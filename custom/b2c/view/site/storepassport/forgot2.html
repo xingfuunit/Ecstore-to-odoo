@@ -1,0 +1,17 @@
+<div style="width: 100%; height: 80px;"></div>
+<!-- 找回密码 -->
+<{if $send_status == 'true'}>
+<div class="been-send">验证码已经发送成功，请到手机获取并在下框中输入(有效时间30分钟)：</div>
+<form action="<{link app=b2c ctl=site_storepassport act=resetpwd_code}>" method="post">
+  <input type="hidden" name="email" value="<{$email}>">
+  <ul>
+    <li class="form-item">
+    <span class="form-act"><input type="text" name="code" id="" class="x-input" maxlength="6" vtype="required"></span>
+    <span class="caution-content"><{$msg}></span>
+    </li>
+    <li class="form-item-normal"><span class="form-act"><{button type="submit" label=$___b2c="提交"|t:'b2c' class="btn-simple btn-big" rel="_request" data-ajax-config="{onSuccess:function(rs){changeStep(rs, 3, function(e){passwordStrength.init($$('form .auto-password-check-handle'));});}}"}> </span></li>
+  </ul>
+</form>
+<{else}>
+<div class="been-send">发生错误，请重试。</div>
+<{/if}>

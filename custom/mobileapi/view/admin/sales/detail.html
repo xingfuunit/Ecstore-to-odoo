@@ -1,0 +1,90 @@
+<form action="index.php?app=mobileapi&ctl=admin_sales_goods&act=toAdd"  method="POST" name="gEditor" id="gEditor" >
+<input type="hidden" name="rule[rule_id]" value="<{$rule.rule_id}>">
+<div id="x-g-basic" class="goods-detail tableform">
+
+        <div class="division">
+            <table border="0" cellpadding="0" cellspacing="0" class="rule_list">
+                <tr>
+                    <th style="width:10%"><{t}>促销名称<{/t}>：</th>
+                    <td style="width:90%"><{input type="text" class="inputstyle" name="rule[name]" required="true" vtype='required' value=$rule.name size=60 }><em><font color="red">*</font></em></td>
+                </tr>
+                <tr>
+                    <th><{t}>促销描述<{/t}>：</th>
+                    <td><{input type="textarea" style=" width:80%" class="inputstyle" value=$rule.description name="rule[description]" rows="10" }></td>
+                </tr>
+                <tr>
+                    <th><{t}>启用状态<{/t}>：</th>
+                     <td>
+                     <label><input type="radio" name="rule[status]"<{if $rule.status != 'false' }> checked="checked"<{/if}> value="true" ><{t}>是<{/t}></label>
+                     <label><input type="radio" name="rule[status]"<{if $rule.status == "false"}> checked="checked"<{/if}> value="false" ><{t}>否<{/t}></label>
+                     </td>
+                </tr>
+                <tr>
+                    <th><{t}>优先级：<{/t}></th>
+                    <td><{input type="unsignedint" value=$rule.sort_order name="rule[sort_order]" maxlength="5" size="3"  }></td>
+                </tr>
+                <tr>
+                    <th><{t}>开始时间<{/t}>：</th>
+                    <td>
+                        <{input type="time" value=$rule.from_time vtype="required" name="from_time"}>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>结束时间<{/t}>：</th>
+                    <td>
+                        <{input type="time" value=$rule.to_time vtype="required" name="to_time"}>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>选择商品<{/t}>：</th>
+                    <td>
+                        <{input type="goods_select" 
+                        object="goods@b2c" 
+                        pdt_name="rule[conditions][goods_select]" 
+                        pdt_value=$rule.conditions.goods_select 
+                        obj_name="rule[conditions][linkobj]"  
+                        obj_value=$rule.conditions.linkobj  
+                        breakpoint=0
+                        vtype="required"
+                        }>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+</div>
+<{capture name='footbar'}>
+<table cellspacing="0" cellpadding="0" class="table-action">
+      <tbody>
+        <tr valign="middle">
+        <td>
+            <{button label=$___b2c="保存并关闭窗口"|t:'b2c' class="btn-primary" onclick="subGoodsForm(event,2)"}>
+            <{button label=$___b2c="保存当前"|t:'b2c' class="btn-primary" onclick="subGoodsForm(event,3)"}>
+            <{assign var=bcclose value=$___b2c='确定退出?'|t:'b2c'}>
+            <{assign var=bclose value="关  闭"}>
+            <{button label=$___b2c=$bclose|t:'b2c' class="btn-secondary" onclick="if(confirm('{$bcclose}'))window.close()"}>
+        </td>
+        </tr>
+        </tbody>
+</table>
+<{/capture}>
+</form>
+<script>
+var _form=$('gEditor'),_formActionURL=_form.get('action');
+
+
+   subGoodsForm = function (event,sign){
+       var specOBJ='';
+       var _target=$(new Event(event).target);
+
+       //var target={extraData:$('finder-tag').toQueryString()+'&'+specOBJ,onRequest:function(){_target.disabled = true;}};
+       var target={onRequest:function(){_target.disabled = true;}};
+ 
+
+        _form.store('target',target);
+        _form.set('action',_formActionURL+'&but='+sign).fireEvent('submit',new Event(event));
+    };
+</script>
+
+
+

@@ -1,0 +1,44 @@
+html, body {
+	height: 100%;
+}
+body {
+	font-family: Helvetica, 'STHeiti STXihei', 'Microsoft JhengHei', 'Microsoft YaHei', Tohoma, Arial;
+	margin:0 auto;
+}
+.container {
+	height: 100%;
+	background: transparent;
+	margin:0 auto;
+}
+.abcbank_banner{
+	width:1278px;
+	height:860px;
+	margin-top:10px;
+	background: url("../images/banner.jpg") no-repeat;
+}
+.goods_list{
+	background-color:#d45a62;
+	width:1278px;
+	height:2120px;
+}
+.goods_detail_left{
+	width:497px;
+	height:393px;
+	float:left;
+	margin-left:120px;
+	margin-top:10px;
+}
+.goods_detail{
+	width:497px;
+	height:393px;
+	float:left;
+	margin-left:30px;
+	margin-top:10px;
+}
+.abcfooter{
+	width:1278px;
+	height:40px;
+	clear:both;
+	margin-top:0px;
+	background: url("../images/footer.jpg") no-repeat;
+}

@@ -1,0 +1,52 @@
+
+<div class="full-screen">
+    <div class="head-nav">
+        <div class="back" ><a href="javascript:history.back()"></a></div>
+        <div style="box-flex: 1; -webkit-box-flex: 1; -moz-box-flex: 1; display: block;line-height: 45px;text-align: center;color:#21292c;">会员中心</div>
+        <div class="home" ><a href="./"></a></div>
+    </div>
+    <div class="member-center">
+        <div class="mem-info c-fix">
+            <div class="mem-avatar">
+                <{if $member.lv_logo!=''}>
+                    <img src="<{$member.lv_logo|storager:'s'}>">
+                <{else}>
+                    <{img src="sprites/default-avatar.png" alt=""}>
+                <{/if}>
+            </div>
+            <div class="mem-level">
+                <div> <{$tag_name}></div>
+                <div> <{$member.levelname}></div>
+                <div>积分：<{$member.point}>      <a href="<{link app=b2c ctl='wap_passport' act='logout'}>"  style="color:#fff; margin-left: 15px;">退出</a></div>
+            </div>
+        </div>
+        <div class="mem-order c-fix">
+            <div class="mem-left">
+                <a href="<{link app=b2c ctl='wap_member' act='orders' arg0='daishouhuo'}>">待收货</a>
+            </div>
+            <div class="mem-right">
+                <a href="<{link app=b2c ctl='wap_member' act='orders'}>">全部订单</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mem-menulist">
+        <ul>
+            <{if $tag_name}><li class="menu-1"><a href="<{link app=b2c ctl='wap_member' act='weixinset'}>">设置登录账号</a></li><{/if}>
+            <li class="menu-1"><a href="<{link app=b2c ctl='wap_member' act='favorite'}>">我的收藏</a></li> 
+            <{*<li class="menu-1"><a href="<{link app=b2c ctl='wap_member' act='referee'}>">我的推荐人</a></li> *}>
+            <li class="menu-2"><a href="<{link app=b2c ctl='wap_member' act='orders' arg0='tuihuo'}>">我的退货</a></li>
+            <li class="menu-3"><a href="<{link app=b2c ctl='wap_member' act='wallet'}>">品鲜钱包</a></li>
+            <li class="menu-4"><a href="<{link app=b2c ctl='wap_member' act='coupon'}>">优惠券</a></li>
+            <li class="menu-5"><a href="<{link app=b2c ctl='wap_member' act='receiver'}>">配送地址</a></li>
+            <li class="menu-6"><a href="<{link app=b2c ctl=wap_member act=message}>">意见反馈</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    var e = $.fn.cookie('S[CART_NUMBER]')?$.fn.cookie('S[CART_NUMBER]'):'';
+    if(e) $("#cartNum").text(e);
+</script>
+

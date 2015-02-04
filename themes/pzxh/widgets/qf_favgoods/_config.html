@@ -1,0 +1,114 @@
+<style>
+<!--
+.tableform table {margin-top:5px;}
+.tableform th,.tableform td{padding:5px;border:1px solid #ddd; vertical-align:middle;line-height:1.8}
+.tableform th {background-color:#E2E8EB}
+.widgetconfig input {padding:2px;line-height:18px;}
+.tableform i {color:#FF0000;}
+-->
+</style>
+
+<div id="goods_exshow_config" class="tableform">
+    <!--div class="division">
+        <label>
+            版块标题：
+            <input type="text" class="x-input" name="title" value="<{$setting.title}>" /> (*留空则不显示标题)
+        </label>
+    </div-->
+    <div class="division">
+        <div class="goods-selector-handle clearfix">
+            <div class="span-auto">
+                <label>
+                    <input type="radio"  name="selector" value="filter" <{if $setting.selector!="select"}> checked<{/if}> />&nbsp;范围选择商品
+                </label>
+            </div>
+            <div class="span-auto">
+                <label><input type="radio"  name="selector" value="select" <{if $setting.selector=="select"}> checked<{/if}> />&nbsp;精确选择商品</label>
+            </div>
+        </div>
+        <div class="division goods-selector">
+            <div data-extend="filter"<{if $setting.selector=="select"}> style="display:none"<{/if}>> 
+                <{input type="goodsfilter"  name="goods_filter" value=$setting.goods_filter}>
+            </div>
+            <div data-extend="select"<{if $setting.selector =="filter"}> style="display:none;"<{/if}>>
+                <{input type="goods_select" object="goods@b2c" pdt_name="goods_select" pdt_value=$setting.goods_select obj_name="goods_select_linkobj" obj_value=$setting.goods_select_linkobj}>
+            </div>
+            <div class="division">
+                排序规则：
+                <select  name="goods_order_by">
+                    <{foreach from=$data.goods_order_by item=item}>
+                    <option value="<{$item.condition}>"  <{if $setting.goods_order_by == $item.condition}>selected<{/if}>><{$item.label}></option>
+                    <{/foreach}>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="division" style="margin-top:8px;">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <th><{t app='b2c'}>栏目标题：<{/t}></th>
+        <td><{input name="title" value=$setting.title}></td>
+      </tr>    
+      <tr>
+        <th><{t app='b2c'}>产品缩略图大小：<{/t}></th>
+        <td>
+          <select name="picWidth">
+            <option<{if $setting.picWidth == "1"}> selected="selected"<{/if}> value="1"><{t}>80X80<{/t}></option>          </select>          
+         </td>
+      </tr>
+      <tr>
+      	<th><{t app='b2c'}>商品数量：<{/t}></th>
+        <!--<td><input type="text" class="x-input" name="limit" value="<{$setting.limit|default:'24'}>" />&nbsp;请填写12的倍数，如：12/24/36/48/60/72/84/96</td>-->
+        <td>
+        	<select name="limit">
+                <option<{if $setting.limit == "24"}> selected="selected"<{/if}> value="24"><{t}>24<{/t}></option>
+                <option<{if $setting.limit == "36"}> selected="selected"<{/if}> value="36"><{t}>36<{/t}></option>
+                <option<{if $setting.limit == "48"}> selected="selected"<{/if}> value="48"><{t}>48<{/t}></option>
+                <option<{if $setting.limit == "60"}> selected="selected"<{/if}> value="60"><{t}>60<{/t}></option>
+                <option<{if $setting.limit == "72"}> selected="selected"<{/if}> value="72"><{t}>72<{/t}></option>
+                <option<{if $setting.limit == "84"}> selected="selected"<{/if}> value="84"><{t}>84<{/t}></option>
+                <option<{if $setting.limit == "96"}> selected="selected"<{/if}> value="96"><{t}>96<{/t}></option>
+            </select>
+        </td>
+      </tr>
+      <tr>
+        <th><{t app='b2c'}>自动切换间隔时间：<{/t}></th>
+        <td><{input name="interval" value=$setting.interval|default:"20"}>秒</td>
+      </tr>            
+      <tr>
+        <th><{t app='b2c'}>商品名最长显示长度：<{/t}></th>
+        <td><{input name="maxlength" value=$setting.maxlength|default:"42"}></td>
+      </tr>
+      <tr>
+      	<th><{t app='b2c'}>显示销售价：<{/t}></th>
+        <td><select name="showgoodsSalePrice">
+            <option<{if $setting.showgoodsSalePrice == "on"}> selected="selected"<{/if}> value="on"><{t app='b2c'}>显示<{/t}></option>
+            <option<{if $setting.showgoodsSalePrice == "off"}> selected="selected"<{/if}> value="off"><{t app='b2c'}>不显示<{/t}></option>
+          </select>
+         </td>
+      </tr>
+      <tr>
+      	<th><{t app='b2c'}>显示市场价：<{/t}></th>
+        <td><select name="showgoodsMarketPrice">
+            <option<{if $setting.showgoodsMarketPrice == "on"}> selected="selected"<{/if}> value="on"><{t app='b2c'}>显示<{/t}></option>
+            <option<{if $setting.showgoodsMarketPrice == "off"}> selected="selected"<{/if}> value="off"><{t app='b2c'}>不显示<{/t}></option>
+          </select>
+         </td>
+      </tr>      
+    </table>
+  </div>
+</div>
+<script>
+    $$('#goods_exshow_config .goods-selector-handle input[type=radio]').addEvent('change',function(){
+        var radio  = this;
+        if(!radio.checked)return;
+        $$('#goods_exshow_config .goods-selector [data-extend]').each(function(item){
+            if(item.get('data-extend')!=radio.value){
+                item.hide();
+                }else{
+                item.show();
+            }
+        });
+    });
+</script>

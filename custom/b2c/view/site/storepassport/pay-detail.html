@@ -1,0 +1,152 @@
+<div class="loging-list" id="page_login" style="margin-top: 80px">
+    <div class="top-title">
+        <div class="login-center" >
+            <span>ShopEx  WEBPOS收银系统V3.0</span>
+        </div>
+    </div>
+    <div>
+        
+        <div style="float: right; width:80px; hight:38px; padding: 5px; font-size: 14px;   border:1px solid #8faace; background: #FFF; text-align: center; margin-right: 10px; margin-top: -20px;">
+                 <a   href="<{link app=b2c ctl=site_cart}>?type=x" style="color:#000000;">返回收银</a>
+            </div>
+        <div class="pay-count-title" style="margin: 0 auto; text-align: center; font-size: 24px;"><{t}>收银交接班结账单<{/t}></div>
+        <div class="oder-printbox" style="padding-bottom: 35px;">
+           <!--<form action="<{link app=b2c ctl='site_storepassport' act='create_paydetail'}>" method="post" data-type="ajax">-->
+               <input type="hidden" name="charge_num" value="<{$maxOrder}>" />
+               <input type="hidden" name="jiaoban_id" value="<{$account.staff}>" />
+               <input type="hidden" name="jiaoban_name" value="<{$account.staff_name}>" />
+               <input type="hidden" name="start_time" value="<{$staff_info.logintime}>" />
+               <input type="hidden" name="cash" value="<{$paymoney.xianjin}>" />
+               <input type="hidden" name="webpos" value="<{$paymoney.shuaka}>" />
+               <input type="hidden" name="deposit" value="<{$paymoney.yucunkuan}>" />
+               <input type="hidden" name="coupon" value="<{$order_yuhui}>" />
+               <input type="hidden" name="order_nums" value="<{$order_nums}>" />
+               <input type="hidden" name="amount" value="<{$paymoney.count_money}>" />
+            <table width="50%" border="1" cellpadding="0" cellspacing="0"  style="margin: 0 auto;">
+              <tr>
+                <td  class="cash_right"><{t}>交接员：<{/t}></td>
+                <td class="cash_left"><{$account.staff_name}></td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>接班员：<{/t}></td>
+                <td class="cash_left" >
+                        <select name="staff" class="login-select" id='huige_select'>
+                            <{foreach from=$liststaff item=itemt key=keyt name=namet}>
+                               <option  value="<{$itemt.staff_id}>--<{$itemt.staff_name}>"><{$itemt.staff_name}></option>
+                            <{/foreach}>
+                       </select>
+                </td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>接班员密码：<{/t}></td>
+                <td class="cash_left">
+                        <input type="password" id='password_is' name="password" vtype="required"/>
+                </td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>班次：<{/t}></td>
+                <td  class="cash_left"><{$maxOrder}></td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>现金：<{/t}></td>
+                <td  class="cash_left">
+                      <{if $paymoney.xianjin != ''}><{$paymoney.xianjin|cur_odr}><{else}>￥0.00<{/if}>元
+                </td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>POS机：<{/t}></td>
+                <td  class="cash_left">
+                     <{if $paymoney.shuaka != ''}><{$paymoney.shuaka|cur_odr}><{else}>￥0.00<{/if}>元
+                </td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>预存款：<{/t}></td>
+                <td  class="cash_left">
+                    <{if $paymoney.yucunkuan != ''}><{$paymoney.yucunkuan|cur_odr}><{else}>￥0.00<{/if}>元
+                </td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>优惠金额：<{/t}></td>
+                <td  class="cash_left"><{$order_yuhui|cur_odr}>元</td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>合计订单数：<{/t}></td>
+                <td  class="cash_left"><{if $order_nums>0}><{$order_nums}><{else}>0<{/if}>笔<{if $paymoney.count_money != ''}><{$paymoney.count_money|cur_odr}><{else}>￥0.00<{/if}>元</td>
+              </tr>
+              <tr>
+                <td colspan="2" style="padding: 5px 5px 5px 20px; text-align: center;">
+                    <input type="submit" style="cursor:pointer" id="add_xjamount" name="amount_submit" class="submdeoe"  value="交接并打印" />
+                    <span id="dd_add_info" class="dd_add_info" style="color: #006600;"></span>
+                </td>
+              </tr>
+            </table>
+           <!--</form>-->
+          </div>
+    </div>
+</div>
+<script type="text/javascript">
+     window.addEvent('domready', function(){
+            $('add_xjamount').addEvent("click",function(E){
+                              var select_val = document.getElementById('huige_select');
+                              var slect_val = select_val.value;
+                              var password_is = document.getElementById('password_is');
+                              var password = password_is.value;
+                              if(slect_val == ''){
+                                  alert("对不起，您没有交接的员工！");
+                                  return false;
+                              }
+                              if(password == ''){
+                                  alert("请输入交接人密码！");
+                                  return false;
+                              }
+                              var ret = slect_val.split("--")[1];
+                              
+                              var url = '<{link app=b2c ctl=site_storepassport act=create_paydetail}>';
+                              var bn_add_info = $$("div .dd_add_info");
+                              var myRequest = new Request.JSON({
+                                  url: url,
+                                  method: 'post',
+                                  onRequest: function(){
+                                      bn_add_info.set('html','正在交接班……');
+                                  },
+                                  onSuccess: function(responseText){
+                                     if(responseText.ret == "交接班成功!"){
+                                         bn_add_info.set('html',responseText.ret);
+                                         var storeprint  = "收银交接班结账单\n时间：<{$time_local|cdate:FDATE_FTIME}>\n交接员：<{$account.staff_name}>\n接班员:"+ret+"\n班次:<{$maxOrder}>\n起始时间:<{$staff_info.logintime|cdate:FDATE_FTIME}>\n截止时间:<{$time_local|cdate:FDATE_FTIME}>\n现金:<{if $paymoney.xianjin != ''}><{$paymoney.xianjin|cur_odr}><{else}>￥0.00<{/if}>元\nPOS机:<{if $paymoney.shuaka != ''}><{$paymoney.shuaka|cur_odr}><{else}>￥0.00<{/if}>元\n预存款:<{if $paymoney.yucunkuan != ''}><{$paymoney.yucunkuan|cur_odr}><{else}>￥0.00<{/if}>元\n优惠券:<{$order_yuhui|cur_odr}>元\n合计订单数:<{if $order_nums>0}><{$order_nums}><{else}>0<{/if}>笔<{if $paymoney.count_money != ''}><{$paymoney.count_money|cur_odr}><{else}>￥0.00<{/if}>元\n交班员签名:\n接班员签名:";
+                                         try {
+                                            window.CallCSharpMethod("softprint",storeprint);
+                                         } catch(e) {}
+                                         winReload();
+                                    }
+                                    if(responseText.ret == "交接班失败!"){
+                                         bn_add_info.set('html',responseText.ret);
+                                    }
+                                    if(responseText.ret == "交接员工密码错误，请重试!"){
+                                         bn_add_info.set('html',responseText.ret);
+                                    }
+                                  },
+                                  onFailure: function(){
+                                      bn_add_info.set('html','请求失败');
+                                  }
+                              });
+                              
+                              var data = '&staff=' + slect_val;
+                                  data   += '&password='+ password;
+                                  data   += '&charge_num=<{$maxOrder}>';
+                                  data   += '&jiaoban_id=<{$account.staff}>';
+                                  data   += '&jiaoban_name=<{$account.staff_name}>';
+                                  data   += '&start_time=<{$staff_info.logintime}>';
+                                  data   += '&cash=<{$paymoney.xianjin}>';
+                                  data   += '&webpos=<{$paymoney.shuaka}>';
+                                  data   += '&deposit=<{$paymoney.yucunkuan}>';
+                                  data   += '&coupon=<{$order_yuhui}>';
+                                  data   += '&order_nums=<{$order_nums}>';
+                              myRequest.send(data);
+
+          });
+      });
+      function winReload() {
+            var _url = '<{link app=b2c ctl=site_storepassport}>';
+            window.location.href = _url;
+        }
+</script>

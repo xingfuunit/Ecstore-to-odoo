@@ -1,0 +1,18 @@
+<app>
+    <name>DIYAPI</name>
+    <description>DIY 调用接口</description>
+
+    <author>
+        <name>iegss</name>
+        <email>iegss@126.com</email>
+        <url>http://www.iegss.com</url>
+    </author>
+
+    <version>1.2</version>
+    <license>Mit license</license>
+
+	<depends>
+		<app>base</app>
+	</depends>
+
+</app>

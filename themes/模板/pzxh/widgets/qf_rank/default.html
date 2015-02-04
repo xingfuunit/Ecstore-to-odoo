@@ -1,0 +1,26 @@
+<style type="text/css">
+.qfgoods li {float:left;overflow:hidden;}
+</style>
+<div id="Ranks-<{$widgets_id}>" class="siderank box1">
+ <{if $setting.title}><h3><{$setting.title}></h3><{/if}>
+ <div class="body">
+  <ul class="clearfix ranklist">
+    <{assign var="do" value='1'}>
+    <{foreach from=$data.goodsRows item=row key=gid name=ranking}>
+    <li class="item clearfix l<{$smarty.foreach.ranking.iteration}><{if $smarty.foreach.ranking.iteration == 1}> selected<{/if}><{if $smarty.foreach.ranking.last}> last<{/if}>">
+      <{assign var=pickey  value=$setting.gpic_size|default:'goodsPicS' }>
+      <div class="im"><a target="_blank" href="<{$row.goodsLink}>"><img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" width="60" height="60" /></a></div>    
+      <div class="rank-box clearfix">
+           <div class="clearfix">
+           <ul class="p"><{if $setting.showgoodsSalePrice =='on'}><li><span><!--销售价：--></span><span class="price1"><{$row.goodsSalePrice|cur}></span></li><{/if}><{if $setting.showgoodsMarketPrice == 'on'}><li class="last"><!--市场价：--><span class="mktprice1"><{$row.goodsMarketPrice|cur}></span></li><{/if}></ul> 
+           </div>
+          <div class="gname"><h6><a title="<{$data.name}>" target="_blank" href="<{$row.goodsLink}>"><{$row.goodsName|cut:$setting.maxlength}></a></h6></div>          
+      </div>    
+     </li>
+    <{/foreach}>
+  </ul>
+  </div>
+</div>
+<script>
+window.addEvent('domready',function(){var topSales = $('Ranks-<{$widgets_id}>').getElements('li');topSales.each(function(s,i){s.addEvents({'mouseenter': function(){this.getParent('ul').getElements('li.selected').each(function(l){l.removeClass('selected')});this.addClass('selected')}	})})})
+</script>

@@ -1,0 +1,21 @@
+<desktop>
+    <permissions>
+        <permission id="microshoplist" display='true' workground='b2c.workground.microshop'>微店列表</permission>
+        <permission id="microshopdel" display='true' workground='b2c.workground.microshop'>删除微店</permission>
+        <permission id="microshopspecial" display='true' workground='b2c.workground.microshop'>专辑列表</permission>
+        <permission id="microshopproducts" display='true' workground='b2c.workground.microshop'>商品列表</permission>
+        <permission id="microshop_promotion_into_list" display='true' workground='b2c.workground.microshop'>微店列表</permission>
+    </permissions>
+
+    <workground name="微店" id="b2c.workground.microshop" order="110">
+        <menugroup name="列表">
+            <menu controller='admin_list' action='index' permission='microshoplist' display='true' order='10'>微店列表</menu>
+            <menu controller='admin_special' action='index' permission='microshopspecial' display='true' order='20'>专辑列表</menu>
+            <menu controller='admin_products' action='index' permission='microshopproducts' display='true' order='30'>商品列表</menu>
+        </menugroup>
+         <menugroup name="O2O推广分成">
+            <menu controller='admin_promotioninto' action='index' permission='microshop_promotion_into_list' display='true' order='10'>分成列表</menu>
+            <menu controller='admin_promotioninto' action='logs' permission='microshop_promotion_into_list' display='true' order='20'>分成记录</menu>
+        </menugroup>
+    </workground>
+</desktop>

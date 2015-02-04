@@ -1,0 +1,90 @@
+<div class="loging-list" id="page_signup" style=" margin-top: 100px;">
+       <div class="top-title">
+        <div class="login-center">
+<!--         <div class="logo-login"><img src="<{$res_url}>/images/t_logo.png" /></div>-->
+          <span>ShopEx  WEBPOS收银系统V3.0</span>
+         </div>
+        </div>
+        <{include file="site/storepassport/member-signup.html"}>
+
+
+</div>
+
+
+<script>
+Module = new Module('page', ['signup']);
+
+Module.page.signup.getElement('button[type=submit]').store('_ajax_config', {
+    progress:function(rs){
+        if(rs.error) {
+            <{if $valideCode == 'true'}>
+            changeCode(Module.element('page.signup', 'img.auto-change-verify-handle'));
+            <{/if}>
+            return top.Message.error(rs.error,function(){
+                if(rs.redirect) location.href = rs.redirect;
+            });
+        }
+        if(rs.success) return top.Message.success(rs.success + '<br><b>系统即将跳转到注册前页面</b>', function(){
+            if(rs.redirect) top.location.href=rs.redirect;
+        });
+        if(rs.redirect) top.location.href=rs.redirect;
+    }
+});
+
+var Query = {
+    check: function(url, element, fn){
+        new Request({
+            url: url,
+            link: 'cancel',
+            onSuccess: function(rs) {
+                var tips = element.retrieve('tips_instance', new formTips({
+                    target: element,
+                    where: 'after',
+                    single: true,
+                    store: true,
+                    autohide: false,
+                    destroy: true
+                })).hide();
+                if(rs) {
+                    rs = JSON.decode(rs);
+                    if(rs.error) {
+                        tips.show(rs.error, {type: 'error'});
+                    }
+                    else if(rs.success) {
+                        tips.show(rs.success, {type: 'success',autohide:3});
+                        fn&&fn.call(this, rs);
+                    }
+                }
+            }
+        }).post(element.name + '=' + element.value);
+    }
+};
+
+Module.page.signup.addEvents({
+    'blur:relay(.action-user-check)': function(e) {
+        var self = this;
+        var value = this.value;
+        Query.check('<{link app=b2c ctl=site_passport act=namecheck}>', this, function(rs){
+            if(validatorMap.email[1](self, value)) {
+                try{
+                    Module.element('page.signup', '.action-email-check').fireEvent('focusin').value = value;
+                }catch(e){}
+                self.retrieve('tips:instance', {hide:function(){}}).hide();
+            }
+        });
+    },
+    'blur:relay(.action-email-check)': function(e) {
+        Query.check('<{link app=b2c ctl=site_passport act=emailcheck}>', this);
+    },
+    'blur:relay(.action-password-check)': function(e) {
+        Query.check('<{link app=b2c ctl=site_passport act=passwordcheck}>', this);
+    },
+    'blur:relay(.action-mobile-check)': function(e) {
+        Query.check('<{link app=b2c ctl=site_passport act=mobilecheck}>', this);
+    },
+    'blur:relay(.action-psw_confirm-check)': function(e) {
+        Query.check('<{link app=b2c ctl=site_passport act=psw_confirmcheck}>', this);
+    }
+});
+</script>
+

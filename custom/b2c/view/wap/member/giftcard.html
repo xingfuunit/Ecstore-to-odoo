@@ -1,0 +1,51 @@
+<div class="full-screen">
+    <header>
+    <div class="a-bar">
+        <a href="javascript:history.back()" class="a-back">
+            <i class="arr left"></i>
+            返回
+        </a>
+        <div class="a-name">
+            礼品卡充值
+        </div>
+    </div>
+    </header>
+    <form action='<{link app="b2c" ctl="wap_member" act="gc_dopayment" arg0="giftcard"}>' method="post">
+    <div class="deposit">
+        <div class="count">
+            目前预存款金额：<em class="f-red"><{$total|cur_odr}></em>
+        </div>
+        <div class="deposit-num">
+            <label>礼品卡号码：</label>
+            <input type="text" name="giftcard[gcard_code]" required="required" min="1" id='deposit'>
+        </div>
+        <div class="deposit-way">
+			    <label class="c-l">验证码:</label>
+			    <div class="c">
+			      <{input type="vcode" name="verifycode" class="verify-input" placeholder="请输入验证码" key='b2c_wap_gc' label='换一张'}>
+			  </div>
+        </div>
+        <button type="submit" class="btn" >去充值</button>
+    </div>
+    </form>
+</div>
+
+<script>
+/*
+$('button[type=submit]').bind('click',function(){
+    var form = $(this).parents('form');
+    var money   = form.find('input[name="payment[money]"]').val();
+    var payment = form.find('input[name="payment[pay_app_id]"]').val();
+    if(isNaN(money) || parseInt(money)<=0 || !money){
+        alert('充值金额请填写大于0的数值!');
+        return false;
+    }
+    if(!payment){
+        alert('必须选择一个支付方式!');
+        return false;
+    }
+});
+*/
+</script>
+
+

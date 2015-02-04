@@ -1,0 +1,131 @@
+<link href="images/style.css" rel="stylesheet" type="text/css" />
+<script src="images/jquery.min.js"></script>
+<div id="product-intro" >
+ <ul id="summary" class="dispatching">
+	<li id="summary-stock" class="deliveryItem">
+	   <div class="dd" style="position:absolute;  z-index:999999;">
+			<div id="store-selector" class="">
+				<div id="store-selectortext" class="oldtext"><div>请选择</div><b></b></div>
+				<div class="content" >		
+					<span class="clr" style=' background: none;'></span>
+				</div>
+				<div class="close" onclick="removeCls()"></div>
+			 </div><!--store-selector end-->
+			<div id="store-prompt"></div><!--store-prompt end-->
+		</div>
+	</li>
+ </ul>
+</div>
+<{script src="jquery.min.js" app="b2c" pdir="js_mini"}>
+<script>
+	var jq = jQuery.noConflict();
+</script>
+<script type="text/javascript" src="images/lib.js"></script>
+<script type="text/javascript" src="images/fz.js"></script>
+<script type="text/javascript">
+  var getAreaByIDURL="<{link app=b2c ctl=site_tools act=getRegionById}>";
+  var privince;
+  function removeCls() {
+	   jq('#store-selector').removeClass('hover');
+	   jq("#store-selector").find(".content, .close").removeAttr("style");
+	   // jq('#stock_area_item, #tab_area_item').css('display','none');
+	   // jq('#tab_city_item').addClass('curr');
+	   // jq('#tab_city_item a').addClass('hover');
+	   // jq('#stock_city_item').css('display','block');
+  }
+
+  jq(function(){
+ 	   var address="";
+	   var cookieProvinceName=stokeAddress.prototype.getCookie('ProvinceName');
+	   var cookieCityName=stokeAddress.prototype.getCookie('CityName');
+	   if(cookieProvinceName!==null&&cookieProvinceName!==""&&cookieCityName!==null&&cookieCityName!=="")
+	   {
+		   address+=cookieProvinceName;
+		   address+=cookieCityName;
+	   }
+	   else
+	   {
+		   address="<{$data.region}><{$data.realcity}>";
+	   }
+	   jq("#store-selector .oldtext div").html(address).attr("title",address);
+	   //Json对象保存获取cookie对象
+	   var jsonCookie;
+	   if(stokeAddress.prototype.getCookie('ProvinceId')!==null)
+	   {
+		   jsonCookie=new Object();
+		   jsonCookie.ProvinceId=stokeAddress.prototype.getCookie('ProvinceId'); 
+		   jsonCookie.CityId=stokeAddress.prototype.getCookie('CityId');
+	   }
+	   var msghtml='<ul class="area-list">';
+	   <{foreach from=$data.area item=item key=iLoop name="item"}>
+	    msghtml+='<li><a href="javascript:;" data-value="<{$item.region_id}>"><{$item.local_name}></a></li>';
+	   <{/foreach}>
+	   msghtml+='</ul>';
+	   
+	   privince=new stokeAddress({
+		    msg:msghtml,
+		    currentPageLoad:{"isLoad":true,"areaCookie":jsonCookie}
+	   })
+
+	   jq("#store-selector").hover(function(){
+	   	console.log('hover_this');
+	   	if (privince.requestLevel != 3 && jq('#stock_area_item').css('display') != 'none') {
+	   	   	jq('#stock_area_item, #tab_area_item').css('display','none');
+	   		jq('#tab_city_item').addClass('curr');
+	   		jq('#tab_city_item a').addClass('hover');
+	   		jq('#stock_city_item').css('display','block');
+		}
+	   })
+	   jq("#store-selector").mouseover(function(){
+	   	   
+		   jq("#store-selectortext").removeClass("oldtext");
+		   jq("#store-selectortext").addClass("text");
+
+	   });
+	   jq("#store-selector").mouseout(function(){
+		   jq("#store-selectortext").removeClass("text");
+		   jq("#store-selectortext").addClass("oldtext"); 
+	   });
+
+	   jq("#store-selector").Jdropdown();
+
+	   jq("#store-selectortext_goods div").live('click', function(){
+	   		var position = jq('#store-selectortext_goods div').offset();
+	   		var box = jq('#store-selector');
+	   		box.find('.content, .close').css({
+	   			'display':'block',
+	   			'top':position.top + 28+'px',
+	   			'left':position.left - 230+'px'
+	   		})
+	   		box.find('.close').css({'left': position.left+184+'px', 'top':position.top + 18+'px'})
+
+	   		privince.requestLevel = 3;
+	   		if (jq('#stock_area_item .area-list').length > 0) {
+		   		jq('#stock_area_item, #tab_area_item').addClass('curr').css('display','block');
+		   		jq('#tab_city_item').removeClass('curr');
+		   		jq('#tab_city_item a').removeClass('hover');
+		   		jq('#stock_city_item').css('display','none');
+		   		jq('#stock_area_item').show();
+		   		jq('#tab_area_item a').addClass('hover');
+	   		}
+	   });
+
+ })
+	/*
+	(function(){
+		//var city_name = '深圳';
+		var city_ip = {
+			showCity : function() {
+			   document.getElementById("homepagecitypanel").style.display=""; 
+			},
+			hideCity : function() {
+		       document.getElementById("homepagecitypanel").style.display="none"; 
+			},
+            selectCity:function(obj){
+               document.getElementById("cityId").innerHTML=obj.innerHTML;
+            }
+		}
+		window.city_ip = city_ip;
+	})();
+	*/
+</script>

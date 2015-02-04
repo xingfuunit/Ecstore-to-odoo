@@ -1,0 +1,27 @@
+<div class="coupon-use">
+    <div class="yhq_title">已有优惠券</div>
+    <div class="invoice_title invoice-top marg">
+    <select name="coupon">
+        <option value="">选择优惠券</option>
+        <{if $coupon_lists}>
+            <{foreach from=$coupon_lists item=list_coupon}>
+                <option value="<{$list_coupon.memc_code}>" data-coupon="<{$list_coupon.cpns_id}>"><{$list_coupon.coupons_info.cpns_name}></option>
+            <{/foreach}>
+        <{/if}>
+    </select>
+        <span class="btn">使用</span>
+    </div>
+    <div class="yhq_title">站外获得优惠券</div>
+    <div class="invoice_title invoice-top marg">
+        <input type="text" name="coupon" value="" placeholder="输入号码" />
+        <span class="btn">使用</span>
+    </div>
+    <ul class="used">
+        <{foreach from=$aCart.object.coupon item=coupon}>
+            <{if $coupon.used}>
+                <li><span class="del" rel="<{$coupon.obj_ident}>" data-coupon="<{$coupon.cpns_id}>" data-code="<{$coupon.coupon}>">取消使用</span><{$coupon.coupon}>-<{$coupon.name}></li>
+                </li>
+            <{/if}>
+        <{/foreach}>
+    </ul>
+</div>

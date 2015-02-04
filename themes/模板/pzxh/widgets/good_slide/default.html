@@ -1,0 +1,42 @@
+<div class="slider auto-bind-widget" id="sub_slide" data-widget-type="Slide" data-widget-config="{
+    autoplay:false,
+    effect:'scrollx',
+    hasTriggers:false,
+    panels:'.slide-item',
+    haslrbtn:true,
+    isFloat:false,
+    viewStep:4
+}">
+  <div class="prev"><i class="icon">&#x26;</i></div>
+  <div class="slide-box">
+    <ul class="slide-list">
+      <{foreach from=$data.goodsRows item=row key=gid name=goodsrow}>
+        <li class="slide-item">
+         <{assign var=pickey  value=$setting.gpic_size|default:'goodsPicM'}>
+         <div class="goodpic" style="width:160px;height:160px;overflow:hidden;background-color:#FFF;margin:0 auto;"><a target="_blank" href="<{$row.goodsLink}>"><img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" width="160" height="160" /></a>
+          </div>
+          <div class="info">
+             <h6><a target="_blank" href="<{$row.goodsLink}>"><{$row.goodsName|cut:$setting.maxlength}></a></h6>
+             <{if $setting.showgoodsIntro == 'on' && $row.goodsIntro}><p class="goods-intro"><a target="_blank" href="<{$row.goodsLink}>"> <{$row.goodsIntro|cut:$setting.maxlength2}></a></p><{/if}>
+             <{if $setting.showgoodsSalePrice =='on'}><p><span class="price0">销售价:</span><span class="price1"><{$row.goodsSalePrice|cur}></span><{/if}></p>
+             <{if $setting.showgoodsMarketPrice == 'on'}><p><span class="price0">市场价:</span><span class="mktprice1"><{$row.goodsMarketPrice|cur}></span></p><{/if}>
+          </div>
+         </li>
+         <{/foreach}>
+    </ul>
+  </div>
+  <div class="next"><i class="icon">&#x27;</i></div>
+</div>
+<script>
+window.addEvent('domready',function(){
+    $$(".slide-item").addEvents({
+		"mouseenter":function(){
+		this.addClass("hover")
+		},
+		"mouseleave":function(){
+			this.removeClass("hover")
+		}
+		})
+	})
+</script>
+

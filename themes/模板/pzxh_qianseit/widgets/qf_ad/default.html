@@ -1,0 +1,50 @@
+<{if $setting.title}><div class="title"><h3><{$setting.title}></h3></div><{/if}>
+<{if $setting.adscrolltype != 'on'}>
+    <div class="qf_ad<{if $setting.adscrolltype == '1'}> clearfix<{/if}>">
+    <{foreach from=$data item=aditem key=key name=aditem}>
+      <{if @count($data) > 1}>
+      <div class="AdvBanner<{if $smarty.foreach.aditem.last}> last<{/if}>"<{if $setting.adscrolltype != 0}>style="margin-right:<{if $smarty.foreach.aditem.last}>0<{else}><{$setting.ad_margin}><{/if}>px;float:left;"<{else}>style="margin-bottom:<{if $smarty.foreach.aditem.last}>0<{else}><{$setting.ad_margin}><{/if}>px;" <{/if}>>
+      <{else}>
+      <div class="AdvBanner">
+      <{/if}>      
+      <{if $aditem.type=='image'}>
+      <a href="<{$aditem.tolink}>"<{if $setting.showpicalt=='on'}> title="<{$aditem.text}>"<{/if}>><img src="<{$aditem.link}>" <{if $aditem.showwidth}>width="<{$aditem.showwidth}>"<{/if}><{if $aditem.showheight}>height="<{$aditem.showheight}>"<{/if}> alt="<{$aditem.text}>" /></a>
+     	<{if $aditem.text && $setting.showpicalt !='on'}>
+        	<p><{if $aditem.tolink}><a href="<{$aditem.tolink}>"><{$aditem.text}></a><{else}><{$aditem.text}><{/if}></p>
+        <{/if}>        
+      <{elseif $aditem.type=='flash'}>
+        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0"<{if $aditem.showwidth}> width="<{$aditem.showwidth}>"<{/if}> <{if $aditem.showheight}> height="<{$aditem.showheight}>"<{/if}>>
+        <param name="movie" value="<{$aditem.link}>" />
+        <param name="quality" value="high" />
+        <param name="wmode" value="transparent">
+        <embed src="<{$aditem.link}>"<{if $aditem.showwidth}> width="<{$aditem.showwidth}>"<{/if}><{if $aditem.showheight}> height="<{$aditem.showheight}>"<{/if}> quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" wmode="transparent">
+        </embed>
+        </object>
+        <{if $aditem.text}><p><{$aditem.text}></p><{/if}>
+    <{elseif $aditem.type=='html'}><{$aditem.link}><{/if}>
+    </div>
+     <{/foreach}>
+    </div>
+<{else}>
+    <{if @count($data) > 1}>
+    <div id="Scroll_<{$widgets_id}>" class="qf_Advbox">
+        <div class="padding-box">
+            <ul class="scroll-box">
+            <{foreach from=$data item=aditem key=key name=aditem}>
+                <{if $aditem.type=='image'}>
+                <li><a href="<{$aditem.tolink}>" title="<{$aditem.text}>"><img src="<{$aditem.link}>" <{if $aditem.showwidth}> width="<{$aditem.showwidth}>"<{/if}><{if $aditem.showheight}> height="<{$aditem.showheight}>"<{/if}> alt="<{$aditem.text}>" /></a> 
+                </li>
+                <{/if}>
+            <{/foreach}>
+           </ul>
+        </div>
+    </div>
+    <{if @count($data) > $setting.scrollnum|default:'4'}>
+    <script>
+    window.addEvent('domready',function(){var a = new Scroll_Script('<{$widgets_id}>','<{$setting.Position|default:'0'}>');});
+    </script>
+    <{/if}>
+    <{/if}>
+<{/if}>
+
+

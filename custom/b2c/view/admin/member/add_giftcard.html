@@ -1,0 +1,95 @@
+
+<{if !$_is_singlepage}>
+
+<form method="POST" action="index.php?app=b2c&ctl=admin_member_giftcardrule&act=save_autogiftcard" class="tableform" id="form_member_giftcard">
+<div class="division">
+<{input type="hidden" name="rule_id" value=$gcrule.rule_id}>
+<table width="100%" border="0" cellpadding="0" cellspacing="0"id='member_level' class="member-set">
+	<tr>
+		<th><{t}>兑换卡名称<{/t}></th>		
+		<td>
+			<span><{$gcrule.rule_name}></span>
+		</td>
+	</tr>
+	<tr>
+		<th><{t}>兑换卡面值<{/t}></th>
+		<td>
+			<span><{$gcrule.gcard_money}></span>			
+		</td>
+	</tr>
+	<tr>
+		<th><{t}>兑换卡前缀<{/t}></th>
+		<td>			
+			<span><{$gcrule.gcard_prefix}></span>
+		</td>
+	</tr>
+	<tr class="member_retail">
+		<th><em class="c-red">*</em><{t}>生成数量<{/t}></th>
+		<td>
+			<{input type="unsigned" name="nums" style="width:50px" size="8" class="_x_input" vtype="number" value=$gcrule.nums}>
+			<span><{t}>请输入生成数量，一次最多不超过500张<{/t}></span>
+		</td>
+	</tr>
+	<tr class="member_retail">
+		<th><em class="c-red">*</em><{t}>有效截止日期<{/t}></th>
+		<td>
+			<{input type="date" name="end_time" required="true" value=$gcrule.end_time}>
+			
+		</td>
+	</tr>
+	<tr class="member_retail">
+		<th><{t}>备注<{/t}></th>
+		<td>
+			<textarea rows="2" style=" width:90%" name="remark" type="textarea"><{$gcrule.log_text}></textarea>						
+		</td>
+	</tr>
+</table>
+
+</div>
+</form>
+<{area inject='.mainFoot'}>
+     <div class="table-action">
+	<{button type="button" label=$___b2c="保存并生成"|t:'b2c' id="giftcard-form-submit"}>
+</div>
+<{/area}>
+
+
+
+
+
+<script>
+(function(){
+	var _form = $('form_member_giftcard');
+	var btn =$('giftcard-form-submit');
+	var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+
+	_form.store('target',{
+		onSuccess:function(response){
+			var hash_res_obj = JSON.decode(response);
+
+			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+			{
+				try{
+					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+				}catch(e){}
+
+				if(_dialogIns)
+				{
+					_dialogIns.close();
+					window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+				}
+			}
+
+		}
+	});
+
+	    btn.addEvent('click',function(){
+		    _form.fireEvent('submit',{stop:$empty});
+		});
+
+})();
+
+
+</script>
+
+<{/if}>

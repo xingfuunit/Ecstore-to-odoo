@@ -1,0 +1,57 @@
+<style>
+#focus_hnqss {width:100%;position:relative;overflow:hidden;}
+#focus_hnqss .viewbox {width:<{$setting.width|default:'1200'}>px;height:<{$setting.height|default:600}>px;margin:0 auto;overflow:visible;position:relative}
+#focus_hnqss .withdraw,
+#focus_hnqss .flashview li,
+#focus_hnqss .flashview li a {width:<{$setting.hwidth|default:'1920'}>px;}
+#focus_hnqss .withdraw,
+#focus_hnqss .flashview,
+#focus_hnqss .flashview li,
+#focus_hnqss .flashview li a{height:<{$setting.height|default:600}>px;}
+#focus_hnqss .withdraw {overflow:hidden;z-index:0;position:relative;left:-<{math equation=floor((x-y)/2) x=$setting.hwidth y=$setting.width}>px;_display:inline;} 
+#focus_hnqss .flashview {position:absolute;top:0;}
+#focus_hnqss .flashview li {float:left;overflow:hidden;display:block;}
+#focus_hnqss .flashview li a {display:block;text-align:center;}
+#focus_hnqss .slide-number a {background:url('images/button.gif') no-repeat;}
+#focus_hnqss .prev,
+#focus_hnqss .next {position:absolute;top:<{math equation=floor((x-49)/2) x=$setting.height}>px;cursor:pointer;height:49px;width:28px;z-index:3;overlow:hidden;background:url("images/button1.png") no-repeat;_background:url("images/button1.gif") no-repeat;<{if $setting.showbutton != 0}>display:none<{/if}>}
+#focus_hnqss .prev {left:50px;background-position:0 0;}
+#focus_hnqss .next {right:50px;background-position:-29px 0;}
+
+#focus_hnqss .slide-number {padding:0 0 12px 250px;text-align:left;position:absolute;bottom:0;z-index:2;<{if $setting.shownumber != 0}>display:none;<{/if}>white-space:nowrap}
+#focus_hnqss .slide-number a{width:20px;height:10px;background:#FFF;display:block;float:left;margin-right:8px;overflow:hidden;text-indent:-999em;}
+#focus_hnqss .slide-number .active {background:#E43E40;color:#FFF;}
+#focus_hnqss .draw_sider {position:absolute;right:0;top:0;width:<{$setting.small_width}>px;height:<{$setting.height|default:600}>px;padding:0 9px;background:#FFF;z-index:3;overflow:hidden;}
+#focus_hnqss .draw_sider ul li {border-top:1px solid #e0e0e0;padding:9px 0;width:100%;overflow:hidden;}
+#focus_hnqss .draw_sider ul li.first {border:none;}
+#focus_hnqss .draw_sider ul li img{display:block;}
+#focus_hnqss .draw_sider ul li a:hover img {filter:alpha(opacity=85)\0;*filter:alpha(opacity=85);opacity:0.85;}
+</style>
+<div id="focus_hnqss">
+    <div class="viewbox">
+        <div class="withdraw">
+            <ul id="flashview_hnqss" class="flashview">
+            	<{foreach from=$setting.focus item=pic key=key name=foucus}>
+                <{if $smarty.foreach.foucus.first}>
+                <li><a target="_blank" href="<{$pic.tolink}>"><img src="<{$pic.imgurl}>" alt="<{$pic.title}>" /></a></li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div>
+         <div class="slide-number" id="slide_hnqss">
+        <{assign var="do" value="0"}>    
+    	<{foreach from=$setting.focus item=item key=key2 name=count}><a href="javascript:void(0);" hidefocus="true" rel="nofollow" <{if $do==0}>class="active"<{/if}>><{assign var="do" value=$do+1}><{$smarty.foreach.count.iteration}></a><{/foreach}>
+    	</div>
+        <{if $setting.small && $setting.showsmall=="on"}>
+        <div class="draw_sider">
+        	<ul>
+            	<{foreach from=$setting.small item=data key=key name=pics}>
+            	<li<{if $smarty.foreach.pics.first}> class="first"<{/if}>><a href="<{$data.tolink}>" target="_blank" title="<{$data.title}>"><img src="<{$data.imgurl}>" width="<{$setting.small_width}>" height="<{$data.height}>" alt="<{$data.title}>" /></a></li>
+                <{/foreach}>
+             </ul>
+        </div>
+        <{/if}>
+    </div>  
+    <a id="moveLeft_hnqss" href="javascript:void(0);" class="prev"></a>
+    <a id="moveRight_hnqss" href="javascript:void(0);" class="next"></a>
+</div>

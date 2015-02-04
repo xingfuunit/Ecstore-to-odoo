@@ -1,0 +1,13 @@
+<site>
+    <module controller='site_index' >
+        <name>webtool</name>
+        <title>api调试工具</title>
+        <disable>false</disable>
+        <default_menu>
+            <title>api调试工具</title>
+            <act>index</act>
+            <hidden>false</hidden>
+        </default_menu>
+    </module>
+    
+</site>

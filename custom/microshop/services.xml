@@ -1,0 +1,37 @@
+<services>
+
+	<service id="api.microshop.special">
+        <class>microshop_rpc_special</class>
+    </service>
+
+	<service id="api.microshop.shop">
+        <class>microshop_rpc_shop</class>
+    </service>
+
+    <service id="desktop_finder.microshop_mdl_shop">
+        <class>microshop_finder_shop</class>
+    </service>
+
+    <service id="desktop_finder.microshop_mdl_special">
+        <class>microshop_finder_special</class>
+    </service>
+
+    <service id="desktop_finder.microshop_mdl_special_products">
+        <class>microshop_finder_special_products</class>
+    </service>
+    
+    <service id="desktop_finder.microshop_mdl_promotion_into">
+        <class>microshop_finder_promotion_into</class>
+    </service>
+    
+    <!-- ecstore订单完成处理分成 -->
+    <service id="b2c_order_finish_after" optname="订单完成处理分成">
+        <class>microshop_rpc_promotioninto_orderfinish</class>
+    </service>
+
+    <!--模板管理-->
+    <service id="site.site_theme_tmpl">
+        <class>microshop_theme_tmpl</class>
+    </service>
+    
+</services>

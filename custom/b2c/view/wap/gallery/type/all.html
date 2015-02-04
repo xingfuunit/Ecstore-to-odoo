@@ -1,0 +1,15 @@
+<{if $goodsData}>
+<ul class="scrollspy">
+    <{foreach from=$goodsData key=key item=goods_row}>
+    <li style="display: none;">
+        <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" class="pt-h-link">
+        <div class="pic">
+            <{img img=$goods_row.wx_image_id|storager src='images/bg.gif' onload='load_img(this)'}>
+        </div>
+        <div class='prise'><label class="fonts01"><{$goods_row.products.price|cur_odr}></label>  <label class="fonts02"><{$goods_row.products.mktprice|cur_odr}></label></div>
+        <div class='img_name'><{$goods_row.name|cut:'80'}>&nbsp;&nbsp;&nbsp; <span class='brief'><{$goods_row.brief|cut:'90'}></span></div>
+        </a>
+    </li>
+    <{/foreach}>
+</ul>
+<{/if}>

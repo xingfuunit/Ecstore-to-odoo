@@ -1,0 +1,29 @@
+<!-- 会员中心主内容区 -->
+<div class="page-article">
+  <!-- 个人信息 -->
+  <div id="member_information" class="member-information">
+    <div class="member-title">
+      <h2><{t}>我要开店<{/t}></h2>
+    </div>
+
+    <div class="member-mod">
+      <form action="<{link app=b2c ctl=site_member act=save_shop}>" method="post" class="signupin-content">
+        <ul>
+          <li class="form-item">
+            <label for="" class="form-label"><em class="warn">*</em>门店编码：</label>
+            <span class="form-act">
+              <{input type="text" name="agency_id" value='' vtype="required"}>
+            </span>
+          </li>
+          <li class="form-item">
+            <label for="" class="form-label"><em class="warn">*</em>微店名称：</label>
+            <span class="form-act">
+              <{input type="text" name="shop_name" value='' vtype="required"}>
+            </span>
+          </li>
+          <li class="form-item-normal"><span class="form-act"><button type="submit" class="btn btn-caution" rel="_request"><span><span><{t}>保 存<{/t}></span></span></button></span></li>
+        </ul>
+      </form>
+    </div>
+  </div>
+</div>

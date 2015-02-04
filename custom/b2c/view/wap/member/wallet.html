@@ -1,0 +1,63 @@
+
+<div class="full-screen">
+    <header>
+    <div class="a-bar">
+        <a href="javascript:history.back()" class="a-back">
+            <i class="arr left"></i>
+            返回
+        </a>
+        <div class="a-name">
+            <{$title}>
+        </div>
+        <div style="width: 10%;"></div>
+    </div>
+    </header>
+  
+            <div class="gb mem-deposit">
+                <div class="d-line box">
+                    <div class="col">
+                        预存款余额：
+                        <span class="f-red"><{$member.advance|cur_odr}></span>
+                    </div>
+                    <div class="col">
+                        <a href="<{link app=b2c ctl='wap_member' full='1' act='deposit'}>">
+                            充值
+                            <i class="arr right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="col">
+                        <a href="<{link app=b2c ctl='wap_member' full='1' act='giftcard'}>">
+                            礼品卡充值
+                            <i class="arr right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="col">
+                        <a href="<{link app=b2c ctl='wap_member' full='1' act='balance'}>">
+                            交易记录
+                            <i class="arr right"></i>
+                        </a>
+                    </div>
+                   	
+                </div>
+            </div>
+            <div class="gb integration">
+                <div class="d-line box">
+                    <div class="col">
+                        账户总积分：<{$member.point}>
+                        <br />
+                        <{if $extend_point_html}>
+                        <{$extend_point_html}>
+                        <{/if}>
+                    </div>
+                    <div class="col">
+                        <a href="<{link app=b2c ctl='wap_member'  full='1' act='point_history'}>">
+                            查看历史积分
+                            <i class="arr right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+     
+</div>

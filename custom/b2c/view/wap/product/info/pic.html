@@ -1,0 +1,13 @@
+<!-- 商品图片 -->
+<{if $wx_img_id}>
+<{*<{foreach from=$page_product_basic.images item=image name=this}>*}>
+    <{*<{if $smarty.foreach.this.iteration eq 1}>*}>
+    <{**}>
+    <{*<{/if}>*}>
+<{*<{/foreach}>*}>
+    <img width="100%" src="<{$wx_img_id|storager}>" alt="<{$page_product_basic.title}>" onload="$(this).parents('.goods').show();">
+<{*<{elseif $page_product_basic.images}>*}>
+    <{*<img width="100%" src="<{$page_product_basic.images.0|storager}>" alt="<{$page_product_basic.title}>">*}>
+<{else}>
+    <img width="100%" src="<{$setting.imageDefault.S.default_image|storager}>" alt="<{$page_product_basic.title}>">
+<{/if}>

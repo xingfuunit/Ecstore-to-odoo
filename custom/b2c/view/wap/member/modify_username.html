@@ -1,0 +1,75 @@
+<div class="full-screen">
+  <header>
+    <div class="a-bar">
+      <a href="javascript:history.back()" class="a-back"><i class="arr left"></i>返回</a>
+      <div class="a-name">设置登录账号</div>
+        <div class="w10"></div>
+    </div>
+  </header>
+  <div class="full-padding">
+    <form action="<{link app=b2c ctl='wap_member' full='1' act='save_weixin'}>" method="post" class="form" data-type="ajax">
+      <div class="c-g">
+        <label for="" class="c-l" style="width: 100px;">
+          <em class="f-red">*</em>手机号：
+        </label>
+        <div class="c">
+          <input type="text" name="login_account" class="text a-account" style="width: 90%;" required="required" placeholder="手机号" pattern="(^[0-9]{3,4}\-[0-9]{7}$)|(^[0-9]{7}$)|(^[0-9]{3,4}[0-9]{7}$)|(^0{0,1}13[0-9]{9}$)" autofocus title="手机号不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>" class="btn btn-send orange ib-btn">获取验证码</a>
+        </div>
+      </div>
+        <div class="notice"></div>
+        <div class="c-g" style="padding-left:5%;">
+            <label for="" class="c-l">
+                <em class="f-red">*</em>短信验证：
+            </label>
+            <div class="c">
+                <input type="password" name="vcode" maxlength="20" placeholder="短信验证码" required="required" pattern=".{6,20}" class="text" data-caution="短信验证码不能为空">
+            </div>
+        </div>
+      <div class="notice"></div>
+      <div class="c-g">
+        <label for="" class="c-l" style="width: 100px;">
+          <em class="f-red">*</em>密码：
+        </label>
+        <div class="c">
+          <input type="password" name="login_password" maxlength="20" placeholder="6-20位数字/字母组合" required="required" pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+        </div>
+      </div>
+      <div class="notice"></div>
+      <div class="btn-bar">
+        <button type="submit" class="btn orange" rel="_request">提交</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+    $('.form .btn-send').click(function (e) {
+        e.preventDefault();
+        var el = $('.form .a-account');
+        if($(this).hasClass('disabled')) return false;
+        sendVerify(this, 'uname=' + el.val() + '&type=signup');
+    });
+
+    function sendVerify(el, data) {
+        var url = el.href;
+        $(el).addClass('disabled');
+        var cd = new countdown(el, {
+            start: 120,
+            secondOnly: true,
+            callback: function(e) {
+                $(el).removeClass('disabled').html('重发验证码');
+            }
+        });
+        $.post(url, data, function(rs) {
+            if(rs) {
+                try{
+                    rs = $.parseJSON(rs);
+                } catch (e) {}
+                if(rs.error) {
+                    $(el).removeClass('disabled').html('重发验证码');
+                    clearTimeout(cd.timer);
+                    if(typeof rs.error === 'string') alert(rs.error);
+                }
+            }
+        });
+    }
+</script>

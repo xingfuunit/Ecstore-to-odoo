@@ -1,0 +1,35 @@
+<!--购买按钮-->
+<{if $page_product_basic.goods_marketable=='true' && $page_product_basic.product_marketable == 'true'}>
+    <{foreach from=$btn_page_list item=item}>
+
+        <{include file=$item.file app=$item.app}>
+
+    <{/foreach}>
+<{else}>
+   <a href="#" class="btnred"> 商品已下架</a>
+<{/if}>
+<script>
+    $('#J_buy_btn').on('click',function(e){
+        var data = $('#buy_form').serialize();
+        $.post($('#buy_form').attr('action'),data,function(re){
+            if(re){
+                try{
+                    result = $.parseJSON(re);
+                    alert(result.error);
+                } catch (e){
+                    //alert('加入购物车成功');
+                    new Dialog(re,{'type':'confirm'});
+                    var  cartNum = $.fn.cookie('S[CART_NUMBER]')?$.fn.cookie('S[CART_NUMBER]'):'';
+                    if(cartNum)$('.cart-num').html(cartNum);
+                    else $('.cart-num').hide();
+                }
+
+            }
+        });
+
+        return false;
+    });
+</script>
+
+
+

@@ -1,0 +1,26 @@
+<div id="main" class="clearfix">
+<div class="member_tt">会员中心</div>
+  <!-- 左栏 -->
+  <div class="page-aside">
+    <!-- 会员中心菜单 -->
+    <div id="member_menu" class="member-menu">
+      <{foreach from=$cpmenu item=menus name=memmenu}>
+      <div class="member-menu-mod parent-<{$smarty.foreach.memmenu.iteration}>">
+        <h2 class="member-menu-title"><{$menus.label}></h2>
+        <ul class="member-menu-list">
+          <{foreach from=$menus.items item=items name=msubmenu}>
+            <{if $items.label != '我要开店'}>
+	    <li class="curr-<{$smarty.foreach.msubmenu.iteration}>">
+             <a href="<{if $items.href}><{$items.href}><{else}><{link app=$items.app ctl=$items.ctl act=$items.link args=$items.args}><{/if}>"<{if $current == $items.link || $items.link == $controller}> class="active"<{/if}>>
+		<{$items.label}>
+	     </a>
+            </li>
+	    <{/if}>
+          <{/foreach}>
+        </ul>
+      </div>
+      <{/foreach}>
+    </div>
+  </div>
+  <{include file=$_PAGE_ app=$app_id}>
+</div>

@@ -1,0 +1,48 @@
+<{capture name="header"}>
+<{css src="ome.css" app="ome"}>
+<{/capture}>
+<div class="tableform">
+<{tabber}>
+<{tab name="商品配置同步"}>
+
+<form action="index.php?app=b2c&ctl=admin_sales_coupon_send&act=index" method="post" class="tableform">
+  <div class="division" style="border: 1px solid #D5DFE3; margin-top:10px;">
+    <table>
+    	<tr>
+    		<td width="150px"><h3 style="color: #305C89;"><{t}>优惠卷（B类卷）：<{/t}></td>
+    		<td align="left">
+    			<{foreach from=$coupons_list  item=val}>
+    			<input type="radio" name="coupons_id" value="<{$val.cpns_id}>"> &nbsp;<{$val.cpns_name}>-<{$val.cpns_prefix}>&nbsp;&nbsp;
+    			<{/foreach}>
+    		</td>
+    	</tr>
+    	
+    	<tr>
+    		<td width="150px"><h3 style="color: #305C89;"><{t}>用户名：<{/t}></td>
+    		<td align="left">
+    			<textarea rows="10" cols="100" name="member_list"></textarea>例:freedom,michael
+    		</td>
+    	</tr>
+    	
+    	<tr>
+    		<td width="150px"><h3 style="color: #305C89;"></td>
+    		<td align="left">
+    			<input type="hidden" value="true" name="sub" />
+    			<button type="submit" class="btn" onclick="return confirmButton();"><span><span>确定</span></span></button>
+    		</td>
+    	</tr>
+    	
+    	
+    </table>
+    </div>
+</form>
+
+<script>
+function confirmButton() {
+  var r=confirm("您确定要发优惠卷吗？")
+  return r;
+}
+</script>
+<{/tab}>
+<{/tabber}>
+</div>

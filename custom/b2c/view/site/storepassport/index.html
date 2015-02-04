@@ -1,0 +1,26 @@
+<div class="loging-list" id="page_login" style="margin-top: 80px">
+    <div class="top-title">
+        <div class="login-center" >
+<!--        <div class="logo-login"><img src="<{$res_url}>/images/t_logo.png" /></div>-->
+            <span>ShopEx  WEBPOS收银系统V3.0</span>
+        </div>
+    </div>
+    <{foreach from=$passports item=item}>
+        <{$item.html}>
+    <{/foreach}>
+</div>
+<script>
+    var Module = new Module('page', ['login']);
+    if ( Module.page ) {
+        Module.page.login.getElement('button[type=submit]').store('_ajax_config', {
+            progress:function(rs){
+                if(rs.error) {
+                    return top.Message.error(rs.error,function(){
+                        if(rs.redirect) location.href = rs.redirect;
+                    });
+                }
+                if(rs.redirect) top.location.href=rs.redirect;
+            }
+        });
+    }
+</script>

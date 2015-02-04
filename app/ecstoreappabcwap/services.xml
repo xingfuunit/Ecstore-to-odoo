@@ -1,0 +1,6 @@
+<services>	
+    <service id="ectools_payment.ectools_mdl_payment_cfgs" optname="支付插件列表">
+		<class>ecstoreappabcwap_payment_plugin_ecstoreappabcwap</class>
+	</service>
+	
+</services>

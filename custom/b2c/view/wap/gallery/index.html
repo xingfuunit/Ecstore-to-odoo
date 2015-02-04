@@ -1,0 +1,256 @@
+<div class="img_list"></div>
+<{if $goodsData}>
+<div id="loading2" class="popup"><div class="load-pic">正在加载....</div></div>
+<div id="b-bg"></div>
+<{else}>
+    <div class="popup" style="background-color: rgba(0,0,0,0.8);">暂时没有该商品</div>
+<{/if}>
+<script>
+(function(){
+    var url = '<{link app=b2c ctl=wap_gallery act=ajax_get_goods}>';
+    var page = '<{$page}>';
+    var cat_id = '<{$screen.cat_id}>';
+    var container = document.body;
+    var priceSeq = 'price';
+    var salesSeq = 'buy_w_count';
+    $('.list_button li').on('click',function(){
+        if($(this).find('a').hasClass('list_pp')){
+            $(this).toggleClass("act");
+            $('.pp_list').toggle();
+            //$('this').addClass('desc');
+        }else{
+            $(this).toggleClass("desc");
+            if($(this).hasClass('desc')){
+                $('.list_button li').not(this).removeClass('desc');
+            }
+            //$('.list_button li').removeClass('desc');
+            hide_search();
+            filterGoods($(this));
+        }
+    });
+    $('.pp_list dd').click(function(event) {
+        var _this = this,
+        t = $(event.target),
+                tag = t[0].tagName.toLowerCase(),
+                table = t.parents('table');
+        var fid = $(this).attr('data-fid');
+        $('.pp_list dd').css('color','');
+        $(this).css('color','#f18101');
+        if(fid&&fid.length){
+            fid = fid.split('-');
+            $('#brand').attr({name:fid[0]+'[]',value:fid[1]});
+        }else{
+            $('#brand').val('');
+            $('.list_pp').parent().removeClass('desc');
+            $('.pp_list').hide();
+            $(this).css('color','');
+        }
+        filterGoods($('.trigger-list .act'),t);
+        hide_search();
+    });
+
+    $('#J_search').on('tap',_search);
+    $('#J_filter .a-search-ipt').blur(_search);
+
+    function _search(){
+        var prt = $(this).parent();
+        prt.submit();
+    }
+    $('#J_search_pt').on('submit',function(){
+        if($.trim($(this).find('.a-search-ipt').val()) == ''){
+            return false;
+        }
+    });
+    function filterGoods(e){
+        var orderby = 'orderBy=',
+                p = '',
+                sear = '',
+                search = location.search;
+        if(e&&e.hasClass('price-seq')) orderby += priceSeq;
+        else if(e&&e.hasClass('sales-seq')) orderby += salesSeq;
+
+        if(e&&e.hasClass('desc')){
+            orderby += ' desc';
+        }else{
+            orderby =  e ? ' asc' : '';
+        }
+        if(search) sear = search.substr(1);
+        var params = ['showtype=all', p, encodeURI(orderby), sear, $('#j_form').serialize()].filter(function(d){
+            return d;
+        }).join('&');
+        $.post(url, params, function(re){
+            $('.img_list').html(re);
+
+            var reg = new RegExp(location.hash || location.href, 'i');
+            window.history.pushState({url: location.href, html: container.innerHTML}, null, location.href.replace(reg, '#' + params));
+        });
+    }
+})();
+
+(function(){
+    return ;
+  var container = document.body;
+  var priceSeq = 'price desc';
+  var salesSeq = 'buy_w_count desc';
+  var url = '<{link app=b2c ctl=wap_gallery act=ajax_get_goods}>';
+  var page = '<{$page}>';
+  var cat_id = '<{$screen.cat_id}>';
+  var filter_dialog;
+
+  /*html5 history manage*/
+  setTimeout(function(){
+      window.history.replaceState({url: location.href, html: container.innerHTML}, null, location.href);
+  }, 0);
+
+  window.onpopstate = function(event){
+      var data;
+      if(event && event.state){
+          data = event.state;
+      }else{
+          data = {html: container.innerHTML, url: location.href};
+      }
+
+      var scripts = '';
+      var text = data.html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gi, function(all, code){
+          scripts += code + '\n';
+          return '';
+      });
+      container.innerHTML = text;
+
+      var script = document.createElement('script');
+      script.text = scripts;
+      document.body.appendChild(script);
+      // document.head.removeChild(script);
+  }
+
+
+  function filterGoods(t,e){
+    var orderby = 'orderBy=',
+        p = 'page=',
+        sear = '',
+        search = location.search;
+    if(e&&$('.trigger-list .act').hasClass('price-seq')) orderby += priceSeq;
+    else if(e&&$('.trigger-list .act').hasClass('sales-seq')) orderby += salesSeq;
+    else if(t.hasClass('price-seq')){
+        orderby += priceSeq;
+    }
+    else if(t.hasClass('sales-seq')){
+        orderby += salesSeq;
+    }
+    if(e&&e.num){
+        p += e.num;
+        page = e.num;
+    }
+    if(search) sear = search.substr(1);
+    var params = ['showtype=list', p, encodeURI(orderby), sear, $('#J_filter form').serialize()].filter(function(d){
+        return d;
+    }).join('&');
+
+    $.post(url, params, function(re){
+        $($('.J-tab .panel')[t.index()]).html(re);
+
+        var reg = new RegExp(location.hash || location.href, 'i');
+        window.history.pushState({url: location.href, html: container.innerHTML}, null, location.href.replace(reg, '#' + params));
+    });
+  }
+
+  $('.J-tab .trigger').on('touchend',function(e){e.preventDefault();}).on('tap',function(){
+    page = 1;
+    if( $(this).hasClass('sales-seq') ){
+        salesSeq = salesSeq == 'buy_w_count desc' ? 'buy_w_count asc' : 'buy_w_count desc';
+    }
+    else if ($(this).hasClass('price-seq')) {
+        if(priceSeq == 'price desc'){
+            priceSeq = 'price asc';
+            $(this).find('i')[0].className = 'arr down';
+        }else{
+            priceSeq = 'price desc';
+            $(this).find('i')[0].className = 'arr top';
+        }
+    }
+
+    filterGoods($(this));
+  });
+  $('.filter-handle').on('tap',function(){
+    page = 1;
+    filter_dialog = new Dialog('#filter_container',{'type':'confirm'});
+  });
+  $('.panel-list').on('click',function(e){
+    var t = $(e.target);
+    if(t.hasClass('flip')){
+      t.num = parseInt(t.attr('page'));
+      if(t.hasClass('next'))t.num = parseInt(page)+1;
+      if(t.hasClass('prev'))t.num = parseInt(page)-1;
+      filterGoods($('.trigger-list .act'),t);
+      return false;
+    }
+  }).on('change','select',function(){
+    var t = $(this.options[this.selectedIndex]);
+    if(t.hasClass('flip')){
+      t.num = parseInt(t.attr('page'));
+      filterGoods($('.trigger-list .act'),t);
+    }
+  });
+  $('#J_filter').on('touchend',function(e){e.preventDefault();}).on('tap',function(event){
+    var _this = this,
+    t = $(event.target),
+    tag = t[0].tagName.toLowerCase(),
+    table = t.parents('table');
+    switch(tag){
+      case 'dt':
+        if( t.hasClass('handle') ){
+          t.removeClass('handle').next().addClass('hide');
+        }else{
+          t.addClass('handle').next().removeClass('hide');
+          t.siblings('.handle').removeClass('handle').next().addClass('hide');
+        }
+        break;
+      case 'td':
+        if(t.hasClass('empty'))return;
+        table.find('td').removeClass('handle');
+        t.addClass('handle');
+        table.parent().prev().find('span').html(t.html());
+        var fid = t.attr('data-fid');
+        if(fid&&fid.length){
+          fid = fid.split('-');
+          table.prev().attr({name:fid[0]+'[]',value:fid[1]});
+          table.parent().prev().find('span').addClass('act');
+        }else{
+          var hide = table.prev();
+          if(/^cat_id/.test(hide.attr('name'))) {
+              hide.val(cat_id);
+          }
+          else {
+              hide.val('');
+          }
+          table.parent().prev().find('span').removeClass('act');
+        }
+        break;
+      case 'span':
+        if(t.hasClass('reset')){
+          $.each($(this).find('table'),function(){
+            $(this).find('td').eq(0).trigger('tap');
+          });
+        }
+        break;
+      case 'input':
+        filterGoods( $('.trigger-list .act'),t );
+        //filter_dialog.close();
+        break;
+    }
+  });
+
+  $('#J_search').on('tap',_search);
+  $('#J_filter .a-search-ipt').blur(_search);
+
+    function _search(){
+        var prt = $(this).parent();
+        prt.submit();
+    }
+  $('#J_search_pt').on('submit',function(){
+    if($.trim($(this).find('.a-search-ipt').val()) == ''){
+      return false;
+    }
+  });
+})();
+</script>

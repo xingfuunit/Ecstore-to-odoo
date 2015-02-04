@@ -1,0 +1,34 @@
+<div class="oder-printbox">
+  <div class="oder-print_title"><{t}>品珍收银交接班结账单<{/t}></div>
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td style="padding-left: 20%;text-align: left;width: 50%;"><{t}>时间：<{/t}><{$charge.end_time|cdate:FDATE_FTIME}></td>
+    </tr>
+    <tr>
+      <td style="padding-left: 20%;text-align: left;"><{t}>交班员：<{/t}><{$charge.jiaoban_name}></td>
+      <td  style="text-align: left;"><{t}>接班员：<{/t}><{$charge.jieban_name}></td>
+    </tr>
+    <tr>
+      <td style="padding-left: 20%;text-align: left;"><{t}>班次：<{/t}><{$charge.charge_num}></td>
+    </tr>
+    <tr>
+      <td style="padding-left: 20%;text-align: left;"><{t}>起始时间：<{/t}><{$charge.start_time|cdate: DATE_STIME}></td>
+      <td style="text-align: left;"><{t}>截止时间：<{/t}><{$charge.end_time|cdate: DATE_STIME}></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+          <table width="100%" border="0" align="center" cellpadding="0" class="table-border" cellspacing="0">
+            <tr><td style="padding-left:20%;text-align: left;;width: 50%;border-bottom: 1px dashed #cccccc;"><{t}>现金：<{/t}></td><td style="border-bottom: 1px dashed #cccccc;"><span style="text-align: left;display: block;">3121&nbsp;&nbsp;&nbsp;元</span></td></tr>
+            <tr><td style="padding-left:20%;text-align: left;;width: 50%;border-bottom: 1px dashed #cccccc;"><{t}>POS机：<{/t}></td><td style="border-bottom: 1px dashed #cccccc;"><span style="text-align: left;display: block;">3121&nbsp;&nbsp;&nbsp;元</span></td></tr>
+            <tr><td style="padding-left:20%;text-align: left;;width: 50%;border-bottom: 1px dashed #cccccc;"><{t}>预存款：<{/t}></td><td style="border-bottom: 1px dashed #cccccc;"><span style="text-align: left;display: block;">3121&nbsp;&nbsp;&nbsp;元</span></td></tr>
+            <tr><td style="padding-left:20%;text-align: left;;width: 50%;border-bottom: 1px dashed #cccccc;"><{t}>优惠券：<{/t}></td><td style="border-bottom: 1px dashed #cccccc;"><span style="text-align: left;display: block;">3121&nbsp;&nbsp;&nbsp;元</span></td></tr>
+            <tr><td style="padding-left:20%;text-align: left;;width: 50%;"><{t}>合计订单数：<{/t}></td><td><span style="text-align: left;display: block;">12&nbsp;&nbsp;&nbsp;笔&nbsp;&nbsp;&nbsp;3541&nbsp;&nbsp;&nbsp;元</span></td></tr>
+         </table>
+      </td>
+    <tr>
+      <td style="padding-left: 20%;text-align: left;"><{t}>交班员签名：<{/t}></td>
+      <td  style="text-align: left;"><{t}>接班员签名：<{/t}></td>
+    </tr>
+  </table>
+</div>

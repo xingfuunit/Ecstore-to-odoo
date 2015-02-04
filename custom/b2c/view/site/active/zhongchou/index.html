@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="/public/app/b2c/statics/active/zhongchou/css/base.css">
+
+<div id="main">
+	<div class="zc_banner1"></div>
+	<div class="zc_date1">
+		<div class="lxftime" endtime="2015/2/13 23:59:59"></div>
+	</div>
+	<div class="zc_date2">
+		<div id="zc_date"><{$zc_data}></div>
+	</div>
+	
+	<div class="goods_list">
+		<!-- <div class="goods_detail_left"><a href="http://www.pzfresh.com/product-1093.html" target="_blank"><img src="/public/app/b2c/statics/active/abc_bank/images/goods_1.jpg" /></a></div>-->
+		<div class="goods_detail_1">
+			<a href="http://www.pzfresh.com/product-1686.html" target="_blank"><img src="/public/app/b2c/statics/active/zhongchou/images/goods1.jpg" /></a>
+		</div>
+		<div class="goods_detail_2">
+			<a href="http://www.pzfresh.com/product-1684.html" target="_blank"><img src="/public/app/b2c/statics/active/zhongchou/images/goods2.jpg" /></a>
+		</div>
+		<div class="goods_detail_3">
+			<a href="http://www.pzfresh.com/product-1687.html" target="_blank"><img src="/public/app/b2c/statics/active/zhongchou/images/goods3_1.jpg" /></a>
+		</div>
+		<div class="goods_detail_4">
+			<a href="http://www.pzfresh.com/product-1685.html" target="_blank"><img src="/public/app/b2c/statics/active/zhongchou/images/goods4_1.jpg" /></a>
+		</div>
+		
+	</div>
+	<div class="zc_footer1"></div>
+	<div class="zc_footer2"></div>
+	<div class="zc_footer3"></div>
+	<div class="zc_footer4"></div>
+	<div class="zc_footer5"></div>
+	<div class="zc_footer6"></div>
+	<div class="zc_footer7"></div>
+	<div class="zc_footer8"></div>
+	<div class="zc_footer9"></div>
+	<div class="zc_footer10"></div>
+	<div class="zc_footer11"></div>
+	<div class="zc_footer12"></div>
+	<div class="zc_footer13"></div>
+	
+</div>
+
+<!-- <div id="dao"><strong id="RemainD"></strong>天<strong id="RemainH"></strong>时<strong id="RemainM"></strong>分<strong id="RemainS"></strong>秒</div> -->
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+function lxfEndtime(){
+        $(".lxftime").each(function(){
+              var lxfday=$(this).attr("lxfday");//用来判断是否显示天数的变量
+              var endtime = new Date($(this).attr("endtime")).getTime();//取结束日期(毫秒值)
+              var nowtime = new Date().getTime();        //今天的日期(毫秒值)
+              var youtime = endtime-nowtime;//还有多久(毫秒值)
+              var seconds = youtime/1000;
+              var minutes = Math.floor(seconds/60);
+              var hours = Math.floor(minutes/60);
+              var days = Math.floor(hours/24);
+              var CDay= days ;
+              var CHour= hours % 24;
+              var CMinute= minutes % 60;
+              var CSecond= Math.floor(seconds%60);//"%"是取余运算，可以理解为60进一后取余数，然后只要余数。
+              if(endtime<=nowtime){
+                      $(this).html("已过期")//如果结束日期小于当前日期就提示过期啦
+                }else{
+                    if($(this).attr("lxfday")=="no"){
+							$(this).html("<i>剩余时间：</i><span>"+CHour+"</span>时<span>"+CMinute+"</span>分<span>"+CSecond+"</span>秒");   //没有天数的
+                    }else{
+                    		$(this).html("<span id=startdate>"+days+"</span>"); //输出天数
+                      	 //$(this).html("<i>剩余时间：</i><span>"+days+"</span><em>天</em><span>"+CHour+"</span><em>时</em><span>"+CMinute+"</span><em>分</em><span>"+CSecond+"</span><em>秒</em>"); //输出有天数的数据
+                    }
+               }
+        });
+ setTimeout("lxfEndtime()",1000);
+};
+$(function(){
+    lxfEndtime();
+ });
+</script>

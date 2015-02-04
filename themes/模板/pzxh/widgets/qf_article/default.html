@@ -1,0 +1,14 @@
+<div class="article-list">
+	<h3><{$setting.title}></h3>
+    <div class="body">
+	<ul>
+		<{foreach from=$data item=item key=key name=news}>
+        <{if $smarty.foreach.news.iteration <= $setting.limit}>
+		<li>
+			<a title="<{$item.articleTitle}>" href="<{$item.articleLink}>" target="_blank"><{$item.articleTitle}></a>
+		</li>
+        <{/if}>
+		<{/foreach}>
+	</ul>
+    </div>
+</div>

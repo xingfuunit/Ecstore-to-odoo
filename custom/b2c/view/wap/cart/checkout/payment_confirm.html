@@ -1,0 +1,20 @@
+<{*<tbody>*}>
+    <{*<tr>*}>
+      <{*<th>支付方式：</th>*}>
+      <{*<td><{$arr_def_payment.app_display_name}></td>*}>
+    <{*</tr>*}>
+<{*</tbody>*}>
+<{if count($shippings) > 0}>
+<div class="ps_function">
+    <a href="javascript:;">
+        <span class="left">支付方式</span>
+        <span class="right">
+            <span class="font_margin2"><{if $arr_def_payment}><{$arr_def_payment.app_display_name}><{else}>
+请选择支付方式
+<{/if}></span>
+        </span>
+    </a>
+    <input name="payment[pay_app_id]" value='{"pay_app_id":"<{$arr_def_payment.pay_app_id}>","payment_name":"<{$arr_def_payment.app_display_name}>"}' type="hidden"/>
+    <input type="hidden" name="payment[currency]" value='<{$currency}>' />
+</div>
+<{/if}>

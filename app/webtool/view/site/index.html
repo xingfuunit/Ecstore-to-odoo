@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>API调试工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="API调试工具">
+
+    <{css src="bootstrap.css" app="webtool"}>
+    <{css src="kindeditor/themes/default/default.css" app="webtool"}>
+    <{script src="mootools.js" app="site"}>
+    <{script src="jsl.format.js" app="webtool"}>
+    <{script src="kindeditor/kindeditor-min.js" app="webtool"}>
+    <{script src="kindeditor/lang/zh_CN.js" app="webtool"}>
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper" id="main">
+    <div class="member-aside">
+        <{foreach from=$cate_list item=item}>
+        <div class="member-menu-module">
+            <h2 class="menu-title lv1_icon_1 lv1_first" title="<{$item.cate_name}>"><{$item.cate_name}><span></span></h2>
+            <ul class="menu-list">
+                <{if $item.child.items}>
+                <{foreach from=$item.child.items item=child_item}>
+                <li class="lv2_first">
+                    <a href="<{link app=webtool ctl=site_index act=index arg0=$child_item.api_id}>" <{if $api_id eq $child_item.api_id}>class="active"<{/if}>><{$child_item.api_title}></a>
+                </li>
+                <{/foreach}>
+                <{/if}>
+            </ul>
+        </div>
+        <{/foreach}>
+    </div>
+
+
+    <div class="wrapper_right" id="api_hero_div">
+    <{if !$cate_detail.api_title}>
+        <p align="center">API调试工具 V1.0 beta</br>使用过程中发现问题请pm QQ:758238751</p>
+    <{else}>
+        <h4 id="api_main_intro"><{$cate_detail.api_title}></h4>
+        <p id="api_vice_intro"><{$cate_detail.api_explain}></p>
+        <p>HTTP请求方式：<span id="request_method">POST</span></p>
+        <p>METHOD：<span id="request_url"><{$cate_detail.api_request_url}></span></p>
+        <p>完整的HTTP请求参数(由下边各个参数的值自动生成，可直接复制至剪切板)：
+            <a id="copy-button" class="btn btn-small" data-clipboard-text="" title="点击拷贝参数">复制至剪切板</a>
+            <span id="copy_done_tip" style="display: none;">done</span>
+        </p>
+        <p>
+            <textarea name="api_data" id="api_data" placeholder="POST数据"><{$container}></textarea>
+        </p>
+        <p id="detail_request_param_tip">详解HTTP请求参数：<a href="javascript:;" class="add-param" id="add-sparam">添加参数</a> <a href="javascript:;" class="add-param" id="view-params">查看参数说明<{if $cate_detail.api_para}>....<{/if}></a></p>
+        <form action="<{link app=webtool ctl="site_index" act="send_request"}>" method="post" id="params">
+        <div id="params_panel">
+        	<input type="hidden" value="<{$cate_detail.api_request_url}>" name="method">
+            <ul class="para_list" id="para_list">
+                <{if $cate_detail.api_para}>
+            	<{foreach from=$cate_detail.api_para item=item}>
+                <{if $item.is_required eq '1'}>
+                <li>
+                    <input type="text" class="input_text para_name" placeholder="参数名" value="<{$item.name}>"> = 
+                    <input type="text" class="input_text para_value" placeholder="参数值" name="<{$item.name}>" value='<{$item.value}>'>
+                    <span class="para_required"><{if $item.is_required}><font color="red">*</font><{/if}></span>
+                </li>
+                <{assign var=is_show  value=1}>
+                <{/if}>
+                <{/foreach}>
+                <{if $is_show neq 1}>
+                <li>
+                    <input type="text" class="input_text para_name" placeholder="参数名"> = 
+                    <input type="text" class="input_text para_value" placeholder="参数值">
+                    <span class="para_required"><font color="red">*</font></span>
+                </li>
+                <{/if}>
+                <{else}>
+                <li>
+                    <input type="text" class="input_text para_name" placeholder="参数名"> = 
+                    <input type="text" class="input_text para_value" placeholder="参数值">
+                    <span class="para_required"><font color="red">*</font></span>
+                </li>
+                <{/if}>
+            </ul>
+        </div>
+        <div class="params-list d_n">
+            <p>参数说明：</p>
+            <table class="paratable">
+                <tr>
+                    <th width="100">参数名称</th>
+                    <th width="60">是否必填</th>
+                    <th width="100">类型</th>
+                    <th>描述</th>
+                </tr>
+                <{if $cate_detail.api_para}>
+                <{foreach from=$cate_detail.api_para item=item}>
+                <tr>
+                    <td><{$item.name}></td>
+                    <td align="center"><{if $item.is_required eq '1'}>是<{else}>否<{/if}></td>
+                    <td align="center"><{$item.type}></td>
+                    <td><{$item.directions}></td>
+                </tr>
+                <{/foreach}>
+                <{else}>
+                <tr><td colspan="4" align="center">没有参数！</tr>
+                <{/if}>
+            </table>
+        </div>
+        <div class="mb25">
+            <input type="submit" value="发送请求" class="btn2">
+        </div>
+        </form>
+        <p id="return_json">返回结果(JSON) &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" id='format_json'>格式化json</a></p>
+        <p>
+            <textarea name="api_data" id="json_input" class="json_input" placeholder="JSON数据"></textarea>
+        </p>
+        <p>数据说明：</p>
+        <div class="api_return"><{$cate_detail.api_return}></div>
+    <{/if}>
+    </div>
+ </div>
+<div class="footer_bar">
+    <a>API 调试工具</a>
+    <!-- <a href="<{link app=webtool ctl="site_index" act="index"}>">首页</a>
+    <{if $cate_detail.api_id}><a href="<{link app=webtool ctl=site_index act=edit arg0=$cate_detail.api_id}>">编辑接口</a><{/if}>
+    <a href="<{link app=webtool ctl="site_index" act="add"}>">添加接口</a> -->
+</div>
+<script type="text/javascript">
+var editor;
+KindEditor.ready(function(K) {
+    editor = K.create('textarea[name="api_return"]', {
+        resizeType : 1,
+        allowPreviewEmoticons : false,
+        allowImageUpload : false,
+        readonlyMode : true,
+        items : [
+            'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+            'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+            'insertunorderedlist', '|', 'emoticons','link']
+    });
+});
+window.addEvent('domready',function(e){
+    $$('.menu-list li .active').getParents('.menu-list')[0].setStyle("height","auto");
+})
+$('main').addEvents({
+    'click:relay(.menu-title)': function(e) {
+        var lv2 = this.getNext();
+        if (lv2.getStyle('height') == '0px') {
+            var anim = {'height': lv2.getElements('li').length * 42 - 1,}
+        } else {
+            var anim = {'height': 0,}
+        }
+        lv2.set('morph', {duration: 500, transition: 'bounce:out'}).morph(anim);
+    },
+    'click:relay(#add-sparam)': function(e) {
+        var box = this.getParent().getNext('form div .para_list');
+        if(!box) var box = this.getParent().getNext('div .para_list');
+        var row = box.getFirst().clone();
+        var arrkey = new Date().getTime();
+        row.getChildren('input').each(function (item, index){
+        	if (e.target.id != 'add-sparam') {
+        		var name = item.get('name');
+	            if (name) {
+	                var _name = String(name.replace('api_para[0]', 'api_para['+arrkey+']'));
+	                item.set('name', _name);
+	            }
+        	}
+            
+        })
+
+        row.inject(box,'bottom');
+    },
+    'click:relay(#view-params)': function(e){
+        $$('.params-list').toggleClass('d_b');
+    },
+    'submit:relay(#params)': function(e) {
+    	e.stop();
+    	var action = this.action;
+    	var box = $$('#para_list li');
+    	box.each(function (item) {
+    		var name = '';
+    		item.getChildren('input').each(function(input, index){
+    			if (index == 0) {
+    				name = input.get('value');
+    			} else {
+    				item.getLast('input').set('name', name);
+    			}
+    		})
+    	})
+        new Request({
+            url: action,
+            method: 'post',
+            data:$(this),
+            onSuccess: function(responseText){
+            	$('api_data').set('text', responseText);
+            	new Request({
+		            url: '<{$api_url}>',
+		            method: 'post',
+		            data:responseText,
+		            onSuccess: function(res){
+		            	$$('#json_input').set('html', res);
+		            }
+		        }).send();
+            }
+        }).send();
+    },
+    'click:relay(#format_json)' : function(e) {
+        $('json_input').set('text', JSON.stringify(JSON.parse($('json_input').get('text')), null, "    "));
+
+    }
+})
+</script>
+</body>
+</html>

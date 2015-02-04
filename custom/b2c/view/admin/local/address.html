@@ -1,0 +1,73 @@
+<form action="index.php?app=b2c&ctl=admin_local_store&act=modify_address" method="post" class="form-handling" id="member-form">
+<div class="division">
+  <input type="hidden" value="<{$local_id}>" name="local_id">
+  <ul>
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>门店名称<{/t}>：</label>
+      <span class="form-act"><{input type="text" name="local_name" size="20" vtype="required" value=$local_name}></span>
+    </li>
+
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>收货地区<{/t}>：</label>
+      <span class="form-act"><{input type="region" name="area" required="true" value=$area app="ectools" callback="selectArea"}></span>
+    </li>
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> 详细地址：</label>
+      <span class="form-act"><span class="hide"><{$area|ship_area}></span><input type="text" name="addr" value="<{$addr}>" id="" size="50" class="x-input action-fill-area" vtype="required"></span>
+    </li>
+    <li class="form-item">
+      <label for="" class="form-label"> &nbsp;&nbsp;邮编：</label>
+      <span class="form-act"><input type="text" name="zip" value="<{$zip}>" id="" class="x-input"></span>
+    </li>
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> 收货人姓名：</label>
+      <span class="form-act"><input type="text" name="name" id="" value="<{$name}>" class="x-input" vtype="required"></span>
+    </li>
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> 手机：</label>
+      <span class="form-act">
+        <input type="text" name="mobile" value="<{$mobile}>" id="" class="x-input" vtype="requiredone">
+        <label class="form-sub-label"> 或 固定电话：</label>
+        <input type="text" name="tel" value="<{$tel}>" id="" vtype="requiredone" data-caution="请填写手机号码或者固定电话">
+      </span>
+    </li>
+    
+  </ul>
+  <div class="table-action">
+    <button class="btn" type="submit" id="member-form-submit"><span><span><{t}>保存<{/t}></span></span></button></div>
+</div>
+</form>
+
+<style>
+.form-label{width:80px; display:block; float:left; line-height:24px;}
+.form-act{float:left;}
+</style>
+
+<script>
+(function(){
+    var _form = $('member-form');
+    var btn =$('member-form-submit');
+    var finder = finderGroup['<{$env.get.finder_id}>'];
+    
+    _form.store('target',{
+        
+        onSuccess:function(response){
+            var hash_res_obj = JSON.decode(response);
+            if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+            {
+                try{
+                    var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                }catch(e){}
+                
+                if(_dialogIns)
+                {   
+                    _dialogIns.close();
+                    finder.refresh.delay(400,finder);
+                }
+            }   
+        }
+    });
+    
+})();
+        
+</script>

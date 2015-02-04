@@ -1,0 +1,20 @@
+                      <{foreach from=$goodsData key=key item=goods_row}>
+                       
+                      <li class="pt-h-item c-fix" data-id="<{$key}>">
+                          <div class="product-list">
+                              <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+                              <div class="product-img"><img src="<{$goods_row.image_default_id|storager:'s'}>"/></div>
+                              </a>
+                              <div class="product-cart">
+                                 <span class="price1"><{$goods_row.products.price|cur_odr}></span><span class="price2"><{$goods_row.products.mktprice|cur_odr}></span>
+                                  <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>"></a>
+                              </div>
+                              <div class="product-name">
+                                  <span> <{$goods_row.products.name|cut:'80'}></span>
+                                  <span> <{$goods_row.products.name|cut:'80'}></span>
+                              </div>        
+                          </div>
+
+                        </li>
+                     
+                      <{/foreach}>

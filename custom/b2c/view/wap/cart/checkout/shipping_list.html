@@ -1,0 +1,44 @@
+<div class="full-screen">
+    <div class="paiing_title"><label>选择收货地址：</label><a class="add_address" href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>">添加收货地址</a></div>
+    <div class="address_list" id="A_list">
+        <ul>
+            <{foreach from=$member_addr_list item=addr key=key}>
+            <li class="<{if $def_addr.addr_id eq $addr.addr_id}> selected<{/if}>" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}'>
+                <div class="address_list_back">
+                    <span class="address_user"><{$addr.name}></span>
+                    <span class="address_phone"><{if $addr.tel}><{$addr.tel}><{else}><{$addr.mobile}><{/if}></span>
+                    <span class="address_address"><{$addr.area|ship_area}><{$addr.addr}></span>
+                </div>
+            </li>
+            <{/foreach}>
+        </ul>
+    </div>
+</div>
+<script>
+    function shipping_confirm(data){
+
+    }
+    $('#A_list li').click(function(){
+        //$('#A_list li').removeClass('selected');
+        //$(this).addClass('selected');
+        $.post('<{link app=b2c ctl=wap_cart act=shipping_confirm}>','address='+$(this).attr('value'),function(re){
+            if(re.error){
+                alert(re.error);
+            }else{
+                location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
+            }
+        });
+    });
+
+    shipping_confirm('address='+$('#J_sel_address input').val());
+</script>
+<{*<{foreach from=$member_addr_list item=addr key=key}>*}>
+<{*<li class="address-item gb <{if $def_addr.addr_id==$addr.addr_id}>act<{/if}>" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}'>*}>
+  <{*<{$addr.area|ship_area}><br/>*}>
+  <{*<{$addr.addr}><br/>*}>
+  <{*<{if $addr.zip}><{$addr.zip}><br/><{/if}>*}>
+  <{*<{$addr.name}><br/>*}>
+  <{*<{if $addr.tel}><{$addr.tel}><br/><{/if}>*}>
+  <{*<{if $addr.mobile}><{$addr.mobile}><{/if}>*}>
+<{*</li>*}>
+<{*<{/foreach}>*}>

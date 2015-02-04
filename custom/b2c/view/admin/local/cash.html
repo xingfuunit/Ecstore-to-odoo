@@ -1,0 +1,42 @@
+<div class="tableform">
+  <div class="division">
+    <table width="100%" cellspacing="0" cellpadding="0">
+      <tr>
+        
+        <th><label><{t}>门店名称：<{/t}></label></th>
+        <td><{$cash.branch_name}></td>
+        <th><label><{t}>录入员工：<{/t}></label></th>
+        <td><{$cash.staff_name}></td>
+        <th><label><{t}>存入银行名称：<{/t}></label></th>
+        <td><{$cash.bank_name}></td>
+        <th><label><{t}>存入银行账号：<{/t}></label></th>
+        <td><{$cash.bank_num}></td>
+      </tr>
+      <tr>
+        <th><label><{t}>存入金额：<{/t}></label></th>
+        <td class="price0"><{$cash.import_money|cur}></td>
+        <th><label>大写：</label></th>
+        <td><{$cash.import_money_upper}></td>
+      </tr>
+      <tr>
+        <th><label><{t}>现金期初余额：<{/t}></label></th>
+        <td class="price0"><{$cash.cash_amount|cur}></td>
+        <th><label>大写：</label></th>
+        <td><{$cash.cash_amount_upper}></td>
+      </tr>
+      <tr>
+        <th><label><{t}>门店现金结余：<{/t}></label></th>
+        <td class="price0"><{$cash.cash_balance|cur}></td>
+        <th><label>大写：</label></th>
+        <td><{$cash.cash_balance_upper}></td>
+      </tr>
+      <tr>
+        <th><label><{t}>录入时间：<{/t}></label></th>
+        <td><{$cash.ctime|cdate:FDATE_FTIME}></td>
+        <th><label>备注：</label></th>
+        <td><{$cash.memo}></td>
+      </tr>
+    </table>
+
+  </div>
+</div>

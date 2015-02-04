@@ -1,0 +1,17 @@
+html{background:#A4C5FF}
+body{width:600px;margin:auto;background:#fff;padding:20px;font-size:12px;}
+dd{padding:10px}
+dt{border-bottom:1px solid #ccc;margin:10px 0;
+	font-weight:bold;color:#42597B;font-size:20px;}
+#writer{background:#E8EEF7;padding:10px;border:1px solid #E1ECFE}
+#writer-email,#writer-subject{display:block;margin-bottom:10px;width:300px}
+#writer textarea{width:570px;margin-bottom:10px;display:block;height:80px}
+#writer-submit{padding:2px 18px;font-weight:bold;}
+h1{text-align:center;padding:20px;text-shadow: 2px 2px 2px #999;}
+.api_doc{ float:right;text-align:right; padding:5px;}
+
+.doc_desc ul{ width:90%; min-height: 20px; border-bottom: 1px solid #ccc; display: inline-block;} 
+.doc_desc ul.doc_head{font-weight: bold; font-size: 14px; border-bottom: 1px solid red;}
+.doc_desc ul li {
+	width: 120px; line-height: 20px; text-align: center; float: left; list-style: none;
+}

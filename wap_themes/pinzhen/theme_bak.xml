@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?><theme>
+    <name>品珍专属模板</name>
+    <id>pinzhen</id>
+    <version>0.1</version>
+    <info>1211</info>
+    <author>by</author>
+    <site></site>
+    <update_url></update_url>
+
+    <borders>
+            </borders>
+    <views>
+            </views>
+    <config>      
+            </config>
+
+    <widgets>
+                <widget app="" theme="pinzhen" file="default.html" slot="3" type="brand_list" order="12" title="" domid="1346304537697" border="__none__" classname="" tpl="default.html" coreid="hot_brand">
+        <![CDATA[a:0:{}]]>
+        </widget>
+                <widget app="" theme="pinzhen" file="index.html" slot="1" type="main_slide" order="0" title="" domid="1372139582395" border="__none__" classname="" tpl="default.html" coreid="main_slide">
+        <![CDATA[a:1:{s:3:&quot;pic&quot;;a:3:{i:1420428188396;a:4:{s:2:&quot;id&quot;;s:13:&quot;1420428188396&quot;;s:4:&quot;link&quot;;s:103:&quot;http://www.pzfresh.com/public/images/e9/aa/fd/000ae9960826a1d233aea4973a16e76d0e35da98.jpg?1420428385#w&quot;;s:10:&quot;linktarget&quot;;s:1:&quot;#&quot;;s:8:&quot;linkinfo&quot;;s:18:&quot;系统升级通知&quot;;}i:1420428782238;a:4:{s:2:&quot;id&quot;;s:13:&quot;1420428782238&quot;;s:4:&quot;link&quot;;s:103:&quot;http://www.pzfresh.com/public/images/dd/40/85/733881ddbaeac84760b6458d73d171d242faf9af.jpg?1420426600#w&quot;;s:10:&quot;linktarget&quot;;s:54:&quot;http://www.pzfresh.com/wap/gallery.html?scontent=n,芒&quot;;s:8:&quot;linkinfo&quot;;s:18:&quot;芒果买一送一&quot;;}i:1420428825919;a:4:{s:2:&quot;id&quot;;s:13:&quot;1420428825919&quot;;s:4:&quot;link&quot;;s:103:&quot;http://www.pzfresh.com/public/images/76/23/1a/5f6640254d1aa31f7006df75c5be61fd628c57d3.jpg?1418805411#w&quot;;s:10:&quot;linktarget&quot;;s:1:&quot;#&quot;;s:8:&quot;linkinfo&quot;;s:24:&quot;关注微信参与抽奖&quot;;}}}]]>
+        </widget>
+            </widgets>
+
+</theme>

@@ -1,0 +1,7169 @@
+<html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ap="http://schemas.mindjet.com/MindManager/Application/2003" xmlns:cor="http://schemas.mindjet.com/MindManager/Core/2003">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Outline of 网站与DIY系统接口 调用说明v3.4</title>
+<style type="text/css">#level1Indent { margin-left:  2em } </style>
+<style type="text/css">#level2Indent { margin-left:  4em } </style>
+<style type="text/css">#level3Indent { margin-left:  6em } </style>
+<style type="text/css">#level4Indent { margin-left:  8em } </style>
+<style type="text/css">#level5Indent { margin-left:  10em } </style>
+<style type="text/css">#levelXIndent { margin-left:  12em } </style>
+<style type="text/css">#level1Style { font-size: 11pt; font-weight: bold; margin-bottom: 0.5em; margin-left:  2em } </style>
+<style type="text/css">#level2Style { font-size:  9pt; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em } </style>
+<style type="text/css">#level3Style { font-size:  8pt; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em } </style>
+<style type="text/css">#level4Style { font-size:  8pt; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em } </style>
+<style type="text/css">#level5Style { font-size:  8pt; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em } </style>
+<style type="text/css">#levelXStyle { font-size:  8pt; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em } </style>
+<style type="text/css">#notesStyle { font-size:  8pt; margin-bottom: 1em } </style>
+</head>
+<body>
+<div id="level1Indent">
+<div id="level1Style"> 网站与DIY系统接口 调用说明v3.4</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei" size="4" style="font-size:14.0pt">接口请求说明</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">请求方式:<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+
+
+
+
+
+POST</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">返回XML通用格式：</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;</font>
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp;&nbsp; </span>
+
+
+
+
+
+
+
+
+</font>
+
+
+
+
+
+
+
+
+<font face="Times New Roman" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;code&gt;ok&lt;/code&gt;<span class="Apple-converted-space">&nbsp; &nbsp;</span>
+
+
+
+
+
+
+
+
+</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Times New Roman" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; text-indent: 35.0px">
+<font face="Times New Roman" style="letter-spacing: 0.0px">&nbsp;&nbsp;</font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;contents&gt;&hellip;&hellip;&lt;/contents&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Times New Roman" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;</font>
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">code值返回类型：</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Times New Roman" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;</font>
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">ok，表示执行成功</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Times New Roman" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;</font>
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">fail，表示动作执行失败，同时失败原因在info中说明</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level2Indent">
+<div id="level2Style">1 产品绑定模板</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">1.1 登录接口</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.1.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei">请求接口： URL/admin_login</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Heiti SC Light">参数：</font>
+
+
+
+
+
+
+
+
+<font> username</font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei">=</font>
+
+
+
+
+
+
+
+
+<font face="Heiti SC Light">张三</font>
+
+
+
+
+
+
+
+
+<font>&amp;password=12312</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.1.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+&lt;contents&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;username&gt; 张三 &lt;/username&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;role&gt;designer&lt;/role&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+&lt;/contents&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Microsoft YaHei'; min-height: 16.0px">
+<br/>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;用户名及密码输入不正确&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">1.2 分类接口</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.2.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">请求接口： URL/goods_cat （得到所有分类数据）</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.2.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;&nbsp;&nbsp;&nbsp;&nbsp;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;contents&gt;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;item cat_id="1" cat_name="" parent_id="0"&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;item cat_id="2" cat_name="" parent_id="1"&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;item cat_id="" cat_name="" parent_id="2"&gt;&lt;/item&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;item cat_id="" cat_name="" parent_id="2"&gt;&lt;/item&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;/item&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;item cat_id="2" cat_name="" parent_id="1"&gt;&lt;/item&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;/item&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;item cat_id="5" cat_name="" parent_id="0"&gt;&lt;/item&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;/contents&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Microsoft YaHei'; min-height: 16.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">1.3 商品接口</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.3.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">请求接口： URL/get_goods（得到分类下的商品列表）</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Heiti SC Light">参数：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei">cat_id=1&amp;page=2&amp;page_limit=2<span class="Apple-converted-space">&nbsp;</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">参数说明：1、page:当前页<span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2、page_limit:条数，可选默认20</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.3.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;contents&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;items&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;item goods_id="1" name="商品名称" cat_id="分类ID" open_spec="值=1有规格产品，值=0无规格产品" /&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/items&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pageinfo page="1" total="总条数" page_limit="10" /&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/contents&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Microsoft YaHei'; min-height: 16.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">1.4 规格产品接口</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.4.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei">请求接口： URL/</font>
+
+
+
+
+
+
+
+
+<font face="Monaco">get_products</font>
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei">（得到分类下的商品列表）</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Heiti SC Light">参数：</font>
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei">goods_id=1</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.4.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;contents&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;items&gt;<span class="Apple-converted-space">&nbsp;</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;item product_id="1" goods_id="1" name="产品名称" bn="产品编号" spec_info="颜色：黄色、尺码：XXS" /&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/items&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/contents&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Microsoft YaHei'; min-height: 16.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">1.5 绑定回转接口</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.5.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">请求接口： URL/set_</font>
+
+
+
+
+
+
+
+
+<font>product_temp</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">参数：</font>
+
+
+
+
+
+
+
+
+<font> product_id=1&amp;temp_id=4,79,8</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.5.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">1.6 模版风格更新接口</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.6.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">请求接口： URL/update_temp_style</font>
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Heiti SC Light">参数：</font>
+
+
+
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei">temp_style_id=1&amp;temp_style_name=风格名&amp;</font>
+
+
+
+
+
+
+
+
+
+
+
+<font> </font>
+
+
+
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">parent_id=0</font>
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">说明：</font>
+
+
+
+
+
+
+
+
+
+
+
+<font face="Microsoft YaHei">temp_style_name 为空删除操作</font>
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.6.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">1.7 模版更新接口</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.7.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei">请求接口： URL/update_</font>
+
+
+
+
+
+
+
+
+
+
+
+<font>temp</font>
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Heiti SC Light">参数：</font>
+
+
+
+
+
+
+
+
+
+
+
+<font> temp_id=1&amp;icon=</font>
+
+
+
+
+
+
+
+
+
+
+
+<font face="Heiti SC Light">模版首图</font>
+
+
+
+
+
+
+
+
+
+
+
+<font>URL&amp;name=</font>
+
+
+
+
+
+
+
+
+
+
+
+<font face="Heiti SC Light">模版名称</font>
+
+
+
+
+
+
+
+
+
+
+
+<font>&amp;temp_style_id=2&amp;img_url[]=http://url/img1.png&amp;img_url[]=http://url/img2.png</font>
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">1.7.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level2Indent">
+<div id="level2Style">2 DIY 制作</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">2.1 启动</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>DIY </font>
+
+
+
+
+<font face="Heiti SC Light">制作</font>
+
+
+
+
+<font> - </font>
+
+
+
+
+<font face="Heiti SC Light">启动</font>
+
+
+
+
+</p>
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; background-color: #ffffff">
+<font face="Menlo" color="#303942" style="color: #303942">diytools://product_id=2&amp;temp_id=1&amp;product_name=</font>
+
+
+
+
+<font face="Heiti SC Light" color="#303942" style="color: #303942">收藏级大正方形画册</font>
+
+
+
+
+<font face="Menlo" color="#303942" style="color: #303942">&amp;spec_info=</font>
+
+
+
+
+<font face="Heiti SC Light" color="#303942" style="color: #303942">画册页数：</font>
+
+
+
+
+<font face="Menlo" color="#303942" style="color: #303942">20P</font>
+
+
+
+
+<font face="Heiti SC Light" color="#303942" style="color: #303942">、封面材质：金属</font>
+
+
+
+
+<font face="Menlo" color="#303942" style="color: #303942">&amp;username=iegss&amp;session_id=9418b4e3d3585d11f91a957a3cc950af&amp;work_number=10000009&amp;task_id=5791_10000009_2_2_1_1393410698&amp;add_cat_url=http://vip.hcyy.cn/index.php/diyapi/services/add_cart/app/diyapi</font>
+
+
+
+
+</p>
+
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">2.2 制作成功提交数据</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.2.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei">请求接口： </font>
+
+
+
+<font face="Menlo" color="#303942" style="color: #303942">add_cat_url (</font>
+
+
+
+<font> </font>
+
+
+
+<font face="Heiti SC Light" color="#303942" style="color: #303942">启动时的参数</font>
+
+
+
+<font> </font>
+
+
+
+<font face="Menlo" color="#303942" style="color: #303942">)</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei">方式：GET/POST</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; background-color: #ffffff">
+<font face="Microsoft YaHei">参数：</font>
+
+
+
+<font> </font>
+
+
+
+<font face="Menlo" color="#303942" style="color: #303942">product_id=2&amp;temp_id=1&amp;session_id=9418b4e3d3585d11f91a957a3cc950af&amp;work_number=10000009&amp;task_id=5791_10000009_2_2_1_1393410698</font>
+
+
+
+</p>
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.2.2 返回</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">2.3 更新上传PDF状态</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.3.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">请求接口： URL/</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Monaco">update_task_pdf</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Heiti SC Light">参数</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font>:<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+task=1_1232132132&amp;pdf_url=http://www.dsf/sss.pdf&amp;upload_status=2</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Heiti SC Light">参数说明</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font>:<span class="Apple-converted-space">&nbsp;</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+task: </font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Heiti SC Light">会话ID</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pdf_url: </font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Heiti SC Light">pdf路径</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+upload_status: </font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Heiti SC Light">上传状态，</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font> 0</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<font face="Heiti SC Light">没传<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1正在上传<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2已经上传完</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.3.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">2.4 更新PDF下载完成次数</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.4.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">请求接口： URL/</font>
+
+
+
+<font face="Monaco">update_pdf_download_times</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Heiti SC Light">参数</font>
+
+
+
+<font> :<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+task=1_1232132132&amp;download_times=2</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Heiti SC Light">参数说明</font>
+
+
+
+<font> :<span class="Apple-converted-space">&nbsp;</span>
+
+
+
+</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>&nbsp;&nbsp;&nbsp;&nbsp; task: </font>
+
+
+
+<font face="Heiti SC Light">会话</font>
+
+
+
+<font>ID</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>&nbsp;&nbsp;&nbsp;&nbsp; download_times: </font>
+
+
+
+<font face="Heiti SC Light">总下载次数</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+</p>
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.4.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">2.5 得到订单付款状态</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.5.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei">请求接口： URL/</font>
+
+
+
+<font> get_order_pay_status</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Heiti SC Light">参数</font>
+
+
+
+<font> :<span class="Apple-converted-space">&nbsp; </span>
+
+
+
+task=1_1232132132</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Heiti SC Light">参数说明</font>
+
+
+
+<font> :<span class="Apple-converted-space">&nbsp;</span>
+
+
+
+</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>&nbsp;&nbsp;&nbsp;&nbsp; task: </font>
+
+
+
+<font face="Heiti SC Light">会话</font>
+
+
+
+<font> ID</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Heiti SC Light">返回参数说明：</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">pay_status</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+0 =&gt; </font>
+
+
+
+<font face="Heiti SC Light">未支付</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+1 =&gt; </font>
+
+
+
+<font face="Heiti SC Light">已支付</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+2 =&gt; </font>
+
+
+
+<font face="Heiti SC Light">已付款至到担保方</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+3 =&gt; </font>
+
+
+
+<font face="Heiti SC Light">部分付款</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+4 =&gt; </font>
+
+
+
+<font face="Heiti SC Light">部分退款</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+
+
+5 =&gt; </font>
+
+
+
+<font face="Heiti SC Light">全额退款</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" align="justify" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+</p>
+
+
+
+
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.5.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+&lt;code&gt;ok&lt;/code&gt;</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">
+<span class="Apple-converted-space">&nbsp; &nbsp; </span>
+
+
+
+&lt;contents&gt;&lt;pay_status&gt;3&lt;/pay_status&gt;&lt;/contents&gt;</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</font>
+
+
+
+</p>
+
+
+
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+
+
+
+</p>
+
+
+
+
+</div>
+</div>
+<div id="level3Indent">
+<div id="level3Style">2.6 得到作业号列表</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.6.1 请求</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei">请求接口： URL/</font>
+<font> get_works</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Heiti SC Light">得到数据：</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>
+<span class="mindmanager-tab-substitution">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+</font>
+<font face="Heiti SC Light">正式订单：已经提交生产和生产完成的作业号</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Heiti SC Light'; min-height: 12.0px">
+<br/>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Heiti SC Light">参数</font>
+<font> :<span class="Apple-converted-space">&nbsp; </span>stime=20140301060908&amp;etime=20140331123224&amp;sign=54156e664b788fb3364b0a490415a5f4&amp;timestamp=20140112000000</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Heiti SC Light">请求参数说明</font>
+<font> :<span class="Apple-converted-space">&nbsp;</span>
+</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&nbsp;&nbsp;&nbsp;&nbsp; stime: </font>
+<font face="Heiti SC Light">作业号提交生产开始时间</font>
+<font> </font>
+<font face="Heiti SC Light">年月日时分秒</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&nbsp;&nbsp;&nbsp;&nbsp; etime: </font>
+<font face="Heiti SC Light">作业号提交生产结束时间</font>
+<font> </font>
+<font face="Heiti SC Light">年月日时分秒</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&nbsp;&nbsp;&nbsp;&nbsp; timestamp: </font>
+<font face="Heiti SC Light">请求时间</font>
+<font> </font>
+<font face="Heiti SC Light">年月日时分秒</font>
+<font> </font>
+<font face="Heiti SC Light">，注：与服务器时差超过</font>
+<font> 5 </font>
+<font face="Heiti SC Light">分钟失效</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&nbsp;&nbsp;&nbsp;&nbsp; sign: </font>
+<font face="Heiti SC Light">签名</font>
+<font> = md5(&rdquo;GzHc1Sap-" + timestamp)</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Heiti SC Light">返回</font>
+<font>XML</font>
+<font face="Heiti SC Light">说明</font>
+<font>:</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;WORKS WORK_ID="7461"&gt; -- </font>
+<font face="Heiti SC Light">任务号</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;JOBID&gt;7461&lt;/JOBID&gt; <span class="Apple-converted-space">&nbsp; </span>-- </font>
+<font face="Heiti SC Light">任务号</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;COPIES&gt;1&lt;/COPIES&gt;<span class="Apple-converted-space">&nbsp; &nbsp; </span>- </font>
+<font face="Heiti SC Light">数量</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;TOTAL&gt;11.66&lt;/TOTAL&gt;<span class="Apple-converted-space">&nbsp; </span>-- </font>
+<font face="Heiti SC Light">金额</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;USERID&gt; </font>
+<font face="Heiti SC Light">广州虎彩</font>
+<font> &lt;/USERID&gt;<span class="Apple-converted-space">&nbsp; </span>-- </font>
+<font face="Heiti SC Light">虎彩文用</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;USERNAME&gt; </font>
+<font face="Heiti SC Light">梁敏芳</font>
+<font> &lt;/USERNAME&gt; -- </font>
+<font face="Heiti SC Light">收货人</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;ORDERNAME&gt;4030596148&lt;/ORDERNAME&gt; -- </font>
+<font face="Heiti SC Light">订单号</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;ORDERDATE&gt;20140305100315&lt;/ORDERDATE&gt;<span class="Apple-converted-space">&nbsp; </span>-- </font>
+<font face="Heiti SC Light">订单下达日期</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;APPROVEDT&gt;20140305&lt;/APPROVEDT&gt; <span class="Apple-converted-space">&nbsp; </span>-- </font>
+<font face="Heiti SC Light">订单提交生产日期</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;APPROVETIME&gt;104744&lt;/APPROVETIME&gt; -- </font>
+<font face="Heiti SC Light">订单提交生产时间</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;TEMPLATENAME&gt; </font>
+<font face="Heiti SC Light">个性杂志</font>
+<font> 12 </font>
+<font face="Heiti SC Light">寸竖款</font>
+<font> &lt;/TEMPLATENAME&gt;<span class="Apple-converted-space">&nbsp; </span>-- </font>
+<font face="Heiti SC Light">产品名称</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;KEYWORDS&gt;39010000327&lt;/KEYWORDS&gt;<span class="Apple-converted-space">&nbsp; &nbsp; </span>-- </font>
+<font face="Heiti SC Light">产品</font>
+<font> 39 </font>
+<font face="Heiti SC Light">码</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;ITEMNO&gt;4030596148-1-1&lt;/ITEMNO&gt; <span class="Apple-converted-space">&nbsp; &nbsp; </span>-- </font>
+<font face="Heiti SC Light">订单号</font>
+<font> +&lsquo;-&rsquo;+ </font>
+<font face="Heiti SC Light">订单总行项目总是</font>
+<font> +<span class="Apple-converted-space">&nbsp;</span>
+</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;DISTRIBUTION&gt; </font>
+<font face="Heiti SC Light">圆通速递</font>
+<font> &lt;/DISTRIBUTION&gt; -- </font>
+<font face="Heiti SC Light">配送方式名称</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;DOWNLOADTIMES&gt;0&lt;/DOWNLOADTIMES&gt; &mdash;- </font>
+<font face="Heiti SC Light">下载次数</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;FILENAME&gt; </font>
+<font face="Heiti SC Light">文件名</font>
+<font> &lt;/FILENAME&gt; &mdash;- </font>
+<font face="Heiti SC Light">文件名</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;DOWNLOADTIMES&gt;http://www.url.com/sss.zip&lt;/DOWNLOADTIMES&gt; &mdash;- </font>
+<font face="Heiti SC Light">下载地址</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;FILEDIR&gt;8 </font>
+<font face="Heiti SC Light">开</font>
+<font> /16P&lt;/FILEDIR&gt; &mdash;- </font>
+<font face="Heiti SC Light">解压路径</font>
+</p>
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font>&lt;/WORKS&gt;</font>
+</p>
+</div>
+</div>
+<div id="level4Indent">
+<div id="level4Style">2.6.2 返回</div>
+<div id="notesStyle">
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">成功返回：</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;CONDITION&gt;&lt;WORKS WORK_ID="10001360"&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;JOBID&gt;10001360&lt;/JOBID&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;COPIES&gt;2&lt;/COPIES&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;TOTAL&gt;549.200&lt;/TOTAL&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;USERID&gt;虎彩文用&lt;/USERID&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;USERNAME&gt;收货人&lt;/USERNAME&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;ORDERNAME&gt;20140328148870&lt;/ORDERNAME&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;ORDERDATE&gt;20140328&lt;/ORDERDATE&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;APPROVEDT&gt;20140328&lt;/APPROVEDT&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;APPROVETIME&gt;141627&lt;/APPROVETIME&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;TEMPLATENAME&gt;专业级A4画册横款&lt;/TEMPLATENAME&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;KEYWORDS&gt;39SAdaSD&lt;/KEYWORDS&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;ITEMNO&gt;20140328148870-3-&lt;/ITEMNO&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;DISTRIBUTION&gt;快递&lt;/DISTRIBUTION&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;FILENAME&gt;30P&lt;/FILENAME&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;DOWNLOADTIMES&gt;0&lt;/DOWNLOADTIMES&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;FILEDIR&gt;&lt;/FILEDIR&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/WORKS&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/CONDITION&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px">
+<br/>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">失败返回：</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;data&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;失败原因&lt;/info&gt;</font>
+</p>
+
+<p xmlns="http://www.w3.org/1999/xhtml" xmlns:pri="http://schemas.mindjet.com/MindManager/Primitive/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" style="margin: 0.0px 0.0px 0.0px 0.0px">
+<font face="Microsoft YaHei" style="letter-spacing: 0.0px">&lt;/data&gt;</font>
+</p>
+
+</div>
+</div>
+</body>
+</html>
