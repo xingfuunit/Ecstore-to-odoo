@@ -1103,18 +1103,22 @@ window.addEvent('domready', function(){
         var tips = new Tips(input);
         var pre = '';
         var msg = '';
-        if(options.store && options.store - value <= 0) {
-            pre = '库存有限，';
-        }
-        if(value < options.min) {
-            input.value = options.min;
-            msg = '此' + info.name + '的最小' + info.mode + '数量为' + options.min + '件';
-        }
-        else if(value > options.max){
-            input.value = options.max;
-            msg = pre + '此' + info.name + '最多只能' + info.mode + options.max + '件';
-        }
-        else if(isNaN(value)) {
+      //if(options.store && options.store - value <= 0) {
+        //    pre = '库存有限，';
+        //}
+        //if(value < options.min) {
+        //    input.value = options.min;
+        //    msg = '此商品的最小购买数量为' + options.min + '件';
+       // }
+        //else if(value > options.max){                          hack by Jason 无库存销售
+        //    input.value = options.max;
+        //    msg = pre + '此商品最多只能购买' + options.max + '件';
+        //}
+       // else if(isNaN(value)) {
+       //     input.value = options['default'];
+       //     msg = '只允许输入数字';
+       // }
+        if(isNaN(value)) {
             input.value = options['default'];
             msg = '只允许输入数字';
         }

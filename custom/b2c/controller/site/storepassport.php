@@ -458,6 +458,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $this->userObject->set_member_session($member_id);
         $this->bind_member($member_id);
         $this->set_cookie('loginName',$post['uname'],time()+31536000);//用于记住密码
+        $this->set_cookie('loginType','store',time()+31536000);//hack by Jason 门店登录的标志写入cookie中
         $this->app->model('cart_objects')->setCartNum();
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         $this->splash('success',$url,app::get('b2c')->_('登录成功'),true);
@@ -1152,6 +1153,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $this->set_cookie('MLV','',time()-3600);
         $this->set_cookie('CUR','',time()-3600);
         $this->set_cookie('LANG','',time()-3600);
+        $this->set_cookie('loginType','',time()-3600);//hack by Jason 登出的时候把是否门店登录的cookie也清空
         $this->set_cookie('S[MEMBER]','',time()-3600);
         foreach(kernel::servicelist('member_logout') as $service){
             $service->logout();
