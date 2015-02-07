@@ -42,6 +42,10 @@
     <td><{input type="text" value=$product.bn key="bn" name="goods[product][0][bn]" maxlength="25" }></td>
   </tr>
   <tr>
+   <th><{t}>条形码：<{/t}></th>
+    <td><{input type="text" value=$product.barcode key="barcode" name="goods[product][0][barcode]" maxlength="25" }></td>
+  </tr>
+  <tr>
     <th><{t}>重量：<{/t}></th>
     <td><{input type="unsigned" key="weight" value=$product.weight name="goods[product][0][weight]" style="width:60px" maxlength="25" }><{t}>克(g)<{/t}></td>
   </tr>
