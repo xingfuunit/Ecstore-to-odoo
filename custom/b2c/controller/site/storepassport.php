@@ -1155,7 +1155,6 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $this->set_cookie('MLV','',time()-3600);
         $this->set_cookie('CUR','',time()-3600);
         $this->set_cookie('LANG','',time()-3600);
-        $this->set_cookie('loginType','',time()-3600);//hack by Jason 登出的时候把是否门店登录的cookie也清空
         $this->set_cookie('S[MEMBER]','',time()-3600);
         foreach(kernel::servicelist('member_logout') as $service){
             $service->logout();

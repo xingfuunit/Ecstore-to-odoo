@@ -1241,7 +1241,7 @@ window.addEvent('domready', function(){
         }
         order.getElement('.goods .price').innerHTML = rs.subtotal_prefilter_after;
         order.getElement('.total .price b').innerHTML = rs.promotion_subtotal;
-        order.getElement('.goodst').innerHTML = '';
+        //order.getElement('.goodst').innerHTML = '';
         dede.getElement('.kkss').innerHTML = rs.promotion_subtotal;
         dsds.getElement('.kkdd').innerHTML = '<input id=txtAmount value="'+rs.promotion_subtotal+'" readOnly="true" style="border:none; color: red; font-size: 24px; font-weight: bold;height:28px;margin-top:-6px;" />';
         dfdf.getElement('.kkff').innerHTML = '<b>'+rs.promotion_subtotal+'</b>';
