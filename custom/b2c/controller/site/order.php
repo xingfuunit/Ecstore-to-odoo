@@ -69,6 +69,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
         	}
         }
         //hack by Jason end
+        error_log(print_r($aCart,1));
         //当有活动时，在生成订单前做一个当前购买数量与实际库存的判断
         if( isset($aCart['cart_status'] )){
 
@@ -227,7 +228,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
         if ($obj_checkproducts)
         {
             foreach($obj_checkproducts as $obj_check){
-                if (!$obj_check->check_products($order_data, $messages))
+                if (!$obj_check->check_products($order_data, $messages) && $_COOKIE['loginType'] != 'store')
                     $this->end(false, $messages);
             }
         }

@@ -324,8 +324,11 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
 		}
 
         if($arr_product['marketable']=='false') return $this->get_error_msg( '该规格商品未上架！' );   //未上架
-        $arr_product['store'] = ( $aGoods['nostore_sell'] ? $this->__max_goods_store : ( empty($arr_product['store']) ? ($arr_product['store']===0 ? 0 : $this->__max_goods_store) : $arr_product['store'] -$arr_product['freez']) );
-
+		if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){   //hack by Jason 判断是否门店的购物车或者订单,如果是,则将库存设置为最大
+        	$arr_product['store'] = $this->__max_goods_store;
+        }else{
+        	$arr_product['store'] = ( $aGoods['nostore_sell'] ? $this->__max_goods_store : ( empty($arr_product['store']) ? ($arr_product['store']===0 ? 0 : $this->__max_goods_store) : $arr_product['store'] -$arr_product['freez']) );
+        }
 		if ( !$aGoods['nostore_sell'] ) {
 			if(empty($arr_product['store'])){
 				if(isset($arr_product['store']) && $arr_product['store']!=='' ) return $this->get_error_msg( '该商品已无库存！' ); //库存0
@@ -667,7 +670,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
             $aData['goods_min_buy'][$row['min_buy']['goods_id']]['info'] = $row['min_buy'];
             $aData['goods_min_buy'][$row['min_buy']['goods_id']]['real_quantity'] += $row['quantity'];
             if( $row['error_html'] ) $aResult['error_html'] = $row['error_html'];
-            if($row['quantity'] > $row['store']['real']) {
+            if($row['quantity'] > $row['store']['real'] && $_COOKIE != 'store') {      ////hack by Jason 判断是否门店的购物车或者订单,如果是,则不报数据的的库存错误
                  $aData['cart_status'] = 'false';
                  $aData['cart_error_html'] = app::get('b2c')->_('库存错误！');
             }
@@ -816,8 +819,11 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
         $arr_product = $aResult[0];
 
         if($arr_product['marketable']=='false') return $this->get_error_msg( '该规格商品未上架！' );   //未上架
-        $arr_product['store'] = ( $aGoods['nostore_sell'] ? $this->__max_goods_store : ( empty($arr_product['store']) ? ($arr_product['store']===0 ? 0 : $this->__max_goods_store) : $arr_product['store'] -$arr_product['freez']) );
-
+    	if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){   //hack by Jason 判断是否门店的购物车或者订单,如果是,则将库存设置为最大
+        	$arr_product['store'] = $this->__max_goods_store;
+        }else{
+        	$arr_product['store'] = ( $aGoods['nostore_sell'] ? $this->__max_goods_store : ( empty($arr_product['store']) ? ($arr_product['store']===0 ? 0 : $this->__max_goods_store) : $arr_product['store'] -$arr_product['freez']) );
+        }
         if ( !$aGoods['nostore_sell'] ) {
             if(empty($arr_product['store'])){
                 if(isset($arr_product['store']) && $arr_product['store']!=='' ) return $this->get_error_msg( '该商品已无库存！' ); //库存0
@@ -856,7 +862,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
             $this->check_goods_info[$row['goods_id']] = $row;
             $key = array_search( $row['goods_id'], $arr_goods_id );
             if( $row['marketable']=='false' ) unset($aData[$key]);
-            if( $row['nostore_sell'] )
+            if( $row['nostore_sell'] || $_COOKIE['loginType'] == 'store')//hack by Jason 检查是否是门店的操作,如果是,则将无库存销售设置为1
                 $this->nostore_sell[$row['goods_id']] = true;
         }
     }
@@ -871,7 +877,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
         foreach($arr as $row) {
             $key = array_search( $row['product_id'], $arr_products_id );
             if( $row['marketable']=='false' ) unset($aData[$key]);
-            if( !$this->nostore_sell[$row['goods_id']] ) {
+            if( !$this->nostore_sell[$row['goods_id']] && $_COOKIE['loginType'] != 'store') {//hack by Jason 检查是否是门店的操作,如果是,则不进行检查
                 foreach( kernel::servicelist('b2c_addtocart_check') as $object ) {
                     if( !is_object($object) ) continue;
                     if(!method_exists($object, 'get_type')) {
@@ -956,13 +962,13 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
                     $arr_tmp_goods = current( $arr_tmp_goods );
                     if( $arr_tmp_goods['marketable'] == 'false' ) return false; // 验证商品是否下架
                     if( $row['marketable'] == 'false' ) return false; // 验证货品是否下架
-                    if( !($arr_tmp_goods['nostore_sell'] || is_null($row['store']) ) ){
+                    if( !($arr_tmp_goods['nostore_sell'] || is_null($row['store']) )  && $_COOKIE['loginType'] != 'store' ){//hack by Jason 检查是否是门店的操作,如果是,则不进行库存检查
                         if($row['store']==0 || 0>$row['store']-$row['freez']) return false;
                     }
 
                     $this->check_products_info[$row['product_id']] = $row;
                     $this->check_goods_info[$row['goods_id']] = $arr_tmp_goods;
-                    if( is_null($row['store']) || empty($arr_tmp_goods['nostore_sell']) ) {
+                	if( (is_null($row['store']) || empty($arr_tmp_goods['nostore_sell'])) && $_COOKIE['loginType'] != 'store') {//hack by Jason 检查是否是门店的操作,如果是,则不进行库存检查
                         if( $this->check_products_info[$row['product_id']]['store']<$tmp_products_store[$row['product_id']] && $arr_tmp_goods['store']!==null ) return false;
                     }
                 }
@@ -1029,14 +1035,18 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
             if(empty($aProducts[$row['obj_items']['products'][0]])) {
                 unset($aData[$key]);continue;
             }
-            if($aProducts[$row['obj_items']['products'][0]]['store'] <= 0){
-                unset($aData[$key]);continue;
+        	if(!isset($_COOKIE['loginType']) || $_COOKIE['loginType'] != 'store'){ //hack by Jason 判断如果是门店登录过来的,即使库存为0也不从购物车删除商品
+            	if($aProducts[$row['obj_items']['products'][0]]['store'] <= 0){
+            		unset($aData[$key]);continue;
+            	}
             }
             $arr_goods[$key] = $row['params']['goods_id'];
             $arr_products[$key] = $row['params']['product_id'];
         }
-        $this->_check_goods($aData, $arr_goods);
-        $this->_check_products($aData, $arr_products, $this->get_type());
+    	if(!isset($_COOKIE['loginType']) || $_COOKIE['loginType'] != 'store'){ //hack by Jason 判断如果是门店登录过来的,则不判断库存
+        	$this->_check_goods($aData, $arr_goods);
+        	$this->_check_products($aData, $arr_products, $this->get_type());
+        }
 
         $arr_products = array();
 
@@ -1437,8 +1447,8 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
                     'quantity' => 1,
                     'params' => is_array($row['params']) ? $row['params'] : @unserialize($row['params']),
                     'floatstore' => $row['floatstore'] ? $row['floatstore'] : 0,
-                    'store'=> ( $row['nostore_sell'] ? $this->__max_goods_store : ( empty($row['store']) ? (((int)$row['store']===0 && $row['store']!==null && $row['store']!=='')? 0 : $this->__max_goods_store) : $row['store'] -$row['freez']) ),
-                    'package_scale' => $row['package_scale'],
+                    'store'=> $_COOKIE['loginType'] == 'store'?$this->__max_goods_store :( $row['nostore_sell'] ? $this->__max_goods_store : ( empty($row['store']) ? (((int)$row['store']===0 && $row['store']!==null && $row['store']!=='')? 0 : $this->__max_goods_store) : $row['store'] -$row['freez']) ),
+                    'package_scale' => $row['package_scale'], //hack by Jason 上行代码 检查是否是门店的操作,如果是将库存设置为最大
                     'package_unit' => $row['package_unit'],
                     'package_use' => $row['package_use'],
                     // 'default_image' => array(
