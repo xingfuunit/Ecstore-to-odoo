@@ -144,6 +144,12 @@
             <menu controller='admin_member' action='send_email' permission='member' display='false' order='70'>群发邮件</menu>
             <menu controller='admin_member' action='send_msg' permission='member' display='false' order='80'>群发短消息</menu>
         </menugroup>
+        
+        <menugroup name="兑换卡管理">
+            <menu controller="admin_member_giftcardrule" action='index' permission='disask' display='true' order='210'>兑换卡规则</menu>
+            <menu controller="admin_member_giftcard" action='index' permission='disask' display='true' order='220'>兑换卡列表</menu>
+        </menugroup>
+        
         <!-- WEBPOS yinhui-->
         <menugroup name="门店管理">
             <!--<menu controller='admin_local_store' action='index' permission='disask' display='true' order='90'>门店地址</menu>-->
@@ -175,7 +181,15 @@
             <menu controller='admin_sales_coupon' action='add' permission='salescoupon' display='false' order='60'>添加优惠券</menu>
             <menu controller='admin_sales_coupon' action='index' permission='salescoupon' display='true' order='50'>优惠券列表</menu>
             <menu controller='admin_sales_coupon_exchange' action='index' permission='salescoupon' display='true' order='70'>积分兑换优惠券</menu>
+    		<menu controller='admin_sales_coupon_send' action='index' permission='salescoupon' display='true' order='80'>发送优惠券</menu>
+            <menu controller='admin_sales_coupon_send' action='item' permission='salescoupon' display='true' order='80'>发送优惠券列表</menu>
+
         </menugroup>
+        
+        
+        <menugroup name="微信">
+            <menu controller='admin_weixin_lottery' action='index' permission='weixin' display='true' order='80'>微信抽奖中奖名单</menu>
+		</menugroup>
         <menugroup name="凑单">
             <menu controller='admin_sales_fororder' action='index' permission='salesfororder' display='true' order='80'>凑单功能配置</menu>
         </menugroup>

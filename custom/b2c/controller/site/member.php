@@ -916,7 +916,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
         }
         //验证验证码
         if($_POST["verifycode"]){
-            if(!base_vcode::verify('GIFTCARDCODE',intval($_POST['verifycode'])))
+            if(!base_vcode::verify('GIFTCARDCODE',$_POST['verifycode']))
             {
                 $msg = app::get('b2c')->_("验证码输入错误!");
                 $this->splash('failed',$url,$msg);                
@@ -2059,4 +2059,31 @@ class b2c_ctl_site_member extends b2c_frontpage{
 
         $this->output();
     }
+    
+    
+    /**
+     * 充值卡充值   页面，处理在 gc_dopayment
+     */
+    public function giftcard($pay_object='giftcard'){
+    	
+    	
+    	
+    	//面包屑
+    	$this->path[] = array('title'=>app::get('b2c')->_('会员中心'),'link'=>$this->gen_url(array('app'=>'b2c', 'ctl'=>'site_member', 'act'=>'index','full'=>1)));
+    	$this->path[] = array('title'=>app::get('b2c')->_('礼品卡充值'),'link'=>'#');
+    	$GLOBALS['runtime']['path'] = $this->path;
+    	
+        #获取默认的货币
+        $obj_currency = app::get('ectools')->model('currency');
+        $arr_def_cur = $obj_currency->getDefault();
+        $this->pagedata['def_cur_sign'] = $arr_def_cur['cur_sign'];
+
+        $membersData = kernel::single('b2c_user_object')->get_members_data(array('members'=>'advance'));
+        $this->pagedata['p_type'] = 'gitcard';
+        $this->pagedata['total'] = $membersData['members']['advance'];
+    	
+    	$this->output();
+    }
+    
+  
 }
