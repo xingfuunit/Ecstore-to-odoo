@@ -400,6 +400,13 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $obj_filter = kernel::single('b2c_site_filter');
         $data = $obj_filter->check_input($data);
 
+        //hack by Jason 如果前端提交有优惠券的代码字母为小写,将优惠券的字母变成大写
+        if($data['coupon']){
+        	$data['coupon'] = strtoupper($data['coupon']);
+        }
+        //end hack
+        
+        
         if($data['response_json'] == 'true'){//ajax提交返回错误
             $errorRequest = true;
         }
