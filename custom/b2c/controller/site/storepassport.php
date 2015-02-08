@@ -458,6 +458,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $this->userObject->set_member_session($member_id);
         $this->bind_member($member_id);
         $this->set_cookie('loginName',$post['uname'],time()+31536000);//用于记住密码
+        $this->set_cookie('loginType','store',time()+31536000);//hack by Jason 门店登录的标志写入cookie中
         $this->app->model('cart_objects')->setCartNum();
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         $this->splash('success',$url,app::get('b2c')->_('登录成功'),true);
@@ -500,6 +501,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $this->userObject->set_member_session($member_id);
         $this->bind_member($member_id);
         $this->set_cookie('loginName',$post['uname'],time()+31536000);//用于记住密码
+        $this->set_cookie('loginType','store',time()+31536000);//hack by Jason 门店登录的标志写入cookie中
         $this->app->model('cart_objects')->setCartNum();
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         $this->redirect($url);
@@ -544,6 +546,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
        }
         $this->userObject->set_member_session_webpos($local_store_listData);
         $this->set_cookie('loginName',$post['uname'],time()+31536000);//用于记住密码
+        $this->set_cookie('loginType','store',time()+31536000);//hack by Jason 门店登录的标志写入cookie中
         $this->app->model('cart_objects')->setCartNum();
         app::get('b2c')->model('local_staff')->update(array('logintime'=> time()),array('staff_id'=>$_SESSION['account']['staff']));
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";

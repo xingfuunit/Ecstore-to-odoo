@@ -1105,18 +1105,22 @@ window.addEvent('domready', function(){
         var tips = new Tips(input);
         var pre = '';
         var msg = '';
-        if(options.store && options.store - value <= 0) {
-            pre = '库存有限，';
-        }
-        if(value < options.min) {
-            input.value = options.min;
-            msg = '此' + info.name + '的最小' + info.mode + '数量为' + options.min + '件';
-        }
-        else if(value > options.max){
-            input.value = options.max;
-            msg = pre + '此' + info.name + '最多只能' + info.mode + options.max + '件';
-        }
-        else if(isNaN(value)) {
+      //if(options.store && options.store - value <= 0) {
+        //    pre = '库存有限，';
+        //}
+        //if(value < options.min) {
+        //    input.value = options.min;
+        //    msg = '此商品的最小购买数量为' + options.min + '件';
+       // }
+        //else if(value > options.max){                          hack by Jason 无库存销售
+        //    input.value = options.max;
+        //    msg = pre + '此商品最多只能购买' + options.max + '件';
+        //}
+       // else if(isNaN(value)) {
+       //     input.value = options['default'];
+       //     msg = '只允许输入数字';
+       // }
+        if(isNaN(value)) {
             input.value = options['default'];
             msg = '只允许输入数字';
         }
@@ -1239,7 +1243,7 @@ window.addEvent('domready', function(){
         }
         order.getElement('.goods .price').innerHTML = rs.subtotal_prefilter_after;
         order.getElement('.total .price b').innerHTML = rs.promotion_subtotal;
-        order.getElement('.goodst').innerHTML = '';
+        //order.getElement('.goodst').innerHTML = '';
         dede.getElement('.kkss').innerHTML = rs.promotion_subtotal;
         dsds.getElement('.kkdd').innerHTML = '<input id=txtAmount value="'+rs.promotion_subtotal+'" readOnly="true" style="border:none; color: red; font-size: 24px; font-weight: bold;height:28px;margin-top:-6px;" />';
         dfdf.getElement('.kkff').innerHTML = '<b>'+rs.promotion_subtotal+'</b>';

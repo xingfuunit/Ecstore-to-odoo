@@ -18,6 +18,9 @@
       <{input type="text" value="{bn}" class="bn" name="{idx}[bn]"}>
     </td>
     <td>
+      <{input type="text" value="{barcode}" name="{idx}[barcode]"}>
+    </td>
+    <td>
       <{permission perm_id='editmarketable'}><input type="checkbox" {status.checked} value="{status}" name="{idx}[status]"><{/permission}>
     </td>
     <td>
@@ -66,6 +69,7 @@
           <tr>
             <th>规格值</th>
             <th style="width:auto;">货号</th>
+            <th style="width:12%;">条形码</th>
             <th style="width:4%;">上架</th>
             <th style="width:6%;">库存</th>
             <th style="width:6%;">冻结库存</th>
@@ -620,7 +624,7 @@ var goodsSpecTree = new Klass({
 
         html = null;
     },
-    props: ['product_id', 'status', 'bn', 'store', 'freez' ,'price', 'member_lv_price', 'cost', 'mktprice', 'weight', 'store_place', 'is_default'],
+    props: ['product_id', 'status', 'bn', 'barcode', 'store', 'freez' ,'price', 'member_lv_price', 'cost', 'mktprice', 'weight', 'store_place', 'is_default'],
     processProducts: function(arr, index, length, id, name, value, pvid) {
         var specid = {}, spec_name = [arr[index].name], specvalue = {}, specpvid={}, sname, spec_id = arr[index].id, uid;
         if(name) {
