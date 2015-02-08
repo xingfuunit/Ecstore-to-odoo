@@ -162,14 +162,14 @@ class b2c_mdl_goods extends dbeav_model{
         if(!isset($filter['search'])) $filter['search'] = true;
         if($searchrule && $filter['search'] === true){
             unset($filter['search']);
-            if($_SERVER['DOCUMENT_URI'] != "/index.php/shopadmin/index.php"|| $_SERVER['DOCUMENT_URI'] != "/shopadmin/index.php"){
+            if($_SERVER['DOCUMENT_URI'] != "/index.php/shopadmin/index.php" && $_SERVER['DOCUMENT_URI'] != "/shopadmin/index.php"){
                 $filter['is_line'] = 0;
             }
             return $searchrule->getList($cols,$filter,$offset,$limit,$orderType,$total);
         }else{
             unset($filter['search']);
             $total=false;
-            if($_SERVER['DOCUMENT_URI'] != "/index.php/shopadmin/index.php" || $_SERVER['DOCUMENT_URI'] != "/shopadmin/index.php"){
+            if($_SERVER['DOCUMENT_URI'] != "/index.php/shopadmin/index.php" && $_SERVER['DOCUMENT_URI'] != "/shopadmin/index.php"){
                 $filter['is_line'] = 0;
             }
             return parent::getList($cols, $filter, $offset, $limit, $orderType);
