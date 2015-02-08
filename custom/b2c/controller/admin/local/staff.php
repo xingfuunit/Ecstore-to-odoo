@@ -19,15 +19,28 @@ class b2c_ctl_admin_local_staff extends desktop_controller {
         ));
 	}
 
-        function edit($staff_id=''){
-           
+        function edit($staff_id=''){           
             if($staff_id){
                 $staff=$this->app->model('local_staff')->getList('*',array('staff_id'=>$staff_id));
                 
                 $this->pagedata['staff']=$staff[0];
             }
             $local_store=app::get('ome')->model('branch')->getList('*',array('disabled'=>'false'));
-              
+            //hack by Jason 将新增门店会员变成要从会员列表中选begin
+            $obj_member = app::get('b2c')->model('members');
+            $aData = $obj_member->getList('member_id',array('member_lv_id'=>'5'));
+            $mem_array = array();
+            foreach($aData as $k=>$v){
+            	$account = app::get('pam')->model('members')->getList('*',array('member_id'=>$v,'login_type'=>'local'));
+            	$now_staff=$this->app->model('local_staff')->getList('*',array('member_id'=>$v));
+            	if(!$now_staff){
+            		$mem_array[]=$account[0];           		
+            	}elseif($account[0]['member_id'] == $staff[0]['member_id']){
+            		$mem_array[]=$account[0];
+            	}       	
+            }
+            $this->pagedata['memberlist']=$mem_array;
+            //hack by Jason 将新增门店会员变成要从会员列表中选end
             $this->pagedata['local']=$local_store;
             $this->display('admin/local/staff.html');
             
@@ -35,10 +48,13 @@ class b2c_ctl_admin_local_staff extends desktop_controller {
         
         function toadd(){
             $this->begin();
+            $obj_member = app::get('b2c')->model('members');
+            $regtime = $obj_member->getList('regtime',array('member_id'=>$_POST['member_id']));
             $use_pass_data['login_name'] = $_POST['login_name'];
-            $use_pass_data['createtime'] = time();
+            $use_pass_data['createtime'] = $regtime[0]['regtime'];            
             $login_password = pam_encrypt::get_encrypted_password(trim($_POST['login_password']),'member',$use_pass_data);
             $staff_data=array(
+            	'member_id'=>$_POST['member_id'],
                 'login_name'=>$_POST['login_name'],
                 'staff_name'=>$_POST['staff_name'],
                 'login_password'=>$login_password,
