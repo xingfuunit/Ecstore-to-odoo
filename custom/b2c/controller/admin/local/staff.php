@@ -35,13 +35,15 @@ class b2c_ctl_admin_local_staff extends desktop_controller {
         
         function toadd(){
             $this->begin();
+            $use_pass_data['login_name'] = $_POST['login_name'];
+            $use_pass_data['createtime'] = time();
+            $login_password = pam_encrypt::get_encrypted_password(trim($_POST['login_password']),'member',$use_pass_data);
             $staff_data=array(
                 'login_name'=>$_POST['login_name'],
-                'login_password'=>md5($_POST['login_password']),
                 'staff_name'=>$_POST['staff_name'],
-                'login_password'=>123456,
+                'login_password'=>$login_password,
                 'branch_id'=>$_POST['branch_id'],
-                'ctime'=>time(),
+                'ctime'=>$use_pass_data['createtime'],
                 'disabled'=>$_POST['disabled'],
             );
             if($_POST['staff_id']){

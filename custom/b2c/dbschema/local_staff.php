@@ -11,6 +11,13 @@ $db ['local_staff'] = array (
                                                 'in_list' => true,
 						'default_in_list' => true,
 				),
+				'member_id' => array (
+						'type' => 'number',
+						'required' => true,
+						'editable' => false ,
+						'comment' => app::get('b2c')->_('会员id'),
+                        'label' => app::get('b2c')->_('会员id'),
+				),
                                 'login_name'=>array(
                                         'type'=>'varchar(100)',
                                         'is_title'=>true,
