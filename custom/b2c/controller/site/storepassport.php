@@ -528,9 +528,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $account = app::get('pam')->model('members')->getList('*',array('member_id'=>$staff['member_id'],'login_type'=>'local'));
         $use_pass_data['login_name'] = $userData['login_account'];
         $use_pass_data['createtime'] = $account[0]['createtime'];
-        error_log(print_r($account,1));
         $login_password = pam_encrypt::get_encrypted_password($userData['login_password'],'member',$use_pass_data);    
-        error_log($login_password);
         $local_store_listData = app::get('b2c')->model('local_staff')->getRow('*',array('login_name'=>$post['uname'],'login_password'=>$login_password));
         //hack by Jason 将登陆密码验证改正
         if($local_store_listData['staff_id']>0 && isset($local_store_listData['staff_id'])){
