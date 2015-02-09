@@ -100,7 +100,6 @@ class b2c_user_object{
         );
         $memberData = $this->get_members_data($memberFilter);
         $member_sdf = $memberData['members'];
-
         if( !empty($member_sdf) ) {
             $login_name = $this->get_member_name();
             $this->member_info['member_id'] = $member_sdf['member_id'];
@@ -241,8 +240,10 @@ class b2c_user_object{
                 $login_name = $arr_name['local'];
             }elseif(isset($arr_name['email'])){
                 $login_name = $arr_name['email'];
-            }else{
+            }elseif(isset($arr_name['mobile'])){
                 $login_name = $arr_name['mobile'];
+            }else{
+            	$login_name = $arr_name['card'];
             }
            }
         }

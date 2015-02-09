@@ -30,6 +30,12 @@ $db['member_card']=array (
   	  'is_title'=>true,
   	  'default_in_list' => false,
   	),
+  	'card_password'=>
+  	array(
+  	  'type'=>'varchar(32)',
+  	  'required' => true,
+  	  'comment' => app::get('pam')->_('会员卡密码'),
+  	),
     'card_lv_id' =>
     array (
       'required' => true,

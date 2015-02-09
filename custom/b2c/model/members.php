@@ -761,4 +761,24 @@ class b2c_mdl_members extends dbeav_model{
         }
         return true;
     }
+    
+
+    //add by Jason通过会员卡注册会员
+    function create_card_member($member_card){
+    	$arrDefCurrency = app::get('ectools')->model('currency')->getDefault();
+    	$data['currency'] = $arrDefCurrency['cur_code'];
+    	$data['pam_account']['account_type'] = 'card';
+    	$data['pam_account']['createtime'] = time();
+    	$data['reg_ip'] = base_request::get_remote_addr();
+    	$data['regtime'] = $data['pam_account']['createtime'];
+    	$data['member_lv_id'] = $member_card['card_lv_id'];
+    	$data['advance'] = $member_card['card_advance'];
+    	$data['point'] = $member_card['card_point'];
+    	$data['pam_account']['login_name'] = strtolower($member_card['card_number']);
+    	$use_pass_data['login_name'] = $member_card['card_number'];
+    	$use_pass_data['createtime'] = $data['pam_account']['createtime'];
+    	$data['pam_account']['login_password'] = pam_encrypt::get_encrypted_password(trim($member_card['card_password']),'member',$use_pass_data);
+    	error_log(print_r($data,1));
+    	return parent::save($data);
+    }
 }
