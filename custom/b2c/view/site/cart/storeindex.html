@@ -46,7 +46,7 @@
                        应收金额：<span class="kkss" style="color: red; font-size: 24px; font-weight: bold;"><{$aCart.promotion_subtotal|cur_odr}></span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
                        账户余额：<span style="color: red; font-size: 24px; font-weight: bold;" class="kkss1"><{$member.advance|cur_odr}></span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;   
                      <span class="zhye_other"><{t}>余额不足，还差：<span class="zhye_other_val" style="color:red;font-size: 24px;" ></span></br>请选择以下方式支付差额。<{/t}><br/><label style="font-size:18px;"><input type="radio" value="1" name="other_pay" checked="checked"/><font style="font-size: 24px">现金付款</font></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:18px;"><input type="radio" value="2" name="other_pay"/><font style="font-size: 24px ">刷卡付款</font><label></span><br /><br />
-                                 账户密码：<input  value="" name="password" type="password" id="webpos_password"/><span id="dd_list" class="dd_add_info" style="color: #006600;"></span><br/>
+                                 支付密码：<input  value="" name="password" type="password" id="webpos_password"/><span id="dd_list" class="dd_add_info" style="color: #006600;"></span><br/>
                        <input type="button" style="cursor:pointer" id="add_yuamount" name="amount_submit" class="submdeoe"  value="确认付款" />
                        </div>        
            </li>
@@ -247,7 +247,7 @@
   </div>
 </div>
 <script type="text/javascript">
-//验证会员密码
+/**验证会员密码 hack by Jason
 $('webpos_password').addEvent("keyup",function(E){
                         <{if !$member.uname}>
                             alert('请先登录会员！');
@@ -277,7 +277,7 @@ $('webpos_password').addEvent("keyup",function(E){
                             myRequest.send(data);
                         }
  });
-    
+**/
 <{if $money_format}>priceControl.spec = <{$money_format}>;<{/if}>
 var Order = function() {
     var self = this;

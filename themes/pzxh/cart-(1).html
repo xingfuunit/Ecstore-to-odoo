@@ -18,9 +18,11 @@
             <div style="float: right; width:80px; hight:38px; padding: 5px; font-size: 14px;   border:1px solid #8faace; background: #FFF; text-align: center; margin-right: 10px; margin-top: -20px;">
                  <a   href="<{link app=b2c ctl=site_storepassport act=payDetail }>" style="color:#000000;">员工交接</a>
             </div>
+            <!-- hack by Jason
             <div style="float: right; width:80px; hight:38px; padding: 5px; font-size: 14px;   border:1px solid #8faace; background: #FFF; text-align: center; margin-right: 10px; margin-top: -20px;">
                  <a href="<{link app=b2c ctl=site_storepassport act=logout }>?type=outlog" style="color:#000000;">员工退出</a>
             </div>
+            -->
             <div style="float: right; width:80px; hight:38px; padding: 5px; font-size: 14px;   border:1px solid #8faace; background: #FFF; text-align: center; margin-right: 10px; margin-top: -20px;">
                  <!--<a href="<{link app=b2c ctl=site_storepassport act=logout }>?type=outlog" style="color:#000000;">报损</a>-->
                  <input type="submit" onClick="delete_confirm" style="cursor:pointer; color:#000000; background: #fff; border:none;" id="add_baosun" name="amount_submit"  value="报损" />
@@ -45,7 +47,7 @@
                  <td width="30%">员  工：<{$staff_name}></td>
                  <td width="30%">配送方式：门店自提</td>
                  <td width="40%"><{if !$member.uname}><{button type="submit" style="cursor:pointer; margin-left:70px; width:85px; margin-top: 10px; " class="submdeoe" label=$__b2c=会员登录|t:'b2c' rel="_request"}><{else}><div style="width:80px; height:20px; padding: 5px; line-height: 25px; font-size: 14px;   border:1px solid #8faace; background: #FFF; text-align: center; ">
-                 <a href="<{link app=b2c ctl=site_storepassport act=logoutwebpos}>?type=outlog" style="color:#000000;">退出会员</a>
+                 <a href="<{link app=b2c ctl=site_storepassport act=logoutwebpos}>?type=outlog&mem=logout" style="color:#000000;">退出会员</a>
                  
             </div><{/if}></td>
              </tr>
@@ -896,90 +898,119 @@ window.addEvent('domready', function(){
     //账户余额付款
     $('add_yuamount').addEvent("click",function(E){
             var dda;
-            dda = document.getElementById('dd_list').innerText;
+            dda = document.getElementById('webpos_password').value;
             if(dda == ''){
                 alert('请先输入会员密码！');
                 return false;
             }
+            
             <{if !$member.uname}>
-                alert('请先登录会员！');
-                return false;
-            <{/if}>
-            var is_buy      = 1,
-                other_pay   = 0,
-                other_print = '',
-                other_cz    = '<{$iscz_date_md}>';
-            //判断是否为充值卡商品，如果是将不允许使用该支付方式    
-             if(other_cz == 1 || other_cz == 2){
-                 alert('您好，购物车有充值卡商品，请使用刷卡或现金支付！');
-                return false;
-             }
-            // 判断是否使用其他方式购买
-            if ( !checkPreMoney() ) {
-                var _dom  = document.getElementsByName('other_pay')[0];
-                var _doms = document.getElementsByName('other_pay')[1];
-                
-                if ( !_dom.checked ) {
-                    if(window.confirm("确认余额+刷卡付款？")){
-                        
-                    }else{
-                        return false;
-                    }
-                    other_print = '余额付款+刷卡付款';
-                    other_pay   = 2;
-                } else if( !_doms.checked ) {
-                    if(window.confirm("确认余额+刷卡付款？")){
-                        
-                    }else{
-                        return false;
-                    }
-                    other_print = '余额付款+现金付款';
-                    other_pay   = 1;
-                }else{
-                    other_print = '账号余额付款';
-                }
-                
-            }
-            if ( is_buy == 0 ) {
-                alert('预存款不够完成本次支付,请勾选上现金/刷卡方式');
-                return false;
-            }
-                var bn  = this.value,
-                url = '<{link app=b2c ctl=site_order act=create}>',
-                bn_add_info = $$("div .bn_add_info");
-                
-                var myRequest = new Request.JSON({
-                    url         : url,
-                    method      : 'post',
-                    onRequest   : function() {
-			            bn_add_info.set('html', '正在生成订单……');
+            alert('请先登录会员！');
+            return false;
+        	<{/if}>
+        	
+            var password = dda;
+            var url = '<{link app=b2c ctl=site_storepassport act=webpos_passwordcheck}>';
+            var ps_add_info = $$(".dd_add_info");
+            	
+                var myRequest1 = new Request.JSON({
+                    url: url,
+                    method: 'post',
+                    onRequest: function(){
+                        ps_add_info.set('html','');
                     },
-			        onSuccess   : function(responseText){
-                                    var _order_id = responseText.redirect.match(/\d+/)[0];
-                                    var storeprint  = "<{$local_store.local_name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name_new}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收：<{$aCart.promotion_subtotal|cur_odr}>\n付款方式："+other_print+"\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.tel}>\n" 
-                                    bn_add_info.set('html','订单生成成功……');
-                                    try {
-                                        window.CallCSharpMethod("softprint",storeprint);
-                                    } catch(e) {}
-			    	    winReload();
+                    onSuccess: function(responseText){
+                        if(responseText.ret == "会员密码正确!"){
+                             ps_add_info.set('html',responseText.ret);
+                             var is_buy      = 1,
+                             other_pay   = 0,
+                             other_print = '',
+                             other_cz    = '<{$iscz_date_md}>';
+                         //判断是否为充值卡商品，如果是将不允许使用该支付方式    
+                          if(other_cz == 1 || other_cz == 2){
+                              alert('您好，购物车有充值卡商品，请使用刷卡或现金支付！');
+                             return false;
+                          }
+                         // 判断是否使用其他方式购买
+                         if ( !checkPreMoney() ) {
+                             var _dom  = document.getElementsByName('other_pay')[0];
+                             var _doms = document.getElementsByName('other_pay')[1];
+                             
+                             if ( !_dom.checked ) {
+                                 if(window.confirm("确认余额+刷卡付款？")){
+                                     
+                                 }else{
+                                     return false;
+                                 }
+                                 other_print = '余额付款+刷卡付款';
+                                 other_pay   = 2;
+                             } else if( !_doms.checked ) {
+                                 if(window.confirm("确认余额+刷卡付款？")){
+                                     
+                                 }else{
+                                     return false;
+                                 }
+                                 other_print = '余额付款+现金付款';
+                                 other_pay   = 1;
+                             }else{
+                                 other_print = '账号余额付款';
+                             }
+                             
+                         }
+                         if ( is_buy == 0 ) {
+                             alert('预存款不够完成本次支付,请勾选上现金/刷卡方式');
+                             return false;
+                         }
+                             var bn  = this.value,
+                             url = '<{link app=b2c ctl=site_order act=create}>',
+                             bn_add_info = $$("div .bn_add_info");
+                             
+                             var myRequest = new Request.JSON({
+                                 url         : url,
+                                 method      : 'post',
+                                 onRequest   : function() {
+             			            bn_add_info.set('html', '正在生成订单……');
+                                 },
+             			        onSuccess   : function(responseText){
+                                                 var _order_id = responseText.redirect.match(/\d+/)[0];
+                                                 var storeprint  = "<{$local_store.local_name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name_new}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收：<{$aCart.promotion_subtotal|cur_odr}>\n付款方式："+other_print+"\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.tel}>\n" 
+                                                 bn_add_info.set('html','订单生成成功……');
+                                                 try {
+                                                     window.CallCSharpMethod("softprint",storeprint);
+                                                 } catch(e) {}
+             			    	    winReload();
+                                 },
+             			        onFailure: function(){
+             			            bn_add_info.set('html','订单生成失败，检查您的余额是否足够！');
+                                 }
+                             });
+                             var data    = 'purchase[addr_id]=<{$def_addr.addr_id}>';
+                                 data   += '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>';
+                                 data   += '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.tel}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}';
+                                 data   += '&payment[pay_app_id]={"pay_app_id":"deposit","payment_name":"预存款"}';
+                                 data   += '&payment[tax_type]=false&yucont=1';
+                                 data   += '&payment[is_tax]=false&payment[tax_content]=商品清单&is_store=1';
+                                 data   += '&other_pay=' + other_pay;
+                                 data   += '&branch_id=<{$local_store.branch_id}>';
+                                 data   += '&is_auto_complete=true';
+                                 data   += '&branch_name_user=<{$local_store.name}>';
+                                 data   += '&staff_name=<{$staff_name}>';
+                                 data   += '&staff=<{$staff}>';
+                             myRequest.send(data);
+                        }
+                        if(responseText.ret == "会员密码错误!"){
+                        	ps_add_info.set('html',responseText.ret);
+                        	alert('会员密码错误!');
+                            return false;
+                        }
+                       
                     },
-			        onFailure: function(){
-			            bn_add_info.set('html','订单生成失败，检查您的余额是否足够！');
+                    onFailure: function(){
+                        ps_add_info.set('html','');
                     }
                 });
-                var data    = 'purchase[addr_id]=<{$def_addr.addr_id}>';
-                    data   += '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>';
-                    data   += '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.tel}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}';
-                    data   += '&payment[pay_app_id]={"pay_app_id":"deposit","payment_name":"预存款"}';
-                    data   += '&payment[tax_type]=false&yucont=1';
-                    data   += '&payment[is_tax]=false&payment[tax_content]=商品清单&is_store=1';
-                    data   += '&other_pay=' + other_pay;
-                    data   += '&branch_id=<{$local_store.branch_id}>';
-                    data   += '&is_auto_complete=true';
-                    data   += '&branch_name_user=<{$local_store.name}>';
-                    data   += '&staff_name=<{$staff_name}>';
-                    data   += '&staff=<{$staff}>';
-                myRequest.send(data);
+                var data = "password=" + password;
+                myRequest1.send(data);                                    
     });
     
     //现金付款

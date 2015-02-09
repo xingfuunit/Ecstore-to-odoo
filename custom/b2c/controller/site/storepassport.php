@@ -384,6 +384,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $pagedata['signup_url'] = $this->gen_url(array('app'=>'b2c','ctl'=>'site_passport','act'=>'signup'));
         $pagedata['lost_url'] = $this->gen_url(array('app'=>'b2c','ctl'=>'site_passport','act'=>'lost'));
         $pagedata['loginName'] = $_COOKIE['loginName'];
+        $pagedata['loginStaff'] = $_COOKIE['loginStaff'];
         #设置回调函数地址
         if($_GET['mini_passport']==1)
         {
@@ -586,6 +587,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
        //hack by Jason 门店店员登陆后自动登陆成会员店员绑定的会员账号end
        $this->userObject->set_member_session_webpos($local_store_listData);
        $this->set_cookie('loginName',$post['uname'],time()+31536000);//用于记住密码
+       $this->set_cookie('loginStaff',$post['uname'],time()+31536000);//hack by Jason 门店店员名写入cookie
        $this->set_cookie('loginType','store',time()+31536000);//hack by Jason 门店登录的标志写入cookie中
        $this->app->model('cart_objects')->setCartNum();
        app::get('b2c')->model('local_staff')->update(array('logintime'=> time()),array('staff_id'=>$_SESSION['account']['staff']));
@@ -1158,8 +1160,11 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         if(!$url){
             $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         }
-        $this->unset_member();
-        $this->app->model('cart_objects')->setCartNum($arr);
+        $staff = app::get('b2c')->model('local_staff')->getRow('*',array('login_name'=>$_COOKIE['loginStaff']));
+        if($staff['member_id'] != $_COOKIE['S']['MEMBER'] || $_GET['mem'] == 'logout'){
+        	$this->unset_member();
+        	$this->app->model('cart_objects')->setCartNum($arr);
+        }        
         $this->redirect($url);
     }
     
@@ -1383,7 +1388,10 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
             
             $jieban_id = $_POST['jieban_id'];
             $account = app::get('b2c')->model('local_staff')->getList('*',array('staff_id'=>$jieban_id));
-            if(trim($_POST['password']) !== $account[0]['login_password']){
+            $use_pass_data['login_name'] = $account[0]['login_name'];
+            $use_pass_data['createtime'] = $account[0]['ctime'];
+            $login_password = pam_encrypt::get_encrypted_password(trim($_POST['password']),'member',$use_pass_data);
+            if($login_password !== $account[0]['login_password']){
                    echo json_encode(array('ret'=>app::get('b2c')->_('交接员工密码错误，请重试!')));
                    return;
             }
