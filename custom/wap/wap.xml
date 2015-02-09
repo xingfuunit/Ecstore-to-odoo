@@ -12,6 +12,12 @@
         <disable>false</disable>
     </module>
     
+    <module controller='lobster'>
+        <name>lobster</name>
+        <title>龙虾活动</title>
+        <disable>false</disable>
+    </module>
+    
     
     <module controller='proinstance'>
         <name>widgetsproinstance</name>

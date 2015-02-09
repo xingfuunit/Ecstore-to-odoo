@@ -74,6 +74,7 @@
         <permission id="sales" display='true' parent='0' workground='b2c.wrokground.sale'>订单促销</permission>
         <permission id="salesgood" display='true' parent='0' workground='b2c.wrokground.sale'>商品促销</permission>
         <permission id="salescoupon" display='true' parent='0' workground='b2c.wrokground.sale'>优惠券</permission>
+        <permission id="weixin" display='true' parent='0' workground='b2c.wrokground.sale'>微信促销</permission>
         <permission id="salesfororder" display='true' parent='0' workground='b2c.wrokground.sale'>优惠券</permission>
         <!--报表-->
         <permission id="analysis" display='true' parent='0' workground='b2c.wrokground.analysis'>经营概况</permission>
@@ -181,15 +182,15 @@
             <menu controller='admin_sales_coupon' action='add' permission='salescoupon' display='false' order='60'>添加优惠券</menu>
             <menu controller='admin_sales_coupon' action='index' permission='salescoupon' display='true' order='50'>优惠券列表</menu>
             <menu controller='admin_sales_coupon_exchange' action='index' permission='salescoupon' display='true' order='70'>积分兑换优惠券</menu>
-    		<menu controller='admin_sales_coupon_send' action='index' permission='salescoupon' display='true' order='80'>发送优惠券</menu>
+            <menu controller='admin_sales_coupon_send' action='index' permission='salescoupon' display='true' order='80'>发送优惠券</menu>
             <menu controller='admin_sales_coupon_send' action='item' permission='salescoupon' display='true' order='80'>发送优惠券列表</menu>
-
         </menugroup>
-        
         
         <menugroup name="微信">
             <menu controller='admin_weixin_lottery' action='index' permission='weixin' display='true' order='80'>微信抽奖中奖名单</menu>
+            <menu controller='admin_weixin_lottery' action='lobster_list' permission='weixin' display='true' order='80'>龙虾集赞活动中奖名单</menu>
 		</menugroup>
+		
         <menugroup name="凑单">
             <menu controller='admin_sales_fororder' action='index' permission='salesfororder' display='true' order='80'>凑单功能配置</menu>
         </menugroup>
