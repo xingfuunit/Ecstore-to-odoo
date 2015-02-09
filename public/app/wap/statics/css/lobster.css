@@ -1,0 +1,91 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+html, body {
+	height: 100%;
+}
+ol, ul li{
+	list-style: none;
+}
+
+body {
+	font-family: Helvetica, 'STHeiti STXihei', 'Microsoft JhengHei', 'Microsoft YaHei', Tohoma, Arial;
+	margin:0 auto;
+	background-color: #FFF;
+}
+.container {
+	height: 100%;
+	background: transparent;
+	margin:0 auto;
+	width: 98%;
+	max-width: 640px;
+}
+
+
+/**join_lobster  **/
+.join_head1{background: url("../images/lobster/ban_bak1.jpg") no-repeat;height: 73px;font-weight: 600;font-size: 1.3em; }
+.join_head1 .j_title { line-height: 70px;overflow:hidden; margin-left: 10%;}
+.join_head1 .j_title span{line-height: 70px;}
+
+.join_head2{background: url("../images/lobster/ban_bak2.jpg") no-repeat;height: 92px;font-weight: 600;font-size: 1.3em; }
+.join_head2 .j_title2{line-height: 92px;overflow:hidden; margin-left: 10%;}
+
+.join_body{background: url(../images/lobster/back.jpg) no-repeat;height: 100%; }
+.join_body .join_tips{color: #f96706; margin-left:10%; height: 60px; line-height: 60px;font-size: 0.8em;font-weight: 600;}
+.join_body .join_sel_tips{color: #f96706; margin-left:10%; height: 30px; line-height: 30px;font-size: 1em;font-weight: 500;}
+
+.join_body .join_gift {margin-left: 13%;}
+.join_body .join_gift ul{}
+.join_body .join_gift ul li{width: 40%;height: 20%;float: left; padding-left: 2%;padding-right: 5%;position: relative;}
+.join_body .join_gift ul li .join_gift_img {margin-right:7%;margin-bottom: 7%;}
+.join_body .join_gift ul li .join_gift_img_sel{width: 20%; position: absolute; top: -0.1em;display: none;}
+.join_body .join_gift  ul li img{width: 100%; }
+.join_body .join_tips2 {color: #f96706; margin-left: 10%; }
+.join_body .join_tips_detail {margin-left: 10%;color: #141414; font-size: 1.3em;}
+.join_body .join_tips_detail img{width: 4%; line-height:4vw; }
+.join_body .join_button { width: 100%;margin-top: 7%;text-align: center;}
+.join_body .join_button img{width: 34% ;}
+
+
+/** lobster_index  **/
+.lobster_banner img{width: 100%;margin-bottom: -6px;}
+.lobster_body{background: url('../images/lobster/lobster_back2.png'); width: 100%;height:110%;  text-align: center; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%;   background-size:100% 100%;  }
+.lobster_body .bnt1 img{ width: 43%;}
+.lobster_body .song_txt{font-size: 1.3em ;margin-bottom: 5%; margin-top: 5%}
+.lobster_body .song_txt span{font-size: 1.6em; color:#fd0202 ;}
+.lobster_body .song_tips {font-size: 1em ; width: 75%;margin: 0 auto; text-align: center; margin-bottom: 3%}
+.lobster_body .bnt2 img{width: 44%;}
+.lobster_body .bnt3 {float: right; margin-top: 5%}
+.lobster_body .bnt3 img{width:60%;}
+.lobster_body .lobster_comment{width: 80%; margin: 0 auto;padding: 1% 0;}
+.lobster_body .lobster_comment .c_header{width: 100%;height:7% ;background: #f17802; color: #FFF;margin-top: 8%;line-height: 2.3em;}
+.lobster_body .lobster_comment .comment_area{overflow-y:scroll; max-height: 12em;margin-top: 0.5em;}
+.lobster_body .lobster_comment .u_head{float: left;}
+.lobster_body .lobster_comment .u_head img{width: 3.2em; margin-right: 0.5em}
+.lobster_body .lobster_comment .lobster_com_list{margin-top: 6%; max-height: 40%; }
+.lobster_body .lobster_comment .com_u_det{text-align: left;}
+.lobster_body .lobster_comment .com_u_det .u_name{font-weight: 600; font-size: 1em}
+.lobster_body .lobster_comment .com_u_det .u_name .c_time{margin-left: 2%; font-size: 0.5em}
+.lobster_body .lobster_comment .com_u_det .u_comment{font-size: 0.9em;}
+.lobster_body .lobster_comment .com_line{height:1px;width:100%;background:#000;overflow:hidden; margin-top: 6%;}
+
+/** member_lobster **/
+.member_lobster{ background: url('../images/lobster/member_lobster_back.png');no-repeat;height: width: 100%;height:110%;  text-align: center; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%;   background-size:100% 100%; text-align: center; position: relative;}
+.member_lobster .zan_txt{position: absolute; top:26%; left: 12%; width: 70%; color: #FFF; font-size: 1.5em; font-weight: 600;  background: url('../images/lobster/back_04.png'); -moz-background-size:100% 100%;   background-size:100% 100%; line-height: 1.2em; padding: 0.5em}
+.member_lobster .zan_txt span{color: #fff496; font-size: 1.8em}
+.member_lobster .zan_txt img{width:65%;}
+
+.member_lobster .get_gift_btn img{width: 50%;margin-top: 2%;}
+
+/** zan_success **/
+.zan_success { background: url('../images/lobster/z_success_b.png');no-repeat;height: width: 100%;height:110%;  text-align: center; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%;   background-size:100% 100%; text-align: center; position: relative;}
+.zan_success .success_txt{position: absolute; top:26%; left: 12%; width: 70%; color: #FFF; font-size: 1.5em; font-weight: 600;  background: url('../images/lobster/z_success_m.png'); -moz-background-size:100% 100%;   background-size:100% 100%; line-height: 1.2em; padding: 0.5em}
+.zan_success .success_txt .span1{font-size: 0.7em;font-weight: 600;}
+.zan_success .success_txt span{color: #000; }
+
+.zan_success .iwant_btn img{width: 70%;margin-top: 2%;}

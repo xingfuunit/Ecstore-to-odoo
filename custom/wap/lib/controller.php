@@ -86,6 +86,12 @@ class wap_controller extends base_controller
     public $is_splash = false;
 	
 	public $openid = '';
+	
+	/**
+	 * oauth2方式 accesstoken 
+	 */
+	public $accesstoken_oauth2 = '';
+	
     /*
      * 构造
      * @var object $app
@@ -118,6 +124,7 @@ class wap_controller extends base_controller
                 $bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>$_GET['state'],'status'=>'active'));
                 if( !empty($bind) &&  kernel::single('weixin_wechat')->get_oauth2_accesstoken($bind['id'],$_GET['code'],$result) ){
                     $openid = $result['openid'];
+                    $this->accesstoken_oauth2 = $result['access_token'];
                 }
             }
             if($openid){
