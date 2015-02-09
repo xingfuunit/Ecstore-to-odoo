@@ -46,8 +46,12 @@ class b2c_ctl_wap_paycenter extends wap_frontpage{
         //获取openid结束
 
         if(!$sdf){
-            $this->_response->set_http_response_code(404);
-            $this->_response->set_body(app::get('b2c')->_('订单号：') . $order_id . app::get('b2c')->_('不存在！'));
+        	
+            $url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_member','act'=>'wallet','arg0'=>''));
+            header('Location:'.$url);
+            
+            //$this->_response->set_http_response_code(404);
+            //$this->_response->set_body(app::get('b2c')->_('订单号：') . $order_id . app::get('b2c')->_('不存在！'));
             return;
         }
 
