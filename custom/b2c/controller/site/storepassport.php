@@ -614,16 +614,19 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
     public function webpos_passwordcheck()
     {
             $member_id = $_SESSION['account']['member'];
-            $account = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id));
-            $use_pass_data['login_name'] = $account[0]['password_account'];
+            $account = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id,'login_type'=>'local'));
+            $use_pass_data['login_name'] = $account[0]['login_account'];
             $use_pass_data['createtime'] = $account[0]['createtime'];
-            $login_password = pam_encrypt::get_encrypted_password(trim($_POST['password']),'member',$use_pass_data);
-            
-            if($login_password !== $account[0]['login_password']){
-                    echo json_encode(array('ret'=>app::get('b2c')->_('会员密码错误!')));
+            $pay_password = pam_encrypt::get_encrypted_password(trim($_POST['password']),'member',$use_pass_data);
+            if(!$account[0]['pay_password']){
+            	echo json_encode(array('ret'=>app::get('b2c')->_('你还没有设置支付密码!')));
+            	return;
+            }
+            if($pay_password !== $account[0]['pay_password']){
+                    echo json_encode(array('ret'=>app::get('b2c')->_('支付密码错误!')));
                     return;
               }else{
-                    echo json_encode(array('ret'=>app::get('b2c')->_('会员密码正确!')));
+                    echo json_encode(array('ret'=>app::get('b2c')->_('支付密码正确!')));
                     return;
               }
     }

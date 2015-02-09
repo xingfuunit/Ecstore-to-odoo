@@ -920,7 +920,7 @@ window.addEvent('domready', function(){
                         ps_add_info.set('html','');
                     },
                     onSuccess: function(responseText){
-                        if(responseText.ret == "会员密码正确!"){
+                        if(responseText.ret == "支付密码正确!"){
                              ps_add_info.set('html',responseText.ret);
                              var is_buy      = 1,
                              other_pay   = 0,
@@ -998,9 +998,14 @@ window.addEvent('domready', function(){
                                  data   += '&staff=<{$staff}>';
                              myRequest.send(data);
                         }
-                        if(responseText.ret == "会员密码错误!"){
+                        if(responseText.ret == "支付密码错误!"){
                         	ps_add_info.set('html',responseText.ret);
-                        	alert('会员密码错误!');
+                        	alert('支付密码错误!');
+                            return false;
+                        }
+                        if(responseText.ret == "你还没有设置支付密码!"){
+                        	ps_add_info.set('html',responseText.ret);
+                        	alert('你还没有设置支付密码!');
                             return false;
                         }
                        
