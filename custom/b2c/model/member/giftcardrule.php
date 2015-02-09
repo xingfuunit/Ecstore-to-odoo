@@ -156,7 +156,7 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
 
 	    $code = md5(microtime());//md5微妙时间
 	    $code = strtoupper($code);//转大写
-	    $pattern = '/(0|1|O|I)/i';//替换字符“0 1 O I”
+	   	$pattern = '/(0|1|O|I|o|2|Z|i|z)/i';//替换字符“0 1 O I”
 	    $replacement = '';
 	    $code = preg_replace($pattern, $replacement, $code);
 	    $code = str_shuffle($pre_code.$code);//拼接per_code字符串 ,随机打乱
