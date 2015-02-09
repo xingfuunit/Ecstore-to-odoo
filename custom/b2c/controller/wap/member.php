@@ -753,6 +753,28 @@ class b2c_ctl_wap_member extends wap_frontpage{
     }
 
     function deposit(){
+    	//判断微信来源时，获取openid
+    	$from_weixin = kernel::single('weixin_wechat')->from_weixin();
+    	if ($from_weixin) {
+            $wxpayjsapi_conf = app::get('ectools')->getConf('weixin_payment_plugin_wxpayjsapi');
+            $wxpayjsapi_conf = unserialize($wxpayjsapi_conf);
+            if(!$_GET['code'])
+            {
+                $return_url = app::get('wap')->router()->gen_url(array('app'=>'b2c','ctl'=>'wap_member','act'=>'deposit','args'=>'','full'=>1));
+                $appId_to_get_code = trim($wxpayjsapi_conf['setting']['appId']);
+                kernel::single('weixin_wechat')->get_code($appId_to_get_code, $return_url);
+            }else{
+                $code = $_GET['code'];
+                $openid = kernel::single('weixin_wechat')->get_openid_by_code($wxpayjsapi_conf['setting']['appId'], $wxpayjsapi_conf['setting']['Appsecret'], $code);
+                if($openid == null)
+                    $this->end(false,  app::get('b2c')->_('获取openid失败'), $this->gen_url(array('app'=>'wap','ctl'=>'default','act'=>'index')));
+            }
+            $this->pagedata['from_url'] = '?openid='.$openid;
+    	}
+    	
+    	
+    	
+    	
         $this->path[] = array('title'=>app::get('b2c')->_('会员中心'),'link'=>$this->gen_url(array('app'=>'b2c', 'ctl'=>'wap_member', 'act'=>'index','full'=>1)));
         $this->path[] = array('title'=>app::get('b2c')->_('预存款充值'),'link'=>'#');
         $GLOBALS['runtime']['path'] = $this->path;

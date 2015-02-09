@@ -1,7 +1,7 @@
 <div class="full-screen">
     <header>
     <div class="a-bar">
-        <a href="<{link app=b2c ctl=wap_member act=wallet}>" class="a-back">
+        <a href="javascript:history.back()" class="a-back">
             <i class="arr left"></i>
             返回
         </a>
@@ -10,7 +10,7 @@
         </div>
     </div>
     </header>
-    <form action='<{link app="b2c" ctl="wap_paycenter" act="dopayment" arg0="recharge"}>' method="post">
+    <form action='<{link app="b2c" ctl="wap_paycenter" act="dopayment" arg0="recharge"}><{$from_url}>' method="post">
     <input type="hidden" name="payment[member_id]" value="<{$member_id}>" />
     <input type="hidden" name="payment[return_url]" value="<{$return_url}>" />
     <input type="hidden" name="payment[pay_app_id]" />
