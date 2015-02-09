@@ -4,7 +4,7 @@
   <div id="member_prepaid" class="member-prepaid">
   	<div class="member-tabs">
   	  <a href="<{link app=b2c ctl='site_member' act='deposit'}>" <{if $p_type == 'deposit'}> class ='active'<{/if}> ><em><{t}>预存款充值<{/t}></em></a>
-      <a href="<{link app=b2c ctl='site_member' act='giftcard'}>" <{if $p_type == 'gitcard'}> class ='active'<{/if}> ><em><{t}>礼品卡充值<{/t}></em></a>
+      <a href="<{link app=b2c ctl='site_member' act='giftcard'}>" <{if $p_type == 'gitcard'}> class ='active'<{/if}> ><em><{t}>充值券充值<{/t}></em></a>
     </div>
 
     <div class="member-title">
@@ -20,7 +20,7 @@
           <col style="width:80%">
           <tbody>
             <tr>
-              <td><{t}>输入礼品卡号码<{/t}>：</td>
+              <td><{t}>输入充值券号码<{/t}>：</td>
               <td><input type="text" name="giftcard[gcard_code]" id="" class="x-input" size="25" vtype="required" data-caution="礼品卡号不能为空"></td>
               
             </tr>
