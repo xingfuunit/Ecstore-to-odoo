@@ -86,7 +86,7 @@ class wap_ctl_lobster extends wap_controller{
 		//分享者信息
 		$join_info = $this->lm_model->getrow('*',array('m_id'=>$m_id));
 		
-		$zan_url = $this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'post_zan','full'=>1,'args'=>array('m_id'=>$m_id))));
+		$zan_url = $this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'post_zan','full'=>1,'args'=>array('m_id'=>$m_id))),0,'snsapi_userinfo');
 		
 // 		//是否当前参加用户
 		$wx_info = $this->_get_wx_info();
@@ -347,11 +347,12 @@ class wap_ctl_lobster extends wap_controller{
 	 * 构造  微信 使用的url
 	 * @param unknown_type $url
 	 * @param is_jump 是否跳转
+	 * snsapi_userinfo
 	 */
-	protected function  _build_wx_url($url,$is_jump=0){
+	protected function  _build_wx_url($url,$is_jump=0,$scope='snsapi_base'){
 		$bind = app::get('weixin')->model('bind')->getRow('*',array('eid'=>$this->_state,'status'=>'active'));
 		$path1 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$bind['appid']}&redirect_uri=";
-		$path2 = "&response_type=code&scope=snsapi_base&state={$this->_state}&connect_redirect=1#wechat_redirect";
+		$path2 = "&response_type=code&scope={$scope}&state={$this->_state}&connect_redirect=1#wechat_redirect";
 		
 		$url = $path1.$url.$path2;
 		
