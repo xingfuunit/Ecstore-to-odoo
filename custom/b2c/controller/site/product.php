@@ -494,8 +494,12 @@ class b2c_ctl_site_product extends b2c_frontpage{
     public function ajax_get_product_by_bn(){
     	$this->_response->set_header('Cache-Control', 'no-store, no-cache');
     	
-    	$bn = $_POST['bn'];
-    	$product = app::get('b2c')->model('products')->getList('product_id,goods_id,marketable,store',array('bn'=>trim($bn)));
+//    	$bn = $_POST['bn'];
+//    	$product = app::get('b2c')->model('products')->getList('product_id,goods_id,marketable,store',array('bn'=>trim($bn)));
+    	$bn = trim($_POST['bn']);
+    	$bn = kernel::database()->quote($bn);
+        $product = kernel::database()->select("select product_id,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
+    	
     	if(!$product){
             echo json_encode(array('error'=>app::get('b2c')->_('商品不存在')));
             return;
