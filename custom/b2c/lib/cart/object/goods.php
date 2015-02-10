@@ -1434,7 +1434,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
                     'goods_type' => $row['goods_type'],
                     'name'=> $row['name'],
                     'unit' => $row['unit'],
-                    'name_new' => $new_name[0]['keyword'],
+                    'name_new' => $row['name'],//hack by Jason $new_name['keyword']
                     'consume_score' => 0,
                     'gain_score' => intval($row['gain_score']),
                     'type_setting' => is_array($row['setting']) ? $row['setting'] : @unserialize($row['setting']),
