@@ -86,10 +86,14 @@ class wap_ctl_lobster extends wap_controller{
 		//分享者信息
 		$join_info = $this->lm_model->getrow('*',array('m_id'=>$m_id));
 		
-		$zan_url = $this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'post_zan','full'=>1,'args'=>array('m_id'=>$m_id))),0,'snsapi_userinfo');
+		$zan_url = $this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'post_zan','full'=>1,'args'=>array('m_id'=>$m_id))));
 		
 // 		//是否当前参加用户
 		$wx_info = $this->_get_wx_info();
+		
+		
+		$m_id = 36;
+		$wx_info['openid'] = 'oLWkLj7xSAnBWdX5_X9deCxu2l9Y';
 
 		$cur_join_user = $this->lm_model->getrow('*',array('m_openid'=>$wx_info['openid'],'m_id'=>$m_id));
 		if($cur_join_user){
@@ -104,7 +108,6 @@ class wap_ctl_lobster extends wap_controller{
 			if($cur_join_user['z_count'] >= $this->_zan_success_num){
 				$this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'member_lobster','full'=>1,'args'=>array('m_id'=>$m_id))),1);
 			}
-			
 		}
 		
 		//赞用户
@@ -131,7 +134,7 @@ class wap_ctl_lobster extends wap_controller{
 		$this->pagedata['zan_list'] = $zan_list;
 		$this->pagedata['m_info']=$join_info;
 		$this->pagedata['lobster_rule'] = $this->_follow_url;
-		$this->pagedata['title'] = app::get('b2c')->_('我要免费吃龙虾，快来支持我！ &nbsp; - '.$join_info['m_nick_name']);
+		$this->pagedata['title'] = app::get('b2c')->_('没看错！波士顿大龙虾免费送，只有三千只，快帮我抢~ '.$join_info['m_nick_name']);
 		//是否提示分享
 		$this->pagedata['is_show_share'] = $is_show_share;
 		$this->page('wap/lobster/index.html',true);
@@ -204,6 +207,9 @@ class wap_ctl_lobster extends wap_controller{
 	function zan_success(){
 		$this->pagedata['title'] = app::get('b2c')->_('我要免费吃龙虾，快来支持我！ &nbsp; - 品珍鲜活');
 		
+		$m_id = $this->_request->get_params();
+		$m_id = (int)$m_id[0];
+		
 		$url = $this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'want_join_btn','full'=>1));
 		$this->pagedata['want_join_btn'] =  $this->_build_wx_url($url);
 		$this->page('wap/lobster/zan_success.html',true);
@@ -221,7 +227,7 @@ class wap_ctl_lobster extends wap_controller{
 		
 		$m_user = $this->lm_model->getrow('*',array('m_openid'=>$wx_info['openid']));
 		if($m_user){
-			$url = $this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'index','full'=>1,'args'=>array('m_id'=>$m_id)));
+			$url = $this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'index','full'=>1,'args'=>array('m_id'=>$m_user['m_id'])));
 			$this->_js_alert('你已参加活动',$this->_build_wx_url($url));
 			exit;
 		}
@@ -342,10 +348,10 @@ class wap_ctl_lobster extends wap_controller{
 	 * @param unknown_type $url
 	 * @param is_jump 是否跳转
 	 */
-	protected function  _build_wx_url($url,$is_jump=0,$scope='snsapi_base'){
+	protected function  _build_wx_url($url,$is_jump=0){
 		$bind = app::get('weixin')->model('bind')->getRow('*',array('eid'=>$this->_state,'status'=>'active'));
 		$path1 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$bind['appid']}&redirect_uri=";
-		$path2 = "&response_type=code&scope={$scope}&state={$this->_state}&connect_redirect=1#wechat_redirect";
+		$path2 = "&response_type=code&scope=snsapi_base&state={$this->_state}&connect_redirect=1#wechat_redirect";
 		
 		$url = $path1.$url.$path2;
 		
@@ -355,7 +361,6 @@ class wap_ctl_lobster extends wap_controller{
 			return $url;
 		}
 	}
-	
 	
 	/**
 	 * 为每个自定义 跳转 连接添加  state参数
