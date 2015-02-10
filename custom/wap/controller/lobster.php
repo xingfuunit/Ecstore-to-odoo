@@ -90,10 +90,6 @@ class wap_ctl_lobster extends wap_controller{
 		
 // 		//是否当前参加用户
 		$wx_info = $this->_get_wx_info();
-		
-		
-		$m_id = 36;
-		$wx_info['openid'] = 'oLWkLj7xSAnBWdX5_X9deCxu2l9Y';
 
 		$cur_join_user = $this->lm_model->getrow('*',array('m_openid'=>$wx_info['openid'],'m_id'=>$m_id));
 		if($cur_join_user){
@@ -120,6 +116,7 @@ class wap_ctl_lobster extends wap_controller{
 
 		//获取赞信息
 		$zan_list = $this->lz_model->getlist('*',array('m_id'=>$m_id),0,30,'z_time Desc');
+
 		if($zan_list){
 			foreach($zan_list as $k=> $v){
 				if($v['z_time']){
