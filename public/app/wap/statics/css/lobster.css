@@ -54,7 +54,7 @@ body {
 
 /** lobster_index  **/
 .lobster_banner img{width: 100%;margin-bottom: -6px;}
-.lobster_body{background: url('../images/lobster/lobster_back2.png'); width: 100%;height:110%;  text-align: center; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%;   background-size:100% 100%;  }
+.lobster_body{background: url('../images/lobster/lobster_back2.png'); width: 100%;/*height:110%;*/  text-align: center; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%;   background-size:100% 100%;  }
 .lobster_body .bnt1 img{ width: 43%;}
 .lobster_body .song_txt{font-size: 1.3em ;margin-bottom: 5%; margin-top: 5%}
 .lobster_body .song_txt span{font-size: 1.6em; color:#fd0202 ;}
@@ -64,7 +64,7 @@ body {
 .lobster_body .bnt3 img{width:60%;}
 .lobster_body .lobster_comment{width: 80%; margin: 0 auto;padding: 1% 0;}
 .lobster_body .lobster_comment .c_header{width: 100%;height:7% ;background: #f17802; color: #FFF;margin-top: 8%;line-height: 2.3em;}
-.lobster_body .lobster_comment .comment_area{overflow-y:scroll; max-height: 12em;margin-top: 0.5em;}
+.lobster_body .lobster_comment .comment_area{/*overflow-y:scroll; max-height: 12em; */ margin-top: 0.5em;}
 .lobster_body .lobster_comment .u_head{float: left;}
 .lobster_body .lobster_comment .u_head img{width: 3.2em; margin-right: 0.5em}
 .lobster_body .lobster_comment .lobster_com_list{margin-top: 6%; max-height: 40%; }
