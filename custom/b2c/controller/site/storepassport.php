@@ -428,11 +428,11 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         //_POST过滤
         $post = utils::_filter_input($_POST);
         unset($_POST);
-        	$userData = array(
-        			'login_account' => $post['uname'],
-        	);
-        
-        
+        $userData = array(
+        	'login_account' => $post['uname'],
+        	'login_type' => is_numeric($post['uname'])?'card':'local',
+        );
+                
         $member_id = kernel::single('pam_passport_site_basic')->login_webpos($userData,'',$msg);
         if(!$member_id){ 
         	if(is_numeric($post['uname'])){
@@ -1438,7 +1438,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
      (
      'pam_account' => array
         (
-            'login_type' => 'cart',
+            'login_type' => 'card',
             'login_account' => $member_card['card_number'],
             'login_password' => pam_encrypt::get_encrypted_password(trim($member_card['card_password']),'member',$use_pass_data),
             'password_account' => $member_card['card_number'],

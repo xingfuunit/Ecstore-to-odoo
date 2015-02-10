@@ -77,6 +77,12 @@ $db['member_card']=array (
       'in_list' => true,
       'default_in_list' => true,
     ),
+    'card_etc' =>
+    array (
+      'type'=>'varchar(32)',
+      'label' => app::get('b2c')->_('会员卡批次'),
+      'comment' => app::get('b2c')->_('会员卡批次'),
+    ),
     'card_state' =>
     array (
       'type' => 'tinyint(1)',
