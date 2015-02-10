@@ -14,9 +14,10 @@ class wap_mdl_lobster_member extends dbeav_model{
 	
 	//礼品数据
 	public $_gift_list = array(
-			'1' => '龙虾',
+			'1' => '龙虾卷',
 			'2' => '满200减80优惠券',
-			'3' => '20元话费',
+			'3'	=> '奇异果卷',
+			'4' => '20元话费',
 	);
 	
 	//地区数据
