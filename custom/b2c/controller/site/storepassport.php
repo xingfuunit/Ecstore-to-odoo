@@ -428,19 +428,14 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         //_POST过滤
         $post = utils::_filter_input($_POST);
         unset($_POST);
+        $userPassport = kernel::single('b2c_user_passport');
         $userData = array(
         	'login_account' => $post['uname'],
-        	'login_type' => is_numeric($post['uname'])?'card':'local',
+        	'login_type'=> $userPassport->get_login_account_type($post['uname']),
         );
                 
         $member_id = kernel::single('pam_passport_site_basic')->login_webpos($userData,'',$msg);
         if(!$member_id){ 
-        	if(is_numeric($post['uname'])){
-        		$userData = array(
-        				'login_account' => $post['uname'],
-        				'login_type' => 'card',
-        		);
-        	}
         	$member_card = $this->app->model('member_card')->getList('*',array('card_number'=>$userData['login_account'],'card_state'=>0));
         	if($member_card){
         		$member_id = $this->create_card_member($member_card[0]);       		
@@ -459,8 +454,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $b2c_members_model = $this->app->model('members');
         $member_point_model = $this->app->model('member_point');
 
-        $member_data = $b2c_members_model->getList( 'member_lv_id,experience,point', array('member_id'=>$member_id) );
-        
+        $member_data = $b2c_members_model->getList( 'member_lv_id,experience,point', array('member_id'=>$member_id) );        
        
         $member_data = $member_data[0];
         $member_data['order_num'] = $this->app->model('orders')->count( array('member_id'=>$member_id) );
@@ -632,8 +626,8 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
     
     public function webpos_passwordcheck()
     {
-            $member_id = $_SESSION['account']['member'];
-            $account = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id,'login_type'=>'local'));
+            $member_id = $_SESSION['account']['member'];           
+            $account = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id));
             $use_pass_data['login_name'] = $account[0]['login_account'];
             $use_pass_data['createtime'] = $account[0]['createtime'];
             $pay_password = pam_encrypt::get_encrypted_password(trim($_POST['password']),'member',$use_pass_data);
@@ -1456,16 +1450,28 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
             'regtime' => $use_pass_data['createtime'],
         )
      		);
-      
+      $db = kernel::database();
+      $transaction_status = $db->beginTransaction();
       if( !$member_id = $userPassport->save_members($saveData,$msg) ){
-          $this->end(true, app::get('b2c')->_('添加失败！'));
-      }else{
-      	$msg = '会员卡预存款';
-      	$objAdvances = $this->app->model("member_advance");
-      	$objAdvances->add($member_id, $member_card['card_advance'], app::get('b2c')->_('会员卡预存款'), $msg);
+      	  $db->rollback();
+          $this->end(true, app::get('b2c')->_('添加失败！请重试'));
+      }else{     	
+      	if($member_card['card_advance']){
+      		$msg = '会员卡预存款';
+      		$objAdvances = $this->app->model("member_advance");
+      		if(!$objAdvances->add($member_id, $member_card['card_advance'], app::get('b2c')->_('会员卡预存款'), $msg)){
+      			$db->rollback();
+      			$this->end(true, app::get('b2c')->_('添加预存款失败！请重试'));
+      		}
+      	}
       	
-      	$member_point = $this->app->model('member_point');
-      	$member_point->change_point($member_id,$member_card['card_point'],$msg,'register_score',2,$member_id,$member_id,'exchange');
+      	if($member_card['card_point']){
+      		$member_point = $this->app->model('member_point');
+      		if(!$member_point->change_point($member_id,$member_card['card_point'],$msg,'register_score',2,$member_id,$member_id,'exchange')){
+      			$db->rollback();
+      			$this->end(true, app::get('b2c')->_('添加积分失败！请重试'));
+      		}
+      	}      	
       	
       	//增加会员同步 2012-5-15
       	if( $member_rpc_object = kernel::service("b2c_member_rpc_sync") ) {
