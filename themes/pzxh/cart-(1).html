@@ -973,7 +973,7 @@ window.addEvent('domready', function(){
                                  },
              			        onSuccess   : function(responseText){
                                                  var _order_id = responseText.redirect.match(/\d+/)[0];
-                                                 var storeprint  = "<{$local_store.local_name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name_new}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收：<{$aCart.promotion_subtotal|cur_odr}>\n付款方式："+other_print+"\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.tel}>\n" 
+                                                 var storeprint  = "<{$local_store.local_name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收：<{$aCart.promotion_subtotal|cur_odr}>\n付款方式："+other_print+"\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
                                                  bn_add_info.set('html','订单生成成功……');
                                                  try {
                                                      window.CallCSharpMethod("softprint",storeprint);
@@ -986,7 +986,7 @@ window.addEvent('domready', function(){
                              });
                              var data    = 'purchase[addr_id]=<{$def_addr.addr_id}>';
                                  data   += '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>';
-                                 data   += '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.tel}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}';
+                                 data   += '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.phone}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}';
                                  data   += '&payment[pay_app_id]={"pay_app_id":"deposit","payment_name":"预存款"}';
                                  data   += '&payment[tax_type]=false&yucont=1';
                                  data   += '&payment[is_tax]=false&payment[tax_content]=商品清单&is_store=1';
@@ -1054,7 +1054,7 @@ window.addEvent('domready', function(){
 			    onSuccess: function(responseText){
                                 var _order_id = responseText.redirect.match(/\d+/)[0];
                                 bn_add_info.set('html','订单生成成功……');
-                                var storeprint ="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name_new}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收现金："+_sex+"\n找零："+_tol+"\n付款方式：现金支付\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.tel}>\n" 
+                                var storeprint ="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收现金："+_sex+"\n找零："+_tol+"\n付款方式：现金支付\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
                                 try {
                                         window.CallCSharpMethod("softprint",storeprint);
                                 } catch(e) {}
@@ -1066,7 +1066,7 @@ window.addEvent('domready', function(){
                         });
                         var data = 'purchase[addr_id]= <{$def_addr.addr_id}>&purchase[def_area]=&md5_cart_info=49fb00721dbddf50fd122a2e11ad6057&extends_args={'+
                                    '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>'+
-                                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.tel}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}'+
+                                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.phone}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}'+
                                 '&payment[pay_app_id]={"pay_app_id":"xianjin","payment_name":"现金付款"}&payment[currency]=&payment[tax_company]='+
                                 '&payment[tax_content]=&payment[tax_type]=false'+
                                 '&payment[is_tax]=false&payment[tax_content]=商品清单&coupon=&memo=&is_store=1&is_store_cz=<{$iscz_date_md}>';
@@ -1102,7 +1102,7 @@ window.addEvent('domready', function(){
 			    },
 			    onSuccess: function(responseText){
                                 var _order_id = responseText.redirect.match(/\d+/)[0];
-                                var storeprint ="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name_new}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收：<{$aCart.promotion_subtotal|cur_odr}>\n付款方式：刷卡支付\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.tel}>\n" 
+                                var storeprint ="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收：<{$aCart.promotion_subtotal|cur_odr}>\n付款方式：刷卡支付\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
                                 bn_add_info.set('html','订单生成成功……');
                                 try {
                                         window.CallCSharpMethod("softprint",storeprint);
@@ -1115,7 +1115,7 @@ window.addEvent('domready', function(){
                         });
                         var data = 'purchase[addr_id]= <{$def_addr.addr_id}>&purchase[def_area]=&md5_cart_info=49fb00721dbddf50fd122a2e11ad6057&extends_args={'+
                                    '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>'+
-                                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.tel}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}'+
+                                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.phone}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}'+
                                 '&payment[pay_app_id]={"pay_app_id":"shuaka","payment_name":"刷卡付款"}&payment[currency]=&payment[tax_company]='+
                                 '&payment[tax_content]=&payment[tax_type]=false'+
                                 '&payment[is_tax]=false&payment[tax_content]=商品清单&coupon=&memo=&is_store=1&is_store_cz=<{$iscz_date_md}>';
@@ -1147,7 +1147,7 @@ window.addEvent('domready', function(){
 			    onSuccess: function(responseText){
                                 
                                 var _order_id = responseText.redirect.match(/\d+/)[0];
-                                var storeprint ="<{$local_store.name}>退货单\n退货员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name_new}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n总计：<{$aCart.promotion_subtotal|cur_odr}>\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n退货单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.tel}>\n" 
+                                var storeprint ="<{$local_store.name}>退货单\n退货员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n总计：<{$aCart.promotion_subtotal|cur_odr}>\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n退货单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
                                 bn_add_info.set('html','退货成功……');
                                 try {
                                         window.CallCSharpMethod("softprint",storeprint);
@@ -1160,7 +1160,7 @@ window.addEvent('domready', function(){
                         });
                         var data = 'local_id= <{$local_store.local_id}>&local_name=<{$local_store.local_name}>'+
                                    '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>'+
-                                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.tel}>'+
+                                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.phone}>'+
                                 '&is_store=1';
                         myRequest.send(data);
                    }
@@ -1184,7 +1184,7 @@ window.addEvent('domready', function(){
 			    },
 			    onSuccess: function(responseText){
                                 var _order_id = responseText.redirect.match(/\d+/)[0];
-                                var storeprint ="<{$local_store.name}>报损单\n报损员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name_new}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n总计：<{$aCart.promotion_subtotal|cur_odr}>\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n报损单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.tel}>\n" 
+                                var storeprint ="<{$local_store.name}>报损单\n报损员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n总计：<{$aCart.promotion_subtotal|cur_odr}>\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n报损单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
                                 bn_add_info.set('html','报损成功……');
                                 try {
                                         window.CallCSharpMethod("softprint",storeprint);
@@ -1197,7 +1197,7 @@ window.addEvent('domready', function(){
                         });
                         var data = 'local_id= <{$local_store.local_id}>&local_name=<{$local_store.local_name}>'+
                                    '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>'+
-                                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.tel}>'+
+                                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.phone}>'+
                                 '&is_store=2';
                         myRequest.send(data);
                    }
