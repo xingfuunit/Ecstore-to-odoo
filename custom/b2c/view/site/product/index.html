@@ -244,13 +244,13 @@ function inputCheck(input, options) {
     var tips = new Tips(input);
     var pre = '';
     var msg = '';
-	
+	/*
 	var xiangou_one = document.getElementsByName("limit_nums")[0].value;
 	if(xiangou_one && value != xiangou_one){
 		input.value = xiangou_one;
 		alert('该产品参加了活动,每人限购 '+xiangou_one+' 件!');		
 		return;
-	}
+	}*/
 	
     if(options.store && options.store - value <= 0) {
         pre = '库存有限，';
