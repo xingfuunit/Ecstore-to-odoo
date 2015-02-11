@@ -434,26 +434,30 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         );
                 
         $member_id = kernel::single('pam_passport_site_basic')->login_webpos($userData,'',$msg);
-        if(!$member_id){ 
+
+    	if(!$member_id){ 
         	$member_card = $this->app->model('member_card')->getList('*',array('card_number'=>$userData['login_account'],'card_state'=>0));
         	if($member_card){
-        		$member_id = $this->create_card_member($member_card[0]);       		
-        		if(!$member_id){
-        			$msg = app::get('b2c')->_('登陆错误,请重试');
-        			$this->splash('failed',null,$msg,true);exit;
+        		if($member_card[0]['expired_time'] > time() || !$member_card[0]['expired_time']){//判断如果是会员卡有没有超过会员卡的失效时间
+        			$member_id = $this->userPassport->create_card_member($member_card[0]);
+        			if(!$member_id){
+        				$msg = app::get('b2c')->_('登陆错误,请重试');
+        				$this->splash('failed',null,$msg,true);exit;
+        			}
+        			$member_id = kernel::single('pam_passport_site_basic')->login_webpos($userData,'',$msg);
         		}else{
-        			$this->app->model('member_card')->update(array('card_state'=>1),array('card_id'=>$member_card[0]['card_id']));
-        		}
+        			$msg = app::get('b2c')->_('该会员卡已超过了激活的时间');
+        			$this->splash('failed',null,$msg,true);exit;
+        		} 
         	}else{
         		$msg = app::get('b2c')->_('登陆账号错误');
         		$this->splash('failed',null,$msg,true);exit;
-        	}
-            
+        	}           
         }
         $b2c_members_model = $this->app->model('members');
         $member_point_model = $this->app->model('member_point');
 
-        $member_data = $b2c_members_model->getList( 'member_lv_id,experience,point', array('member_id'=>$member_id) );        
+        $member_data = $b2c_members_model->getList( 'member_lv_id,experience,point', array('member_id'=>$member_id) );   
        
         $member_data = $member_data[0];
         $member_data['order_num'] = $this->app->model('orders')->count( array('member_id'=>$member_id) );
@@ -1419,65 +1423,6 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
             }
         }
         
-    }
-    
-    //add by Jason通过会员卡注册会员
-    function create_card_member($member_card){
-      $userPassport = kernel::single('b2c_user_passport');
-      $arrDefCurrency = app::get('ectools')->model('currency')->getDefault();
-      $use_pass_data['login_name'] = $member_card['card_number'];
-      $use_pass_data['createtime'] = time();
-      $saveData = array
-     (
-     'pam_account' => array
-        (
-            'login_type' => 'local',
-            'login_account' => $member_card['card_number'],
-            'login_password' => pam_encrypt::get_encrypted_password(trim($member_card['card_password']),'member',$use_pass_data),
-            'password_account' => $member_card['card_number'],
-            'disabled' => 'false',
-            'createtime' => $use_pass_data['createtime'],
-        ),
-    'b2c_members' => array
-        (
-            'member_lv' => array
-                (
-                    'member_group_id' => $member_card['card_lv_id']
-                ),
-            'currency' => $arrDefCurrency['cur_code'],
-            'reg_ip' => base_request::get_remote_addr(),
-            'regtime' => $use_pass_data['createtime'],
-        )
-     		);
-      $db = kernel::database();
-      $transaction_status = $db->beginTransaction();
-      if( !$member_id = $userPassport->save_members($saveData,$msg) ){
-      	  $db->rollback();
-          $this->end(true, app::get('b2c')->_('添加失败！请重试'));
-      }else{     	
-      	if($member_card['card_advance']){
-      		$msg = '会员卡预存款';
-      		$objAdvances = $this->app->model("member_advance");
-      		if(!$objAdvances->add($member_id, $member_card['card_advance'], app::get('b2c')->_('会员卡预存款'), $msg)){
-      			$db->rollback();
-      			$this->end(true, app::get('b2c')->_('添加预存款失败！请重试'));
-      		}
-      	}
-      	
-      	if($member_card['card_point']){
-      		$member_point = $this->app->model('member_point');
-      		if(!$member_point->change_point($member_id,$member_card['card_point'],$msg,'register_score',2,$member_id,$member_id,'exchange')){
-      			$db->rollback();
-      			$this->end(true, app::get('b2c')->_('添加积分失败！请重试'));
-      		}
-      	}      	
-      	
-      	//增加会员同步 2012-5-15
-      	if( $member_rpc_object = kernel::service("b2c_member_rpc_sync") ) {
-          	$member_rpc_object->createActive($member_id);
-     	 }
-      	return $member_id;
-      }
     }
     
 }

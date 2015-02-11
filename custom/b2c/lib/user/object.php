@@ -253,7 +253,6 @@ class b2c_user_object{
                 $login_name = $service->get_login_name($login_name);
             }
         }
-        error_log($login_name);
         return $login_name;
     }
 }

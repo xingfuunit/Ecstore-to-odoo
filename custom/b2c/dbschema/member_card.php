@@ -77,6 +77,30 @@ $db['member_card']=array (
       'in_list' => true,
       'default_in_list' => true,
     ),
+    'create_time'=>array(
+       'type'=>'time',
+       'required' => true,
+       'comment' => app::get('b2c')->_('创建时间'),
+       'label' => app::get('b2c')->_('创建时间'),
+       'in_list' => true,
+	   'default_in_list' => true,
+    ),
+    'expired_time'=>array(
+	   'type'=>'time',
+	   'required' => true,
+	   'comment' => app::get('b2c')->_('失效时间'),
+	   'label' => app::get('b2c')->_('失效时间'),
+	   'in_list' => true,
+	   'default_in_list' => true,
+    ),
+    'active_time'=>array(
+	   'type'=>'time',
+	   'required' => true,
+	   'comment' => app::get('b2c')->_('激活时间'),
+	   'label' => app::get('b2c')->_('激活时间'),
+	   'in_list' => true,
+	   'default_in_list' => true,
+    ),
     'card_etc' =>
     array (
       'type'=>'varchar(32)',

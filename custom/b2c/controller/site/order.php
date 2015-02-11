@@ -85,7 +85,6 @@ class b2c_ctl_site_order extends b2c_frontpage{
         $md5_cart_info = $_POST['md5_cart_info'];
         if (!defined("STRESS_TESTING") && $md5_cart_info != kernel::single("b2c_cart_objects")->md5_cart_objects($is_fastbuy))
             //$this->end(false,app::get('b2c')->_('购物车内容发生变化，请重新结算！'),$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'checkout')),true,true);
-
         $msg = "";
         if(!$_POST['address']){
             $msg .= app::get('b2c')->_("请先确认收货地址")."<br />";
