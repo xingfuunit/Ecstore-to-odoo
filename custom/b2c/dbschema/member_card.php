@@ -21,6 +21,7 @@ $db['member_card']=array (
   	  'type' => 'varchar(50)',
   	  'label' => app::get('b2c')->_('会员卡卡号'),
   	  'width' => 75,
+      'order' => 10,
   	  'sdfpath' => 'contact/name',
       'searchtype' => 'has',
   	  'editable' => true,
@@ -28,12 +29,16 @@ $db['member_card']=array (
   	  'filterdefault' => 'true',
   	  'in_list' => true,
   	  'is_title'=>true,
-  	  'default_in_list' => false,
+  	  'default_in_list' => true,
   	),
   	'card_password'=>
   	array(
   	  'type'=>'varchar(32)',
+      'order' => 20,
   	  'required' => true,
+  	  'in_list' => true,
+  	  'default_in_list' => true,
+  	  'label' => app::get('b2c')->_('会员卡密码'),
   	  'comment' => app::get('pam')->_('会员卡密码'),
   	),
     'card_lv_id' =>
@@ -43,7 +48,7 @@ $db['member_card']=array (
       'label' => app::get('b2c')->_('会员卡等级'),
       'sdfpath' => 'member_lv/member_group_id',
       'width' => 75,
-      'order' => 40,
+      'order' => 30,
       'type' => 'table:member_lv',
       'editable' => true,
       'filtertype' => 'bool',
@@ -56,6 +61,7 @@ $db['member_card']=array (
       'type' => 'decimal(20,3) unsigned',
       'default' => '0.00',
       'required' => true,
+      'order' => 40,
       'label' => app::get('b2c')->_('会员卡预存款'),
       'sdfpath' => 'advance/total',
       'width' => 110,
@@ -63,12 +69,14 @@ $db['member_card']=array (
       'filtertype' => 'number',
       'in_list' => true,
       'comment' => app::get('b2c')->_('会员卡余额'),
+      'default_in_list' => true,
     ),
     'card_point' =>
     array (
       'type' => 'int(10)',
       'default' => 0,
       'required' => true,
+      'order' => 50,
       'sdfpath' => 'score/total',
       'label' => app::get('b2c')->_('会员卡积分'),
       'width' => 110,
@@ -80,6 +88,7 @@ $db['member_card']=array (
     'create_time'=>array(
        'type'=>'time',
        'required' => true,
+       'order' => 60,
        'comment' => app::get('b2c')->_('创建时间'),
        'label' => app::get('b2c')->_('创建时间'),
        'in_list' => true,
@@ -88,6 +97,7 @@ $db['member_card']=array (
     'expired_time'=>array(
 	   'type'=>'time',
 	   'required' => true,
+	   'order' => 70,	   
 	   'comment' => app::get('b2c')->_('失效时间'),
 	   'label' => app::get('b2c')->_('失效时间'),
 	   'in_list' => true,
@@ -96,6 +106,7 @@ $db['member_card']=array (
     'active_time'=>array(
 	   'type'=>'time',
 	   'required' => true,
+	   'order' => 80,
 	   'comment' => app::get('b2c')->_('激活时间'),
 	   'label' => app::get('b2c')->_('激活时间'),
 	   'in_list' => true,
@@ -104,19 +115,24 @@ $db['member_card']=array (
     'card_etc' =>
     array (
       'type'=>'varchar(32)',
+      'order' => 90,
       'label' => app::get('b2c')->_('会员卡批次'),
       'comment' => app::get('b2c')->_('会员卡批次'),
+      'in_list' => true,
+      'default_in_list' => true,
     ),
     'card_state' =>
     array (
       'type' => 'tinyint(1)',
       'default' => 0,
+      'order' => 100,
       'required' => true,
       'label' => app::get('b2c')->_('会员卡状态'),
       'width' => 110,
       'editable' => false,
-      'in_list' => false,
+      'in_list' => true,
       'comment' => app::get('b2c')->_('会员卡状态'),
+      'default_in_list' => true,
     ),
   ),
   'engine' => 'innodb',

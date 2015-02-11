@@ -38,6 +38,13 @@ $db ['local_staff'] = array (
                                         'label' => app::get('b2c')->_('登录密码'),
                                         
                                 ),
+								'over_password'=>array(
+										'type'=>'varchar(32)',
+										// 'required' => true,
+										'comment' => app::get('b2c')->_('交班密码'),
+										'label' => app::get('b2c')->_('交班密码'),
+				
+								),
                                 'branch_id'=>array(
                                         'type'=>'number',
                                         'required' => true,

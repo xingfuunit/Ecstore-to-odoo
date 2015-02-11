@@ -1407,8 +1407,8 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
             $account = app::get('b2c')->model('local_staff')->getList('*',array('staff_id'=>$jieban_id));
             $use_pass_data['login_name'] = $account[0]['login_name'];
             $use_pass_data['createtime'] = $account[0]['ctime'];
-            $login_password = pam_encrypt::get_encrypted_password(trim($_POST['password']),'member',$use_pass_data);
-            if($login_password !== $account[0]['login_password']){
+            $over_password = pam_encrypt::get_encrypted_password(trim($_POST['password']),'member',$use_pass_data);
+            if($over_password !== $account[0]['over_password']){
                    echo json_encode(array('ret'=>app::get('b2c')->_('交接员工密码错误，请重试!')));
                    return;
             }
