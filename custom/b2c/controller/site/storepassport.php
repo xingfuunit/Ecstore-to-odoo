@@ -384,6 +384,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $pagedata['signup_url'] = $this->gen_url(array('app'=>'b2c','ctl'=>'site_passport','act'=>'signup'));
         $pagedata['lost_url'] = $this->gen_url(array('app'=>'b2c','ctl'=>'site_passport','act'=>'lost'));
         $pagedata['loginName'] = $_COOKIE['loginName'];
+        $pagedata['loginStaff'] = $_COOKIE['loginStaff'];
         #设置回调函数地址
         if($_GET['mini_passport']==1)
         {
@@ -458,6 +459,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $this->userObject->set_member_session($member_id);
         $this->bind_member($member_id);
         $this->set_cookie('loginName',$post['uname'],time()+31536000);//用于记住密码
+        $this->set_cookie('loginType','store',time()+31536000);//hack by Jason 门店登录的标志写入cookie中
         $this->app->model('cart_objects')->setCartNum();
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         $this->splash('success',$url,app::get('b2c')->_('登录成功'),true);
@@ -500,6 +502,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $this->userObject->set_member_session($member_id);
         $this->bind_member($member_id);
         $this->set_cookie('loginName',$post['uname'],time()+31536000);//用于记住密码
+        $this->set_cookie('loginType','store',time()+31536000);//hack by Jason 门店登录的标志写入cookie中
         $this->app->model('cart_objects')->setCartNum();
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         $this->redirect($url);
@@ -516,13 +519,20 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $userData = array(
             'login_account' => $post['uname'],
             'login_password' => $post['password']
-        );
-        
-        $local_store_listData = app::get('b2c')->model('local_staff')->getRow('*',array('login_name'=>$post_date['uname'],'login_password'=>$post_date['password']));
-        
-       if($local_store_listData['staff_id']>0 && isset($local_store_listData['staff_id'])){
-                if(isset($post_date['store']) && $post_date['store'] > 0){
-                    
+        );  
+        //hack by Jason 将登陆密码验证改正
+        $staff = app::get('b2c')->model('local_staff')->getRow('*',array('login_name'=>$userData['login_account'])); 
+        if(!$staff){
+        	$this->splash('failed',$this->gen_url(array('app'=>'b2c','ctl'=>'site_storepassport','act'=>'index')),app::get('b2c')->_('员工账号不存在'),true);
+        }      
+        $account = app::get('pam')->model('members')->getList('*',array('member_id'=>$staff['member_id'],'login_type'=>'local'));
+        $use_pass_data['login_name'] = $userData['login_account'];
+        $use_pass_data['createtime'] = $account[0]['createtime'];
+        $login_password = pam_encrypt::get_encrypted_password($userData['login_password'],'member',$use_pass_data);    
+        $local_store_listData = app::get('b2c')->model('local_staff')->getRow('*',array('login_name'=>$post['uname'],'login_password'=>$login_password));
+        //hack by Jason 将登陆密码验证改正
+        if($local_store_listData['staff_id']>0 && isset($local_store_listData['staff_id'])){
+                if(isset($post_date['store']) && $post_date['store'] > 0){                   
         		$obj_local_store = app::get('ome')->model('branch');
         		$local_store_list = $obj_local_store->getList('*',array(
         				'branch_id'=>$post_date['store'],
@@ -530,9 +540,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         		$local_store = $local_store_list[0];
         		if($local_store){
         			$_SESSION['local_store'] = $local_store;
-        		}
-        		
-                        
+        		}        		                        
         		$in_addr_data = $local_store;
         		$in_addr_data['member_id'] = $account[0]['member_id'];		
         	}
@@ -542,12 +550,47 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         if($local_store_listData['branch_id']!=$post['store']){
           $this->splash('failed',$this->gen_url(array('app'=>'b2c','ctl'=>'site_storepassport','act'=>'index')),app::get('b2c')->_('会员没有权限登录该门店！'),true); 
        }
-        $this->userObject->set_member_session_webpos($local_store_listData);
-        $this->set_cookie('loginName',$post['uname'],time()+31536000);//用于记住密码
-        $this->app->model('cart_objects')->setCartNum();
-        app::get('b2c')->model('local_staff')->update(array('logintime'=> time()),array('staff_id'=>$_SESSION['account']['staff']));
-        $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
-        $this->splash('success',$url,app::get('b2c')->_('登录成功'),true);
+       
+       //hack by Jason 门店店员登陆后自动登陆成会员店员绑定的会员账号begin
+       $iniuser = array(
+       		'login_account' => $account[0]['password_account'],
+       );
+       
+       $member_id = kernel::single('pam_passport_site_basic')->login_webpos($iniuser,'',$msg);
+       if(!$member_id){
+       	$msg = app::get('b2c')->_('登陆账号错误');
+       	$this->splash('failed',null,$msg,true);exit;
+       }
+       $b2c_members_model = $this->app->model('members');
+       $member_point_model = $this->app->model('member_point');
+       
+       $member_data = $b2c_members_model->getList( 'member_lv_id,experience,point', array('member_id'=>$member_id) );
+       
+        
+       $member_data = $member_data[0];
+       $member_data['order_num'] = $this->app->model('orders')->count( array('member_id'=>$member_id) );
+       
+       if($this->app->getConf('site.level_switch')==1)
+       {
+       	$member_data['member_lv_id'] = $b2c_members_model->member_lv_chk($member_data['member_lv_id'],$member_data['experience']);
+       }
+       if($this->app->getConf('site.level_switch')==0)
+       {
+       	$member_data['member_lv_id'] = $member_point_model->member_lv_chk($member_id,$member_data['member_lv_id'],$member_data['point']);
+       }
+       
+       $b2c_members_model->update($member_data,array('member_id'=>$member_id));
+       $this->userObject->set_member_session($member_id);
+       $this->bind_member($member_id);
+       //hack by Jason 门店店员登陆后自动登陆成会员店员绑定的会员账号end
+       $this->userObject->set_member_session_webpos($local_store_listData);
+       $this->set_cookie('loginName',$post['uname'],time()+31536000);//用于记住密码
+       $this->set_cookie('loginStaff',$post['uname'],time()+31536000);//hack by Jason 门店店员名写入cookie
+       $this->set_cookie('loginType','store',time()+31536000);//hack by Jason 门店登录的标志写入cookie中
+       $this->app->model('cart_objects')->setCartNum();
+       app::get('b2c')->model('local_staff')->update(array('logintime'=> time()),array('staff_id'=>$_SESSION['account']['staff']));
+       $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
+       $this->splash('success',$url,app::get('b2c')->_('登录成功'),true);
     }//end function
     
     public function passwordcheck()
@@ -957,7 +1000,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
             $sdf['resetpwdtime'] = $resetpwdtime;
             if(app::get('b2c')->model('members')->save($sdf)){
                 
-                    $this->send_sms_ec($_POST['mobile'],"尊敬的用户，您的验证码：".$rend."；您可以用来进行找回密码的操作。 【鲜八度果蔬便利店】");
+                    $this->send_sms_ec($_POST['mobile'],"尊敬的用户，您的验证码：".$rend."；您可以用来进行找回密码的操作。 【品珍鲜活】");
                     $flag = true;
                     $this->pagedata['send_status'] = 'true';
                     $this->pagedata['email'] = $_POST['email'];
@@ -1115,8 +1158,11 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         if(!$url){
             $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         }
-        $this->unset_member();
-        $this->app->model('cart_objects')->setCartNum($arr);
+        $staff = app::get('b2c')->model('local_staff')->getRow('*',array('login_name'=>$_COOKIE['loginStaff']));
+        if($staff['member_id'] != $_COOKIE['S']['MEMBER'] || $_GET['mem'] == 'logout'){
+        	$this->unset_member();
+        	$this->app->model('cart_objects')->setCartNum($arr);
+        }        
         $this->redirect($url);
     }
     
@@ -1340,7 +1386,10 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
             
             $jieban_id = $_POST['jieban_id'];
             $account = app::get('b2c')->model('local_staff')->getList('*',array('staff_id'=>$jieban_id));
-            if(trim($_POST['password']) !== $account[0]['login_password']){
+            $use_pass_data['login_name'] = $account[0]['login_name'];
+            $use_pass_data['createtime'] = $account[0]['ctime'];
+            $login_password = pam_encrypt::get_encrypted_password(trim($_POST['password']),'member',$use_pass_data);
+            if($login_password !== $account[0]['login_password']){
                    echo json_encode(array('ret'=>app::get('b2c')->_('交接员工密码错误，请重试!')));
                    return;
             }

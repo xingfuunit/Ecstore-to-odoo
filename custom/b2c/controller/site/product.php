@@ -494,8 +494,12 @@ class b2c_ctl_site_product extends b2c_frontpage{
     public function ajax_get_product_by_bn(){
     	$this->_response->set_header('Cache-Control', 'no-store, no-cache');
     	
-    	$bn = $_POST['bn'];
-    	$product = app::get('b2c')->model('products')->getList('product_id,goods_id,marketable,store',array('bn'=>trim($bn)));
+//    	$bn = $_POST['bn'];
+//    	$product = app::get('b2c')->model('products')->getList('product_id,goods_id,marketable,store',array('bn'=>trim($bn)));
+    	$bn = trim($_POST['bn']);
+    	$bn = kernel::database()->quote($bn);
+        $product = kernel::database()->select("select product_id,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
+    	
     	if(!$product){
             echo json_encode(array('error'=>app::get('b2c')->_('商品不存在')));
             return;
@@ -506,7 +510,7 @@ class b2c_ctl_site_product extends b2c_frontpage{
     	    return;
         }
         
-        if($product[0]['store'] <= 10){
+        if($product[0]['store'] <= 10 && $_COOKIE['loginType'] != 'store'){ //hack by Jason 如果是门店的操作,则不用检查库存
             echo json_encode(array('error'=>app::get('b2c')->_('库存有限')));
     	    return;
         }
@@ -521,7 +525,7 @@ class b2c_ctl_site_product extends b2c_frontpage{
         $product = app::get('b2c')->model('products')->getList('goods_id,store,freez',array('product_id'=>$product_id));
         if($product){
             $goodsdata = app::get('b2c')->model('goods')->getList('goods_id,nostore_sell,store,store_prompt',array('goods_id'=>$product[0]['goods_id']));
-            if($goodsdata && ($goodsdata[0]['nostore_sell'] || $goodsdata[0]['store'] === null)){
+            if($goodsdata && ($goodsdata[0]['nostore_sell'] || $goodsdata[0]['store'] === null || $_COOKIE['loginType'] == 'store')){//hack by Jason 如果是门店的操作,则将库存设为最大
                 $store['store'] = 999999;//暂时表示库存无限大
             }else{
                 $goodsStore = $product[0]['store'] - $product[0]['freez'];
@@ -737,7 +741,7 @@ class b2c_ctl_site_product extends b2c_frontpage{
         $productBasic['brief'] = $aGoods['brief'];//副标题
         $productBasic['product_marketable'] = $aGoods['product']['marketable'];//是否上架
         $productBasic['goods_marketable'] = $aGoods['marketable'];//是否上架
-        $productBasic['nostore_sell'] = $aGoods['nostore_sell'];//是否开启无库存销售
+        $productBasic['nostore_sell'] = $_COOKIE['loginType'] == 'store'?'1':$aGoods['nostore_sell'];//hack by Jason如果是门店的操作,则默认开启无库存销售
 
         $goodsBasic = $goodsObject->get_goods_basic($aGoods['goods_id'],$aGoods);
         if($goodsBasic['type']['setting']['use_params']){
@@ -1059,7 +1063,7 @@ class b2c_ctl_site_product extends b2c_frontpage{
                     unset($aGift[$key]);continue;
                 }
                 $aGift[$key]['image_default_id'] = $image[$key]['image_default_id'];
-                if($row['nostore_sell']){
+                if($row['nostore_sell'] || $_COOKIE['loginType'] == 'store'){//hack by Jason如果是门店操作,将礼品的库存也设置为最大
                     $aGift[$key]['store'] = 999999;
                 }
             }

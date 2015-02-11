@@ -353,7 +353,21 @@ class weixin_wechat{
             return false;
         }
     }
-
+    
+    /**
+     * oauth2 方式获取用户信息 
+     * 调用方式： 1、用微信端口连接 先获取 code  2、调用 父类 $accesstoken_oauth2，$openid
+     */
+    public function get_basic_userinfo_oauth2($accesstoken_oauth2,$openid){
+    	$url = "https://api.weixin.qq.com/sns/userinfo?access_token={$accesstoken_oauth2}&openid={$openid}&lang=zh_CN";
+    	$httpclient = kernel::single('base_httpclient');
+    	$response = $httpclient->set_timeout(10)->get($url);
+    	$result = json_decode($response, true);
+    	
+    	return $result;
+    }
+    
+    
     // 生成微信需授权页面链接
     public function gen_auth_link($appid, $eid, $redirect_uri){
         $url = sprintf('https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect',$appid,$redirect_uri,$eid);
@@ -394,8 +408,6 @@ class weixin_wechat{
             return $result;
         }
     }
-
-
 
     //发货通知微信
     public function delivernotify($postData){

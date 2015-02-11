@@ -16,6 +16,17 @@
       <label for="" class="form-label"><em class="text-warn">*</em> <{t}>员工姓名<{/t}>：</label>
       <span class="form-act"><{input type="text" name="staff_name"  vtype="required" value=$staff.staff_name }></span>
     </li>
+    
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>员工会员<{/t}>：</label>
+      <span class="form-act">
+          <select name="member_id" class="x-input" style="width:120px;">
+              <{foreach from=$memberlist item=i}>
+              <option value="<{$i.member_id}>" <{if $staff.member_id==$i.member_id}>selected<{/if}>><{$i.login_account}></option>
+              <{/foreach}>
+          </select>
+      </span>
+    </li>
 
     <li class="form-item">
       <label for="" class="form-label"> &nbsp;&nbsp;门店：</label>

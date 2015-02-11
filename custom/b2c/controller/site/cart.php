@@ -100,7 +100,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         );
         $this->pagedata['money_format'] = json_encode($ret);
         $this->pagedata['json'] = $cart_json->get_json($this->pagedata);
-        $this->pagedata['times_order'] = date("Y-m-d H:m:s");
+        $this->pagedata['times_order'] = date("Y-m-d H:i:s");
         //输出
         #会员基本信息
         $this->member = $this->get_current_member();
@@ -400,6 +400,13 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $obj_filter = kernel::single('b2c_site_filter');
         $data = $obj_filter->check_input($data);
 
+        //hack by Jason 如果前端提交有优惠券的代码字母为小写,将优惠券的字母变成大写
+        if($data['coupon']){
+        	$data['coupon'] = strtoupper($data['coupon']);
+        }
+        //end hack
+        
+        
         if($data['response_json'] == 'true'){//ajax提交返回错误
             $errorRequest = true;
         }
@@ -448,7 +455,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             }
         }
         $obj_cart_object = kernel::single('b2c_cart_objects');
-        if (!$obj_cart_object->check_store($arr_objects[$type], $aData, $msg))
+        if (!$obj_cart_object->check_store($arr_objects[$type], $aData, $msg) && $_COOKIE['loginType'] != 'store') //hack by Jason 如果是门店来的购物车,则不检查库存
         {
             if($post['mini_cart']){
                 $this->pagedata['errormsg'] = $msg;
@@ -1801,7 +1808,7 @@ public function ajax()
             $products = app::get('b2c')->model('products')->getList('goods_id,product_id,store,freez',array('goods_id'=>$goodsids,'marketable'=>'true','is_default'=>'true'),0,-1,'price asc');
             foreach( (array)$products as $pk=>$row ){
                 $goods = $list[$row['goods_id']];
-                if(($goods['store'] === null || $row['store'] - $row['freez']) > 0 || $goods['nostore_sell'] ){
+                if(($goods['store'] === null || $row['store'] - $row['freez']) > 0 || $goods['nostore_sell'] || $_COOKIE['loginType'] !='store'){  //hack by Jason
                     $list[$row['goods_id']]['product_id'] = $row['product_id'];
                 }else{
                     unset($list[$row['goods_id']]);

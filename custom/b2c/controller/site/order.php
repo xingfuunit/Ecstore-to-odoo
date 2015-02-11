@@ -56,6 +56,19 @@ class b2c_ctl_site_order extends b2c_frontpage{
             $fastbuy_filter = true;
         }
         $aCart = $this->mCart->get_objects($fastbuy_filter);
+        // hack by jason 判断如果是门店来的订单,则将库存设置为最大
+        if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){
+        	unset($aCart['cart_status']);
+        	unset($aCart['cart_error_html']);
+        	foreach ($aCart['object']['goods'] as $key=>$goods){
+        		$goods['store']['real'] = 999999;
+        		$goods['store']['store'] = 999999;
+        		foreach ($goods['obj_items']['products'] as $k=>$products){
+        			$aCart['object']['goods'][$key]['obj_items']['products'][$k]['store'] = 999999;
+        		}
+        	}
+        }
+        //hack by Jason end
         //当有活动时，在生成订单前做一个当前购买数量与实际库存的判断
         if( isset($aCart['cart_status'] )){
 
@@ -214,7 +227,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
         if ($obj_checkproducts)
         {
             foreach($obj_checkproducts as $obj_check){
-                if (!$obj_check->check_products($order_data, $messages))
+                if (!$obj_check->check_products($order_data, $messages) && $_COOKIE['loginType'] != 'store')
                     $this->end(false, $messages);
             }
         }
