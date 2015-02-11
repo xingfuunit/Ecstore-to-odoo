@@ -1,6 +1,18 @@
 <div class="tableform">
     <h5><{t}>参与者列表<{/t}></h5>
     <div class="division">
+	    <div style="margin-bottom:10px;">
+		  		<span><{t}>活动参加人数:<{/t}></span><span><{$join_count}></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  		<span><{t}>获奖人数:<{/t}></span><span><{$join_win}></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  		<span><{t}>赞总人数:<{/t}></span><span><{$zan_count}></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  		
+		  		<{foreach from=$gift_list key=k item=i}>
+		  		<span><{t}>获得[<{$i}>]人数:<{/t}></span><span><{$gift_count.$k}></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  		<{/foreach}>
+		  		
+	</div>
+		
+	<div style="clear:both"></div>
       <table cellspacing="0" cellpadding="3" width="100%" class="gridlist">
         <col class="span-3"/>
         <col class="span-auto"/>
@@ -28,9 +40,7 @@
           <{/foreach}>
         </tbody>
       </table>
-      <div style="clear:both"></div>
-	  <div style="">
-	  	123
-	  </div>
+     
+	  
     </div>
 </div>

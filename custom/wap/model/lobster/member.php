@@ -12,11 +12,14 @@
 
 class wap_mdl_lobster_member extends dbeav_model{
 	
+	//集赞获奖数
+	public $_zan_success_num = 30;
+	
 	//礼品数据
 	public $_gift_list = array(
-			'1' => '龙虾卷',
+			'1' => '龙虾券',
 			'2' => '满200减80优惠券',
-			'3'	=> '奇异果卷',
+			'3'	=> '奇异果券',
 			'4' => '20元话费',
 	);
 	
