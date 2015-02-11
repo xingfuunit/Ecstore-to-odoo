@@ -65,8 +65,6 @@ class wap_ctl_lobster extends wap_controller{
 			exit;
 		}
 		
-		$shopname = app::get('site')->getConf('site.name');
-		
 		$this->_state = $_GET['state'];
 	}
 	
@@ -343,11 +341,13 @@ class wap_ctl_lobster extends wap_controller{
 	 * @param unknown_type $url
 	 * @param is_jump 是否跳转
 	 * snsapi_userinfo
+	 * 
+	 * no_reg=1 返回给微信接口  参加活动的不注册
 	 */
 	protected function  _build_wx_url($url,$is_jump=0,$scope='snsapi_base'){
 		$bind = app::get('weixin')->model('bind')->getRow('*',array('eid'=>$this->_state,'status'=>'active'));
 		$path1 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$bind['appid']}&redirect_uri=";
-		$path2 = "&response_type=code&scope={$scope}&state={$this->_state}&connect_redirect=1#wechat_redirect";
+		$path2 = "?no_reg=1&response_type=code&scope={$scope}&state={$this->_state}&connect_redirect=1#wechat_redirect";
 		
 		$url = $path1.$url.$path2;
 		
@@ -455,7 +455,8 @@ class wap_ctl_lobster extends wap_controller{
 	 * （短信内容直接添加到数据库）
 	 * 恭喜您成功召集30个好友支持，成功获取本次品珍鲜活送龙虾活动奖品~奖品将于活动结束后统一发放，领奖方式请参照活动细则。如有疑问，可微信联系客服或拨打：400-930-9303
 	 */
-	protected function _send_success_sms($tmpl,$mobile,$data=''){
+	public  function _send_success_sms($tmpl,$mobile,$data=''){
+		
 		$messengerModel = app::get('b2c')->model('member_messenger');
 		$actions = $messengerModel->actions();
 		$level = $actions[$tmpl]['level'];

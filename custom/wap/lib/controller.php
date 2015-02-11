@@ -127,15 +127,20 @@ class wap_controller extends base_controller
                     $this->accesstoken_oauth2 = $result['access_token'];
                 }
             }
+            
+            //区分是否活动
             if($openid){
             	$this->openid = $openid;
+            }
+            
+            //no_reg 表示使用微信接口，但不注册用户
+            if($openid && empty($_GET['no_reg'])){
                 $sendData = array(
                         'bind_id' => $bind['id'],
                 );
                 //一键登陆
                 $pam_members_model = app::get('pam')->model('members');
                 $flag = $pam_members_model->getList('*',array('login_account'=>trim($openid)));
-                 
                 
                 $userData = array(
                         'login_account' => $openid,
