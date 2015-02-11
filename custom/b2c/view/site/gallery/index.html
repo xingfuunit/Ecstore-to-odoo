@@ -23,7 +23,7 @@
       </div>
       <!-- 筛选条件 -->
       <div id="gallery_filter" class="gallery-filter">
-        <div id="filter_selected" class="filter-selected clearfix hide">
+        <div id="filter_selected" class="filter-selected clearfix">
           <dl class="filter-selected-list clearfix">
             <dt class="filter-selected-title">您已选择：</dt>
             <dd class="filter-selected-values">
@@ -279,10 +279,16 @@
         <input type="hidden" name="item[0][goods_id]" value="">
         <input type="hidden" name="item[0][product_id]" value="">
         <ul>
-          <li class="form-item send_add">
-            <label for="email" class="form-label"><{t}>邮箱地址/手机号码<{/t}>：</label>
+          <li class="form-item">
+            <label for="email" class="form-label"><{t}>邮箱地址<{/t}>：</label>
             <span class="form-act">
-              <{input type="text" name="send_address" id="" size="30" vtype="required&&email||tel"}>
+              <{input type="text" name="email" id="" size="30" vtype="required&&email"}>
+            </span>
+          </li>
+          <li class="form-item">
+            <label for="cellphone" class="form-label"><{t}>手机号码<{/t}>：</label>
+            <span class="form-act">
+              <{input type="text" name="cellphone" id="" size="30" vtype="required"}>
             </span>
           </li>
           <li class="form-item form-item-last">
@@ -625,16 +631,6 @@ Module.gallery.show.addEvents({
                     product_id:getinfo[0]
                 }
 /*                var spcurl='<{link app=b2c ctl=site_product act=index arg0="{product_id}"}>'; */
-
-                if(getinfo[4] > 0){
-                    item.getElement('.action-addtocart').removeClass('hide');
-                    item.getElement('.p-quantity').removeClass('hide');
-                    item.getElement('.action-notify').addClass('hide');
-                }else{
-                    item.getElement('.action-notify').removeClass('hide');
-                    item.getElement('.action-addtocart').addClass('hide');
-                    item.getElement('.p-quantity').addClass('hide');
-                }
                 var spcurl='product-{product_id}.html';
                 item.getElement('.img_href').href=spcurl.substitute(spcurlinfo);
                 item.getElement('ins').innerHTML=getinfo[2];
