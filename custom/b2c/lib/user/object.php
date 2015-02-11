@@ -240,10 +240,8 @@ class b2c_user_object{
                 $login_name = $arr_name['local'];
             }elseif(isset($arr_name['email'])){
                 $login_name = $arr_name['email'];
-            }elseif(isset($arr_name['mobile'])){
-                $login_name = $arr_name['mobile'];
             }else{
-            	$login_name = $arr_name['card'];
+                $login_name = $arr_name['mobile'];
             }
            }
         }

@@ -184,12 +184,7 @@ class b2c_user_passport
             $login_type = 'mobile';
             return $login_type;
         }
-        //hack by jason增加了是否会员卡的判断begin
-        if(is_numeric($login_account) && strlen($login_account) != 11){
-        	$login_type = 'card';
-        	return $login_type;
-        }
-        //hack by jason增加了是否会员卡的判断end
+
         return $login_type;
     }//end function
 

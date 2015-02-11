@@ -431,7 +431,6 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         $userPassport = kernel::single('b2c_user_passport');
         $userData = array(
         	'login_account' => $post['uname'],
-        	'login_type'=> $userPassport->get_login_account_type($post['uname']),
         );
                 
         $member_id = kernel::single('pam_passport_site_basic')->login_webpos($userData,'',$msg);
@@ -1432,7 +1431,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
      (
      'pam_account' => array
         (
-            'login_type' => 'card',
+            'login_type' => 'local',
             'login_account' => $member_card['card_number'],
             'login_password' => pam_encrypt::get_encrypted_password(trim($member_card['card_password']),'member',$use_pass_data),
             'password_account' => $member_card['card_number'],
