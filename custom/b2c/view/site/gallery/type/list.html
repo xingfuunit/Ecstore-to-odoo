@@ -30,26 +30,26 @@
         <input type="hidden" name="goods[product_id]" value="<{$goods.products.product_id}>">
         <input type="hidden" name="goods[image_defalut_src]" value="<{$goods.image_default_id|default:$imageDefault.S.default_image}>">
       <div class="goods-buy">
-          <{if $env.conf.b2c.gallery.display.buynum == 'true'}>
-              <span class="p-quantity<{$goods.products.store > 0 ? '' : ' hide'}>">
-          <a href="javascript:void(0);" class="btn-decrease">-</a><input type="text" min="1" max="<{$goods.products.store|number}>" size="2" name="goods[num]" class="action-quantity-input" value="1"><a href="javascript:void(0);" class="btn-increase">+</a>
-
-        </span>
-          <{/if}>
         <{if $goods.products.store > 0}>
         <!-- 加入购物车 -->
+        <{if $env.conf.b2c.gallery.display.buynum == 'true'}>
+        <span class="p-quantity">
+          <a href="javascript:void(0);" class="btn-decrease">-</a><input type="text" min="1" max="<{$goods.products.store|number}>" size="2" name="goods[num]" class="action-quantity-input" value="1"><a href="javascript:void(0);" class="btn-increase">+</a>
+        
+        </span>
+        <{/if}>
         <{if $env.conf.b2c.site.buy.target == '2'}>
         <{assign var='buytarget' value='_blank_cart'}>
         <{elseif $env.conf.b2c.site.buy.target == '3'}>
         <{assign var='buytarget' value='_dialog_minicart'}>
         <{/if}>
-        <{*<{elseif $goods.spec_desc && $goods.store}>*}>
-        <{*<a class="btn btn-caution" href="<{link app=b2c ctl=site_product arg0=$goods.products.product_id}>"><span><span>查看详情</span></span></a>*}>
-        <{*<{else}>*}>
-        <{/if}>
+        <a class="btn btn-major action-addtocart" href="<{link app=b2c ctl=site_cart act=add arg0=goods arg1=$goods.goods_id arg2=$goods.products.product_id arg3=1}>"<{if $buytarget}> target="<{$buytarget}>"<{/if}>><span><span>加入购物车</span></span></a>
+        <{elseif $goods.spec_desc && $goods.store}>
+        <a class="btn btn-caution" href="<{link app=b2c ctl=site_product arg0=$goods.products.product_id}>"><span><span>查看详情</span></span></a>
+        <{else}>
         <!-- 到货通知 -->
-        <a href="javascript:void(0);" class="btn btn-caution action-notify<{$goods.products.store > 0 ? ' hide' : ''}>" rel="<{$goods.goods_id}>::<{$goods.products.product_id}>"><span><span>到货通知</span></span></a>
-          <a class="btn btn-major action-addtocart<{$goods.products.store > 0 ? '' : ' hide'}>" href="<{link app=b2c ctl=site_cart act=add arg0=goods arg1=$goods.goods_id arg2=$goods.products.product_id arg3=1}>"<{if $buytarget}> target="<{$buytarget}>"<{/if}>><span><span>加入购物车</span></span></a>
+        <a href="javascript:void(0);" class="btn btn-caution action-notify" rel="<{$goods.goods_id}>::<{$goods.products.product_id}>"><span><span>到货通知</span></span></a>
+        <{/if}>
       </div>
       <div class="goods-others">
         <{if $login=='nologin'}>

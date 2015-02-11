@@ -103,12 +103,9 @@ class b2c_user_passport
         }
 
         //检查密码合法，是否一致
-
-            if( !$this->check_passport($data['pam_account']['login_password'],$data['pam_account']['psw_confirm'],$msg) ){
-                return false;
-            }            
-
-       
+        if( !$this->check_passport($data['pam_account']['login_password'],$data['pam_account']['psw_confirm'],$msg) ){
+            return false;
+        }
 
         return true;
     }
@@ -629,6 +626,10 @@ class b2c_user_passport
      **/
     public function save_members($saveData,&$msg){
         $saveData = $this->obj_filter->check_input($saveData);
+        
+        $saveData['pam_account']['login_account'] = str_replace('<x>','',$saveData['pam_account']['login_account']);
+        $saveData['pam_account']['password_account'] = str_replace('<x>','',$saveData['pam_account']['password_account']);
+        
         $member_model = $this->app->model('members');
         $db = kernel::database();
         $db->beginTransaction();

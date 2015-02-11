@@ -23,9 +23,6 @@ class wap_ctl_lobster extends wap_controller{
 	//礼品最大数量
 	private $_gift_max = 3000;
 	
-	//集赞获奖数
-	private $_zan_success_num = 30;
-	
 	//开始时间
 	private $_startdate = '2015-2-10 00:00:01';
 	
@@ -62,7 +59,7 @@ class wap_ctl_lobster extends wap_controller{
 		$this->lz_model = $this->app->model('lobster_zlist');
 		
 		//送完即止
-		$gift_count = $this->lm_model->count(array('z_count|than'=>$this->_zan_success_num-1));
+		$gift_count = $this->lm_model->count(array('z_count|than'=>$this->lm_model->_zan_success_num-1));
 		if($gift_count > $this->_gift_max){
 			$this->_js_alert('本次活动奖品已派完，敬请期待下期活动！',$this->_follow_url);
 			exit;
@@ -86,7 +83,7 @@ class wap_ctl_lobster extends wap_controller{
 		//分享者信息
 		$join_info = $this->lm_model->getrow('*',array('m_id'=>$m_id));
 		
-		$zan_url = $this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'post_zan','full'=>1,'args'=>array('m_id'=>$m_id))));
+		$zan_url = $this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'post_zan','full'=>1,'args'=>array('m_id'=>$m_id))),0,'snsapi_userinfo');
 		
 // 		//是否当前参加用户
 		$wx_info = $this->_get_wx_info();
@@ -101,10 +98,9 @@ class wap_ctl_lobster extends wap_controller{
 			}
 			
 			//集赞成功  跳到获奖页面
-			if($cur_join_user['z_count'] >= $this->_zan_success_num){
+			if($cur_join_user['z_count'] >= $this->lm_model->_zan_success_num){
 				$this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'member_lobster','full'=>1,'args'=>array('m_id'=>$m_id))),1);
 			}
-			
 		}
 		
 		//赞用户
@@ -116,7 +112,8 @@ class wap_ctl_lobster extends wap_controller{
 		}
 
 		//获取赞信息
-		$zan_list = $this->lz_model->getlist('*',array('m_id'=>$m_id),0,30,'z_time Desc');
+		$zan_list = $this->lz_model->getlist('*',array('m_id'=>$m_id),0,100,'z_time Desc');
+
 		if($zan_list){
 			foreach($zan_list as $k=> $v){
 				if($v['z_time']){
@@ -131,7 +128,7 @@ class wap_ctl_lobster extends wap_controller{
 		$this->pagedata['zan_list'] = $zan_list;
 		$this->pagedata['m_info']=$join_info;
 		$this->pagedata['lobster_rule'] = $this->_follow_url;
-		$this->pagedata['title'] = app::get('b2c')->_('我要免费吃龙虾，快来支持我！ &nbsp; - '.$join_info['m_nick_name']);
+		$this->pagedata['title'] = app::get('b2c')->_('没看错！波士顿大龙虾免费送，只有三千只，快帮我抢~ '.$join_info['m_nick_name']);
 		//是否提示分享
 		$this->pagedata['is_show_share'] = $is_show_share;
 		$this->page('wap/lobster/index.html',true);
@@ -189,7 +186,7 @@ class wap_ctl_lobster extends wap_controller{
 				$this->lm_model->update($zan_data,array('m_id'=>$m_id));
 				
 				//赞数达到30 发短信
-				if($m_info['z_count']+1  == $this->_zan_success_num){
+				if($m_info['z_count']+1  == $this->lm_model->_zan_success_num){
 					$this->_send_success_sms('weixin_success', $m_info['phone']);
 				}
 			}
@@ -203,6 +200,9 @@ class wap_ctl_lobster extends wap_controller{
 	 */
 	function zan_success(){
 		$this->pagedata['title'] = app::get('b2c')->_('我要免费吃龙虾，快来支持我！ &nbsp; - 品珍鲜活');
+		
+		$m_id = $this->_request->get_params();
+		$m_id = (int)$m_id[0];
 		
 		$url = $this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'want_join_btn','full'=>1));
 		$this->pagedata['want_join_btn'] =  $this->_build_wx_url($url);
@@ -221,7 +221,7 @@ class wap_ctl_lobster extends wap_controller{
 		
 		$m_user = $this->lm_model->getrow('*',array('m_openid'=>$wx_info['openid']));
 		if($m_user){
-			$url = $this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'index','full'=>1,'args'=>array('m_id'=>$m_id)));
+			$url = $this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'index','full'=>1,'args'=>array('m_id'=>$m_user['m_id'])));
 			$this->_js_alert('你已参加活动',$this->_build_wx_url($url));
 			exit;
 		}
@@ -249,9 +249,9 @@ class wap_ctl_lobster extends wap_controller{
 		}
 		
 		//显示获取数
-		if($m_info['z_count'] < $this->_zan_success_num){
+		if($m_info['z_count'] < $this->lm_model->_zan_success_num){
 			
-			$lost = $this->_zan_success_num- $m_info['z_count'];
+			$lost = $this->lm_model->_zan_success_num- $m_info['z_count'];
 			$this->pagedata['lost'] = $lost;
 			$this->pagedata['count'] = $m_info['z_count'];
 			
@@ -261,6 +261,7 @@ class wap_ctl_lobster extends wap_controller{
 		}
 		//获取奖品
 		else{
+			$this->pagedata['count'] = $m_info['z_count'];
 			$this->page('wap/lobster/member_win.html',true);
 		}
 		
@@ -341,11 +342,12 @@ class wap_ctl_lobster extends wap_controller{
 	 * 构造  微信 使用的url
 	 * @param unknown_type $url
 	 * @param is_jump 是否跳转
+	 * snsapi_userinfo
 	 */
-	protected function  _build_wx_url($url,$is_jump=0){
+	protected function  _build_wx_url($url,$is_jump=0,$scope='snsapi_base'){
 		$bind = app::get('weixin')->model('bind')->getRow('*',array('eid'=>$this->_state,'status'=>'active'));
 		$path1 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$bind['appid']}&redirect_uri=";
-		$path2 = "&response_type=code&scope=snsapi_base&state={$this->_state}&connect_redirect=1#wechat_redirect";
+		$path2 = "&response_type=code&scope={$scope}&state={$this->_state}&connect_redirect=1#wechat_redirect";
 		
 		$url = $path1.$url.$path2;
 		
