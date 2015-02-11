@@ -18,6 +18,7 @@ class b2c_ctl_admin_weixin_lottery extends desktop_controller{
      */
     function lobster_list(){
     	$obster_model = app::get('wap')->model('lobster_member');
+    	$obster_zlist_model = app::get('wap')->model('lobster_zlist');
     	$obster_list = $obster_model->getList("*",array(),0,-1,'z_count DESC');
     	
     	if($obster_list){
@@ -27,6 +28,26 @@ class b2c_ctl_admin_weixin_lottery extends desktop_controller{
     		}
     	}
     	
+    	//参与者总数
+    	$join_count = $obster_model->count();
+    	$this->pagedata['join_count'] = $join_count;
+
+    	//获奖者数
+    	$join_win = $obster_model->count(array('z_count|than'=>$obster_model->_zan_success_num-1));
+    	$this->pagedata['join_win'] = $join_win;
+    	
+    	//赞总数量
+    	$zan_count = $obster_zlist_model->count();
+    	$this->pagedata['zan_count'] = $zan_count;
+
+    	$gift_count = array();
+    	//礼品统计数量
+    	foreach($obster_model->_gift_list as $k=>$v){
+    		$gift_count[$k] = $obster_model->count(array('gift_id'=>$k,'z_count|than'=>$obster_model->_zan_success_num-1));
+    	}
+    	$this->pagedata['gift_count'] = $gift_count;
+    	$this->pagedata['gift_list'] = $obster_model->_gift_list;
+
     	$this->pagedata['obster_list'] = $obster_list;
     	$this->page('admin/weixin/lobster_list.html');
     }
