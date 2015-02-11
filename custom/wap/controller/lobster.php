@@ -23,9 +23,6 @@ class wap_ctl_lobster extends wap_controller{
 	//礼品最大数量
 	private $_gift_max = 3000;
 	
-	//集赞获奖数
-	private $_zan_success_num = 30;
-	
 	//开始时间
 	private $_startdate = '2015-2-10 00:00:01';
 	
@@ -62,7 +59,7 @@ class wap_ctl_lobster extends wap_controller{
 		$this->lz_model = $this->app->model('lobster_zlist');
 		
 		//送完即止
-		$gift_count = $this->lm_model->count(array('z_count|than'=>$this->_zan_success_num-1));
+		$gift_count = $this->lm_model->count(array('z_count|than'=>$this->lm_model->_zan_success_num-1));
 		if($gift_count > $this->_gift_max){
 			$this->_js_alert('本次活动奖品已派完，敬请期待下期活动！',$this->_follow_url);
 			exit;
@@ -101,7 +98,7 @@ class wap_ctl_lobster extends wap_controller{
 			}
 			
 			//集赞成功  跳到获奖页面
-			if($cur_join_user['z_count'] >= $this->_zan_success_num){
+			if($cur_join_user['z_count'] >= $this->lm_model->_zan_success_num){
 				$this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'member_lobster','full'=>1,'args'=>array('m_id'=>$m_id))),1);
 			}
 		}
@@ -189,7 +186,7 @@ class wap_ctl_lobster extends wap_controller{
 				$this->lm_model->update($zan_data,array('m_id'=>$m_id));
 				
 				//赞数达到30 发短信
-				if($m_info['z_count']+1  == $this->_zan_success_num){
+				if($m_info['z_count']+1  == $this->lm_model->_zan_success_num){
 					$this->_send_success_sms('weixin_success', $m_info['phone']);
 				}
 			}
@@ -252,9 +249,9 @@ class wap_ctl_lobster extends wap_controller{
 		}
 		
 		//显示获取数
-		if($m_info['z_count'] < $this->_zan_success_num){
+		if($m_info['z_count'] < $this->lm_model->_zan_success_num){
 			
-			$lost = $this->_zan_success_num- $m_info['z_count'];
+			$lost = $this->lm_model->_zan_success_num- $m_info['z_count'];
 			$this->pagedata['lost'] = $lost;
 			$this->pagedata['count'] = $m_info['z_count'];
 			
