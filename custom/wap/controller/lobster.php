@@ -115,7 +115,7 @@ class wap_ctl_lobster extends wap_controller{
 		}
 
 		//获取赞信息
-		$zan_list = $this->lz_model->getlist('*',array('m_id'=>$m_id),0,30,'z_time Desc');
+		$zan_list = $this->lz_model->getlist('*',array('m_id'=>$m_id),0,100,'z_time Desc');
 
 		if($zan_list){
 			foreach($zan_list as $k=> $v){
@@ -264,6 +264,7 @@ class wap_ctl_lobster extends wap_controller{
 		}
 		//获取奖品
 		else{
+			$this->pagedata['count'] = $m_info['z_count'];
 			$this->page('wap/lobster/member_win.html',true);
 		}
 		
