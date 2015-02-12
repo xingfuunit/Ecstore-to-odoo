@@ -687,6 +687,7 @@ class b2c_user_passport
     					'login_type' => 'local',
     					'login_account' => $member_card['card_number'],
     					'login_password' => pam_encrypt::get_encrypted_password(trim($member_card['card_password']),'member',$use_pass_data),
+    					'pay_password' => pam_encrypt::get_encrypted_password(trim($member_card['card_password']),'member',$use_pass_data),
     					'password_account' => $member_card['card_number'],
     					'disabled' => 'false',
     					'createtime' => $use_pass_data['createtime'],
