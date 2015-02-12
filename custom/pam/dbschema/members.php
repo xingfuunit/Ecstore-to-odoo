@@ -28,7 +28,7 @@ $db['members'] = array(
             array(
                 'local' => '用户名',
                 'mobile' => '手机',
-                'email' => '邮箱'
+                'email' => '邮箱',
             ),
             'default'=>'local',
             'comment' => app::get('pam')->_('账户类型'),

@@ -1,0 +1,74 @@
+<form action="index.php?app=b2c&ctl=admin_member_card&act=toadd" method="post" class="form-handling" id="member-form">
+<div class="division">
+  <input type="hidden" value="<{$card.card_id}>" name="card_id">
+  <ul>
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>会员卡号<{/t}>：</label>
+      <span class="form-act"><{input type="text" name="card_number" size="20" vtype="required" value=$card.card_number}></span>
+    </li>
+
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>会员卡密码<{/t}>：</label>
+      <span class="form-act"><{input type="text" name="card_password" size="20" vtype="required" value=$card.card_password}></span>
+    </li>
+    
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>会员卡等级<{/t}>：</label>
+      <span class="form-act">
+      <{input type='select' name='member_lv[member_group_id]' vtype="required" options=$mem.lv.options value=$mem.lv.value name="card_lv_id" }>
+      </span>
+    </li>
+
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>会员卡余额<{/t}>：</label>
+      <span class="form-act"><{input type="text" name="card_advance"  vtype="required" value=$card.card_advance }></span>
+    </li>
+    
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>会员卡积分<{/t}>：</label>
+      <span class="form-act"><{input type="text" name="card_point"  vtype="required" value=$card.card_point }></span>
+    </li>
+    
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>会员卡批次<{/t}>：</label>
+      <span class="form-act"><{input type="text" name="card_etc"  vtype="required" value=$card.card_etc }></span>
+    </li> 
+  </ul>
+  <div class="table-action">
+    <button class="btn" type="submit" id="member-form-submit"><span><span><{t}>保存<{/t}></span></span></button></div>
+</div>
+</form>
+
+<style>
+.form-label{width:80px; display:block; float:left; line-height:24px;}
+.form-act{float:left;}
+</style>
+
+<script>
+(function(){
+    var _form = $('member-form');
+    var btn =$('member-form-submit');
+    var finder = finderGroup['<{$env.get.finder_id}>'];
+    
+    _form.store('target',{
+        
+        onSuccess:function(response){
+            var hash_res_obj = JSON.decode(response);
+            if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+            {
+                try{
+                    var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                }catch(e){}
+                
+                if(_dialogIns)
+                {   
+                    _dialogIns.close();
+                    finder.refresh.delay(400,finder);
+                }
+            }   
+        }
+    });
+    
+})();
+        
+</script>

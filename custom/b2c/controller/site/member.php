@@ -1283,6 +1283,20 @@ class b2c_ctl_site_member extends b2c_frontpage{
     }
 
     /*
+     *hack by Jason 保存修改支付密码
+    * */
+    function save_security_pay(){
+    	$url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_member','act'=>'securitycenter'));
+    	$userPassport = kernel::single('b2c_user_passport');
+    	$result = $userPassport->save_security_pay($this->app->member_id,$_POST,$msg);
+    	if($result){
+    		$this->splash('success',$url,$msg,true);
+    	}else{
+    		$this->splash('failed',null,$msg,true);
+    	}
+    }
+    
+    /*
      *会员中心收货地址
      * */
     function receiver(){
@@ -1882,6 +1896,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
         }
       }
       $this->pagedata['data'] = $data;
+      $this->pagedata['pamdata'] = $pamMemberData[0];//hack by Jason
       $this->pagedata['verify'] = $verify; 
       $this->output();
     }
@@ -1945,6 +1960,13 @@ class b2c_ctl_site_member extends b2c_frontpage{
         $userPassport = kernel::single('b2c_user_passport'); 
         $member_id = $userPassport->userObject->get_member_id();
         $arr_colunms = $userPassport->userObject->get_pam_data('login_account',$member_id);
+        /** hack by Jason 设置支付密码 **/
+        if($verifyType == 'security_pay'){
+        	$member_id = $this->app->member_id;
+        	$pamMemberData = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id));
+        	$this->pagedata['pamdata'] = $pamMemberData[0];
+        }
+        /** hack by Jason 设置支付密码 end**/
         $this->pagedata['verifyType'] = $verifyType; 
         $this->pagedata['data'] = $arr_colunms; 
         $this->output();

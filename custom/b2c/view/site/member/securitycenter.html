@@ -21,6 +21,28 @@
             </span>
           </li>
 
+		  <li>
+            <{if $pamdata.pay_password}>
+            <span class="security-title">
+              <i class="icon icon-success">%</i><b>支付密码</b>
+            </span>
+            <span class="security-actions"><a href="<{link app=b2c ctl=site_member act=verify arg0=security_pay}>">修改</a></span>
+            <span class="security-content">
+              <em>请牢记您的支付密码，在门店支付的时候需要你输入支付密码</em>
+            </span>
+            <{else}>
+            <span class="security-title">
+              <i class="icon icon-warning">$</i><b>支付密码</b>
+            </span>
+            <span class="security-actions">
+              <a href="<{link app=b2c ctl=site_member act=verify arg0=security_pay}>" class="btn btn-caution"><span><span>立即添加</span></span></a>
+            </span>
+            <span class="security-content">
+              <em>请牢记您的支付密码，在门店支付的时候需要你输入支付密码</em>
+            </span>
+            <{/if}>
+          </li>
+		  
           <li>
             <{if $verify.mobile}>
             <span class="security-title">

@@ -251,6 +251,7 @@ class b2c_mdl_member_messenger {
             /*             'goods-replay'=>array('label'=>'商品评论回复','level'=>9), todo */
             'account-register'=>array('label'=>app::get('b2c')->_('会员注册时'),'b2c_messenger_sms'=>'false','level'=>9,'varmap'=>app::get('b2c')->_('用户名').'&nbsp;<{$uname}>&nbsp;&nbsp;&nbsp;&nbsp;email&nbsp;<{$email}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('密码').'&nbsp;<{$passwd}>'),
             'account-chgpass'=>array('label'=>app::get('b2c')->_('会员更改密码时'),'level'=>9,'sendType'=>'notice','varmap'=>app::get('b2c')->_('密码').'&nbsp;<{$passwd}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('登录名').'&nbsp;<{$uname}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email&nbsp;<{$email}>'),
+        	'account-chgpaypass'=>array('label'=>app::get('b2c')->_('会员更改支付密码时'),'level'=>9,'sendType'=>'fan-out'),
             /*             'comment-replay'=>array('label'=>'留言回复时','level'=>9,'varmap'=>''), todo */
             /*             'indexorder-pay'=>array('label'=>'前台订单支付','level'=>9), */
             /*             'comment-new'=>array('label'=>'订单生成通知商家','level'=>9), */

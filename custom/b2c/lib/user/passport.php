@@ -111,6 +111,35 @@ class b2c_user_passport
     }
 
     /**
+     * 检查密码是否合法，支付密码是否一致
+     * add by Jason
+     * @params string $pay_password  支付密码
+     * @params string $psw_confirm 确认支付密码
+     *
+     * @return bool
+     */
+    public function check_pay_passport($pay_password,$psw_confirm,&$msg){
+    	$passwdlen = strlen( trim($pay_password) );
+    	if($passwdlen<6){
+    		$msg = $this->app->_('支付密码长度不能小于6位');
+    		return false;
+    	}
+    	if($passwdlen>8){
+    		$msg = $this->app->_('支付密码长度不能大于8位');
+    		return false;
+    	}
+    	if(!is_numeric($pay_password)){
+    		$msg = $this->app->_('支付密码只能为数字');
+    		return false;
+    	}
+    	if($pay_password != $psw_confirm){
+    		$msg = $this->app->_('输入的支付密码不一致');
+    		return false;
+    	}
+    	return true;
+    }//end function add by Jason
+    
+    /**
      * 检查密码是否合法，密码是否一致(注册，找回密码，修改密码)调用
      * @params string $password  密码
      * @params string $psw_confirm 确认密码
@@ -300,7 +329,7 @@ class b2c_user_passport
         } 
         $login_type = $this->get_login_account_type($login_account);
         $pamMembersModel = app::get('pam')->model('members');
-        $pamData = $pamMembersModel->getList('login_password,password_account,createtime',array('member_id'=>$member_id)); 
+        $pamData = $pamMembersModel->getList('login_password,pay_password,password_account,createtime',array('member_id'=>$member_id)); //hack by Jason 增加pay_password字段
         if(!$pamData){
             $msg = app::get('b2c')->_('aa');
             return false;  
@@ -310,6 +339,7 @@ class b2c_user_passport
             'login_type' => $login_type,
             'login_account' => $login_account,
             'login_password' => $pamData[0]['login_password'],
+        	'pay_password' => $pamData[0]['pay_password'],//add by Jason 增加支付密码
             'password_account' => $pamData[0]['password_account'], //登录密码加密账号
             'disabled' =>  'false',
             'createtime' => $pamData[0]['createtime']
@@ -363,6 +393,69 @@ class b2c_user_passport
       return true;
     }
 
+    /*
+     * 修改支付密码
+    * add by Jason
+    * @params $member_id int
+    * @params $data array
+    * */
+    public function save_security_pay($member_id,$data,&$msg){
+    	$pamMembersModel = app::get('pam')->model('members');
+    	$pamData = $pamMembersModel->getList('pay_password,password_account,createtime',array('member_id'=>$member_id));
+    	$use_pass_data['login_name'] = $pamData[0]['password_account'];
+    	$use_pass_data['createtime'] = $pamData[0]['createtime'];
+    	if($data['old_pay_passwd']){
+    		$pay_password = pam_encrypt::get_encrypted_password(trim($data['old_pay_passwd']),'member',$use_pass_data);
+    		if($pay_password !== $pamData[0]['pay_password']){
+    			$msg=app::get('b2c')->_('输入的旧密码与原密码不符！');
+    			return false;
+    		}
+    	}
+    	if ( !$this->check_pay_passport($data['pay_passwd'],$data['pay_passwd_re'],$msg) ){
+    		return false;
+    	}
+    
+    	if ( $this->reset_passport_pay($member_id,trim($data['pay_passwd'])) ){
+    		$msg = app::get('b2c')->_("支付密码修改成功");
+    	}else{
+    		$msg=app::get('b2c')->_('支付密码修改失败！');
+    		return false;
+    	}
+    
+    	$arr_colunms = $this->userObject->get_pam_data('*',$member_id);
+    	$aData['email'] = $arr_colunms['email'];
+    	$aData['uname'] = $arr_colunms['local'] ? $arr_colunms['local'] : $arr_colunms['mobile'];
+    	$aData['uname'] = $aData['uname'] ? $aData['uname'] : $arr_colunms['email'];
+    	$aData['passwd'] = $data['pay_passwd'];
+    
+    	//发送邮件或者短信
+    	$obj_account=$this->app->model('member_account');
+    	$obj_account->fireEvent('chgpaypass',$aData,$member_id);
+    	return true;
+    }
+    
+    /*
+     * 根据会员ID 修改用户支付密码
+    * add by Jason 修改支付密码方法
+    **/
+    public function reset_passport_pay($member_id,$pay_password){
+    	$pamMembersModel = app::get('pam')->model('members');
+    	$pamData = $pamMembersModel->getList('login_account,password_account,createtime',array('member_id'=>$member_id));
+    	$db = kernel::database();
+    	$db->beginTransaction();
+    	foreach($pamData as $row){
+    		$use_pass_data['login_name'] = $row['password_account'];
+    		$use_pass_data['createtime'] = $row['createtime'];
+    		$new_pay_password = pam_encrypt::get_encrypted_password(trim($pay_password),'member',$use_pass_data);
+    		if(!$pamMembersModel->update(array('pay_password'=>$new_pay_password),array('login_account'=>$row['login_account']))){
+    			$db->rollBack();
+    			return false;
+    		}
+    	}
+    	$db->commit();
+    	return true;
+    }
+    
     /*
      * 根据会员ID 修改用户密码
      **/
@@ -581,5 +674,68 @@ class b2c_user_passport
         $msg  = app::get('b2c')->_('保存失败,请重试或联系客服');
         return false;
     }
+    
+    //add by Jason通过会员卡注册会员
+    function create_card_member($member_card){
+    	$arrDefCurrency = app::get('ectools')->model('currency')->getDefault();
+    	$use_pass_data['login_name'] = $member_card['card_number'];
+    	$use_pass_data['createtime'] = time();
+    	$saveData = array
+    	(
+    			'pam_account' => array
+    			(
+    					'login_type' => 'local',
+    					'login_account' => $member_card['card_number'],
+    					'login_password' => pam_encrypt::get_encrypted_password(trim($member_card['card_password']),'member',$use_pass_data),
+    					'password_account' => $member_card['card_number'],
+    					'disabled' => 'false',
+    					'createtime' => $use_pass_data['createtime'],
+    			),
+    			'b2c_members' => array
+    			(
+    					'member_lv' => array
+    					(
+    							'member_group_id' => $member_card['card_lv_id']
+    					),
+    					'currency' => $arrDefCurrency['cur_code'],
+    					'reg_ip' => base_request::get_remote_addr(),
+    					'regtime' => $use_pass_data['createtime'],
+    			)
+    	);
+    	$db = kernel::database();
+    	$transaction_status = $db->beginTransaction();
+    	if( !$member_id = $this->save_members($saveData,$msg) ){
+    		$db->rollback();
+    		$this->end(true, app::get('b2c')->_('添加失败！请重试'));
+    	}else{
+    		if($member_card['card_advance']){
+    			$msg = '会员卡预存款';
+    			$objAdvances = $this->app->model("member_advance");
+    			if(!$objAdvances->add($member_id, $member_card['card_advance'], app::get('b2c')->_('会员卡预存款'), $msg)){
+    				$db->rollback();
+    				$this->end(true, app::get('b2c')->_('添加预存款失败！请重试'));
+    			}
+    		}
+    		 
+    		if($member_card['card_point']){
+    			$member_point = $this->app->model('member_point');
+    			if(!$member_point->change_point($member_id,$member_card['card_point'],$msg,'register_score',2,$member_id,$member_id,'exchange')){
+    				$db->rollback();
+    				$this->end(true, app::get('b2c')->_('添加积分失败！请重试'));
+    			}
+    		}
+    		
+    		$this->app->model('member_card')->update(array('card_state'=>1,'active_time'=>time()),array('card_id'=>$member_card['card_id']));
+
+    		//增加会员同步 2012-5-15
+    		if( $member_rpc_object = kernel::service("b2c_member_rpc_sync") ) {
+    			$member_rpc_object->createActive($member_id);
+    		}
+    		$db->commit($transaction_status);
+    		
+    		return $member_id;
+    	}
+    }
+    
 }
                 

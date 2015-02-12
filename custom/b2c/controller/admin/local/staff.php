@@ -53,11 +53,13 @@ class b2c_ctl_admin_local_staff extends desktop_controller {
             $use_pass_data['login_name'] = $_POST['login_name'];
             $use_pass_data['createtime'] = $regtime[0]['regtime'];            
             $login_password = pam_encrypt::get_encrypted_password(trim($_POST['login_password']),'member',$use_pass_data);
+            $over_password = pam_encrypt::get_encrypted_password(trim($_POST['over_password']),'member',$use_pass_data);
             $staff_data=array(
             	'member_id'=>$_POST['member_id'],
                 'login_name'=>$_POST['login_name'],
                 'staff_name'=>$_POST['staff_name'],
                 'login_password'=>$login_password,
+            	'over_password'=>$over_password,
                 'branch_id'=>$_POST['branch_id'],
                 'ctime'=>$use_pass_data['createtime'],
                 'disabled'=>$_POST['disabled'],
