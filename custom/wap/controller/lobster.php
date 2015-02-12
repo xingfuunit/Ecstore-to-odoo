@@ -12,7 +12,7 @@ class wap_ctl_lobster extends wap_controller{
 	protected  $lz_model;
 	
 	//控制开始结束
-	protected  $_is_stop = false;
+	protected  $_is_stop = true;
 	
 	//微信eid
 	protected $_state;
@@ -40,7 +40,7 @@ class wap_ctl_lobster extends wap_controller{
 		
 		//强制结束
 		if($this->_is_stop){
-			$this->_js_alert($this->_active_name.'活动已结束，更多活动请关注 品珍微信',$this->_follow_url);
+			$this->_js_alert($this->_active_name.'3000只龙虾已经全部送完啦~品珍鲜活感谢您的支持与关注，敬请期待下一期活动~',$this->_follow_url);
 			exit;
 		}
 		
@@ -455,8 +455,7 @@ class wap_ctl_lobster extends wap_controller{
 	 * （短信内容直接添加到数据库）
 	 * 恭喜您成功召集30个好友支持，成功获取本次品珍鲜活送龙虾活动奖品~奖品将于活动结束后统一发放，领奖方式请参照活动细则。如有疑问，可微信联系客服或拨打：400-930-9303
 	 */
-	public  function _send_success_sms($tmpl,$mobile,$data=''){
-		
+	protected function _send_success_sms($tmpl,$mobile,$data=''){
 		$messengerModel = app::get('b2c')->model('member_messenger');
 		$actions = $messengerModel->actions();
 		$level = $actions[$tmpl]['level'];
