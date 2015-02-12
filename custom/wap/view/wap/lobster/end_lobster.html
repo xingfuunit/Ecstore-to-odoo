@@ -12,11 +12,19 @@
 	<div class="container">
 		<div class="lobster_banner"><img src="<{if $is_show_share}>/public/app/wap/statics/images/lobster/lobster_back1_share.jpg<{else}>/public/app/wap/statics/images/lobster/lobster_back1.png<{/if}>"></div>
 		<div class="lobster_body">
-				<div class="bnt1"><a href="<{$zan_url}>"><img src="/public/app/wap/statics/images/lobster/bnt1.png"></a></div>
+				<div class="end_baea">
+					<div class="end_lob_back">
+						<span class="end_txt">历时10个小时，本次品珍鲜活推出的送龙虾活动已逾十五万人参与，<span style="color:red">3000</span>只龙虾已经全部派送完毕~
+							<a href="<{$end_url}>">点击查看详情</a><br>
+							感谢您的参与，敬请期待更多优惠活动~
+							活动奖品将尽快发放，请时刻关注<br>
+							<span class="pz_t">品珍鲜活</span>
+						</span>
+					</div>
+				</div>
+				<div style="clear:both;"></div>
 				<div class="song_txt"><{$m_info['m_nick_name']}>已成功获得<span class=""><{$m_info['z_count']}></span>个好友的支持</div>
 				<div class="song_tips">30个好友支持即可获得品珍鲜活送出的熟冻波士顿龙虾一只</div>
-				<div class="bnt2"><a href="<{$join_url}>"><img src="/public/app/wap/statics/images/lobster/bnt2.png"></a></div>
-				<div class="bnt3"><a href="<{$lobster_rule}>"><img src="/public/app/wap/statics/images/lobster/bnt3.png"></a></div>
 				<div style="clear:both"></div>
 			<div class="lobster_comment">
 				<div class="c_header">看看谁支持了<{$m_info['m_nick_name']}></div>
@@ -53,10 +61,5 @@
 </html>
 
 <script type="text/javascript">
-		window.onload=function(){
-			var is_show = <{$is_show_share}>;
-			if(is_show){
-				alert('请点击右上角分享');
-			}
-		}
+
 </script>

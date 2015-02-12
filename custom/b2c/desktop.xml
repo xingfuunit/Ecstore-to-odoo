@@ -169,6 +169,11 @@
             <menu controller='admin_member_disask' action='basic_setting' permission='settingdisask' display='true' order='160'>消息设置</menu>
             <menu controller='admin_member_withdrawal' action='index' permission='disask' display='true' order='170'>提现列表</menu>
         </menugroup>
+        
+        <menugroup name="会员卡">
+            <menu controller="admin_member_card" action='index' permission='member' display='true' order='230'>会员卡管理</menu>
+        </menugroup>
+        
     </workground>
 
     <workground name="营销" id="b2c.wrokground.sale" controller="admin_sales_order" action="index" order="40">

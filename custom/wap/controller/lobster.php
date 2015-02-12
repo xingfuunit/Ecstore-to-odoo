@@ -12,7 +12,7 @@ class wap_ctl_lobster extends wap_controller{
 	protected  $lz_model;
 	
 	//控制开始结束
-	protected  $_is_stop = false;
+	protected  $_is_stop = true;
 	
 	//微信eid
 	protected $_state;
@@ -20,11 +20,11 @@ class wap_ctl_lobster extends wap_controller{
 	//关注文章地址
 	private $_follow_url = 'http://mp.weixin.qq.com/s?__biz=MzAxMjEwMjg2OA==&mid=206625913&idx=1&sn=a21e86c75e22f947ae2e7fb57cf47030#rd';
 	
+	//活动结束文章
+	private $_end_url = 'http://mp.weixin.qq.com/s?__biz=MzAxMjEwMjg2OA==&mid=206627978&idx=3&sn=5e1b720986f1d88024ea513a3d0e4076#rd';
+	
 	//礼品最大数量
 	private $_gift_max = 3000;
-	
-	//集赞获奖数
-	private $_zan_success_num = 30;
 	
 	//开始时间
 	private $_startdate = '2015-2-10 00:00:01';
@@ -35,46 +35,40 @@ class wap_ctl_lobster extends wap_controller{
 	//活动ID
 	private $_active_id = '1';
 	
-	private $_active_name = '龙虾集赞';
+	private $_active_name = '龙虾';
 	
 	
 	function __construct(&$app){
 		parent::__construct($app);
 		
-		//强制结束
-		if($this->_is_stop){
-			$this->_js_alert($this->_active_name.'活动已结束，更多活动请关注 品珍微信',$this->_follow_url);
-			exit;
-		}
-		
-		//判断开始结束
-		$time = time();
-		if($time < strtotime($this->_startdate)){
-			$this->_js_alert($this->_active_name.'活动未开始，请先关注 品珍微信',$this->_follow_url);
-			exit;
-		}
-		if($time > strtotime($this->_end_date)){
-			$this->_js_alert($this->_active_name.'活动已结束，更多活动请关注 品珍微信',$this->_follow_url);
-			exit;
-		}
-		
 		$this->lm_model = $this->app->model('lobster_member');
 		$this->lz_model = $this->app->model('lobster_zlist');
+
+// 		//判断开始结束
+// 		$time = time();
+// 		if($time < strtotime($this->_startdate)){
+// 			$this->_js_alert($this->_active_name.'活动未开始，请先关注 品珍微信',$this->_follow_url);
+// 			exit;
+// 		}
+// 		if($time > strtotime($this->_end_date)){
+// 			$this->_js_alert($this->_active_name.'活动已结束，更多活动请关注 品珍微信',$this->_follow_url);
+// 			exit;
+// 		}
 		
-		//送完即止
-		$gift_count = $this->lm_model->count(array('z_count|than'=>$this->_zan_success_num-1));
-		if($gift_count > $this->_gift_max){
-			$this->_js_alert('本次活动奖品已派完，敬请期待下期活动！',$this->_follow_url);
-			exit;
-		}
-		
-		$shopname = app::get('site')->getConf('site.name');
+// 		//送完即止
+// 		$gift_count = $this->lm_model->count(array('z_count|than'=>$this->lm_model->_zan_success_num-1));
+// 		if($gift_count > $this->_gift_max){
+// 			$this->_js_alert('本次活动奖品已派完，敬请期待下期活动！',$this->_follow_url);
+// 			exit;
+// 		}
 		
 		$this->_state = $_GET['state'];
 	}
 	
 	
 	function index(){
+		//判断活动是否结束
+		$this->_is_stop();
 
 		$m_id = $this->_request->get_params();
 		$m_id = (int)$m_id[0];
@@ -101,7 +95,7 @@ class wap_ctl_lobster extends wap_controller{
 			}
 			
 			//集赞成功  跳到获奖页面
-			if($cur_join_user['z_count'] >= $this->_zan_success_num){
+			if($cur_join_user['z_count'] >= $this->lm_model->_zan_success_num){
 				$this->_build_wx_url($this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'member_lobster','full'=>1,'args'=>array('m_id'=>$m_id))),1);
 			}
 		}
@@ -115,7 +109,7 @@ class wap_ctl_lobster extends wap_controller{
 		}
 
 		//获取赞信息
-		$zan_list = $this->lz_model->getlist('*',array('m_id'=>$m_id),0,30,'z_time Desc');
+		$zan_list = $this->lz_model->getlist('*',array('m_id'=>$m_id),0,100,'z_time Desc');
 
 		if($zan_list){
 			foreach($zan_list as $k=> $v){
@@ -141,6 +135,10 @@ class wap_ctl_lobster extends wap_controller{
 	 * 点赞
 	 */
 	function post_zan(){
+		
+		//判断活动是否结束
+		$this->_is_stop();
+		
 		$m_id = $this->_request->get_params();
 		$m_id = (int)$m_id[0];
 		
@@ -189,7 +187,7 @@ class wap_ctl_lobster extends wap_controller{
 				$this->lm_model->update($zan_data,array('m_id'=>$m_id));
 				
 				//赞数达到30 发短信
-				if($m_info['z_count']+1  == $this->_zan_success_num){
+				if($m_info['z_count']+1  == $this->lm_model->_zan_success_num){
 					$this->_send_success_sms('weixin_success', $m_info['phone']);
 				}
 			}
@@ -202,6 +200,10 @@ class wap_ctl_lobster extends wap_controller{
 	 * 赞成功
 	 */
 	function zan_success(){
+		
+		//判断活动是否结束
+		$this->_is_stop();
+		
 		$this->pagedata['title'] = app::get('b2c')->_('我要免费吃龙虾，快来支持我！ &nbsp; - 品珍鲜活');
 		
 		$m_id = $this->_request->get_params();
@@ -240,6 +242,10 @@ class wap_ctl_lobster extends wap_controller{
 	 * 活动个人主页
 	 */
 	function member_lobster(){
+		
+		//判断活动是否结束
+		$this->_is_stop();
+		
 		$this->pagedata['title'] = app::get('b2c')->_($this->_active_name.'活动  - 品珍鲜活');
 		
 		$wx_info = $this->_get_wx_info();
@@ -252,9 +258,9 @@ class wap_ctl_lobster extends wap_controller{
 		}
 		
 		//显示获取数
-		if($m_info['z_count'] < $this->_zan_success_num){
+		if($m_info['z_count'] < $this->lm_model->_zan_success_num){
 			
-			$lost = $this->_zan_success_num- $m_info['z_count'];
+			$lost = $this->lm_model->_zan_success_num- $m_info['z_count'];
 			$this->pagedata['lost'] = $lost;
 			$this->pagedata['count'] = $m_info['z_count'];
 			
@@ -264,6 +270,7 @@ class wap_ctl_lobster extends wap_controller{
 		}
 		//获取奖品
 		else{
+			$this->pagedata['count'] = $m_info['z_count'];
 			$this->page('wap/lobster/member_win.html',true);
 		}
 		
@@ -273,6 +280,10 @@ class wap_ctl_lobster extends wap_controller{
 	 * 参加页面
 	 */
 	function join_lobster(){
+		
+		//判断活动是否结束
+		$this->_is_stop();
+		
 		$this->pagedata['title'] = app::get('b2c')->_('欢迎参加'.$this->_active_name.'活动  - 品珍鲜活');
 		
 		$user_info = $this->_get_wx_info();
@@ -345,11 +356,13 @@ class wap_ctl_lobster extends wap_controller{
 	 * @param unknown_type $url
 	 * @param is_jump 是否跳转
 	 * snsapi_userinfo
+	 * 
+	 * no_reg=1 返回给微信接口  参加活动的不注册
 	 */
 	protected function  _build_wx_url($url,$is_jump=0,$scope='snsapi_base'){
 		$bind = app::get('weixin')->model('bind')->getRow('*',array('eid'=>$this->_state,'status'=>'active'));
 		$path1 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$bind['appid']}&redirect_uri=";
-		$path2 = "&response_type=code&scope={$scope}&state={$this->_state}&connect_redirect=1#wechat_redirect";
+		$path2 = "?no_reg=1&response_type=code&scope={$scope}&state={$this->_state}&connect_redirect=1#wechat_redirect";
 		
 		$url = $path1.$url.$path2;
 		
@@ -474,6 +487,54 @@ class wap_ctl_lobster extends wap_controller{
 		
 		return true;
 	} 
+	
+	/**
+	 * 活动结束
+	 */
+	public function end_lobster(){
+		$m_id = $this->_request->get_params();
+		$m_id = (int)$m_id[0];
+		
+		if(empty($m_id)){
+			print_r('param error!');exit;
+		}
+		
+		//分享者信息
+		$join_info = $this->lm_model->getrow('*',array('m_id'=>$m_id));
+		
+		//获取赞信息
+		$zan_list = $this->lz_model->getlist('*',array('m_id'=>$m_id),0,200,'z_time Desc');
+		
+		if($zan_list){
+			foreach($zan_list as $k=> $v){
+				if($v['z_time']){
+					$zan_list[$k]['z_time'] = date('m-d H:i',$v['z_time']);
+				}
+			}
+		}
 
+		$this->pagedata['end_url'] = $this->_end_url;
+		$this->pagedata['zan_list'] = $zan_list;
+		$this->pagedata['m_info']=$join_info;
+		$this->pagedata['lobster_rule'] = $this->_follow_url;
+		$this->pagedata['title'] = app::get('b2c')->_($this->_active_name.'活动'.$join_info['m_nick_name']);
+		$this->page('wap/lobster/end_lobster.html',true);
+	}
+
+	/**
+	 * 活动结束
+	 */
+	function _is_stop(){
+	
+		if($this->_is_stop){
+			// 			$this->_js_alert('3000只龙虾已经全部送完啦~品珍鲜活感谢您的支持与关注，敬请期待下一期活动~',$this->_follow_url);
+			$m_id = $this->_request->get_params();
+			$m_id = (int)$m_id[0];
+			
+			$url = $this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'end_lobster','full'=>1,'args'=>array('m_id'=>$m_id)));
+			$this->redirect($url);
+		}
+	}
+	
 }
 ?>
