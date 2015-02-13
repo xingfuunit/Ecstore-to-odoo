@@ -480,5 +480,55 @@ class weixin_wechat{
         }
         return false;
     }
+    
+    /**
+     * 客服接口-发消息 （当用户主动发消息给公众号的时候（包括发送信息、点击自定义菜单、订阅事件、扫描二维码事件、支付成功事件、用户维权） ，48小时内可回复）
+     * 发送微信 发消息
+     *  {
+ 	 *	"touser":"OPENID",
+ 	 *	"msgtype":"text",
+ 	 *	"text":
+ 	 * 	{
+ 	 *		"content":"Hello World"
+ 	 *	}
+ 	 *}
+     */
+    function send_message($bind_id,$openid,$content){
+    	
+    	if(!$access_token = $this->get_basic_accesstoken($bind_id)){
+    		return false;
+    	}
+    	
+    	$data=array(
+    			'touser'=>$openid,
+    			'msgtype'=>'text',
+    			'text'=>array('content'=>$content),
+    	);
+    	
+    	$url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={$access_token}";
+    	$data = json_encode ( $data );
+    	// 由于微信不直接认json_encode处理过的带中文数据的信息，这里做个转换
+    	$post_message = preg_replace ( "/\\\u([0-9a-f]{4})/ie", "iconv('UCS-2BE', 'UTF-8', pack('H*', '$1'));", $data );
+    	$httpclient = kernel::single('base_httpclient');
+    	
+    	$response = $httpclient->set_timeout(6)->post($url, $post_message);
+    	$result = json_decode($response, true);
+    	if($result['errcode']==40001){
+    		 
+    		if(base_kvstore::instance('weixin')->delete('basic_accesstoken_'.$bind_id)){
+    			$this->createMenu($bind_id, $menu_data, &$msg);
+    		}
+    		return true;
+    	}
+    	if( $result['errcode']==0 ){
+    		logger::info('推送消息失败:'.print_r($data,1));
+    		return true;
+    	}else{
+    		$msg = "推送消息失败,微信返回的错误码为 {$result['errcode']}";
+    		logger::info($msg);
+    		return false;
+    	}
+    	
+    }
 
 }
