@@ -113,10 +113,25 @@ class b2c_ctl_site_passport extends b2c_frontpage{
 
         $member_id = kernel::single('pam_passport_site_basic')->login($userData,$post['verifycode'],$msg);
         if(!$member_id){
-            //设置登陆失败错误次数 一个小时三次错误后需要自动开启验证码
-            kernel::single('b2c_service_vcode')->set_error_count();
-            $data['needVcode'] = kernel::single('b2c_service_vcode')->status();
-            $this->splash('failed',null,$msg,true,$data);exit;
+        	$member_card = $this->app->model('member_card')->getList('*',array('card_number'=>$userData['login_account'],'card_state'=>0));
+        	if($member_card){
+        		if($member_card[0]['expired_time'] > time() || !$member_card[0]['expired_time']){//判断如果是会员卡有没有超过会员卡的失效时间
+        			$member_id = $this->userPassport->create_card_member($member_card[0]);
+        			if(!$member_id){
+        				$msg = app::get('b2c')->_('登陆错误,请重试');
+        				$this->splash('failed',null,$msg,true);exit;
+        			}
+        		}else{
+        			$msg = app::get('b2c')->_('该会员卡已超过了激活的时间');
+        			$this->splash('failed',null,$msg,true);exit;
+        		}       		
+        	}else{
+        		//设置登陆失败错误次数 一个小时三次错误后需要自动开启验证码
+            	kernel::single('b2c_service_vcode')->set_error_count();
+            	$data['needVcode'] = kernel::single('b2c_service_vcode')->status();
+            	$this->splash('failed',null,$msg,true,$data);exit;
+        	}
+            
         }
 
         $b2c_members_model = $this->app->model('members');

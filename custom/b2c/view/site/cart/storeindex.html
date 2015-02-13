@@ -46,7 +46,7 @@
                        应收金额：<span class="kkss" style="color: red; font-size: 24px; font-weight: bold;"><{$aCart.promotion_subtotal|cur_odr}></span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
                        账户余额：<span style="color: red; font-size: 24px; font-weight: bold;" class="kkss1"><{$member.advance|cur_odr}></span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;   
                      <span class="zhye_other"><{t}>余额不足，还差：<span class="zhye_other_val" style="color:red;font-size: 24px;" ></span></br>请选择以下方式支付差额。<{/t}><br/><label style="font-size:18px;"><input type="radio" value="1" name="other_pay" checked="checked"/><font style="font-size: 24px">现金付款</font></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:18px;"><input type="radio" value="2" name="other_pay"/><font style="font-size: 24px ">刷卡付款</font><label></span><br /><br />
-                                 支付密码：<input  value="" name="password" type="password" id="webpos_password"/><span id="dd_list" class="dd_add_info" style="color: #006600;"></span><br/>
+                                支付密码：<input  value="" name="password" type="password" id="webpos_password"/><span id="dd_list" class="dd_add_info" style="color: #006600;"></span><br/>
                        <input type="button" style="cursor:pointer" id="add_yuamount" name="amount_submit" class="submdeoe"  value="确认付款" />
                        </div>        
            </li>
@@ -121,7 +121,7 @@
                         </div>        
                 </li>
                  hack by Jason去掉webpos的会员充值功能end-->
-                <li ><a href="#" class="drop">充值卡</a> 
+                <li ><a href="#" class="drop">充值券</a> 
                      
                        
                     <div class="dropdown_1column sdffsd" style="margin-left: -356px;">        
@@ -132,7 +132,7 @@
                                     <ul>
 
                                         <li class="form-item" style="width: 400px; margin-bottom: 30px; padding-top: 50px; ">
-                                            <label for="" class="form-label" style="width: 150px; font-size: 20px;" >兑换卡卡号：</label>
+                                            <label for="" class="form-label" style="width: 150px; font-size: 20px;" >充值券号：</label>
                                             <span class="form-act">
                                                                         <{input style="font-size:18px; hight:40px;  border:1px solid #ccc; padding:0px;" class="inputstyle" type="unsigned" name="giftcard[gcard_code]" vtype="required" id='deposit' data-caution="请填写兑换卡号！"}>
                                             </span>

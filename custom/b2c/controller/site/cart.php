@@ -1282,7 +1282,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $obj_addr = kernel::single('b2c_member_addrs');
         //新增地址
         if(!$_POST['address']){
-            $save_data = $obj_addr->purchase_save_addr($_POST,$member_id,$msg);
+            $save_data = $obj_addr->purchase_save_addr($_POST,$member_id,$msg);   
             $addr_id = $save_data['addr_id'];
             $this->pagedata['def_addr'] = $save_data;
         }else{

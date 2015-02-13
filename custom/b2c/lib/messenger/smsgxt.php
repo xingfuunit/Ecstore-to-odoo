@@ -15,7 +15,7 @@ class b2c_messenger_smsgxt{
 //     private $sms_user_name = "it-service"; //帐号
     
     private $sms_user_name = 'pzfresh@pzfresh.com';
-    private $sms_password = "x127682"; //密码
+    private $sms_password = "kdw329461"; //密码
     
     private $statusStr = array(
     		"000"  => "成送成功",
