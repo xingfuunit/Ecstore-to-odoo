@@ -44,8 +44,7 @@
         <{assign var='buytarget' value='_dialog_minicart'}>
         <{/if}>
         <a class="btn btn-major action-addtocart" href="<{link app=b2c ctl=site_cart act=add arg0=goods arg1=$goods.goods_id arg2=$goods.products.product_id arg3=1}>"<{if $buytarget}> target="<{$buytarget}>"<{/if}>><span><span>加入购物车</span></span></a>
-        <{elseif $goods.spec_desc && $goods.store}>
-        <a class="btn btn-caution" href="<{link app=b2c ctl=site_product arg0=$goods.products.product_id}>"><span><span>查看详情</span></span></a>
+
         <{else}>
         <!-- 到货通知 -->
         <a href="javascript:void(0);" class="btn btn-caution action-notify" rel="<{$goods.goods_id}>::<{$goods.products.product_id}>"><span><span>到货通知</span></span></a>

@@ -496,6 +496,7 @@ class b2c_ctl_site_product extends b2c_frontpage{
     	
 //    	$bn = $_POST['bn'];
 //    	$product = app::get('b2c')->model('products')->getList('product_id,goods_id,marketable,store',array('bn'=>trim($bn)));
+    	
     	$bn = trim($_POST['bn']);
     	$bn = kernel::database()->quote($bn);
         $product = kernel::database()->select("select product_id,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");

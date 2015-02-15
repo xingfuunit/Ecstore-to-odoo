@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+
+<style>
+.clearfix:after {
+visibility: hidden;
+display: block;
+font-size: 0;
+content: " ";
+clear: both;
+height: 0;
+}
+.clearfix { display: inline-table; }
+/* Hides from IE-mac \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* End hide from IE-mac */
+
+
+.w {width:1200px;margin:0 auto;}
+.l,.r {width:200px;height:500px;background-color:#f2f2f2;color:#000}
+.l {float:left}
+.r {float:right}
+.m {margin:0 -210px;width:100%;height:500px;background-color:red;color:#FFF;}
+.m .inner {margin:0 210px;}
+
+</style>
+</head>
+
+<body>
+
+
+<div class="w clearfix">	
+    <div class="r">右侧列</div>
+    <div class="m">
+    	<div class="inner">中间自适应宽度区域</div> 
+    </div>   
+    <div class="l">左侧列</div>
+</div>
+
+
+
+
+</body>
+</html>

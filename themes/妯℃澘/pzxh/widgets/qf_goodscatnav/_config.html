@@ -1,0 +1,119 @@
+<div class="tableform widgetconfig">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"><tr>
+            <th>链接设置:</th>
+            <td>
+                <div class="span-auto division">
+                    <label>
+                        <p>分类链接在新窗口打开？</p>
+                        <input type="checkbox" name="target_blank" value="1" <{if $setting.target_blank}> checked <{/if}> />是
+                    </label>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <{button label=$___b2c="添加栏目菜单"|t:'b2c' app="desktop" icon="btn_add.gif" id="add_ad_pic" onclick="addConfig('menus');"}>
+
+	<div class="division" id="listArea_menus">
+		<div>
+			<table width="100%" cellpadding="0" cellspacing="0">
+			  <tr>
+			  <th style="width:75px">前导提示：</th>
+			  <td><input type="text" name="fronttips" style="width:100px" value="<{$setting.fronttips}>"> &nbsp; <input type="checkbox" name="bold" value="1"<{if $setting.bold}> checked<{/if}>>  粗体 &nbsp;&nbsp;&nbsp;&nbsp; 前导提示留空为不显示</td>
+			  </tr>
+			</table>
+		</div>
+		<{if $setting.menus}>
+		<{foreach from=$setting.menus item=mdata key=key}>
+		<div class="configs">
+			<table width="100%" cellpadding="0" cellspacing="0">
+			  <tr>
+			  <th style="width:75px">栏目标题：</th>
+			  <td style="width:105px"><input type="text" name="menus[<{$mdata.i}>][text]" style="width:100px" value="<{$mdata.text}>"></td>
+			  <th style="width:75px">className：</th>
+			  <td style="width:105px"><input type="text" name="menus[<{$mdata.i}>][classname]" style="width:80px" value="<{$mdata.classname}>"></td>
+			  <th style="width:75px">链接地址：</th>
+			  <td style="width:170px"><input type="text" name="menus[<{$mdata.i}>][url]" value="<{$mdata.url}>" style="width:170px"></td>
+			  <th style="width:65px">窗口目标：</th>
+			  <td><select name="menus[<{$mdata.i}>][target]">
+					<option value="_self" <{if $mdata.target=='_self'}>selected<{/if}>>本窗口</option>
+					<option value="_blank" <{if $mdata.target=='_blank'}>selected<{/if}>>新窗口</option>
+				</select>
+			  </td>
+              <td><span onclick="delLink(this)"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt=$___b2c="删除"|t:'b2c' title=$___b2c="删除"|t:'b2c'}></span></td>
+			  </tr>
+			</table>
+			<input type=hidden name=menus[<{$mdata.i}>][i] value="<{$mdata.i}>">
+		</div>
+		<{/foreach}>
+		<{/if}>
+        </div>
+      <div>各分类栏目图片：</div>
+
+	<div class="division">
+		<{if $data}>
+        <{assign var="i" value="0"}>
+		<{foreach from=$data item=item key=goddkey name=tee}>
+		<div class="goodcatimage">
+			<table width="100%" cellpadding="0" cellspacing="0">
+			  <tr>
+			  <th style="width:75px">分类名称：</th>
+			  <td style="width:105px"><{$item.cat_name}></td>
+              <th style="width:75px">图片链接：</th>
+			  <td>
+              <input type="text" style="width:78%" name="imglinks[]" id="imgsrc_<{$item.cat_id}>" value="<{$setting.imglinks.$i|default:"./"}>" />
+			  </td>
+			  <th style="width:75px">图片地址：</th>
+			  <td>
+              <input type="text" style="width:78%" class="imgsrc" name="gcatlinks[]" id="gcatlink_<{$item.cat_id}>" value="<{$setting.gcatlinks.$i|default:"%THEME%/images/"}>" />
+			<input type="button" value="上传图片" onclick="addPic($('gcatlink_<{$item.cat_id}>'))" />
+			  </td>
+			  </tr>
+			</table>
+		</div>
+        <{assign var="i" value=$i+1}>
+		<{/foreach}>
+		<{/if}>
+		</div>
+</div>
+
+<script>
+function addConfig(key){
+	var content;
+	d=new Date();
+	i=d.getTime();
+	if(key=='menus'){
+		content='\
+		<div class="configs">\
+			<table width="100%" cellpadding="0" cellspacing="0">\
+			  <tr>\
+			  <th style="width:75px">栏目标题：</th>\
+			  <td style="width:105px"><input type="text" name="menus['+i+'][text]" style="width:100px;"></td>\
+			  <th style="width:75px">className：</th>\
+			  <td style="width:105px"><input type="text" name="menus['+i+'][classname]" style="width:80px"></td>\
+			  <th style="width:75px">链接地址：</th>\
+			  <td style="width:170px;"><input type="text" name="menus['+i+'][url]" style="width:170px;" value="./"></td>\
+			  <th style="width:65px">窗口目标：</th>\
+			  <td><select name="menus['+i+'][target]"><option value="_self">本窗口</option><option value="_blank" selected>新窗口</option></select></td>\
+			  <td><span onclick="delLink(this)"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt=$___b2c="删除"|t:'b2c' title=$___b2c="删除"|t:'b2c'}></span></td>\
+			  </tr>\
+			</table>\
+			<input type=hidden name=menus['+i+'][i] value="'+i+'">\
+		</div>\
+		';
+	}
+	$E('#listArea_'+key).adopt(new Element('div').set('html',content).getFirst());
+}
+
+function addPic(target){
+	var url='index.php?app=desktop&act=alertpages&goto='+encodeURIComponent("index.php?app=image&ctl=admin_manage&act=image_broswer&type=big");
+	Ex_Loader('modedialog',function(){
+		return new imgDialog(url,{onCallback:function(image_id,image_src){
+				$(target).value=image_src;
+		}})	;
+	});
+}	
+delLink=function(o){
+	$(o).getParent('.configs').remove();
+}
+</script>
+</div>

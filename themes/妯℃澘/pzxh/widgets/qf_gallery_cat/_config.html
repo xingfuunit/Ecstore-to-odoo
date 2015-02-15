@@ -1,0 +1,114 @@
+<style>
+<!--
+.division td {line-height:22px;}
+.widgetconfig table {margin-top:5px;}
+.widgetconfig th,.widgetconfig td{padding:5px;border:1px solid #ddd; vertical-align:middle;line-height:1.8}
+.widgetconfig th {background-color:#E2E8EB}
+.widgetconfig input {padding:2px;line-height:18px;}
+.widgetconfig i {color:#FF0000;}
+#cat-showType li {
+	margin-right:5px;
+	list-style:none;
+	cursor:pointer;
+}
+#cat-showType li input {
+	vertical-align:middle;
+	border:none;
+}
+#cat-showType li.checked {
+	color:#690;
+}
+#cat-showType .text {
+	width:80px;
+}
+.topcat{
+	color:#ff0000;
+	font-weight:bold;
+}
+.subCat{
+	font-weight:bold;
+}
+.info{
+	color:#009900;
+}
+.division td {line-height:22px;}
+-->
+</style>
+
+<div id="cat-default" class="tableform widgetconfig">
+    <div class="division">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      	<tr>
+			<th width="20%">显示标题：</th>
+			<td width="30%">  
+				<input name="title" class="inputstyle" value="<{$setting.title}>" />
+			</td>
+            <th>分类显示方式：</th>
+            <td>
+                <select name="catShowType" id="catShowType">
+                    <option value="0" <{if $setting.catShowType=="0"}>selected="selected"<{/if}>>显示所有分类</option>
+                    <option value="1" <{if $setting.catShowType=="1"}>selected="selected"<{/if}>>自动判断</option>
+                    <option value="2" <{if $setting.catShowType=="2"}>selected="selected"<{/if}>>显示指定分类</option>
+                </select>
+            </td>
+        </tr>  
+        <tr>
+          <th width="20%">循环深度：</th>
+          <td width="30%"><select name="showCatDepth_default">
+              <option value="1" <{if $setting.showCatDepth_default=="1"}> selected="selected"<{/if}>>仅显示一级分类</option>
+              <option value="2" <{if $setting.showCatDepth_default=="2"}> selected="selected"<{/if}>>显示二级分类</option>
+              <option value="3" <{if $setting.showCatDepth_default=="3"}> selected="selected"<{/if}>>显示三级分类</option>
+            </select>
+			</td>
+        	<th width="10%" class="showtypeid <{if $setting.catShowType != '2'}> hide<{/if}>">指定分类ID：</th>
+          	<td width="40%" class="showtypeid <{if $setting.catShowType != '2'}> hide<{/if}>">
+                <input type="text" name="show_cat_id" value="<{$setting.show_cat_id}>">(可指定多个分类，用,隔开.如1,2)
+            </td>
+            <th width="10%" class="hidetypeid <{if $setting.catShowType == '2'}> hide<{/if}>"></th>
+            <td width="40%" class="hidetypeid <{if $setting.catShowType == '2'}> hide<{/if}>"></td>
+        </tr>
+        
+        <tr>
+          <th width="20%">分隔商品列表符号：</th>
+          <td width="30%"><input type="text" name="page_devide" value="<{$setting.page_devide|default:''}>">(显示三级分类时使用)</td>
+         <!-- <th >列数：</th>
+          <td ><input name="devide" value="<{$setting.devide|default:'0'}>">("0"为自动排列)</td> -->
+            <th></th>
+            <td></td>
+        </tr>		
+      </table>
+    </div>
+</div>
+<script>
+    $('catShowType').addEvent('change',function(){
+        if(this.value !='2'){
+            $$('.showtypeid').each(function(el){
+              if (el.hasClass('hide')) {
+              } else {
+                  el.addClass('hide');
+              }
+            });
+            $$('.hidetypeid').each(function(el){
+                if (el.hasClass('hide')) {
+                    el.removeClass('hide');
+                } else { }
+            });
+        }
+        else{
+                $$('.showtypeid').each(function(el){
+                    if (el.hasClass('hide')) {
+                        el.removeClass('hide');
+                    } else {
+                    }
+                });
+                $$('.hidetypeid').each(function(el){
+                    if (el.hasClass('hide')) {
+
+                    } else {
+                        el.addClass('hide');
+                    }
+                });
+
+        }
+    })
+</script>

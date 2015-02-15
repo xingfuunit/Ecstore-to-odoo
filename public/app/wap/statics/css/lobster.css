@@ -58,6 +58,7 @@ body {
 .lobster_body .bnt1 img{ width: 43%;}
 .lobster_body .song_txt{font-size: 1.3em ;margin-bottom: 5%; margin-top: 5%}
 .lobster_body .song_txt span{font-size: 1.6em; color:#fd0202 ;}
+.lobster_body .get_gift_txt{font-size: 0.8em; };
 .lobster_body .song_tips {font-size: 1em ; width: 75%;margin: 0 auto; text-align: center; margin-bottom: 3%}
 .lobster_body .bnt2 img{width: 44%;}
 .lobster_body .bnt3 {float: right; margin-top: 5%}
@@ -89,3 +90,8 @@ body {
 .zan_success .success_txt span{color: #000; }
 
 .zan_success .iwant_btn img{width: 70%;margin-top: 2%;}
+
+.lobster_body .end_baea {text-align: center; /*height: 17em;*/}
+.lobster_body .end_baea .end_lob_back{position: absolute; padding: 0.5em;  top:25%; left: 12%; width: 70%; color: #FFF; font-size: 1.3em; font-weight: 600;  background: url('../images/lobster/back_04.png'); -moz-background-size:100% 100%;   background-size:100% 100%; line-height: 1.2em; padding: 0.5em;line-height: 1.5em; display: block;}
+.lobster_body .end_lob_back .end_txt{font-size: 0.8em;font-weight: 300;}
+.lobster_body .end_lob_back .end_txt .pz_t{color: #fffc00; font-weight:600;font-size: 1.3em} 

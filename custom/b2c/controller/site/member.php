@@ -960,8 +960,14 @@ class b2c_ctl_site_member extends b2c_frontpage{
 
                         //金额写入预存款
                         $rerurn = $advanceMdl->add($member_id,$gc_info['gcard_money'],$message,$errMsg); 
+                        
                         if($rerurn){
-                             $this->end(true,app::get('b2c')->_('礼品卡充值成功！'));
+                        	
+                        	// 增加经验值
+                        	$obj_member = $this->app->model('members');
+                        	$obj_member->change_exp($member_id, floor($gc_info['gcard_money']));
+                        	
+                            $this->end(true,app::get('b2c')->_('礼品卡充值成功！'));
                         }else{
                             $db->rollback();
                             $this->end(false,$errMsg);

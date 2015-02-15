@@ -1,0 +1,118 @@
+<div class="category-handle" id="category_handle">
+  <span>全部商品分类</span>
+</div>
+<div class="category-box" id="category_box"<{if $data.page != "index" && $tmpl_type != "index"}> style="visibility:hidden;"<{/if}>>
+  <ul class="category-list">
+    <{foreach from=$data.data item=item key=key name=clist}>
+    <li class="category-item<{if !$item.lv2}> no-lv2<{/if}>">
+      <div class="cat-root-box clearfix">
+          <div class="cat-lv1 fl"><span class="type_icon<{$smarty.foreach.clist.iteration}> pngFix"></span><a href="<{$item.url}>" <{if $setting.target_blank=='1'}>target="_blank"<{/if}> class="category-link"><{$item.cat_name}></a></div>
+          <{if $item.lv2}>
+          <div class="cat-lv2-redundancy fl">
+          <{foreach from=$item.lv2 item=sub_item key=sub_key name=isub2}>
+          <{if $smarty.foreach.isub2.iteration<=3}>
+          <a href="<{$sub_item.url}>" <{if $setting.target_blank=='1'}>target="_blank"<{/if}> class="level2"><{$sub_item.cat_name}> /</a>         <{/if}>
+          <{/foreach}>
+          <span class="sjx_icon"></span>
+          </div>
+           <{/if}>
+      </div>
+      
+      <div class="cat-children-box clearfix">
+      <{if $item.lv2}>
+              <div class="cat-children">
+                <{foreach from=$item.lv2 item=sub_item key=sub_key}>
+                <dl class="sub-category clearfix">
+                  <dt><a href="<{$sub_item.url}>" <{if $setting.target_blank=='1'}>target="_blank"<{/if}> class="level2"><{$sub_item.cat_name}></a></dt>
+                  <dd class="clearfix">
+                    <{if $sub_item.lv3}>
+                    <{foreach from=$sub_item.lv3 item=lv3_item key=lv3_key}>
+                    <a href="<{$lv3_item.url}>" <{if $setting.target_blank=='1'}>target="_blank"<{/if}> class="level3"><{$lv3_item.cat_name}></a>
+                    <{/foreach}>
+                    <{/if}>
+                  </dd>
+                </dl>
+                <{/foreach}>
+              </div>
+             <div class="close" onclick="$(this).getParent('.category-item').removeClass('active')">X</div> 
+             <div class="cat-link">
+             	<!--<div class="cat-goto"><a href="<{$item.url}>" target="_blank"><{$item.cat_name}>频道</a><i></i></div>-->
+                <{if $item.brand}>
+                <dl class="cat-link-brand">
+                  <dt>相关品牌</dt>
+                  <dd>
+                  <{foreach from=$item.brand item=brand key=brand_key name=brandlist}>
+                  <{if $smarty.foreach.brandlist.iteration <11}>
+                  <a href="<{link app=b2c ctl=site_brand arg0=$brand}>" class="item"><{$data.brand_list[$brand].brand_name}></a>
+                  <{/if}>
+                  <{/foreach}>
+                  </dd>
+                </dl>
+                <{/if}>
+            </div>
+            <{/if}>      
+      </div>
+    </li>
+    <{/foreach}>
+  </ul>
+</div>
+<script>
+var category = $('category_box');
+<{if $data.page != "index" && $tmpl_type != "index"}>
+$('category_handle').getParent().addEvents({
+    'mouseenter': function(e){
+        category.setStyle('visibility','visible');
+    },
+    'mouseleave': function(e){
+        category.setStyle('visibility','hidden');
+    }
+});
+<{/if}>
+category.getElements('.category-item').addEvents({
+    'mouseover':function(e){
+        var self = this;
+        clearTimeout(this.showTimer);
+        clearTimeout(this.hideTimer);
+        var active = function(){
+            if(self.getElement('.cat-children-box')){
+                self.addClass('active');
+            }
+        }
+        this.showTimer = active.delay(100);
+    },
+    'mouseout':function(e){
+        var self = this;
+        clearTimeout(this.showTimer);
+        clearTimeout(this.hideTimer);
+        var active = function(){
+            if(self.getElement('.cat-children-box')){
+                self.removeClass('active');
+            }
+        }
+        this.hideTimer = active.delay(100);
+    }
+});
+
+window.addEvent('domready',function(){
+	var dcat = $$('.category-box .category-item');
+	if(dcat){
+		var dpopup = dcat.getElement('.cat-children-box');
+		for(i=0;i<dcat.length;i++){
+			var a = dcat[i].index = i;
+			var b =30 * a;
+			var c = dpopup[i].getSize().y;
+			if(i<3){
+				dpopup[i].setStyles({
+					'top':0+'px'
+				});
+			}
+			else{
+				dpopup[i].setStyles({
+				'top':b-c-50+'px'
+				});
+			};
+		};
+	}	
+});
+</script>
+

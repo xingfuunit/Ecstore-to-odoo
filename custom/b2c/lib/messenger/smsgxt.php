@@ -11,8 +11,11 @@ class b2c_messenger_smsgxt{
     
     private $sendUrl = 'http://service.winic.org/sys_port/gateway/'; //吉信通发送地址
     
-    var $sms_user_name; //帐号
-    var $sms_password; //密码
+    //private $sms_user_name = "pzfresh@pzfresh.com"; //帐号
+//     private $sms_user_name = "it-service"; //帐号
+    
+    private $sms_user_name = 'pzfresh@pzfresh.com';
+    private $sms_password = "kdw329461"; //密码
     
     private $statusStr = array(
     		"000"  => "成送成功",
@@ -35,9 +38,6 @@ class b2c_messenger_smsgxt{
     public function __construct() {
         $this->httpClient = kernel::single('base_httpclient');
         $this->httpClient->set_timeout(6);
-        
-        $this->sms_user_name = defined('SMS_USER_NAME')?SMS_USER_NAME:"wumart";
-        $this->sms_password = defined('SMS_PASSWORD')?SMS_PASSWORD:"wumart123456";
 
         //启用测试数据
         //$this->testInit();

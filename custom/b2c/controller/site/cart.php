@@ -1205,9 +1205,15 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             $msg = 'pos预存款充值';
             $objAdvance = $this->app->model("member_advance");
             $status = $objAdvance->add($member_id, $psm, app::get('b2c')->_('pos预存款充值'), $msg);
-            $this->_response->set_redirect($url)->send_headers();
+
+            // 增加经验值
+            $obj_member = $this->app->model('members');
+            $obj_member->change_exp($member_id, floor($psm));
+            
+            $this->splash('success',$url,app::get('b2c')->_('会员充值成功！'),true);            
+            exit;
         }else{
-             $this->_response->set_redirect($url)->send_headers();
+            $this->splash('error',$url,app::get('b2c')->_('充值失败，系统错误，请稍后重试！'),true);
         }
     }
     

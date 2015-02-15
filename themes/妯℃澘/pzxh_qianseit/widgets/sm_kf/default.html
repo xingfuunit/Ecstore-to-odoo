@@ -1,0 +1,12 @@
+<{if $setting.showgotop =="on" && $data || $setting.showgotop =="on"}>
+<div id="qf_kfbox" class="hnqss_cn_kf">
+   <div class="kf_wrap" id="kf_wrap">
+   <a class="cart_rt" href="./cart.html">购物车</a>
+   <{if $setting.qqnumber}><a class="kf_service" id="kfonline" title="若不能点击请手加QQ<{$setting.qqnumber}>与客服对话" rel="nofollow" onclick="javascript:window.open('<{if $setting.qyqq_link}><{$setting.qyqq_link}><{else}>http://wpa.qq.com/msgrd?v=3&uin=<{$setting.qqnumber}>&site=qq&menu=yes<{/if}>', '_blank', 'height=544, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');" href="javascript:void(0);">在线客服</a><{/if}>
+   <{if $setting.message}><a class="kf_feedback"  href="<{$setting.message}>" title="提提意见">用户调查</a><{/if}>
+   </div>
+</div>
+<script>var online= new Array();</script> 
+<script src="http://webpresence.qq.com/getonline?Type=1&<{$setting.qqnumber}>:"></script>
+<script src="images/hnqss_cn_kf.js"></script>
+<{/if}>
