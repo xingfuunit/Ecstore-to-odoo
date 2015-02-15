@@ -758,15 +758,10 @@ class b2c_user_passport
     	 
     	foreach($old_pammember_info as $opi){
     		if($opi['login_type'] == 'local' && is_numeric($opi['login_account'])){
-    			$pamMemberMdl->delete(array('member_id'=>$member_id,'login_type'=>'local'));//删除现有会员绑定的会员卡
-    			$affect_delet_row = $pamMemberMdl->db->affect_row();
-    			if(!$affect_delet_row){
-    				$db->rollback();
-    				return 'delete_oldcard_failed';
-    			}
+    			app::get('pam')->model('members')->delete(array('login_account'=>$opi['login_account'],'login_type'=>'local'));//删除现有会员绑定的会员卡
     		}
     	}
-    	 
+    	
     	$new_member_lv = $member_card[0]['card_lv_id'] > $old_member_info[0]['member_lv_id'] ? $member_card[0]['card_lv_id'] : $old_member_info[0]['member_lv_id'];//对比得出新等级ID
     
     	$objAdvances = $this->app->model("member_advance");
