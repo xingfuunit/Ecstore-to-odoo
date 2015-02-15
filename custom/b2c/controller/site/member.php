@@ -2132,5 +2132,115 @@ class b2c_ctl_site_member extends b2c_frontpage{
     	$this->output();
     }
     
+    /**
+     * add by Jason 绑定会员卡
+     */
+    public function bind_member_card(){
+    	$this->userPassport = kernel::single('b2c_user_passport');
+    	$userPassport = kernel::single('b2c_user_passport');
+    	$login_member_id = $userPassport->userObject->get_member_id();
+    	$card = trim($_POST['card_number']);
+    	$card_password = trim($_POST['card_password']);
+    	$type = trim($_POST['type']); //绑定类型,card_to_member为卡转入会员,member_to_card为会员转入卡
+    	if(!$type){
+    		$msg = app::get('b2c')->_('请选择要绑定的类型');
+    		$this->splash('failed',null,$msg,true);
+    	}
+    	 
+    	if( !$card || !is_numeric($card)){
+    		$msg = app::get('b2c')->_('请填写正确的会员卡号');
+    		$this->splash('failed',null,$msg,true);
+    	}
+    	$member_card = $this->app->model('member_card')->getList('*',array('card_number'=>$card));
+    	if(!$member_card){//先从会员卡表中直接读取卡号,判断卡号是否存在
+    		$msg = app::get('b2c')->_('会员卡不存在');
+    		$this->splash('failed',null,$msg,true);
+    	}else{//会员卡号存在
+    		$member_id = app::get('pam')->model('members')->getList('member_id',array('login_account'=>$card));
+    		if($member_id[0]['member_id']){//卡号存在且卡已被激活,要检查该会员卡是否被绑定,还要检查是否改了密码,验证密码的一致性
+    			$new_card = '';
+    			$pamMemberData = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id[0]['member_id']));
+    			if(count($pamMemberData) > 1){//被激活后判断是否被绑定
+    				$msg = app::get('b2c')->_('该会员卡已被绑定');
+    				$this->splash('failed',null,$msg,true);
+    			}
+    			$use_pass_data['login_name'] = $card;
+    			$use_pass_data['createtime'] = $pamMemberData[0]['createtime'];
+    			$login_password = pam_encrypt::get_encrypted_password($card_password,'member',$use_pass_data);
+    			if($login_password != $pamMemberData[0]['login_password']){//会员卡被激活之后,可能被改密码,要进行密码验证
+    				$msg = app::get('b2c')->_('会员卡密码错误');
+    				$this->splash('failed',null,$msg,true);
+    			}
+    		}else{//卡号存在且未被激活
+    			$new_card = '1';
+    			$card_psw_isright = $this->app->model('member_card')->getList('*',array('card_number'=>$card,'card_password'=>$card_password));
+    			if(!$card_psw_isright){//直接对比会员卡表中的密码是否一致即可
+    				$msg = app::get('b2c')->_('会员卡密码错误');
+    				$this->splash('failed',null,$msg,true);
+    			}
+    		}
+    	}
+    	error_log("here222");
+    	$status = $this->userPassport->_bind_member_card($new_card, $type, $login_member_id, $card);
+    	switch ($status){
+    		case 'old_member_wrong' :
+    			$msg = app::get('b2c')->_('当前会员信息错误错误');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'insert_membercard_wrong' :
+    			$msg = app::get('b2c')->_('会员卡注入错误');
+    			$this->splash('failed',null,$msg,true);
+    		case 'add_advance_wrong' :
+    			$msg = app::get('b2c')->_('增加预存款是失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'reduce_advance_wrong' :
+    			$msg = app::get('b2c')->_('减少预存款失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'add_point_wrong' :
+    			$msg = app::get('b2c')->_('增加积分失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'reduce_point_wrong' :
+    			$msg = app::get('b2c')->_('减少积分失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'delete_oldcard_failed' :
+    			$msg = app::get('b2c')->_('删除绑定的旧会员卡失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'update_level_failed' :
+    			$msg = app::get('b2c')->_('等级更新失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'update_newcard_failed' :
+    			$msg = app::get('b2c')->_('更新新会员卡失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'update_oldcard_failed' :
+    			$msg = app::get('b2c')->_('更新旧会员卡失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'update_oldmember_failed' :
+    			$msg = app::get('b2c')->_('更新旧会员失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'update_cardmember_failed' :
+    			$msg = app::get('b2c')->_('更新会员卡会员失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'update_old_cardmember_failed' :
+    			$msg = app::get('b2c')->_('更新旧会员卡会员失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'ok' :
+    			$msg = app::get('b2c')->_('绑定成功');
+    			$passport_login = $this->gen_url(array('app'=>'b2c','ctl'=>'site_passport','act'=>'login'));
+    			$url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_passport','act'=>'logout','arg0'=>$passport_login));
+    			$this->splash('success',$url,$msg,true);
+    			break;
+    	}
+    }
   
 }
