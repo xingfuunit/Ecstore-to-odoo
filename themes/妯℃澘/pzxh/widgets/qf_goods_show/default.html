@@ -1,0 +1,29 @@
+<style type="text/css">
+.sidegoods li {float:left;overflow:hidden;}
+.sidegoods li .goodpic {<{if $setting.picWidth=='3'}>width:140px;height:140px;<{elseif $setting.picWidth=='2'}>width:150px;height:150px;<{else}>width:160px;height:160px;<{/if}>overflow:hidden;background-color:#FFF;margin:0 auto;}
+</style>
+
+<div class="box1 sidegoods">
+  <h3><{$setting.title}></h3>
+  <div class="body">
+  <ul class="clearfix goodslist">
+    <{assign var="do" value='1'}>
+    <{foreach from=$data.goodsdata.goodsRows item=goodsdemo key=key name=sidegoods}>
+    <li class="item<{if $smarty.foreach.sidegoods.last}> last<{/if}>">
+      <div class="goodpic">
+          <a target="_blank" href="<{$goodsdemo.goodsLink}>" title="<{if $data.info[$goodsdemo.goodsId].nice}><{$data.info[$goodsdemo.goodsId].nice}><{else}><{$goodsdemo.goodsName}><{/if}>"><img src="<{if $data.info[$goodsdemo.goodsId].pic}><{$data.info[$goodsdemo.goodsId].pic}><{else}><{$goodsdemo.goodsPicM}><{/if}>" alt="<{if $data.info[$goodsdemo.goodsId].nice}><{$data.info[$goodsdemo.goodsId].nice}><{else}><{$goodsdemo.goodsName}><{/if}>" <{if $setting.picWidth=='3'}> width="140" height="140"<{elseif $setting.picWidth=='2'}> width="150" height="150"<{else}> width="160" height="160"<{/if}> /></a>
+      </div>
+      <div class="info">
+      	 <h6><a target="_blank" href="<{$goodsdemo.goodsLink}>"><{if $data.info[$goodsdemo.goodsId].nice}><{$data.info[$goodsdemo.goodsId].nice}><{else}><{$goodsdemo.goodsName}><{/if}></a></h6>
+            <!--<{if $setting.showgoodsIntro == 'on' && $goodsdemo.goodsIntro}><p class="goods-intro"><{$goodsdemo.goodsIntro}></p><{/if}>-->          <{if $setting.showgoodsMarketPrice == 'on' || $setting.showgoodsSalePrice == 'on'}>
+          <p class="clearfix">
+          	<{if $setting.showgoodsSalePrice =='on'}><!--销售价：--><span class="price1"><{$goodsdemo.goodsSalePrice|cur}></span><{/if}>
+          	<{if $setting.showgoodsMarketPrice == 'on'}><span class="mktprice1"><{$goodsdemo.goodsMarketPrice|cur}></span><{/if}>
+          </p>
+          <{/if}>
+      </div>
+     </li>
+    <{/foreach}>
+  </ul>
+  </div>
+</div>

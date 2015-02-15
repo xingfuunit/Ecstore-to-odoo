@@ -1,0 +1,125 @@
+@CHARSET "UTF-8";
+
+
+.mt,.mc{ overflow:hidden; zoom:1;}
+.dispatching{list-style:none; margin-top:-4px;}
+.dispatching li{padding:6px 0; overflow:hidden; *zoom:1;clear:both}
+.dispatching .deliveryItem{height:28px;padding-bottom:0}
+.dispatching .deliveryItem{overflow:visible;margin-top:0px}
+.dispatching .dt{float:left;width:72px;text-align:right; }
+.dispatching .dd{float:left;width:524px}
+#store-selector{position:relative;float:left;z-index:999;height:26px;margin-right:6px}
+#store-selector .oldtext{float:left;position:relative; z-index:999; top:0;height:25px;padding:0 20px 0 4px;line-height:25px;overflow:hidden}
+#store-selector.hover .oldtext {
+z-index: 999;
+height: 25px;
+border-bottom: 0;
+}
+#store-selector .oldtext b{background-image:url(newicon20130617.png);background-repeat:no-repeat}
+#store-selector .oldtext b{display:block;position:absolute;top:0;right:0;width:17px;height:24px;background-position:-264px -188px;overflow:hidden}
+#store-selector .text{float:left;position:relative;top:0;height:25px;background:#fff;border:1px solid #CECBCE;padding:0 20px 0 4px;line-height:25px;overflow:hidden}
+#store-selector.hover .text {
+z-index: 999;
+height: 25px;
+border-bottom: 0;
+}
+#store-selector .text b{background-image:url(newicon20130617.png);background-repeat:no-repeat}
+#store-selector .text b{display:block;position:absolute;top:0;right:0;width:17px;height:24px;background-position:-264px -188px;overflow:hidden}
+#store-selector .content{display:none;position:absolute;top:25px;left:-45px;border:1px solid #CECBCE;width:390px;padding:15px;background:#fff;-moz-box-shadow:0 0 5px #ddd;-webkit-box-shadow:0 0 5px #ddd;box-shadow:0 0 5px #ddd}
+#store-selector.hover .content, #store-selector.hover .close {
+display: block}
+#store-selector .close {
+ display: none;
+ position: absolute;
+ z-index: 999;
+ top: 20px;
+ left: 365px;
+ width: 17px;
+ height: 17px;
+ background:url(newicon20130617.png) no-repeat -257px -86px;
+ cursor:pointer;
+}
+.JD-stock{position:relative}
+.JD-stock .tab{width:100%;height:25px;float:left;border-bottom:2px solid #edd28b;overflow:visible;*overflow:hidden}
+#store-selector .tab li {
+ float: left;
+ clear: none;
+ padding: 0;
+}
+.JD-stock .tab a, .JD-stock .tab .current a.hover {
+position: relative;
+float: left;
+height: 23px;
+line-height: 23px;
+padding: 0 21px 1px 11px;
+margin-right: 3px;
+border: 1px solid #ddd;
+border-bottom: 0;
+color: #ccc;
+text-align: center;
+cursor: pointer;
+}
+.JD-stock .tab a.hover {
+height: 25px;
+background-color: #fff;
+border: 2px solid #edd28b;
+border-bottom: 0;
+padding: 0 20px 0 10px;
+line-height: 22px;
+text-decoration: none;
+color: #000;
+}
+.seller-link a, #tab-services a, .detail-correction a, .detail-list a, #summary a, .p-comm a {
+  color: #005aa0;
+}
+.JD-stock .tab a i, .JD-stock .tab .current, .JD-stock .tab .current a {
+background-image: url(jd-stock.png);
+background-repeat: no-repeat;
+}
+.JD-stock .tab a i, .JD-stock .tab .current a:hover i {
+position: absolute;
+z-index:999;
+right: 4px;
+top: 10px;
+display: block;
+width: 7px;
+height: 5px;
+overflow: hidden;
+background-position: 0 -35px;
+}
+.area-list {
+padding-top: 5px;}
+.area-list li {
+float: left;
+width: 80px;
+padding: 2px 0 2px 15px;
+clear: none;
+}
+#store-selector .area-list li {
+padding: 2px 0 2px 15px;
+clear: none;
+}
+.area-list .long-area {
+width: 170px;
+}
+.area-list li a {
+float: left;
+padding: 2px 4px;
+color: #005aa0;
+text-decoration:none;
+}
+.seller-link a, #tab-services a, .detail-correction a, .detail-list a, #summary a, .p-comm a {
+color: #005aa0;
+}
+
+.area-list li a:hover {
+background: #005ea7;
+color: #fff !important;
+}
+#store-prompt {
+float: left;
+margin-top: 4px;
+}
+#store-prompt strong {
+font-size: 14px;
+}

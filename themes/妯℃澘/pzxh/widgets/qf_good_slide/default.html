@@ -1,0 +1,83 @@
+<style id="wid<{$widgets_id}>_style">
+#focus_<{$widgets_id}> {width:1200px;heigth:368px;overflow:hidden;}
+#focus_<{$widgets_id}> .hightbox,
+#focus_<{$widgets_id}> .switchable-viewbox,
+#focus_<{$widgets_id}> .switchable-viewbox li {width:1141px;height:378px;overflow:hidden;}
+#focus_<{$widgets_id}>,
+#focus_<{$widgets_id}> .hightbox {position:relative;z-index:1;margin:0 auto;}
+#focus_<{$widgets_id}> .switchable-viewbox {position:absolute;width:6666666px;overflow:hidden;}
+#focus_<{$widgets_id}> .switchable-viewbox li {float:left;text-align:center;}
+#focus_<{$widgets_id}> .switchable-viewbox li .slide_iteminfo{border:1px solid #fff;float:left;height:334px;margin:0px 7px;overflow:hidden;padding-top:10px;width:269px;_display:inline}
+#focus_<{$widgets_id}> .switchable-viewbox li .slide_iteminfo.hover{border:1px solid #eaeaea;}
+#focus_<{$widgets_id}> .switchable-viewbox li .slide_iteminfo .info {padding:0 10px;text-align:center;}
+#focus_<{$widgets_id}> .switchable-viewbox li .slide_iteminfo .info h6 {font-size:12px;font-weight:normal;line-height:20px;padding-top:10px;}
+#focus_<{$widgets_id}> .switchable-viewbox li .slide_iteminfo .info .goods-intro {line-height:20px;margin-bottom:5px;}
+#focus_<{$widgets_id}> .switchable-viewbox li .slide_iteminfo .info h6 a {text-decoration:none;}
+/*#focus_<{$widgets_id}> .prev,
+#focus_<{$widgets_id}> .next {background:url("images/icon.gif") no-repeat;display:block;overflow:hidden;width:22px;height:57px;text-indent:-999px;position:absolute;top:143px;}
+#focus_<{$widgets_id}> .prev{background-position:0 -69px;left:10px;}
+#focus_<{$widgets_id}> .next{background-position:-22px -69px;right:10px;}*/
+/*#focus_<{$widgets_id}> .shopex-switchable-triggerBox {width:<{math equation="floor(x-y*2)" x=$setting.width y=$setting.nummarg}>px;height:auto;position:absolute;bottom:0;z-index:2;white-space:nowrap;text-align:<{if $setting.align eq 0}>left<{elseif $setting.align eq 1}>center<{else}>right<{/if}>;padding:<{$setting.nummarg}>px}
+#focus_<{$widgets_id}> .shopex-switchable-triggerBox a {width:<{$setting.numwidth}>px;height:<{$setting.numheight}>px;font-size:0;line-height:0;background:<{$setting.bgcolor}>;display:inline-block;*display:inline;*zoom:1;overflow:hidden;margin:0px <{$setting.nummargin}>px; border-radius:5px;}
+#focus_<{$widgets_id}> .shopex-switchable-triggerBox .active {background:<{$setting.hbgcolor}>;border-radius:5px;}*/
+</style>
+<div id="focus_<{$widgets_id}>">
+  <div class="hightbox">
+    <ol class="switchable-viewbox">
+    <{foreach from=$data.slideData item=item name=slidenum}>
+    <li class="slideitem_<{$widgets_id}>">
+    	   <{foreach from=$item item=row key=gid name=goodsrow}>
+         <div class="slide_iteminfo">
+         <{assign var=pickey  value=$setting.gpic_size|default:'goodsPicM'}>
+         <div class="goodpic" style="width:<{$setting.picWidth|default:160}>px;overflow:hidden;background-color:#FFF;margin:0 auto;"><a target="_blank" href="<{$row.goodsLink}>"><img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" width="<{$setting.picWidth|default:160}>" height="<{$setting.picHeight|default:160}>"/></a>
+          </div>
+          <div class="info">
+             <h6><a target="_blank" href="<{$row.goodsLink}>"><{$row.goodsName|cut:$setting.maxlength}></a></h6>
+             <{if $setting.showgoodsIntro == 'on' && $row.goodsIntro}><p class="goods-intro"><a target="_blank" href="<{$row.goodsLink}>"> <{$row.goodsIntro|cut:$setting.maxlength2}></a></p><{/if}>
+             <{if $setting.showgoodsSalePrice =='on'}><p><span class="price0">销售价:</span><span class="price1"><{$row.goodsSalePrice|cur}></span><{/if}></p>
+             <{if $setting.showgoodsMarketPrice == 'on'}><p><span class="price0">市场价:</span><span class="mktprice1"><{$row.goodsMarketPrice|cur}></span></p><{/if}>
+          </div>
+          </div>
+          <{/foreach}>
+    </li>
+   	 <{/foreach}>
+    </ol>
+  </div>
+  <a href="javascript:void(0);" class="prev">&#x26;</a>
+  <a href="javascript:void(0);" class="next">&#x27;</a>
+  <div class="shopex-switchable-triggerBox clearfix" style="display:none;">
+  	 <{assign var="do" value="0"}>
+    <{foreach from=$data.slideData item=item key=key2 name=count}>
+    <a href="javascript:void(0);" hidefocus="true" rel="nofollow"<{if $do==0}> class="active"<{/if}>><{assign var="do" value=$do+1}></a>
+    <{/foreach}>
+  </div>
+</div>
+<script type="text/javascript">
+window.addEvent('domready',function(){
+    $$(".slide_iteminfo").addEvents({
+		"mouseenter":function(){
+		this.addClass("hover")
+		},
+		"mouseleave":function(){
+			this.removeClass("hover")
+		}
+		})
+	});
+    (function(){
+        new Switchable('focus_<{$widgets_id}>', {
+			hasTriggers:false,
+            content:'.switchable-viewbox',
+            circular:true,
+			duration:'500',
+			interval:'<{$setting.qfspeed|default:"5000"}>',
+			lazyDataType:'li',
+            effect:'scrollx',
+			<{if $setting.qfautoplay =='on'}>
+			autoplay:true,
+			<{else}>
+			autoplay:false,
+			<{/if}>
+			haslrbtn:true
+        });
+    })();
+ </script>

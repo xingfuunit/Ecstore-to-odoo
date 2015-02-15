@@ -1,0 +1,12 @@
+<div class="section-title"></div>
+          <ul class="friendlink-list clearfix">
+          <li>友情链接:</li>
+          <{foreach from=$data item=row}>
+          <{if $setting.selector == 'text'}>
+          <li class="link-item"> <a href="<{$row.href}>" class="text-name" target="_blank"><{$row.link_name}>          </li>
+          <{elseif $row.image_url}>
+          <li class="link-item"> <a href="<{$row.href}>" class="img-name" target="_blank"><img data-src="          <{$row.image_url|storager}>" alt="<{$row.link_name}>" width="<{$setting.width}>" height="<{$setting.height}>" /></a> </li>
+          <{/if}>
+          <{/foreach}>
+        </ul>
+</div>

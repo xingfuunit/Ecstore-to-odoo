@@ -1,0 +1,61 @@
+<script src="images/picrun.js"></script>
+<style>
+#sub_slide_<{$widgets_id}> {padding:0 46px;width:916px;position:relative;height:368px;}
+#sub_slide_<{$widgets_id}> .slide-box {height:368px;overflow:hidden;position:relative;width:916px;}
+#sub_slide_<{$widgets_id}> .slide-box ul {overflow:hidden;height:368px;position:absolute;left:0;width:300000px}
+#sub_slide_<{$widgets_id}> .slide-box li {width:916px;height:368px;float:left;overflow:hidden;}
+#sub_slide_<{$widgets_id}> .slide-box li .slide_iteminfo{border:1px solid #fff;float:left;width:213px;height:333px;margin:0 7px;_display:inline;overflow:hidden;padding-top:32px;}
+#sub_slide_<{$widgets_id}> .slide-box li .hover {border-color:#eaeaea;}
+#sub_slide_<{$widgets_id}> .slide-box li .slide_iteminfo .info {padding:0 10px;text-align:center;}
+#sub_slide_<{$widgets_id}> .slide-box li .slide_iteminfo .goodpic {height:210px !important;}
+#sub_slide_<{$widgets_id}> .slide-box li .slide_iteminfo .info h6 {color: #60215a;font-size:12px;font-weight: normal;line-height:20px;padding-top: 5px;}
+#sub_slide_<{$widgets_id}> .slide-box li .slide_iteminfo .info .goods-intro {line-height: 20px;margin-bottom: 5px;}
+#sub_slide_<{$widgets_id}> .slide-box li .slide_iteminfo .info h6 a {color: #60215a;text-decoration: none;}
+#sub_slide_<{$widgets_id}> .prev,
+#sub_slide_<{$widgets_id}> .next {cursor:pointer;width:22px;position:absolute;top:143px;}
+#sub_slide_<{$widgets_id}> .prev {left:10px}
+#sub_slide_<{$widgets_id}> .next {right:10px}
+#sub_slide_<{$widgets_id}> .icon {height:57px;width:22px;background:url("images/icon.gif") no-repeat;display:block;overflow:hidden;text-indent:-99em;}
+#sub_slide_<{$widgets_id}> .prev .icon{background-position:0 -69px;}
+#sub_slide_<{$widgets_id}> .next .icon{background-position:-22px -69px;}
+.pcont{overflow:hidden;}
+</style>
+<div class="slider" id="sub_slide_<{$widgets_id}>">
+ <a class="prev" onmouseout="ISL_StopUp_0()" onmousedown="ISL_GoUp_0()" onmouseup="ISL_StopUp_0()" target="_self" onfocus="this.blur()" href="javascript:void(0);"><i class="icon">&#x26;</i></a>
+  <div class="slide-box pcont" id="ISL_Cont_0">
+   <ul class="slide-list ScrCont">
+ 	 <li class="slide-item" id="List1_0">
+  		<{foreach from=$data.goodsRows item=row key=gid name=goodsrow}>
+         <div class="slide_iteminfo">
+         <{assign var=pickey value=$setting.gpic_size|default:'goodsPicM'}>
+         <div class="goodpic" style="width:<{$setting.picWidth|default:160}>px;overflow:hidden;background-color:#FFF;margin:0 auto;"><a target="_blank" href="<{$row.goodsLink}>"><img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" width="<{$setting.picWidth|default:160}>" height="<{$setting.picHeight|default:160}>" /></a>
+          </div>
+          <div class="info">
+             <h6><a target="_blank" href="<{$row.goodsLink}>"><{$row.goodsName|cut:$setting.maxlength}></a></h6>
+             <{if $setting.showgoodsIntro == 'on' && $row.goodsIntro}><p class="goods-intro"><a target="_blank" href="<{$row.goodsLink}>"> <{$row.goodsIntro|cut:$setting.maxlength2}></a></p><{/if}>
+             <{if $setting.showgoodsSalePrice =='on'}><p><span class="price0">销售价:</span><span class="price1"><{$row.goodsSalePrice|cur}></span><{/if}></p>
+             <{if $setting.showgoodsMarketPrice == 'on'}><p><span class="price0">市场价:</span><span class="mktprice1"><{$row.goodsMarketPrice|cur}></span></p><{/if}>
+          </div>
+          </div>
+        <{/foreach}>
+     </li>
+     <li class="slide-item" id="List2_0"></li>
+    </ul>
+  </div>
+  <a class="next" onmouseout="ISL_StopDown_0()" onmousedown="ISL_GoDown_0()" onmouseup="ISL_StopDown_0()" target="_self" onfocus="this.blur()" href="javascript:void(0);"><i class="icon">&#x27;</i></a>
+
+</div>
+<script>
+window.addEvent('domready',function(){
+    $$(".slide_iteminfo").addEvents({
+		"mouseenter":function(){
+		this.addClass("hover")
+		},
+		"mouseleave":function(){
+			this.removeClass("hover")
+		}
+		})
+	})
+</script>
+<script type="text/javascript">picrun_ini(229,4);</script>  
+
