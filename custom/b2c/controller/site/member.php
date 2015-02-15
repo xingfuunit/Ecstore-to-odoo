@@ -2135,7 +2135,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
     /**
      * add by Jason 绑定会员卡
      */
-    public function bind_member_card(){
+    public function verifymember_card(){
     	$this->userPassport = kernel::single('b2c_user_passport');
     	$userPassport = kernel::single('b2c_user_passport');
     	$login_member_id = $userPassport->userObject->get_member_id();
