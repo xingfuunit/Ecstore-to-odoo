@@ -108,19 +108,17 @@
                           <{include file='site/cart/checkout/local_coupon.html' app='b2c'}>           
                         </div>        
                 </li>
-                <!-- hack by Jason去掉webpos的会员充值功能begin
+                
                   <li ><a href="#" class="drop">会员充值</a> 
-                     
-                       
                     <div class="dropdown_1column sdffsd" style="margin-left: -314px;">        
                       <form class="form" style=""  method="post" action="<{link app=b2c ctl=site_cart act=checkout_vacancies}>">
                            输入充值金额：<input type="text" name="yu_amount" class="sddss" value="" /><br/><br/>  
-                           <input type="submit" name="amount_submit" class="submdeoe"  value="确认充值"  style="margin-left: 98px; cursor:pointer"/>
+                           <!-- <input type="submit" name="amount_submit" class="submdeoe"  value="确认充值"  style="margin-left: 98px; cursor:pointer"/> -->
+                           <{button class="btn btn-import btn-big submdeoe" style="width:100px; hight:30px;"  type="submit" isDisabled="true" label=$___b2c="确认充值"|t:'b2c' rel="_request"}>
                        </form>
-                         
                         </div>        
                 </li>
-                 hack by Jason去掉webpos的会员充值功能end-->
+                
                 <li ><a href="#" class="drop">充值券</a> 
                      
                        

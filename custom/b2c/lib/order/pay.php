@@ -69,6 +69,13 @@ class b2c_order_pay extends b2c_api_rpc_request
                                     }
                                 }
                             }
+                            
+                            
+                            file_put_contents('f.log', serialize($sdf)."\r\n".serialize($objOrderbills)."\r\n",FILE_APPEND);
+                            // 增加经验值
+                            $obj_member = $this->app->model('members');
+                            $obj_member->change_exp($objOrderbills['rel_id'], floor($objOrderbills['money']));
+                            
                             break;
                         case 'joinfee':                            
                             break;
