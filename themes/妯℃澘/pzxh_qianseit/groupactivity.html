@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<{header}>
+<link rel="stylesheet"  href="images/qingfeng.css" />
+</head><body>
+<{require file="block/header.html"}>
+<div id="content" class="tuan wrap clearfix pushdown-4">
+    <div class="w250 fr"><{widgets id="i09"}></div>
+    <div class="w920 fl"><{main}></div>
+</div>
+<{require file="block/footer.html"}>
+<script>
+window.addEvent('domready', function() {  
+	$('goods-viewer').getNext('p').addClass('tuan-detail');
+});
+</script>
+</body>
+</html>

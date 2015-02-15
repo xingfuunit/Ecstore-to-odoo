@@ -1,0 +1,29 @@
+.ad-h{margin-top:17px;}
+.ad-h .ct{float:left}
+.ad-h .ct1{margin-right:14px}
+.floor-h .hd{height:57px;padding-top:43px;}
+.floor-h .hd h3{width:317px;height:41px;overflow:hidden;text-indent:-999em;background:url("i/tth.gif") no-repeat 0px -123px;float:left}
+.floor-h1 .hd h3{background-position:0px 0px}
+.floor-h2 .hd h3{background-position:0px -41px;}
+.floor-h3 .hd h3{background-position:0px -82px}
+.floor-h3{margin-bottom:25px}
+.floor-h .f-nav{padding-top:18px}
+.floor-h .f-nav a{padding:0px 20px;font-size:14px;font-weight:normal}
+.floor-h .f-nav li.last a{padding:3px 10px;background:#999;color:#fff; margin-left:15px}
+.floor-h .f-nav li.last a:hover{background:#c5ad87;color:#fff;}
+.floor-h .bd{height:602px;border:1px solid #ededed;border-top:1px solid #363636;border-bottom:none;overflow:hidden}
+.floor-h .bd .wrap{width:103%}
+.fh_l{width:273px;border-bottom:1px solid #ededed;height:601px}
+.fh-ad{height:444px;}
+.fh_r{width:928px;overflow:hidden}
+.floor-h .qfgoods li{float:left;width:231px;height:300px;border-left:1px solid #ededed;border-bottom:1px solid #ededed}
+.qfgoods li .info{padding:0px 15px; text-align:center}
+.qfgoods li .info .price1{color:#c0031a; font-size:12px; font-weight:bold}
+.qfgoods li .info h6{height:30px; line-height:30px; overflow:hidden; padding-top:10px}
+.qfgoods li .info p{line-height:25px}
+.fh-brd{padding-left:2px}
+.fh-brd .ct{float:left;width:134px;height:79px;}
+.fh-brd .ct1{border-right:1px solid #eaeaea}
+.fh-brd .ct1,.fh-brd .ct2{width:134px;height:78px;border-bottom:1px solid #eaeaea;}
+.fh-brd .ct3{border-right:1px solid #eaeaea}
+.fh-brd .ct a{width:134px;height:79px;text-align:center;display:table-cell;vertical-align:middle;*display:block; *font-size:66px;*font-family:Arial}

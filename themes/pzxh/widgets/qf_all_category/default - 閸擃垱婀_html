@@ -1,0 +1,168 @@
+<{if $setting.show_cat_lv2||$setting.show_cat_lv3||$setting.show_cat_sale||$setting.show_cat_brand}><{assign var=isbox value=1}><{/if}>
+<div id="cat_ex_vertical_<{$widgets_id}>" >        
+	<ul class="cat-ex-vertical clearfix">
+        <{if $setting.menus}>
+    	<li class="cat-item lv1 first" data-catid="100000" data-typeid="10000" data-typename="<{$setting.fronttips|default:'按场合选酒'}>">
+			<div class="cat-root-box odd l0">
+				<a class="cat-lv2-title nosub" href="./index.php/gallery.html?scontent=n"><span><{$setting.fronttips}></span></a>
+                <div class="cat-lv2-redundancy">
+                 <{foreach from=$setting.menus item=menus key=key}>
+        			<a href="<{$menus.url}>"<{if $setting.target_blank}> target="_blank"<{/if}>><{$menus.text|escape:html}></a>
+            	<{/foreach}>               
+                </div>	
+			</div>
+         </li>
+        <{/if}>
+        <{foreach from=$data.lv1 key=cat_lv1_key item=cat_lv1 name=cat_lv1_name}>
+		<li class="cat-item lv1 <{if $smarty.foreach.cat_lv1_name.iteration % 2 == 0}> odd<{/if}><{if $env.foreach.cat_lv1_name.last}> last<{/if}>" data-catid="<{$cat_lv1.cat_id}>" data-typeid="<{$cat_lv1.type}>" data-typename="<{$cat_lv1.type_name}>">
+			<div class="cat-root-box l<{$smarty.foreach.cat_lv1_name.iteration}>">
+				<a href="<{$cat_lv1.url}>"<{if $setting.target_blank}> target="_blank"<{/if}> class="cat-lv2-title<{if $isbox}> nosub<{/if}>"><span><{$cat_lv1.cat_name}></span></a>
+                <{if $setting.redundancy_catlv2}><div class="cat-lv2-redundancy"></div><{/if}>				
+			</div>
+			<{if $isbox}>
+			<div class="cat-children-box clearfix">
+				<{if $setting.show_cat_sale||$setting.show_cat_brand}>
+                <div class="close" onclick="$(this).getParent('.cat-item').fireEvent('mouseleave')"></div>
+				<div class="cat-link">
+                     <!--div class="cat-goto"><a href="<{$cat_lv1.url}>" target="_blank">进入<{$cat_lv1.cat_name}>频道&gt;&gt;</a></div-->
+                     <{if $setting.show_cat_brand && count($cat_lv1.brand)>0}>
+                      <dl class="cat-link-brand">
+                        <dt><{$setting.brand_title}></dt>
+                        <dd class="clearfix">
+                            <{foreach from=$cat_lv1.brand item=bid}>
+                            <{if $smarty.foreach.brandcount.iteration <= $setting.brand_logo_maxnum}>
+                            <{assign var=brand value=$data.brand_list.{$bid}}>
+                            <{assign var=brandl value="b,".$bid.brand_id}>
+                            <{if $brand}>                            
+                            <div class="cat-link-brand-item"><a href="<{link app=b2c ctl=site_gallery act=index arg0=$cat_lv1.cat_id arg1=$brandl}>" class="img-link"<{if $setting.target_blank}> target="_blank"<{/if}>><{if $brand.brand_logo}><img src="<{$brand.brand_logo|storager}>" alt="<{$brand.brand_name}>" /><{else}><{$brand.brand_name}><{/if}></a></div>
+                            <{/if}>
+                            <{/if}>
+                           <{/foreach}>
+                        </dd>
+                    </dl>
+                    <{/if}>
+					<{if $setting.show_cat_sale && count($cat_lv1.sales)>0}>
+					<dl class="cat-link-sales">
+						<dt><{$setting.sales_title}></dt>
+						<dd class="clearfix">
+						<{foreach from=$cat_lv1.sales item=sale name=sales_name}>
+							<div class="cat-link-sale-item" data-endtime="<{$sale.to_time}>"><{$sale.name}></div>
+						<{/foreach}>
+						</dd>
+					</dl>
+					<{/if}>                    
+                    <div class="cat-link-ad"><a href="#" target="_blank"><img src="http://localhost/themes/m1shop/images/m1/catad.gif" width="209" height="60" alt="广告" /></a></div>
+			    </div>
+			    <{/if}>
+			</div>
+		 <{/if}>
+		</li>
+	<{/foreach}>
+	</ul>
+    <{if $setting.show_cat_lv2 || $setting.show_cat_lv3}>
+	<div style="display:none;">
+           <{if $setting.show_cat_lv2}> 
+			<{foreach from=$data.lv2 key=cat_lv2_key item=cat_lv2 name=cat_lv2_name}>
+				<dl class="cat-item lv2 clearfix" data-catpid="<{$cat_lv2.pid}>" data-catid="<{$cat_lv2.cat_id}>" data-typeid="<{$cat_lv2.type}>" data-typename="<{$cat_lv2.type_name}>">
+					<dt><a href="<{$cat_lv2.url}>"<{if $setting.target_blank}> target="_blank"<{/if}>><{$cat_lv2.cat_name}></a></dt>
+					<{if $setting.show_cat_lv3}>
+					<dd></dd>
+					<{/if}>
+				</dl>
+			<{/foreach}>
+		<{/if}>
+		<{if $setting.show_cat_lv3}>
+			<{foreach from=$data.lv3 key=cat_lv3_key item=cat_lv3 name=cat_lv3_name}>
+			<a href="<{$cat_lv3.url}>" class="lv3" data-catpid="<{$cat_lv3.pid}>" data-catid="<{$cat_lv3.cat_id}>" data-typeid="<{$cat_lv3.type}>" data-typename="<{$cat_lv3.type_name}>"<{if $setting.target_blank}> target="_blank"<{/if}>><{$cat_lv3.cat_name}></a>
+			<{/foreach}>
+		<{/if}>
+	</div>
+    <{/if}>
+</div>
+
+<script type="text/javascript">
+	addEvent('domready',function(){
+		//var _t = $time();
+		var container = $('cat_ex_vertical_<{$widgets_id}>');	
+		<{if $isbox}>
+		var containerParentNode = container.parentNode;
+		var containerPos = container.getPosition([window]);
+		var mousEenterTimer = 0,mouseLeaveTimer = 0;
+		<{/if}>
+		container.getElements('li.lv1').each(function(item){			
+	   <{if $isbox}>
+		var ccbEl = item.getElement('div.cat-children-box');
+		<{/if}>
+		
+	    <{*if $setting.show_cat_lv2}>
+			var catLv1ID =item.get('data-catid');
+			var dls = container.getElements('dl[data-catpid='+catLv1ID+']');
+			var ccEl  = new Element('div.cat-children').inject(ccbEl,'top').adopt(dls);
+			var dls_length = dls.length;
+			if(dls&&dls_length>1){
+				dls[0].addClass('first');
+				dls[dls_length-1].addClass('last');
+				}else{
+				return;
+			}
+				<{if $setting.redundancy_catlv2}>
+					var tmpInject = [];
+					dls.getElement('a').each(function(a){
+						tmpInject.push(new Element('a',{href:a.get('href'),text:a.get('text')}));
+					});
+					item.getElement('.cat-lv2-redundancy').adopt(tmpInject);
+				<{/if}>
+				<{else}>
+				return;
+			<{/if*}>
+
+		    <{if $isbox}>
+			item.addEvents({
+				'mouseenter':function(){
+					clearTimeout(mousEenterTimer);
+					clearTimeout(this.retrieve('mouseLeaveTimer'));
+					mousEenterTimer =(function(){
+						this.addClass('mouseenter-cat');						
+						<{if $setting.show_cat_brand}>					
+							var brandMaxH =  item.retrieve('brandMaxH');
+							var brandItems = item.getElements('.cat-link-brand-item');
+							if(!brandMaxH){
+								brandItems.each(function(brand){
+									brandMaxH = Math.max(brandMaxH,brand.getSize().y);
+								});
+							}
+							if(brandItems&&brandItems.length)
+							brandItems.setStyles({height:brandMaxH,overflow:'hidden'});
+						<{/if}>
+						var _pos1 = window.getScrollTop() - containerPos.y;
+						var _pos2 =this.retrieve('_pos2');
+						if(!_pos2)_pos2 =  this.getPosition().y+this.getSize().y;
+						ccbEl.setStyle('top',_pos1>0?_pos1:0);
+						var _pos3 = ccbEl.getPosition().y+ccbEl.getSize().y;
+						var _limit = _pos3 - _pos2;
+						var flexDeviate = 4;
+						if(_limit<0){
+							ccbEl.setStyle('top',ccbEl.getStyle('top').toInt()+Math.abs(_limit));
+							flexDeviate = (-flexDeviate);
+						}
+					}).delay(200,this);
+				},	
+				'mouseleave':function(){
+					clearTimeout(mousEenterTimer);
+					this.store('mouseLeaveTimer',
+						mouseLeaveTimer =  this.removeClass.delay(150,this,['mouseenter-cat'])
+					);
+				}
+			});
+			<{/if}>
+
+		});		
+		<{if $setting.show_cat_lv3}>
+		container.getElements('.lv2 dd').each(function(item){
+			var catLv2ID = item.getParent('.lv2').get('data-catid');
+			item.adopt(container.getElements('a[data-catpid='+catLv2ID+']'));
+		});
+		<{/if}>
+		//console.info($time()-_t);
+	});//end domready
+</script>

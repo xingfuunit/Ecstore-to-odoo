@@ -1,0 +1,37 @@
+<style>
+  #top_link_area .add-title,
+  #top_link_area .add-url,
+  #top_link_area .delete{float:left;_display:inline;margin-left:5px;}
+  #top_link_area .delete{height:20px;width:16px;cursor:pointer;}
+  #top_link_area .top-link-item{background-color:#E2E8EB;padding:5px 5px 3px;line-height:22px;margin:2px 0;}
+  #add_top_link{cursor:pointer;}
+.widgetconfig table {margin-top:5px;}
+.widgetconfig th,.widgetconfig td{padding:5px;border:1px solid #ddd; vertical-align:middle;line-height:1.8}
+.widgetconfig th {background-color:#E2E8EB}
+.widgetconfig input {padding:2px;line-height:18px;}
+.widgetconfig i {color:#FF0000;}
+.widgetconfig em {color:#999;font-style:normal;}
+</style>
+
+<div  class="tableform">
+    <div class="division widgetconfig" style="margin:-5px 0 0 0">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tr>
+            <th>是否显示前导提示:</th>
+            <td ><input type="checkbox" name="showkeywords" <{if $setting.showkeywords}>checked<{/if}>></td>
+       </tr>
+      <tr>
+        <th>是否显示价格区间:</th>
+        <td ><input type="checkbox" name="searchopen" <{if $setting.searchopen}>checked<{/if}>></td>
+       </tr>
+       <tr>
+        <th>默认关键字</th>
+        <td ><input type="text" name="keywords" value="<{$setting.keywords|default:'请输入商品关键字'}>"></td>
+       </tr>
+      <tr>
+        <th>关键词描述</th>
+        <td><input name="hotkey" class="inputstyle" value="<{$setting.hotkey|default:'热门关键词'}>" /></td>
+       </tr>             
+    </table>
+    </div>
+</div>

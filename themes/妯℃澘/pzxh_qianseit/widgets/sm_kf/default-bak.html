@@ -1,0 +1,76 @@
+<{if $data || $setting.showgotop =="on"}>
+<style type="text/css" id="qf_kf_box_style">
+.hnqss_cn_kf .qf_backtop,
+.hnqss_cn_kf .kf_service,
+.hnqss_cn_kf .kf_feedback,
+.hnqss_cn_kf .kf_floor {background:#FFF url('images/kfbg.gif') no-repeat;}
+.hnqss_cn_kf {width:78px;position:fixed;border:solid 1px #e7e7e7;bottom:5px;right:5px;box-shadow:0 1px 3px #ddd;z-index:9999}
+*html{_background-image:url(about:blank); _background-attachment:fixed; zoom:1;}
+*html .hnqss_cn_kf {*position:absolute;*top:expression((-500+(document.documentElement.clientHeight ? document.documentElement.clientHeight:document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop:document.body.scrollTop))+'px');*zoom:1;}
+.hnqss_cn_kf a{border-bottom:2px solid #E7E7E7;display:block;width:78px;overflow:hidden;opacity:0.8;transition:opacity 0.3s ease-in 0s,opacity 0.3s ease-out 0s;text-align:center;}
+.hnqss_cn_kf .qf_backtop,
+.hnqss_cn_kf .kf_service,
+.hnqss_cn_kf .kf_feedback {border-top:solid 1px #e7e7e7;border-bottom:none;height:78px;line-height:78px;text-indent:-999em;}
+.hnqss_cn_kf .kf_floor {height:39px;line-height:39px;background-position:0 -330px;color:#1a1a1a}
+.hnqss_cn_kf a:hover {opacity:1;}
+.hnqss_cn_kf .kf_floor:hover {background-position:-78px -330px;color:#FFF}
+.hnqss_cn_kf .kf_feedback {background-position:0 -251px;}
+.hnqss_cn_kf .kf_feedback:hover {background-position:-78px -251px}
+.hnqss_cn_kf .kf_service {background-position:0 0px}
+.hnqss_cn_kf .kf_service:hover {background-position:-78px 0px}
+.hnqss_cn_kf .qf_backtop {background-position:0 -159px}
+.hnqss_cn_kf .qf_backtop:hover {background-position:-78px -159px}
+.hnqss_cn_kf .offline {background-position:0 -79px}
+.hnqss_cn_kf .offline:hover {background-position:-78px -79px}
+-->
+</style>
+<div id="qf_kfbox" class="hnqss_cn_kf">
+    <{foreach from=$data item=item key=key}>
+      <{if $item.title}>
+      <a class="kf_floor" href="<{$item.links}>" title="<{$item.title|escape:html}>"><{$item.title|escape:html}></a>
+      <{/if}>
+    <{/foreach}>
+    <a class="kf_feedback" target="_blank" href="<{$setting.message}>" title="提提意见">提提意见</a>
+    <a class="kf_service" id="kfonline" title="若不能点击请手加QQ<{$setting.qqnumber}>与客服对话" rel="nofollow" onclick="javascript:window.open('http://wpa.qq.com/msgrd?v=3&uin=<{$setting.qqnumber}>&site=qq&menu=yes', '_blank', 'height=544, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');" href="javascript:void(0);">在线客服</a>
+    <{if $setting.showgotop == "on"}>    
+    <a rel="nofollow" class="qf_backtop" href="javascript:viod(0);"></a> 
+    <{/if}>  
+</div>
+
+<script>var online= new Array();</script> 
+<script src="http://webpresence.qq.com/getonline?Type=1&<{$setting.qqnumber}>:"></script>
+<script>
+var kfbox = $('qf_kfbox');
+function SetOnline(id,online){
+   if (online == 1){
+	   $(id).addClass('online');
+	}
+	else{
+	   $(id).addClass('offline');
+	}
+};
+window.addEvents({'domready':function(){
+		kfbox.getElement('.qf_backtop').addEvents({
+			'click':function(e){
+				new Fx.Scroll(window,{wait:false,duration:500}).toTop();
+				return false;
+			}
+		});
+		if (kfbox) SetOnline('kfonline',online[0]);		
+	},
+	'scroll': function(){
+		if(window.getScrollTop()===0){
+			kfbox.hide();
+		}else{
+			kfbox.show();
+			/*if(window.ie6)
+				gotop.setStyle('top',window.getScrollTop()+window.getHeight()-130);
+			*/
+		}
+	},
+	'resize':function(){}
+})
+</script>
+<{else}>
+<p>请编辑添加数据</p>
+<{/if}>
