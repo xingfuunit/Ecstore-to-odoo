@@ -25,7 +25,7 @@
         <input type="hidden" name="verifyType" value="<{$verifyType}>"> 
         <div class="msg"><{t}>为保障您的账户安全，请先验证您的身份<{/t}></div>
         <ul>
-          <{if (!$verify.mobile && !$verify.email) || $verifyType == 'security_pay'}>
+          <{if (!$verify.mobile && !$verify.email) || $verifyType == 'security_pay' || $verifyType == 'verifymember_card'}>
           <li class="form-item">
             <label for="" class="form-label">填写登录密码：</label>
             <span class="form-act"><{input type="password" name="password" id="" autofocus vtype="required" data-caution="请填写您的登录密码"}></span>

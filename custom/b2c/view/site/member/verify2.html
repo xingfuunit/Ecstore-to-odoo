@@ -2,7 +2,12 @@
 <div class="page-article">
   <div id="member_security" class="member-security">
     <div class="member-title">
-      <h2><{if $verifyType == 'setmobile' || $verifyType == 'verifymobile'}><{t}>手机验证<{/t}><{else if($verifyType == 'security_pay')}><{t}>修改支付密码<{/t}><{else}><{t}>邮箱验证<{/t}><{/if}></h2> 
+      <h2>
+      <{if $verifyType == 'setmobile' || $verifyType == 'verifymobile'}><{t}>手机验证<{/t}><{/if}>
+      <{if $verifyType == 'security_pay'}><{t}>修改支付密码<{/t}><{/if}>
+      <{if $verifyType == 'verifymember_card'}><{t}>会员卡绑定<{/t}><{/if}>
+      <{if $verifyType == 'setemail' || $verifyType == 'verifyemail'}><{t}>邮箱验证<{/t}><{/if}>
+      </h2> 
     </div>
     <!-- 步骤图 -->
     <div id="verify_steps" class="steps steps-three">
@@ -11,7 +16,7 @@
           <tr>
             <td class="step-item step-1 "><span><q class="icon">&#x50;</q><i>1</i><{t}>身份验证<{/t}></span></td>
             <td class="icon step-arrow">&#x28;</td>
-            <td class="step-item step-2 active" ><span><q class="icon">&#x50;</q><i>2</i><{t}><{if $verifyType == 'security_pay'}>修改支付密码<{else}>设置验证信息<{/if}><{/t}></span></td>
+            <td class="step-item step-2 active" ><span><q class="icon">&#x50;</q><i>2</i><{t}><{if $verifyType == 'security_pay'}>修改支付密码<{else if $verifyType == 'verifymember_card'}>会员卡绑定<{else}>设置验证信息<{/if}><{/t}></span></td>
             <td class="icon step-arrow">&#x28;</td>
             <td class="step-item step-3"><span><q class="icon">&#x50;</q><i>3</i><{t}>完成<{/t}></span></td>
           </tr>
@@ -92,7 +97,14 @@
               <{/if}>
             </span>
           </li>
-          <{else}>
+          <li class="form-item">
+            <label for="" class="form-label">填写验证码：</label>
+            <span class="form-act"><{input type="text" name="vcode" id="" vtype="required"}></span>
+            <span class="caution-content"><{$msg}></span>
+          </li>
+          <li class="form-item"><span class="form-act"><{button type="submit" rel="_request" class="btn-caution btn-big" label="提交"}></span></li>
+          <{/if}>
+          <{if $verifyType == 'setemail' || $verifyType == 'verifyemail'}>
           <li class="form-item">
             <label for="" class="form-label">邮箱：</label>
             <span class="form-act">
@@ -114,13 +126,64 @@
               <{/if}>
               </span>
           </li>
-          <{/if}>
           <li class="form-item">
             <label for="" class="form-label">填写验证码：</label>
             <span class="form-act"><{input type="text" name="vcode" id="" vtype="required"}></span>
             <span class="caution-content"><{$msg}></span>
           </li>
           <li class="form-item"><span class="form-act"><{button type="submit" rel="_request" class="btn-caution btn-big" label="提交"}></span></li>
+          <{/if}>
+          <{if $verifyType == 'verifymember_card'}>
+          <{if $carddata.login_account}>
+          <li class="form-item">
+            <label for="" class="form-label">已绑定会员卡：</label>
+            <span class="form-act">
+              <label for="for_verify_mobile" class="form-sub-label">
+                <input type="radio" name="send_type" checked id="for_verify_mobile" class="action-verify-method" value="mobile"> 
+               <{$carddata.login_account}>
+              </label>
+            </span>
+          </li>
+          <{/if}>
+          <li class="form-item">
+            <label for="" class="form-label">会员卡号：</label>
+            <span class="form-act">
+              <input type="hidden" name='send_type'  value="reset">
+              <{input type="text" name="card_number" id="" class="action-card-number" vtype="required"}>
+              <span class="caution-content"><{$msg}></span>
+              </span>
+          </li>
+          <li class="form-item">
+            <label for="" class="form-label">会员卡密码：</label>
+            <span class="form-act"><{input type="password" name="card_password" id="" class="action-card-password" vtype="required"}></span>
+            <span class="caution-content"><{$msg}></span>
+          </li>
+          <li class="form-item">
+            <label for="" class="form-label">绑定类型：</label>
+            <span class="form-act">
+              <label for="for_verify_mobile" class="form-sub-label">
+                <input type="radio" name="type" id="for_verify_membercard" checked  vtype="required" class="action-verify-method" value="card_to_member"> 
+               会员卡绑定到现登录的账号
+              </label>
+              <label for="for_verify_mobile" class="form-sub-label">
+                <input type="radio" name="type" id="for_verify_membercard"  vtype="required" class="action-verify-method" value="member_to_card"> 
+               现登录的账号绑定到会员卡
+              </label>
+            </span>
+          </li>
+          <li class="form-item">
+            <label for="" class="form-label">绑定说明：</label>
+            <span style="color:red;font-weight: bold;">会员卡绑定到现登录账号</span>,则<span style="color:red;font-weight: bold;">会员卡账号</span>中的预存款,积分等信息,将自动合并到<span style="color:red;font-weight: bold;">现登录账号</span>,合并后会员卡号和现有账号都可以登录
+          </li>
+          <li class="form-item">
+            <label for="" class="form-label"></label>
+            <span style="color:red;font-weight: bold;">现登录的账号绑定到会员卡</span>,则<span style="color:red;font-weight: bold;">现登录的账号</span>中的预存款,积分等信息,将自动合并到<span style="color:red;font-weight: bold;">会员卡账号</span>,合并后现有账号和会员卡号都可以登录
+          </li>
+          <li class="form-item"><span class="form-act">
+          <a href="<{link app=b2c ctl=site_passport act=bind_member_card}>" id="bind_btn" class="btn btn-caution action-bind-membercard"><span><span>绑定会员卡</span></span></a>
+          </span></li>
+          <{/if}>
+          
         </ul>
       </form>
       <{/if}>
@@ -171,6 +234,21 @@ module.addEvents({
         e.stop();
         var url = this.href;
         var data = 'uname=' + module.getElement('.action-account-check').value + '&type=' + module.getElement('input[name=send_type]').value;
+        Query.send(url, data);
+    },
+    'click:relay(.action-bind-membercard)':function(e) {
+    	var t=document.getElementsByName("type");
+    	var ti;
+    	 for(var i = 0; i < t.length; i++)
+    	{
+    	     if(t[i].checked)
+    	    	 ti=i;
+    	 }
+    	var type = t[ti].value;
+        e.stop();
+        var url = this.href;
+        var data = 'card_number=' + module.getElement('.action-card-number').value + '&card_password=' + module.getElement('.action-card-password').value + '&type=' + type;
+        
         Query.send(url, data);
     },
     'click:relay(.action-get-verifycode)': function(e) {

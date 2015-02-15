@@ -1894,6 +1894,11 @@ class b2c_ctl_site_member extends b2c_frontpage{
           $data['email'] = $row['login_account'];
           $verify['email'] = true;  
         }
+        
+        if($row['login_type'] == 'local' && is_numeric($row['login_account'])){
+        	$data['member_card'] = $row['login_account'];
+        	$verify['member_card'] = true;
+        }
       }
       $this->pagedata['data'] = $data;
       $this->pagedata['pamdata'] = $pamMemberData[0];//hack by Jason
@@ -1914,6 +1919,11 @@ class b2c_ctl_site_member extends b2c_frontpage{
         if($row['login_type'] == 'email' && $row['disabled'] == 'false'){
           $data['email'] = $row['login_account'];
           $verify['email'] = true;  
+        }
+        
+        if($row['login_type'] == 'local' && $row['disabled'] == 'true'){
+        	$data['member_card'] = $row['login_account'];
+        	$verify['member_card'] = true;
         }
       }
       $this->pagedata['verifyType'] = $verifyType; 
@@ -1960,11 +1970,20 @@ class b2c_ctl_site_member extends b2c_frontpage{
         $userPassport = kernel::single('b2c_user_passport'); 
         $member_id = $userPassport->userObject->get_member_id();
         $arr_colunms = $userPassport->userObject->get_pam_data('login_account',$member_id);
-        /** hack by Jason 设置支付密码 **/
+        /** hack by Jason 设置支付密码  判断是否绑定会员卡begin**/
         if($verifyType == 'security_pay'){
         	$member_id = $this->app->member_id;
         	$pamMemberData = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id));
         	$this->pagedata['pamdata'] = $pamMemberData[0];
+        }
+        if($verifyType == 'verifymember_card'){
+        	$member_id = $this->app->member_id;
+        	$memberCardData = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id,'login_type'=>'local'));
+        	foreach($memberCardData as $key=>$mcd){
+        		if(is_numeric($mcd['login_account'])){
+        			$this->pagedata['carddata'] = $memberCardData[$key];
+        		}
+        	}        	
         }
         /** hack by Jason 设置支付密码 end**/
         $this->pagedata['verifyType'] = $verifyType; 

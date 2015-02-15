@@ -43,6 +43,26 @@
             <{/if}>
           </li>
 		  
+		  <li>
+            <{if $verify.member_card}>
+            <span class="security-title">
+              <i class="icon icon-success">%</i><b>会员卡绑定</b>
+            </span>
+            <span class="security-actions"><a href="<{link app=b2c ctl=site_member act=verify arg0=verifymember_card}>">修改</a></span>
+            <span class="security-content"><em>您绑定的会员卡：<{$data.member_card}></em></span>
+            <{else}>
+            <span class="security-title">
+              <i class="icon icon-warning">$</i><b>会员卡绑定</b>
+            </span>
+            <span class="security-actions">
+              <a href="<{link app=b2c ctl=site_member act=verify arg0=verifymember_card}>" class="btn btn-caution"><span><span>立即绑定</span></span></a>
+            </span>
+            <span class="security-content">
+              <em>绑定会员卡之后，可以使用会员卡登录，并享受会员卡的优惠 </em>
+            </span>
+            <{/if}>
+          </li>
+		  
           <li>
             <{if $verify.mobile}>
             <span class="security-title">
