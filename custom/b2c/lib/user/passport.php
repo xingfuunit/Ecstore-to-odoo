@@ -1040,11 +1040,15 @@ class b2c_user_passport
     		//开始事务
     		if($from_to == 'weixin_to_old'){
     			$from_pam_member = $loginPamData;
+    			$from_b2f_member = $loginMemberData;
     			$to_pam_member = $pamMemberData;
+    			$to_b2c_member = $memberData;
     			$to_member_id = $pamMemberData[0]['member_id'];
     		}else{
     			$from_pam_member = $pamMemberData;
+    			$from_b2c_member = $memberData;
     			$to_pam_member = $loginPamData;
+    			$to_b2c_member = $loginMemberData;
     			$to_member_id = $loginPamData[0]['member_id'];
     		}    		
     		
@@ -1075,24 +1079,24 @@ class b2c_user_passport
     			return 'update_log_failed';
     		}
     		error_log("here6");
-    		if($from_pam_member[0]['advance'] > 0){
+    		if($from_b2f_member[0]['advance'] > 0){
     			$msg = '会员绑定预存款转移';
-    			if(!$objAdvances->add($to_pam_member[0]['member_id'], $from_pam_member[0]['advance'], app::get('b2c')->_('会员绑定预存款转移'), $msg)){//为合并的会员增加预存款
+    			if(!$objAdvances->add($to_pam_member[0]['member_id'], $from_b2f_member[0]['advance'], app::get('b2c')->_('会员绑定预存款转移'), $msg)){//为合并的会员增加预存款
     				$db->rollback();
     				return 'add_advance_wrong';
     			}
-    			if(!$objAdvances->add($from_pam_member[0]['member_id'], -$from_pam_member[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
+    			if(!$objAdvances->add($from_pam_member[0]['member_id'], -$from_b2f_member[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
     				$db->rollback();
     				return 'reduce_advance_wrong';
     			}
     		}
     		error_log("here7");
-    		if($from_pam_member[0]['point'] > 0){
-    			if(!$member_point->change_point($to_pam_member[0]['member_id'],$from_pam_member[0]['point'],$msg,'register_score',2,$to_pam_member[0]['member_id'],$to_pam_member[0]['member_id'],'exchange')){
+    		if($from_b2f_member[0]['point'] > 0){
+    			if(!$member_point->change_point($to_pam_member[0]['member_id'],$from_b2f_member[0]['point'],$msg,'register_score',2,$to_pam_member[0]['member_id'],$to_pam_member[0]['member_id'],'exchange')){
     				$db->rollback();
     				return 'add_point_wrong';
     			}
-    			if(!$member_point->change_point($from_pam_member[0]['member_id'],-$from_pam_member[0]['point'],$msg,'register_score',2,$from_pam_member[0]['member_id'],$from_pam_member[0]['member_id'],'exchange')){
+    			if(!$member_point->change_point($from_pam_member[0]['member_id'],-$from_b2f_member[0]['point'],$msg,'register_score',2,$from_pam_member[0]['member_id'],$from_pam_member[0]['member_id'],'exchange')){
     				$db->rollback();
     				return 'reduce_point_wrong';
     			}
