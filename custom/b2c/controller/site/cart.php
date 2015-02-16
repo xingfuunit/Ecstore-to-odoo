@@ -1197,8 +1197,9 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     public function checkout_vacancies()
     {
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
+        $this->begin();
         if(!empty($_POST['yu_amount'])&&$_POST['yu_amount']>0){
-            $this->set_header();
+        	
             $arrMember = $this->get_current_member();
             $member_id = $arrMember['member_id'];
             $psm = $_POST['yu_amount'];
@@ -1210,10 +1211,11 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             $obj_member = $this->app->model('members');
             $obj_member->change_exp($member_id, floor($psm));
             
-            $this->splash('success',$url,app::get('b2c')->_('会员充值成功！'),true);            
-            exit;
+            //计算精度
+            bcscale(2);
+            $this->splash('success',$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')), app::get('b2c')->_('会员充值成功！'),true,array('uname'=>$arrMember['uname'],'yu_amount'=>bcadd($psm,0.00),'advance'=>bcadd($psm,$arrMember['advance'])));
         }else{
-            $this->splash('error',$url,app::get('b2c')->_('充值失败，系统错误，请稍后重试！'),true);
+        	$this->splash(false, $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('会充值失败，系统错误，请稍后重试！'),true,null);
         }
     }
     

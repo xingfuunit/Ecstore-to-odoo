@@ -1221,16 +1221,17 @@ window.addEvent('domready', function(){
 			        bn_add_info.set('html','正在充值中……');
 			    },
 			    onSuccess: function(responseText){
-                                var _order_id = responseText.redirect.match(/\d+/)[0];
-                                var storeprint ="<{$local_store.name}>报损单\n报损员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n总计：<{$aCart.promotion_subtotal|cur_odr}>\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n报损单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
-                                bn_add_info.set('html','报损成功……');
+			    				console.log(responseText);
+                                var data = responseText.data;
+			    				var storeprint ="<{$local_store.name}>充值单\n操作员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n用户名："+data.uname+"\n充值数额："+data.yu_amount+"\n帐号余额："+data.advance+"\n\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
+                                bn_add_info.set('html','充值成功……');
                                 try {
                                         window.CallCSharpMethod("softprint",storeprint);
                                 } catch(e) {}
                                 winReload();
 			    },
 			    onFailure: function(){
-			        bn_add_info.set('html','请求失败');
+			        bn_add_info.set('html','充值失败，请稍后重试');
 			    }
                         });
                         yu_amount = document.getElementById("yu_amount").value;
