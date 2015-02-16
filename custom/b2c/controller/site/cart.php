@@ -1199,13 +1199,17 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         $this->begin();
         if(!empty($_POST['yu_amount'])&&$_POST['yu_amount']>0){
+        	$pay_way = array(
+        			'1'=>'现金',
+        			'2'=>'刷卡',
+        			);
         	
             $arrMember = $this->get_current_member();
             $member_id = $arrMember['member_id'];
             $psm = $_POST['yu_amount'];
             $msg = 'pos预存款充值';
             $objAdvance = $this->app->model("member_advance");
-            $status = $objAdvance->add($member_id, $psm, app::get('b2c')->_('pos预存款充值'), $msg);
+            $status = $objAdvance->add($member_id, $psm, app::get('b2c')->_('pos['.$pay_way[$_POST['exp_pay_way']].']预存款充值'), $msg);
 
             // 增加经验值
             $obj_member = $this->app->model('members');
@@ -1213,9 +1217,9 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             
             //计算精度
             bcscale(2);
-            $this->splash('success',$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')), app::get('b2c')->_('会员充值成功！'),true,array('uname'=>$arrMember['uname'],'yu_amount'=>bcadd($psm,0.00),'advance'=>bcadd($psm,$arrMember['advance'])));
+            $this->splash('success',$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')), app::get('b2c')->_('会员充值成功！'),true,array('uname'=>$arrMember['uname'],'yu_amount'=>bcadd($psm,0.00),'advance'=>bcadd($psm,$arrMember['advance']),'exp_way'=>$pay_way[$_POST['exp_pay_way']]));
         }else{
-        	$this->splash(false, $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('会充值失败，系统错误，请稍后重试！'),true,null);
+        	$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('会充值失败，系统错误，请稍后重试！'),true,null);
         }
     }
     
