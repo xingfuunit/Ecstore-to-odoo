@@ -1375,6 +1375,9 @@ class b2c_ctl_wap_member extends wap_frontpage{
     		$userPassport = kernel::single('b2c_user_passport');
     		$login_member_id = intval($this->app->member_id);    		
     		$from_to =$_POST['from_to'.'_'.$bind_type];
+    		if(!$from_to){
+    			$from_to = 'weixin_to_old';
+    		}
     		$account = $_POST['login_account'.'_'.$bind_type];
     		$account_password = $_POST['login_password'.'_'.$bind_type];
     		error_log('bind_type:'.$bind_type.'-login_member_id:'.$login_member_id.'-from_to:'.$from_to.'-account:'.$account.'-account_password:'.$account_password);
