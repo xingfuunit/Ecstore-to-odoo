@@ -19,19 +19,19 @@
     </label>
 
     <div class="c" id="account_div_mobile"  >
-          <input type="text" name="login_account_mobile" class="text a-account" style="width: 90%;" required="required" placeholder="手机号" pattern="(^[0-9]{3,4}\-[0-9]{7}$)|(^[0-9]{7}$)|(^[0-9]{3,4}[0-9]{7}$)|(^0{0,1}13[0-9]{9}$)" autofocus title="手机号不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>" class="btn btn-send orange ib-btn btn-sms">获取验证码</a>
+          <input type="text" name="login_account_mobile" class="text a-account" style="width: 90%;"   placeholder="手机号" pattern="(^[0-9]{3,4}\-[0-9]{7}$)|(^[0-9]{7}$)|(^[0-9]{3,4}[0-9]{7}$)|(^0{0,1}13[0-9]{9}$)" autofocus title="手机号不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>" class="btn btn-send orange ib-btn btn-sms">获取验证码</a>
     </div>
 
     <div class="c" id="account_div_email"  style="display: none;">
-          <input type="text" name="login_account_email" class="text a-account" style="width: 90%;" required="required" placeholder="邮箱帐号" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" autofocus title="邮箱不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_email}>" class="btn btn-send orange ib-btn btn-email">获取邮件验证码</a>
+          <input type="text" name="login_account_email" class="text a-account" style="width: 90%;"   placeholder="邮箱帐号" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" autofocus title="邮箱不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_email}>" class="btn btn-send orange ib-btn btn-email">获取邮件验证码</a>
     </div>
 
      <div class="c" id="account_div_account" style="display: none;" >
-          <input type="text" name="login_account_account" class="text a-account" style="width: 90%;" required="required" placeholder="商城帐号" pattern="" autofocus title="商城帐号不正确">
+          <input type="text" name="login_account_account" class="text a-account" style="width: 90%;"   placeholder="商城帐号" pattern="" autofocus title="商城帐号不正确">
     </div>
 
      <div class="c" id="account_div_card" style="display: none;">
-          <input type="text" name="login_account_cart" class="text a-account" style="width: 90%;" required="required" placeholder="会员卡帐号" pattern="(0|[1-9]/d*)$" autofocus title="会员卡帐号不正确">
+          <input type="text" name="login_account_cart" class="text a-account" style="width: 90%;"   placeholder="会员卡帐号" pattern="(0|[1-9]/d*)$" autofocus title="会员卡帐号不正确">
     </div>
 
     <div class="notice"></div>
@@ -43,7 +43,7 @@
 	                <em class="f-red">*</em>短信验证：
 	            </label>
 	            <div class="c">
-	                <input type="password" name="vcode_mobile" maxlength="20" placeholder="短信验证码" required="required" pattern=".{6,20}" class="text" data-caution="短信验证码不能为空">
+	                <input type="password" name="vcode_mobile" maxlength="20" placeholder="短信验证码"   pattern=".{6,20}" class="text" data-caution="短信验证码不能为空">
 	            </div>
 	        </div>
 	      <div class="notice"></div>
@@ -53,8 +53,8 @@
 	          <em class="f-red">*</em>保留数据：
 	        </label>
 	        <div class="c" >
-	          <input type="radio" name="from_to_mobile" required="required" value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
-	          <input type="radio" name="from_to_mobile" required="required" value="weixin_to_old" class="text" style="width:10%">PC帐户
+	          <input type="radio" name="from_to_mobile"   value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
+	          <input type="radio" name="from_to_mobile"   value="weixin_to_old" class="text" style="width:10%">PC帐户
 	        </div>
 	      </div>
 
@@ -63,7 +63,7 @@
 	          <em class="f-red">*</em>密码：
 	        </label>
 	        <div class="c">
-	          <input type="password" name="login_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合" required="required" pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+	          <input type="password" name="login_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 	        </div>
 	      </div>
 	      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_mobile">此帐户已注册，设置帐户时会掉失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
@@ -77,7 +77,7 @@
 	                <em class="f-red">*</em>邮箱验证：
 	            </label>
 	            <div class="c">
-	                <input type="password" name="vcode_email" maxlength="20" placeholder="邮箱验证码" required="required" pattern=".{6,20}" class="text" data-caution="邮箱验证码不能为空">
+	                <input type="password" name="vcode_email" maxlength="20" placeholder="邮箱验证码"   pattern=".{6,20}" class="text" data-caution="邮箱验证码不能为空">
 	            </div>
 	        </div>
 	      <div class="notice"></div>
@@ -87,8 +87,8 @@
 	          <em class="f-red">*</em>保留数据：
 	        </label>
 	        <div class="c" >
-	          <input type="radio" name="from_to_email" required="required" value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
-	          <input type="radio" name="from_to_email" required="required" value="weixin_to_old" class="text" style="width:10%">PC帐户
+	          <input type="radio" name="from_to_email"   value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
+	          <input type="radio" name="from_to_email"   value="weixin_to_old" class="text" style="width:10%">PC帐户
 	        </div>
 	      </div>
 
@@ -97,7 +97,7 @@
 	          <em class="f-red">*</em>密码：
 	        </label>
 	        <div class="c">
-	          <input type="password" name="login_password_email" maxlength="20" placeholder="6-20位数字/字母组合" required="required" pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+	          <input type="password" name="login_password_email" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 	        </div>
 	      </div>
 
@@ -111,7 +111,7 @@
 		          <em class="f-red">*</em>密码：
 		        </label>
 		        <div class="c">
-		          <input type="password" name="login_password_account" maxlength="20" placeholder="6-20位数字/字母组合" required="required" pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+		          <input type="password" name="login_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 		        </div>
 		      </div>
 		   <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会掉失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
@@ -123,7 +123,7 @@
 		          <em class="f-red">*</em>密码：
 		        </label>
 		        <div class="c">
-		          <input type="password" name="login_password_card" maxlength="20" placeholder="6-20位数字/字母组合" required="required" pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+		          <input type="password" name="login_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 		        </div>
 		      </div>
 

@@ -1374,9 +1374,9 @@ class b2c_ctl_wap_member extends wap_frontpage{
     	if($bind_type == 'email' || $bind_type == 'account' || $bind_type == 'mobile'){
     		$userPassport = kernel::single('b2c_user_passport');
     		$login_member_id = intval($this->app->member_id);    		
-    		$from_to =$_POST['from_to'];
-    		$account = $_POST['login_account'];
-    		$account_password = $_POST['login_password'];
+    		$from_to =$_POST['from_to'.'_'.$bind_type];
+    		$account = $_POST['login_account'.'_'.$bind_type];
+    		$account_password = $_POST['login_password'.'_'.$bind_type];
     		error_log('bind_type:'.$bind_type.'-login_member_id:'.$login_member_id.'-from_to:'.$from_to.'-account:'.$account.'-account_password:'.$account_password);
     		$status = $userPassport->bind_member($bind_type,$from_to,$login_member_id,$account,$account_password);
     		error_log('status:'.$status);
@@ -1443,7 +1443,9 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			break;
     	}
     	}elseif($bind_type == 'card'){
-    		$this->save_weixin_card();
+    		$card = trim($_POST['login_account'.'_'.$bind_type]);
+    		$card_password = trim($_POST['login_password'.'_'.$bind_type]);
+    		$this->save_weixin_card($card,$card_password);
     	}else{
     		$msg = app::get('b2c')->_('请选择要绑定的信息');
     		$this->splash('failed',null,$msg,'','',true);
@@ -1451,13 +1453,11 @@ class b2c_ctl_wap_member extends wap_frontpage{
     }
     
     
-    function save_weixin_card(){
+    function save_weixin_card($card,$card_password){
     	error_log('here10');
     	$this->userPassport = kernel::single('b2c_user_passport');
     	$userPassport = kernel::single('b2c_user_passport');
     	$login_member_id = intval($this->app->member_id);
-    	$card = trim($_POST['login_account']);
-    	$card_password = trim($_POST['login_password']);
     	if( !$card || !is_numeric($card)){
     		$msg = app::get('b2c')->_('请填写正确的会员卡号');
     		$this->splash('failed',null,$msg,'','',true);
@@ -1570,23 +1570,23 @@ class b2c_ctl_wap_member extends wap_frontpage{
      * */
     function save_weixin(){
         $userPassport = kernel::single('b2c_user_passport');
-        $mobile = strlen($_POST['login_account']);
+        $mobile = strlen($_POST['login_account'.'_'.$bind_type]);
         if($mobile < 11){
             $this->splash('failed',null,'请使用手机绑定','','',true);exit;
         }
-        $data['pam_account']['login_name'] = $_POST['login_account'];
+        $data['pam_account']['login_name'] = $_POST['login_account'.'_'.$bind_type];
         $_POST['license'] = 'on';
-        $data['pam_account']['login_password'] = $_POST['login_password'];
-        $data['pam_account']['psw_confirm'] = $_POST['login_password'];
-        $data['vcode'] = $_POST['vcode'];
+        $data['pam_account']['login_password'] = $_POST['login_password'.'_'.$bind_type];
+        $data['pam_account']['psw_confirm'] = $_POST['login_password'.'_'.$bind_type];
+        $data['vcode'] = $_POST['vcode'.'_'.$bind_type];
         if( !$userPassport->check_signup($data,$msg) ){
             $this->splash('failed',null,$msg,'','',true);exit;
             //$this->splash('failed',null,$msg,'','',true);exit;
         }
-        $passwdlen = strlen($_POST['login_password']);
+        $passwdlen = strlen($_POST['login_password'.'_'.$bind_type]);
         if($mobile==11){
             $obj_member = app::get('pam')->model('members');
-            $sdf = $obj_member->getList('login_account',array('login_type'=>'mobile','login_account'=>$_POST['login_account']));
+            $sdf = $obj_member->getList('login_account',array('login_type'=>'mobile','login_account'=>$_POST['login_account'.'_'.$bind_type]));
             if($sdf[0]['login_account']){
                $msg=app::get('b2c')->_('该手机已存在！');
                $this->splash('failed',null,$msg,'','',true);
@@ -1608,8 +1608,8 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $member_id = intval($this->app->member_id);
         $app = app::get('b2c');
         $app->model('member_point')->change_point($member_id,+$point,$error_msg,$reason_type,$data_rand,$member_id,$member_id);
-        if($userPassport->set_new_account($this->app->member_id,trim($_POST['login_account']),$msg) ){
-            $userPassport->reset_passport($this->app->member_id,$_POST['login_password']);
+        if($userPassport->set_new_account($this->app->member_id,trim($_POST['login_account'.'_'.$bind_type]),$msg) ){
+            $userPassport->reset_passport($this->app->member_id,$_POST['login_password'.'_'.$bind_type]);
            //增加会员同步 2012-05-15
             if( $member_rpc_object = kernel::service("b2c_member_rpc_sync") ) {
                 $member_rpc_object->modifyActive($this->app->member_id);
