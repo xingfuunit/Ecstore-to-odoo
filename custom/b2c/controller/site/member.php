@@ -2182,6 +2182,10 @@ class b2c_ctl_site_member extends b2c_frontpage{
     	}
     	$status = $this->userPassport->_bind_member_card($new_card, $type, $login_member_id, $card);
     	switch ($status){
+    		case 'card_to_card' :
+    			$msg = app::get('b2c')->_('会员卡不能绑定会员卡');
+    			$this->splash('failed',null,$msg,true);
+    			break;
     		case 'old_member_wrong' :
     			$msg = app::get('b2c')->_('当前会员信息错误错误');
     			$this->splash('failed',null,$msg,true);

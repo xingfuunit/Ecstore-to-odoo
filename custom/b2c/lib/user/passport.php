@@ -759,6 +759,9 @@ class b2c_user_passport
     		return 'old_member_wrong';
     	}
     	
+    	if($old_pammember_info[0]['login_type'] == 'local' && is_numeric($old_pammember_info[0]['login_account'])){
+    		return 'card_to_card';
+    	}
     	
     	//开始事务
     	$db = kernel::database();
@@ -799,7 +802,7 @@ class b2c_user_passport
     				$db->rollback();
     				return 'update_log_failed';
     			}
-    			if($new_member_info[0]['advance']){ //如果新卡含有金钱,则将新卡金钱转移到现有会员上
+    			if($new_member_info[0]['advance'] > 0){ //如果新卡含有金钱,则将新卡金钱转移到现有会员上
     				$msg = '会员卡绑定预存款转移';
     				if(!$objAdvances->add($member_id, $new_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为合并的会员增加预存款
     					$db->rollback();
@@ -810,7 +813,7 @@ class b2c_user_passport
     					return 'reduce_advance_wrong';
     				}
     			}
-    			if($new_member_info[0]['point']){   //如果新卡含有积分,则将新卡积分转移到现有会员上
+    			if($new_member_info[0]['point'] > 0){   //如果新卡含有积分,则将新卡积分转移到现有会员上
     				if(!$member_point->change_point($member_id,$new_member_info[0]['point'],$msg,'register_score',2,$member_id,$member_id,'exchange')){
     					$db->rollback();
     					return 'add_point_wrong';
@@ -1021,18 +1024,29 @@ class b2c_user_passport
     		$new_member_lv = $memberData[0]['card_lv_id'] > $loginMemberData[0]['member_lv_id'] ? $memberData[0]['card_lv_id'] : $loginMemberData[0]['member_lv_id'];//对比得出新等级ID
     		//开始事务
     		if($from_to == 'weixin_to_old'){
-    			$from_pam_member = $loginMemberData;
+    			$from_pam_member = $loginPamData;
     			$to_pam_member = $pamMemberData;
     			$to_member_id = $pamMemberData[0]['member_id'];
     		}else{
     			$from_pam_member = $pamMemberData;
-    			$to_pam_member = $loginMemberData;
-    			$to_member_id = $loginMemberData[0]['member_id'];
+    			$to_pam_member = $loginPamData;
+    			$to_member_id = $loginPamData[0]['member_id'];
+    		}    		
+    		
+			error_log('from_wei:'.$loginPamData[0]['login_account']);
+    		error_log("here5");
+    		error_log(print_r($to_pam_member,1));
+    		$pamMemberMdl->update(              //
+    				array('member_id'=>$to_pam_member[0]['member_id'],'password_account'=>$to_pam_member[0]['password_account'],'login_password'=>$to_pam_member[0]['login_password'],'pay_password'=>$to_pam_member[0]['pay_password'],'createtime'=>$to_pam_member[0]['createtime'],'disabled'=>'true'),
+    				array('member_id'=>$from_pam_member[0]['member_id']));
+    		$update_cardmember_row = $pamMemberMdl->db->affect_row();
+    		if(!$update_cardmember_row){
+    			$db->rollback();
+    			return 'update_cardmember_failed';
     		}
-    		error_log("here4");
     		$to_pammember_array = app::get('pam')->model('members')->getList('*',array('member_id'=>$to_member_id));
     		foreach($to_pammember_array as $opi){
-    			if($opi['login_type'] == 'local' && strlen(($opi['login_account'])) > 25){    				
+    			if($opi['login_type'] == 'local' && strlen(($opi['login_account'])) > 25 && $opi['login_account'] != $loginPamData[0]['login_account']){
     				app::get('pam')->model('members')->delete(array('login_account'=>$opi['login_account'],'login_type'=>'local'));//删除现有会员绑定的微信账号
     				$sdf['to_member_id'] = '';
     				$sdf['to_account'] = '';
@@ -1041,15 +1055,6 @@ class b2c_user_passport
     				app::get('b2c')->model('bind_log')->insert($sdf); //删除的微信账号写入log
     				error_log('delete:'.$opi['login_account']);
     			}
-    		}
-    		error_log("here5");
-    		$pamMemberMdl->update(              //
-    				array('member_id'=>$to_pam_member[0]['member_id'],'password_account'=>$to_pam_member[0]['password_account'],'login_password'=>$to_pam_member[0]['login_password'],'pay_password'=>$to_pam_member[0]['pay_password'],'createtime'=>$to_pam_member[0]['createtime'],'disabled'=>'true'),
-    				array('member_id'=>$from_pam_member[0]['member_id']));
-    		$update_cardmember_row = $pamMemberMdl->db->affect_row();
-    		if(!$update_cardmember_row){
-    			$db->rollback();
-    			return 'update_cardmember_failed';
     		}
     		if(!$this->userPassport->bind_log($from_pam_member,$to_pam_member)){
     			$db->rollback();
