@@ -1381,6 +1381,10 @@ class b2c_ctl_wap_member extends wap_frontpage{
     		$status = $userPassport->bind_member($bind_type,$from_to,$login_member_id,$account,$account_password);
     		error_log('status:'.$status);
     		switch ($status){
+    		case 'failed' :
+    			$msg = app::get('b2c')->_('绑定失败');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
     		case 'wrong_password' :
     			$msg = app::get('b2c')->_('会员账号密码错误');
     			$this->splash('failed',null,$msg,'','',true);
@@ -1563,7 +1567,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			break;
     		case 'ok' :
     			$msg=app::get('b2c')->_('绑定成功！');
-            	$url = kernel::single('wap_controller')->gen_url(array('app'=>'b2c','ctl'=>'wap_member','act'=>'index'));
+            	$url = kernel::single('wap_controller')->gen_url(array('app'=>'b2c','ctl'=>'wap_passport','act'=>'logout'));
             	$this->splash('success',$url,$msg,'','',true);
     			break;
     	}

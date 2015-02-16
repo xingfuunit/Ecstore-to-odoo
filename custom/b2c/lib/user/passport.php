@@ -790,10 +790,9 @@ class b2c_user_passport
     		$new_member_info = $memberMdl->getList('*',array('member_id'=>$new_member_id));//获得新注册的会员卡账号的member表信息
     		$new_pammember_info = $pamMemberMdl->getList('*',array('member_id'=>$new_member_id));//获得新注册的会员卡pam_member表信息
     		if($type == 'card_to_member'){//如果是新卡,并且是卡转现有会员
-    			$pamMemberMdl->update(              //
+    			$update_new_row = $pamMemberMdl->update(              //
     					array('member_id'=>$member_id,'password_account'=>$old_pammember_info[0]['password_account'],'login_password'=>$old_pammember_info[0]['login_password'],'pay_password'=>$old_pammember_info[0]['pay_password'],'createtime'=>$old_pammember_info[0]['createtime'],'disabled'=>'true'),
     					array('member_id'=>$new_member_id));
-    			$update_new_row = $pamMemberMdl->db->affect_row();
     			if(!$update_new_row){
     				$db->rollback();
     				return 'update_newcard_failed';
@@ -823,19 +822,21 @@ class b2c_user_passport
     					return 'reduce_point_wrong';
     				}
     			}
-    			$memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));//更新现有会员的等级
+    			$level_update = $memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));//更新现有会员的等级
+    			if(!$level_update){
+    				$db->rollback();
+    				return 'update_level_failed';
+    			}
     		}
     		if($type == 'member_to_card'){//如果是新卡,并且是现有会员转卡
-    			$pamMemberMdl->update(array('disabled'=>'true'),array('member_id'=>$member_id,'login_type'=>'local'));//将原来的旧local账号设置为disabled true
-    			$update_oldcard_row = $pamMemberMdl->db->affect_row();
+    			$update_oldcard_row = $pamMemberMdl->update(array('disabled'=>'true'),array('member_id'=>$member_id,'login_type'=>'local'));//将原来的旧local账号设置为disabled true
     			if(!$update_oldcard_row){
     				$db->rollback();
     				return 'update_oldcard_failed';
     			}
-    			$pamMemberMdl->update(//将现有会员的密码等信息重置为会员卡账号对应的密码信息
+    			$update_oldmember_row = $pamMemberMdl->update(//将现有会员的密码等信息重置为会员卡账号对应的密码信息
     					array('member_id'=>$new_member_id,'password_account'=>$new_pammember_info[0]['password_account'],'login_password'=>$new_pammember_info[0]['login_password'],'pay_password'=>$new_pammember_info[0]['pay_password'],'createtime'=>$new_pammember_info[0]['createtime'],'disabled'=>'true'),
     					array('member_id'=>$member_id));
-    			$update_oldmember_row = $pamMemberMdl->db->affect_row();
     			if(!$update_oldmember_row){
     				$db->rollback();
     				return 'update_oldmember_failed';
@@ -865,17 +866,20 @@ class b2c_user_passport
     					return 'reduce_point_wrong';
     				}
     			}
-    			$memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$new_member_id));//更新等级
+    			$level_update = $memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));//更新现有会员的等级
+    			if(!$level_update){
+    				$db->rollback();
+    				return 'update_level_failed';
+    			}
     		}
     	}else{//如果是已激活且未被绑定的会员卡
     		$card_pammember_info = $pamMemberMdl->getList('*',array('login_account'=>$card_number));//会员卡会员pam_member表信息
     		$card_member_id = $card_pammember_info[0]['member_id'];
     		$card_member_info = $memberMdl->getList('*',array('member_id'=>$card_member_id));//会员卡会员member表信息
     		if($type == 'card_to_member'){//会员卡转现有会员
-    			$pamMemberMdl->update(              //
+    			$update_cardmember_row = $pamMemberMdl->update(              //
     					array('member_id'=>$member_id,'password_account'=>$old_pammember_info[0]['password_account'],'login_password'=>$old_pammember_info[0]['login_password'],'pay_password'=>$old_pammember_info[0]['pay_password'],'createtime'=>$old_pammember_info[0]['createtime'],'disabled'=>'true'),
     					array('member_id'=>$card_member_id));
-    			$update_cardmember_row = $pamMemberMdl->db->affect_row();
     			if(!$update_cardmember_row){
     				$db->rollback();
     				return 'update_cardmember_failed';
@@ -905,13 +909,16 @@ class b2c_user_passport
     					return 'reduce_point_wrong';
     				}
     			}
-    			$memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));
+    			$level_update = $memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));//更新现有会员的等级
+    			if(!$level_update){
+    				$db->rollback();
+    				return 'update_level_failed';
+    			}
     		}
     		if($type == 'member_to_card'){
-    			$pamMemberMdl->update(//将现有会员的密码等信息重置为会员卡账号对应的密码信息
+    			$update_old_cardmember_row = $pamMemberMdl->update(//将现有会员的密码等信息重置为会员卡账号对应的密码信息
     					array('member_id'=>$card_member_id,'password_account'=>$card_pammember_info[0]['password_account'],'login_password'=>$card_pammember_info[0]['login_password'],'pay_password'=>$card_pammember_info[0]['pay_password'],'createtime'=>$card_pammember_info[0]['createtime'],'disabled'=>'true'),
     					array('member_id'=>$member_id));
-    			$update_old_cardmember_row = $pamMemberMdl->db->affect_row();
     			if(!$update_old_cardmember_row){
     				$db->rollback();
     				return 'update_old_cardmember_failed';
@@ -941,10 +948,18 @@ class b2c_user_passport
     					return 'reduce_point_wrong';
     				}
     			}
-    			$memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$card_member_id));
+    			$level_update = $memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));//更新现有会员的等级
+    			if(!$level_update){
+    				$db->rollback();
+    				return 'update_level_failed';
+    			}
     		}
     	}
-    	$this->app->model('member_card')->update(array('card_state'=>2),array('card_number'=>$card_number));//将会员卡表中该会员卡的状态变成2,已绑定
+    	$card_state = $this->app->model('member_card')->update(array('card_state'=>2),array('card_number'=>$card_number));//将会员卡表中该会员卡的状态变成2,已绑定
+    	if(!$card_state){
+    		$db->rollback();
+    		return 'update_level_failed';
+    	}
     	$db->commit($transaction_status);
     	return 'ok';
     }
@@ -999,8 +1014,8 @@ class b2c_user_passport
     	$db = kernel::database();
     	$transaction_status = $db->beginTransaction();
     	if(!$pamMemberData){
-    		if($userPassport->set_new_account($login_member_id,trim($_POST['login_account']),$msg) ){
-    			$userPassport->reset_passport($login_member_id,$_POST['login_password']);
+    		if($userPassport->set_new_account($login_member_id,$account,$msg) ){
+    			$userPassport->reset_passport($login_member_id,$account_password);
     			//增加会员同步 2012-05-15
     			if( $member_rpc_object = kernel::service("b2c_member_rpc_sync") ) {
     				$member_rpc_object->modifyActive($login_member_id);
@@ -1036,10 +1051,9 @@ class b2c_user_passport
 			error_log('from_wei:'.$loginPamData[0]['login_account']);
     		error_log("here5");
     		error_log(print_r($to_pam_member,1));
-    		$pamMemberMdl->update(              //
+    		$update_cardmember_row = $pamMemberMdl->update(              //
     				array('member_id'=>$to_pam_member[0]['member_id'],'password_account'=>$to_pam_member[0]['password_account'],'login_password'=>$to_pam_member[0]['login_password'],'pay_password'=>$to_pam_member[0]['pay_password'],'createtime'=>$to_pam_member[0]['createtime'],'disabled'=>'true'),
     				array('member_id'=>$from_pam_member[0]['member_id']));
-    		$update_cardmember_row = $pamMemberMdl->db->affect_row();
     		if(!$update_cardmember_row){
     			$db->rollback();
     			return 'update_cardmember_failed';
@@ -1084,7 +1098,11 @@ class b2c_user_passport
     			}
     		}
     		error_log("here8");
-    		app::get('b2c')->model('members')->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$to_pam_member[0]['member_id']));
+    		$update_level =app::get('b2c')->model('members')->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$to_pam_member[0]['member_id']));
+    		if(!$update_level){
+    			$db->rollback();
+    			return 'update_level_failed';
+    		}
     		$db->commit($transaction_status);
     		return 'ok';
     	}
