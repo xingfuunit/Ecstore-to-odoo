@@ -521,4 +521,16 @@ class b2c_ctl_wap_passport extends wap_frontpage{
             $service->logout();
         }
     }
+    
+    //绑定时，检查账号是否已注册
+    public function bind_ajax_check_name(){
+    	if(!empty($_POST['login_account'])){
+    		$is_member = app::get('pam')->model('members')->getrow('*',array('login_account|nequal'=>$_POST['login_account']));
+    		if(!$is_member){
+    			$this->splash('success',null,$this->app->_('该账号未注册'),true,0,true );exit;
+    		}else{
+    			$this->splash('error',null,$this->app->_('该账号已注册'),true,0,true);exit;
+    		}
+    	}
+    }
 }

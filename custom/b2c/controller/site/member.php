@@ -2164,7 +2164,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
     				$msg = app::get('b2c')->_('该会员卡已被绑定');
     				$this->splash('failed',null,$msg,true);
     			}
-    			$use_pass_data['login_name'] = $card;
+    			$use_pass_data['login_name'] = $pamMemberData[0]['password_account'];
     			$use_pass_data['createtime'] = $pamMemberData[0]['createtime'];
     			$login_password = pam_encrypt::get_encrypted_password($card_password,'member',$use_pass_data);
     			if($login_password != $pamMemberData[0]['login_password']){//会员卡被激活之后,可能被改密码,要进行密码验证
@@ -2180,7 +2180,6 @@ class b2c_ctl_site_member extends b2c_frontpage{
     			}
     		}
     	}
-    	error_log("here222");
     	$status = $this->userPassport->_bind_member_card($new_card, $type, $login_member_id, $card);
     	switch ($status){
     		case 'old_member_wrong' :
@@ -2234,6 +2233,18 @@ class b2c_ctl_site_member extends b2c_frontpage{
     			$msg = app::get('b2c')->_('更新旧会员卡会员失败');
     			$this->splash('failed',null,$msg,true);
     			break;
+    		case 'update_lo_failed' :
+    			$msg = app::get('b2c')->_('更新日志失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'update_card_state_failed' :
+    			$msg = app::get('b2c')->_('更新会员卡状态失败');
+    			$this->splash('failed',null,$msg,true);
+    			break;
+    		case 'card_is_bind' :
+    			$msg = app::get('b2c')->_('会员卡已被绑定');
+    			$this->splash('failed',null,$msg,true);
+    			break;   			
     		case 'ok' :
     			$msg = app::get('b2c')->_('绑定成功');
     			$passport_login = $this->gen_url(array('app'=>'b2c','ctl'=>'site_passport','act'=>'login'));

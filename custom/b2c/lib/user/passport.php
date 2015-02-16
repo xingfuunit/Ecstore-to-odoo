@@ -193,7 +193,11 @@ class b2c_user_passport
             $msg =app::get('b2c')->_('请输入用户名');
             return false;  
         } 
-
+		
+        if( strlen($login_name)>24 ){
+        	$msg = $this->app->_('登录账号过长，请换一个重试');
+        }
+        
         //获取到注册时账号类型
         $login_type = $this->get_login_account_type($login_name);
         switch( $login_type ){
@@ -202,7 +206,7 @@ class b2c_user_passport
                     $msg = $this->app->_('登录账号最少4个字符');
                     return false;
                 }
-                elseif( strlen($login_name)>100 ){
+                elseif( strlen($login_name)>24 ){
                     $msg = $this->app->_('登录账号过长，请换一个重试');
                 }
 
@@ -744,6 +748,9 @@ class b2c_user_passport
     	$memberMdl = app::get('b2c')->model('members');
     	$pamMemberMdl = app::get('pam')->model('members');
     	$member_card = $this->app->model('member_card')->getList('*',array('card_number'=>$card_number));//会员卡表信息
+    	if($member_card[0]['card_state'] == 2){
+    		return 'card_is_bind';
+    	}
     	$old_pammember_info = $pamMemberMdl->getList('*',array('member_id'=>$member_id));//现有会员pam_member信息
     	$old_member_id = $old_pammember_info[0]['member_id'];
     	$old_member_info = $memberMdl->getList('*',array('member_id'=>$member_id));//现有会员member信息
@@ -751,17 +758,22 @@ class b2c_user_passport
     	if(!$old_member_info){
     		return 'old_member_wrong';
     	}
-    
+    	
+    	
     	//开始事务
     	$db = kernel::database();
     	$transaction_status = $db->beginTransaction();
     	 
     	foreach($old_pammember_info as $opi){
     		if($opi['login_type'] == 'local' && is_numeric($opi['login_account'])){
+    			$sdf['to_member_id'] = '';
+    			$sdf['to_account'] = '';
+    			$sdf['from_member_id'] = $opi['member_id'];
+    			$sdf['from_account'] = $opi['login_account'];
+    			app::get('b2c')->model('bind_log')->insert($sdf); //删除的会员卡账号写入log
     			app::get('pam')->model('members')->delete(array('login_account'=>$opi['login_account'],'login_type'=>'local'));//删除现有会员绑定的会员卡
     		}
     	}
-    	
     	$new_member_lv = $member_card[0]['card_lv_id'] > $old_member_info[0]['member_lv_id'] ? $member_card[0]['card_lv_id'] : $old_member_info[0]['member_lv_id'];//对比得出新等级ID
     
     	$objAdvances = $this->app->model("member_advance");
@@ -782,6 +794,10 @@ class b2c_user_passport
     			if(!$update_new_row){
     				$db->rollback();
     				return 'update_newcard_failed';
+    			}
+    			if(!$this->bind_log($new_pammember_info,$old_pammember_info)){
+    				$db->rollback();
+    				return 'update_log_failed';
     			}
     			if($new_member_info[0]['advance']){ //如果新卡含有金钱,则将新卡金钱转移到现有会员上
     				$msg = '会员卡绑定预存款转移';
@@ -821,7 +837,10 @@ class b2c_user_passport
     				$db->rollback();
     				return 'update_oldmember_failed';
     			}
-    			 
+    			if(!$this->bind_log($old_pammember_info,$new_pammember_info)){
+    				$db->rollback();
+    				return 'update_log_failed';
+    			}
     			if($old_member_info[0]['advance'] > 0){//增减预存款
     				$msg = '会员卡绑定预存款转移';
     				if(!$objAdvances->add($new_member_id, $old_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为合并的会员增加预存款
@@ -858,6 +877,10 @@ class b2c_user_passport
     				$db->rollback();
     				return 'update_cardmember_failed';
     			}
+    			if(!$this->bind_log($card_member_info,$old_pammember_info)){
+    				$db->rollback();
+    				return 'update_log_failed';
+    			}
     			if($card_member_info[0]['advance'] > 0){
     				$msg = '会员卡绑定预存款转移';
     				if(!$objAdvances->add($old_member_id, $card_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为合并的会员增加预存款
@@ -890,6 +913,10 @@ class b2c_user_passport
     				$db->rollback();
     				return 'update_old_cardmember_failed';
     			}
+    			if(!$this->bind_log($old_pammember_info,$card_pammember_info)){
+    				$db->rollback();
+    				return 'update_log_failed';
+    			}
     			if($old_member_info[0]['advance'] > 0){
     				$msg = '会员卡绑定预存款转移';
     				if(!$objAdvances->add($card_member_id, $old_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为合并的会员增加预存款
@@ -914,9 +941,148 @@ class b2c_user_passport
     			$memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$card_member_id));
     		}
     	}
+    	$this->app->model('member_card')->update(array('card_state'=>2),array('card_number'=>$card_number));//将会员卡表中该会员卡的状态变成2,已绑定
     	$db->commit($transaction_status);
     	return 'ok';
     }
     
+    function bind_log($from_array,$to_array){
+    	$from_member_id = $from_array[0]['member_id'];
+    	$to_member_id = $to_array[0]['member_id'];
+    	foreach($from_array as $fa){
+    		$from_accout_str = $from_accout_str.$fa['login_account'].',';
+    	}
+    	foreach($to_array as $ta){
+    		$to_accout_str = $to_accout_str.$ta['login_account'].',';
+    	}
+    	$log['from_member_id'] = $from_member_id;
+    	$log['from_account'] = $from_accout_str;
+    	$log['to_member_id'] = $to_member_id;
+    	$log['to_account'] = $to_accout_str;
+    	app::get('b2c')->model('bind_log')->insert($log);   
+    	$affect_row = app::get('b2c')->model('bind_log')->db->affect_row();
+    	if($affect_row){
+    		return true;
+    	}else{
+    		return false;
+    	}
+    }
+    
+    function bind_member($type,$from_to,$login_member_id,$account,$account_password){
+    	if($type == 'emial'){
+    		if(!strstr($account,'@')){
+    			return 'wrong_email';
+    		}
+    	}
+    	if($type == 'mobile'){
+    		$search ='/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
+    		if(!preg_match($search,$account)) {
+    			return 'wrong_mobile';
+    		}
+    	}
+    	
+    	$this->userPassport = kernel::single('b2c_user_passport');
+    	$objAdvances = $this->app->model("member_advance");
+    	$member_point = $this->app->model('member_point');
+    	$pamMemberMdl = app::get('pam')->model('members');
+    	$userPassport = kernel::single('b2c_user_passport');    	 
+    	   	 
+    	$pamMemberData = app::get('pam')->model('members')->getList('*',array('login_account'=>$account));
+    	$loginPamData = app::get('pam')->model('members')->getList('*',array('member_id'=>$login_member_id));
+    	$member_id = $pamMemberData[0]['member_id'];
+    	$memberData = app::get('b2c')->model('members')->getList('*',array('member_id'=>$pamMemberData[0]['member_id']));
+    	$loginMemberData = app::get('b2c')->model('members')->getList('*',array('member_id'=>$login_member_id));
+    	error_log(print_r($pamMemberData,1));
+    	$db = kernel::database();
+    	$transaction_status = $db->beginTransaction();
+    	if(!$pamMemberData){
+    		if($userPassport->set_new_account($login_member_id,trim($_POST['login_account']),$msg) ){
+    			$userPassport->reset_passport($login_member_id,$_POST['login_password']);
+    			//增加会员同步 2012-05-15
+    			if( $member_rpc_object = kernel::service("b2c_member_rpc_sync") ) {
+    				$member_rpc_object->modifyActive($login_member_id);
+    			}
+    			$db->commit($transaction_status);
+    			return 'ok';
+    		}else{
+    			$db->rollback();
+    			return 'failed';
+    		}
+    	}else{
+    		error_log("here2");
+    		$use_pass_data['login_name'] = $pamMemberData[0]['password_account'];
+    		$use_pass_data['createtime'] = $pamMemberData[0]['createtime'];
+    		$login_password = pam_encrypt::get_encrypted_password($account_password,'member',$use_pass_data);
+    		if($login_password != $pamMemberData[0]['login_password']){
+    			$db->rollback();
+    			return 'wrong_password';
+    		}
+    		error_log("here3---".$login_password);
+    		$new_member_lv = $memberData[0]['card_lv_id'] > $loginMemberData[0]['member_lv_id'] ? $memberData[0]['card_lv_id'] : $loginMemberData[0]['member_lv_id'];//对比得出新等级ID
+    		//开始事务
+    		if($from_to == 'weixin_to_old'){
+    			$from_pam_member = $loginMemberData;
+    			$to_pam_member = $pamMemberData;
+    			$to_member_id = $pamMemberData[0]['member_id'];
+    		}else{
+    			$from_pam_member = $pamMemberData;
+    			$to_pam_member = $loginMemberData;
+    			$to_member_id = $loginMemberData[0]['member_id'];
+    		}
+    		error_log("here4");
+    		$to_pammember_array = app::get('pam')->model('members')->getList('*',array('member_id'=>$to_member_id));
+    		foreach($to_pammember_array as $opi){
+    			if($opi['login_type'] == 'local' && strlen(($opi['login_account'])) > 25){    				
+    				app::get('pam')->model('members')->delete(array('login_account'=>$opi['login_account'],'login_type'=>'local'));//删除现有会员绑定的微信账号
+    				$sdf['to_member_id'] = '';
+    				$sdf['to_account'] = '';
+    				$sdf['from_member_id'] = $opi['member_id'];
+    				$sdf['from_account'] = $opi['login_account'];
+    				app::get('b2c')->model('bind_log')->insert($sdf); //删除的微信账号写入log
+    				error_log('delete:'.$opi['login_account']);
+    			}
+    		}
+    		error_log("here5");
+    		$pamMemberMdl->update(              //
+    				array('member_id'=>$to_pam_member[0]['member_id'],'password_account'=>$to_pam_member[0]['password_account'],'login_password'=>$to_pam_member[0]['login_password'],'pay_password'=>$to_pam_member[0]['pay_password'],'createtime'=>$to_pam_member[0]['createtime'],'disabled'=>'true'),
+    				array('member_id'=>$from_pam_member[0]['member_id']));
+    		$update_cardmember_row = $pamMemberMdl->db->affect_row();
+    		if(!$update_cardmember_row){
+    			$db->rollback();
+    			return 'update_cardmember_failed';
+    		}
+    		if(!$this->userPassport->bind_log($from_pam_member,$to_pam_member)){
+    			$db->rollback();
+    			return 'update_log_failed';
+    		}
+    		error_log("here6");
+    		if($from_pam_member[0]['advance'] > 0){
+    			$msg = '会员绑定预存款转移';
+    			if(!$objAdvances->add($to_pam_member[0]['member_id'], $from_pam_member[0]['advance'], app::get('b2c')->_('会员绑定预存款转移'), $msg)){//为合并的会员增加预存款
+    				$db->rollback();
+    				return 'add_advance_wrong';
+    			}
+    			if(!$objAdvances->add($from_pam_member[0]['member_id'], -$from_pam_member[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
+    				$db->rollback();
+    				return 'reduce_advance_wrong';
+    			}
+    		}
+    		error_log("here7");
+    		if($from_pam_member[0]['point'] > 0){
+    			if(!$member_point->change_point($to_pam_member[0]['member_id'],$from_pam_member[0]['point'],$msg,'register_score',2,$to_pam_member[0]['member_id'],$to_pam_member[0]['member_id'],'exchange')){
+    				$db->rollback();
+    				return 'add_point_wrong';
+    			}
+    			if(!$member_point->change_point($from_pam_member[0]['member_id'],-$from_pam_member[0]['point'],$msg,'register_score',2,$from_pam_member[0]['member_id'],$from_pam_member[0]['member_id'],'exchange')){
+    				$db->rollback();
+    				return 'reduce_point_wrong';
+    			}
+    		}
+    		error_log("here8");
+    		app::get('b2c')->model('members')->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$to_pam_member[0]['member_id']));
+    		$db->commit($transaction_status);
+    		return 'ok';
+    	}
+    }
 }
                 
