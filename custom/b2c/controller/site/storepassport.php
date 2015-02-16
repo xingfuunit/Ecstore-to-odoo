@@ -631,7 +631,7 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
     {
             $member_id = $_SESSION['account']['member'];           
             $account = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id));
-            $use_pass_data['login_name'] = $account[0]['login_account'];
+            $use_pass_data['login_name'] = $account[0]['password_account'];
             $use_pass_data['createtime'] = $account[0]['createtime'];
             $pay_password = pam_encrypt::get_encrypted_password(trim($_POST['password']),'member',$use_pass_data);
             if(!$account[0]['pay_password']){
