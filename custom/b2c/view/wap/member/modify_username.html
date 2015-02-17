@@ -7,44 +7,163 @@
     </div>
   </header>
   <div class="full-padding">
-    <form action="<{link app=b2c ctl='wap_member' full='1' act='save_weixin'}>" method="post" class="form" data-type="ajax">
-      <div class="c-g">
-        <label for="" class="c-l" style="width: 100px;">
-          <em class="f-red">*</em>手机号：
-        </label>
-        <div class="c">
-          <input type="text" name="login_account" class="text a-account" style="width: 90%;" required="required" placeholder="手机号" pattern="(^[0-9]{3,4}\-[0-9]{7}$)|(^[0-9]{7}$)|(^[0-9]{3,4}[0-9]{7}$)|(^0{0,1}13[0-9]{9}$)" autofocus title="手机号不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>" class="btn btn-send orange ib-btn">获取验证码</a>
-        </div>
+    <form action="<{link app=b2c ctl='wap_member' full='1' act='bind_member'}>" method="post" class="form" data-type="ajax">
+    <div class="c-g">
+    <label for="" class="c-l" style="width: 100px;">
+    <select name="bind_type" id="bind_type">   
+        <option value="mobile" selected="selected" data-coupon="">手机号</option>
+        <option value="email" data-coupon="">邮箱</option>
+        <option value="account" data-coupon="">账号</option> 
+        <option value="card" data-coupon="">会员卡</option>  
+    </select>
+    </label>
+
+    <div class="c" id="account_div_mobile"  >
+          <input type="text" name="login_account_mobile" class="text a-account" style="width: 90%;"   placeholder="手机号" pattern="(^[0-9]{3,4}\-[0-9]{7}$)|(^[0-9]{7}$)|(^[0-9]{3,4}[0-9]{7}$)|(^0{0,1}13[0-9]{9}$)" autofocus title="手机号不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>" class="btn btn-send orange ib-btn btn-sms">获取验证码</a>
+    </div>
+
+    <div class="c" id="account_div_email"  style="display: none;">
+          <input type="text" name="login_account_email" class="text a-account" style="width: 90%;"   placeholder="邮箱帐号" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" autofocus title="邮箱不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_email}>" class="btn btn-send orange ib-btn btn-email">获取邮件验证码</a>
+    </div>
+
+     <div class="c" id="account_div_account" style="display: none;" >
+          <input type="text" name="login_account_account" class="text a-account" style="width: 90%;"   placeholder="商城帐号"  autofocus title="商城帐号不正确">
+    </div>
+
+     <div class="c" id="account_div_card" style="display: none;">
+          <input type="text" name="login_account_card" class="text a-account" style="width: 90%;"   placeholder="会员卡帐号"  autofocus title="会员卡帐号不正确">
+    </div>
+
+    <div class="notice"></div>
+    </div>
+	
+	<div id="mobile_input" > 
+	        <div class="c-g" style="padding-left:5%;">
+	            <label for="" class="c-l">
+	                <em class="f-red">*</em>短信验证：
+	            </label>
+	            <div class="c">
+	                <input type="text" name="vcode_mobile" maxlength="20" placeholder="短信验证码"   pattern=".{6,20}" class="text" data-caution="短信验证码不能为空">
+	            </div>
+	        </div>
+	      <div class="notice"></div>
+
+	      <div class="c-g" style="min-height:55px;display:none;" id="radio_mobile" >
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>保留数据：
+	        </label>
+	        <div class="c" >
+	          <input type="radio" name="from_to_mobile"   value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
+	          <input type="radio" name="from_to_mobile"   value="weixin_to_old" class="text" style="width:10%">PC帐户
+	        </div>
+	      </div>
+
+	      <div class="c-g">
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>密码：
+	        </label>
+	        <div class="c">
+	          <input type="password" name="login_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+	        </div>
+	      </div>
+	      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_mobile">此帐户已注册，设置帐户时会掉失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
       </div>
-        <div class="notice"></div>
-        <div class="c-g" style="padding-left:5%;">
-            <label for="" class="c-l">
-                <em class="f-red">*</em>短信验证：
-            </label>
-            <div class="c">
-                <input type="password" name="vcode" maxlength="20" placeholder="短信验证码" required="required" pattern=".{6,20}" class="text" data-caution="短信验证码不能为空">
-            </div>
-        </div>
-      <div class="notice"></div>
-      <div class="c-g">
-        <label for="" class="c-l" style="width: 100px;">
-          <em class="f-red">*</em>密码：
-        </label>
-        <div class="c">
-          <input type="password" name="login_password" maxlength="20" placeholder="6-20位数字/字母组合" required="required" pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
-        </div>
-      </div>
-      <div class="notice"></div>
+
+
+	
+	 <div id="email_input" style="display: none;">
+	        <div class="c-g" style="padding-left:5%;">
+	            <label for="" class="c-l">
+	                <em class="f-red">*</em>邮箱验证：
+	            </label>
+	            <div class="c">
+	                <input type="text" name="vcode_email" maxlength="20" placeholder="邮箱验证码"   pattern=".{6,20}" class="text" data-caution="邮箱验证码不能为空">
+	            </div>
+	        </div>
+	      <div class="notice"></div>
+
+	      <div class="c-g" style="min-height:55px;display:none;" id="radio_email" >
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>保留数据：
+	        </label>
+	        <div class="c" >
+	          <input type="radio" name="from_to_email"   value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
+	          <input type="radio" name="from_to_email"   value="weixin_to_old" class="text" style="width:10%">PC帐户
+	        </div>
+	      </div>
+
+	      <div class="c-g">
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>密码：
+	        </label>
+	        <div class="c">
+	          <input type="password" name="login_password_email" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+	        </div>
+	      </div>
+
+	      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_email">此帐户已注册，设置帐户时会丢失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+     </div>
+	
+
+	<div id="account_input"  style="display: none;">
+	
+		<div class="c-g" style="min-height:55px;display:none;" id="radio_account" >
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>保留数据：
+	        </label>
+	        <div class="c" >
+	          <input type="radio" name="from_to_email"   value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
+	          <input type="radio" name="from_to_email"   value="weixin_to_old" class="text" style="width:10%">PC帐户
+	        </div>
+	      </div>
+	
+		        <div class="c-g">
+		        <label for="" class="c-l" style="width: 100px;">
+		          <em class="f-red">*</em>原账号密码：
+		        </label>
+		        <div class="c">
+		          <input type="password" name="login_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+		        </div>
+		      </div>
+		   <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+	</div>
+			
+	<div id="card_input"  style="display: none;">
+		<div class="c-g" style="min-height:55px;display:none;" id="radio_card" >
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>保留数据：
+	        </label>
+	        <div class="c" >
+	          <input type="radio" name="from_to_email"   value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
+	          <input type="radio" name="from_to_email"   value="weixin_to_old" class="text" style="width:10%">PC会员卡帐户
+	        </div>
+	      </div>
+		        <div class="c-g">
+		        <label for="" class="c-l" style="width: 100px;">
+		          <em class="f-red">*</em>会员卡密码：
+		        </label>
+		        <div class="c">
+		          <input type="password" name="login_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+		        </div>
+		      </div>
+		      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+     </div>
+
+
       <div class="btn-bar">
-        <button type="submit" class="btn orange" rel="_request">提交</button>
+        <button type="submit" class="btn orange" >提交</button>
       </div>
     </form>
   </div>
 </div>
+
+
 <script>
-    $('.form .btn-send').click(function (e) {
+
+	//sms 发送
+    $('.form .btn-sms').click(function (e) {
         e.preventDefault();
-        var el = $('.form .a-account');
+        var el = $(this).siblings('.a-account');
         if($(this).hasClass('disabled')) return false;
         sendVerify(this, 'uname=' + el.val() + '&type=signup');
     });
@@ -72,4 +191,109 @@
             }
         });
     }
+
+
+    //email 发送
+    $('.form .btn-email').click(function (e) {
+        e.preventDefault();
+        var el = $(this).siblings('.a-account');
+        console.log(el.val());
+       if($(this).hasClass('disabled')) return false;
+        sendemailVerify(this, 'uname=' + el.val() + '&type=reset');
+    });
+
+    function sendemailVerify(el, data){
+    	var url = el.href;
+        $(el).addClass('disabled');
+
+        $.post(url, data, function(rs) {
+            if(rs) {
+                try{
+                    rs = $.parseJSON(rs);
+                } catch (e) {}
+                if(rs.error) {
+                    $(el).removeClass('disabled').html('重发验证码');
+                    if(typeof rs.error === 'string') alert(rs.error);
+                }
+            }
+        });
+    }
+
+    //检测手机是否使用
+    $('input[name=login_account_mobile]').change(function(e){
+    	uname = $(this).val();
+    	url = '<{link app=b2c ctl=wap_passport act=bind_ajax_check_name}>';
+    	$.post(url, 'login_account='+uname, function(rs) {
+    		console.log(rs);
+            if(rs) {
+                try{
+                    rs = $.parseJSON(rs);
+                } catch (e) {}
+                if(rs.success){
+                	$('.form .btn-sms').show();
+                	$('input[name=vcode_mobile]').parents('.c-g').show();
+                	$('#radio_mobile').hide();
+                	$('#tips_txt_mobile').hide();
+                }
+                if(rs.error) {
+  					$('.form .btn-sms').hide();
+                	$('input[name=vcode_mobile]').parents('.c-g').hide();
+                	$('#radio_mobile').show();
+                	$('#tips_txt_mobile').show();
+                	
+                }
+            }
+        });
+    })
+
+
+    //检测邮箱是否使用
+    $('input[name=login_account_email]').change(function(e){
+    	uname = $(this).val();
+    	url = '<{link app=b2c ctl=wap_passport act=bind_ajax_check_name}>';
+    	$.post(url, 'login_account='+uname, function(rs) {
+    		console.log(rs);
+            if(rs) {
+                try{
+                    rs = $.parseJSON(rs);
+                } catch (e) {}
+                if(rs.success){
+                	$('.form .btn-email').show();
+                	$('input[name=vcode_email]').parents('.c-g').show();
+                	$('#radio_email').hide();
+                	$('#tips_txt_email').hide();
+                }
+                if(rs.error) {
+  					$('.form .btn-email').hide();
+                	$('input[name=vcode_email]').parents('.c-g').hide();
+                	$('#radio_email').show();
+                	$('#tips_txt_email').show();
+                }
+            }
+        });
+    })
+
+
+
+    $('#bind_type').change(function(e){
+    	var bind_type = $("#bind_type option:selected").val();
+
+    	$('#account_div_mobile').hide();
+    	$('#account_div_email').hide();
+    	$('#account_div_account').hide();
+    	$('#account_div_card').hide();
+
+    	$('#account_div_'+bind_type).show();
+
+    	$('#mobile_input').hide();
+    	$('#email_input').hide();
+    	$('#account_input').hide();
+    	$('#card_input').hide();
+
+    	$('#'+bind_type+'_input').show();
+
+    })
+
+
+
 </script>
