@@ -1367,7 +1367,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     	$login_member_id = intval($this->app->member_id);
     	$from_to =$_POST['from_to'.'_'.$bind_type];
     	if(!$from_to){
-    		$from_to = 'weixin_to_old';
+    		$from_to = 'old_to_weixin';
     	}
     	
     	if(!$account || !isset($account) || strlen($account) < 4){
