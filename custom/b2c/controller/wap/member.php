@@ -1361,6 +1361,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     	$wei_member = app::get('pam')->model('members')->getList('*',array('member_id'=>$this->app->member_id));
     	$userPassport = kernel::single('b2c_user_passport');
     	$account = $_POST['login_account'.'_'.$bind_type];
+    	$account_pam_member = app::get('pam')->model('members')->getList('member_id',array('login_account'=>$account));
     	$account_password = trim($_POST['login_password'.'_'.$bind_type]);
     	$vode = $_POST['vcode'.'_'.$bind_type];
     	$login_member_id = intval($this->app->member_id);
@@ -1391,7 +1392,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
 
     	if($bind_type == 'email' || $bind_type == 'account' || $bind_type == 'mobile'){
     		    		
-    		if($bind_type == 'email'){
+    		if($bind_type == 'email' && !$account_pam_member[0]['member_id']){
     			//验证码    			
     		    	$userVcode = kernel::single('b2c_user_vcode');
     				if( !$userVcode->verify($vode,$account,'reset')){
@@ -1400,7 +1401,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
      	 			}
     		}
     		
-    		if($login_type == 'mobile'){
+    		if($bind_type == 'mobile' && !$account_pam_member[0]['member_id']){
     			$res = kernel::single('b2c_user_vcode')->verify($vode,$account,'signup');
     			if(!$res){
     				$msg = app::get('b2c')->_('短信验证码错误');
@@ -1410,6 +1411,10 @@ class b2c_ctl_wap_member extends wap_frontpage{
     		    		    		    		
     		$status = $userPassport->bind_member($bind_type,$from_to,$login_member_id,$account,$account_password);
     		switch ($status){
+    		case 'update_passwd_failed' :
+    			$msg = app::get('b2c')->_('密码更新失败');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
     		case 'failed' :
     			$msg = app::get('b2c')->_('绑定失败');
     			$this->splash('failed',null,$msg,'','',true);

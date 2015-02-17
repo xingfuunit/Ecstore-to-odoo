@@ -101,11 +101,22 @@
 	        </div>
 	      </div>
 
-	      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_email">此帐户已注册，设置帐户时会掉失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+	      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_email">此帐户已注册，设置帐户时会丢失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
      </div>
 	
 
 	<div id="account_input"  style="display: none;">
+	
+		<div class="c-g" style="min-height:55px;display:none;" id="radio_account" >
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>保留数据：
+	        </label>
+	        <div class="c" >
+	          <input type="radio" name="from_to_email"   value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
+	          <input type="radio" name="from_to_email"   value="weixin_to_old" class="text" style="width:10%">PC帐户
+	        </div>
+	      </div>
+	
 		        <div class="c-g">
 		        <label for="" class="c-l" style="width: 100px;">
 		          <em class="f-red">*</em>原账号密码：
@@ -114,11 +125,19 @@
 		          <input type="password" name="login_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 		        </div>
 		      </div>
-		      <input type="hidden" name="from_to_account"  value="weixin_to_old">
-		   <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会掉失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+		   <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
 	</div>
 			
 	<div id="card_input"  style="display: none;">
+		<div class="c-g" style="min-height:55px;display:none;" id="radio_card" >
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>保留数据：
+	        </label>
+	        <div class="c" >
+	          <input type="radio" name="from_to_email"   value="old_to_weixin" class="text" style="width:10%">微信帐户<br/>
+	          <input type="radio" name="from_to_email"   value="weixin_to_old" class="text" style="width:10%">PC会员卡帐户
+	        </div>
+	      </div>
 		        <div class="c-g">
 		        <label for="" class="c-l" style="width: 100px;">
 		          <em class="f-red">*</em>会员卡密码：
@@ -127,8 +146,7 @@
 		          <input type="password" name="login_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 		        </div>
 		      </div>
-		      <input type="hidden" name="from_to_card"  value="weixin_to_old">
-		      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会掉失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+		      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
      </div>
 
 

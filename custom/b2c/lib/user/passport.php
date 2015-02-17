@@ -1022,14 +1022,15 @@ class b2c_user_passport
     			return 'ok';
     		}
     	}
-		else{
-    		foreach($pamMemberData as $pmd){
-    			if($pmd['login_type'] == 'local' && strlen($pmd['login_account']) > 25){
-    				return 'openid_rebind';
-    			}	
-    		}
+		else{    		
     		$member_id = $pamMemberData[0]['member_id'];
     		$memberData = app::get('b2c')->model('members')->getList('*',array('member_id'=>$pamMemberData[0]['member_id']));
+    		$allPamMemberData = app::get('pam')->model('members')->getList('*',array('member_id'=>$pamMemberData[0]['member_id']));
+    		foreach($allPamMemberData as $pmd){
+    			if($pmd['login_type'] == 'local' && strlen($pmd['login_account']) > 25){
+    				return 'openid_rebind';
+    			}
+    		}
     		$use_pass_data['login_name'] = $pamMemberData[0]['password_account'];
     		$use_pass_data['createtime'] = $pamMemberData[0]['createtime'];
     		$login_password = pam_encrypt::get_encrypted_password($account_password,'member',$use_pass_data);
@@ -1042,11 +1043,11 @@ class b2c_user_passport
     		if($from_to == 'weixin_to_old'){
     			$from_pam_member = $loginPamData;
     			$from_b2c_member = $loginMemberData;
-    			$to_pam_member = $pamMemberData;
+    			$to_pam_member = $allPamMemberData;
     			$to_b2c_member = $memberData;
-    			$to_member_id = $pamMemberData[0]['member_id'];
+    			$to_member_id = $allPamMemberData[0]['member_id'];
     		}else{
-    			$from_pam_member = $pamMemberData;
+    			$from_pam_member = $allPamMemberData;
     			$from_b2c_member = $memberData;
     			$to_pam_member = $loginPamData;
     			$to_b2c_member = $loginMemberData;
@@ -1062,6 +1063,22 @@ class b2c_user_passport
     		if(!$update_level){
     			$db->rollback();
     			return 'update_level_failed';
+    		}
+    	}
+    	
+    	
+    	$stupid_password = pam_encrypt::get_encrypted_password('123456','member',array('login_name'=>$to_pam_member[0]['password_account'],'createtime'=>$to_pam_member[0]['createtime']));
+    	if($stupid_password == $to_pam_member[0]['login_password']){ //如果微信端是sb密码123456则将密码设置为输入的旧账号密码
+    		$use_data['login_name'] = $to_pam_member[0]['pay_password'];
+    		$use_data['createtime'] = $to_pam_member[0]['createtime'];
+    		$to_login_password = pam_encrypt::get_encrypted_password($account_password,'member',array('login_name'=>$to_pam_member[0]['password_account'],'createtime'=>$to_pam_member[0]['createtime']));
+    		$to_pam_member[0]['login_password'] = $to_login_password;
+    		$update_passwd_row = $pamMemberMdl->update(              //将原来sb密码123456设置成新密码
+    				array('login_password'=>$to_pam_member[0]['login_password']),
+    				array('member_id'=>$to_pam_member[0]['member_id']));
+    		if(!$update_passwd_row){
+    			$db->rollback();
+    			return 'update_passwd_failed';
     		}
     	}
     	
