@@ -19,19 +19,19 @@
     </label>
 
     <div class="c" id="account_div_mobile"  >
-          <input type="text" name="login_account_mobile" class="text a-account" style="width: 90%;"   placeholder="手机号" pattern="(^[0-9]{3,4}\-[0-9]{7}$)|(^[0-9]{7}$)|(^[0-9]{3,4}[0-9]{7}$)|(^0{0,1}13[0-9]{9}$)" autofocus title="手机号不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>" class="btn btn-send orange ib-btn btn-sms">获取验证码</a>
+          <input type="text" name="login_account_mobile" id="login_account_mobile" class="text a-account" style="width: 90%;"   placeholder="手机号" pattern="(^[0-9]{3,4}\-[0-9]{7}$)|(^[0-9]{7}$)|(^[0-9]{3,4}[0-9]{7}$)|(^0{0,1}13[0-9]{9}$)" autofocus title="手机号不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>" class="btn btn-send orange ib-btn btn-sms">获取验证码</a>
     </div>
 
     <div class="c" id="account_div_email"  style="display: none;">
-          <input type="text" name="login_account_email" class="text a-account" style="width: 90%;"   placeholder="邮箱帐号" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" autofocus title="邮箱不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_email}>" class="btn btn-send orange ib-btn btn-email">获取邮件验证码</a>
+          <input type="text" name="login_account_email" id="login_account_email" class="text a-account" style="width: 90%;"   placeholder="邮箱帐号" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" autofocus title="邮箱不正确"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_email}>" class="btn btn-send orange ib-btn btn-email">获取邮件验证码</a>
     </div>
 
      <div class="c" id="account_div_account" style="display: none;" >
-          <input type="text" name="login_account_account" class="text a-account" style="width: 90%;"   placeholder="商城帐号"  autofocus title="商城帐号不正确">
+          <input type="text" name="login_account_account" id="login_account_account" class="text a-account" style="width: 90%;"   placeholder="商城帐号"  autofocus title="商城帐号不正确">
     </div>
 
      <div class="c" id="account_div_card" style="display: none;">
-          <input type="text" name="login_account_card" class="text a-account" style="width: 90%;"   placeholder="会员卡帐号"  autofocus title="会员卡帐号不正确">
+          <input type="text" name="login_account_card" id="login_account_card" class="text a-account" style="width: 90%;"   placeholder="会员卡帐号"  autofocus title="会员卡帐号不正确">
     </div>
 
     <div class="notice"></div>
@@ -66,7 +66,7 @@
 	          <input type="password" name="login_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 	        </div>
 	      </div>
-	      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_mobile">此帐户已注册，设置帐户时会掉失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+	      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_mobile">此帐户已注册，设置帐户时会丢失其中一方帐户订单与优惠券，请选择保留数据的帐户</div>
       </div>
 
 
@@ -101,7 +101,7 @@
 	        </div>
 	      </div>
 
-	      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_email">此帐户已注册，设置帐户时会丢失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+	      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_email">此帐户已注册，设置帐户时会丢失其中一方帐户订单与优惠券，请选择保留数据的帐户</div>
      </div>
 	
 
@@ -125,7 +125,7 @@
 		          <input type="password" name="login_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 		        </div>
 		      </div>
-		   <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+		   <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单与优惠券，请选择保留数据的帐户</div>
 	</div>
 			
 	<div id="card_input"  style="display: none;">
@@ -146,7 +146,7 @@
 		          <input type="password" name="login_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 		        </div>
 		      </div>
-		      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失失其中一方帐户订单与优惠卷，请选择保留数据的帐户</div>
+		      <div style="font-size:0.2em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失失其中一方帐户订单与优惠券，请选择保留数据的帐户</div>
      </div>
 
 
@@ -277,6 +277,8 @@
 
     $('#bind_type').change(function(e){
     	var bind_type = $("#bind_type option:selected").val();
+    	
+    	$("input[type=text]").val('');
 
     	$('#account_div_mobile').hide();
     	$('#account_div_email').hide();
