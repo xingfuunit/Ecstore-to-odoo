@@ -86,6 +86,13 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $aUser_name = $obj_pam_members->dump(array('member_id' => $this->member['member_id']));
         $this->pagedata['tag_name'] = $aUser_name['tag_name'];
         
+        $wei_member = app::get('pam')->model('members')->getList('*',array('member_id'=>$this->app->member_id));
+        if(count($wei_member) > 1){
+        	$this->pagedata['weixin_bind'] = '1';
+        }else{
+        	$this->pagedata['weixin_bind'] = '0';
+        }
+        
         //订单列表
 #        $oRder = $this->app->model('orders');//--11sql
 #        $aData = $oRder->fetchByMember($this->app->member_id,$nPage=1,array(),5); //--141sql优化点
@@ -1367,7 +1374,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     	$login_member_id = intval($this->app->member_id);
     	$from_to =$_POST['from_to'.'_'.$bind_type];
     	if(!$from_to){
-    		$from_to = 'old_to_weixin';
+    		$from_to = 'old_to_weixin';   		
     	}
     	
     	if(!$account || !isset($account) || strlen($account) < 4){

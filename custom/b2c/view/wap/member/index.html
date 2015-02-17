@@ -32,7 +32,7 @@
     
     <div class="mem-menulist">
         <ul>
-            <{if $tag_name}><li class="menu-1"><a href="<{link app=b2c ctl='wap_member' act='weixinset'}>">设置登录账号</a></li><{/if}>
+            <{if $tag_name}><{if $weixin_bind == '0'}><li class="menu-1"><a href="<{link app=b2c ctl='wap_member' act='weixinset'}>">设置登录账号</a></li><{/if}><{/if}>
             <li class="menu-1"><a href="<{link app=b2c ctl='wap_member' act='favorite'}>">我的收藏</a></li> 
             <{*<li class="menu-1"><a href="<{link app=b2c ctl='wap_member' act='referee'}>">我的推荐人</a></li> *}>
             <li class="menu-2"><a href="<{link app=b2c ctl='wap_member' act='orders' arg0='tuihuo'}>">我的退货</a></li>
