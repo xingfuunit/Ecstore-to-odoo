@@ -1358,9 +1358,27 @@ class b2c_ctl_wap_member extends wap_frontpage{
     
     function bind_member(){
     	$bind_type = trim($_POST['bind_type']);
-    	error_log('wei_member:'.$this->app->member_id);
     	$wei_member = app::get('pam')->model('members')->getList('*',array('member_id'=>$this->app->member_id));
-    	error_log(print_r($wei_member,1));
+    	$userPassport = kernel::single('b2c_user_passport');
+    	$account = $_POST['login_account'.'_'.$bind_type];
+    	$account_password = trim($_POST['login_password'.'_'.$bind_type]);
+    	$vode = $_POST['vcode'.'_'.$bind_type];
+    	$login_member_id = intval($this->app->member_id);
+    	$from_to =$_POST['from_to'.'_'.$bind_type];
+    	if(!$from_to){
+    		$from_to = 'weixin_to_old';
+    	}
+    	
+    	if(!$account || !isset($account) || strlen($account) < 4){
+    		$msg = app::get('b2c')->_('请输入正确的账号');
+    		$this->splash('failed',null,$msg,'','',true);
+    	}
+    	
+    	if(!$account_password || !isset($account_password) || strlen($account_password) < 6){
+    		$msg = app::get('b2c')->_('密码必须为6-20位字符');
+    		$this->splash('failed',null,$msg,'','',true);
+    	}
+    	
     	if(count($wei_member) > 1){
     		$msg = app::get('b2c')->_('该微信账号已经绑定过其他账号,不能再进行绑定');
     		$this->splash('failed',null,$msg,'','',true);
@@ -1372,17 +1390,25 @@ class b2c_ctl_wap_member extends wap_frontpage{
     	}
 
     	if($bind_type == 'email' || $bind_type == 'account' || $bind_type == 'mobile'){
-    		$userPassport = kernel::single('b2c_user_passport');
-    		$login_member_id = intval($this->app->member_id);    		
-    		$from_to =$_POST['from_to'.'_'.$bind_type];
-    		if(!$from_to){
-    			$from_to = 'weixin_to_old';
+    		    		
+    		if($bind_type == 'email'){
+    			//验证码    			
+    		    	$userVcode = kernel::single('b2c_user_vcode');
+    				if( !$userVcode->verify($vode,$account,'reset')){
+        					$msg = app::get('b2c')->_('验证码错误');
+    						$this->splash('failed',null,$msg,'','',true);
+     	 			}
     		}
-    		$account = $_POST['login_account'.'_'.$bind_type];
-    		$account_password = $_POST['login_password'.'_'.$bind_type];
-    		error_log('bind_type:'.$bind_type.'-login_member_id:'.$login_member_id.'-from_to:'.$from_to.'-account:'.$account.'-account_password:'.$account_password);
+    		
+    		if($login_type == 'mobile'){
+    			$res = kernel::single('b2c_user_vcode')->verify($vode,$account,'signup');
+    			if(!$res){
+    				$msg = app::get('b2c')->_('短信验证码错误');
+    				$this->splash('failed',null,$msg,'','',true);
+    			}
+    		}
+    		    		    		    		
     		$status = $userPassport->bind_member($bind_type,$from_to,$login_member_id,$account,$account_password);
-    		error_log('status:'.$status);
     		switch ($status){
     		case 'failed' :
     			$msg = app::get('b2c')->_('绑定失败');
@@ -1447,16 +1473,18 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			$msg = app::get('b2c')->_('更新日志失败');
     			 $this->splash('failed',null,$msg,'','',true);
     			break;
+    		case 'openid_rebind' :
+    			$msg = app::get('b2c')->_('该账号已经绑定过微信');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
     		case 'ok' :
     			$msg=app::get('b2c')->_('绑定成功！');
             	$url = kernel::single('wap_controller')->gen_url(array('app'=>'b2c','ctl'=>'wap_passport','act'=>'logout'));
             	$this->splash('success',$url,$msg,'','',true);
     			break;
     	}
-    	}elseif($bind_type == 'card'){
-    		$card = trim($_POST['login_account'.'_'.$bind_type]);
-    		$card_password = trim($_POST['login_password'.'_'.$bind_type]);
-    		$this->save_weixin_card($card,$card_password);
+    	}elseif($bind_type == 'card'){   		
+    		$this->save_weixin_card($account,$account_password);
     	}else{
     		$msg = app::get('b2c')->_('请选择要绑定的信息');
     		$this->splash('failed',null,$msg,'','',true);
@@ -1465,7 +1493,6 @@ class b2c_ctl_wap_member extends wap_frontpage{
     
     
     function save_weixin_card($card,$card_password){
-    	error_log('here10');
     	$this->userPassport = kernel::single('b2c_user_passport');
     	$userPassport = kernel::single('b2c_user_passport');
     	$login_member_id = intval($this->app->member_id);
@@ -1473,34 +1500,32 @@ class b2c_ctl_wap_member extends wap_frontpage{
     		$msg = app::get('b2c')->_('请填写正确的会员卡号');
     		$this->splash('failed',null,$msg,'','',true);
     	}
-    	error_log('here11');
     	$member_card = $this->app->model('member_card')->getList('*',array('card_number'=>$card));
     	if(!$member_card){//先从会员卡表中直接读取卡号,判断卡号是否存在
-    		error_log('here12');
     		$msg = app::get('b2c')->_('会员卡不存在');
     		$this->splash('failed',null,$msg,'','',true);
     	}else{//会员卡号存在
-    		error_log('here13');
     		$member_id = app::get('pam')->model('members')->getList('member_id',array('login_account'=>$card));
     		if($member_id[0]['member_id']){//卡号存在且卡已被激活,要检查该会员卡是否被绑定,还要检查是否改了密码,验证密码的一致性
-    			error_log('here14');
     			$new_card = '';
     			$pamMemberData = app::get('pam')->model('members')->getList('*',array('member_id'=>$member_id[0]['member_id']));
     			if(count($pamMemberData) > 1){//被激活后判断是否被绑定
-    				$msg = app::get('b2c')->_('该会员卡已被绑定');
-    				$this->splash('failed',null,$msg,'','',true);
+    				foreach($pamMemberData as $pmd){
+    					if($pmd['login_type'] == 'local' && strlen($pmd['login_account']) > 25){
+    						$msg = app::get('b2c')->_('该会员卡已绑定过微信');
+    						$this->splash('failed',null,$msg,'','',true);
+    					}
+    				}
     			}
-    			error_log('here15');
+    			
     			$use_pass_data['login_name'] = $card;
     			$use_pass_data['createtime'] = $pamMemberData[0]['createtime'];
     			$login_password = pam_encrypt::get_encrypted_password($card_password,'member',$use_pass_data);
     			if($login_password != $pamMemberData[0]['login_password']){//会员卡被激活之后,可能被改密码,要进行密码验证
-    				error_log('here16');
     				$msg = app::get('b2c')->_('会员卡密码错误');
     				$this->splash('failed',null,$msg,'','',true);
     			}
     		}else{//卡号存在且未被激活
-    			error_log('here17');
     			$new_card = '1';
     			$card_psw_isright = $this->app->model('member_card')->getList('*',array('card_number'=>$card,'card_password'=>$card_password));
     			if(!$card_psw_isright){//直接对比会员卡表中的密码是否一致即可
@@ -1509,9 +1534,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			}
     		}
     	}
-    	error_log('here18');
     	$status = $this->userPassport->_bind_member_card($new_card, 'member_to_card', $login_member_id, $card);
-    	error_log('here19');
     	switch ($status){
     		case 'old_member_wrong' :
     			$msg = app::get('b2c')->_('当前会员信息错误错误');
