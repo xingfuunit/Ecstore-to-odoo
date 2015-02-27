@@ -3,7 +3,7 @@
   <input name="mini" type="hidden" value="<{$mini_passport}>">
   <ul>
     <li class="form-item">
-      <label for="" class="form-label">登录帐号：</label><span class="form-act"><{input type="text" name="pam_account[login_name]" id="" class="action-account-check" placeholder="用户名/邮箱/手机号" vtype="required" data-caution="请填写登录帐号，最少4个字符" autofocus}><span class="validation-messagebox"></span></span>
+      <label for="" class="form-label">登录帐号：</label><span class="form-act"><{input type="text" name="pam_account[login_name]" id="" class="action-account-check" placeholder="用户名/邮箱/手机号" vtype="required&&minLength:4&&maxLength:20" data-caution="请填写登录帐号，最少4个字符" autofocus}><span class="validation-messagebox"></span></span>
     </li>
     <li class="form-item">
         <label for="" class="form-label"><em class="warn">*</em>密码：</label><span class="form-act"><{input type="password" name="pam_account[login_password]" maxlength="20" placeholder="6-20个字符" vtype="required&&minLength:6&&maxLength:20" data-caution="请填写密码，6-20个字符&&输入不正确，最少6个字符&&输入不正确，最多20个字符" check='true'}></span>

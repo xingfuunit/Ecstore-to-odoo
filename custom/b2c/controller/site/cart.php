@@ -67,6 +67,12 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     }
 
     public function index(){
+    	$pamMemberData = app::get('pam')->model('members')->getList('*',array('login_account'=>$account));
+    	foreach($pamMemberData as $pmd){
+    		if($pmd['login_type'] == 'local' && strlen($pmd['login_account']) > 25){
+    			return 'openid_rebind';
+    		}
+    	}
         $GLOBALS['runtime']['path'][] = array('link'=>$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'index')),'title'=>'购物车');
         $this->mCart->unset_data();
         $this->_common(1);
