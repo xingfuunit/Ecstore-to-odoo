@@ -18,7 +18,7 @@ class b2c_ctl_site_updatecard extends b2c_frontpage{
      *会员中心首页
     * */
     public function index() {
-    	$file = fopen(ROOT_DIR."/puka.txt", "r") or exit("Unable to open file!");
+    	$file = fopen(ROOT_DIR."/xiaolin_huangka_checked_500.txt", "r") or exit("Unable to open file!");
     	//Output a line of the file until the end is reached
     	//feof() check if file read end EOF
     	while(!feof($file))
