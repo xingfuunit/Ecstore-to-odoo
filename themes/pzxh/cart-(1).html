@@ -909,6 +909,12 @@ window.addEvent('domready', function(){
             return false;
         	<{/if}>
         	
+        		
+        	if($$(".cart-empty").length > 0){
+        		alert('你的购物车为空！');
+                return false;
+        	}       		
+        	
             var password = dda;
             var url = '<{link app=b2c ctl=site_storepassport act=webpos_passwordcheck}>';
             var ps_add_info = $$(".dd_add_info");
@@ -1029,6 +1035,12 @@ window.addEvent('domready', function(){
                             alert('请先登录会员！');
                             return false;
                         <{/if}>
+                        
+                        if($$(".cart-empty").length > 0){
+                        	alert('你的购物车为空！');
+                            return false;
+                        }  
+                        
                         var bn = this.value;
                         var url = '<{link app=b2c ctl=site_order act=create}>';
                         var bn_add_info = $$("div .bn_add_info");
@@ -1084,6 +1096,12 @@ window.addEvent('domready', function(){
                         alert('请先登录会员！');
                         return false;
                     <{/if}>
+                    
+                    if($$(".cart-empty").length > 0){
+                        alert('你的购物车为空！');
+                        return false;
+                    } 
+                    
                     if(window.confirm("确认刷卡支付？")){
 			var bn = this.value;
                         var url = '<{link app=b2c ctl=site_order act=create}>';
@@ -1172,6 +1190,12 @@ window.addEvent('domready', function(){
                         alert('请先登录会员！');
                         return false;
                     <{/if}>
+                    
+                    if($$(".cart-empty").length > 0){
+                        alert('你的购物车为空！');
+                        return false;
+                    } 
+                    
                     if(window.confirm("确认报损？")){
 			var bn = this.value;
                         var url = '<{link app=b2c ctl=site_order act=create_goods}>';
@@ -1278,6 +1302,14 @@ function winReload() {
     var _url = '<{link app=b2c ctl=site_storepassport act=logoutwebpos}>'+'?type=outlog';
    //var _url = '<{link app=b2c ctl=site_cart}>'+'?type=x';
     window.location.href = _url;
+}
+
+function cart_is_empty(){
+	if($("#cart-empty").length > 0){
+		return false;
+	}else{
+		return true;
+	}
 }
 
 </script>
