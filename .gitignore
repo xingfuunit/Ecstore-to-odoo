@@ -1,2 +1,5 @@
 /data
 /config
+/.settings
+/*.buildpath
+/*.project
