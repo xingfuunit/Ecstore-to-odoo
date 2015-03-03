@@ -1064,6 +1064,11 @@ class b2c_user_passport
     			$db->rollback();
     			return 'update_level_failed';
     		}
+    		
+    		$update_bind_tag = app::get('pam')->model('bind_tag')->update(              //更新tag_name对饮的member_id
+    				array('member_id'=>$to_pam_member[0]['member_id']),
+    				array('member_id'=>$login_member_id));
+ 
     	}
     	
     	
