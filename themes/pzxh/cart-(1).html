@@ -897,10 +897,27 @@ window.addEvent('domready', function(){
     
     //账户余额付款
     $('add_yuamount').addEvent("click",function(E){
+    		var x = $$('#txtYuPrice').get('value');
+    		if(x == 0){
+            	window.confirm("请输入实收金额");
+            	return false;
+        	}
+    		if(document.getElementsByName('other_pay')[0].checked){
+    			var dede = $('kkkkk');
+        		_chaer = dede.getElement('.zhye_yu_val').value; 
+        		if(_chaer){
+        			_nomer = Number(txtYuTotal.value);
+        			if ( _nomer<0) {
+                    	alert('实收金额必须大于或等于支付差额');
+                    	return false;
+                	}
+        		} 
+    		}
+    		      	
             var dda;
             dda = document.getElementById('webpos_password').value;
             if(dda == ''){
-                alert('请先输入会员密码！');
+                alert('请先输入支付密码！');
                 return false;
             }
             
