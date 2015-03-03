@@ -1,0 +1,253 @@
+<style>
+<!--
+.widgetconfig table {margin-top:5px;}
+.widgetconfig th,.widgetconfig td{padding:5px;border:1px solid #ddd; vertical-align:middle;line-height:1.8}
+.widgetconfig th {background-color:#E2E8EB}
+.widgetconfig input {padding:2px;line-height:18px;}
+.widgetconfig i {color:#FF0000;}
+.widgetconfig h4 {text-align:center;font-weight:bold;background:#DDE5FC;color:#669;height:35px;line-height:35px;}
+.topcat {color:#000;font-weight:600}
+-->
+</style>
+<div class="tableform widgetconfig" id="goodscat_ex_vertical_config">
+	<div class="division">
+    <h4>展示设置</h4>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+	         <td><input type="checkbox" disabled=true name="show_cat_lv1" value="1"  checked  />展示一级分类</td>
+	         <td><input type="checkbox" name="show_cat_lv2" value="1" <{if $setting.show_cat_lv2}> checked <{/if}> />展示二级分类</td>
+             <td><input type="checkbox" name="show_cat_lv3" value="1" <{if $setting.show_cat_lv3}> checked <{/if}> />展示三级分类</td>
+             <td><input type="checkbox" name="show_cat_sale" value="1" <{if $setting.show_cat_sale}> checked <{/if}> />展示分类关联商品级促销信息</td>
+             <td><input type="checkbox" name="show_cat_brand" value="1" <{if $setting.show_cat_brand}> checked <{/if}> />展示分类所属类型关联品牌信息</td>
+             <td><input type="checkbox" name="redundancy_catlv2" value="1" <{if $setting.redundancy_catlv2}> checked <{/if}> />在不弹出情况下冗余展示2级分类</td>
+	    </tr>
+    </table> 
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+	      <th>最多显示品牌数:</th>
+	      <td><input type="text" class="x-input"  name="maxbnum" value="<{$setting.maxbnum|default:'8'}>" /> 个</td>
+          <th>促销信息显示数：</th>
+          <td><input type="text" class="x-input"  name="salelist_limit" value="<{$setting.salelist_limit|default:'5'}>" /> 条</td>
+	    </tr>
+     </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	    <tr>
+        	<th>相关品牌标题</th>
+            <td><input type="text" name="brand_title" value="<{$setting.brand_title}>"  class="x-input"/></td>
+            <th>相关促销标题</th>
+	        <td><input type="text" name="sales_title" value="<{$setting.sales_title}>"  class="x-input"/></td>
+            <th>链接在新窗口打开？</th>
+            <td><input type="checkbox" name="target_blank" value="1" <{if $setting.target_blank}> checked <{/if}> />是</td>
+	    </tr>
+    </table>
+	</div>
+
+
+	 <div id="assignSet" class="setSelectCatTable">
+     <h4>分类设置</h4>
+    <{foreach from=$data.cats item=parent}>
+    <{assign var=parentid value=$parent.cat_id}>
+    <div class="division">
+      <table width="100%" cellspacing="0" cellpadding="0" >
+        <tr class="topCatTR">
+          <th width="10%" rowspan="2"><span class="topcat"><{$parent.cat_name}></span></th>
+		  <td>重命名：<input type="text" name="resetcat[<{$parent.cat_id}>][name]" value="<{$setting.resetcat.$parentid.name}>" style="width:100px;">&nbsp;&nbsp;重定向：<input type="text" name="resetcat[<{$parent.cat_id}>][link]" style="width:200px;" value="<{$setting.resetcat.$parentid.link}>"></td>
+		 </tr>
+         <tr>
+		  <td>分类图片：<input type="text" name="resetcat[<{$parent.cat_id}>][ad]" value="<{$setting.resetcat.$parentid.ad}>" style="width:180px;" id="resetcat[<{$parent.cat_id}>][ad]"><input type="button" value="上传" onclick="addPic($('resetcat[<{$parent.cat_id}>][ad]'))" />&nbsp;&nbsp;链接：<input type="text" name="resetcat[<{$parent.cat_id}>][url]" style="width:150px;" value="<{$setting.resetcat.$parentid.url}>">&nbsp;&nbsp;标题：<input type="text" name="resetcat[<{$parent.cat_id}>][title]" style="width:80px;" value="<{$setting.resetcat.$parentid.title}>"></td>
+		 </tr>         
+         
+         <!--tr>
+            <th width="15%">关联文章</th>
+			<td width='85%'>
+				<select name="showArticlesCats[<{$parentid}>]">
+           		   <option value=""<{if $setting.showArticlesCats.$parentid==null}> selected="selected"<{/if}>>不关联</option>
+				   <optgroup>
+				      <{foreach from=$data.art_cats item=item key=order}>
+                      <option value="<{$item.art_cat_id}>" <{if $setting.showArticlesCats.$parentid==$item.art_cat_id}>selected="selected"<{/if}>><{$item.art_cat_nm}></option>
+				      <{/foreach}>
+				   </optgroup>
+				</select>&nbsp;文章显示数量：<input type="text" name="showArticlesNum[<{$parentid}>]" value="<{$setting.showArticlesNum.$parentid|default:5}>" size="4" />&nbsp;个
+      </td>
+   </tr-->
+      </table>
+    </div>
+    <{/foreach}>
+    </div>  
+    
+    
+    <div class="division">
+    <h4>虚拟分类设置</h4>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	   <tr>
+          <th><{t app="b2c"}>选择显示节点：<{/t}></th>
+          <td><select name="virtualcat_id">
+		       <!--option value=''><{t app="b2c"}>[所有分类]<{/t}></option-->
+			   <{foreach from=$data.vcats item=item key=key}>
+			   <option value="<{$item.cat_id}>"<{if $item.cat_id==$setting.virtualcat_id}> selected="selected"<{/if}>><{$item.cat_name|paddingleft:$item.step*4-4:'&nbsp;'}></option>
+			   <{/foreach}>
+			  </select>
+		  <{t app="b2c"}>设置后仅显示当前所选节点以及所属的子节点<{/t}></td>
+        </tr>
+		<tr>
+          <th><{t app="b2c"}>是否显示节点名称：<{/t}></th>
+          <td><select name="show_selected_node">
+		      <option value="on"<{if $setting.show_selected_node =='on'}> selected="selected"<{/if}>><{t app="b2c"}>是<{/t}></option>
+			  <option value="off"<{if $setting.show_selected_node =='off'}> selected="selected"<{/if}>><{t app="b2c"}>否<{/t}></option>
+			  </select>
+		 </td>
+        </tr>
+        <tr>
+          <th><{t app="b2c"}>循环深度：<{/t}></th>
+          <td><select name="showCatDepth_default"><option value="1"<{if $setting.showCatDepth_default=="1"}> selected="selected"<{/if}>><{t app="b2c"}>仅显示一级分类<{/t}></option><option value="2" <{if $setting.showCatDepth_default=="2"}>selected="selected"<{/if}>><{t app="b2c"}>显示二级分类<{/t}></option><option value="3" <{if $setting.showCatDepth_default=="3"}>selected="selected"<{/if}>><{t app="b2c"}>显示三级分类<{/t}></option>
+            </select></td>
+        </tr>
+        <tr>
+		  <td>分类图片：</th>
+          <td><input type="text" name="virtualcat_ad" value="<{$setting.virtualcat_ad}>" style="width:180px;" id="virtualcat_ad"><input type="button" value="上传" onclick="addPic($('virtualcat_ad'))" />&nbsp;&nbsp;链接：<input type="text" name="virtualcat_ad_url" style="width:150px;" value="<{$setting.virtualcat_ad_url}>">&nbsp;&nbsp;标题：<input type="text" name="virtualcat_ad_title" style="width:80px;" value="<{$setting.virtualcat_ad_title}>"></td>
+		 </tr> 
+		</table>
+  </div>
+  
+	<div class="division" id="listArea_menus">
+    	<h4>自定义链接设置</h4>
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+          <th style="width:75px">自定义主标题：</th>
+          <td><input type="text" name="fronttips" style="width:150px" value="<{$setting.fronttips|default:'按场合选酒'}>" /></td>
+           <th style="width:75px">自定义主标题链接：</th>
+          <td><input type="text" name="fronturl" style="width:200px" value="<{$setting.fronturl}>" /></td>
+          </tr>
+        </table>
+        <div style="margin:10px;"><{button label=$___b2c="添加类目"|t:'b2c' app="desktop" icon="btn_add.gif" id="add_ad_pic" onclick="addConfig('menus');"}></div>   
+		<{if $setting.menus}>
+		<{foreach from=$setting.menus item=data key=key}>
+		<div class="configs">
+			<table width="100%" cellpadding="0" cellspacing="0">
+			  <tr>
+			  <th style="width:75px">标题：</th>
+			  <td style="width:105px"><input type="text" name="menus[<{$data.i}>][text]" style="width:100px" value="<{$data.text}>"></td>
+			  <th style="width:75px">className：</th>
+			  <td style="width:105px"><input type="text" name="menus[<{$data.i}>][classname]" style="width:80px" value="<{$data.classname}>"></td>
+			  <th style="width:75px">地址：</th>
+			  <td style="width:170px"><input type="text" name="menus[<{$data.i}>][url]" value="<{$data.url}>" style="width:170px"></td>
+			  <th style="width:65px">窗口：</th>
+			  <td><select name="menus[<{$data.i}>][target]">
+					<option value="_self"<{if $data.target=='_self'}> selected<{/if}>>本窗口</option>
+					<option value="_blank"<{if $data.target=='_blank'}> selected<{/if}>>新窗口</option>
+				</select>
+			  </td>
+              <td><span onclick="delLink(this)"><{img src="delecate.gif" style="cursor:pointer;" alt="删除" title="删除"}></span></td>
+			  </tr>
+			</table>
+			<input type="hidden" name="menus[<{$data.i}>][i]" value="<{$data.i}>">
+		</div>
+		<{/foreach}>
+		<{/if}>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('goodscat_ex_vertical_config').getParent('form').addEvent('submit',function(){
+		this.getElements('input[type=checkbox]').each(function(item){
+			if(!item.checked)item.value = "";item.checked = true;
+		});
+	});
+	$$('input[name=show_cat_lv2]').addEvent('change',function(){
+		var extendCheckbox = $$('input[name=show_cat_lv3],input[name=redundancy_catlv2]');
+		if(this.checked){
+			extendCheckbox.removeProperty('disabled');			
+		}else{
+			extendCheckbox.set({'disabled':true,'checked':false});			
+		}
+	}).fireEvent('change');
+</script>
+
+<script>
+function addConfig(key){
+	var content;
+	d=new Date();
+	i=d.getTime();
+	if(key=='menus'){
+		content='\
+		<div class="configs">\
+			<table width="100%" cellpadding="0" cellspacing="0">\
+			  <tr>\
+			  <th style="width:75px">栏目标题：</th>\
+			  <td style="width:105px"><input type="text" name="menus['+i+'][text]" style="width:100px;"></td>\
+			  <th style="width:75px">className：</th>\
+			  <td style="width:105px"><input type="text" name="menus['+i+'][classname]" style="width:80px"></td>\
+			  <th style="width:75px">链接地址：</th>\
+			  <td style="width:170px;"><input type="text" name="menus['+i+'][url]" style="width:170px;" value="./"></td>\
+			  <th style="width:65px">窗口目标：</th>\
+			  <td><select name="menus['+i+'][target]"><option value="_self">本窗口</option><option value="_blank" selected>新窗口</option></select></td>\
+			  <td><span onclick="delLink(this)"><{img src="delecate.gif" style="cursor:pointer;" alt="删除" title="删除"}></span></td>\
+			  </tr>\
+			</table>\
+			<input type=hidden name=menus['+i+'][i] value="'+i+'">\
+		</div>\
+		';
+	}
+	$E('#listArea_'+key).adopt(new Element('div').set('html',content).getFirst());
+}
+
+function addPic(target){
+	var url='index.php?app=desktop&act=alertpages&goto='+encodeURIComponent("index.php?app=image&ctl=admin_manage&act=image_broswer&type=big");
+	Ex_Loader('modedialog',function(){
+		return new imgDialog(url,{onCallback:function(image_id,image_src){
+				$(target).value=image_src;
+		}})	;
+	});
+}
+
+delLink=function(o){
+	$(o).getParent('.configs').remove();
+}
+
+/*商品分类选择*/
+function altStyle(obj){
+	$(obj).store('cc',0);
+	var lis = $(obj).getElements("li");
+	lis.addEvents({
+		"click": function(e){					
+			var o = window.ie ? event.srcElement.tagName : e.target.tagName;
+			if($(obj).retrieve('cc')) return;
+			$(obj).store('cc',1);
+			var input = this.getElement("input");
+			var type = input.getProperty("type");
+			if(["checkbox","radio"].contains(type)){
+				if(input.disabled) return;
+				if(type=="radio") lis.each(function(li){li.className=""});
+
+				if(window.ie||o!="INPUT"&&input.onclick){
+					input.click();
+				}				
+				if(this.hasClass("checked")){
+					this.removeClass("checked");
+					input.checked = false;
+					
+					//alert(this.getParent().getElements("input").length);
+					var noCheck = true;
+					this.getParent().getElements("input").each(function(o, i){
+						if(o.checked){
+							noCheck = false;
+						}
+					});
+					if(noCheck){
+					    /*如果二级分类全没选择，一级分类也自动取消选择
+						alert(this.getParent('.topCatTR'));*/
+						this.getParent('.topCatTR').getElement("input").checked = false;
+					}
+				} else {
+					this.addClass("checked");
+					input.checked = true;
+					/*自动选中一级分类
+					alert(this.getParent('.topCatTR'));*/
+					this.getParent('.topCatTR').getElement("input").checked = true;
+				}
+			}
+		},
+		"mouseup":function(e){$(obj).store('cc',0);}
+	});
+}
+</script>

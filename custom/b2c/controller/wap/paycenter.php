@@ -242,7 +242,7 @@ class b2c_ctl_wap_paycenter extends wap_frontpage{
             //预售修改,在原有的基础上加上 product_id 字段获取商品id以便下面查询预售信息
             $order_items = app::get('b2c')->model('order_items')->getList('name,product_id',array('order_id'=>$sdf['order_id']),0,1);
             $product_id=$order_items[0]['product_id'];
-            $sdf['body'] = $order_items[0]['name'];
+            $sdf['body'] = $order_items[0]['name'].'--订单号:'.$sdf['order_id'];
             $sdf['pay_object'] = $pay_object;
             $sdf['shopName'] = $shopName;
 

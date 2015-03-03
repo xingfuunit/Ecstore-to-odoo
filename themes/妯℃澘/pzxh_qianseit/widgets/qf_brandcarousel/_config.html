@@ -1,0 +1,65 @@
+﻿<style>
+.widgetconfig table {margin-top:5px;}
+.widgetconfig th,.widgetconfig td{padding:5px;border:1px solid #ddd; vertical-align:middle;line-height:1.8}
+.widgetconfig th {background-color:#E2E8EB}
+.widgetconfig input {padding:2px;line-height:18px;}
+.widgetconfig i {color:#FF0000;}
+.widgetconfig h4 {text-align:center;font-weight:bold;background:#DDE5FC;color:#669;height:35px;line-height:35px;}
+i{color:#FF0000;font-style:normal}
+</style>
+<div class="widgetconfig tableform">
+    <div class="division ">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th width="20%">栏目标题:</th>
+        <td width="80%" colspan="3"><input name="title" type="text" value="<{$setting.title}>" style="width:150px" /></td>
+      </tr>
+      <tr>
+        <th width="20%">品牌调用数量:</th>
+        <td width="30%"><input name="limit" type="text" value="<{$setting.limit|default:20}>" style="width:80px" /></td>
+        <th width="20%">生层列数:</th>
+        <td width="30%"><input name="colums" type="text" value="<{$setting.colums|default:5}>" style="width:80px" /></td>
+      </tr>
+      <tr>
+        <th width="20%">品牌图片宽度:</th>
+        <td width="30%"><input name="brandwidth" type="text" value="<{$setting.brandwidth|default:124}>" style="width:80px" /></td>
+        <th width="20%">品牌图片高度:</th>
+        <td width="30%"><input name="brandheight" type="text" value="<{$setting.brandheight|default:76}>" style="width:80px" /></td>
+      </tr>
+      <tr>
+        <th width="20%">品牌调用数量:</th>
+        <td width="30%"><input name="limit" type="text" value="<{$setting.limit|default:20}>" style="width:80px" /></td>
+        <th width="20%">生层列数:</th>
+        <td width="30%"><input name="colums" type="text" value="<{$setting.colums|default:5}>" style="width:80px" /></td>
+      </tr>
+      <tr>
+        <th width="20%">效果过渡时间:</th>
+        <td width="30%"><input name="duration" type="text" value="<{$setting.duration|default:500}>" style="width:60px" />(1秒=1000)</td>
+        <th width="20%">图片切换周期:</th>
+        <td width="30%"><input name="periodical" type="text" value="<{$setting.periodical|default:5000}>"style="width:60px" />(1秒=1000)</td>
+      </tr>
+      <tr>
+        <th width="20%">滚动方向:</th>
+        <td width="30%">
+        	<select name="direction">
+            	<option value="scrollx"<{if $setting.direction=='scrollx'}> selected="selected"<{/if}>>--左右--</option>
+                <option value="scrolly"<{if $setting.direction=='scrolly'}> selected="selected"<{/if}>>--上下--</option>
+                <option value="fade"<{if $setting.direction=='fade'}> selected="selected"<{/if}>>--渐显--</option>
+            </select>
+         </td>
+         <th></th>
+         <td></td>
+      </tr>
+      <tr>
+      	<th><{t app='b2c'}>是否显示触点：<{/t}></th>
+        <td> 
+        	<select name="showfous">
+            <option<{if $setting.showfous == "on"}> selected="selected"<{/if}> value="on"><{t app='b2c'}>是<{/t}></option>
+            <option<{if $setting.showfous == "off"}> selected="selected"<{/if}> value="off"><{t app='b2c'}>否<{/t}></option>
+          </select>
+        </td>
+      </tr>
+      
+    </table>
+    </div>
+</div>

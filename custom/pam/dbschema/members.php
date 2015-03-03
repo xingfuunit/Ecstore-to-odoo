@@ -18,6 +18,7 @@ $db['members'] = array(
         array(
             'type'=>'varchar(100)',
             'is_title'=>true,
+        	'pkey'=>true,
             'required' => true,
             'comment' => app::get('pam')->_('登录名'),
         ),

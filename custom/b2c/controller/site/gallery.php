@@ -530,6 +530,7 @@ class b2c_ctl_site_gallery extends b2c_frontpage{
 
         $params['marketable'] = 'true';
         $params['is_buildexcerpts'] = 'true';
+        $params['is_line'] = '0';
         $tmp_filter = $params;
 
         #价格区间筛选

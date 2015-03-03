@@ -1203,6 +1203,52 @@ window.addEvent('domready', function(){
                    }
     });
     
+    //充值
+    
+    $('memberRecharge').addEvent("click",function(E){
+                    <{if !$member.uname}>
+                        alert('请先登录会员！');
+                        return false;
+                    <{/if}>
+                    if(window.confirm("确认充值？")){
+						var bn = this.value;
+                        var url = '<{link app=b2c ctl=site_cart act=checkout_vacancies}>';
+                        var bn_add_info = $$("div .bn_add_info");
+                        var myRequest = new Request.JSON({
+                            url: url,
+                            method: 'post',
+                            onRequest: function(){
+			        bn_add_info.set('html','正在充值中……');
+			    },
+			    onSuccess: function(responseText){
+                                var data = responseText.data;
+			    				var storeprint ="<{$local_store.name}>充值单\n操作员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n用户名："+data.uname+"\n充值数额："+data.yu_amount+"\n帐号余额："+data.advance+"\n支付方式："+data.exp_way+"付款\n\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
+                                bn_add_info.set('html','充值成功……');
+                                try {
+                                        window.CallCSharpMethod("softprint",storeprint);
+                                } catch(e) {}
+                                winReload();
+			    },
+			    onFailure: function(){
+			        bn_add_info.set('html','充值失败，请稍后重试');
+			    }
+                        });
+                        yu_amount = document.getElementById("yu_amount").value;
+                        
+                        var _dom  = document.getElementsByName('exp_pay_way')[0];
+                        var _dom2 = document.getElementsByName('exp_pay_way')[1];
+                        
+                        if(_dom.checked){
+                        	var exp_pay_way = 1;
+                        }else{
+                        	var exp_pay_way = 2;
+                        }
+                        var data = 'yu_amount='+yu_amount+'&exp_pay_way='+exp_pay_way;
+                        myRequest.send(data);
+                   }
+    });
+    
+    
     function _add_cart(goods_id, product_id){
     	var url = '<{link app=b2c ctl=site_cart act=add arg0=goods arg1="' + goods_id + '" arg2="' + product_id + '" arg3="1"}>';
     	var bn_add_info = $$("div .bn_add_info");

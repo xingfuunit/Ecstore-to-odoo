@@ -1,0 +1,204 @@
+<style>
+<!--
+.widgetconfig table {margin-top:5px;}
+.widgetconfig th,.widgetconfig td{padding:5px;border:1px solid #ddd; vertical-align:middle;line-height:1.8}
+.widgetconfig th {background-color:#E2E8EB}
+.widgetconfig input {padding:2px;line-height:18px;}
+.widgetconfig i {color:#FF0000;}
+.widgetconfig em {color:#999;font-style:normal;}
+-->
+</style>
+<div class="tableform widgetconfig">
+  <div class="division">
+    <table width="100%" cellpadding="0" cellspacing="0">
+     <tr>
+     	<th width="20%"><{t app='b2c'}>栏目标题<{/t}></th>
+        <td colspan="3" width="80%"><input type="text" name="title" value="<{$setting.title}>" style="width:200px;margin-right:15px;"><em>留空则不显示标题栏</em></td>
+     </tr>
+      <tr>
+        <th width="20%"><strong><i>*</i><{t app='b2c'}>多张广告图排列方式<{/t}></strong> </th>
+        <td width="30%">
+			<input type="radio" name="adscrolltype" value="0" <{if $setting.adscrolltype=="0"}>checked="checked"<{/if}>><{t app='b2c'}>上下换行<{/t}>&nbsp;&nbsp;
+			<input type="radio" name="adscrolltype" value="1" <{if $setting.adscrolltype=="1"}>checked="checked"<{/if}>>左右浮动,
+            <input type="radio" name="adscrolltype" value="on" <{if $setting.adscrolltype=="on"}>checked="checked"<{/if}>>左右滚动
+        </td>
+        <th width="20%">广告间隔 </th>
+        <td width="30%"><input type="text" name="ad_margin" value="<{$setting.ad_margin|default:'0'}>">&nbsp;px;</td>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="clearfix">
+  	<{button label=$___b2c="添加图片广告"|t:'b2c' app="desktop" icon="btn_add.gif" id="add_ad_pic" onclick=""}>
+	<{button label=$___b2c="添加FLASH广告"|t:'b2c' app="desktop" icon="btn_add.gif" id="add_ad_flash" onclick=""}>
+	<{button label=$___b2c="自定义广告"|t:'b2c' app="desktop" icon="btn_add.gif" id="add_ad_html" onclick=""}>
+	<span>文字说明作为图片ALT属性 <input type="radio" name="showpicalt" value="on" <{if $setting.showpicalt!="off"}>checked="checked"<{/if}> >是 <input type="radio" name="showpicalt" value="off" <{if $setting.showpicalt=="off"}>checked="checked"<{/if}>>否(图片广告时生效)</span>
+ </div>
+ 
+  <div class="division" style="margin-top:8px;" id="ad">
+  <{foreach from=$setting.ad item=data key=key}>
+    <div id="ad_<{$data.i}>" class="configad">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <input type=hidden name=ad[<{$data.i}>][type] value="<{$data.type}>">
+        <input type=hidden name=ad[<{$data.i}>][i] value="<{$data.i}>">
+        <{if $data.type=='image'}>
+        <tr>
+          <th width="20%">图片地址:</th>
+          <td><input type="text" style="width:78%" class="imgsrc" name=ad[<{$data.i}>][link] id="ad[<{$data.i}>][link]" value="<{$data.link}>" />
+			<input type="button" value="上传图片" onclick="addPic($('ad[<{$data.i}>][link]'))" />
+		</td>
+          <td style="width:30px;"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td>
+        </tr>
+        <tr>
+          <th width="20%">图片尺寸:</th>
+          <td>宽
+            <input type="text" style="width:100px" name=ad[<{$data.i}>][showwidth] value="<{$data.showwidth}>">px&nbsp;&nbsp;高
+            <input type="text" style="width:100px" name=ad[<{$data.i}>][showheight] value="<{$data.showheight}>">px </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th width="20%">链接地址:</th>
+          <td><input type="text" style="width:90%" name=ad[<{$data.i}>][tolink] value="<{$data.tolink}>"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th width="20%">广告说明:</th>
+          <td><input type="text" style="width:90%" name=ad[<{$data.i}>][text] value="<{$data.text}>"></td>
+          <td></td>
+        </tr>
+        <{elseif $data.type=='flash'}>
+        <tr>
+          <th width="20%">Flash地址:</th>
+          <td><input type="text" style="width:78%" name=ad[<{$data.i}>][link] value="<{$data.link}>">
+            <!--input type=button value=上传Flash onClick=addFlash($('ad[<{$data.i}>][link]'))--></td>
+          <td style="width:30px;"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td>
+        </tr>
+        <tr>
+          <th width="20%">Flash尺寸:</th>
+          <td>宽<input type="text" style="width:100px" name=ad[<{$data.i}>][showwidth] value="<{$data.showwidth}>">px&nbsp;&nbsp;
+		  高<input type="text" style="width:100px" name=ad[<{$data.i}>][showheight] value="<{$data.showheight}>">px </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th width="20%">视频说明:</th>
+          <td><input type="text" style="width:90%" name=ad[<{$data.i}>][text] value="<{$data.text}>"></td>
+          <td></td>
+        </tr>
+        <{elseif $data.type=='html'}>
+        <tr>
+          <th width="20%">广告代码:</th>
+          <td><textarea style="width:90%" name=ad[<{$data.i}>][link]><{$data.link|escape:"html"}></textarea></td>
+          <td style="width:30px;"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td>
+        </tr>
+        <{/if}>
+      </table>
+    </div>
+    <{/foreach}>
+    </div>
+</div>
+
+<div class="tableform widgetconfig" id="adscrolltype-view" <{if $setting.adscrolltype!="2"}>style="display:none"<{/if}>>
+	<div class="division">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <th width="20%">滚动方向</th>
+        <td width="30%">
+        	<input type="radio" name="Position" value="0" <{if $setting.Position!="1"}>checked="checked"<{/if}>>向左滚动&nbsp;&nbsp;
+        	<input type="radio" name="Position" value="1" <{if $setting.Position=="1"}>checked="checked"<{/if}>>向上滚动
+        </td>
+        <th width="20%">每屏显示数量</th>
+        <td width="30%"><input type="text" name="scrollnum" value="<{$setting.scrollnum|default:'4'}>">&nbsp;个</td>
+      </tr>
+    </table>
+    </div>
+</div>
+
+<script>
+function setToggler(togglers){
+  togglers.each(function(toggler){
+    var view = toggler.getProperty('name')+'-view';
+    toggler.addEvent('click',function(){
+      if(this.value=="on"){
+        $(view).show();
+      }else{
+        $(view).hide();
+      }
+    });
+  });
+}
+
+var togglers = $$('input[name="adscrolltype"]');
+setToggler(togglers);
+
+$('add_ad_pic').addEvent('click',function(){
+  var d=new Date();
+  var i=d.getTime();
+  $('ad').adopt(new Element('div').set('html','\
+    <div class="configad" style="margin-top:6px;">\
+       <table cellpadding="0" cellspacing="0">\
+         <tr><th width=20%>图片地址:</th><td><input type="text" style="width:78%" class="imgsrc" name=ad['+i+'][link] id="ad['+i+'][link]" value="%THEME%/images/" size=15><input type="button" value="上传图片" onClick="addPic($(\'ad['+i+'][link]\'))"></td>\
+		 <td style="width:30px"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td></tr>\
+		  <tr><th width=20%>图片尺寸:</th><td>宽<input type="text" style="width:100px" name="ad['+i+'][showwidth]" value="">px&nbsp;&nbsp;高<input type="text" style="width:100px" name="ad['+i+'][showheight]" value="">px</td><td></td></tr>\
+          <tr><th>链接地址:</th><td><input type="text" style="width:90%" name=ad['+i+'][tolink] size=15></td><td></td></tr>\
+		  <tr><th>广告说明：</th><td><input type="text" style="width:90%" name=ad['+i+'][text]></td><td></td></tr>\
+       </table>\
+      <input type=hidden name=ad['+i+'][i] value="'+i+'">\
+      <input type=hidden name=ad['+i+'][type] value="image">\
+    </div>\
+  ').getFirst());
+	$('pic['+i+']').addEvent('click',function(e){bindevent(this)});
+});
+
+$('add_ad_flash').addEvent('click',function(){
+  d=new Date();
+  i=d.getTime();
+  $('ad').adopt(new Element('div').set('html','\
+    <div class="configad" style="margin-top:6px;">\
+        <table cellpadding="0" cellspacing="0">\
+         <tr><th width=20%>Flash地址：</th><td><input type="text" style="width:78%" name=ad['+i+'][link] id="ad['+i+'][link]" value="%THEME%/images/ad_11.swf">\</td>\
+          <td style="width:30px"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td>\
+		  <tr><th width=20%>Flash尺寸:</th><td>宽<input type="text" style="width:100px" name="ad['+i+'][showwidth]" value="100">px&nbsp;&nbsp;高<input type="text" style="width:100px" name="ad['+i+'][showheight]" value="100">px</td><td></td></tr>\
+         </tr>\
+		 <tr><th>视频说明：</th><td><input type="text" style="width:90%" name=ad['+i+'][text]></td><td></td></tr>\
+       </table>\
+      <input type=hidden name=ad['+i+'][i] value="'+i+'">\
+      <input type=hidden name=ad['+i+'][type] value="flash">\
+    </div>\
+  ').getFirst());
+});
+
+$('add_ad_html').addEvent('click',function(){
+  d=new Date();
+  i=d.getTime();
+  $('ad').adopt(new Element('div').set('html','\
+      <div class="configad" style="margin-top:6px;">\
+      <table cellpadding="0" cellspacing="0">\
+         <tr><th width=20%>广告代码：</th><td><textarea style="width:90%" name=ad['+i+'][link]></textarea></td>\
+		 <td style="width:30px"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td>\
+         </tr>\
+     </table>\
+     <input type=hidden name=ad['+i+'][i] value="'+i+'">\
+      <input type=hidden name=ad['+i+'][type] value="html">\
+	  </div>\
+  ').getFirst());
+});
+
+function addPic(target){
+	var url='index.php?app=desktop&act=alertpages&goto='+encodeURIComponent("index.php?app=image&ctl=admin_manage&act=image_broswer&type=big");
+	Ex_Loader('modedialog',function(){
+		return new imgDialog(url,{onCallback:function(image_id,image_src){
+				$(target).value=image_src;
+		}})	;
+	});
+}	
+function addFlash(target){
+	return new Dialog('index.php?ctl=editor&act=flash',{title:'插入FLASH',onShow:function(){
+			var dialog=this;
+			this.dialog.store('callback',function(src){
+              target.value=src;
+              dialog.close();
+           });
+   }});
+}
+delLink=function(o){$(o).getParent('.configad').remove();}
+</script>

@@ -1,0 +1,101 @@
+<div class="category-box" id="category_box">
+  <ul class="category-list">
+    <li class="category-item"><a href="./" class="category-link">首页</a></li>
+    <{assign var="indexi" value="0"}>
+    <{foreach from=$data.data item=item key=key name=clist}>
+    <li class="category-item">
+     <a href="<{$item.url}>" <{if $setting.target_blank=='1'}>target="_blank"<{/if}> class="category-link"><{$item.cat_name}></a>
+       <{if $item.lv2}>
+       <div class="cat-children-box clearfix">
+                     <div class="cat-children">
+                <{foreach from=$item.lv2 item=sub_item key=sub_key}>
+                <dl class="sub-category clearfix">
+                  <dt><a href="<{$sub_item.url}>" <{if $setting.target_blank=='1'}>target="_blank"<{/if}> class="level2"><{$sub_item.cat_name}></a></dt>
+                  <dd class="clearfix">
+                    <{if $sub_item.lv3}>
+                    <{foreach from=$sub_item.lv3 item=lv3_item key=lv3_key}>
+                    <a href="<{$lv3_item.url}>" <{if $setting.target_blank=='1'}>target="_blank"<{/if}> class="level3"><{$lv3_item.cat_name}></a>
+                    <{/foreach}>
+                    <{/if}>
+                  </dd>
+                </dl>
+                <{/foreach}>
+              </div>
+             <div class="cat-link">
+             	<!--<div class="cat-goto"><a href="<{$item.url}>" target="_blank"><{$item.cat_name}>频道</a></div>-->
+                <{if $item.brand}>
+                <dl class="cat-link-brand">
+                  <dt>相关品牌</dt>
+                  <dd>
+                  <{foreach from=$item.brand item=brand key=brand_key name=brandlist}>
+                  <{if $smarty.foreach.brandlist.iteration <11}>
+                  <a href="<{link app=b2c ctl=site_brand arg0=$brand}>" class="item"><{$data.brand_list[$brand].brand_name}></a>
+                  <{/if}>
+                  <{/foreach}>
+                  </dd>
+                </dl>
+                <{/if}>
+            </div>
+            <div class="cat-ad"><{if $data.gcatlinks.$indexi != ''}><a href="<{$data.imglinks.$indexi}>" <{if $setting.target_blank=='1'}>target="_blank"<{/if}>><img src="<{$data.gcatlinks.$indexi}>" width="258" /></a><{/if}></div>
+      </div>
+      <{/if}> 
+   </li>
+   <{assign var="indexi" value=$indexi+1}>
+    <{/foreach}>
+     <{if $data.menus}>
+    <{foreach from=$data.menus item=item key=key}>
+     <li class="category-item last"><a href="<{$item.url}>" class="category-link" target="<{$item.target}>"><{$item.text}></a><span class="<{$item.classname}>"></span></li>
+    <{/foreach}>
+    <{/if}>
+  </ul>
+</div>
+<script>
+var category = $('category_box');
+category.getElements('.category-item').addEvents({
+    'mouseover':function(e){
+        var self = this;
+        clearTimeout(this.showTimer);
+        clearTimeout(this.hideTimer);
+        var active = function(){
+            if(self.getElement('.cat-children-box')){
+                self.addClass('active');
+            }
+        }
+        this.showTimer = active.delay(100);
+    },
+    'mouseout':function(e){
+        var self = this;
+        clearTimeout(this.showTimer);
+        clearTimeout(this.hideTimer);
+        var active = function(){
+            if(self.getElement('.cat-children-box')){
+                self.removeClass('active');
+            }
+        }
+        this.hideTimer = active.delay(100);
+    }
+});
+
+window.addEvent('domready',function(){
+	var dcat = $$('.all-category .category-item');
+	if(dcat){
+		var dpopup = dcat.getElement('.cat-children-box');
+		for(i=0;i<dcat.length;i++){
+			var a = dcat[i].index = i;
+			var b = 70 * a;
+			var c = dpopup[i].getSize().y;
+			if(b<c-70){
+				dpopup[i].setStyles({
+					'top':0+'px'
+				});
+			}
+			else{
+				dpopup[i].setStyles({
+					'top':b-c+70+'px'
+				});
+			};
+		};
+	}	
+});
+</script>
+

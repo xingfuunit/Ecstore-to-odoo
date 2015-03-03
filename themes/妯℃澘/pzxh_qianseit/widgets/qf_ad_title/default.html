@@ -1,0 +1,12 @@
+<div class="ad1 clearfix">
+                    <div class="ad1_tt fl">
+                         <h3><a class="s-link" target="_blank" href="<{$data.ad_pic_link}>"><{$setting.ad_title}></a></h3>
+                      
+                         <p><{$setting.ad_detail}></p>
+                    </div>
+                    <div class="ad_pictr fr"><{if $setting.showtag1 =='on'}><span class="tag1 pngFix"></span><{/if}><{if $setting.showtag2 =='on'}><span class="tag2 pngFix"></span><{/if}>
+                    <a href="<{$data.ad_pic_link}>" target="_blank">
+                    <img data-src="<{$data.ad_pic|storager}>" alt="<{$setting.ad_pic_txt}>" <{if $data.ad_pic_width}>width="                    <{$data.ad_pic_width}>"<{/if}> <{if $data.ad_pic_height}>height="<{$data.ad_pic_height}>"<{/if}> />
+  </a></div>
+</div>
+

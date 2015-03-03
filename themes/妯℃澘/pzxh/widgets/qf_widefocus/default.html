@@ -1,0 +1,69 @@
+<style id="wid<{$widgets_id}>_style">
+#focus_<{$widgets_id}> {width:100%;position:relative;overflow:hidden;}
+#focus_<{$widgets_id}> .viewbox {width:<{$setting.width|default:'1200'}>px;height:<{$setting.height|default:600}>px;margin:0 auto;overflow:visible;position:relative}
+#focus_<{$widgets_id}> .withdraw,
+#focus_<{$widgets_id}> .flashview li,
+#focus_<{$widgets_id}> .flashview li a {width:<{$setting.hwidth|default:'1920'}>px;}
+#focus_<{$widgets_id}> .withdraw,
+#focus_<{$widgets_id}> .flashview,
+#focus_<{$widgets_id}> .flashview li,
+#focus_<{$widgets_id}> .flashview li a{height:<{$setting.height|default:600}>px;}
+#focus_<{$widgets_id}> .withdraw {overflow:hidden;z-index:0;position:relative;left:-<{math equation=floor((x-y)/2) x=$setting.hwidth y=$setting.width}>px;_display:inline;} 
+#focus_<{$widgets_id}> .flashview {position:absolute;top:0;}
+#focus_<{$widgets_id}> .flashview li {float:left;overflow:hidden;display:block;}
+#focus_<{$widgets_id}> .flashview li a {display:block;text-align:center;}
+#focus_<{$widgets_id}> .prev,
+#focus_<{$widgets_id}> .next,
+#focus_<{$widgets_id}> .slide-number a {background:url('images/button.gif') no-repeat;}
+#focus_<{$widgets_id}> .prev,
+#focus_<{$widgets_id}> .next {position:absolute;top:<{math equation=floor((x-72)/2) x=$setting.height}>px;cursor:pointer;height:72px;width:73px;z-index:3;display:block;overlow:hidden;opacity:0.7;background:url('images/button.gif') no-repeat 0 0;display:none;}
+#focus_<{$widgets_id}> .prev {left:50px;background-position:0 0;}
+#focus_<{$widgets_id}> .prev:hover {background-position:0 -72px;}
+#focus_<{$widgets_id}> .next {right:50px;background-position:-73px 0;}
+#focus_<{$widgets_id}> .next:hover {background-position:-73px -72px;}
+#focus_<{$widgets_id}> .slide-number {padding:0 0 12px 250px;text-align:left;position:absolute;bottom:0;z-index:2;display:block;white-space:nowrap}
+#focus_<{$widgets_id}> .slide-number a{width:20px;height:10px;background:#FFF;display:block;float:left;margin-right:8px;overflow:hidden;text-indent:-999em;}
+#focus_<{$widgets_id}> .slide-number .active {background:<{$setting.fscolor}>;color:#FFF;}
+#focus_<{$widgets_id}> .draw_sider {position:absolute;right:0;top:0;width:<{$setting.small_width}>px;height:<{$setting.height|default:600}>px;padding:0 9px;background:#FFF;z-index:3;overflow:hidden;}
+#focus_<{$widgets_id}> .draw_sider ul li {border-top:1px solid #e0e0e0;padding:9px 0;width:100%;overflow:hidden;}
+#focus_<{$widgets_id}> .draw_sider ul li.first {border:none;}
+#focus_<{$widgets_id}> .draw_sider ul li img{display:block;-webkit-transition:opacity 0.5s ease-in-out;-moz-transition:opacity 0.5s ease-in-out;-o-transition: opacity 0.5s ease-in-out;transition: opacity 0.5s ease-in-out;}
+#focus_<{$widgets_id}> .draw_sider ul li a:hover img {filter:alpha(opacity=60)\0;*filter:alpha(opacity=60);opacity:0.6;}
+</style>
+<div id="focus_<{$widgets_id}>" style="height:<{$setting.height}>px;overflow:hidden;">
+    <div class="viewbox">
+        <div class="withdraw">
+            <ul id="flashview_<{$widgets_id}>" class="flashview">
+            	<{foreach from=$setting.focus item=pic key=key name=foucus}>
+                <li><a target="_blank" href="<{$pic.tolink}>"><img src="<{$pic.imgurl}>" alt="<{$pic.title}>" /></a></li>
+                <{/foreach}>
+            </ul>
+        </div>
+         <div class="slide-number" id="slide_<{$widgets_id}>">
+         <{assign var="do" value="0"}><{foreach from=$setting.focus item=item key=key2 name=count}><a href="javascript:void(0);" hidefocus="true" rel="nofollow" <{if $do==0}>class="active"<{/if}>><{assign var="do" value=$do+1}><{$smarty.foreach.count.iteration}></a><{/foreach}>
+    	</div>
+    </div>  
+    <a id="moveLeft_<{$widgets_id}>" href="javascript:void(0);" class="prev"></a>
+    <a id="moveRight_<{$widgets_id}>" href="javascript:void(0);" class="next"></a>
+</div>
+
+<script src="images/qf-wide-focus.js"></script>
+<script type="text/javascript">
+
+window.addEvent("domready",function(){
+	var wid_<{$widgets_id}> = new qfFocus("flashview_<{$widgets_id}>",{
+		'periodical':'<{$setting.periodical|default:5000}>',
+		'duration':'<{$setting.duration|default:300}>',		
+		'direction':'<{if $setting.direction != '1'}>horizontal<{else}>vertical<{/if}>',
+		'button': {
+			'left':'moveLeft_<{$widgets_id}>',
+			'right':'moveRight_<{$widgets_id}>',
+			'delay':100
+		},
+		'pagebtns': {
+			'id':'slide_<{$widgets_id}>',
+			'selected-class':'active'
+		}
+	}).init();
+});
+</script>

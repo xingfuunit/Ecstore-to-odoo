@@ -1258,19 +1258,23 @@ class b2c_mdl_goods extends dbeav_model{
 
         #检测special活动是否存活，是否可下架
         if($data['marketable'] == 'false'){
-            $service_sepcial_goods_check = kernel::service('sepcial_goods_check');
-            if($service_sepcial_goods_check != null){
-                if(!$service_sepcial_goods_check->check_special_product_marketable($result,$msg))
-                {
-                    return false;
-                }
+        	foreach(kernel::servicelist('b2c_goods_model_check') as $service_sepcial_goods_check)
+	            {
+	                if(method_exists($service_sepcial_goods_check, 'check_goods_marketable_false'))
+	                {
+	                    if(!$service_sepcial_goods_check->check_goods_marketable_false($result,$msg))
+	                    {
+	                        return false;
+	                    }
+	                }
+	            }
                 //          $special_status = kernel::single('starbuy_special_goods')->check_special_product_marketable($result,$msg);
 //          if(!$special_status){
 //              return false;
 //          }
-            }
         }
         $objProducts->update($data,$result);
+        
         $rs_flag = $this->update($data,$result);
         if(kernel::single('b2c_search_goods')->is_search_status()){
             searchrule_search::instance('b2c_goods')->update($data,$result);

@@ -1,0 +1,27 @@
+<style type="text/css">
+.qfgoods li {float:left;overflow:hidden;}
+</style>
+<div class="qfgoods" id="qf-goods-<{$widgets_id}>">
+ <{if $setting.title}><div class="hd"><{$setting.title}></div><{/if}>
+  <ul class="clearfix">
+    <{assign var="do" value='1'}>
+    <{foreach from=$data.goodsRows item=row key=gid name=goodsrow}>
+    <li class="item">
+      <{assign var=pickey  value=$setting.gpic_size|default:'goodsPicS' }>
+      <div class="goodpic" style="<{if $setting.picWidth}>width:<{$setting.picWidth|default:200}>px;<{/if}><{if $setting.picHeight}>height:<{$setting.picHeight|default:200}>px;<{/if}>overflow:hidden;background-color:#FFF;margin:0 auto;"><a target="_blank" href="<{$row.goodsLink}>"><img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>"<{if $setting.picWidth}> width="<{$setting.picWidth|default:200}>"<{/if}><{if $setting.picHeight}> height="<{$setting.picHeight|default:200}>"<{/if}> /></a>
+      </div>
+      <div class="info">
+      	 <h6><a target="_blank" href="<{$row.goodsLink}>" title="<{$row.goodsName}>"><{$row.goodsName|cut:$setting.maxlength}></a></h6>
+         <{if $setting.showgoodsIntro =='on' && $row.goodsIntro}><p class="goods-intro"><a target="_blank" href="<{$row.goodsLink}>"><{$row.goodsIntro|cut:$setting.maxlength2}></a></p><{/if}>
+          <{if $setting.showgoodsMarketPrice == 'on' || $setting.showgoodsSalePrice == 'on'}>
+          <p class="pp2">
+            <{if $setting.showgoodsbtn == 'on'}><span class="buy_btn fr"><a target="_blank" href="<{$row.goodsLink}>">购买</a></span><{/if}>
+          	<{if $setting.showgoodsSalePrice =='on'}><span>销售价：</span><span class="price1"><{$row.goodsSalePrice|cur}></span><{/if}>
+          	<{if $setting.showgoodsMarketPrice == 'on'}><span class="mktprice1"><{$row.goodsMarketPrice|cur}></span><{/if}>
+          </p>
+          <{/if}>
+      </div>
+     </li>
+    <{/foreach}>
+  </ul>
+</div>
