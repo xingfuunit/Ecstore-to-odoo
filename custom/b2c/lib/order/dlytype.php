@@ -158,7 +158,7 @@ class b2c_order_dlytype
                         foreach ($area_fee_conf as $k=>$v)
                         {
                             $areas = explode(',',$v['areaGroupId']);
-
+                            
                             // 再次解析字符
                             foreach ($areas as &$strArea)
                             {
@@ -180,8 +180,22 @@ class b2c_order_dlytype
                                     }
                                 }
                             }
-
+                            
                             if(in_array($area_id,$areas)){//如果地区在其中，优先使用地区设置的配送费用，及公式
+                            	
+                            	// alter by Nick 判断特定商品的配送方式
+                            	if($v['goods_id']){
+                            		$is_goods_allow = true;
+                            		foreach($controller->pagedata['aCart']['goods_min_buy'] as $k=> $g){
+                            			if(!in_array($k,$v['goods_id'])){
+                            				$is_goods_allow = false;
+                            			}
+                            		}
+                            		if($is_goods_allow == false){
+                            			break;
+                            		}
+                            	}
+                            	
                                 $value['firstprice'] = $v['firstprice'];
                                 $value['continueprice'] = $v['continueprice'];
                                 //if($v['dt_useexp']==1){
@@ -190,12 +204,14 @@ class b2c_order_dlytype
                                 $setting_0[$value['ordernum'].'.'.$value['dt_id']] = $value;
                                 break;
                             }
+                            
                         }
                     }
                 }
             }
 
             $return = array_merge($setting_1,$setting_0);
+            
             ksort($return);
             return $return;
         }
