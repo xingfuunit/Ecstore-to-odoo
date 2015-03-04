@@ -7,10 +7,10 @@
 		} 
 		function checkP(o){ 
 				theV=isNaN(parseFloat(o.value))?0:parseFloat(o.value);
-				theV=parseInt(theV*100)/100; 
+				theV=parseInt(theV*1000)/1000; 
 				if(theV!=o.value){ 
-					theV=(theV*100).toString(); 
-					theV=theV.substring(0,theV.length-2)+"."+theV.substring(theV.length-2,theV.length) 
+					theV=(theV*1000).toString(); 
+					theV=theV.substring(0,theV.length-3)+"."+theV.substring(theV.length-3,theV.length);
 					o.value=theV; 
 				} 
                                 if (txtAmount.value) {
@@ -40,10 +40,10 @@
 		} 
 		function checkP2(o){ 
 				theV=isNaN(parseFloat(o.value))?0:parseFloat(o.value);
-				theV=parseInt(theV*100)/100; 
+				theV=parseInt(theV*1000)/1000; 
 				if(theV!=o.value){ 
-					theV=(theV*100).toString(); 
-					theV=theV.substring(0,theV.length-2)+"."+theV.substring(theV.length-2,theV.length) 
+					theV=(theV*1000).toString(); 
+					theV=theV.substring(0,theV.length-3)+"."+theV.substring(theV.length-3,theV.length);
 					o.value=theV; 
 				} 
                                if (txtYuAmount.value) {
@@ -92,8 +92,8 @@
                      <span class="zhye_other"><{t}>余额不足，还差：<span class="zhye_other_val" style="color:red;font-size: 24px;" ></span>
                      <input id=txtYuAmount class="zhye_yu_val" type="hidden" value="" />
                      </br>请选择以下方式支付差额。<{/t}><br/><label style="font-size:18px;">
-                     <input type="radio" value="1" name="other_pay" onclick="changePay(this);" checked="checked"/><font style="font-size: 24px">现金付款</font></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <label style="font-size:18px;"><input type="radio" value="2" onclick="changePay(this);" name="other_pay"/><font style="font-size: 24px ">刷卡付款</font><label></span><br /><br />
+                     <input type="radio" value="1" name="other_pay" onclick="changePay(this);"/><font style="font-size: 24px">现金付款</font></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <label style="font-size:18px;"><input type="radio" value="2" onclick="changePay(this);" name="other_pay" checked="checked"/><font style="font-size: 24px ">刷卡付款</font><label></span><br /><br />
           <span class="zhye_xianjin">实收金额：<span style="color: red; font-size: 18px; line-height: 40px; font-weight: bold;">￥</span>
           <input id=txtYuPrice value="0" class="sddss" style=" width: 150px; height: 28px; padding-left: 5px; color: red; font-size: 20px; font-weight: bold;" onkeyup="checkP2(this);" onpaste="checkP2(this);" oncut="checkP2(this);" ondrop="checkP2(this);" onchange="checkP2(this);" onblur="checkMoney2(this)" />
           找零：<input id=txtYuTotal value=0 readOnly="true" style="border-right-width:0px; margin-right:0px; border: none; color: red; font-size: 20px; font-weight: bold;margin-top:-8px;"/>
@@ -1598,7 +1598,7 @@ function checkPreMoney() {
         dede.getElement('.zhye_other_val').innerHTML = '￥' + _val;
         dede.getElement('.zhye_yu_val').value = '￥' + _val;
         z_o_dom.show();
-        z_x_dom.show();
+        z_x_dom.hide();
         return false;
     } else {
         z_o_dom.hide();
