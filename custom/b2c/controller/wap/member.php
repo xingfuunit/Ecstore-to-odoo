@@ -88,6 +88,28 @@ class b2c_ctl_wap_member extends wap_frontpage{
         
         $wei_member = app::get('pam')->model('members')->getList('*',array('member_id'=>$this->app->member_id));
         if(count($wei_member) > 1){
+        	foreach($wei_member as $row){
+        		if($row['login_type'] == 'mobile'){
+        			$data['bind_type'] = '手机';
+        			$data['bind_account'] = $row['login_account'];
+        			break;
+        		}
+        	
+        		if($row['login_type'] == 'email'){
+        			$data['bind_type'] = '邮件';
+        			$data['bind_account'] = $row['login_account'];
+        			break;
+        		}
+        	
+        		if($row['login_type'] == 'local'){
+        			if(strlen($row['login_account']) < 24){
+        				$data['bind_type'] = '账号';
+        				$data['bind_account'] = $row['login_account'];
+        				break;
+        			}       			
+        		}
+        	}
+        	$this->pagedata['bind_info'] = $data;
         	$this->pagedata['weixin_bind'] = '1';
         }else{
         	$this->pagedata['weixin_bind'] = '0';
