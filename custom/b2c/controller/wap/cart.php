@@ -1031,7 +1031,8 @@ class b2c_ctl_wap_cart extends wap_frontpage{
 	        }
 	        setcookie('purchase[branch_name]',$branch['name'] , 0, kernel::base_url() . '/');
 	        setcookie('purchase[branch_id]',$branch['branch_id'] , 0, kernel::base_url() . '/');
-	        
+	        $seKey = md5($this->obj_session->sess_id().$member_id);
+	        setcookie('purchase[addr][usable]', $seKey, 0, kernel::base_url() . '/');
 	        setcookie('purchase[addr][addr_id]', $addr_id, 0, kernel::base_url() . '/');
         }
         echo $this->fetch('wap/cart/checkout/delivery_confirm.html');

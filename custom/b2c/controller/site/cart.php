@@ -962,6 +962,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             $this->pagedata['dlytype_html'] = kernel::single('b2c_order_dlytype')->select_delivery_method($this,$area[2],$this->pagedata['aCart']);
             $this->pagedata['shipping_method'] = (isset($_COOKIE['purchase']['shipping']) && $_COOKIE['purchase']['shipping']) ? unserialize($_COOKIE['purchase']['shipping']) : '';
             $this->pagedata['shipping_branch_name'] = $_COOKIE['purchase']['branch_name'];
+            $this->pagedata['shipping_branch_id'] = $_COOKIE['purchase']['branch_id'];
             $this->pagedata['has_cod'] = $this->pagedata['shipping_method']['has_cod'];
         }
 
@@ -1408,7 +1409,12 @@ class b2c_ctl_site_cart extends b2c_frontpage{
 	        	app::get('b2c')->model('member_addrs')->update($data,array('addr_id'=>$pickup_addr[0]['addr_id']));
 	        	$addr_id = $pickup_addr[0]['addr_id'];
 	        }
+	        $seKey = md5($this->obj_session->sess_id().$member_id);
 	        
+	        setcookie('purchase[branch_name]',$branch['name'] , 0, kernel::base_url() . '/');
+	        setcookie('purchase[branch_id]',$branch['branch_id'] , 0, kernel::base_url() . '/');
+	        
+	        setcookie('purchase[addr][usable]', $seKey, 0, kernel::base_url() . '/');
 	        setcookie('purchase[addr][addr_id]', $addr_id, 0, kernel::base_url() . '/');
         }
         
