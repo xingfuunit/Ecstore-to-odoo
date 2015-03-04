@@ -9,9 +9,11 @@
 <{*<{/foreach}>*}>
 <div class="full-screen">
     <div id="zxps" class="paiing" >
+    	<dl>
         <{foreach from=$shippings item="shipping" key="key" name="shippings"}>
-        <span class="paiing-span<{if $smarty.get.id eq $shipping.dt_id}> selected<{/if}>" value='{"id":<{$shipping.dt_id}>,"has_cod":"<{$shipping.has_cod}>","dt_name":"<{$shipping.dt_name}>","money":"<{$shipping.money}>"}'><{$shipping.dt_name}></span>    <!-- 当前选中状态  加样式   selected  -->
+        <dd class="paiing-span<{if $smarty.get.id eq $shipping.dt_id}> selected<{/if}>" value='{"id":<{$shipping.dt_id}>,"has_cod":"<{$shipping.has_cod}>","dt_name":"<{$shipping.dt_name}>","money":"<{$shipping.money}>"}'><{$shipping.dt_name}></dd>    <!-- 当前选中状态  加样式   selected  -->
         <{/foreach}>
+        </dl>
     </div>
 
 

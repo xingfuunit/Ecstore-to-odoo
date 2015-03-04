@@ -1396,7 +1396,7 @@ vertical-align: middle;
 .no-border{border:0; padding:0px 10px;}
 .invoice_submit{margin-top:20px;background-color:#f08300;display:block;color:#fff;width:100%;padding:5px 0;border-radius: 4px;display:block;text-align:center;}
 .paiing{padding:5px 10px; overflow:hidden;margin-top:20px;}
-.paiing-span{width:30%; padding:4px 10px;margin:10px 5px; border:1px solid #cbcbcb;cursor:pointer;}
+
 .selected,.paiing .selected{border-color:#d20212;}
 .paiing_title{padding:5px 10px; overflow:hidden; background-color:#e2e2e2;}
 .paiing img{border:1px solid #e2e2e2;width:30%;margin:5px 0px 5px 3px;padding:0;}
@@ -1922,7 +1922,7 @@ ul{list-style-type:none;margin:0;padding:0;}
 .no-border{border:0; padding:0px 10px;}
 .invoice_submit{margin-top:20px;background-color:#f08300;display:block;color:#fff;width:100%;padding:5px 0;border-radius: 4px;display:block;text-align:center;}
 .paiing{padding:5px 10px; overflow:hidden;margin-top:20px;}
-.paiing-span{width:30%; padding:4px 10px;margin:10px 5px; border:1px solid #cbcbcb;cursor:pointer;}
+.paiing-span{padding:4px 10px;margin:10px 5px; border:1px solid #cbcbcb;cursor:pointer;float:left;}
 .selected,.paiing .selected{border-color:#d20212;}
 .paiing_title{padding:5px 10px; overflow:hidden;margin-top:20px; background-color:#e2e2e2;}
 .paiing img{border:1px solid #e2e2e2;width:30%;margin:5px 0px 5px 3px;padding:0;}
