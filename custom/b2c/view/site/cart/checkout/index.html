@@ -189,7 +189,8 @@ var Order = function() {
         load: 'cart-shipping_edit.html',
         save: 'cart-shipping_save.html',
         remove: 'cart-shipping_delete.html',
-        confirm: 'cart-shipping_confirm.html'
+        confirm: 'cart-shipping_confirm.html',
+        reload:'cart-shipping_reload.html',
     };
     Object.append(this.shipping, {
         edit: this.shipping.module.getElement('.action-edit-shipping'),
@@ -473,9 +474,20 @@ $('main').addEvents({
     //= 确认配送方式
     'click:relay(.action-confirm-delivery)': function(e) {
         if(validate(this.getParent('.change-delivery'), 'all')) {
+        	shipping_obj = $$('input:checked[name=shipping]').get('value');
+			shipping_obj =  eval('(' + shipping_obj + ')');
+			
+			var selectIndex = document.getElementById("branch_id").selectedIndex;
+			var branch_id = document.getElementById("branch_id").options[selectIndex].value;
+			if (shipping_obj.dt_name == '门店自提' && branch_id == '') {
+				alert("请选择自提门店");
+				return ;
+			}
+        	
             order.shipping.edit.removeClass('fold');
             hideWarn(this);
             loadDelivery(this);
+            //location.reload();
         }
     },
     //= 确认支付方式
@@ -747,7 +759,6 @@ function addShipping(el, method) {
     var li;
 
     order.send(order.shipping.save, parent, function(rs){
-	
         if(el.match('input')) {
             if(el.value == 0) {
                 addAddress(update,parent,rs,true);
@@ -830,8 +841,18 @@ function loadDelivery(el) {
     order.update(mod.confirm, data.toQueryString() + order.isFastbuy, update, function(rs){
         fold('delivery', false);
         linkage('payment', data);
+        shippingRload();
+    });
+    
+}
+
+function shippingRload() {
+    order.send(order.shipping.reload, "", function(rs){
+        document.getElementById("order_shipping").innerHTML = rs;
     });
 }
+
+
 function loadPayment(el) {
     var mod = order.payment;
     var data = mod.change;

@@ -1312,7 +1312,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
 
         $objMem = $this->app->model('members');
         $this->pagedata['browser'] = $this->get_browser();
-        $this->pagedata['receiver'] = $objMem->getMemberAddr($this->app->member_id);
+        $this->pagedata['receiver'] = $objMem->getMemberAddrLocal($this->app->member_id);
         $this->pagedata['is_allow'] = (count($this->pagedata['receiver'])<10 ? 1 : 0);
         $this->pagedata['num'] = count($this->pagedata['receiver']);
         $this->pagedata['res_url'] = $this->app->res_url;

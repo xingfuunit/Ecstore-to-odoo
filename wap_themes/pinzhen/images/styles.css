@@ -2035,3 +2035,7 @@ ul{list-style-type:none;margin:0;padding:0;}
 #checkout_total .settlement .js_btn{color:#fff;}
 .marg {margin: 22px 0px;}
 .dialog .btn{float: left;padding: 1px 14px;font-size: 14px;border-radius: 4px;}
+
+.ps-div .selected{
+	border:1px #d20212 solid;
+}

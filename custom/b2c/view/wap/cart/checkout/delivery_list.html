@@ -14,21 +14,14 @@
         <{/foreach}>
     </div>
 
-    <{*<div id="ps-div" class="ps-div">*}>
-        <{*<div class="ps-div-title">自提时间</div>*}>
-        <{*<div class="ps-div-time">2014-11-11 20:00:00</div>   <!-- 弹出选择框选择  -->*}>
-    <{*</div>*}>
+
     <div style="<{if $smarty.get.id neq 2}>display:none;<{/if}>"  class="ps-div" id="select_zt">
         <div class="ps-div-title">自提地点</div>                <!-- 弹出选择框选择  -->
-        <div class="ps-div-address">顺德大良店</div>
+        <{foreach from=$branchlist item="branchs"}>
+        <div class="ps-div-address" value='<{$branchs.branch_id}>'><{$branchs.name}></div>
+        <{/foreach}>
     </div>
-
-    <{*<div class="ps-divs-sf">*}>
-        <{*<div class="ps-div-title">快递名称</div>                <!-- 弹出选择框选择  -->*}>
-        <{*<div class="ps-div-address">顺丰</div>*}>
-    <{*</div>*}>
-
-
+    
     <div class="invoice no-border">
         <a id="submit_del" href="javascript:;" class="invoice_submit">确定</a>
     </div>
@@ -38,15 +31,29 @@
         $('#zxps .paiing-span').removeClass('selected');
         $(this).addClass('selected');
         var data = $.parseJSON($(this).attr('value'));
-        if(data.dt_name.indexOf('自提') >　0){
+        if(data.dt_name == '门店自提'){
             $('#select_zt').show();
         }else{
             $('#select_zt').hide();
         }
     });
+    
+    $('#select_zt .ps-div-address').click(function () {
+    	$('#select_zt .ps-div-address').removeClass('selected');
+    	$(this).addClass('selected');
+    });
 
     $('#submit_del').click(function(){
         var data = 'shipping='+$('#zxps .selected').attr('value');
+        
+        var selectedData = $.parseJSON($('#zxps .selected').attr('value'));
+        
+        if (selectedData.dt_name == '门店自提') {
+        	if ($('#select_zt .selected').attr('value') == undefined) {
+        		alert('请选择自提门店');return ;
+        	}
+        	data = data + "&branch_id="+ $('#select_zt .selected').attr('value');
+        }
         var url = '<{link app=b2c ctl=wap_cart act=delivery_confirm}>';
         $.post(url,data,function(re){
             if(re){

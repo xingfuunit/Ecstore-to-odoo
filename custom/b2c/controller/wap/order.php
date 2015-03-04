@@ -213,6 +213,21 @@ class b2c_ctl_wap_order extends wap_frontpage{
         }else{
             $order_data['source'] = 'wap'; //订单来源
         }
+        
+        //门店自提
+        if( isset($_POST['branch_id']) && intval($_POST['branch_id']) > 0 ){
+            $order_data['branch_id'] = intval($_POST['branch_id']);
+            $branch_mdl = kernel::single("ome_mdl_branch");
+            if($branch_mdl){
+                $branch_obj = $branch_mdl->dump(array('branch_id'=>$order_data['branch_id']));
+                $order_data['branch_name_user'] = $branch_obj['name'];
+            }
+        }else{
+            $order_data['branch_id'] = 0;
+            $order_data['branch_name_user'] = '';
+        }
+        
+        
         $result = $obj_order_create->save($order_data, $msg);
 		if ($result)
 		{

@@ -13,8 +13,8 @@
             <td><input type="radio" name="shipping" value='{"id":<{$shipping.dt_id}>,"has_cod":"<{$shipping.has_cod}>","dt_name":"<{$shipping.dt_name}>","money":"<{$shipping.money}>"}' id="for_delivery_<{$shipping.dt_id}>" class="action-change-delivery" vtype="requiredcustom" data-validatemsg="请选择一种配送方式"<{if $shipping_method.shipping_id == $shipping.dt_id}> checked="checked"<{/if}>>
             <label for="for_delivery_<{$shipping.dt_id}>"><{$shipping.dt_name}></label>&nbsp;
             <{if $shipping.dt_name == '门店自提'}>
-            <select name="branch_id">
-              <option>请选择自提门店</option>
+            <select name="branch_id" id="branch_id">
+              <option value="">请选择自提门店</option>
               <{foreach from=$branchlist item="branch" key="branch_key"}>
               <option value='<{$branch.branch_id}>'><{$branch.name}></option>
               <{/foreach}>
