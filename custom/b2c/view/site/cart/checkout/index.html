@@ -819,6 +819,10 @@ function loadShipping(el, method) {
             fold('shipping', false);
 
             var region = 'area=' + (parent.getElement('li.selected') ? JSON.decode(parent.getElement('li.selected').getElement('.action-change-shipping').value).area : parent.getElement('input[name=area]').value);
+			//add by Nick ajax切换配送方式 需要区分 立即支付 和 购物车
+			if(order.isFastbuy){
+				region = region + order.isFastbuy;
+			}
             linkage('delivery', region);
         }
     });
