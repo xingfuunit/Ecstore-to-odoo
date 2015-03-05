@@ -7,10 +7,10 @@
 		} 
 		function checkP(o){ 
 				theV=isNaN(parseFloat(o.value))?0:parseFloat(o.value);
-				theV=parseInt(theV*1000)/1000; 
+				theV=parseInt(theV*100)/100; 
 				if(theV!=o.value){ 
-					theV=(theV*1000).toString(); 
-					theV=theV.substring(0,theV.length-3)+"."+theV.substring(theV.length-3,theV.length);
+					theV=(theV*100).toString(); 
+					theV=theV.substring(0,theV.length-2)+"."+theV.substring(theV.length-2,theV.length);
 					o.value=theV; 
 				} 
                                 if (txtAmount.value) {
@@ -40,10 +40,10 @@
 		} 
 		function checkP2(o){ 
 				theV=isNaN(parseFloat(o.value))?0:parseFloat(o.value);
-				theV=parseInt(theV*1000)/1000; 
+				theV=parseInt(theV*100)/100; 
 				if(theV!=o.value){ 
-					theV=(theV*1000).toString(); 
-					theV=theV.substring(0,theV.length-3)+"."+theV.substring(theV.length-3,theV.length);
+					theV=(theV*100).toString(); 
+					theV=theV.substring(0,theV.length-2)+"."+theV.substring(theV.length-2,theV.length);
 					o.value=theV; 
 				} 
                                if (txtYuAmount.value) {

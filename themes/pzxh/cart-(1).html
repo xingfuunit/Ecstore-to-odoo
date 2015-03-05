@@ -41,7 +41,7 @@
              <tr>
                  <td width="30%">店  铺：<{$local_store.name}></td>
                  <td width="30%">门店地址：<{$local_store.area|region}><{$local_store.addr}></td>
-                 <td width="40%">会员账号：<{if $member.uname}><{$member.uname}><{else}><{input type="text" name="uname" id="" value="{$loginName}" placeholder="手机/用户名/邮箱地址/会员卡号" vtype="required" data-caution="请填写登录帐号" class="login-input" style="width:200px; height:30px; border: 1px solid #8faace;" autofocus="autofocus"}><{/if}></td>
+                 <td width="40%">会员账号：<{if $member.uname}><{$member.uname}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;会员积分：<{$member.usage_point}><{else}><{input type="text" name="uname" id="" value="{$loginName}" placeholder="手机/用户名/邮箱地址/会员卡号" vtype="required" data-caution="请填写登录帐号" class="login-input" style="width:200px; height:30px; border: 1px solid #8faace;" autofocus="autofocus"}><{/if}></td>
              </tr>
              <tr>
                  <td width="30%">员  工：<{$staff_name}></td>
