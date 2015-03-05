@@ -573,12 +573,16 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         /* 是否开启配送时间的限制 */
         $this->pagedata['site_checkout_receivermore_open'] = $this->app->getConf('site.checkout.receivermore.open');
         /*收货地址 end*/
-
         if($def_addr){
             //是否有默认的当前的配送方式
             $area = explode(':',$def_addr['area']);
             $this->pagedata['dlytype_html'] = kernel::single('b2c_order_dlytype')->select_delivery_method($this,$area[2],$this->pagedata['aCart'],"",'wap/cart/checkout/delivery_confirm.html');
             $this->pagedata['shipping_method'] = (isset($_COOKIE['purchase']['shipping']) && $_COOKIE['purchase']['shipping']) ? unserialize($_COOKIE['purchase']['shipping']) : '';
+            
+            if ($this->pagedata['shipping_method']['shipping_name'] == '门店自提' &&  $def_addr['local_id'] != '-1') {
+            	$this->pagedata['shipping_method'] = '';
+            }
+            
             $this->pagedata['shipping_branch_name'] = $_COOKIE['purchase']['branch_name'];
             $this->pagedata['shipping_branch_id'] = $_COOKIE['purchase']['branch_id'];
             
@@ -993,7 +997,9 @@ class b2c_ctl_wap_cart extends wap_frontpage{
 	        $member_id = kernel::single('b2c_user_object')->get_member_id();
 	        $pickup_addr = app::get('b2c')->model('member_addrs')->getList('*',array('member_id'=>$member_id,'local_id'=>'-1'));
 	        $addrs_info = app::get('b2c')->model('member_addrs')->getList('*',array('addr_id'=>$_COOKIE['purchase']['addr']['addr_id']));
-	        
+	        if (empty($addrs_info)) {
+	        	$addrs_info = app::get('b2c')->model('member_addrs')->getList('*',array('local_id'=>'0','member_id'=>$member_id),0,1,'def_addr desc');
+	        }
         	$area_explode = explode(':',$branch['area']);
         	$area_explode[1] = str_replace('/','',$area_explode[1]);
         	$address = str_replace($area_explode[1],'',$branch['address']);

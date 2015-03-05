@@ -477,13 +477,14 @@ $('main').addEvents({
         	shipping_obj = $$('input:checked[name=shipping]').get('value');
 			shipping_obj =  eval('(' + shipping_obj + ')');
 			
-			var selectIndex = document.getElementById("branch_id").selectedIndex;
-			var branch_id = document.getElementById("branch_id").options[selectIndex].value;
-			if (shipping_obj.dt_name == '门店自提' && branch_id == '') {
-				alert("请选择自提门店");
-				return ;
-			}
-        	
+			if (document.getElementById("branch_id")) {
+				var selectIndex = document.getElementById("branch_id").selectedIndex;
+				var branch_id = document.getElementById("branch_id").options[selectIndex].value;
+				if (shipping_obj.dt_name == '门店自提' && branch_id == '') {
+					alert("请选择自提门店");
+					return ;
+				}
+        	}
             order.shipping.edit.removeClass('fold');
             hideWarn(this);
             loadDelivery(this);
