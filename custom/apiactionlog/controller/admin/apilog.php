@@ -32,7 +32,7 @@ class apiactionlog_ctl_admin_apilog extends desktop_controller{
         	if ($api_type=='request2') {
         		//把真正失败的同步日志筛选出来 by michael
         		$week = time()-3600*24*14;
-        		$aData = kernel::database()->select("SELECT a.apilog_id FROM sdb_apiactionlog_apilog a,sdb_b2c_orders b WHERE a.worker='store.trade.update' AND (a.task_name='订单变更' or a.task_name='订单新增')　AND (b.payment != 'xianjin' and  b.payment != 'shuaka')  AND a.original_bn=b.order_id AND b.pay_status='1' AND b.ship_status='0' AND b.status != 'finish' AND a.status='fail' AND a.last_modified>='{$week}'  ");
+        		$aData = kernel::database()->select("SELECT a.apilog_id FROM sdb_apiactionlog_apilog a,sdb_b2c_orders b WHERE a.worker='store.trade.update' AND (a.task_name='订单变更' or a.task_name='订单新增') AND (b.payment != 'xianjin' and  b.payment != 'shuaka')  AND a.original_bn=b.order_id AND b.pay_status='1' AND b.ship_status='0' AND b.status != 'finish' AND a.status='fail' AND a.last_modified>='{$week}'  ");
         		$ids = array();
         		foreach ($aData as $key=>$value) {
         			$ids[] = $value['apilog_id'];
