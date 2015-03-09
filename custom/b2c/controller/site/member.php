@@ -1631,7 +1631,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
         $GLOBALS['runtime']['path'] = $this->path;
 
         //获取会员已发货的商品日志
-        $sell_logs = $this->app->model('sell_logs')->getList('order_id,product_id,goods_id',array('member_id'=>$this->app->member_id));
+        $sell_logs = $this->app->model('sell_logs')->getList('order_id,product_id,goods_id,createtime',array('member_id'=>$this->app->member_id));
         //获取会员已评论的商品
         $comments = $this->app->model('member_comments')->getList('order_id,product_id',array('author_id'=>$this->app->member_id,'object_type'=>'discuss','for_comment_id'=>'0'));
         $data = array();
@@ -1677,7 +1677,6 @@ class b2c_ctl_site_member extends b2c_frontpage{
         }
         $totalPage = ceil($i/$limit);
         if($nPage > $totalPage) $nPage = $totalPage;
-
         $this->pagedata['list'] = $sell_logs_data;
         $this->pagination($nPage,$totalPage,'nodiscuss');
 
@@ -1756,11 +1755,13 @@ class b2c_ctl_site_member extends b2c_frontpage{
         $GLOBALS['runtime']['path'] = $this->path;
         $oCoupon = kernel::single('b2c_coupon_mem');
         $aData = $oCoupon->get_list_m($this->app->member_id,$nPage);
+    	$sortAdata = array();
         if ($aData) {
             foreach ($aData as $k => $item) {
                 if ($item['coupons_info']['cpns_status'] !=1) {
                     $aData[$k]['coupons_info']['cpns_status'] = false;
                     $aData[$k]['memc_status'] = app::get('b2c')->_('此种优惠券已取消');
+                    $aData[$k]['order'] = 5;
                     continue;
                 }
 
@@ -1768,6 +1769,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
                 if (!in_array($this->member['member_lv'],(array)$member_lvs)) {
                     $aData[$k]['coupons_info']['cpns_status'] = false;
                     $aData[$k]['memc_status'] = app::get('b2c')->_('本级别不准使用');
+                    $aData[$k]['order'] = 5;
                     continue;
                 }
 
@@ -1776,24 +1778,43 @@ class b2c_ctl_site_member extends b2c_frontpage{
                     if ($item['memc_used_times']<$this->app->getConf('coupon.mc.use_times')){
                         if ($item['coupons_info']['cpns_status']){
                             $aData[$k]['memc_status'] = app::get('b2c')->_('可使用');
+                            $aData[$k]['order'] = 1;
                         }else{
                             $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券已作废');
+                            $aData[$k]['order'] = 5;
                         }
                     }else{
                         $aData[$k]['coupons_info']['cpns_status'] = false;
                         $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券次数已用完');
+                        $aData[$k]['order'] = 4;
                     }
                 }else{
-                    $aData[$k]['coupons_info']['cpns_status'] = false;
-                    $aData[$k]['memc_status'] = app::get('b2c')->_('还未开始或已过期');
+                	if($curTime < $item['time']['from_time']){
+                		$aData[$k]['coupons_info']['cpns_status'] = false;
+                		$aData[$k]['memc_status'] = app::get('b2c')->_('还未开始');
+                		$aData[$k]['order'] = 2;
+                	}
+                	if($curTime > $item['time']['to_time']){
+                		$aData[$k]['coupons_info']['cpns_status'] = false;
+                		$aData[$k]['memc_status'] = app::get('b2c')->_('已过期');
+                		$aData[$k]['order'] = 3;
+                	}
                 }
             }
+        }
+
+        for($i=1;$i<5;$i++){
+        	foreach($aData as $key => $item){
+        		if($aData[$key]['order'] == $i){ //将优惠券进行排序:1.可以使用;2未开始;3.已过期;4.已使用;5.其他
+        			$sortAdata[] = $item;
+        		}
+        	}
         }
 
         $total = $oCoupon->get_list_m($this->app->member_id);
         $this->pagination($nPage,ceil(count($total)/$this->pagesize),'coupon');
         $this->pagedata['browser'] = $this->get_browser();
-        $this->pagedata['coupons'] = $aData;
+        $this->pagedata['coupons'] = $sortAdata;
         $this->output();
     }
 
