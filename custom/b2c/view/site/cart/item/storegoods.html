@@ -46,7 +46,11 @@
         <!-- <{if $goods.store.store == 0}><span class="warn-message"><{t}>库存不足<{/t}></span> hack by Jason -->
         <!-- <{elseif $goods.store.store <= 5}><span class="warn-message"><{t}>余量有限<{/t}></span><{/if}>  hack by Jason -->
       </td>
-      <td class="p-goodskg"><{if $goods.unit.unit == '千克' || $goods.unit.unit == 'kg'}><input type="text" value="<{$goods.quantity_exchange}>" id="modify_quantity_ex_<{$goods.obj_ident}>" name="kg_might" style="border: 1px solid #ccc; text-align: center; width: 70px; height: 20px;"><{else}>-<{/if}></td>
+      <!-- <td class="p-goodskg"><{if $goods.unit.unit == '千克' || $goods.unit.unit == 'kg'}><input type="text" value="<{$goods.quantity_exchange}>" id="modify_quantity_ex_<{$goods.obj_ident}>" name="kg_might" style="border: 1px solid #ccc; text-align: center; width: 70px; height: 20px;"><{else}>-<{/if}></td> -->
+      <td class="p-goodskg">
+      <{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}><input type="text" value="<{$goods.quantity_exchange}>" id="modify_quantity_ex_<{$goods.obj_ident}>" name="kg_might" style="border: 1px solid #ccc; text-align: center; width: 70px; height: 20px;"><{else}>-<{/if}>
+      <{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}><p class="p-weight" style="font-weight:bold;font-size:15px;"><{$goods.quantity_exchange/500}>斤</p><{/if}>
+      </td>
       <td class="p-discount"><{($goods.discount_amount_prefilter)+(($goods.obj_items.products.0.price.price-$goods.obj_items.products.0.price.member_lv_price)*$goods.quantity)|cur_odr}></td>
      
       <td class="p-integral">

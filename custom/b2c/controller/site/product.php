@@ -499,12 +499,26 @@ class b2c_ctl_site_product extends b2c_frontpage{
     	
     	$bn = trim($_POST['bn']);
     	$bn = kernel::database()->quote($bn);
+    	/**hack by Jason begin **/
+    	if(strlen($bn) == 15){
+    		$tmp_bn = $bn;
+    		$bn = kernel::database()->quote(substr($tmp_bn, 2,6));
+    		$weigh = intval(substr($tmp_bn, 8,5));
+    	}
+    	/**hack by Jason end **/
         $product = kernel::database()->select("select product_id,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
     	
     	if(!$product){
             echo json_encode(array('error'=>app::get('b2c')->_('商品不存在')));
             return;
     	}
+    	/**hack by Jason begin **/
+    	if($weigh){
+    		$product[0]['num'] = $weigh;
+    	}else{
+    		$product[0]['num'] = 1;
+    	}
+    	/**hack by Jason end **/
         //print_r($product);exit;
         if($product[0]['marketable'] == "false"){
             echo json_encode(array('error'=>app::get('b2c')->_('商品未上架')));

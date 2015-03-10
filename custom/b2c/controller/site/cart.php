@@ -1737,7 +1737,8 @@ public function ajax()
             foreach ( $aCart['object']['goods'] AS $k => $v ) {
                 $aCart['object']['goods'][$k]['unit'] = $goods_model->db_dump(array('goods_id'=>$v['params']['goods_id']),'unit');
                 // 商品单位换算
-                $_val = number_format($v['quantity']/1000, 3, '.', '');
+                //$_val = number_format($v['quantity']/1000, 3, '.', '');
+                $_val = $v['quantity'];//hack by Jason
                 $aCart['object']['goods'][$k]['quantity_exchange'] = floatval($_val);
                 //print_r($aCart['object']['goods']);exit;
             }
