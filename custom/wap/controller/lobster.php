@@ -536,5 +536,179 @@ class wap_ctl_lobster extends wap_controller{
 		}
 	}
 	
+
+//	================================================= 特殊操作   ============================================
+
+// 	12号会员数 2119-1726+159=552
+// 	11号会员数54856-54844+8186=8198
+// 	10号会员数 986-979+125=132
+// 	虚增数：49079
+
+	//较验密码
+	public $_del_pwd = 'zxcvbnm';
+	
+	//每次处理个数
+	public $_pre_exc_num = '100';
+	
+	//临时操作，写死需要绑定的微信帐号
+	public $_weixin_account = 'pz0086';
+	
+	/**
+	 * 清除龙虾活动多余会员数据
+	 */
+	function del_exc_member(){
+		
+		$start = isset($_POST['start']) ? $_POST['start'] : 1;
+		$exc_count = isset($_POST['exc_count']) ? $_POST['exc_count'] : 0;
+		
+		$start_time = '2015-2-10 00:00:01';
+		$end_time = '2015-2-12 23:59:59';
+		
+		$start_time = '2015-2-10 00:00:01';
+		$end_time = '2015-2-12 23:59:59';
+		
+		$pam_member_model = app::get('pam')->model('members');
+		$pam_bind_tag_model = app::get('pam')->model('bind_tag');
+		
+		//开头为 o1a的是来自微信的数据
+		$filter = array('createtime|than'=>strtotime($start_time),'createtime|lthan'=>strtotime($end_time),'login_account|head'=>'o1');
+
+		$count = $pam_member_model->count($filter);
+		
+		if($_POST){
+			if(md5($_POST['pwd']) == md5($this->_del_pwd)){
+				
+				$member_list = $pam_member_model->getList('*',$filter,$start,$this->_pre_exc_num,'member_id ASC');
+				
+				if($member_list){
+					//记录处理数
+					$exc_num = 0;
+					
+					foreach($member_list  as $k => $v){
+						
+						$weixin_info = $pam_bind_tag_model->getrow('*',array('member_id'=>$v['member_id']));
+						
+						//未关注微信用户 且 没参加活动  就删除
+						if(!$this->del_member_is_join_lobster($weixin_info['open_id'], $this->_weixin_account)  && !$this->del_member_is_bind($weixin_info['open_id'], $this->_weixin_account)){
+							$this->_del_exc($v['member_id'],$weixin_info['open_id']);
+							$exc_count ++;
+							$exc_num ++;
+						}
+					}
+					$msg  ='处理完成：'.$exc_num;
+					echo json_encode(array(
+										'status'=>1,
+										'msg'=>$msg,
+										'start'=> $start + $this->_pre_exc_num,
+										'limit'=> $this->_pre_exc_num,
+										'pwd'=>$_POST['pwd'],
+										'exc_count'=>$exc_count,
+										'post_url' => $this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'del_exc_member','full'=>1,'args'=>array('start'=>$start))),
+										'exc_num'=>$exc_num,
+									)
+							);
+					exit;
+					
+				}else{
+					$msg = '处理已完成 或 未找到处理数据';
+					echo json_encode(array('status'=>2,'msg'=>$msg,'exc_count'=>$exc_count));
+					exit;
+				}
+				
+			}else{
+				$msg = '校验码不正确';
+				echo json_encode(array('status'=>0,'msg'=>$msg));
+				exit;
+			}
+		}
+		
+		$this->pagedata['count'] = $count;
+		$this->pagedata['limit'] = $this->_pre_exc_num;
+		$this->pagedata['post_url'] = $this->gen_url(array('app'=>'wap','ctl'=>'lobster','act'=>'del_exc_member','full'=>1,'args'=>array('start'=>$start)));
+		$this->page('wap/lobster/del_exc_member.html',true);
+	}
+	
+	/**
+	 * 删除操作  根据members_id  删除 pam_bind_tag ,pam_members,b2c_members 3个表的 
+	 * @param unknown_type $member_id
+	 * @param unknown_type $account
+	 */
+	private function _del_exc($member_id,$account){
+		if($member_id){
+			$pam_members_model = app::get('pam')->model('members');
+			$members_model = app::get('b2c')->model('members');
+			$pam_bind_model = app::get('pam')->model('bind_tag');
+			
+			$filter = array('member_id'=>$member_id);
+			
+			$pam_members_model->delete($filter);
+			$members_model->delete($filter);
+			$pam_bind_model->delete($filter);
+			
+			//写入log文件
+			$content = 'member_id:'.$member_id.'  account:'.$account."\r\n";
+			file_put_contents('l_weixin_del_member.log',$content,FILE_APPEND);
+		}
+		
+		
+	}
+	
+	
+	/**
+	 * 	open_id 是否关注  
+	 */
+	private function del_member_is_bind($openid,$weixin_account){
+		$bind_model = app::get('weixin')->model('bind');
+		$bind = $bind_model->getrow('id',array('weixin_account'=>$weixin_account));
+		$uinfo = kernel::single('weixin_wechat')->get_basic_userinfo($bind['id'],$openid);
+		
+		if($uinfo){
+			//写入log文件
+			$content = 'openid:'.$openid."\r\n";
+			file_put_contents('l_member_bind.log',$content,FILE_APPEND);
+		}else{
+			//写入log文件
+			$content = 'openid:'.$openid."\r\n";
+			file_put_contents('l_member_no_bind.log',$content,FILE_APPEND);
+		}
+		if ($uinfo['subscribe']) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/**
+	 * 判断 是否参与 龙虾集赞活动，参加了就不删除 （参加的包含点赞的）
+	 */
+	private function del_member_is_join_lobster($openid,$weixin_account){
+		
+		$lobster_member_model = app::get('wap')->model('lobster_member');
+		$re = $lobster_member_model->getrow(' * ',array('m_openid'=>$openid));
+
+// 		$sql = "SELECT * FROM sdb_wap_lobster_member WHERE LCASE(m_openid) = '$openid'";
+// 		$re = $lobster_member_model->db->select($sql);
+// 		$re = $re[0];
+		
+		if($re){
+			//写入log文件
+			$content = 'login_account:'.$openid.'    openid:'.$re['m_openid']."\r\n";
+			file_put_contents('l_member_join_lobster.log',$content,FILE_APPEND);
+		}else{
+			//写入log文件
+			$content = 'login_account:'.$openid."\r\n";
+			file_put_contents('l_member_no_join_lobster.log',$content,FILE_APPEND);
+		}
+		
+		if($re){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+// 	================================================= 特殊操作  ============================================
 }
 ?>
