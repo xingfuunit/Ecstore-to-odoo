@@ -1368,7 +1368,7 @@ class b2c_mdl_goods extends dbeav_model{
                     $service_sepcial_goods_check = kernel::service('sepcial_goods_check');
                     if($service_sepcial_goods_check != null)
                     {
-                        if(!$service_sepcial_goods_check->check_special_product($pval['product_id'],$msg))
+                        if(!$service_sepcial_goods_check->check_product_delete($pval['product_id'],$msg))
                         {
                             $this->recycle_msg = $msg.$val['name'];
                             return false;
