@@ -501,7 +501,7 @@ class b2c_ctl_site_product extends b2c_frontpage{
     	$bn = kernel::database()->quote($post_bn);
     	/**hack by Jason begin **/
     	if(strlen($bn) == 15){
-    		$last_num = barcode_last($post_bn);
+    		$last_num = $this->barcode_last($post_bn);
     		if($last_num == substr($post_bn, -1)){
     			$tmp_bn = $bn;
     			$bn = kernel::database()->quote(substr($tmp_bn, 2,6));
