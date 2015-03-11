@@ -80,7 +80,18 @@ class b2c_ctl_wap_paycenter extends wap_frontpage{
         $this->pagedata['order']['quantity'] = $order_quantity[0]['nums'];
 
         $opayment = app::get('ectools')->model('payment_cfgs');
-        $this->pagedata['payments'] = $opayment->getListByCode($sdf['currency'],array('iscommon','iswap'));
+        
+        //判断wap 还是微信
+        if(kernel::single('weixin_wechat')->from_weixin()){
+        	$pay_plan = 'iswx';
+        	$this->pagedata['device_is_wx'] = true;
+        }else{
+        	$pay_plan = 'iswap';
+        	$this->pagedata['device_is_wx'] = false;
+        }
+        $this->pagedata['payments'] = $opayment->getListByCode($sdf['currency'],array('iscommon',$pay_plan));
+        
+        
         $system_money_decimals = $this->app->getConf('system.money.decimals');
         $system_money_operation_carryset = $this->app->getConf('system.money.operation.carryset');
         $pay_online = false;
@@ -152,6 +163,7 @@ class b2c_ctl_wap_paycenter extends wap_frontpage{
         if($this->pagedata['order']['payinfo']['pay_app_id'] == 'deposit'){
             $this->pagedata['combination_pay'] = $pay_online ? app::get('b2c')->getConf('site.combination.pay') : 'false';
         }
+        
 
         $objCur = app::get('ectools')->model('currency');
         $aCur = $objCur->getFormat($this->pagedata['order']['currency']);
@@ -189,6 +201,7 @@ class b2c_ctl_wap_paycenter extends wap_frontpage{
                 }
             }
         }
+        
 
         $this->pagedata['promotion_type'] = $this->pagedata['order']['promotion_type'];
         $this->set_tmpl('order_index');
