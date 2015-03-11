@@ -19,6 +19,7 @@ class ectools_mdl_payment_cfgs {
                             'type' =>array (
                                 'ispc'     => app::get('ectools')->_('标准版'),
                                 'iswap' => app::get('ectools')->_('触屏版'),
+                            	'iswx' => app::get('ectools')->_('微信版'),
                                 'iscommon' => app::get('ectools')->_('通用版'),
                             ),
                             'default' => 'ispc',
