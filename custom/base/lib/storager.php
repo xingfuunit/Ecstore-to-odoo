@@ -209,12 +209,16 @@ class base_storager{
                     implode("','",array_keys($img)).'\')') as $r){
                 $imglib[$r['image_id']] = $r;
             }
-
+			
             foreach($img as $image_id => $sizes){
                 foreach($sizes as $i=>$item){
                     switch($item[0]{0}){
                         case 's':
                             $url = $imglib[$image_id]['s_url']?$imglib[$image_id]['s_url']:$imglib[$image_id]['url'];
+                            break;
+                        case 'p':
+                            $url = $imglib[$image_id]['s_url']?$imglib[$image_id]['s_url']:$imglib[$image_id]['url'];
+                            $url = 'http://www.pzfresh.com/'.$url;
                             break;
                         case 'm':
                             $url = $imglib[$image_id]['m_url']?$imglib[$image_id]['m_url']:$imglib[$image_id]['url'];
@@ -228,7 +232,7 @@ class base_storager{
                     }
                     if($url&&!strpos($url,'://')){
 						$resource_host_url = kernel::get_resource_host_url();
-						$url = $resource_host_url.'/'.$url;
+						$url = $resource_host_url.'/'.$url;						
                     }
                     $code = ($r['width']>$r['height'])?'w':'h';
                     $img[$image_id][$i][0] = $url?($url.'?'.$imglib[$image_id]['last_modified'].'#'.$code):'';
