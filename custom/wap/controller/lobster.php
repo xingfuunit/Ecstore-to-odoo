@@ -548,7 +548,7 @@ class wap_ctl_lobster extends wap_controller{
 	public $_del_pwd = 'zxcvbnm';
 	
 	//每次处理个数
-	public $_pre_exc_num = '100';
+	public $_pre_exc_num = '50';
 	
 	//临时操作，写死需要绑定的微信帐号
 	public $_weixin_account = 'pz0086';
@@ -588,8 +588,8 @@ class wap_ctl_lobster extends wap_controller{
 						
 						$weixin_info = $pam_bind_tag_model->getrow('*',array('member_id'=>$v['member_id']));
 						
-						//未关注微信用户 且 没参加活动  就删除
-						if(!$this->del_member_is_join_lobster($weixin_info['open_id'], $this->_weixin_account)  && !$this->del_member_is_bind($weixin_info['open_id'], $this->_weixin_account)){
+						//未关注微信用户 且 没参加活动 且 没有订单优惠券数据  就删除
+						if(!$this->del_member_is_join_lobster($weixin_info['open_id'], $this->_weixin_account)  && !$this->del_member_is_bind($weixin_info['open_id'], $this->_weixin_account)  && !$this->del_member_is_used($v['member_id'])){
 							$this->_del_exc($v['member_id'],$weixin_info['open_id']);
 							$exc_count ++;
 							$exc_num ++;
@@ -677,6 +677,25 @@ class wap_ctl_lobster extends wap_controller{
 		else{
 			return false;
 		}
+	}
+	
+	//判断用户 是否有订单或者 优惠券
+	private function del_member_is_used($member_id){
+		$is_used = false;
+		
+		if($member_id){
+			$orders_model = app::get('b2c')->model('orders');
+			if($orders_model->count(array('member_id'=>$member_id))>0){
+				$is_used  = true;
+			}
+			
+			$member_coupon_model = app::get('b2c')->model('member_coupon');
+			if($member_coupon_model->count(array('member_id'=>$member_id))>0){
+				$is_used = true;
+			}
+		}
+		
+		return $is_used;
 	}
 	
 	/**
