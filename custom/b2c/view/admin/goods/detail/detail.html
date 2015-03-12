@@ -46,7 +46,7 @@
   <{if $qrcode_image_id}>
   <div class="fl">
     <div>二维码：</div>
-    <img src=<{$qrcode_image_id|storager:'p'}> alt="" vspace="2" width="80" height="80">
+    <img src=<{$qrcode_image_id|storager:'s'}> alt="" vspace="2" width="80" height="80">
     <div>
       <span class="lnk" onclick="location.href='<{link full=1 app=weixin ctl=admin_setting act=download_qrcode image_id=$qrcode_image_id name=$goods.name}>'">下载</span>
   </div>
