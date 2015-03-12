@@ -21,6 +21,8 @@ class b2c_ctl_wap_cart extends wap_frontpage{
     var $customer_template_type='cart';
     var $noCache = true;
     var $show_gotocart_button = true;
+    
+	var $_follow_url = 'http://mp.weixin.qq.com/s?__biz=MzAxMjEwMjg2OA==&mid=206625913&idx=1&sn=a21e86c75e22f947ae2e7fb57cf47030#rd';
 
     public function __construct(&$app) {
         parent::__construct($app);
@@ -89,17 +91,15 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $setting['wap_status'] = app::get('wap')->getConf('wap.status');
         if( $setting['scanbuy'] == 'true' && $setting['wap_status'] == 'true' ){
         	
-        	
-        	if(kernel::single('weixin_object')->from_weixin()){
+        	if(kernel::single('weixin_wechat')->from_weixin()){
         		//如果来自微信 且已关注  自动登录并加入购物车
-        		if(){
-        			
-        		}
-        		//未关注 跳转关注页面
-        		else{
-        			
-        		}
-        		
+        		$openid = parent::$this->openid;
+				$bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>$_GET['state'],'status'=>'active'));
+				$uinfo = kernel::single('weixin_wechat')->get_basic_userinfo($bind['id'],$openid);
+					//未关注跳到关注页面
+					if (!$uinfo['subscribe']) {
+						$this->redirect($this->_follow_url);
+	        		}
         	}
         	
             $goodsData = app::get('b2c')->model('products')->getRow('goods_id',array('product_id'=>$productId));
