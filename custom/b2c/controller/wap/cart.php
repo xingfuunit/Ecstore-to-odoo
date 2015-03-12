@@ -1070,7 +1070,15 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $member = $this->app->model('members');
         $data = $member->dump($member_id,'advance');
         $this->pagedata['total'] = $data['advance']['total'];
-        return $obj_payment_select->select_pay_method($this, $sdf, false,false,array('iscommon','iswap'),'wap/cart/checkout/select_currency.html');exit;
+        
+        //判断微信端，wap端
+        if(kernel::single('weixin_wechat')->from_weixin()){
+        	$plan = 'iswx';
+        }else{
+        	$plan = 'iswap';
+        }
+        
+        return $obj_payment_select->select_pay_method($this, $sdf, false,false,array('iscommon',$plan),'wap/cart/checkout/select_currency.html');exit;
     }
 
     // 确认支付方式
