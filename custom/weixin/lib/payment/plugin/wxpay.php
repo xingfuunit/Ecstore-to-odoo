@@ -45,7 +45,7 @@ final class weixin_payment_plugin_wxpay extends ectools_payment_app implements e
     /**
      * @var string 当前支付方式所支持的平台
      */
-    public $platform = 'iswap';
+    public $platform = 'iswx';
 
     /**
      * @var array 扩展参数
