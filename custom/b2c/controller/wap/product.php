@@ -80,8 +80,19 @@ class b2c_ctl_wap_product extends wap_frontpage{
         //获得推广代码
         $this->pagedata['buy_code'] = $_getParams[1];
         if( $_GET['qr'] ){
-            $url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'qrCodeAddCart','arg0'=>$productId));
-            $this->redirect($url);
+        	
+        	//判断是否来自微信， 来自微信获取 openid
+        	if(kernel::single('weixin_object')->from_weixin()){
+
+        		$bind = app::get('weixin')->model('bind')->getRow('*',array('weixin_account'=>WEIXIN_ACCOUNT));
+        		
+        		$url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'qrCodeAddCart','arg0'=>$productId));
+        		$this->redirect($url);
+        	}else{
+        		$url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'qrCodeAddCart','arg0'=>$productId));
+        		$this->redirect($url);
+        	}
+
         }
 
         $siteMember = $this->get_current_member();

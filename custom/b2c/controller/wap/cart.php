@@ -88,6 +88,20 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $setting['scanbuy'] = app::get('wap')->getConf('wap.scanbuy');
         $setting['wap_status'] = app::get('wap')->getConf('wap.status');
         if( $setting['scanbuy'] == 'true' && $setting['wap_status'] == 'true' ){
+        	
+        	
+        	if(kernel::single('weixin_object')->from_weixin()){
+        		//如果来自微信 且已关注  自动登录并加入购物车
+        		if(){
+        			
+        		}
+        		//未关注 跳转关注页面
+        		else{
+        			
+        		}
+        		
+        	}
+        	
             $goodsData = app::get('b2c')->model('products')->getRow('goods_id',array('product_id'=>$productId));
             $cartData['goods']['goods_id'] = $goodsData['goods_id'];
             $cartData['goods']['product_id'] = $productId;
