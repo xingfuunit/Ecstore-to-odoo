@@ -151,12 +151,15 @@ class b2c_ctl_site_cart extends b2c_frontpage{
          */
         $oCoupon = kernel::single('b2c_coupon_mem');
         $aData = $oCoupon->get_list_m($this->member['member_id']);
-       // print_r($aData);exit;
+        //print_r($aData);exit;
         if( is_array($aData) ) {
             foreach( $aData as $_key => $_val ) {
                 if( $_val['memc_used_times'] ) unset($aData[$_key]);
+                if( $_val['time']['to_time'] < time() ) unset($aData[$_key]); //已过期不予以显示
+                if( $_val['time']['from_time'] > time() ) unset($aData[$_key]); //未开始不予以显示
             }
         }
+        print_r($aData);exit;
         $this->pagedata['coupon_lists'] = $aData;
         /*end*/
         
@@ -1036,6 +1039,8 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         if( is_array($aData) ) {
             foreach( $aData as $_key => $_val ) {
                 if( $_val['memc_used_times'] ) unset($aData[$_key]);
+                if( $_val['time']['to_time'] < time() ) unset($aData[$_key]); //已过期不予以显示
+                if( $_val['time']['from_time'] > time() ) unset($aData[$_key]); //未开始不予以显示
             }
         }
         $this->pagedata['coupon_lists'] = $aData;

@@ -14,13 +14,10 @@
         <{foreach from=$coupons item=item}>
         <div class="gb">
             <span class="icon <{if $item.memc_isvalid eq true}>orange<{else}>gray<{/if}>"><{$item.memc_status}></span>
-            <span>有效期：<{$item.time.from_time|cdate:SDATE_STIME}> 到 <{$item.time.to_time|cdate:SDATE_STIME}></span>
-            <div class="d-line">
-                <span class="l-k">优惠券号码：</span>
-                <span class="l-v"><{$item.memc_code}></span>
-                <span class="l-k">优惠券名称：</span>
-                <span class="l-v"><{$item.coupons_info.cpns_name}></span>
-            </div>
+            <span style="margin-top:10px;">优惠券名称：<{$item.coupons_info.cpns_name}></span>
+            <span style="margin-top:10px;">优惠券号码：<{$item.memc_code}></span>
+            <span style="margin-top:10px;">使用条件：<{$item.time.description}></span>
+            <span style="margin-top:10px;">有效期：<{$item.time.from_time|cdate:SDATE_STIME}>到<{$item.time.to_time|cdate:SDATE_STIME}></span>
         </div>
         <{/foreach}>
         <{else}>
