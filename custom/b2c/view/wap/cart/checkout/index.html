@@ -35,9 +35,26 @@
             <{include file='wap/cart/checkout/cart_main.html' app='b2c'}>
         </div>
         <div class="section" id="D_L">
-            <{if $def_addr}>
-                <{$dlytype_html}>
-            <{/if}>
+        <{if $shipping_method.shipping_name}>
+				  <div class="ps_function">
+		              <a href="/wap/cart-checkout_wrap.html?show=delivery_change">
+		                  <span class="left">配送方式</span>
+		                    <span class="right">
+		                        <span class="font_margin2"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}></span>
+		                        <input name="shipping" value='{"id":<{$shipping_method.shipping_id}>,"has_cod":"<{$shipping_method.has_cod}>","dt_name":"<{$shipping_method.shipping_name}>","money":"<{$shipping_method.money}>"}' type="hidden">
+		                    </span>
+		              </a>
+		          </div>
+		 <{else}>
+				  <div class="ps_function">
+		              <a href="/wap/cart-checkout_wrap.html?show=delivery_change">
+		                  <span class="left">配送方式</span>
+		                    <span class="right">
+		                        <span class="font_margin2">请选择</span>
+		                    </span>
+		              </a>
+		          </div>
+		 <{/if}>
         </div>
         <div class="section" id="P_L">
             <{if $def_addr}>
@@ -262,10 +279,11 @@
             url:''
         }
         if($('input[name=address]').val() && !$('input[name=shipping]').val()){
+        	/*
             var data = 'area='+$('input[name=address]').val();
             $.post('<{link app=b2c ctl=wap_cart act=delivery_confirm}>',data,function(re){
                 $('#D_L').html(re);
-            });
+            });*/
         }
         $('#P_L').click(function(){
             if($('input[name=shipping]').val()){

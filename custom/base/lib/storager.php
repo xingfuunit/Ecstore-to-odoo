@@ -216,6 +216,12 @@ class base_storager{
                         case 's':
                             $url = $imglib[$image_id]['s_url']?$imglib[$image_id]['s_url']:$imglib[$image_id]['url'];
                             break;
+                        case 'p':
+                            $url = $imglib[$image_id]['s_url']?$imglib[$image_id]['s_url']:$imglib[$image_id]['url'];
+                            if(defined('IMG_PZFRESH')){
+                            	$url = IMG_PZFRESH.'/'.$url;
+                            }
+                            break;
                         case 'm':
                             $url = $imglib[$image_id]['m_url']?$imglib[$image_id]['m_url']:$imglib[$image_id]['url'];
                             break;

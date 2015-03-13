@@ -47,7 +47,7 @@
                                             <button type="submit" class="btn red">去付款</button>
                                         <{/if}>
                                     <{else}>
-                                        <{if $order.payinfo.platform =='iscommon' || $order.payinfo.platform =='iswap'}>
+                                        <{if $order.payinfo.platform =='iscommon' || $order.payinfo.platform == $device_is_wx ? 'iswx' :'iswap'}>
                                             <button type="submit" class="btn red">去付款</button>
                                         <{else}>
                                             <label class="f-red">(支付方式不支持手机版，请选择其他支付方式支付！)</label>

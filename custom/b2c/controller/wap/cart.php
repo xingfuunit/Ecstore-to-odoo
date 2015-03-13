@@ -21,6 +21,8 @@ class b2c_ctl_wap_cart extends wap_frontpage{
     var $customer_template_type='cart';
     var $noCache = true;
     var $show_gotocart_button = true;
+    
+	var $_follow_url = 'http://mp.weixin.qq.com/s?__biz=MzAxMjEwMjg2OA==&mid=206625913&idx=1&sn=a21e86c75e22f947ae2e7fb57cf47030#rd';
 
     public function __construct(&$app) {
         parent::__construct($app);
@@ -88,6 +90,18 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $setting['scanbuy'] = app::get('wap')->getConf('wap.scanbuy');
         $setting['wap_status'] = app::get('wap')->getConf('wap.status');
         if( $setting['scanbuy'] == 'true' && $setting['wap_status'] == 'true' ){
+        	
+        	if(kernel::single('weixin_wechat')->from_weixin()){
+        		//如果来自微信 且已关注  自动登录并加入购物车
+        		$openid = parent::$this->openid;
+				$bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>$_GET['state'],'status'=>'active'));
+				$uinfo = kernel::single('weixin_wechat')->get_basic_userinfo($bind['id'],$openid);
+					//未关注跳到关注页面
+					if (!$uinfo['subscribe']) {
+						$this->redirect($this->_follow_url);
+	        		}
+        	}
+        	
             $goodsData = app::get('b2c')->model('products')->getRow('goods_id',array('product_id'=>$productId));
             $cartData['goods']['goods_id'] = $goodsData['goods_id'];
             $cartData['goods']['product_id'] = $productId;
@@ -573,17 +587,25 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         /* 是否开启配送时间的限制 */
         $this->pagedata['site_checkout_receivermore_open'] = $this->app->getConf('site.checkout.receivermore.open');
         /*收货地址 end*/
-
         if($def_addr){
             //是否有默认的当前的配送方式
             $area = explode(':',$def_addr['area']);
             $this->pagedata['dlytype_html'] = kernel::single('b2c_order_dlytype')->select_delivery_method($this,$area[2],$this->pagedata['aCart'],"",'wap/cart/checkout/delivery_confirm.html');
             $this->pagedata['shipping_method'] = (isset($_COOKIE['purchase']['shipping']) && $_COOKIE['purchase']['shipping']) ? unserialize($_COOKIE['purchase']['shipping']) : '';
+            
+            if ($this->pagedata['shipping_method']['shipping_name'] == '门店自提' &&  $def_addr['local_id'] != '-1') {
+            	$this->pagedata['shipping_method'] = '';
+            }
+            
+            $this->pagedata['shipping_branch_name'] = $_COOKIE['purchase']['branch_name'];
+            $this->pagedata['shipping_branch_id'] = $_COOKIE['purchase']['branch_id'];
+            
             $this->pagedata['has_cod'] = (isset($this->pagedata['shipping_method']['has_code']) && $this->pagedata['shipping_method']['has_cod']) ? $this->pagedata['shipping_method']['has_cod'] : 'false';
         }
-
+//var_dump($this->pagedata['shipping_method']);
         $currency = app::get('ectools')->model('currency');
         if($this->pagedata['shipping_method']){
+        	
             // 是否有默认的支付方式
             $this->pagedata['arr_def_payment'] = (isset($_COOKIE['purchase']['payment']) && $_COOKIE['purchase']['payment']) ? unserialize($_COOKIE['purchase']['payment']) : '';
             /*支付方式列表*/
@@ -797,7 +819,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $this->set_header();
         $obj_member_addrs = $this->app->model('member_addrs');
         $arrMember = $this->get_current_member();
-        $member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'],'local_id'=>'0'));
+        $member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'],'local_id'=>array(0,-1)));
         $def_addr = kernel::single('b2c_member_addrs')->get_default_addr($arrMember['member_id']);
         $this->pagedata['def_addr'] = $def_addr;
         $this->pagedata['member_addr_list'] = $member_addr_list;
@@ -815,6 +837,9 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         }
         if(method_exists($this,$_GET['show'])){
             $fn = $_GET['show'];
+            $_filter = array();
+	        $_filter['is_show'] = 'true';
+	        $this->pagedata['branchlist'] = app::get('ome')->model('branch')->getList('branch_id, name, address', $_filter);
             $this->pagedata['content'] = $this->$fn();
             $this->page('wap/cart/checkout/checkout_wrap.html');
         }
@@ -983,6 +1008,61 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         setcookie('purchase[shipping]', serialize($arr_shipping), time()+3600, kernel::base_url() . '/');
         setcookie("purchase[payment]", "", time() - 3600, kernel::base_url().'/');
         $this->pagedata['shipping_method'] = $arr_shipping;
+        
+        if(isset($_POST['branch_id']) && $_POST['branch_id'] > 0){
+        //	echo $_POST['branch_id'];exit;
+        	
+        	
+			//门店自提，把收货地址改为门店地址
+			
+        	$branch = app::get('ome')->model('branch')->dump($_POST['branch_id'],'branch_id, name, address,area');
+	        $member_id = kernel::single('b2c_user_object')->get_member_id();
+	        $pickup_addr = app::get('b2c')->model('member_addrs')->getList('*',array('member_id'=>$member_id,'local_id'=>'-1'));
+	        $addrs_info = app::get('b2c')->model('member_addrs')->getList('*',array('addr_id'=>$_COOKIE['purchase']['addr']['addr_id']));
+	        if (empty($addrs_info)) {
+	        	$addrs_info = app::get('b2c')->model('member_addrs')->getList('*',array('local_id'=>'0','member_id'=>$member_id),0,1,'def_addr desc');
+	        }
+        	$area_explode = explode(':',$branch['area']);
+        	$area_explode[1] = str_replace('/','',$area_explode[1]);
+        	$address = str_replace($area_explode[1],'',$branch['address']);
+        	
+	        if (empty($pickup_addr)) {
+	        	$data = array();
+	        	$data['member_id'] = $member_id;
+	        	$data['name'] = $addrs_info[0]['name'];
+	        	$data['lastname'] = $addrs_info[0]['lastname'];
+	        	$data['firstname'] = $addrs_info[0]['firstname'];
+	        	$data['area'] = $branch['area'];
+	        	$data['addr'] = $address;
+	        	$data['zip'] = $addrs_info[0]['zip'];
+	        	$data['tel'] = $addrs_info[0]['tel'];
+	        	$data['mobile'] = $addrs_info[0]['mobile'];
+	        	$data['day'] = $addrs_info[0]['day'];
+	        	$data['time'] = $addrs_info[0]['time'];
+	        	$data['def_addr'] = 0;
+	        	$data['local_id'] = -1;
+	        	$addr_id = app::get('b2c')->model('member_addrs')->insert($data);
+	        } else {
+	        	$data = array();
+	        	$data['name'] = $addrs_info[0]['name'];
+	        	$data['lastname'] = $addrs_info[0]['lastname'];
+	        	$data['firstname'] = $addrs_info[0]['firstname'];
+	        	$data['area'] = $branch['area'];
+	        	$data['addr'] = $address;
+	        	$data['zip'] = $addrs_info[0]['zip'];
+	        	$data['tel'] = $addrs_info[0]['tel'];
+	        	$data['mobile'] = $addrs_info[0]['mobile'];
+	        	$data['day'] = $addrs_info[0]['day'];
+	        	$data['time'] = $addrs_info[0]['time'];
+	        	app::get('b2c')->model('member_addrs')->update($data,array('addr_id'=>$pickup_addr[0]['addr_id']));
+	        	$addr_id = $pickup_addr[0]['addr_id'];
+	        }
+	        setcookie('purchase[branch_name]',$branch['name'] , 0, kernel::base_url() . '/');
+	        setcookie('purchase[branch_id]',$branch['branch_id'] , 0, kernel::base_url() . '/');
+	        $seKey = md5($this->obj_session->sess_id().$member_id);
+	        setcookie('purchase[addr][usable]', $seKey, 0, kernel::base_url() . '/');
+	        setcookie('purchase[addr][addr_id]', $addr_id, 0, kernel::base_url() . '/');
+        }
         echo $this->fetch('wap/cart/checkout/delivery_confirm.html');
     }
 
@@ -1012,7 +1092,15 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $member = $this->app->model('members');
         $data = $member->dump($member_id,'advance');
         $this->pagedata['total'] = $data['advance']['total'];
-        return $obj_payment_select->select_pay_method($this, $sdf, false,false,array('iscommon','iswap'),'wap/cart/checkout/select_currency.html');exit;
+        
+        //判断微信端，wap端
+        if(kernel::single('weixin_wechat')->from_weixin()){
+        	$plan = 'iswx';
+        }else{
+        	$plan = 'iswap';
+        }
+        
+        return $obj_payment_select->select_pay_method($this, $sdf, false,false,array('iscommon',$plan),'wap/cart/checkout/select_currency.html');exit;
     }
 
     // 确认支付方式

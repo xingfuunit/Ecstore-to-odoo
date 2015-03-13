@@ -41,7 +41,7 @@
              <tr>
                  <td width="30%">店  铺：<{$local_store.name}></td>
                  <td width="30%">门店地址：<{$local_store.area|region}><{$local_store.addr}></td>
-                 <td width="40%">会员账号：<{if $member.uname}><{$member.uname}><{else}><{input type="text" name="uname" id="" value="{$loginName}" placeholder="手机/用户名/邮箱地址/会员卡号" vtype="required" data-caution="请填写登录帐号" class="login-input" style="width:200px; height:30px; border: 1px solid #8faace;" autofocus="autofocus"}><{/if}></td>
+                 <td width="40%">会员账号：<{if $member.uname}><{$member.uname}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;会员积分：<{$member.usage_point}><{else}><{input type="text" name="uname" id="" value="{$loginName}" placeholder="手机/用户名/邮箱地址/会员卡号" vtype="required" data-caution="请填写登录帐号" class="login-input" style="width:200px; height:30px; border: 1px solid #8faace;" autofocus="autofocus"}><{/if}></td>
              </tr>
              <tr>
                  <td width="30%">员  工：<{$staff_name}></td>
@@ -872,8 +872,7 @@ window.addEvent('domready', function(){
 				    onSuccess: function(responseText){
 				    	if(responseText.product_id){
 				    		bn_add_info.set('html',' 正在加入购物车');
-
-				    		_add_cart(responseText.goods_id, responseText.product_id);
+				    		_add_cart(responseText.goods_id, responseText.product_id,responseText.num);
 
 				    	}else{
                                                //bn_add_info.set('html',' 111');
@@ -896,11 +895,47 @@ window.addEvent('domready', function(){
     });
     
     //账户余额付款
-    $('add_yuamount').addEvent("click",function(E){
+    $('add_yuamount').addEvent("click",function(E){   
+    		var shishou = Number(txtYuPrice.value);//实收金额
+       		var zhaoling = Number(txtYuTotal.value);//找零金额
+        	shishou    = '￥' + shishou.toFixed(2);
+        	zhaoling    = '￥' + zhaoling.toFixed(2);
+        	var dede = $('kkkkk');
+        	var zhye_val    = dede.getElement('.kkss1').innerHTML; //账户余额
+        	var ysje_val    = dede.getElement('.kkss').innerHTML;//应收金额
+        	zhye_val        = zhye_val.match(/\d+(?:\.\d+)?$/)[0];
+        	ysje_val        = ysje_val.match(/\d+(?:\.\d+)?$/)[0];
+        	zhye_val        = parseFloat(zhye_val);
+        	ysje_val        = parseFloat(ysje_val);
+        	if ( zhye_val < ysje_val ) { //如果应收金额大于账户余额,则余额支付的金额即为余额值
+       	 		var yuezhifu = zhye_val ;
+       	 		yuezhifu    = '￥' + yuezhifu.toFixed(2);
+        	}else{//如果实收金额小于或等于账户余额,则余额支付的金额应该为 账户余额 减去 应收金额
+       	 		var yuezhifu = ysje_val;
+       	 		yuezhifu    = '￥' + yuezhifu.toFixed(2);
+        	}
+        	
+    		if(document.getElementsByName('other_pay')[0].checked && zhye_val < ysje_val){//判断是否余额+现金买单和 账户余额是否小于应收金额
+    			var x = $$('#txtYuPrice').get('value');
+        		if(x == 0){
+                	window.confirm("请输入实收金额");
+                	return false;
+            	}
+    			var dede = $('kkkkk');
+        		_chaer = dede.getElement('.zhye_yu_val').value; 
+        		if(_chaer){
+        			_nomer = Number(txtYuTotal.value);
+        			if ( _nomer<0) {
+                    	alert('实收金额必须大于或等于支付差额');
+                    	return false;
+                	}
+        		} 
+    		}
+    		      	
             var dda;
             dda = document.getElementById('webpos_password').value;
             if(dda == ''){
-                alert('请先输入会员密码！');
+                alert('请先输入支付密码！');
                 return false;
             }
             
@@ -908,6 +943,12 @@ window.addEvent('domready', function(){
             alert('请先登录会员！');
             return false;
         	<{/if}>
+        	
+        		
+        	if($$(".cart-empty").length > 0){
+        		alert('你的购物车为空！');
+                return false;
+        	}       		
         	
             var password = dda;
             var url = '<{link app=b2c ctl=site_storepassport act=webpos_passwordcheck}>';
@@ -931,6 +972,9 @@ window.addEvent('domready', function(){
                               alert('您好，购物车有充值卡商品，请使用刷卡或现金支付！');
                              return false;
                           }
+                         
+                          
+                         
                          // 判断是否使用其他方式购买
                          if ( !checkPreMoney() ) {
                              var _dom  = document.getElementsByName('other_pay')[0];
@@ -942,26 +986,43 @@ window.addEvent('domready', function(){
                                  }else{
                                      return false;
                                  }
-                                 other_print = '余额付款+刷卡付款';
-                                 other_pay   = 2;
+                                 var shuaka = dede.getElement('.zhye_other_val').innerHTML;
+                                 shuaka = shuaka.match(/\d+(?:\.\d+)?$/)[0];
+                                 shuaka = parseFloat(shuaka);
+                                 shuaka =  '￥' + shuaka.toFixed(2);
+                                 var other_print = '余额付款+刷卡付款';
+                                 var other_word = "\n刷卡支付："+shuaka;
+                                 var other_zhaoling = ""
+                                 var other_pay   = 2;
                              } else if( !_doms.checked ) {
-                                 if(window.confirm("确认余额+刷卡付款？")){
+                                 if(window.confirm("确认余额+现金付款？")){
                                      
                                  }else{
                                      return false;
                                  }
-                                 other_print = '余额付款+现金付款';
-                                 other_pay   = 1;
+                                 var other_print = '余额付款+现金付款';
+                                 var other_word = "\n现金支付："+shishou;
+                                 var other_zhaoling = "\n找零："+zhaoling;
+                                 var other_pay   = 1;
                              }else{
-                                 other_print = '账号余额付款';
+                                 var other_print = '账号余额付款';
+                                 var other_word = "&nbsp;";
+                                 var other_zhaoling = "&nbsp;";                                 
                              }
                              
+                         }else{
+                        	 var other_print = '账号余额付款';
+                             var other_word = "";
+                             var other_zhaoling = "";
                          }
                          if ( is_buy == 0 ) {
                              alert('预存款不够完成本次支付,请勾选上现金/刷卡方式');
                              return false;
                          }
-                             var bn  = this.value,
+                         
+                         var part_print = "\n余额支付："+yuezhifu+other_word+other_zhaoling;                                                  
+                                                     
+                         	var bn  = this.value,
                              url = '<{link app=b2c ctl=site_order act=create}>',
                              bn_add_info = $$("div .bn_add_info");
                              
@@ -973,7 +1034,7 @@ window.addEvent('domready', function(){
                                  },
              			        onSuccess   : function(responseText){
                                                  var _order_id = responseText.redirect.match(/\d+/)[0];
-                                                 var storeprint  = "<{$local_store.local_name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收：<{$aCart.promotion_subtotal|cur_odr}>\n付款方式："+other_print+"\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
+                                                 var storeprint  = "<{$local_store.local_name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>"+part_print+"\n付款方式："+other_print+"\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
                                                  bn_add_info.set('html','订单生成成功……');
                                                  try {
                                                      window.CallCSharpMethod("softprint",storeprint);
@@ -1029,6 +1090,12 @@ window.addEvent('domready', function(){
                             alert('请先登录会员！');
                             return false;
                         <{/if}>
+                        
+                        if($$(".cart-empty").length > 0){
+                        	alert('你的购物车为空！');
+                            return false;
+                        }  
+                        
                         var bn = this.value;
                         var url = '<{link app=b2c ctl=site_order act=create}>';
                         var bn_add_info = $$("div .bn_add_info");
@@ -1084,6 +1151,12 @@ window.addEvent('domready', function(){
                         alert('请先登录会员！');
                         return false;
                     <{/if}>
+                    
+                    if($$(".cart-empty").length > 0){
+                        alert('你的购物车为空！');
+                        return false;
+                    } 
+                    
                     if(window.confirm("确认刷卡支付？")){
 			var bn = this.value;
                         var url = '<{link app=b2c ctl=site_order act=create}>';
@@ -1172,6 +1245,12 @@ window.addEvent('domready', function(){
                         alert('请先登录会员！');
                         return false;
                     <{/if}>
+                    
+                    if($$(".cart-empty").length > 0){
+                        alert('你的购物车为空！');
+                        return false;
+                    } 
+                    
                     if(window.confirm("确认报损？")){
 			var bn = this.value;
                         var url = '<{link app=b2c ctl=site_order act=create_goods}>';
@@ -1249,8 +1328,9 @@ window.addEvent('domready', function(){
     });
     
     
-    function _add_cart(goods_id, product_id){
-    	var url = '<{link app=b2c ctl=site_cart act=add arg0=goods arg1="' + goods_id + '" arg2="' + product_id + '" arg3="1"}>';
+    function _add_cart(goods_id, product_id,num){  
+    	var url = '<{link app=b2c ctl=site_cart act=add arg0=goods arg1="' + goods_id + '" arg2="' + product_id + '" arg3="'+num+'"}>';
+    	console.log(url);
     	var bn_add_info = $$("div .bn_add_info");
     	var myRequest = new Request({
 			    url: url,
@@ -1268,7 +1348,7 @@ window.addEvent('domready', function(){
 			    }
 			});
 
-    		var data = 'btype=&goods[goods_id]=' + goods_id + '&goods[product_id]=' + product_id + '&goods[num]=1&stock=10&mini_cart=true';
+    		var data = 'btype=&goods[goods_id]=' + goods_id + '&goods[product_id]=' + product_id + '&goods[num]='+num+'&stock=10&mini_cart=true';
 			myRequest.send();
 
     }
@@ -1278,6 +1358,14 @@ function winReload() {
     var _url = '<{link app=b2c ctl=site_storepassport act=logoutwebpos}>'+'?type=outlog';
    //var _url = '<{link app=b2c ctl=site_cart}>'+'?type=x';
     window.location.href = _url;
+}
+
+function cart_is_empty(){
+	if($("#cart-empty").length > 0){
+		return false;
+	}else{
+		return true;
+	}
 }
 
 </script>

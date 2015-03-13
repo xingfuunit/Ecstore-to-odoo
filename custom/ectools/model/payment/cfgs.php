@@ -19,6 +19,7 @@ class ectools_mdl_payment_cfgs {
                             'type' =>array (
                                 'ispc'     => app::get('ectools')->_('标准版'),
                                 'iswap' => app::get('ectools')->_('触屏版'),
+                            	'iswx' => app::get('ectools')->_('微信版'),
                                 'iscommon' => app::get('ectools')->_('通用版'),
                             ),
                             'default' => 'ispc',
@@ -81,7 +82,7 @@ class ectools_mdl_payment_cfgs {
             }
             $strPaymnet = $this->app->getConf($class_name);
             $arrPaymnet = unserialize($strPaymnet);
-
+            
             $row['app_name'] = $object->name;
             $row['app_staus'] = (($arrPaymnet['status']===true||$arrPaymnet['status']==='true') ? app::get('ectools')->_('开启') : app::get('ectools')->_('关闭'));
             $row['app_version'] = $object->ver;
@@ -103,14 +104,19 @@ class ectools_mdl_payment_cfgs {
                 $row['real_method']= $arrPaymnet['setting']['real_method'];
             }
 
+            //因为wxpayjsapi 加密了，因此 写死 此方式   alter by Nick
+            if($object->app_key == 'wxpayjsapi'){
+            	$object->platform = 'iswx';
+            	
+            }
+            
             $row['app_platform'] = $object->platform;
-
-
+            
             if($filter['app_id']){
                 $app_id = is_array($filter['app_id'])?$filter['app_id'][0]:$filter['app_id'];
                 return array($this->getPaymentInfo($app_id));
             }
-
+            
             if (isset($filter) && $filter)
             {
                 if (isset($filter['is_frontend']) && !$filter['is_frontend'])
@@ -178,6 +184,8 @@ class ectools_mdl_payment_cfgs {
 
             $start_index++;
         }
+        
+        
 
         return $data;
     }

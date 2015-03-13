@@ -185,6 +185,11 @@ class b2c_mdl_members extends dbeav_model{
             $objMemberAddr = $this->app->model('member_addrs');
             return $objMemberAddr->getList('*',array('member_id'=>$nMemberId));
      }
+     
+     function getMemberAddrLocal($nMemberId){
+            $objMemberAddr = $this->app->model('member_addrs');
+            return $objMemberAddr->getList('*',array('member_id'=>$nMemberId,'local_id'=>array(0,-1)));
+     }
 
      function getAddrById($nAddrId){
             $objMemberAddr = $this->app->model('member_addrs');

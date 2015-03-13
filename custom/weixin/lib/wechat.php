@@ -530,5 +530,20 @@ class weixin_wechat{
     	}
     	
     }
+    
+    /**
+     * 根据 bind_id 获得需要 的微信 oauth2 url
+     * @param unknown_type $bind_id
+     * @param unknown_type $url
+     * @param unknown_type $scope
+     * @return string
+     */
+    function  build_wx_oauth2_url($bind_id,$url,$scope='snsapi_base'){
+		$bind = app::get('weixin')->model('bind')->getRow('*',array('id'=>$bind_id));
+		$path1 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$bind['appid']}&redirect_uri=";
+		$path2 = "?response_type=code&scope={$scope}&state={$bind['eid']}&connect_redirect=1#wechat_redirect";
+		
+		return $url = $path1.$url.$path2;
+    }
 
 }
