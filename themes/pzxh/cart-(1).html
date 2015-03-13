@@ -872,8 +872,7 @@ window.addEvent('domready', function(){
 				    onSuccess: function(responseText){
 				    	if(responseText.product_id){
 				    		bn_add_info.set('html',' 正在加入购物车');
-
-				    		_add_cart(responseText.goods_id, responseText.product_id);
+				    		_add_cart(responseText.goods_id, responseText.product_id,responseText.num);
 
 				    	}else{
                                                //bn_add_info.set('html',' 111');
@@ -1329,8 +1328,9 @@ window.addEvent('domready', function(){
     });
     
     
-    function _add_cart(goods_id, product_id){
-    	var url = '<{link app=b2c ctl=site_cart act=add arg0=goods arg1="' + goods_id + '" arg2="' + product_id + '" arg3="1"}>';
+    function _add_cart(goods_id, product_id,num){  
+    	var url = '<{link app=b2c ctl=site_cart act=add arg0=goods arg1="' + goods_id + '" arg2="' + product_id + '" arg3="'+num+'"}>';
+    	console.log(url);
     	var bn_add_info = $$("div .bn_add_info");
     	var myRequest = new Request({
 			    url: url,
@@ -1348,7 +1348,7 @@ window.addEvent('domready', function(){
 			    }
 			});
 
-    		var data = 'btype=&goods[goods_id]=' + goods_id + '&goods[product_id]=' + product_id + '&goods[num]=1&stock=10&mini_cart=true';
+    		var data = 'btype=&goods[goods_id]=' + goods_id + '&goods[product_id]=' + product_id + '&goods[num]='+num+'&stock=10&mini_cart=true';
 			myRequest.send();
 
     }

@@ -1380,8 +1380,9 @@ window.addEvent('domready', function(){
             'change:relay(input)': function(e) {
                 try{
                     var _dom  = e.target || e.srcElement,
-                        _val  = parseFloat(_dom.value) / 1000,
-                        _val  = _val.toFixed(3),
+                    //_val  = parseFloat(_dom.value) / 1000,old
+                   // _val  = _val.toFixed(3),old
+                        _val  = parseFloat(_dom.value),
                         _e_id = _dom.id.replace('modify_quantity', 'modify_quantity_ex');
                     $(_e_id).value = _val;
                 } catch(e) {}
@@ -1402,7 +1403,8 @@ window.addEvent('domready', function(){
             'change:relay(input)': function(e) {
                 try{
                     var _dom  = e.target || e.srcElement,
-                        _val  = parseInt(parseFloat(_dom.value) * 1000),
+                    //val  = parseInt(parseFloat(_dom.value) * 1000), old
+                        _val  = parseInt(parseFloat(_dom.value)),
                         _e_id = _dom.id.replace('modify_quantity_ex', 'modify_quantity'),
                         _e_dom= $(_e_id);
                     _e_dom.value = _val;

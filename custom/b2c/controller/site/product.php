@@ -497,14 +497,38 @@ class b2c_ctl_site_product extends b2c_frontpage{
 //    	$bn = $_POST['bn'];
 //    	$product = app::get('b2c')->model('products')->getList('product_id,goods_id,marketable,store',array('bn'=>trim($bn)));
     	
-    	$bn = trim($_POST['bn']);
-    	$bn = kernel::database()->quote($bn);
+    	$post_bn = trim($_POST['bn']);
+    	$bn = kernel::database()->quote($post_bn);
+    	
         $product = kernel::database()->select("select product_id,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
     	
     	if(!$product){
-            echo json_encode(array('error'=>app::get('b2c')->_('商品不存在')));
-            return;
+    		/**hack by Jason begin **/
+    		if(strlen($bn) == 15){
+    			$last_num = $this->barcode_last($post_bn);
+    			if($last_num == substr($post_bn, -1)){
+    				$tmp_bn = $bn;
+    				$bn = kernel::database()->quote(substr($tmp_bn, 2,6));
+    				$weigh = intval(substr($tmp_bn, 8,5));
+    				$product = kernel::database()->select("select product_id,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
+    			}else{
+    				echo json_encode(array('error'=>app::get('b2c')->_('商品不存在')));
+    				return;
+    			}
+    		}else{
+    				echo json_encode(array('error'=>app::get('b2c')->_('商品不存在')));
+    				return;
+    			}            
     	}
+    	/**hack by Jason end **/
+    	
+    	/**hack by Jason begin **/
+    	if($weigh){
+    		$product[0]['num'] = $weigh;
+    	}else{
+    		$product[0]['num'] = 1;
+    	}
+    	/**hack by Jason end **/
         //print_r($product);exit;
         if($product[0]['marketable'] == "false"){
             echo json_encode(array('error'=>app::get('b2c')->_('商品未上架')));
@@ -1239,6 +1263,30 @@ class b2c_ctl_site_product extends b2c_frontpage{
         }
         echo json_encode($data);
         exit;
+    }
+    
+    /**
+     * 商品条形码校验位的验证
+     */
+    function barcode_last($barcode){
+    	$code_array = str_split($barcode,1);
+    	$even = 0;
+    	$odd = 0;
+    	foreach($code_array as $key => $value){
+    		if($key < 12 && $key%2 == 1){
+    			$even = $even + intval($value);
+    		}
+    		if($key < 12 && $key%2 == 0){
+    			$odd = $odd + intval($value);
+    		}
+    	}
+    	$eo = $even * 3 + $odd;
+    	$sd = intval(substr($eo, -1));
+    	if($sd == 0){
+    		return 0;
+    	}else{
+    		return (10-$sd);
+    	}
     }
 
 }

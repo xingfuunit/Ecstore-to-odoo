@@ -21,6 +21,8 @@ class b2c_ctl_wap_cart extends wap_frontpage{
     var $customer_template_type='cart';
     var $noCache = true;
     var $show_gotocart_button = true;
+    
+	var $_follow_url = 'http://mp.weixin.qq.com/s?__biz=MzAxMjEwMjg2OA==&mid=206625913&idx=1&sn=a21e86c75e22f947ae2e7fb57cf47030#rd';
 
     public function __construct(&$app) {
         parent::__construct($app);
@@ -88,6 +90,18 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $setting['scanbuy'] = app::get('wap')->getConf('wap.scanbuy');
         $setting['wap_status'] = app::get('wap')->getConf('wap.status');
         if( $setting['scanbuy'] == 'true' && $setting['wap_status'] == 'true' ){
+        	
+        	if(kernel::single('weixin_wechat')->from_weixin()){
+        		//如果来自微信 且已关注  自动登录并加入购物车
+        		$openid = parent::$this->openid;
+				$bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>$_GET['state'],'status'=>'active'));
+				$uinfo = kernel::single('weixin_wechat')->get_basic_userinfo($bind['id'],$openid);
+					//未关注跳到关注页面
+					if (!$uinfo['subscribe']) {
+						$this->redirect($this->_follow_url);
+	        		}
+        	}
+        	
             $goodsData = app::get('b2c')->model('products')->getRow('goods_id',array('product_id'=>$productId));
             $cartData['goods']['goods_id'] = $goodsData['goods_id'];
             $cartData['goods']['product_id'] = $productId;
@@ -1072,7 +1086,15 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $member = $this->app->model('members');
         $data = $member->dump($member_id,'advance');
         $this->pagedata['total'] = $data['advance']['total'];
-        return $obj_payment_select->select_pay_method($this, $sdf, false,false,array('iscommon','iswap'),'wap/cart/checkout/select_currency.html');exit;
+        
+        //判断微信端，wap端
+        if(kernel::single('weixin_wechat')->from_weixin()){
+        	$plan = 'iswx';
+        }else{
+        	$plan = 'iswap';
+        }
+        
+        return $obj_payment_select->select_pay_method($this, $sdf, false,false,array('iscommon',$plan),'wap/cart/checkout/select_currency.html');exit;
     }
 
     // 确认支付方式

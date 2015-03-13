@@ -10,7 +10,7 @@
 <{/if}>
 <div id="zxzf" class="paiing">
 <{foreach from=$payments item="payment" key="key" name="payments"}>
-    <{if $payment.app_id eq 'deposit' && $total > 0}>
+    <{if $payment.app_id eq 'deposit'}>
     <span class="paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
         <{$payment.app_display_name}>
     </span>
