@@ -159,7 +159,6 @@ class b2c_ctl_site_cart extends b2c_frontpage{
                 if( $_val['time']['from_time'] > time() ) unset($aData[$_key]); //未开始不予以显示
             }
         }
-        print_r($aData);exit;
         $this->pagedata['coupon_lists'] = $aData;
         /*end*/
         

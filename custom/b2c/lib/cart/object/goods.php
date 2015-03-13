@@ -1374,7 +1374,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
         ///////////////// 货品信息 ///////////////////////
         $sSql = "SELECT
                      g.spec_desc as spec_desc_goods,p.product_id,p.goods_id,p.bn,g.score as gain_score,p.cost,p.name, p.store, p.marketable, g.params, g.package_scale, g.package_unit, g.package_use, p.freez,
-                     g.goods_type, g.nostore_sell, g.min_buy,g.type_id,g.cat_id,g.image_default_id,p.spec_info,p.spec_desc,p.price,p.weight,
+                     g.goods_type, g.nostore_sell, g.min_buy,g.type_id,g.cat_id,g.image_default_id,p.spec_info,p.spec_desc,p.price,p.weight,p.mktprice,
                      t.setting, t.floatstore
                  FROM  sdb_b2c_products AS p
                  LEFT JOIN  sdb_b2c_goods AS g    ON p.goods_id = g.goods_id
@@ -1425,6 +1425,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
                     'price' => array(
                                 'price' => $row['price'],
                                 'cost' => $row['cost'],
+                    			'mktprice' => $row['mktprice'],
                                 'member_lv_price' => empty($aPrice[$row['product_id']]) ? $this->omath->number_multiple(array($row['price'],$discout) ) : $aPrice[$row['product_id']]['price'],
                                 //'buy_price' => empty($aPrice[$row['product_id']])? ($row['price'] * $discout) : $aPrice[$row['product_id']]['price'] * $discout,
                                 'buy_price' => empty($aPrice[$row['product_id']]) ? $this->omath->number_multiple( array($row['price'],$discout) ) : $aPrice[$row['product_id']]['price'],
