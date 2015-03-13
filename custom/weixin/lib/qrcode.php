@@ -150,10 +150,18 @@ class weixin_qrcode {
 
         switch( $type ){
             case 'site':
-                $data = app::get('wap')->router()->gen_url( $url )."?qr=1";
+            	if(defined('IMG_PZFRESH')){
+            		$data = IMG_PZFRESH.'/wap/product-'.$product_id.'.html?qr=1';
+            	}else{
+            		$data = app::get('wap')->router()->gen_url( $url )."?qr=1";
+            	}                
                 break;
             default:
-                $data = app::get('wap')->router()->gen_url( $url );
+            	if(defined('IMG_PZFRESH')){
+            		$data = IMG_PZFRESH.'/wap/product-'.$product_id.'.html';
+            	}else{
+            		$data = app::get('wap')->router()->gen_url( $url );
+            	}                
                 break;
         }
         return $data;
