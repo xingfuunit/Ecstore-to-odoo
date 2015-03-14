@@ -104,12 +104,6 @@ class ectools_mdl_payment_cfgs {
                 $row['real_method']= $arrPaymnet['setting']['real_method'];
             }
 
-            //因为wxpayjsapi 加密了，因此 写死 此方式   alter by Nick
-            if($object->app_key == 'wxpayjsapi'){
-            	$object->platform = 'iswx';
-            	
-            }
-            
             $row['app_platform'] = $object->platform;
             
             if($filter['app_id']){
