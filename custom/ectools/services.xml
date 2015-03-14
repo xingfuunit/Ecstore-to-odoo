@@ -15,6 +15,7 @@
         <class>ectools_payment_plugin_deposit</class>
         <class>ectools_payment_plugin_unionpay</class>
         <class>ectools_payment_plugin_ibankinginner</class>
+		<class>ectools_payment_plugin_tenpayscan</class>
     </service>
 
     <service id="view_compile_helper">
