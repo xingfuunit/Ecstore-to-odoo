@@ -1298,7 +1298,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
                         }
                     }else{
                         $aData[$k]['coupons_info']['cpns_status'] = false;
-                        $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券次数已用完');
+                        $aData[$k]['memc_status'] = app::get('b2c')->_('已使用');
                         $aData[$k]['order'] = 4;
                     }
                 }else{
