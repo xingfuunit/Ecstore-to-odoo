@@ -72,7 +72,9 @@
     <service id="desktop_finder.b2c_mdl_coupons.exchange">
         <class>b2c_finder_coupons_exchange</class>
     </service>
-
+	<service id="desktop_finder.b2c_mdl_member_coupon_detail">
+		<class>b2c_mdl_member_coupon_detail</class>
+    </service>
     <service id="desktop_finder.b2c_mdl_sales_rule_goods">
         <class>b2c_finder_sales_rule_goods</class>
     </service>

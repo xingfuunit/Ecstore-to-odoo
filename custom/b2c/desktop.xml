@@ -186,6 +186,7 @@
         <menugroup name="优惠券">
             <menu controller='admin_sales_coupon' action='add' permission='salescoupon' display='false' order='60'>添加优惠券</menu>
             <menu controller='admin_sales_coupon' action='index' permission='salescoupon' display='true' order='50'>优惠券列表</menu>
+			<menu controller='admin_sales_coupon_detail' action='index' permission='salescoupon' display='true' order='51'>优惠券查询列表</menu>
             <menu controller='admin_sales_coupon_exchange' action='index' permission='salescoupon' display='true' order='70'>积分兑换优惠券</menu>
             <menu controller='admin_sales_coupon_send' action='index' permission='salescoupon' display='true' order='80'>发送优惠券</menu>
             <menu controller='admin_sales_coupon_send' action='item' permission='salescoupon' display='true' order='80'>发送优惠券列表</menu>
