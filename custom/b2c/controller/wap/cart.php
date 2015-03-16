@@ -22,7 +22,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
     var $noCache = true;
     var $show_gotocart_button = true;
     
-	var $_follow_url = 'http://mp.weixin.qq.com/s?__biz=MzAxMjEwMjg2OA==&mid=206625913&idx=1&sn=a21e86c75e22f947ae2e7fb57cf47030#rd';
+	var $_follow_url = 'http://mp.weixin.qq.com/s?__biz=MzAxMjEwMjg2OA==&mid=207308142&idx=2&sn=6ba6cdd43cf8d2f3266ddc9f9431cfb7#rd';
 
     public function __construct(&$app) {
         parent::__construct($app);
