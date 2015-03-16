@@ -31,12 +31,19 @@ var region_sel = {
             elems = cur_sel.getAllNext();
 
         if(!cur_sel.getSelected()[0].getAttribute('data-level-index') && this.callback) {
-            _this.callback(_this.sels);
+            _this.callback(_this.sels,cur_sel.getAttribute('data-level-index'));//添加当前select框的data-level-index值传到index bySam20150314
         }
         elems.each(function(el,i){
             if(i || elems.length == 1) el.hide().empty();
         })
         this.addOpt(cur_sel.getNext(),level).setValue();
+        if(!cur_sel.getSelected()[0].getAttribute('data-level-index')){//当前select框没有下一级时,隐藏下一个select框 bySam20150314
+        	if (cur_sel.getNext()) {
+        		cur_sel.getNext().hide();
+        		
+        	}
+        	
+        }
     },
     setValue:function(){
         var k = [],str,id;

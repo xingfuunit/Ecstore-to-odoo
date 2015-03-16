@@ -313,13 +313,15 @@ Object.merge(validatorMap, {
     }
 });
 
-function selectArea(sels) {
+function selectArea(sels,i) {
     var selected = '';
+    var j = 0;
     sels.each(function(s){
-        if(s.isDisplayed()) {
+        if(s.isDisplayed() && j<=i) {//text的值只取到sels[i] bySam20150314
             var text = s[s.selectedIndex].text.trim().clean();
             if(['<{t}>北京<{/t}>','<{t}>天津<{/t}>','<{t}>上海<{/t}>','<{t}>重庆<{/t}>'].indexOf(text)>-1) return;
             selected += text;
+            j++;
         }
     });
     // var arr = $('change_shipping').getElement('.action-change-shipping:checked');
