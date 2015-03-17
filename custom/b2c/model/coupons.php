@@ -710,25 +710,30 @@ var $idColumn = 'cpns_id'; //表示id的列
     
     /**
      * 订单取消，重新激活 优惠券
-     * 删除逻辑： 1、删除 使用log，2、假如绑定了会员的优惠券，重新激活
+     * 删除逻辑： 1、删除 使用log，2、假如绑定了会员的优惠券，重新激活  3、只有订单状态为未付款方可退
+     * 
      */
     public function reactive_coupons($order_id){
+    	$order_model = app::get('b2c')->model('order');
+    	$order_info = $order_model->getRow('*',array('order_id'=>$order_id,'pay_status'=>0));
     	
-    	$member_coupon_model = app::get('b2c')->model('member_coupon');
-    	$order_coupon_mode = app::get('couponlog')->model('order_coupon_user');
-    	
-    	$used_coupons = $order_coupon_mode->getlist('*',array('order_id'=>$order_id));
-    	if($used_coupons){
-    		foreach($used_coupons as $k=> $v){
-    			if($v['order_id']){
-    				$order_coupon_mode->delete(array('order_id'=>$v['order_id']));
-    			}
-    			
-    			$member_coupon = $member_coupon_model->getRow('*',array('memc_code'=>$v['memc_code']));
-    			if($member_coupon['memc_code']){
-    				$member_coupon_model->update(array('memc_used_times'=>0),array('memc_code'=>$member_coupon['memc_code']));
-    			}
-    		}
+    	if($order_info){
+	    	$member_coupon_model = app::get('b2c')->model('member_coupon');
+	    	$order_coupon_mode = app::get('couponlog')->model('order_coupon_user');
+	    	
+	    	$used_coupons = $order_coupon_mode->getlist('*',array('order_id'=>$order_id));
+	    	if($used_coupons){
+	    		foreach($used_coupons as $k=> $v){
+	    			if($v['order_id']){
+	    				$order_coupon_mode->delete(array('order_id'=>$v['order_id']));
+	    			}
+	    			
+	    			$member_coupon = $member_coupon_model->getRow('*',array('memc_code'=>$v['memc_code']));
+	    			if($member_coupon['memc_code']){
+	    				$member_coupon_model->update(array('memc_used_times'=>0),array('memc_code'=>$member_coupon['memc_code']));
+	    			}
+	    		}
+	    	}
     	}
     }
     
