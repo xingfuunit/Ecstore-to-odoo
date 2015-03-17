@@ -129,7 +129,7 @@ public function get_schema(){
 		}
 		$sql .= ' order by sdb_b2c_member_coupon.memc_gen_time DESC';
 
-		echo $sql;
+		//echo $sql;
 
         $rows = $this->db->selectLimit($sql,$limit,$offset);
         
