@@ -714,7 +714,7 @@ var $idColumn = 'cpns_id'; //表示id的列
      * 
      */
     public function reactive_coupons($order_id){
-    	$order_model = app::get('b2c')->model('order');
+    	$order_model = app::get('b2c')->model('orders');
     	$order_info = $order_model->getRow('*',array('order_id'=>$order_id,'pay_status'=>0));
     	
     	if($order_info){
