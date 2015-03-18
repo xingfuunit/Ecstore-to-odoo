@@ -25,7 +25,7 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
 				}
 			}
 			if($a){
-			  	$this->recycle_msg = app::get('b2c')->_('操作失败！存在兑换卡未使用');
+			  	$this->recycle_msg = app::get('b2c')->_('操作失败！存在充值券未使用');
 			   	return false;
 			}
        }
@@ -36,7 +36,7 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
 		$fag = 1;
 		//规则名称验证
 		if( '' == $data['rule_name'] ){
-			$msg = app::get('b2c')->_('兑换卡规则名称不能为空！');
+			$msg = app::get('b2c')->_('充值券规则名称不能为空！');
 			$fag = 0;
 		}else{
 			$rule_name = $this->getList('rule_name',array('rule_name'=>$data['rule_name']));
@@ -44,7 +44,7 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
 			$rule_name = $rule_name[0]['rule_name'];
 
 			if( !$data['rule_id'] && $rule_name){
-				$msg = app::get('b2c')->_('操作失败！兑换卡规则名称重复');
+				$msg = app::get('b2c')->_('操作失败！充值券规则名称重复');
 				$fag = 0;
 			}
 
@@ -53,14 +53,14 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
 		//面值验证
 
 
-		//兑换卡前缀验证
+		//充值券前缀验证
 		if( '' == $data['gcard_prefix'] ){
-			$msg = app::get('b2c')->_('兑换卡前缀不能为空！');
+			$msg = app::get('b2c')->_('充值券前缀不能为空！');
 			$fag = 0;
 		}else{			
 				
 			if(preg_match('/[^A-Za-z0-9]/i',$data['gcard_prefix']) || strlen(trim($data['gcard_prefix'])) <= 0 || strlen(trim($data['gcard_prefix'])) > 6 ){
-				$msg = app::get('b2c')->_('兑换卡前缀请输入1-6位的数组和字母组合');
+				$msg = app::get('b2c')->_('充值券前缀请输入1-6位的数组和字母组合');
 				$fag = 0;
 			}
 
@@ -68,7 +68,7 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
 
 			$rule_prefix = $rule_prefix[0]['gcard_prefix'];
 			if(!$data['rule_id'] && $rule_prefix){
-				$msg = app::get('b2c')->_('操作失败！兑换卡前缀重复');
+				$msg = app::get('b2c')->_('操作失败！充值券前缀重复');
 				$fag = 0;
 			}
 
@@ -85,7 +85,7 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
 
     }
 
-    //生成兑换卡
+    //生成充值券
     function auto_giftcard(&$aData){   
 		$length = 13; //总长度
     	$rule_id = $aData['rule_id'];
@@ -151,7 +151,7 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
     	
     }
 
-    //生成兑换卡 算法
+    //生成充值券 算法
     function generate_code($length=8,$pre_code=""){
 
 	    $code = md5(microtime());//md5微妙时间
@@ -167,7 +167,7 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
 	    return $code;
 	}
 
-	//获取特定兑换卡生成日志
+	//获取特定充值券生成日志
 	function getGiftcardLogList($rule_id,$page=0,$limit=-1){
 		$gclogMdl = app::get('b2c')->model('member_giftcardlog');
 		$arrlogs= array();
@@ -201,11 +201,11 @@ class b2c_mdl_member_giftcardrule extends dbeav_model{
 		$cols = $this->_columns();
 		if(!$data['title']){
 		    $title = array();
-		    $title[] = '兑换卡规则名称';
-		    $title[] = '兑换卡';
+		    $title[] = '充值券规则名称';
+		    $title[] = '充值券';
 		    $title[] = '面额';
 		    $title[] = '有效截止日期';
-		    $title[] = '兑换卡状态';
+		    $title[] = '充值券状态';
 		    $title[] = '过期状态';
 		    $title[] = '使用状态';
 		    $data['title'] = '"'.implode('","',$title).'"';

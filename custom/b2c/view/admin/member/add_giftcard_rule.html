@@ -5,20 +5,20 @@
 <{input type="hidden" name="rule_id" value=$gcrule.rule_id}>
 <table width="100%" border="0" cellpadding="0" cellspacing="0"id='member_level' class="member-set">
 	<tr>
-		<th><em class="c-red">*</em><{t}>兑换卡规则名称<{/t}></th>		
+		<th><em class="c-red">*</em><{t}>充值券规则名称<{/t}></th>		
 		<td>
 			<{input type="text" name="rule_name" size="20" vtype="required" value=$gcrule.rule_name}>
 		</td>
 	</tr>
 	<tr>
-		<th><em class="c-red">*</em><{t}>兑换卡面值<{/t}></th>
+		<th><em class="c-red">*</em><{t}>充值券面值<{/t}></th>
 		<td>
 			<{input type="unsigned" name="gcard_money" style="width:50px" size="20" vtype="required" value=$gcrule.gcard_money}>
-			<span class="notice-inline"><{t}>输入兑换卡面值<{/t}></span>
+			<span class="notice-inline"><{t}>输入充值券面值<{/t}></span>
 		</td>
 	</tr>
 	<tr>
-		<th><em class="c-red">*</em><{t}>兑换卡前缀<{/t}></th>
+		<th><em class="c-red">*</em><{t}>充值券前缀<{/t}></th>
 		<td>
 			<{input type="unsigned" name="gcard_prefix" style="width:50px" size="20" vtype="required" value=$gcrule.gcard_prefix}>
 			<span class="notice-inline"><{t}>输入字母或数字组合的前缀(最多6位)<{/t}></span>

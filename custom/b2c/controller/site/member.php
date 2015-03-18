@@ -905,7 +905,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
         $this->output();
     }
     
-    //兑换卡充值到预存款
+    //充值券充值到预存款
     function gc_dopayment($pay_object='giftcard'){
         $this->path[] = array('title'=>app::get('b2c')->_('会员中心'),'link'=>$this->gen_url(array('app'=>'b2c', 'ctl'=>'site_member', 'act'=>'index','full'=>1)));
         $this->path[] = array('title'=>app::get('b2c')->_('我的预存款'),'link'=>'#');
