@@ -20,7 +20,7 @@
     <div style="<{if $smarty.get.id neq 2}>display:none;<{/if}>"  class="ps-div" id="select_zt">
         <div class="ps-div-title">自提地点</div>                <!-- 弹出选择框选择  -->
         <{foreach from=$branchlist item="branchs"}>
-        <div class="ps-div-address" value='<{$branchs.branch_id}>'><{$branchs.name}></div>
+        <div class="ps-div-address" value='<{$branchs.branch_id}>'><{$branchs.name_b}></div>
         <{/foreach}>
     </div>
     

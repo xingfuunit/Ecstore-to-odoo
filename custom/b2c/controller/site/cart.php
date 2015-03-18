@@ -971,6 +971,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             
             
             $this->pagedata['shipping_branch_name'] = $_COOKIE['purchase']['branch_name'];
+			$this->pagedata['shipping_branch_name_b'] = $_COOKIE['purchase']['branch_name_b'];
             $this->pagedata['shipping_branch_id'] = $_COOKIE['purchase']['branch_id'];
             $this->pagedata['has_cod'] = $this->pagedata['shipping_method']['has_cod'];
         }
@@ -1377,8 +1378,8 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         setcookie("purchase[payment]", "", time() - 3600, kernel::base_url().'/');
         
         if(isset($_POST['branch_id']) && $_POST['branch_id'] > 0 && $arr_shipping['shipping_name'] == '门店自提'){
-        	$branch = app::get('ome')->model('branch')->dump($_POST['branch_id'],'branch_id, name, address,area');
-        	$arr_shipping['shipping_name'].= '【'.$branch['name'].'】';
+        	$branch = app::get('ome')->model('branch')->dump($_POST['branch_id'],'branch_id, name,name_b, address,area');
+        	$arr_shipping['shipping_name'].= '【'.$branch['name_b'].'】';
         	
 	        //门店自提，把收货地址改为门店地址
 	        $member_id = kernel::single('b2c_user_object')->get_member_id();
@@ -1427,6 +1428,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
 	        $seKey = md5($this->obj_session->sess_id().$member_id);
 	        
 	        setcookie('purchase[branch_name]',$branch['name'] , 0, kernel::base_url() . '/');
+			setcookie('purchase[branch_name_b]',$branch['name_b'] , 0, kernel::base_url() . '/');
 	        setcookie('purchase[branch_id]',$branch['branch_id'] , 0, kernel::base_url() . '/');
 	        
 	        setcookie('purchase[addr][usable]', $seKey, 0, kernel::base_url() . '/');

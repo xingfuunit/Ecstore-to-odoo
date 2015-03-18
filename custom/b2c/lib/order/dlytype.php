@@ -87,7 +87,7 @@ class b2c_order_dlytype
         if ($tpl == 'API') return $shipping;
 
         $_filter['is_show'] = 'true';
-        $controller->pagedata['branchlist'] = app::get('ome')->model('branch')->getList('branch_id, name, address', $_filter);
+        $controller->pagedata['branchlist'] = app::get('ome')->model('branch')->getList('branch_id, name,name_b, address', $_filter);
         $str_html = $controller->fetch($tpl,$controller->pagedata['app_id']);
         $obj_ajax_view_help = kernel::single('b2c_view_ajax');
         return $obj_ajax_view_help->get_html($str_html, 'b2c_order_dlytype','select_delivery_method');
