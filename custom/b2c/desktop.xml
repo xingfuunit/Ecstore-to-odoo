@@ -48,7 +48,8 @@
         <permission id="editstore" display='true' parent='editgoods' workground='b2c.wrokground.goods'>单商品库存编辑</permission>
         <permission id="batcheditstore" display='true' parent='editgoods' workground='b2c.wrokground.goods'>商品库存批量编辑</permission>
         <permission id="nostore_sell" display='true' parent='editgoods' workground='b2c.wrokground.goods'>无库存也可销售</permission>
-
+		<permission id="store_nostore_sell" display='true' parent='editgoods' workground='b2c.wrokground.goods'>门店无库存也可销售</permission>
+		
 		<permission id="deleteproducts" display='true' parent='editgoods' workground='b2c.wrokground.goods'>货品删除</permission>
         <!--订单-->
         <permission id="order" access_opctl='b2c_access:test' display='true' parent='0' workground='ectools.wrokground.order'>查看订单列表</permission>
