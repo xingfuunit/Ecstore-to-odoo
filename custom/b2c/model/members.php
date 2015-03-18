@@ -730,7 +730,7 @@ class b2c_mdl_members extends dbeav_model{
     }
 
 
-   //验证礼品卡
+   //验证充值券
     public function gc_validate($gc_code,&$msg=''){
         
         kernel::single('base_session')->start();
@@ -738,7 +738,7 @@ class b2c_mdl_members extends dbeav_model{
 
         $gc_id = strip_tags($gc_id);
         if(preg_match('/[^A-Za-z0-9]/i',$gc_code) || strlen($gc_code) != 13){
-            $msg = app::get('b2c')->_('操作失败！礼品卡密码错误');
+            $msg = app::get('b2c')->_('操作失败！充值券密码错误');
             
             $_SESSION['giftcard'][$member_id]++;
             return false;
@@ -747,19 +747,19 @@ class b2c_mdl_members extends dbeav_model{
         $gc_info = $giftcardMdl->getList('*',array('gcard_code'=>$gc_code));
 
         if(!$gc_info){
-            $msg = app::get('b2c')->_('操作失败！礼品卡密码错误');
+            $msg = app::get('b2c')->_('操作失败！充值券密码错误');
             $_SESSION['giftcard'][$member_id]++;
            return false;
         }else{
             $gc_info = $gc_info[0];
             $end_time = ($gc_info['end_time']-time()) >0 ? 1 : 0;
             if( ('false' != $gc_info['is_overdue']) || !$end_time || ($gc_info['status'] == 'dead') || ('false' != $gc_info['disabled']) ){
-                $msg = app::get('b2c')->_('操作失败！礼品卡已失效，不可用');
+                $msg = app::get('b2c')->_('操作失败！充值券已失效，不可用');
                 $_SESSION['giftcard'][$member_id]++;          
                 return false;
             }
             if('false' != $gc_info['used_status']){
-                $msg = app::get('b2c')->_('操作失败！礼品卡已使用');
+                $msg = app::get('b2c')->_('操作失败！充值券已使用');
                 $_SESSION['giftcard'][$member_id]++;               
                 return false;
             }

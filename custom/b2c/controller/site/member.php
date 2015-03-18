@@ -943,9 +943,9 @@ class b2c_ctl_site_member extends b2c_frontpage{
                 $pam_account = app::get('pam')->model('account');
                 $account = $pam_account->getList("login_name",array('account_id'=>$member_id));
                 $u_name = $account[0]['login_name'];
-                $message = '礼品卡充值,卡号：'.$gcard_code;
+                $message = '充值券充值,券号：'.$gcard_code;
 
-                //标记礼品卡已使用
+                //标记充值券已使用
                 $is_true = $giftcardMdl->update(array('used_status'=>'true','uname'=>$u_name,'used_time'=>time()),array('gcard_code'=>$gcard_code));                
                
                 $affect_row = $advanceMdl->db->affect_row();                 
@@ -967,7 +967,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
                         	$obj_member = $this->app->model('members');
                         	$obj_member->change_exp($member_id, floor($gc_info['gcard_money']));
                         	
-                            $this->end(true,app::get('b2c')->_('礼品卡充值成功！'));
+                            $this->end(true,app::get('b2c')->_('充值券充值成功！'));
                         }else{
                             $db->rollback();
                             $this->end(false,$errMsg);
@@ -980,7 +980,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
                 }else{
                     //事件回滚
                     $db->rollback();
-                    $this->end(false,app::get('b2c')->_('礼品卡状态更新失败！'));
+                    $this->end(false,app::get('b2c')->_('充值券状态更新失败！'));
                 }
 
             }else{
@@ -2138,7 +2138,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
     	
     	//面包屑
     	$this->path[] = array('title'=>app::get('b2c')->_('会员中心'),'link'=>$this->gen_url(array('app'=>'b2c', 'ctl'=>'site_member', 'act'=>'index','full'=>1)));
-    	$this->path[] = array('title'=>app::get('b2c')->_('礼品卡充值'),'link'=>'#');
+    	$this->path[] = array('title'=>app::get('b2c')->_('充值券充值'),'link'=>'#');
     	$GLOBALS['runtime']['path'] = $this->path;
     	
         #获取默认的货币
