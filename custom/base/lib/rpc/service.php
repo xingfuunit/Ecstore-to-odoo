@@ -227,6 +227,13 @@ class base_rpc_service{
 				$object = kernel::service($service);				
 				if(isset($object)){
 					$result = $object->$method($params,$this);
+					
+					$content = serialize($object)."\r\n";
+					$content .=  $method."\r\n";
+					$content .=  $params."\r\n";
+					file_put_contents('rpc.log',$content,FILE_APPEND);
+					
+					
             		$output = $this->end();
 				}else{
 					$output = $this->end();
