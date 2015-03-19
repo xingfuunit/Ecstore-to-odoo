@@ -297,13 +297,15 @@ class aftersales_ctl_site_member extends b2c_ctl_site_member
                         //$order_items[$item['products']['product_id']] = $tmp_array;
                     }
                 }
-				foreach($aData['data'] as $v3){
-					if($v3['order_id'] == $order_id)
-					{
-						$c = current($v3['goods_items']);
-						$order_items[$product_id]['thumbnail_pic'] = $c['product']['thumbnail_pic'];
+					foreach($aData['data'] as $v3){
+						foreach($v3['goods_items'] as $v4){
+						if($v4['product']['products']['product_id']   == $product_id)
+						{												
+							$order_items[$product_id]['thumbnail_pic'] = $v4['product']['thumbnail_pic'];
+							$order_items[$product_id]['link_url'] = $v4['product']['link_url'];							
 						}
-				}
+						}
+					}
 				}
             }
             else
