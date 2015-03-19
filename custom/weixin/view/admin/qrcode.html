@@ -1,0 +1,120 @@
+<form action="index.php?app=weixin&ctl=admin_menu&act=update" id="menucatEditor" method="post">
+    <{area inject=".mainHead"}>
+    <h2 class="head-title"><{t}>微信自定义二维码<{/t}></h2>
+	<div class="notice">
+      <{t}>因微信端有生成限制，因此没用的二维码不能删除<{/t}>
+    </div>
+    <div class="gridlist-action finder-action clearfix">
+        <{assign var=addmenucat value=$___a='添加二维码'|t:'weixin'}>
+        <div class="span-auto">
+            <{button app="desktop" label=$___a='添加二维码'|t:'weixin' id="add-rootmenu" icon="btn_add.gif"  }>
+        </div>
+        <div class="span-auto">
+            <label>当前微信公众账号切换:</label>
+            <{input type="select" name="bind_id" required="true" value=$bind_id options=$publicNumber label="name" }>
+            <{if !$publicNumber}><i class="red">您还没有公众号，请去控制面板配置公众账号后再添加自定义二维码!</i><{/if}>
+        </div>
+		
+		<div class="span-auto">
+            <label>当前二维码分组:</label>
+            <{input type="select" name="group_id" required="true" value=$group_id options=$code_group label="name"}>
+        </div>
+		
+		<div class="span-auto">
+            <{button app="desktop" label=$___a='提交'|t:'weixin' id="search_code_btn" name="search_code_btn" }>
+        </div>
+    </div>
+
+    <div class="Node">
+        <div class='gridlist-head finder-header'>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="5%"><{t}>CodeID<{/t}></td>
+                    <td width="20%"><{t}>二维码名称<{/t}></td>
+					<td width="20%"><{t}>组<{/t}></td>
+                    <td width="10%"><{t}>扫描统计<{/t}></td>
+                    <td width="10%"><{t}>关注统计<{/t}></td>
+					<td width="10%"><{t}>缩略图<{/t}></td>
+                    <td width="25%"><{t}>操作<{/t}></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <{/area}>
+
+    <div class="Node-body" id="menus_body">
+        <{include file='admin/qrcode/list.html'}>
+    </div>
+
+</form>
+
+<script>
+
+function deleteRow(act,event){
+    e=$(new Event(event).stop().target);
+    var row=e.getParent('.row');
+
+    if(confirm('<{t}>您确定要删除该菜单？<{/t}>')){
+        W.page(act,{
+            method:'get',
+            update:'messagebox',
+            onComplete:function(re){
+                if(re.contains('success')){row.remove();}
+            }
+        });
+    }
+}
+
+$$('select[name=bind_id]').addEvent('change', function(e){
+    /*W.page('index.php?app=weixin&ctl=admin_qrcode&act=index&bind_id='+$(this).value,{
+        update:$('menus_body'),
+        onComplete:function(res){
+            new Request.JSON({
+                url:'index.php?app=weixin&ctl=admin_qrcode&act=get_default_theme_menu',
+                method:'post',
+                data:'bind_id='+$E('select[name=bind_id').get('value'),
+                onComplete:function(ret){
+                    $$('input[name=menu_theme]').each(function(obj){
+                        if(obj.get('value') == ret){
+                            obj.checked=true;
+                            obj.getNext('i.red').show('inline').getSiblings('i.red').hide();
+                        }
+                    });
+                    $('edit-menucatsort').getElement('span span').set({'text':'<{t}>编辑排序<{/t}>','styles':''});
+                }
+            }).send();
+        }
+    });*/
+});
+
+
+void function(){
+	
+	$('search_code_btn').addEvent('click',function(){
+		var bind_id = $E('select[name=bind_id]').get('value');
+		var group_id = $E('select[name=group_id]').get('value');
+		window.location.href="index.php?app=weixin&ctl=admin_qrcode&act=index&bind_id="+bind_id+"&group_id="+group_id;
+	});
+
+
+    // 添加一级菜单
+    $('add-rootmenu').addEvent('click',function(){
+        new Dialog('index.php?app=weixin&ctl=admin_qrcode&act=add',
+            {title:'添加二维码',height:0.7,width:0.6}
+        );
+    });
+
+
+  function confirmDialog(msg,fn){
+      new Dialog(new Element('div.dialog-confirm',{html:'<div class="content">' + msg + '</div><div class="action"><{button label="确定" type="button" class="btn-primary" return="true"}> &nbsp;&nbsp; <{button type="button" class="btn-secondary" label="取消" isCloseDialogBtn="true"}></div>'}),{title:'<{t}>提示<{/t}>',resizeable:false,width:250,height:110,onLoad:function(){
+          this.dialog.getElement('[return=true]').addEvent('click',function(e){
+              fn&&fn.call(this);
+              this.close();
+          }.bind(this));
+      }});
+  }
+
+
+}();
+
+</script>
