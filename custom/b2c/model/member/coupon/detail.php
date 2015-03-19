@@ -145,9 +145,7 @@ public function get_schema(){
 	   'type' => 'text',
       'label' => app::get('couponlog')->_('已使用次数'),
       'width' => 80,
-      'searchtype' => 'has',
-      'filtertype' => false,
-      'filterdefault' => 'true',
+
       'editable' => false,
       'in_list' => true,
       'default_in_list' => true,
@@ -282,6 +280,15 @@ public function get_schema(){
         }
 		if(isset($filter['memc_code']) && $filter['memc_code']){
             $where[] = ' sdb_b2c_member_coupon.memc_code = '.'\''.$filter['memc_code'].'\'';
+        }
+		if(isset($filter['disabled']) && $filter['disabled']){
+			if($filter['disabled']=='可用'){$filter['disabled']='true'}
+			if($filter['disabled']=='不可用'){$filter['disabled']='false'}
+            $where[] = ' sdb_b2c_member_coupon.disabled = '.'\''.$filter['disabled'].'\'';
+        }
+		if(isset($filter['memc_isvalid']) && $filter['memc_isvalid']){
+			if($filter['memc_isvalid']=='失效'){$filter['memc_isvalid']='true'}
+            $where[] = ' sdb_b2c_member_coupon.memc_isvalid = '.'\''.$filter['memc_isvalid'].'\'';
         }
 	
         return implode($where,' AND ');
