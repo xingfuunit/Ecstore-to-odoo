@@ -258,9 +258,55 @@ class aftersales_ctl_site_member extends b2c_ctl_site_member
                                 $order_items[$product_id]['thumbnail_pic'] = $spec_desc_goods[0]['image_default_id'];
                             }
                         }
+						//当没有图片时
+						if(!isset($order_items[$product_id]['thumbnail_pic']) || !$order_items[$product_id]['thumbnail_pic']){
+						$order = $this->app->model('orders');
+						$aData = $order->fetchByMember($this->app_b2c->member_id,$nPage-1,$order_status,10);
+
+        $this->get_order_details($aData,'member_orders');
+        $oImage = app::get('image')->model('image');
+        $oGoods = app::get('b2c')->model('goods');
+        $imageDefault = app::get('image')->getConf('image.set');
+
+        foreach($aData['data'] as $k => &$v) {
+	   $res_a = kernel::single('aftersales_mdl_return_product')->getList('member_id,type,status',array('order_id'=>$v['order_id']));
+		if($res_a[0]['member_id'] == $this->app_b2c->member_id){
+			$aData['data'][$k]['hou_status'] = $res_a[0]['status'];
+			$aData['data'][$k]['hou_type'] = $res_a[0]['type'];
+
+		}
+
+            foreach($v['goods_items'] as $k2 => &$v2) {
+                $spec_desc_goods = $oGoods->getList('spec_desc,image_default_id',array('goods_id'=>$v2['product']['goods_id']));
+                if($v2['product']['products']['spec_desc']['spec_private_value_id']){
+                    $select_spec_private_value_id = reset($v2['product']['products']['spec_desc']['spec_private_value_id']);
+                    $spec_desc_goods = reset($spec_desc_goods[0]['spec_desc']);
+                }
+                if($spec_desc_goods[$select_spec_private_value_id]['spec_goods_images']){
+                    list($default_product_image) = explode(',', $spec_desc_goods[$select_spec_private_value_id]['spec_goods_images']);
+                    $v2['product']['thumbnail_pic'] = $default_product_image;
+                }elseif($spec_desc_goods[0]['image_default_id']){
+                    if( !$v2['product']['thumbnail_pic'] && !$oImage->getList("image_id",array('image_id'=>$spec_desc_goods[0]['image_default_id']))){
+                        $v2['product']['thumbnail_pic'] = $imageDefault['S']['default_image'];
+                    }else{
+                        $v2['product']['thumbnail_pic'] = $spec_desc_goods[0]['image_default_id'];
+                    }
+                }
+            }
+        }
                         //$order_items[$item['products']['product_id']] = $tmp_array;
                     }
                 }
+					foreach($aData['data'] as $v3){
+						foreach($v3['goods_items'] as $v4){
+						if($v4['product']['products']['product_id']   == $product_id)
+						{												
+							$order_items[$product_id]['thumbnail_pic'] = $v4['product']['thumbnail_pic'];
+							$order_items[$product_id]['link_url'] = $v4['product']['link_url'];							
+						}
+						}
+					}
+				}
             }
             else
             {
