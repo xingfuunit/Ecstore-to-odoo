@@ -1715,9 +1715,21 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
     		$re = $obj->test_mysqli_timeout();
     		if($re){
     			$erp_product = $obj->select('select * from sdb_ome_products where bn = "'.$bn.'"');
-    			$branch_product = $obj->select('select * from sdb_ome_branch_product where product_id = "'.$erp_product[0]['product_id'].'" and branch_id = "'.$branch_id.'"');
-    			$effect_store = intval($branch_product[0]['store']) - intval($branch_product[0]['store_freeze']);
-    			return $effect_store;
+    			if($erp_product){
+    				$branch_product = $obj->select('select * from sdb_ome_branch_product where product_id = "'.$erp_product[0]['product_id'].'" and branch_id = "'.$branch_id.'"');
+    				$effect_store = intval($branch_product[0]['store']) - intval($branch_product[0]['store_freeze']);
+    				return $effect_store;
+    			}else{//如果在product表中不存在,则查询捆绑商品表
+    				$erp_pkg_goods = $obj->select('select goods_id from sdb_omepkg_pkg_goods where pkg_bn = "'.$bn.'"');
+    				$erp_pkg_products = $obj->select('select * from sdb_omepkg_pkg_product where goods_id = "'.$erp_pkg_goods[0]['goods_id'].'"');
+    				$effect_store = array();
+    				foreach($erp_pkg_products as $key => $val){
+    					$branch_product = $obj->select('select * from sdb_ome_branch_product where product_id = "'.$val['product_id'].'" and branch_id = "'.$branch_id.'"');			
+    					$pkg_store = floor((intval($branch_product[0]['store']) - intval($branch_product[0]['store_freeze']))/$val['pkgnum']);
+    					$effect_store[] = $pkg_store;
+    				}
+    				return min($effect_store);
+    			}    			
     		}else{
     			return $this->__max_goods_store;
     		}
