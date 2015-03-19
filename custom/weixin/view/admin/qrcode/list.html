@@ -1,0 +1,84 @@
+
+<div id="menu_tree" class='gridlist finder-list catlist'>
+    <{foreach from=$list item=item name="item"}>
+    <div depath="<{$item.menu_depth}>" class="clear_cat row <{if $env.foreach.item.iteration%2>0}>even<{/if}>" menu_id="<{$item.menu_id}>" parent_id="<{$item.parent_id}>">
+        <div class='row-line' style="padding:0">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td width="5%" style="vertical-align:top"><{$item.code_id}></td>
+                    <td width="20%" style="vertical-align:top">
+                        <{$item.code_name}>
+                    </td>
+                    <td width="20%" style="vertical-align:top">
+                        <{$item.code_group}>
+                    </td>
+                    <td width="10%" style="vertical-align:top">
+                      	<{$item.scan_count}>
+                    </td>
+					<td width="10%" style="vertical-align:top">
+                      	<{$item.follow_count}>
+                    </td>
+					<td width="10%" style="vertical-align:top">
+                      	<a href='<{$showcode_url}><{$item.code_key}>' class='img-tip pointer' target='_blank' onmouseover='bindFinderColTip(event);'><span>&nbsp;pic</span></a>
+                    </td>
+                    <td width="25%" style="vertical-align:top">
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <span class="opt lnk" onClick="new Dialog('index.php?app=weixin&ctl=admin_qrcode&act=edit&code_id=<{$item.code_id}>', {title:'<{t}>编辑<{/t}>',height:0.7,width:0.6})">
+                                    <{img src="bundle/editcate.gif" border="0" alt=$___weixin="编辑"|t:'weixin'   app='desktop'}>
+                                    <{t}>编辑<{/t}>
+                                </span>
+                            </div>
+							<!--
+                            <div class="span-auto">
+                                <span class="opt lnk" onclick="deleteRow('index.php?app=weixin&ctl=admin_qrcode&act=remove&menu_id=<{$item.menu_id}>',event)">
+                                    <{img src="bundle/delecate.gif" border="0" alt=$___weixin="删除"|t:'weixin'  app='desktop'}>
+                                    <{t}>删除<{/t}>
+                                </span>
+                            </div>
+							-->
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <{/foreach}>
+</div>
+
+<script>
+$('menu_tree').addEvent('click',function(e){
+    if(!e.target.className.match(/handle-/i))return;
+    var handle=$(e.stop().target);
+    var eventRow=handle.getParent('.row');
+    var visible=handle.hasClass('handle-show')?'':'none';
+    if(visible=='none'){
+        handle.hide().getNext().show();
+    }else{
+        handle.hide().getPrevious().show();
+    }
+    flode(eventRow,visible);
+});
+
+function flode(eventRow,visible){
+    var menu_id=eventRow.get('menu_id');
+    var parent_id=eventRow.get('parent_id');
+    eventRow.getAllNext('div[parent_id='+menu_id+']').each(function(row){
+    if(visible=='none'){
+        row.hide();
+        var obj=row.getElements('.handle-menu img');
+        if(obj.length>1){
+            flode(row,visible);
+        }
+    }else{
+        row.show();
+        var obj=row.getElements('.handle-menu img');
+        if(obj.length>1){
+            var vis=(obj[0].getStyle('display')=='none'?'none':'inline');
+            flode(row,vis);
+        }
+    }
+    });
+}
+
+</script>
