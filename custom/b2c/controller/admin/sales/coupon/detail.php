@@ -11,7 +11,7 @@ class b2c_ctl_admin_sales_coupon_detail extends desktop_controller{
     function index(){
 		
 		$this->finder('b2c_mdl_member_coupon_detail',array(
-            'title'=>app::get('b2c')->_('查询优惠券'),
+            'title'=>app::get('b2c')->_('查询优惠券，用户所有的优惠券'),
             'use_buildin_recycle'=>false,
             ));
     }
