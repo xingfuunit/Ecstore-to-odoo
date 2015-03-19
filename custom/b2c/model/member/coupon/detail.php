@@ -282,13 +282,16 @@ public function get_schema(){
             $where[] = ' sdb_b2c_member_coupon.memc_code = '.'\''.$filter['memc_code'].'\'';
         }
 		if(isset($filter['disabled']) && $filter['disabled']){
-			if($filter['disabled']=='可用'){$filter['disabled']='true'}
-			if($filter['disabled']=='不可用'){$filter['disabled']='false'}
+			if($filter['disabled']=='失效'){$filter['disabled']='true';}
+			
             $where[] = ' sdb_b2c_member_coupon.disabled = '.'\''.$filter['disabled'].'\'';
+			
         }
 		if(isset($filter['memc_isvalid']) && $filter['memc_isvalid']){
-			if($filter['memc_isvalid']=='失效'){$filter['memc_isvalid']='true'}
+			if($filter['memc_isvalid']=='可用'){$filter['memc_isvalid']='true';}
+			if($filter['memc_isvalid']=='不可用'){$filter['memc_isvalid']='false';}
             $where[] = ' sdb_b2c_member_coupon.memc_isvalid = '.'\''.$filter['memc_isvalid'].'\'';
+			var_dump($where);
         }
 	
         return implode($where,' AND ');
