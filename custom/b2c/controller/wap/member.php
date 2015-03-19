@@ -246,6 +246,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
                 $order_status['pay_status'] = array(1,2);
                 $order_status['ship_status'] = 1;
             }
+            $order_status = array('pay_status'=>0,'ship_status'=>array(1,2,3));
             $aData = $order->fetchByMember($this->app->member_id,$nPage-1,$order_status);
         }
         $this->get_order_details($aData,'member_orders');
@@ -1530,6 +1531,14 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			break;
     		case 'openid_rebind' :
     			$msg = app::get('b2c')->_('该账号已经绑定过微信');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
+    		case 'order_uncompleted' :
+    			$msg = app::get('b2c')->_('被绑定的账号有未完成的订单,不能进行绑定！');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
+    		case 'update_coupon_failed' :
+    			$msg = app::get('b2c')->_('合并优惠券失败！');
     			$this->splash('failed',null,$msg,'','',true);
     			break;
     		case 'ok' :

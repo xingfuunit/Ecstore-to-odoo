@@ -1052,13 +1052,33 @@ class b2c_user_passport
     			$to_pam_member = $loginPamData;
     			$to_b2c_member = $loginMemberData;
     			$to_member_id = $loginPamData[0]['member_id'];
-    		}    		
+    		}    
+
+    		/**是否有未完成订单的判断开始 **/
+    		$order = $this->app->model('orders');
+    		if($order->getList('order_id',array('member_id'=>$from_pam_member[0]['member_id'],'pay_status'=>0,'ship_status'=>array(1,2,3)))){
+    			$db->rollback();
+    			return 'order_uncompleted';
+    		}
+    		if($order->getList('order_id',array('member_id'=>$from_pam_member[0]['member_id'],'pay_status'=>1,'ship_status'=>array(0,2,3)))){
+    			$db->rollback();
+    			return 'order_uncompleted';
+    		}
+    		if($order->getList('order_id',array('member_id'=>$from_pam_member[0]['member_id'],'pay_status'=>4,'ship_status'=>array(0,1)))){
+    			$db->rollback();
+    			return 'order_uncompleted';
+    		}
+    		if($order->getList('order_id',array('member_id'=>$from_pam_member[0]['member_id'],'pay_status'=>5,'ship_status'=>array(0,1)))){
+    			$db->rollback();
+    			return 'order_uncompleted';
+    		}
+    		/**是否有未完成订单的判断结束 **/
     		
     		if(!$this->userPassport->bind_log($from_pam_member,$to_pam_member)){
     			$db->rollback();
     			return 'update_log_failed';
     		}
-
+    		    		
     		$update_level =app::get('b2c')->model('members')->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$to_pam_member[0]['member_id']));
     		if(!$update_level){
     			$db->rollback();
@@ -1114,6 +1134,17 @@ class b2c_user_passport
     		if(!$member_point->change_point($from_pam_member[0]['member_id'],-$from_b2c_member[0]['point'],$msg,'operator_adjust',3,$from_pam_member[0]['member_id'],$from_pam_member[0]['member_id'],'bindmember')){
     			$db->rollback();
     			return 'reduce_point_wrong';
+    		}
+    	}
+    	$oCoupon = kernel::single('b2c_coupon_mem');
+    	$oData = $oCoupon->get_list_m($from_pam_member[0]['member_id']);
+    	if($oData){
+    		$update_oCoupon_row = $this->app->model('member_coupon')->update(  //
+    				array('member_id'=>$to_pam_member[0]['member_id']),
+    				array('member_id'=>$from_pam_member[0]['member_id']));
+    		if(!$update_oCoupon_row){
+    			$db->rollback();
+    			return 'update_coupon_failed';
     		}
     	}
     	$db->commit($transaction_status);
