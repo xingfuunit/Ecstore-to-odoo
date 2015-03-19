@@ -21,19 +21,19 @@ class b2c_ctl_admin_member_giftcardrule extends desktop_controller{
             echo '很抱歉！您当前的版本无法使用此功能';exit;
         } */
         $this->finder('b2c_mdl_member_giftcardrule',array(
-            'title'=>app::get('b2c')->_('礼品卡规则'),
+            'title'=>app::get('b2c')->_('充值券规则'),
             'allow_detail_popup' =>true,
             'use_view_tab'=>true,  
             'use_buildin_filter'=>true,
             'allow_detail_popup'=>ture,          
             'actions'=>array(
-                array('label'=>app::get('b2c')->_('添加礼品卡规则'),'href'=>'index.php?app=b2c&ctl=admin_member_giftcardrule&act=add_giftcard_rule','target'=>'dialog::{width:680,height:250,title:\''.app::get('b2c')->_('添加礼品卡规则').'\'}'),
+                array('label'=>app::get('b2c')->_('添加充值券规则'),'href'=>'index.php?app=b2c&ctl=admin_member_giftcardrule&act=add_giftcard_rule','target'=>'dialog::{width:680,height:250,title:\''.app::get('b2c')->_('添加充值券规则').'\'}'),
             )
         ));
     }
 
     
-    //生成礼品卡
+    //生成充值券
     public function add_giftcard($rule_id=null){       
         $rule_id = $rule_id ? $rule_id : $_GET['p'][0];  
         if($rule_id){
@@ -47,7 +47,7 @@ class b2c_ctl_admin_member_giftcardrule extends desktop_controller{
 
     }
 
-    //保存并生成礼品卡
+    //保存并生成充值券
     public function save_autogiftcard(){
         $arr = $_POST;        
         $this->begin('index.php?app=b2c&ctl=admin_member_giftcardrule&act=index');
@@ -66,7 +66,7 @@ class b2c_ctl_admin_member_giftcardrule extends desktop_controller{
         }
         $arr['op_id'] = $this->user->user_id;  //管理员信息只能在控制层获取
         $arr['op_name'] = $this->user->user_data['name'];
-        //生成礼品卡
+        //生成充值券
         if($gcMdl->auto_giftcard($arr)){
              
             //$this->export_giftcardlog($arr['log_id']); //生成时直接下载
@@ -78,7 +78,7 @@ class b2c_ctl_admin_member_giftcardrule extends desktop_controller{
 
     }
 
-    //添加礼品卡规则
+    //添加充值券规则
     public function add_giftcard_rule($rule_id=null){
         if($rule_id){
             $gcruleMdl = $this->app->model('member_giftcardrule');

@@ -21,8 +21,8 @@ class b2c_finder_member_giftcardrule{
     }
 
     public function column_editbutton($row){
-        return '<a href="index.php?app=b2c&ctl=admin_member_giftcardrule&act=add_giftcard_rule&_finder[finder_id]='.$_GET['_finder']['finder_id'].'&p[0]='.$row['rule_id'].'" target="dialog::{title:\''.app::get('b2c')->_('编辑兑换卡规则').'\', width:680, height:250}">'.app::get('b2c')->_('编辑').'</a>&nbsp;&nbsp;
-            <a href="index.php?app=b2c&ctl=admin_member_giftcardrule&act=add_giftcard&_finder[finder_id]='.$_GET['_finder']['finder_id'].'&p[0]='.$row['rule_id'].'" target="dialog::{title:\''.app::get('b2c')->_('生成兑换卡').'\', width:680, height:300}">'.app::get('b2c')->_('生成').'</a>';
+        return '<a href="index.php?app=b2c&ctl=admin_member_giftcardrule&act=add_giftcard_rule&_finder[finder_id]='.$_GET['_finder']['finder_id'].'&p[0]='.$row['rule_id'].'" target="dialog::{title:\''.app::get('b2c')->_('编辑充值券规则').'\', width:680, height:250}">'.app::get('b2c')->_('编辑').'</a>&nbsp;&nbsp;
+            <a href="index.php?app=b2c&ctl=admin_member_giftcardrule&act=add_giftcard&_finder[finder_id]='.$_GET['_finder']['finder_id'].'&p[0]='.$row['rule_id'].'" target="dialog::{title:\''.app::get('b2c')->_('生成充值券').'\', width:680, height:300}">'.app::get('b2c')->_('生成').'</a>';
         
     }
         

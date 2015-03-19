@@ -21,7 +21,7 @@ $db['member_giftcard'] =array (
     array (
       'type' => 'varchar(50)',
       'pkey' => true,
-      'label' => app::get('b2c')->_('兑换卡'),
+      'label' => app::get('b2c')->_('充值券'),
       'width' => 180,
       'searchtype' => 'has',
       'filtertype' => false,
@@ -95,7 +95,7 @@ $db['member_giftcard'] =array (
       ),
       'default' => 'active',
       'required' => true,
-      'label' => app::get('b2c')->_('兑换卡状态'),
+      'label' => app::get('b2c')->_('充值券状态'),
       'width' => 70,
       'editable' => false,
       'filtertype' => 'has',
@@ -167,7 +167,7 @@ $db['member_giftcard'] =array (
       'editable' => false,
     ),
   ),
-  'comment' => app::get('b2c')->_('兑换卡信息表'),
+  'comment' => app::get('b2c')->_('充值券信息表'),
   'index' => 
   array (
     'ind_giftcard' => 

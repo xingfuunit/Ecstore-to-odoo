@@ -33,7 +33,7 @@ $db['member_giftcardrule']=array (
     ),
     'gcard_money' => 
     array (
-      'label' => app::get('b2c')->_('兑换卡面值'),
+      'label' => app::get('b2c')->_('充值券面值'),
       'type' => 'money',
       'default' => '0.00',
       'required' => true,
@@ -48,7 +48,7 @@ $db['member_giftcardrule']=array (
     'gcard_prefix' => 
     array (
       'type' => 'varchar(50)',
-      'label' => app::get('b2c')->_('兑换卡前缀'),
+      'label' => app::get('b2c')->_('充值券前缀'),
       'width' => 75,
       'searchtype' => 'has',
       'editable' => true,
@@ -92,7 +92,7 @@ $db['member_giftcardrule']=array (
       'editable' => false,
     ),
   ),
-  'comment' => app::get('b2c')->_('兑换卡规则表'),
+  'comment' => app::get('b2c')->_('充值券规则表'),
   'index' => 
   array (
     'ind_rule' => 
