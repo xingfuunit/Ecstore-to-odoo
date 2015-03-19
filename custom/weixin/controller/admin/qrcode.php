@@ -100,7 +100,6 @@ class weixin_ctl_admin_qrcode extends desktop_controller{
 			$data =array(
 					'code_group' 	=> $post['code_group'],
 					'code_name'		=> $post['code_name'],
-					'code_key'		=> $post['code_key'],
 					'createtime'	=> time(),
 					'bind_id'		=> $post['bind_id']
 			);
@@ -118,7 +117,6 @@ class weixin_ctl_admin_qrcode extends desktop_controller{
 					'code_name'		=> $post['code_name'],
 					'createtime'	=> time(),
 					'bind_id'		=> $post['bind_id'],
-					'code_key'=> 	'0',
 			);
 			
 			 $code_id = $this->_qrcode_model->insert($data);
