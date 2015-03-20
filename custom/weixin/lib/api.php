@@ -8,6 +8,7 @@ class weixin_api{
     }
 
     public function api(){
+    	
         //签名验证，消息有效性验证
         if( !empty($_GET) && $this->doget() ){
             echo $_GET["echostr"];
@@ -59,6 +60,7 @@ class weixin_api{
              * view  点击菜单跳转链接时的事件推送
              * */
             $method = strtolower($postData['Event']);
+            
             if( method_exists($this->wechat,$method) ){
                 $this->wechat->$method($postData);
             }else{
@@ -325,5 +327,6 @@ class weixin_api{
         $response = $httpclient->post($callback_url, $nodify_data);
         echo 'success';exit;
     }
+    
 
 }

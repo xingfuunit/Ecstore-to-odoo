@@ -58,13 +58,17 @@ class b2c_ctl_site_order extends b2c_frontpage{
         $aCart = $this->mCart->get_objects($fastbuy_filter);
         // hack by jason 判断如果是门店来的订单,则将库存设置为最大
         if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){
-        	unset($aCart['cart_status']);
-        	unset($aCart['cart_error_html']);
-        	foreach ($aCart['object']['goods'] as $key=>$goods){
-        		$goods['store']['real'] = 999999;
-        		$goods['store']['store'] = 999999;
+        	$obj_goods = kernel::single('b2c_cart_object_goods');       	       	
+        	foreach ($aCart['object']['goods'] as $key=>$goods){       		
         		foreach ($goods['obj_items']['products'] as $k=>$products){
-        			$aCart['object']['goods'][$key]['obj_items']['products'][$k]['store'] = 999999;
+        			$erp_store = $obj_goods->get_erp_store($aCart['object']['goods'][$key]['obj_items']['products'][$k]['bn'], $_SESSION['local_store']['branch_id'], $aCart['object']['goods'][$key]['obj_items']['products'][$k]['goods_id']);
+        			$aCart['object']['goods'][$key]['obj_items']['products'][$k]['store'] = $erp_store;
+        			if($erp_store == 999999){
+        				unset($aCart['cart_status']);
+        				unset($aCart['cart_error_html']);
+        				$goods['store']['real'] = 999999;
+        				$goods['store']['store'] = 999999;
+        			}
         		}
         	}
         }

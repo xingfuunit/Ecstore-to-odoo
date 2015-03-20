@@ -500,7 +500,7 @@ class b2c_ctl_site_product extends b2c_frontpage{
     	$post_bn = trim($_POST['bn']);
     	$bn = kernel::database()->quote($post_bn);
     	
-        $product = kernel::database()->select("select product_id,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
+        $product = kernel::database()->select("select product_id,goods_id,bn,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
     	
     	if(!$product){
     		/**hack by Jason begin **/
@@ -510,7 +510,7 @@ class b2c_ctl_site_product extends b2c_frontpage{
     				$tmp_bn = $bn;
     				$bn = kernel::database()->quote(substr($tmp_bn, 2,6));
     				$weigh = intval(substr($tmp_bn, 8,5));
-    				$product = kernel::database()->select("select product_id,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
+    				$product = kernel::database()->select("select product_id,bn,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
     			}else{
     				echo json_encode(array('error'=>app::get('b2c')->_('商品不存在')));
     				return;
@@ -535,10 +535,19 @@ class b2c_ctl_site_product extends b2c_frontpage{
     	    return;
         }
         
-        if($product[0]['store'] <= 10 && $_COOKIE['loginType'] != 'store'){ //hack by Jason 如果是门店的操作,则不用检查库存
-            echo json_encode(array('error'=>app::get('b2c')->_('库存有限')));
-    	    return;
-        }
+        if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){
+        	$obj_goods = kernel::single('b2c_cart_object_goods');
+        	$erp_store = $obj_goods->get_erp_store($product[0]['bn'], $_SESSION['local_store']['branch_id'], $product[0]['goods_id']);
+        	if($erp_store <= 0){
+        		echo json_encode(array('error'=>app::get('b2c')->_('库存不足')));
+        		return;
+        	}
+        }else{
+        	if($product[0]['store'] <= 10){ //hack by Jason 如果是门店的操作,则不用检查库存
+        		echo json_encode(array('error'=>app::get('b2c')->_('库存有限')));
+        		return;
+        	}
+        }        
     	
        // print_r($product);exit;
         
@@ -547,14 +556,21 @@ class b2c_ctl_site_product extends b2c_frontpage{
 
     /*商品详情页库存显示*/
     function _get_product_store($product_id){
-        $product = app::get('b2c')->model('products')->getList('goods_id,store,freez',array('product_id'=>$product_id));
+        $product = app::get('b2c')->model('products')->getList('goods_id,bn,store,freez',array('product_id'=>$product_id));
         if($product){
-            $goodsdata = app::get('b2c')->model('goods')->getList('goods_id,nostore_sell,store,store_prompt',array('goods_id'=>$product[0]['goods_id']));
-            if($goodsdata && ($goodsdata[0]['nostore_sell'] || $goodsdata[0]['store'] === null || $_COOKIE['loginType'] == 'store')){//hack by Jason 如果是门店的操作,则将库存设为最大
+            $goodsdata = app::get('b2c')->model('goods')->getList('goods_id,nostore_sell,store_nostore_sell,store,store_prompt',array('goods_id'=>$product[0]['goods_id']));
+            if($goodsdata && ($goodsdata[0]['nostore_sell'] || $goodsdata[0]['store'] === null)){//hack by Jason 如果是门店的操作,则将库存设为最大
                 $store['store'] = 999999;//暂时表示库存无限大
             }else{
-                $goodsStore = $product[0]['store'] - $product[0]['freez'];
-                $store['store'] = ($goodsStore >= 0)? $goodsStore : 0 ;
+            	if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){
+            		$obj_goods = kernel::single('b2c_cart_object_goods');
+            		$erp_store = $obj_goods->get_erp_store($product[0]['bn'], $_SESSION['local_store']['branch_id'], $product[0]['goods_id']);
+            		$store['store'] = $erp_store;
+            	}else{
+            		$goodsStore = $product[0]['store'] - $product[0]['freez'];
+            		$store['store'] = ($goodsStore >= 0)? $goodsStore : 0 ;
+            	}
+                
             }
             $show_storage = app::get('b2c')->getConf('site.show_storage');
             switch($show_storage){

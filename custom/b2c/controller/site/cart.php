@@ -595,6 +595,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
      */
     private function update_cart(&$msg='',$type='all') {
         $aParams = $this->_request->get_params(true);
+        
         $mCartObject = $this->app->model('cart_objects');
         $aCart = $this->mCart->get_basic_objects();
         foreach($aCart as $row)
@@ -628,7 +629,6 @@ class b2c_ctl_site_cart extends b2c_frontpage{
                 // 需要判断商品的单位换算
                 $aParams['modify_quantity'][$obj_ident]['quantity_exchange'] = $arr_object['quantity'] * 1000;
                 $_flag = $mCartObject->update_object( $aParams['obj_type'],$obj_ident,$arr_object );
-
                 if( is_array($_flag) && isset($_flag['status']) && isset($_flag['msg']) ) {
                     if( $_flag['status'] ) {
                         $this->ajax_update = true;

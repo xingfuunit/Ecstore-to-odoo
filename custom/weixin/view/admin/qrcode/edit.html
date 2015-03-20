@@ -1,0 +1,144 @@
+<form action="index.php?app=weixin&ctl=admin_qrcode&act=save" method="POST" id="menu_add_form">
+    <div class="tableform">
+        <div class="division">
+            <h4><{t}>自定义二维码信息<{/t}></h4>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <th><{t}>自定义二维码名称:<{/t}></th>
+                    <td>
+                        <{input  type='text' name='code_name' vtype='required&&text' caution=$__weixin='请填写自定义二维码名称'|t:'weixin' value=$code.code_name }>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>绑定公众号:<{/t}></th>
+                    <td>
+                    	
+                        <{input noselect=false type='select' name='bind_id' value=$code.bind_id required='true' vtype='required' caution=$__weixin='请选择绑定公众号'|t:'weixin' options=$publicNumber label="name" }>
+                        <span class="notice-inline"><{t}>二维码绑定的微信帐号<{/t}></span>
+                    </td>
+                </tr>
+				<tr>
+                    <th><{t}>二维码分组:<{/t}></th>
+                    <td>
+                        <{input noselect=false type='select' name='code_group' value=$code.group_id required='true' vtype='required' caution=$__weixin='请选择分组'|t:'weixin' options=$group_list}>
+                    </td>
+                </tr>
+                <{input type='hidden' name='code_id' value=$code.code_id}>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+<{area inject='.mainFoot'}>
+    <div class="notice" style="text-align:center">每个公众号有自定义二维码申请限制（100000个）</div>
+    <div class="table-action">
+      <{button type="button" label=$__weixin="确定"|t:'weixin' class="btn-primary" id="menu_add_form_submit_btn"}>
+      <{button type="button" label=$__weixin="取消"|t:'weixin' isCloseDialogBtn="true" class="btn-secondary"}>
+    </div>
+<{/area}>
+
+<script>
+    function _callback_product(rs){
+       var _data = JSON.decode(rs);
+        if(_data.id){
+            new Request.JSON({
+                url:'index.php?app=weixin&ctl=admin_menu&act=get_product_url',
+                method:'post',
+                data:'product_id='+_data.id,
+                onComplete:function(ret){
+                    $('_msg_url').value = ret;
+                }
+            }).send();
+        }
+    }
+    function _callback_weiquan(rs){
+        if(rs){
+            $E('input[name=menu[menu_name]]').value='维权';
+            $E('input[name=menu[msg_url]]').value='维权';
+        }else{
+            $E('input[name=menu[menu_name]]').value='';
+            $E('input[name=menu[msg_url]]').value='';
+        }
+    }
+
+    function _callback_gallery(rs){
+       var _data = JSON.decode(rs);
+        if(_data.id){
+            new Request.JSON({
+                url:'index.php?app=weixin&ctl=admin_menu&act=get_gallery_url',
+                method:'post',
+                data:'cat_id='+_data.id,
+                onComplete:function(ret){
+                    $('_msg_url').value = ret;
+                }
+            }).send();
+        }
+    }
+
+    function _callback_articlelist(_node_id){
+        if(_node_id){
+            new Request.JSON({
+                url:'index.php?app=weixin&ctl=admin_menu&act=get_articlelist_url',
+                method:'post',
+                data:'node_id='+_node_id,
+                onComplete:function(ret){
+                    console.log(ret);
+                    $('_msg_url').value = ret;
+                }
+            }).send();
+        }
+    }
+
+    function _callback_article(rs){
+       var _data = JSON.decode(rs);
+        if(_data.id){
+            new Request.JSON({
+                url:'index.php?app=weixin&ctl=admin_menu&act=get_article_url',
+                method:'post',
+                data:'article_id='+_data.id,
+                onComplete:function(ret){
+                    $('_msg_url').value = ret;
+                }
+            }).send();
+        }
+    }
+
+    function _callback_authlink(rs){
+        if(rs){
+            $('_msg_url').value = rs;
+        }
+    }
+
+(function(){
+    $$(".act-switch").addEvent('change', function(e) {
+        var val = this.value;
+        if(this.checked) {
+            var switchmsg = this.getParent('tbody').getElement('.' + val);
+            switchmsg.show().getElements('input').set("disabled",false);
+            switchmsg.getSiblings('.switch-cont').hide().getElements('input').invoke('set', 'disabled', true);
+        }
+    })
+
+    $$(".module_link").addEvent('click', function(e) {
+        this.getElement('th').setStyle('color','red');
+        this.getSiblings('.module_link').getElement('th').setStyle('color','');
+    })
+
+    $('menu_add_form').store('target',{
+        onComplete:function(){
+            var dialog;
+            if(dialog = $('menu_add_form').getParent('.dialog')){
+                dialog  = dialog.retrieve('instance');
+                dialog.close();
+            }
+        }
+    });
+
+    $('menu_add_form_submit_btn').addEvent('click',function(){
+        $('menu_add_form').fireEvent('submit',{stop:$empty});
+    });
+
+})();
+
+</script>
