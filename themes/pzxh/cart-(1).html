@@ -854,6 +854,7 @@ window.addEvent('domready', function(){
 <script>
 
 window.addEvent('domready', function(){
+	var pay_status = false;
 	$('bn_add_cart').focus();
 	$('bn_add_cart').addEvent("keyup",function(E){
 		if(E.key == "enter") {
@@ -895,7 +896,7 @@ window.addEvent('domready', function(){
     });
     
     //账户余额付款
-    $('add_yuamount').addEvent("click",function(E){   
+    $('add_yuamount').addEvent("click",function(E){			
     		var shishou = Number(txtYuPrice.value);//实收金额
        		var zhaoling = Number(txtYuTotal.value);//找零金额
         	shishou    = '￥' + shishou.toFixed(2);
@@ -1147,6 +1148,10 @@ window.addEvent('domready', function(){
     
     //刷卡付款
     $('add_skamount').addEvent("click",function(E){
+				if(pay_status){
+				alert('订单正在提交中...');
+					return false;
+				}
                     <{if !$member.uname}>
                         alert('请先登录会员！');
                         return false;
@@ -1158,6 +1163,7 @@ window.addEvent('domready', function(){
                     } 
                     
                     if(window.confirm("确认刷卡支付？")){
+					pay_status = true;
 			var bn = this.value;
                         var url = '<{link app=b2c ctl=site_order act=create}>';
                         var bn_add_info = $$("div .bn_add_info");
@@ -1183,6 +1189,7 @@ window.addEvent('domready', function(){
                                 winReload();
 			    },
 			    onFailure: function(){
+					pay_status = false;
 			        bn_add_info.set('html','请求失败');
 			    }
                         });
