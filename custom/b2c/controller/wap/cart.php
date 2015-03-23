@@ -805,6 +805,14 @@ class b2c_ctl_wap_cart extends wap_frontpage{
                 }
             }
         }
+        
+        //添加微信JS扫描接口
+//         if(kernel::single('weixin_wechat')->from_weixin()){
+        	//获得config 配置微信帐号
+        	$bind = app::get('weixin')->model('bind')->getRow('id',array('weixin_account'=>WEIXIN_ACCOUNT,'status'=>'active'));
+        	$this->pagedata['signPackage'] = kernel::single('weixin_jssdk')->getSignPackage($bind);
+//         }
+        
         $this->page('wap/cart/checkout/index.html',false,$app_id);
     }
 
