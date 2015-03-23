@@ -51,10 +51,16 @@ class weixin_mdl_qrcode extends dbeav_model
     {
         $arr_list = parent::getList($cols,$filter,$offset,$limit,$orderType);
         
+//         $qrcode_log_model = app::get('weixin')->model('qrcode_log');
+        $qrcode_log_model = $this->app->model('qrcode_log');
+        
         if($arr_list){
         	foreach($arr_list as $k => &$v){
         		$v['group_id'] = $v['code_group'];
         		$v['code_group'] = $this->_group_list[$v['code_group']];
+				//统计        		
+        		$v['follow_count'] = $qrcode_log_model->count(array('qrcode_id'=>$v['code_id'],'log_type'=>$qrcode_log_model->get_type('follow')));
+        		$v['scan_count'] = $qrcode_log_model->count(array('qrcode_id'=>$v['code_id'],'log_type'=>$qrcode_log_model->get_type('scan')));
         	}
         }
         

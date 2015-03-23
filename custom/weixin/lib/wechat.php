@@ -118,10 +118,12 @@ class weixin_wechat{
             $paramsData = $this->get_message($messageData[0]['message_id'], $messageData[0]['message_type'], $postData);
             $this->send_msg($postData,$paramsData);
             
+            
+            
             //统计关注数据
-            $qrcode_model = app::get('weixin')->model('qrcode');
+            $qrcode_model = app::get('weixin')->model('qrcode_log');
             $key =  explode('_',$postData['EventKey']);
-            $qrcode_model->addfollowCount($key[1]);
+            $qrcode_model->add_qrcode_log('follow',$key[1],$postData['ToUserName'],$postData['FromUserName'],$postData['CreateTime']);
         }
         
         //关注注册    
@@ -602,8 +604,8 @@ class weixin_wechat{
      *  自定义 二维码 扫描事件 处理
      */
     public function scan($postdata){
-    	$qrcode_model = app::get('weixin')->model('qrcode');
-    	if($qrcode_model->addScanCount($postdata['EventKey'])){
+    	$qrcode_model = app::get('weixin')->model('qrcode_log');
+    	if($qrcode_model->add_qrcode_log('scan',$postdata['EventKey'],$postdata['ToUserName'],$postdata['FromUserName'],$postdata['CreateTime'])){
     		echo 'success';exit;
     	}
     }

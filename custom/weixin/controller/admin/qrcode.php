@@ -138,6 +138,30 @@ class weixin_ctl_admin_qrcode extends desktop_controller{
 			$this->end(false, app::get('weixin')->_('生成二维码失败!'). $msg, $refreshUrl);
 		}
 	}
+	
+	/**
+	 * 每个 
+	 */
+	public function show_count(){
+		$get = $this->_request->get_get();
+		$model_qrcode_log = $this->app->model('qrcode_log');
+		$filter['qrcode_id'] = $get['code_id'];
+		$filter['log_type'] = $model_qrcode_log->get_type($get['log_type']);
+		
+		$this->finder(
+				'weixin_mdl_qrcode_log',
+				array(
+						'title'=>app::get('weixin')->_('自定义二维码统计'),
+						'base_filter'=>$filter,
+						'actions'=>array(
+								array('label'=>app::get('b2c')->_('返回'),'href'=>'index.php?app=weixin&ctl=admin_qrcode&act=index&bind_id='.$get['bind_id'],'target'=>'','icon'=>'sss.ccc'),
+							
+						),
+						'use_buildin_recycle'=>false,
+						'use_buildin_filter'=>true,
+				)
+		);
+	}
 
 
 }
