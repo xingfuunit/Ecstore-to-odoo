@@ -22,7 +22,7 @@ $db['qrcode_log']=array (
       'width' => 110,
       'editable' => true,
       'filtertype' => 'yes',
-      'filterdefault' => true,
+      'filterdefault' => false,
       'in_list' => true, 
     ),
   	'qrcode_id' =>
@@ -33,7 +33,7 @@ $db['qrcode_log']=array (
   		'editable' => true,
   		'hidden' => true,
   		'filtertype' => 'yes',
-  		'filterdefault' => true,
+  		'filterdefault' => false,
   		'in_list' => true,
   	),
     'tousername' =>
@@ -47,7 +47,7 @@ $db['qrcode_log']=array (
       'searchtype' => 'has',
       'editable' => true,
       'filtertype' => 'custom',
-      'filterdefault' => true,
+      'filterdefault' => false,
       'in_list' => true,
       'default_in_list' => true,
       'order'=>'1',
