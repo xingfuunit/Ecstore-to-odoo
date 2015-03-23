@@ -74,7 +74,8 @@ $db['qrcode']=array (
       'filterdefault' => true,
       'in_list' => true,
     ),
-    'scan_count' =>
+    /*
+  	'scan_count' =>
     array (
       'type' => 'number',
       'default' => 0,
@@ -96,6 +97,7 @@ $db['qrcode']=array (
       'filterdefault' => true,
       'in_list' => true,
     ),
+    */
   	'code_url'=>
 	  	array (
       'type' => 'varchar(255)',
