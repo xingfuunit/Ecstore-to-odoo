@@ -598,6 +598,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
             }
             
             $this->pagedata['shipping_branch_name'] = $_COOKIE['purchase']['branch_name'];
+			$this->pagedata['shipping_branch_name_b'] = $_COOKIE['purchase']['branch_name_b'];
             $this->pagedata['shipping_branch_id'] = $_COOKIE['purchase']['branch_id'];
             
             $this->pagedata['has_cod'] = (isset($this->pagedata['shipping_method']['has_code']) && $this->pagedata['shipping_method']['has_cod']) ? $this->pagedata['shipping_method']['has_cod'] : 'false';
@@ -833,7 +834,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
             $fn = $_GET['show'];
             $_filter = array();
 	        $_filter['is_show'] = 'true';
-	        $this->pagedata['branchlist'] = app::get('ome')->model('branch')->getList('branch_id, name, address', $_filter);
+	        $this->pagedata['branchlist'] = app::get('ome')->model('branch')->getList('branch_id, name,name_b, address', $_filter);
             $this->pagedata['content'] = $this->$fn();
             $this->page('wap/cart/checkout/checkout_wrap.html');
         }
@@ -1009,7 +1010,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         	
 			//门店自提，把收货地址改为门店地址
 			
-        	$branch = app::get('ome')->model('branch')->dump($_POST['branch_id'],'branch_id, name, address,area');
+        	$branch = app::get('ome')->model('branch')->dump($_POST['branch_id'],'branch_id, name,name_b, address,area');
 	        $member_id = kernel::single('b2c_user_object')->get_member_id();
 	        $pickup_addr = app::get('b2c')->model('member_addrs')->getList('*',array('member_id'=>$member_id,'local_id'=>'-1'));
 	        $addrs_info = app::get('b2c')->model('member_addrs')->getList('*',array('addr_id'=>$_COOKIE['purchase']['addr']['addr_id']));
@@ -1052,6 +1053,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
 	        	$addr_id = $pickup_addr[0]['addr_id'];
 	        }
 	        setcookie('purchase[branch_name]',$branch['name'] , 0, kernel::base_url() . '/');
+			setcookie('purchase[branch_name_b]',$branch['name_b'] , 0, kernel::base_url() . '/');
 	        setcookie('purchase[branch_id]',$branch['branch_id'] , 0, kernel::base_url() . '/');
 	        $seKey = md5($this->obj_session->sess_id().$member_id);
 	        setcookie('purchase[addr][usable]', $seKey, 0, kernel::base_url() . '/');
