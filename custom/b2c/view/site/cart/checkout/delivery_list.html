@@ -16,7 +16,7 @@
             <select name="branch_id" id="branch_id">
               <option value="">请选择自提门店</option>
               <{foreach from=$branchlist item="branch" key="branch_key"}>
-              <option value='<{$branch.branch_id}>'><{$branch.name}></option>
+              <option value='<{$branch.branch_id}>'><{$branch.name_b}></option>
               <{/foreach}>
             </select>
             <{/if}>

@@ -40,7 +40,7 @@
 		              <a href="/wap/cart-checkout_wrap.html?show=delivery_change">
 		                  <span class="left">配送方式</span>
 		                    <span class="right">
-		                        <span class="font_margin2"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}></span>
+		                        <span class="font_margin2"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}></span>
 		                        <input name="shipping" value='{"id":<{$shipping_method.shipping_id}>,"has_cod":"<{$shipping_method.has_cod}>","dt_name":"<{$shipping_method.shipping_name}>","money":"<{$shipping_method.money}>"}' type="hidden">
 		                    </span>
 		              </a>

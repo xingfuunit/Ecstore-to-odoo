@@ -31,8 +31,8 @@ class apiactionlog_ctl_admin_apilog extends desktop_controller{
         if ($status=='fail' && ($api_type=='request' || $api_type=='request2')){
         	if ($api_type=='request2') {
         		//把真正失败的同步日志筛选出来 by michael
-        		$week = time()-3600*24*14;
-        		$aData = kernel::database()->select("SELECT a.apilog_id FROM sdb_apiactionlog_apilog a,sdb_b2c_orders b WHERE a.worker='store.trade.update' AND (a.task_name='订单变更' or a.task_name='订单新增') AND b.shipping != '门店收银'  AND a.original_bn=b.order_id AND b.pay_status='1' AND b.ship_status='0' AND b.status != 'finish' AND a.status='fail' AND a.last_modified>='{$week}'  ");
+        		$week = time()-3600*24*7;
+        		$aData = kernel::database()->select("SELECT a.apilog_id,a.original_bn FROM sdb_apiactionlog_apilog a WHERE  a.msg != 'w04001,4007' AND a.status IN ('fail','sending') AND a.api_type='request' and a.last_modified>='{$week}'  ORDER BY a.apilog_id");
         		$ids = array();
         		foreach ($aData as $key=>$value) {
         			$ids[] = $value['apilog_id'];
@@ -123,4 +123,52 @@ class apiactionlog_ctl_admin_apilog extends desktop_controller{
             )
         );
     }
+    
+    
+    //没有同步的订单　by michael
+    
+    function order_nosync() {
+    	//查出log表中，无的订单
+		$week = time()-3600*24*4;
+		$sql ="SELECT order_id,FROM_UNIXTIME(createtime,'%Y%m%d') FROM sdb_b2c_orders where pay_status = '1' and createtime>='{$week}'";
+		
+		$ecData = kernel::database()->select($sql);
+		
+		$sql ="select * from sdb_ome_orders where createtime>='{$week}'";
+		$erpData = kernel::single('base_db_connect')->select($sql);
+		
+		$ids = array();
+		foreach ($ecData as $key=>$value) {
+			$is_exist = 0;
+			foreach ($erpData as $key2=>$value2) {
+				if ($value['order_id'] == $value2['order_bn']) {
+					if ($value2['pay_status'] == '0' ) {
+				 		$ids[] = $value['order_id'];
+				 	//	echo $value['order_id'];
+				 	//	exit;
+				 	}
+				 	$is_exist++;
+				}
+			}
+			
+			if ($is_exist == 0) {
+				$ids[] = $value['order_id'];
+			}
+			
+		}
+		
+		
+		$ids = implode(',',$ids);
+		$base_filter = "order_id in  (".$ids.")";
+		
+ 
+                	
+        $this->finder('b2c_mdl_orders', array(
+                'title'=>app::get('b2c')->_('近４天没有同步的订单'),
+            	'use_buildin_recycle'=>false,
+            	'base_filter' =>$base_filter,
+                ));
+        
+    }
+    
 }

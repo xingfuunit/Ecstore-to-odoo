@@ -39,6 +39,19 @@ $db ['branch'] = array (
 						'width' => 130,
 						'label' => '仓库名' 
 				),
+				'name_b' => array (
+						'type' => 'varchar(200)',
+						'required' => true,
+						'editable' => false,						
+						'searchtype' => 'has',
+						'filtertype' => 'normal',
+						'filterdefault' => true,
+						'in_list' => true,
+						'default_in_list' => true,
+						'width' => 130,
+						'label' => '仓库前端显示名', 
+						'comment' => '仓库前端显示名',
+				),
 				'parent_id' => array (
 						'type' => 'number',
 						'default' => 0 
