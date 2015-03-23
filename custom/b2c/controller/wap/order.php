@@ -220,7 +220,7 @@ class b2c_ctl_wap_order extends wap_frontpage{
             $branch_mdl = kernel::single("ome_mdl_branch");
             if($branch_mdl){
                 $branch_obj = $branch_mdl->dump(array('branch_id'=>$order_data['branch_id']));
-                $order_data['branch_name_user'] = $branch_obj['name'];
+                $order_data['branch_name_user'] = $branch_obj['name_b'];//将仓库别称存入order表 bySam20153018
             }
         }else{
             $order_data['branch_id'] = 0;

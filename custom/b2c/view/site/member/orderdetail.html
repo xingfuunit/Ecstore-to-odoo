@@ -205,7 +205,8 @@
             <tbody>
               <tr>
                 <th><{t}>配送方式<{/t}>：</th>
-                <td><{$order.shipping.shipping_name}></td>
+				
+                <td><{$order.shipping.shipping_name}> <{if $order.shipping.shipping_name == '门店自提' && $order.branch_name_user }>【<{$order.branch_name_user}>】<{/if}></td>
               </tr>
               <tr>
                 <th><{t}>运费<{/t}>：</th>
