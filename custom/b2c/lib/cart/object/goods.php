@@ -1705,15 +1705,13 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
      * 同步获取ERP的真实库存
      */
     public function get_erp_store($bn,$branch_id,$goods_id){
-    	$oSG = $this->o_goods;
-    	$aResult = $oSG->getList('goods_id, store,nostore_sell,store_nostore_sell, marketable', array('goods_id'=> "$goods_id"));
-    	$aGoods = $aResult[0];
-    	if($aGoods['store_nostore_sell'] == 1){
-    		return $this->__max_goods_store;
-    	}else{
-    		$obj = new base_db_connect;
-    		$re = $obj->test_mysqli_timeout();
-    		if($re){
+    	$obj = new base_db_connect;
+    	$re = $obj->test_mysqli_timeout();
+    	if($re){
+    		$branch = $obj->select('select * from sdb_ome_branch where branch_id = "'.$branch_id.'"');
+    		if($branch['nostore_sell'] == 'true'){
+    			return $this->__max_goods_store;
+    		}else{
     			$erp_product = $obj->select('select * from sdb_ome_products where bn = "'.$bn.'"');
     			if($erp_product){
     				$branch_product = $obj->select('select * from sdb_ome_branch_product where product_id = "'.$erp_product[0]['product_id'].'" and branch_id = "'.$branch_id.'"');
@@ -1729,11 +1727,11 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
     					$effect_store[] = $pkg_store;
     				}
     				return min($effect_store);
-    			}    			
-    		}else{
-    			return $this->__max_goods_store;
+    			}
     		}
-    	}   	
+    	}else{
+    		return $this->__max_goods_store;
+    	}
     }
     
     /**
