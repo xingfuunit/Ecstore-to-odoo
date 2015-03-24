@@ -1709,7 +1709,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
     	$re = $obj->test_mysqli_timeout();
     	if($re){
     		$branch = $obj->select('select * from sdb_ome_branch where branch_id = "'.$branch_id.'"');
-    		if($branch['nostore_sell'] == 'true'){
+    		if($branch[0]['nostore_sell'] == 'true'){
     			return $this->__max_goods_store;
     		}else{
     			$erp_product = $obj->select('select * from sdb_ome_products where bn = "'.$bn.'"');
