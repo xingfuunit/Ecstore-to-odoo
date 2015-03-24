@@ -65,8 +65,8 @@ class b2c_finder_goods{
         $goods = current($goods);
         $render->pagedata['goods'] = &$goods;
         $render->pagedata['is_pub'] = ($goods['marketable']!='false');
-        if(defined('IMG_PZFRESH')){
-        	$render->pagedata['url'] = IMG_PZFRESH.'/product-'.$default_product[0]['product_id'].'.html';
+        if(defined('ROOT_PZFRESH')){
+        	$render->pagedata['url'] = ROOT_PZFRESH.'/product-'.$default_product[0]['product_id'].'.html';
         }else{
         	$render->pagedata['url'] = app::get('site')->router()->gen_url(array('app'=>'b2c','ctl'=>'site_product','full'=>1,'act'=>'index','arg'=>$default_product[0]['product_id']));
         }
