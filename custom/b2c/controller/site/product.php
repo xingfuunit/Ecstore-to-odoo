@@ -1097,16 +1097,18 @@ class b2c_ctl_site_product extends b2c_frontpage{
                     $aGift[$key]['store'] = 999999;
                 }
             }
-            $image = app::get('b2c')->model('goods')->getList('image_default_id,goods_id,nostore_sell,marketable',array('goods_id'=>$arrGoodsId) );
-            sort($image);
+         //   $image = app::get('b2c')->model('goods')->getList('image_default_id,goods_id,nostore_sell,marketable',array('goods_id'=>$arrGoodsId) );
+         //   sort($image);
             foreach($aGift as $key=>$row){
-                if($image[$key]['marketable'] == 'false'){
+            	$image = app::get('b2c')->model('goods')->getList('image_default_id,goods_id,nostore_sell,marketable',array('goods_id'=>$row['goods_id']) );
+            //	var_dump($image[0]['image_default_id']);
+                if($image[0]['marketable'] == 'false'){
                     unset($aGift[$key]);continue;
                 }
-                $aGift[$key]['image_default_id'] = $image[$key]['image_default_id'];
-                if($row['nostore_sell'] || $_COOKIE['loginType'] == 'store'){//hack by Jason如果是门店操作,将礼品的库存也设置为最大
+                $aGift[$key]['image_default_id'] = $image[0]['image_default_id'];
+                if( $image[0]['nostore_sell'] || $_COOKIE['loginType'] == 'store'){//hack by Jason如果是门店操作,将礼品的库存也设置为最大
                     $aGift[$key]['store'] = 999999;
-                }
+                } 
             }
             $productPromotion['gift'] = $aGift;
         }
