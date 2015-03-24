@@ -1,3 +1,4 @@
+
 <div class="coupon-use">
     <div class="yhq_title">已有优惠券</div>
     <div class="invoice_title invoice-top marg">
@@ -14,7 +15,7 @@
     <div class="yhq_title">站外获得优惠券</div>
     <div class="invoice_title invoice-top marg">
         <input type="text" name="coupon" value="" placeholder="输入号码" />
-        <span class="btn">使用</span>
+        <span class="btn">使用</span> <span class="" id="scanQRCode0"  style="margin-left:5px;">扫描</span>
     </div>
     <ul class="used">
         <{foreach from=$aCart.object.coupon item=coupon}>
@@ -25,3 +26,53 @@
         <{/foreach}>
     </ul>
 </div>
+
+<script type="application/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="application/javascript">
+  wx.config({
+    debug: true,
+    appId: '<{ $signPackage["appId"];}>',
+    timestamp: '<{ $signPackage["timestamp"];}>',
+    nonceStr: '<{ $signPackage["nonceStr"];}>',
+    signature: '<{ $signPackage["signature"];}>',
+    jsApiList: [
+        'checkJsApi',
+        'scanQRCode'
+      ]
+  });
+ 
+ wx.ready(function () {
+ 	
+	document.querySelector('#checkJsApi').onclick = function () {
+	    wx.checkJsApi({
+	      jsApiList: [
+	        'getNetworkType',
+	        'previewImage'
+	      ],
+	      success: function (res) {
+	        alert(JSON.stringify(res));
+	      }
+	    });
+  };
+
+  document.querySelector('#scanQRCode0').onclick = function () {
+    wx.scanQRCode();
+  };
+  // 9.1.2 扫描二维码并返回结果
+  document.querySelector('#scanQRCode1').onclick = function () {
+    wx.scanQRCode({
+      needResult: 1,
+      desc: 'scanQRCode desc',
+      success: function (res) {
+        alert(JSON.stringify(res));
+      }
+    });
+  };
+  
+});
+
+wx.error(function (res) {
+  alert(res.errMsg);
+});
+ 	
+</script>
