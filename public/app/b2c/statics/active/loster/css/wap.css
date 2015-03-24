@@ -1,0 +1,9 @@
+#main{margin:0; padding:0;font-size:0px;}
+#main{font-family:"微软雅黑";}
+#main a{border:0;}
+#main img{border:0;}
+#main div{width:100%; height:auto; overflow:hidden;}
+#main div img{width:100%;height:auto; overflow:hidden;}
+#main .left{ width:50%; float:left;}
+#main .right{width:33.3%; float:left;}
+#main .conent{width:20%; height:124px; position:fixed; top:50%; left:50%; margin:-62px 0 0 -10%; display:none; }

@@ -26,7 +26,7 @@
   <{foreach from=$goods.gift item=gift key=_gift_key}>
   <tr class="p-gift">
     <td class="p-info">
-      <b>[赠品]</b><a target="_blank" href="<{link app=gift ctl=site_gift arg0=$gift.product_id}>"><{$gift.name}><{$gift.spec_desc}></a>
+      <b>[赠品]</b><a target="_blank" href="<{link app=gift ctl=site_gift arg0=$gift.product_id}>"><{$gift.name}></a>
     </td>
     <td class="p-price"><{$gift.price.price|cur_odr}></td>
     <td class="p-num"><{$gift.quantity}></td>

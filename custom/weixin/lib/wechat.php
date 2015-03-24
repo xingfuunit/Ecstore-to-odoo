@@ -117,6 +117,13 @@ class weixin_wechat{
             $messageData = app::get('weixin')->model('message')->getList('message_id,message_type',array('bind_id'=>$postData['bind_id'],'reply_type'=>'attention') );
             $paramsData = $this->get_message($messageData[0]['message_id'], $messageData[0]['message_type'], $postData);
             $this->send_msg($postData,$paramsData);
+            
+            
+            
+            //统计关注数据
+            $qrcode_model = app::get('weixin')->model('qrcode_log');
+            $key =  explode('_',$postData['EventKey']);
+            $qrcode_model->add_qrcode_log('follow',$key[1],$postData['ToUserName'],$postData['FromUserName'],$postData['CreateTime']);
         }
         
         //关注注册    
@@ -545,5 +552,64 @@ class weixin_wechat{
 		
 		return $url = $path1.$url.$path2;
     }
+    
+    /**
+     * 
+     * @param unknown_type $bind_id
+     * @param $scene_id 生成二维码识别id 不要重复
+     * @param unknown_type $forever 是否永久二维码 
+     */
+    function create_qr_code($bind_id,&$scene_id,$forever=true){
+    	if(!$access_token = $this->get_basic_accesstoken($bind_id)){
+    		return false;
+    	}
+    	
+    	$url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={$access_token}";
+    	
+    	if($forever){
+	    	$qrcode_data = array(
+	    				'action_name'=> 'QR_LIMIT_SCENE',
+	    				'action_info'=> array(
+	    							'scene' => array('scene_id'=>$scene_id)
+	    								),
+	    		);
+    	}else{
+    		$qrcode_data = array(
+    					'expire_seconds'=>1800,
+	    				'action_name'	=> 'QR_SCENE',
+	    				'action_info'	=> array(
+	    								'scene' => array('scene_id'=>$scene_id)
+	    							),
+	    		);
+    	}
+    	$data = json_encode ( $qrcode_data );
+    	// 由于微信不直接认json_encode处理过的带中文数据的信息，这里做个转换
+    	$post_code = preg_replace ( "/\\\u([0-9a-f]{4})/ie", "iconv('UCS-2BE', 'UTF-8', pack('H*', '$1'));", $data );
+    	$httpclient = kernel::single('base_httpclient');
+    	$response = $httpclient->set_timeout(6)->post($url, $post_code);
+    	$result = json_decode($response, true);
+
+    	if( !$result['errcode']){
+    		logger::info('生成微信二维码成功:'.print_r($data,1));
+    		return $result;
+    	}else{
+    		$msg = "生成微信二维码失败,微信返回的错误码为 {$result['errcode']}";
+    		logger::info($msg);
+    		return false;
+    	}
+    }
+    
+    
+    /**
+     *  自定义 二维码 扫描事件 处理
+     */
+    public function scan($postdata){
+    	$qrcode_model = app::get('weixin')->model('qrcode_log');
+    	if($qrcode_model->add_qrcode_log('scan',$postdata['EventKey'],$postdata['ToUserName'],$postdata['FromUserName'],$postdata['CreateTime'])){
+    		echo 'success';exit;
+    	}
+    }
+    
+    
 
 }

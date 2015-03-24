@@ -107,7 +107,7 @@
             <span class="l-k">配送方式：</span>
             <span class="l-v">
                 <div class="col2">
-                    <div class="col"><{$order.shipping.shipping_name}></div>
+                    <div class="col"><{$order.shipping.shipping_name}><{if $order.shipping.shipping_name == '门店自提' && $order.branch_name_user }>【<{$order.branch_name_user}>】<{/if}></div>
                     <div class="col t-r">运费<span class="f-red"><{$order.shipping.cost_shipping|cur_odr:$order.currency}></span>元</div>
                 </div>
             </span>

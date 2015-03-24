@@ -299,7 +299,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
 
 		$oSG = $this->o_goods;
 		if( !isset($this->check_goods_info[$goods_id]) )
-            $this->check_goods_info[$goods_id] = $oSG->getList('goods_id, store,nostore_sell, marketable', array('goods_id'=> "$goods_id"));
+            $this->check_goods_info[$goods_id] = $oSG->getList('goods_id, store,nostore_sell,store_nostore_sell, marketable', array('goods_id'=> "$goods_id"));
 
         $aResult = $this->check_goods_info[$goods_id];
 
@@ -311,7 +311,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
         if(empty($product_id)) return array('status'=>'false','msg'=>'货品id为空！');;
 
         #if( !isset($this->check_products_info[$product_id]) )
-            $this->check_products_info[$product_id] = $this->o_products->getList('product_id,goods_id, store, freez, marketable', array('product_id'=>"$product_id"));
+            $this->check_products_info[$product_id] = $this->o_products->getList('product_id,bn,goods_id, store, freez, marketable', array('product_id'=>"$product_id"));
 
         $aResult = $this->check_products_info[$product_id];
         if(!$aResult[0]) return $this->get_error_msg( '数据读取错误！货品' );
@@ -325,20 +325,30 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
 
         if($arr_product['marketable']=='false') return $this->get_error_msg( '该规格商品未上架！' );   //未上架
 		if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){   //hack by Jason 判断是否门店的购物车或者订单,如果是,则将库存设置为最大
-        	$arr_product['store'] = $this->__max_goods_store;
+			$erp_store = $this->get_erp_store($arr_product['bn'], $_SESSION['local_store']['branch_id'], $arr_product['goods_id']);
+			//error_log("bn:".$arr_product['bn']."-branch_id:".$_SESSION['local_store']['branch_id']."-goods_id:".$arr_product['goods_id']."-erp_store:".$erp_store);
+			if($erp_store == $this->__max_goods_store){
+				$arr_product['store'] = $this->__max_goods_store;
+			}else{
+				if($erp_store <= 0){
+					return $this->get_error_msg( '该商品已无库存！' ); //库存0
+				}elseif(intval($quantity)>$erp_store){
+					return $this->get_error_msg( '购买数量超出库存' );
+				}
+			}  
         }else{
         	$arr_product['store'] = ( $aGoods['nostore_sell'] ? $this->__max_goods_store : ( empty($arr_product['store']) ? ($arr_product['store']===0 ? 0 : $this->__max_goods_store) : $arr_product['store'] -$arr_product['freez']) );
+        	if ( !$aGoods['nostore_sell'] ) {
+        		if(empty($arr_product['store'])){
+        			if(isset($arr_product['store']) && $arr_product['store']!=='' ) return $this->get_error_msg( '该商品已无库存！' ); //库存0
+        			// 检测是否够库存
+        		} elseif(intval($quantity)>$arr_product['store']){
+        			return $this->get_error_msg( '购买数量超出库存' );
+        		}elseif($store[$product_id]+$quantity > $arr_product['store']){
+        			return $this->get_error_msg( '购买数量超出库存' );
+        		}
+        	}
         }
-		if ( !$aGoods['nostore_sell'] ) {
-			if(empty($arr_product['store'])){
-				if(isset($arr_product['store']) && $arr_product['store']!=='' ) return $this->get_error_msg( '该商品已无库存！' ); //库存0
-				// 检测是否够库存
-			} elseif(intval($quantity)>$arr_product['store']){
-				return $this->get_error_msg( '购买数量超出库存' );
-			}elseif($store[$product_id]+$quantity > $arr_product['store']){
-				return $this->get_error_msg( '购买数量超出库存' );
-			} 
-		}
 
 		if($object_price = kernel::service('special_goods')){
 			$result = $object_price->check_store($product_id,$store[$product_id]+$quantity,$msg);
@@ -793,7 +803,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
         $goods_id = $arr_goods_info['goods_id'];
         $product_id = $arr_goods_info['product_id'];
         if( !isset($this->check_goods_info[$goods_id]) )
-            $this->check_goods_info[$goods_id] = $oSG->getList('goods_id, store,nostore_sell, marketable', array('goods_id'=> "$goods_id"));
+            $this->check_goods_info[$goods_id] = $oSG->getList('goods_id, store,nostore_sell,store_nostore_sell, marketable', array('goods_id'=> "$goods_id"));
 
         $aResult = $this->check_goods_info[$goods_id];
 
@@ -810,7 +820,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
         if(empty($product_id)) return array('status'=>'false','msg'=>'货品id为空！');
 
         #if( !isset($this->check_products_info[$product_id]) )
-            $this->check_products_info[$product_id] = $this->o_products->getList('product_id,goods_id, store, freez, marketable', array('product_id'=>"$product_id"));
+            $this->check_products_info[$product_id] = $this->o_products->getList('product_id,goods_id, store,bn, freez, marketable', array('product_id'=>"$product_id"));
 
         $aResult = $this->check_products_info[$product_id];
 
@@ -820,16 +830,28 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
 
         if($arr_product['marketable']=='false') return $this->get_error_msg( '该规格商品未上架！' );   //未上架
     	if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){   //hack by Jason 判断是否门店的购物车或者订单,如果是,则将库存设置为最大
-        	$arr_product['store'] = $this->__max_goods_store;
+			$erp_store = $this->get_erp_store($arr_product['bn'], $_SESSION['local_store']['branch_id'], $arr_product['goods_id']);
+			if($erp_store == $this->__max_goods_store){
+				$arr_product['store'] = $this->__max_goods_store;
+			}else{
+				if($erp_store <= 0){
+					return $this->get_error_msg( '该商品已无库存！' ); //库存0
+				}elseif(intval($aData['quantity'])>$erp_store){
+					return $this->get_error_msg( '购买数量超出库存' );
+				}
+			}  
         }else{
         	$arr_product['store'] = ( $aGoods['nostore_sell'] ? $this->__max_goods_store : ( empty($arr_product['store']) ? ($arr_product['store']===0 ? 0 : $this->__max_goods_store) : $arr_product['store'] -$arr_product['freez']) );
-        }
-        if ( !$aGoods['nostore_sell'] ) {
-            if(empty($arr_product['store'])){
-                if(isset($arr_product['store']) && $arr_product['store']!=='' ) return $this->get_error_msg( '该商品已无库存！' ); //库存0
-            // 检测是否够库存
-            } else if($aData['quantity']>$arr_product['store']) return $this->get_error_msg( '购买数量超出库存' );
-
+        	if ( !$aGoods['nostore_sell'] ) {
+        		if(empty($arr_product['store'])){
+        			if(isset($arr_product['store']) && $arr_product['store']!=='' ) return $this->get_error_msg( '该商品已无库存！' ); //库存0
+        			// 检测是否够库存
+        		} elseif(intval($quantity)>$arr_product['store']){
+        			return $this->get_error_msg( '购买数量超出库存' );
+        		}elseif($store[$product_id]+$quantity > $arr_product['store']){
+        			return $this->get_error_msg( '购买数量超出库存' );
+        		}
+        	}
         }
 
         if($_check_adjunct && $aData['params']['adjunct']) {
@@ -856,14 +878,22 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
     protected function _check_goods( &$aData, $arr_goods_id ) {
         if( empty($arr_goods_id) ) return ;
 
-        $arr = $this->o_goods->getList('goods_id, store,nostore_sell, marketable', array('goods_id'=> $arr_goods_id));
+        $arr = $this->o_goods->getList('goods_id, store,nostore_sell, store_nostore_sell,marketable', array('goods_id'=> $arr_goods_id));
 
         foreach($arr as $row) {
             $this->check_goods_info[$row['goods_id']] = $row;
             $key = array_search( $row['goods_id'], $arr_goods_id );
             if( $row['marketable']=='false' ) unset($aData[$key]);
-            if( $row['nostore_sell'] || $_COOKIE['loginType'] == 'store')//hack by Jason 检查是否是门店的操作,如果是,则将无库存销售设置为1
-                $this->nostore_sell[$row['goods_id']] = true;
+            if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){
+            	if( $row['store_nostore_sell']){//hack by Jason 检查是否是门店的操作,如果是,则将无库存销售设置为1
+            		$this->nostore_sell[$row['goods_id']] = true;
+            	}
+            }else{
+            	if( $row['nostore_sell']){//hack by Jason 检查是否是门店的操作,如果是,则将无库存销售设置为1
+            		$this->nostore_sell[$row['goods_id']] = true;
+            	}
+            }
+            
         }
     }
 
@@ -872,7 +902,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
     protected function _check_products( &$aData, $arr_products_id, $cur_type='' ) {
         if( empty($arr_products_id) ) return ;
 
-        $arr = $this->o_products->getList('product_id,goods_id, store,freez,marketable', array('product_id'=>$arr_products_id));
+        $arr = $this->o_products->getList('product_id,bn,goods_id, store,freez,marketable', array('product_id'=>$arr_products_id));
 
         foreach($arr as $row) {
             $key = array_search( $row['product_id'], $arr_products_id );
@@ -954,7 +984,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
             }
             if( $arr_p_id ) {
                 $arr_g_id = array();
-                $arr_tmp_store = $this->o_products->getList('product_id, goods_id, store, freez, marketable', array('product_id'=>$arr_p_id) );
+                $arr_tmp_store = $this->o_products->getList('product_id, bn,goods_id, store, freez, marketable', array('product_id'=>$arr_p_id) );
                 foreach( $arr_tmp_store as $row ) {
                     if( empty($row['goods_id']) ) return false;
                     $arr_tmp_goods = $this->o_goods->getList('goods_id, store,nostore_sell, marketable', array('goods_id'=> $row['goods_id']));
@@ -1028,14 +1058,18 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
         $aProducts = $this->_get_products($aProductId);
 
 
-
         $arr_goods = $arr_products = array();
         foreach( $aData as $key => $row ) {
             //商品不存在时删除购物车内信息
             if(empty($aProducts[$row['obj_items']['products'][0]])) {
                 unset($aData[$key]);continue;
             }
-        	if(!isset($_COOKIE['loginType']) || $_COOKIE['loginType'] != 'store'){ //hack by Jason 判断如果是门店登录过来的,即使库存为0也不从购物车删除商品
+            if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){ 
+            	$erp_store = $this->get_erp_store($aProducts[$row['obj_items']['products'][0]]['bn'], $_SESSION['local_store']['branch_id'], $row['params']['goods_id']);
+            	if($erp_store <= 0){
+            		unset($aData[$key]);continue;
+            	}
+            }else{
             	if($aProducts[$row['obj_items']['products'][0]]['store'] <= 0){
             		unset($aData[$key]);continue;
             	}
@@ -1043,10 +1077,8 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
             $arr_goods[$key] = $row['params']['goods_id'];
             $arr_products[$key] = $row['params']['product_id'];
         }
-    	if(!isset($_COOKIE['loginType']) || $_COOKIE['loginType'] != 'store'){ //hack by Jason 判断如果是门店登录过来的,则不判断库存
-        	$this->_check_goods($aData, $arr_goods);
-        	$this->_check_products($aData, $arr_products, $this->get_type());
-        }
+        $this->_check_goods($aData, $arr_goods);
+        $this->_check_products($aData, $arr_products, $this->get_type());
 
         $arr_products = array();
 
@@ -1374,7 +1406,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
         ///////////////// 货品信息 ///////////////////////
         $sSql = "SELECT
                      g.spec_desc as spec_desc_goods,p.product_id,p.goods_id,p.bn,g.score as gain_score,p.cost,p.name, p.store, p.marketable, g.params, g.package_scale, g.package_unit, g.package_use, p.freez,
-                     g.goods_type, g.nostore_sell, g.min_buy,g.type_id,g.cat_id,g.image_default_id,p.spec_info,p.spec_desc,p.price,p.weight,p.mktprice,
+                     g.goods_type, g.nostore_sell, g.store_nostore_sell, g.min_buy,g.type_id,g.cat_id,g.image_default_id,p.spec_info,p.spec_desc,p.price,p.weight,p.mktprice,
                      t.setting, t.floatstore
                  FROM  sdb_b2c_products AS p
                  LEFT JOIN  sdb_b2c_goods AS g    ON p.goods_id = g.goods_id
@@ -1448,7 +1480,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
                     'quantity' => 1,
                     'params' => is_array($row['params']) ? $row['params'] : @unserialize($row['params']),
                     'floatstore' => $row['floatstore'] ? $row['floatstore'] : 0,
-                    'store'=> $_COOKIE['loginType'] == 'store'?$this->__max_goods_store :( $row['nostore_sell'] ? $this->__max_goods_store : ( empty($row['store']) ? (((int)$row['store']===0 && $row['store']!==null && $row['store']!=='')? 0 : $this->__max_goods_store) : $row['store'] -$row['freez']) ),
+                    'store'=> $_COOKIE['loginType'] == 'store'?$this->get_erp_store($row['bn'], $_SESSION['local_store']['branch_id'], $row['goods_id']) :( $row['nostore_sell'] ? $this->__max_goods_store : ( empty($row['store']) ? (((int)$row['store']===0 && $row['store']!==null && $row['store']!=='')? 0 : $this->__max_goods_store) : $row['store'] -$row['freez']) ),
                     'package_scale' => $row['package_scale'], //hack by Jason 上行代码 检查是否是门店的操作,如果是将库存设置为最大
                     'package_unit' => $row['package_unit'],
                     'package_use' => $row['package_use'],
@@ -1669,6 +1701,41 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
         }
     }
 
+    /**
+     * 同步获取ERP的真实库存
+     */
+    public function get_erp_store($bn,$branch_id,$goods_id){
+    	$oSG = $this->o_goods;
+    	$aResult = $oSG->getList('goods_id, store,nostore_sell,store_nostore_sell, marketable', array('goods_id'=> "$goods_id"));
+    	$aGoods = $aResult[0];
+    	if($aGoods['store_nostore_sell'] == 1){
+    		return $this->__max_goods_store;
+    	}else{
+    		$obj = new base_db_connect;
+    		$re = $obj->test_mysqli_timeout();
+    		if($re){
+    			$erp_product = $obj->select('select * from sdb_ome_products where bn = "'.$bn.'"');
+    			if($erp_product){
+    				$branch_product = $obj->select('select * from sdb_ome_branch_product where product_id = "'.$erp_product[0]['product_id'].'" and branch_id = "'.$branch_id.'"');
+    				$effect_store = intval($branch_product[0]['store']) - intval($branch_product[0]['store_freeze']);
+    				return $effect_store;
+    			}else{//如果在product表中不存在,则查询捆绑商品表
+    				$erp_pkg_goods = $obj->select('select goods_id from sdb_omepkg_pkg_goods where pkg_bn = "'.$bn.'"');
+    				$erp_pkg_products = $obj->select('select * from sdb_omepkg_pkg_product where goods_id = "'.$erp_pkg_goods[0]['goods_id'].'"');
+    				$effect_store = array();
+    				foreach($erp_pkg_products as $key => $val){
+    					$branch_product = $obj->select('select * from sdb_ome_branch_product where product_id = "'.$val['product_id'].'" and branch_id = "'.$branch_id.'"');			
+    					$pkg_store = floor((intval($branch_product[0]['store']) - intval($branch_product[0]['store_freeze']))/$val['pkgnum']);
+    					$effect_store[] = $pkg_store;
+    				}
+    				return min($effect_store);
+    			}    			
+    		}else{
+    			return $this->__max_goods_store;
+    		}
+    	}   	
+    }
+    
     /**
      * return 错误信息 如：商品起订量等。
      */

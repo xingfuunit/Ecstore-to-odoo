@@ -392,6 +392,14 @@ $db['goods']=array (
       'width' => 30,
       'editable' => false,
     ),
+    'store_nostore_sell' =>
+    array (
+      'type' => 'intbool',
+      'default' => '1',
+      'label' => app::get('b2c')->_('是否允许门店无库存销售'),
+      'width' => 30,
+      'editable' => false, 
+    ),
     'goods_setting' =>
     array(
         'type' => 'serialize',
