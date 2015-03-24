@@ -238,7 +238,18 @@ $db ['branch'] = array (
 						'in_list' => true,
 						'default_in_list' => true,
 						'filtertype' => true 
-				) 
+				),
+				'nostore_sell' =>
+				array (
+						'type' => 'bool',
+						'default' => 'true',
+						'required' => true,
+						'label' => app::get('b2c')->_('是否允许无库存销售'),
+						'width' => 30,
+						'filtertype' => 'yes',
+						'editable' => false,
+						'in_list' => true,
+				),
 		),
 		
 		'index' => array (
