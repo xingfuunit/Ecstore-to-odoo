@@ -145,3 +145,192 @@ total 281 docs, 30506 bytes
 total 0.178 sec, 170485 bytes/sec, 1570.39 docs/sec
 total 2937 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
 total 11 writes, 0.000 sec, 21.9 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+FATAL: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods.spl: Resource temporarily unavailable, will not index. Try --rotate option.
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+FATAL: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods.spl: Resource temporarily unavailable, will not index. Try --rotate option.
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 285 docs, 0.0 MB
+collected 1441 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 285 docs, 30814 bytes
+total 0.183 sec, 168218 bytes/sec, 1555.86 docs/sec
+total 2991 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 22.2 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 285 docs, 0.0 MB
+collected 1427 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 285 docs, 30863 bytes
+total 0.163 sec, 189341 bytes/sec, 1748.44 docs/sec
+total 2982 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 22.2 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 286 docs, 0.0 MB
+collected 1487 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 286 docs, 31262 bytes
+total 0.152 sec, 205113 bytes/sec, 1876.48 docs/sec
+total 3036 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 22.5 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 286 docs, 0.0 MB
+collected 1487 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 286 docs, 31363 bytes
+total 0.153 sec, 203846 bytes/sec, 1858.88 docs/sec
+total 3036 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 22.5 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 292 docs, 0.0 MB
+collected 1540 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 292 docs, 32100 bytes
+total 0.159 sec, 200788 bytes/sec, 1826.48 docs/sec
+total 3121 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 23.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+FATAL: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods.spl: Resource temporarily unavailable, will not index. Try --rotate option.
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+FATAL: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods.spl: Resource temporarily unavailable, will not index. Try --rotate option.
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+FATAL: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods.spl: Resource temporarily unavailable, will not index. Try --rotate option.
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 327 docs, 0.0 MB
+collected 1756 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 327 docs, 36444 bytes
+total 0.244 sec, 148901 bytes/sec, 1336.04 docs/sec
+total 3638 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 25.9 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 357 docs, 0.0 MB
+collected 1903 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 357 docs, 38966 bytes
+total 0.189 sec, 205314 bytes/sec, 1881.05 docs/sec
+total 3966 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 27.9 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 359 docs, 0.0 MB
+collected 1918 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 359 docs, 39138 bytes
+total 0.198 sec, 196938 bytes/sec, 1806.45 docs/sec
+total 3993 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 28.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 359 docs, 0.0 MB
+collected 1924 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 359 docs, 39138 bytes
+total 0.184 sec, 212417 bytes/sec, 1948.43 docs/sec
+total 3998 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 28.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 395 docs, 0.0 MB
+collected 2054 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 395 docs, 43478 bytes
+total 0.222 sec, 195218 bytes/sec, 1773.57 docs/sec
+total 4349 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 30.7 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+indexing index 'b2c_goods_merge'...
+collected 398 docs, 0.0 MB
+collected 2061 attr values
+sorted 0.0 Mvalues, 100.0% done
+sorted 0.0 Mhits, 100.0% done
+total 398 docs, 44140 bytes
+total 0.201 sec, 219395 bytes/sec, 1978.23 docs/sec
+total 4376 reads, 0.001 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 11 writes, 0.000 sec, 31.1 kb/call avg, 0.0 msec/call avg
