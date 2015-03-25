@@ -562,6 +562,17 @@ $db['orders']=array (
     		'in_list' => true,
     		'default_in_list' => true,
     ),
+	'branch_name_user_b' => array (
+    		'type' => 'varchar(200)',
+    		'default' => "",
+    		'editable' => false,
+    		'comment' => app::get('b2c')->_('所属仓库门店别称'),
+    		'label' => app::get('b2c')->_('自提门店别称'),
+    		'searchtype' => 'has',
+    		'filtertype' => 'normal',
+    		'in_list' => true,
+    		'default_in_list' => true,
+    ),
     'staff_id' => array (
     		'type' => 'int(10)',
     		'default' => 0,
