@@ -23,6 +23,7 @@ class weixin_mdl_qrcode extends dbeav_model
 				'3'=> '店员',
 				'4'=> '员工',
 				'5'=> '活动',
+				'6'=> '物料',
 			);
 	
 	/**
