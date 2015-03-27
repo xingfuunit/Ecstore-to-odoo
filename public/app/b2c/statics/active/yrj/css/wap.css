@@ -1,0 +1,9 @@
+*{margin:0; padding:0;}
+body{font-family:"微软雅黑"; background:#fdbc02}
+a{border:0;}
+img{border:0;}
+div{width:100%; height:auto; overflow:hidden;}
+div img{width:100%;height:auto; overflow:hidden;}
+.left{ width:50%; float:left;}
+.right{width:33.3%; float:left;}
+.conent{width:20%; height:124px; position:fixed; top:50%; left:50%; margin:-62px 0 0 -10%; display:none; }
