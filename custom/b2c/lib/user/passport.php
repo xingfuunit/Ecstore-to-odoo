@@ -1018,6 +1018,15 @@ class b2c_user_passport
     			return 'creat_new_account_failed';
     		}else{
     			$userPassport->reset_passport($login_member_id,$account_password);
+    			if($type == 'mobile'){
+    				//会员手机验证赠送积分
+    				$reason_type = 'mobile_score';
+    				$point = 300;
+    				$data_rand = rand(0,10);
+    				$error_msg = '微信绑定手机赠送积分';   				
+    				$member_id = $login_member_id;    			
+    				app::get('b2c')->model('member_point')->change_point($member_id,+$point,$error_msg,$reason_type,$data_rand,$member_id,$member_id);
+    			}
     			$db->commit($transaction_status);
     			return 'ok';
     		}

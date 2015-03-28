@@ -1,0 +1,28 @@
+body{ padding:0; margin:0;}
+.ms_head{width:1279px; height:auto; margin:0 auto;}
+.ms_main{width:1279px; height:auto; margin:0 auto; background:#653e07}
+.ms_clear{ clear:both; height:20px; width:1279px;}
+.ms_main a{ list-style:none; color:#663300; text-decoration:none;font-family:Microsoft Yahei;}
+.ms_product_01 a{ background:url(../images/meatstyle_04.jpg) no-repeat; width:1279px; height:352px; display:block}
+.ms_product_01 span{ float:right; width:145px; height:35px; margin-top:250px;}
+.ms_product_02 a{ background:url(../images/meatstyle_06.jpg) no-repeat; width:1279px; height:352px; display:block}
+.ms_product_02 span{ float:right; width:145px; height:35px; margin-top:250px; margin-right:400px;}
+.ms_product_03 a{ background:url(../images/meatstyle_08.jpg) no-repeat; width:1279px; height:352px; display:block}
+.ms_product_03 span{ float:right; width:145px; height:35px; margin-top:280px;}
+.ms_br_box{width:1279px; height:auto; background:#653e07; float:left}
+.ms_br_box a{width:405px; height:514px;display:block; margin-left: 16px; float:left}
+.ms_br_box a span{ float:right;margin-right: 70px;margin-top: 425px;}
+a.ms_box_p01{background: url(../images/meatstyle_11.jpg) no-repeat;}
+a.ms_box_p02{background: url(../images/meatstyle_13.jpg) no-repeat;}
+a.ms_box_p03{background: url(../images/meatstyle_15.jpg) no-repeat;}
+a.ms_box_p04{background: url(../images/meatstyle_19.jpg) no-repeat;}
+a.ms_box_p05{background: url(../images/meatstyle_20.jpg) no-repeat;}
+a.ms_box_p06{background: url(../images/meatstyle_21.jpg) no-repeat;}
+.bigpic a{ width:397px; height:484px; margin:0px 0px 0px 22px;}
+.ms_bp_p01{ background:url(../images/meatstyle_30.jpg) no-repeat}
+.ms_bp_p02{ background:url(../images/meatstyle_32.jpg) no-repeat}
+.ms_bp_p03{ background:url(../images/meatstyle_34.jpg) no-repeat}
+.bigpic a span{ float:right;margin-right:31px;margin-top: 417px;}
+a.ms_sheep{ width:1279px; height:394px; background: url(../images/meatstyle_41.jpg) no-repeat; display:block}
+a.ms_sheep span{ float:right; margin-top:250px; margin-right:180px;}
+.ms_morechoose{ background:#FFFFFF; padding:20px 0px; float:left}

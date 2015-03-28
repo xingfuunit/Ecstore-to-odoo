@@ -255,7 +255,8 @@ class b2c_ctl_site_order extends b2c_frontpage{
             $branch_mdl = kernel::single("ome_mdl_branch");
             if($branch_mdl){
                 $branch_obj = $branch_mdl->dump(array('branch_id'=>$order_data['branch_id']));
-                $order_data['branch_name_user'] = $branch_obj['name_b'];//将仓库别称存入order表 bySam20153017
+				$order_data['branch_name_user'] = $branch_obj['name'];
+                $order_data['branch_name_user_b'] = $branch_obj['name_b'];//将仓库别称存入order表 bySam20153017
             }
         }else{
             $order_data['branch_id'] = 0;
