@@ -1025,8 +1025,7 @@ class b2c_user_passport
     				$data_rand = rand(0,10);
     				$error_msg = '赠送失败';   				
     				$member_id = $login_member_id;    			
-    				$app = app::get('b2c');
-    				$app->model('member_point')->change_point($member_id,+$point,$error_msg,$reason_type,$data_rand,$member_id,$member_id);
+    				app::get('b2c')->model('member_point')->change_point($member_id,+$point,$error_msg,$reason_type,$data_rand,$member_id,$member_id);
     			}
     			$db->commit($transaction_status);
     			return 'ok';
