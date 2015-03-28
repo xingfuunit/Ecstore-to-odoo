@@ -1532,7 +1532,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			$msg = app::get('b2c')->_('该账号已经绑定过微信');
     			$this->splash('failed',null,$msg,'','',true);
     			break;
-    		case 'ok' :    			
+    		case 'ok' :
     			$msg=app::get('b2c')->_('绑定成功！');
             	$url = kernel::single('wap_controller')->gen_url(array('app'=>'b2c','ctl'=>'wap_passport','act'=>'logout'));
             	$this->splash('success',$url,$msg,'','',true);
