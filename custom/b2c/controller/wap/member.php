@@ -1532,17 +1532,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			$msg = app::get('b2c')->_('该账号已经绑定过微信');
     			$this->splash('failed',null,$msg,'','',true);
     			break;
-    		case 'ok' :
-    			if($bind_type == 'mobile'){
-    				//会员手机验证赠送积分
-    				$reason_type = 'mobile_score';
-    				$point = 300;
-    				$data_rand = rand(0,10);
-    				$error_msg = '赠送失败';
-    				$member_id = intval($this->app->member_id);
-    				$app = app::get('b2c');
-    				$app->model('member_point')->change_point($member_id,+$point,$error_msg,$reason_type,$data_rand,$member_id,$member_id);
-    			}
+    		case 'ok' :    			
     			$msg=app::get('b2c')->_('绑定成功！');
             	$url = kernel::single('wap_controller')->gen_url(array('app'=>'b2c','ctl'=>'wap_passport','act'=>'logout'));
             	$this->splash('success',$url,$msg,'','',true);
