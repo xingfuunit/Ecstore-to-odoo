@@ -106,7 +106,7 @@
            <li><a href="#" class="drop">现金付款</a>
                     
                         <div class="dropdown_1column jisuan" id="sssss">        
-                            应收金额：<span class="kkdd"><span  style="color: red; font-size: 18px; line-height: 40px; font-weight: bold; "></span><input id=txtAmount value="￥<{$aCart.promotion_subtotal}>" readOnly="true" style="border:none; color: red; font-size: 24px; height:28px;font-weight: bold;margin-top:-6px;"/></span><br/>  
+                            应收金额：<span class="kkdd"><span  style="color: red; font-size: 18px; line-height: 40px; font-weight: bold; "></span><input id=txtAmount value="<{$aCart.promotion_subtotal|cur_odr}>" readOnly="true" style="border:none; color: red; font-size: 24px; height:28px;font-weight: bold;margin-top:-6px;"/></span><br/>  
                             实收金额：<span style="color: red; font-size: 18px; line-height: 40px; font-weight: bold;">￥</span><input id=txtPrice value="0" class="sddss" style=" width: 150px; height: 28px; padding-left: 5px; color: red; font-size: 20px; font-weight: bold;" onkeyup="checkP(this);" onpaste="checkP(this);" oncut="checkP(this);" ondrop="checkP(this);" onchange="checkP(this);" onblur="checkMoney(this)" /><br/>
                             找零：<input id=txtTotal value=0 readOnly="true" style="border-right-width:0px; margin-right:0px; border: none; color: red; font-size: 20px; font-weight: bold;margin-top:-8px;"/> <br/><br/>
                             <input type="submit" style="cursor:pointer" id="add_xjamount" name="amount_submit" class="submdeoe"  value="确认付款" />

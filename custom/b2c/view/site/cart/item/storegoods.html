@@ -36,7 +36,7 @@
           </ul>
         </div>
       </td>
-      <td class="p-price"><{$goods.obj_items.products.0.price.price|cur_odr}></td>
+      <td class="p-price"><{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}>￥<{$goods.obj_items.products.0.price.price}><{else}><{$goods.obj_items.products.0.price.price|cur_odr}><{/if}></td>
       <td>
           <div class="p-quantity" style="width:100px">
             <!--  <a  href="javascript:void(0);" class="btn-decrease">-</a>-->
@@ -49,19 +49,19 @@
       <!-- <td class="p-goodskg"><{if $goods.unit.unit == '千克' || $goods.unit.unit == 'kg'}><input type="text" value="<{$goods.quantity_exchange}>" id="modify_quantity_ex_<{$goods.obj_ident}>" name="kg_might" style="border: 1px solid #ccc; text-align: center; width: 70px; height: 20px;"><{else}>-<{/if}></td> -->
       <td class="p-goodskg">
       <{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}><input type="text" value="<{$goods.quantity_exchange}>" id="modify_quantity_ex_<{$goods.obj_ident}>" name="kg_might" style="border: 1px solid #ccc; text-align: center; width: 70px; height: 20px;"><{else}>-<{/if}>
-      <{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}><p class="p-weight" style="font-weight:bold;font-size:15px;"><{$goods.quantity_exchange/500}>斤</p><{/if}>
+      <{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}><p class="p-weight" style="font-weight:bold;font-size:15px;"><{$goods.quantity_exchange/1000}>千克</p><{/if}>
       </td>
       <td class="p-discount"><{($goods.discount_amount_prefilter)+(($goods.obj_items.products.0.price.price-$goods.obj_items.products.0.price.member_lv_price)*$goods.quantity)|cur_odr}></td>
      
       <td class="p-integral">
           <{if ($goods.subtotal_gain_score - $goods.subtotal_consume_score)}>
-              <{($goods.subtotal_gain_score - $goods.subtotal_consume_score)}>
+              <{($goods.subtotal_gain_score - $goods.subtotal_consume_score)|cur_odr}>
           <{else}>
               -
           <{/if}>
       </td>
       <!--<td class="p-discount"><input type="text" value="" id="discount_ex_<{$goods.obj_ident}>" name="kg_might" style="border: 1px solid #ccc; text-align: center; width: 40px; height: 20px;"></td>-->
-      <td class="p-subtotal"><{$goods.subtotal_prefilter_after|cur_odr}></td>
+      <td class="p-subtotal"><{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}>￥<{$goods.subtotal_prefilter_after}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}></td>
      
       <td class="p-action">
       <{if $cart_type != "x"}>
