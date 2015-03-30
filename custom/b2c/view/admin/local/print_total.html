@@ -1,0 +1,70 @@
+<div class="oder-printbox">
+  <div class="oder-print_title" style="border-bottom: none;"><{t}>门店日结报表<{/t}></div>
+
+  <table width="100%" border="1" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="cash_right"><{t}>门店名称：<{/t}></td>
+      <td class="cash_left"><{$branch_name}></td>
+    </tr>
+    <tr>
+      <td  class="cash_right"><{t}>当天交易：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['total_num']}>笔</span><span class="upper"><{$total['total_price']}>元</span></td>
+    </tr>
+    
+    <tr>
+      <td  class="cash_right"><{t}>现金支付：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['total_xianjin_num']}>笔</span><span class="upper"><{$total['total_xianjin_price']}>元</span></td>
+    </tr>
+    
+    <tr>
+      <td  class="cash_right"><{t}>刷卡支付：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['total_shuaka_num']}>笔</span><span class="upper"><{$total['total_shuaka_price']}>元</span></td>
+    </tr>
+    
+    <tr>
+      <td  class="cash_right"><{t}>帐号余额支付：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['total_deposit_num']}>笔</span><span class="upper"><{$total['total_deposit_price']}>元</span></td>
+    </tr>
+    
+    <tr>
+      <td  class="cash_right"><{t}>订单优惠：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['pmt_num']}>笔</span><span class="upper"><{$total['pmt_price']}>元</span></td>
+    </tr>
+    
+    <tr>
+      <td  class="cash_right"><{t}>订单无优惠：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['no_pmt_num']}>笔</span><span class="upper"><{$total['no_pmt_price']}>元</span></td>
+    </tr>
+    
+    <tr>
+      <td  class="cash_right"><{t}>现金充值：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['advance_xianjin_num']}>笔</span><span class="upper"><{$total['advance_xianjin_money']}>元</span></td>
+    </tr>
+    
+    <tr>
+      <td  class="cash_right"><{t}>刷卡充值：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['advance_shuaka_num']}>笔</span><span class="upper"><{$total['advance_shuaka_money']}>元</span></td>
+    </tr>
+    
+    <tr>
+      <td  class="cash_right"><{t}>充值券充值：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['advance_chongzhiquan_num']}>笔</span><span class="upper"><{$total['advance_chongzhiquan_money']}>元</span></td>
+    </tr>
+    
+    <tr>
+      <td  class="cash_right"><{t}>门店自提：<{/t}></td>
+      <td  class="cash_left"><span class="upper"><{$total['store_num']}>笔</span><span class="upper"><{$total['store_price']}>元</span></td>
+    </tr>
+    
+    
+    <tr>
+      <td colspan="2" style="padding: 5px 5px 5px 20px;"><{t}>备注：<{/t}><{$cash.memo}></td>
+
+    </tr>
+    <tr>
+      <td  style="padding: 5px 5px 5px 20px;border-right: none;"><{t}>确认人签名：<{/t}></td>
+      <td  style="padding: 5px 50px 5px 20px;border-left: none;text-align: right;"><{t}><{/t}></td>
+    </tr>
+ 
+  </table>
+</div>

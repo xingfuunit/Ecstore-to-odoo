@@ -1228,7 +1228,9 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             $psm = $_POST['yu_amount'];
             $msg = 'pos预存款充值';
             $objAdvance = $this->app->model("member_advance");
-            $status = $objAdvance->add($member_id, $psm, app::get('b2c')->_('pos['.$pay_way[$_POST['exp_pay_way']].']预存款充值'), $msg);
+            $paymenthod = $_POST['exp_pay_way'] == 1 ? 'xianjin' : 'shuaka';
+            $branch_id = intval($_SESSION['local_store']['branch_id']);
+            $status = $objAdvance->add($member_id, $psm, app::get('b2c')->_('pos['.$pay_way[$_POST['exp_pay_way']].']预存款充值'), $msg,'','',$paymenthod,'',0,true,$branch_id);
 
             // 增加经验值
             $obj_member = $this->app->model('members');
