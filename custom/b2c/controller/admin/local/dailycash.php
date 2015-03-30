@@ -36,7 +36,7 @@ class b2c_ctl_admin_local_dailycash extends desktop_controller {
 		$branch_id = intval($_GET['branch_id']);
 		$this->pagedata['branch_id']=$branch_id;
 		//仓库
-		$local_store=app::get('ome')->model('branch')->getList('*',array('disabled'=>'false'));
+		$local_store=app::get('ome')->model('branch')->getList('*',array('disabled'=>'false','is_show'=>'true'));
 		$this->pagedata['local_store']=$local_store;
 		$today = isset($_GET['today']) ? $_GET['today'] : date('Y-m-d');
 		$this->pagedata['today']=$today;
