@@ -168,7 +168,43 @@ class apiactionlog_ctl_admin_apilog extends desktop_controller{
             	'use_buildin_recycle'=>false,
             	'base_filter' =>$base_filter,
                 ));
-        
     }
-    
+	/**
+	 *门店名没有同步的订单　by Sam
+	*/
+    function erp_order_no_branch() {
+		$week = time()-3600*24*4;
+		$sql ="SELECT  order_bn,order_id,branch_id,FROM_UNIXTIME(createtime,'%Y%m%d') FROM sdb_ome_orders where shipping = '门店收银' and  branch_id = '0' and createtime>='{$week}'";
+
+		$erpData = kernel::single('base_db_connect')->select($sql);
+
+		$ids = array();
+		foreach ($erpData as $key=>$value) {
+				$ids[] = $value['order_id'];
+		}
+
+		$ids = implode(',',$ids);
+		$base_filter = " order_id in  (".$ids.")";
+		
+		$actions =
+                array(
+                    array(
+                        'label' => '批量重试',
+                        'submit' => 'index.php?app=apiactionlog&ctl=admin_apilog&act=re_request',
+                        'target' => "refresh",//dialog::{width:550,height:300,title:'批量重试'}",
+                    ),
+                );
+				
+        $this->finder('b2c_mdl_orders', array(
+                'title'=>app::get('b2c')->_('近４天门店名没有同步的订单'),
+				'actions'=> $actions,
+            	'use_buildin_recycle'=>false,
+				'use_buildin_new_dialog' => false,
+				'use_buildin_set_tag'=>false,
+				'use_buildin_export'=>false,
+				'use_buildin_import'=>false,
+				'use_buildin_filter'=>true,
+            	'base_filter' =>$base_filter,
+                ));
+    }
 }
