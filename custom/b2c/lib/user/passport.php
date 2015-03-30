@@ -807,7 +807,7 @@ class b2c_user_passport
     					$db->rollback();
     					return 'add_advance_wrong';
     				}
-    				if(!$objAdvances->add($new_member_id, -$new_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
+    				if(!$objAdvances->deduct($new_member_id, $new_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
     					$db->rollback();
     					return 'reduce_advance_wrong';
     				}
@@ -851,7 +851,7 @@ class b2c_user_passport
     					$db->rollback();
     					return 'add_advance_wrong';
     				}
-    				if(!$objAdvances->add($member_id, -$old_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
+    				if(!$objAdvances->deduct($member_id, $old_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
     					$db->rollback();
     					return 'reduce_advance_wrong';
     				}
@@ -894,7 +894,7 @@ class b2c_user_passport
     					$db->rollback();
     					return 'add_advance_wrong';
     				}
-    				if(!$objAdvances->add($card_member_id, -$card_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
+    				if(!$objAdvances->deduct($card_member_id, $card_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
     					$db->rollback();
     					return 'reduce_advance_wrong';
     				}
@@ -933,7 +933,7 @@ class b2c_user_passport
     					$db->rollback();
     					return 'add_advance_wrong';
     				}
-    				if(!$objAdvances->add($old_member_id, -$old_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
+    				if(!$objAdvances->deduct($old_member_id, $old_member_info[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
     					$db->rollback();
     					return 'reduce_advance_wrong';
     				}
@@ -1109,7 +1109,7 @@ class b2c_user_passport
     			$db->rollback();
     			return 'add_advance_wrong';
     		}
-    		if(!$objAdvances->add($from_pam_member[0]['member_id'], -$from_b2c_member[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
+    		if(!$objAdvances->deduct($from_pam_member[0]['member_id'], $from_b2c_member[0]['advance'], app::get('b2c')->_('会员卡绑定预存款转移'), $msg)){//为被合并的会员增加预存款
     			$db->rollback();
     			return 'reduce_advance_wrong';
     		}
