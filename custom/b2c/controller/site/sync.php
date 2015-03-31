@@ -15,12 +15,12 @@ class b2c_ctl_site_sync {
     public function index(){
 		
         $week = time()-3600*24*4;
-		$sql ="SELECT  order_bn,order_id,branch_id,FROM_UNIXTIME(createtime,'%Y%m%d') FROM sdb_ome_orders where shipping = '门店收银' and  branch_id = '0' and createtime>='{$week}'";
+		$sql ="SELECT  order_bn,order_id,branch_id,FROM_UNIXTIME(createtime,'%Y%m%d') as createtime FROM sdb_ome_orders where shipping = '门店收银' and  branch_id = '0' and createtime>='{$week}'";
 
 		$erpData = kernel::single('base_db_connect')->select($sql);
 
 		if($erpData){
-			error_log(date("Y-m-d H:i:s")."	".json_decode($erpData),3,ROOT_DIR.'/data/logs/sync_branch_log.php');
+			error_log(date("Y-m-d H:i:s")."	".json_encode($erpData),3,ROOT_DIR.'/data/logs/sync_branch_log.php');
 			$ids = array();
 			foreach ($erpData as $key=>$value) {
 					$ids['order_id'][] = $value['order_bn'];
