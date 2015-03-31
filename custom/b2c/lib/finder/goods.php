@@ -77,7 +77,6 @@ class b2c_finder_goods{
         $render->pagedata['buy_count'] = $goods['buy_count'];
         $render->pagedata['view_count'] = $goods['view_count'];
         $render->pagedata['qrcode_image_id'] = kernel::single('weixin_qrcode')->get_desktop_qrcode_image_id($default_product[0]['product_id']);
-		error_log($render->pagedata['qrcode_image_id']);
         $render->pagedata['status'] = unserialize($goods['count_stat']);
 
         $goods_point = app::get('b2c')->model('comment_goods_point');

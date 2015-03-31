@@ -98,5 +98,25 @@ class b2c_ctl_site_active extends b2c_frontpage{
     } 
     
     
+    /**
+     * 肉食专题
+     */
+    public function meatstyle(){
+    	$shopname = '将肉食进行到底';
+    	$this->title = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
+    	$this->keywords = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
+    	$this->description = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
+    	
+    	$bn_array=array('210001','210004','210012','210002','210011','210005','210007','210013','210018','230022','230014','230018','220001');
+    	$count_arry = array();
+    	$mdl_goods = $this->app->model('goods');
+    	foreach($bn_array as $ba){
+    		$count = $mdl_goods->db->select("select buy_count from sdb_b2c_goods where bn ='$ba'");
+    		$count_arry[] = $count[0][buy_count];
+    	}
+    	$this->pagedata['count'] = $count_arry;
+    	$this->page('site/active/meatstyle/index.html');
+    }
+    
 }
 

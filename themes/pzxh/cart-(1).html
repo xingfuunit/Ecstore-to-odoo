@@ -896,7 +896,11 @@ window.addEvent('domready', function(){
     });
     
     //账户余额付款
-    $('add_yuamount').addEvent("click",function(E){			
+    $('add_yuamount').addEvent("click",function(E){
+				if(pay_status){
+					alert('订单正在提交中...');
+					return false;
+				}	
     		var shishou = Number(txtYuPrice.value);//实收金额
        		var zhaoling = Number(txtYuTotal.value);//找零金额
         	shishou    = '￥' + shishou.toFixed(2);
@@ -954,7 +958,7 @@ window.addEvent('domready', function(){
             var password = dda;
             var url = '<{link app=b2c ctl=site_storepassport act=webpos_passwordcheck}>';
             var ps_add_info = $$(".dd_add_info");
-            	
+            	pay_status = true;
                 var myRequest1 = new Request.JSON({
                     url: url,
                     method: 'post',
@@ -1043,6 +1047,7 @@ window.addEvent('domready', function(){
              			    	    winReload();
                                  },
              			        onFailure: function(){
+									pay_status = false;
              			            bn_add_info.set('html','订单生成失败，检查您的余额是否足够！');
                                  }
                              });
@@ -1061,11 +1066,13 @@ window.addEvent('domready', function(){
                              myRequest.send(data);
                         }
                         if(responseText.ret == "支付密码错误!"){
+							pay_status = false;
                         	ps_add_info.set('html',responseText.ret);
                         	alert('支付密码错误!');
                             return false;
                         }
                         if(responseText.ret == "你还没有设置支付密码!"){
+							pay_status = false;
                         	ps_add_info.set('html',responseText.ret);
                         	alert('你还没有设置支付密码!');
                             return false;
@@ -1073,6 +1080,7 @@ window.addEvent('domready', function(){
                        
                     },
                     onFailure: function(){
+						pay_status = false;
                         ps_add_info.set('html','');
                     }
                 });
@@ -1087,6 +1095,10 @@ window.addEvent('domready', function(){
         console.log('ok');
         return false;*/
     $('add_xjamount').addEvent("click",function(E){
+				if(pay_status){
+					alert('订单正在提交中...');
+					return false;
+				}
 			<{if !$member.uname}>
                             alert('请先登录会员！');
                             return false;
@@ -1113,6 +1125,7 @@ window.addEvent('domready', function(){
                             window.confirm("请输入实收金额");
                             return false;
                         }
+						pay_status = true;
                         var myRequest = new Request.JSON({
                             url: url,
                             method: 'post',
@@ -1129,6 +1142,7 @@ window.addEvent('domready', function(){
                                 winReload();
 			    },
 			    onFailure: function(){
+					pay_status = false;
 			        bn_add_info.set('html','请求失败');
 			    }
                         });
@@ -1149,7 +1163,7 @@ window.addEvent('domready', function(){
     //刷卡付款
     $('add_skamount').addEvent("click",function(E){
 				if(pay_status){
-				alert('订单正在提交中...');
+					alert('订单正在提交中...');
 					return false;
 				}
                     <{if !$member.uname}>

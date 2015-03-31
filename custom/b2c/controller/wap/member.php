@@ -785,6 +785,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     function deposit(){
     	//判断微信来源时，获取openid
     	$from_weixin = kernel::single('weixin_wechat')->from_weixin();
+    	
     	if ($from_weixin) {
             $wxpayjsapi_conf = app::get('ectools')->getConf('weixin_payment_plugin_wxpayjsapi');
             $wxpayjsapi_conf = unserialize($wxpayjsapi_conf);
@@ -814,7 +815,14 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $this->pagedata['currencys'] = $currency;
         $this->pagedata['currency'] = $currency['cur_code'];
         $opay = app::get('ectools')->model('payment_cfgs');
-        $aOld = $opay->getList('*', array('status' => 'true', 'platform'=>array('iscommon','iswap'), 'is_frontend' => true));
+        
+        //区分来自微信 和wap端的支付方式
+        if($from_weixin){
+        	$aOld = $opay->getList('*', array('status' => 'true', 'platform'=>array('iscommon','iswx'), 'is_frontend' => true));
+        }else{
+        	$aOld = $opay->getList('*', array('status' => 'true', 'platform'=>array('iscommon','iswap'), 'is_frontend' => true));
+        }
+        
 
         #获取默认的货币
         $obj_currency = app::get('ectools')->model('currency');
