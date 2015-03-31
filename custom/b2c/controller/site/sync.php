@@ -20,7 +20,7 @@ class b2c_ctl_site_sync {
 		$erpData = kernel::single('base_db_connect')->select($sql);
 
 		if($erpData){
-			error_log(date("Y-m-d H:i:s")."	".json_encode($erpData),3,ROOT_DIR.'/data/logs/sync_branch_log.php');
+			error_log(date("Y-m-d H:i:s")."	".json_encode($erpData)."\n",3,ROOT_DIR.'/data/logs/sync_branch_log.php');
 			$ids = array();
 			foreach ($erpData as $key=>$value) {
 					$sql ='SELECT branch_id,branch_name_user from sdb_b2c_orders where order_id = \''.$value['order_bn'].'\'';
@@ -34,7 +34,7 @@ class b2c_ctl_site_sync {
 					
 					$erpSync = kernel::single('base_db_connect')->select($sql);
 					
-					error_log("	".$erpSync."\n",3,ROOT_DIR.'/data/logs/sync_branch_log.php');
+					error_log("	".json_encode($erpSync)."\n",3,ROOT_DIR.'/data/logs/sync_branch_log.php');
 					
 					
 					
