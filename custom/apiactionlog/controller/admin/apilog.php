@@ -207,4 +207,5 @@ class apiactionlog_ctl_admin_apilog extends desktop_controller{
             	'base_filter' =>$base_filter,
                 ));
     }
+
 }
