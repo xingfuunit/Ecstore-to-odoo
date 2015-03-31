@@ -180,7 +180,7 @@ class apiactionlog_ctl_admin_apilog extends desktop_controller{
 
 		$ids = array();
 		foreach ($erpData as $key=>$value) {
-				$ids[] = $value['order_id'];
+				$ids[] = '\''.$value['order_bn'].'\'';
 		}
 
 		$ids = implode(',',$ids);
