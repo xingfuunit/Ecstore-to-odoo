@@ -83,7 +83,7 @@ class ome_mdl_dailycash extends dbeav_model{
 			}
 		}
 		
-		$rs = $this->db->select("select count(*) as _count,sum(final_amount) as price,payment from sdb_b2c_orders where shipping='门店自提' and pay_status != '4' and pay_status != '5' ".$branch_where." and FROM_UNIXTIME( createtime, '%Y-%m-%d' ) = '{$date_line}' and pmt_order=0");
+		$rs = $this->db->select("select count(*) as _count,sum(final_amount) as price,payment from sdb_b2c_orders where shipping='门店自提' and pay_status in ('1','2') and ship_status in ('1','2')  ".$branch_where." and FROM_UNIXTIME( createtime, '%Y-%m-%d' ) = '{$date_line}' ");
 		
 		$total['store_num'] = $rs[0]['_count']; //门店自提订单数
 		$total['store_price'] = $rs[0]['price'];//门店自提订单总金额
