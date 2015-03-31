@@ -1,0 +1,78 @@
+<{capture name="header"}> <{css src="ome.css" app="ome"}> <{/capture}>
+<div class="tableform">
+	<{tabber}> <{tab name="门店日结"}>
+
+	<form action="index.php?app=b2c&ctl=admin_local_dailycash&act=total"
+		method="get" class="tableform" id="form1">
+		<div class="division"
+			style="border: 1px solid #D5DFE3; margin-top: 10px;">
+			<table>
+				<tr>
+					<td width="100px"><h3 style="color: #305C89;"><{t}>门店：<{/t}></h3></td>
+					<td align="left" width="100px"><select name='branch_id'>
+							<option value="0">全部</option> 
+							<{foreach from=$local_store item=i}>
+							<option value="<{$i.branch_id}>"<{if $branch_id==$i.branch_id}>selected<{/if}>><{$i.name}></option>
+							<{/foreach}>
+					</select></td>
+					<td width="100px"><h3 style="color: #305C89;"><{t}>时间：<{/t}></h3></td>
+					<td width="100px"><input type="text" name='today' value="<{$today}>">
+					</td>
+					<td>
+						<button type="submit" class="btn">
+							<span><span>查询</span></span>
+						</button>
+						<a href="index.php?app=b2c&ctl=admin_local_dailycash&act=total_print&branch_id=<{$branch_id}>&today=<{$today}>" target="_blank">
+						<button type="button" class="btn">
+							<span><span>打印</span></span>
+						</button>
+						</a>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>当天交易</td><td><{$total['total_num']}>笔</td><td><{$total['total_price']}>元</td><td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>现金支付</td><td><{$total['total_xianjin_num']}>笔</td><td><{$total['total_xianjin_price']}>元</td><td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>刷卡支付</td><td><{$total['total_shuaka_num']}>笔</td><td><{$total['total_shuaka_price']}>元</td><td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>帐号余额支付</td><td><{$total['total_deposit_num']}>笔</td><td><{$total['total_deposit_price']}>元</td><td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>订单优惠</td><td><{$total['pmt_num']}>笔</td><td><{$total['pmt_price']}>元</td><td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>订单无优惠</td><td><{$total['no_pmt_num']}>笔</td><td><{$total['no_pmt_price']}>元</td><td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>现金充值</td><td><{$total['advance_xianjin_num']}>笔</td><td><{$total['advance_xianjin_money']}>元</td><td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>刷卡充值</td><td><{$total['advance_shuaka_num']}>笔</td><td><{$total['advance_shuaka_money']}>元</td><td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>充值券充值</td><td><{$total['advance_chongzhiquan_num']}>笔</td><td><{$total['advance_chongzhiquan_money']}>元</td><td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>门店自提</td><td><{$total['store_num']}>笔</td><td><{$total['store_price']}>元</td><td>&nbsp;</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+
+	<{/tab}> <{/tabber}>
+</div>
+
