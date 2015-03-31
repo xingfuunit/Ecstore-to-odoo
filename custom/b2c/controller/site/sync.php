@@ -23,24 +23,24 @@ class b2c_ctl_site_sync {
 			error_log(date("Y-m-d H:i:s")."	".json_encode($erpData),3,ROOT_DIR.'/data/logs/sync_branch_log.php');
 			$ids = array();
 			foreach ($erpData as $key=>$value) {
-					$ids['order_id'][] = $value['order_bn'];
-			}
-			$this->re_request($ids);
+					$sql ='SELECT branch_id,branch_name_user from sdb_b2c_orders where order_id = \''.$value['order_bn'].'\'';
+
+					$ecData = kernel::database()->select($sql);
+					$ecData = $ecData[0];
+					
+					$sql = 'UPDATE sdb_ome_orders SET branch_id='.'\''.$ecData['branch_id'].'\''.' , '.'branch_name_user='.'\''.$ecData['branch_name_user'].'\''.' WHERE order_bn='.'\''.$value['order_bn'].'\'';
+
+					error_log("	".$sql,3,ROOT_DIR.'/data/logs/sync_branch_log.php');
+					
+					$erpSync = kernel::single('base_db_connect')->select($sql);
+					
+					error_log("	".$erpSync."\n",3,ROOT_DIR.'/data/logs/sync_branch_log.php');
+					
+					
+					
+			}			
 		}
 		echo '--end--';
 		exit;
     }
-	private function re_request($order_no){
-
-        if($order_no){
-            $apilog_id = $order_no;
-        }
-
-        $request_mdl = kernel::single('apiactionlog_router_request');
-        $result = $request_mdl->re_request($apilog_id);
-
-		error_log("	".json_encode($result)."\n",3,ROOT_DIR.'/data/logs/sync_branch_log.php');
-
-    }
-
 }
