@@ -14,7 +14,7 @@ class b2c_ctl_site_sync {
      */
     public function index(){
 		
-        $week = time()-3600*24*4;
+        $week = time()-3600*24*1;
 		$sql ="SELECT  order_bn,order_id,branch_id,FROM_UNIXTIME(createtime,'%Y%m%d') as createtime FROM sdb_ome_orders where shipping = '门店收银' and  branch_id = '0' and createtime>='{$week}'";
 
 		$erpData = kernel::single('base_db_connect')->select($sql);
