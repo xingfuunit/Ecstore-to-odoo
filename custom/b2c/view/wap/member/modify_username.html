@@ -58,15 +58,23 @@
 	        </div>
 	      </div>
 
-	      <div class="c-g">
+	      <div class="c-g" style="display:none;" id="new_password_mobile">
 	        <label for="" class="c-l" style="width: 100px;">
-	          <em class="f-red">*</em>密码：
+	          <em class="f-red">*</em>原账号密码：
 	        </label>
 	        <div class="c">
 	          <input type="password" name="login_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 	        </div>
 	      </div>
-	      <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_mobile">此帐户已注册，设置帐户时会丢失其中一方帐户订单与优惠券，请选择保留数据的帐户</div>
+	      <div class="c-g">
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>绑定后密码：
+	        </label>
+	        <div class="c">
+	          <input type="password" name="new_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+	        </div>
+	      </div>
+	      <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_mobile">此帐户已注册，设置帐户时会丢失其中一方帐户订单，请选择保留数据的帐户</div>
       </div>
 
 
@@ -92,16 +100,25 @@
 	        </div>
 	      </div>
 
-	      <div class="c-g">
+	      <div class="c-g" style="display:none;" id="new_password_email">
 	        <label for="" class="c-l" style="width: 100px;">
-	          <em class="f-red">*</em>密码：
+	          <em class="f-red">*</em>原账号密码：
 	        </label>
 	        <div class="c">
 	          <input type="password" name="login_password_email" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 	        </div>
 	      </div>
+	      
+	      <div class="c-g">
+	        <label for="" class="c-l" style="width: 100px;">
+	          <em class="f-red">*</em>绑定后密码：
+	        </label>
+	        <div class="c">
+	          <input type="password" name="new_password_email" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+	        </div>
+	      </div>
 
-	      <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_email">此帐户已注册，设置帐户时会丢失其中一方帐户订单与优惠券，请选择保留数据的帐户</div>
+	      <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_email">此帐户已注册，设置帐户时会丢失其中一方帐户订单，请选择保留数据的帐户</div>
      </div>
 	
 
@@ -125,7 +142,15 @@
 		          <input type="password" name="login_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 		        </div>
 		      </div>
-		   <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单与优惠券，请选择保留数据的帐户</div>
+		      <div class="c-g">
+		        <label for="" class="c-l" style="width: 100px;">
+		          <em class="f-red">*</em>绑定后密码：
+		        </label>
+		        <div class="c">
+		          <input type="password" name="new_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+		        </div>
+		      </div>
+		   <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单，请选择保留数据的帐户</div>
 	</div>
 			
 	<div id="card_input"  style="display: none;">
@@ -146,7 +171,15 @@
 		          <input type="password" name="login_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
 		        </div>
 		      </div>
-		      <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失失其中一方帐户订单与优惠券，请选择保留数据的帐户</div>
+		      <div class="c-g">
+		        <label for="" class="c-l" style="width: 100px;">
+		          <em class="f-red">*</em>绑定后密码：
+		        </label>
+		        <div class="c">
+		          <input type="password" name="new_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+		        </div>
+		      </div>
+		      <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失失其中一方帐户订单，请选择保留数据的帐户</div>
      </div>
 
 
@@ -233,12 +266,14 @@
                 	$('.form .btn-sms').show();
                 	$('input[name=vcode_mobile]').parents('.c-g').show();
                 	$('#radio_mobile').hide();
+                	$('#new_password_mobile').hide();
                 	$('#tips_txt_mobile').hide();
                 }
                 if(rs.error) {
   					$('.form .btn-sms').hide();
                 	$('input[name=vcode_mobile]').parents('.c-g').hide();
                 	$('#radio_mobile').show();
+                	$('#new_password_mobile').show();
                 	$('#tips_txt_mobile').show();
                 	
                 }
@@ -261,12 +296,14 @@
                 	$('.form .btn-email').show();
                 	$('input[name=vcode_email]').parents('.c-g').show();
                 	$('#radio_email').hide();
+                	$('#new_password_email').hide();
                 	$('#tips_txt_email').hide();
                 }
                 if(rs.error) {
   					$('.form .btn-email').hide();
                 	$('input[name=vcode_email]').parents('.c-g').hide();
                 	$('#radio_email').show();
+                	$('#new_password_email').show();
                 	$('#tips_txt_email').show();
                 }
             }

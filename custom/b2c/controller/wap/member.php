@@ -103,7 +103,13 @@ class b2c_ctl_wap_member extends wap_frontpage{
         	
         		if($row['login_type'] == 'local'){
         			if(strlen($row['login_account']) < 24){
-        				$data['bind_type'] = '账号';
+        				$userPassport = kernel::single('b2c_user_passport');
+        				$bind_type = $userPassport->get_local_account_type($row['login_account']);
+        				if($bind_type == 'card'){
+        					$data['bind_type'] = '会员卡';
+        				}else{
+        					$data['bind_type'] = '账号';
+        				}
         				$data['bind_account'] = $row['login_account'];
         				break;
         			}       			
@@ -1421,7 +1427,8 @@ class b2c_ctl_wap_member extends wap_frontpage{
     	$userPassport = kernel::single('b2c_user_passport');
     	$account = $_POST['login_account'.'_'.$bind_type];
     	$account_pam_member = app::get('pam')->model('members')->getList('member_id',array('login_account'=>$account));
-    	$account_password = trim($_POST['login_password'.'_'.$bind_type]);
+    	$old_account_password = trim($_POST['login_password'.'_'.$bind_type]);
+    	$new_account_password = trim($_POST['new_password'.'_'.$bind_type]);
     	$vode = $_POST['vcode'.'_'.$bind_type];
     	$login_member_id = intval($this->app->member_id);
     	$from_to =$_POST['from_to'.'_'.$bind_type];
@@ -1434,21 +1441,27 @@ class b2c_ctl_wap_member extends wap_frontpage{
     		$this->splash('failed',null,$msg,'','',true);
     	}
     	
-    	if(!$account_password || !isset($account_password) || strlen($account_password) < 6){
-    		$msg = app::get('b2c')->_('密码必须为6-20位字符');
+    	//if((isset($old_account_password) || !empty($new_account_password)) && strlen($old_account_password) < 6){
+    	//	$msg = app::get('b2c')->_('原账号密码必须为6-20位字符');
+    	//	$this->splash('failed',null,$msg,'','',true);
+    	//}
+    	
+    	if(!$new_account_password || !isset($new_account_password) || strlen($new_account_password) < 6){
+    		$msg = app::get('b2c')->_('绑定后密码必须为6-20位字符');
     		$this->splash('failed',null,$msg,'','',true);
     	}
     	
-    	if(count($wei_member) > 1){
-    		$msg = app::get('b2c')->_('该微信账号已经绑定过其他账号,不能再进行绑定');
-    		$this->splash('failed',null,$msg,'','',true);
-    	}
+    	//if(count($wei_member) > 1){
+    	//	$msg = app::get('b2c')->_('该微信账号已经绑定过其他账号,不能再进行绑定');
+    	//	$this->splash('failed',null,$msg,'','',true);
+    	//}
     	if(!$wei_member){
     		$msg = app::get('b2c')->_('当前账号错误');
     		$url = kernel::single('wap_controller')->gen_url(array('app'=>'b2c','ctl'=>'wap_passport','act'=>'logout'));
             $this->splash('failed',$url,$msg,'','',true);
+    	}else{
+    		$this->check_bind_info($wei_member, $account, $bind_type);			
     	}
-
     	if($bind_type == 'email' || $bind_type == 'account' || $bind_type == 'mobile'){
     		    		
     		if($bind_type == 'email' && !$account_pam_member[0]['member_id']){
@@ -1468,7 +1481,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			}
     		}
     		    		    		    		
-    		$status = $userPassport->bind_member($bind_type,$from_to,$login_member_id,$account,$account_password);
+    		$status = $userPassport->bind_member($bind_type,$from_to,$login_member_id,$account,$old_account_password,$new_account_password);
     		switch ($status){
     		case 'update_passwd_failed' :
     			$msg = app::get('b2c')->_('密码更新失败');
@@ -1479,7 +1492,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			$this->splash('failed',null,$msg,'','',true);
     			break;
     		case 'wrong_password' :
-    			$msg = app::get('b2c')->_('会员账号密码错误');
+    			$msg = app::get('b2c')->_('原会员账号密码错误');
     			$this->splash('failed',null,$msg,'','',true);
     			break;
     		case 'old_member_wrong' :
@@ -1525,9 +1538,13 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			$msg = app::get('b2c')->_('更新旧会员失败');
     			 $this->splash('failed',null,$msg,'','',true);
     			break;
-    		case 'update_cardmember_failed' :
-    			$msg = app::get('b2c')->_('更新会员卡会员失败');
+    		case 'update_member_failed' :
+    			$msg = app::get('b2c')->_('更新会员信息失败');
     			 $this->splash('failed',null,$msg,'','',true);
+    			break;
+    		case 'update_passwd_failed' :
+    			$msg = app::get('b2c')->_('更新会员密码失败');
+    			$this->splash('failed',null,$msg,'','',true);
     			break;
     		case 'update_old_cardmember_failed' :
     			$msg = app::get('b2c')->_('更新旧会员卡会员失败');
@@ -1556,7 +1573,13 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			break;
     	}
     	}elseif($bind_type == 'card'){   		
-    		$this->save_weixin_card($account,$account_password);
+    		if($from_to == 'old_to_weixin'){
+    			$type = "card_to_member";
+    		}
+    		if($from_to == 'weixin_to_old'){
+    			$type = "member_to_card";
+    		}
+    		$this->save_weixin_card($account,$old_account_password,$new_account_password,$type);
     	}else{
     		$msg = app::get('b2c')->_('请选择要绑定的信息');
     		$this->splash('failed',null,$msg,'','',true);
@@ -1564,7 +1587,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     }
     
     
-    function save_weixin_card($card,$card_password){
+    function save_weixin_card($card,$card_password,$new_account_password,$type){
     	$this->userPassport = kernel::single('b2c_user_passport');
     	$userPassport = kernel::single('b2c_user_passport');
     	$login_member_id = intval($this->app->member_id);
@@ -1606,17 +1629,25 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			}
     		}
     	}
-    	$status = $this->userPassport->_bind_member_card($new_card, 'member_to_card', $login_member_id, $card);
+    	$status = $this->userPassport->_bind_member_card($new_card, $type, $login_member_id, $card,$new_account_password);
     	switch ($status){
+    		case 'update_coupon_failed' :
+    			$msg = app::get('b2c')->_('更新优惠券错误');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
+    		case 'update_passwd_failed' :
+    			$msg = app::get('b2c')->_('更新密码错误');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
     		case 'old_member_wrong' :
-    			$msg = app::get('b2c')->_('当前会员信息错误错误');
+    			$msg = app::get('b2c')->_('当前会员信息错误');
     			$this->splash('failed',null,$msg,'','',true);
     			break;
     		case 'insert_membercard_wrong' :
     			$msg = app::get('b2c')->_('会员卡注入错误');
     			$this->splash('failed',null,$msg,'','',true);
     		case 'add_advance_wrong' :
-    			$msg = app::get('b2c')->_('增加预存款是失败');
+    			$msg = app::get('b2c')->_('增加预存款失败');
     			 $this->splash('failed',null,$msg,'','',true);
     			break;
     		case 'reduce_advance_wrong' :
@@ -2045,6 +2076,55 @@ class b2c_ctl_wap_member extends wap_frontpage{
 		}
 	
 	
+	}
+	
+	public function check_bind_info($wei_member,$account,$bind_type){
+		$userPassport = kernel::single('b2c_user_passport');
+		foreach($wei_member as $wm){
+			if($wm['login_type'] == 'email'){
+				$wei_email = $wei_email + 1;
+			}
+			if($wm['login_type'] == 'local'){
+				$wei_local = $wei_local + 1;
+				$local_type = $userPassport->get_local_account_type($wm['login_account']);
+				if($local_type == 'account'){
+					$wei_local_account = $wei_local_account + 1;
+				}
+				if($local_type == 'card'){
+					$wei_local_card = $wei_local_card + 1;
+				}
+				if($local_type == 'openid'){
+					$wei_local_openid = $wei_local_openid + 1;
+				}
+			}
+			if($wm['login_type'] == 'mobile'){
+				$wei_mobile = $wei_mobile + 1;
+			}
+		}
+		
+		if($bind_type == 'email' && $wei_email >=1){
+			$msg = app::get('b2c')->_('该微信号已经绑定过邮箱了！');
+			$this->splash('failed',null,$msg,'','',true);
+		}
+		if($bind_type == 'mobile' && $wei_mobile >=1){
+			$msg = app::get('b2c')->_('该微信号已经绑定过手机了！');
+			$this->splash('failed',null,$msg,'','',true);
+		}
+		if($bind_type == 'account' || $bind_type == 'card'){
+			$local_bind_type = $userPassport->get_local_account_type($account);
+			if($local_bind_type == 'account' && $wei_local_account >= 1){
+				$msg = app::get('b2c')->_('该微信号已经绑定过账号了！');
+				$this->splash('failed',null,$msg,'','',true);
+			}
+			if($local_bind_type == 'card' && $wei_local_card >= 1){
+				$msg = app::get('b2c')->_('该微信号已经绑定过会员卡了！');
+				$this->splash('failed',null,$msg,'','',true);
+			}
+			if($local_bind_type == 'openid' && $wei_local_openid >= 1){
+				$msg = app::get('b2c')->_('该微信号已经绑定过微信了！');
+				$this->splash('failed',null,$msg,'','',true);
+			}
+		}
 	}
 	
 }
