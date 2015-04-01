@@ -959,7 +959,9 @@ class b2c_ctl_site_member extends b2c_frontpage{
                         $db->commit($transaction_status); 
 
                         //金额写入预存款
-                        $rerurn = $advanceMdl->add($member_id,$gc_info['gcard_money'],$message,$errMsg); 
+                        $branch_id = intval($_SESSION['local_store']['branch_id']);
+                        
+                        $rerurn = $advanceMdl->add($member_id,$gc_info['gcard_money'],$message,$errMsg,'','','chongzhiquan','',0,true,$branch_id); 
                         
                         if($rerurn){
                         	
