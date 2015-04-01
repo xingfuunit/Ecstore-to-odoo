@@ -8,7 +8,7 @@
  
 $datatypes = array(
     'money'=>array(
-        'sql'=>'decimal(20,3)',
+        'sql'=>'decimal(20,2)',
         'searchparams'=>array('than'=>app::get('base')->_('大于'),'lthan'=>app::get('base')->_('小于'),'nequal'=>app::get('base')->_('等于'),'sthan'=>app::get('base')->_('小于等于'),'bthan'=>app::get('base')->_('大于等于'),'between'=>app::get('base')->_('介于')),
         'match'=>'[0-9]{1,18}(\.[0-9]{1,3}|)',
     ),
