@@ -57,7 +57,7 @@ $db['goods']=array (
     ),
     'price' =>
     array (
-      'type' => 'money',
+      'type' => 'decimal(20,3)',
       'sdfpath' => 'product[default]/price/price/price',
       'default' => '0',
       'required' => true,
@@ -206,7 +206,7 @@ $db['goods']=array (
     ),
     'cost' =>
     array (
-      'type' => 'money',
+      'type' => 'decimal(20,3)',
       'sdfpath' => 'product[default]/price/cost/price',
       'default' => '0',
       'required' => true,
@@ -218,7 +218,7 @@ $db['goods']=array (
     ),
     'mktprice' =>
     array (
-      'type' => 'money',
+      'type' => 'decimal(20,3)',
       'sdfpath' => 'product[default]/price/mktprice/price',
       'label' => app::get('b2c')->_('市场价'),
       'width' => 75,

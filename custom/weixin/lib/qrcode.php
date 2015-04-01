@@ -150,15 +150,15 @@ class weixin_qrcode {
 
         switch( $type ){
             case 'site':
-            	if(defined('IMG_PZFRESH')){
-            		$data = IMG_PZFRESH.'/wap/product-'.$product_id.'.html?qr=1';
+            	if(defined('ROOT_PZFRESH')){
+            		$data = ROOT_PZFRESH.'/wap/product-'.$product_id.'.html?qr=1';
             	}else{
             		$data = app::get('wap')->router()->gen_url( $url )."?qr=1";
             	}                
                 break;
             default:
-            	if(defined('IMG_PZFRESH')){
-            		$data = IMG_PZFRESH.'/wap/product-'.$product_id.'.html';
+            	if(defined('ROOT_PZFRESH')){
+            		$data = ROOT_PZFRESH.'/wap/product-'.$product_id.'.html';
             	}else{
             		$data = app::get('wap')->router()->gen_url( $url );
             	}                

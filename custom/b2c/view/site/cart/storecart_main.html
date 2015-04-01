@@ -18,7 +18,7 @@
             <span class="price"><b><{$aCart.discount_amount_order|cur_odr}></b></span>
           </li>
           <li class="total">
-            <span class="label"><{if $aCart.subtotal_gain_score>0}><i>(订单可得积分<span class="subtotal-integral"><{$aCart.subtotal_gain_score}></span>)</i> <{/if}><em><{t}>总金额：<{/t}></em></span>
+            <span class="label"><{if $aCart.subtotal_gain_score>0}><i>(订单可得积分<span class="subtotal-integral"><{$aCart.subtotal_gain_score|cur_odr}></span>)</i> <{/if}><em><{t}>总金额：<{/t}></em></span>
             <span class="price"><b><{$aCart.promotion_subtotal|cur_odr}></b></span>
           </li>
         </ul>
