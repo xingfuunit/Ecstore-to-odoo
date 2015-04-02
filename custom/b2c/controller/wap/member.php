@@ -1611,7 +1611,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     			if(count($pamMemberData) > 1){//被激活后判断是否被绑定
     				foreach($pamMemberData as $pmd){
     					if($pmd['login_type'] == 'local' && strlen($pmd['login_account']) > 25){
-    						$msg = app::get('b2c')->_('该会员卡已绑定过微信');
+    						$msg = app::get('b2c')->_('该会员卡已被绑定过！');
     						$this->splash('failed',null,$msg,'','',true);
     					}
     				}
