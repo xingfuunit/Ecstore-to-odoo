@@ -56,6 +56,8 @@ class b2c_ctl_admin_local_dailycash extends desktop_controller {
 		$branch_name = empty($local_store[0]['name']) ? '全部' : $local_store[0]['name'];
 		$this->pagedata['branch_name'] = $branch_name;
 		$today = isset($_GET['today']) ? $_GET['today'] : date('Y-m-d');
+		$today = strtotime("$today");		
+		$today = date('Y-m-d',$today);
 		$this->pagedata['today']=$today;
 		$total = app::get ( 'ome' )->model ( 'dailycash' )->get_total($today,$branch_id);
 		$this->pagedata['total']=$total;
