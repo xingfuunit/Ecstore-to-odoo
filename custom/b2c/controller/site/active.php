@@ -118,5 +118,11 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	$this->page('site/active/meatstyle/index.html');
     }
     
+
+    public function postdata(){
+    	error_log("here");
+    	error_log(print_r($_POST,1));
+    }
+    
 }
 
