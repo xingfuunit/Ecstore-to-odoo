@@ -13,7 +13,8 @@
             <menu controller='admin_apilog' action='xmlimport' permission='setting_api_log' display='true' order='5000700'>商品同步</menu>
             
 			<menu controller='admin_apilog' action='index' params='p[0]:fail|p[1]:request2' permission='setting_api_log' display='true' order='5000701'>请求失败2</menu>
-            <menu controller='admin_apilog' action='order_nosync'  permission='setting_api_log' display='true' order='5000701'>没有同步的订单</menu>
+            <menu controller='admin_apilog' action='order_nosync'  permission='setting_api_log' display='true' order='5000702'>没有同步的订单</menu>
+			<menu controller='admin_apilog' action='erp_order_no_branch'  permission='setting_api_log' display='true' order='5000703'>没有门店名的订单</menu>
         </menugroup>
     </workground>
 </desktop>
