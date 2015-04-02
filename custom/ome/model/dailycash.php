@@ -72,14 +72,14 @@ class ome_mdl_dailycash extends dbeav_model{
 		
 		foreach ($rs as $key=>$value) {
 			if ($value['paymethod'] == 'xianjin') {
-				$total['advance_xianjin_num'] = $rs[0]['_count'];
-				$total['advance_xianjin_money'] = $rs[0]['money'];
+				$total['advance_xianjin_num'] = $value['_count'];
+				$total['advance_xianjin_money'] = $value['money'];
 			} else if ($value['paymethod'] == 'shuaka') {
-				$total['advance_shuaka_num'] = $rs[0]['_count'];
-				$total['advance_shuaka_money'] = $rs[0]['money'];
+				$total['advance_shuaka_num'] = $value['_count'];
+				$total['advance_shuaka_money'] = $value['money'];
 			} else if ($value['paymethod'] == 'chongzhiquan') {
-				$total['advance_chongzhiquan_num'] = $rs[0]['_count'];
-				$total['advance_chongzhiquan_money'] = $rs[0]['money'];
+				$total['advance_chongzhiquan_num'] = $value['_count'];
+				$total['advance_chongzhiquan_money'] = $value['money'];
 			}
 		}
 		
