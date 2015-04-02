@@ -40,7 +40,8 @@ class b2c_ctl_site_sync {
 					
 			}			
 		}
-		echo '--end--';
+		echo '--end--'; 
 		exit;
+		
     }
 }
