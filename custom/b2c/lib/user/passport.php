@@ -833,6 +833,7 @@ class b2c_user_passport
     				}
     			}
     			if($new_member_info[0]['point'] > 0){   //如果新卡含有积分,则将新卡积分转移到现有会员上
+    				$msg = '会员卡绑定积分转移';
     				if(!$member_point->change_point($member_id,$new_member_info[0]['point'],$msg,'operator_adjust',3,$member_id,$member_id,'bindmember')){
     					$db->rollback();
     					return 'add_point_wrong';
@@ -891,6 +892,7 @@ class b2c_user_passport
     				}
     			}
     			if($old_member_info[0]['point'] > 0){//增减积分
+    				$msg = '会员卡绑定积分转移';
     				if(!$member_point->change_point($new_member_id,$old_member_info[0]['point'],$msg,'operator_adjust',3,$new_member_id,$new_member_id,'bindmember')){
     					$db->rollback();
     					return 'add_point_wrong';
@@ -952,6 +954,7 @@ class b2c_user_passport
     				}
     			}
     			if($card_member_info[0]['point'] > 0){
+    				$msg = '会员卡绑定积分转移';
     				if(!$member_point->change_point($old_member_id,$card_member_info[0]['point'],$msg,'operator_adjust',3,$old_member_id,$old_member_id,'bindmember')){
     					$db->rollback();
     					return 'add_point_wrong';
@@ -1009,6 +1012,7 @@ class b2c_user_passport
     				}
     			}
     			if($old_member_info[0]['point'] > 0){
+    				$msg = '会员卡绑定积分转移';
     				if(!$member_point->change_point($card_member_id,$old_member_info[0]['point'],$msg,'operator_adjust',3,$card_member_id,$card_member_id,'bindmember')){
     					$db->rollback();
     					return 'add_point_wrong';

@@ -24,6 +24,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
         if(!$this->action) $this->action = 'index';
         $this->action_view = $this->action.".html";
         $this->member = $this->get_current_member();
+        $this->from_weixin = kernel::single('weixin_wechat')->from_weixin();
         /** end **/
     }
 
@@ -1413,7 +1414,10 @@ class b2c_ctl_wap_member extends wap_frontpage{
      *会员中心 绑定会员页面
      * */
     function weixinset($type = ''){
-		    	
+    	//if(!$this->from_weixin){
+    	//	$url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_member','act'=>'index'));
+    	//	$this->redirect($url);
+    	//}
         $this->path[] = array('title'=>app::get('b2c')->_('会员中心'),'link'=>$this->gen_url(array('app'=>'b2c', 'ctl'=>'site_member', 'act'=>'index','full'=>1)));
         $this->path[] = array('title'=>app::get('b2c')->_('用户绑定设置'),'link'=>'#');
         $GLOBALS['runtime']['path'] = $this->path;
@@ -2103,25 +2107,25 @@ class b2c_ctl_wap_member extends wap_frontpage{
 		}
 		
 		if($bind_type == 'email' && $wei_email >=1){
-			$msg = app::get('b2c')->_('该微信号已经绑定过邮箱了！');
+			$msg = app::get('b2c')->_('当前账号已经绑定过邮箱了！');
 			$this->splash('failed',null,$msg,'','',true);
 		}
 		if($bind_type == 'mobile' && $wei_mobile >=1){
-			$msg = app::get('b2c')->_('该微信号已经绑定过手机了！');
+			$msg = app::get('b2c')->_('当前账号已经绑定过手机了！');
 			$this->splash('failed',null,$msg,'','',true);
 		}
 		if($bind_type == 'account' || $bind_type == 'card'){
 			$local_bind_type = $userPassport->get_local_account_type($account);
 			if($local_bind_type == 'account' && $wei_local_account >= 1){
-				$msg = app::get('b2c')->_('该微信号已经绑定过账号了！');
+				$msg = app::get('b2c')->_('当前账号已经绑定过账号了！');
 				$this->splash('failed',null,$msg,'','',true);
 			}
 			if($local_bind_type == 'card' && $wei_local_card >= 1){
-				$msg = app::get('b2c')->_('该微信号已经绑定过会员卡了！');
+				$msg = app::get('b2c')->_('当前账号已经绑定过会员卡了！');
 				$this->splash('failed',null,$msg,'','',true);
 			}
 			if($local_bind_type == 'openid' && $wei_local_openid >= 1){
-				$msg = app::get('b2c')->_('该微信号已经绑定过微信了！');
+				$msg = app::get('b2c')->_('当前账号已经绑定过微信了！');
 				$this->splash('failed',null,$msg,'','',true);
 			}
 		}
