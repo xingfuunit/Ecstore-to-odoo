@@ -128,6 +128,11 @@
         <title>购物车</title>
         <disable>false</disable>
     </module>
+	<module id='b2c' controller='site_sync' >
+        <name>sync</name>
+        <title>购物车</title>
+        <disable>false</disable>
+    </module>
     
     <module id='b2c' controller='site_updatecard' >
         <name>updatecard</name>
