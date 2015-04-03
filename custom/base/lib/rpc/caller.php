@@ -101,7 +101,6 @@ class base_rpc_caller{
             return false;
         }else{
             $result = json_decode($response);
-            error_log(print_r($result,1));
             if($result){
                 $this->error = $response->error;
                 switch($result->rsp){
