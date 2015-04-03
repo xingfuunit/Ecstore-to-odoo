@@ -151,10 +151,11 @@ class wap_controller extends base_controller
                 
                 $member_id = $this->logindide($userData,'',$msg);
                 $this->userObject->set_member_session($member_id);
-                if($flag[0]['member_id'] == ''){
-                   kernel::single('weixin_wechat')->subscribe($sendData,1,$openid);
-                   return true;
-                }
+                //不自动注册
+//                 if($flag[0]['member_id'] == ''){
+//                    kernel::single('weixin_wechat')->subscribe($sendData,1,$openid);
+//                    return true;
+//                 }
             }
             
         }
