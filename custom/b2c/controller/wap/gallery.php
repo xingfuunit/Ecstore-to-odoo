@@ -571,6 +571,9 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         $orderby = empty($orderby) ? 'd_order desc,goods_id desc' : $orderby;
         $goodsData = $goodsModel->getList('*',$filter,$pageLimit*($page-1),$pageLimit,$orderby,$total=false);
         if($goodsData && $total ===false){
+			if($_SERVER['DOCUMENT_URI'] != "/index.php/shopadmin/index.php" && $_SERVER['DOCUMENT_URI'] != "/shopadmin/index.php"){
+                $filter['is_line'] = 0;
+            }
            $total = $goodsModel->count($filter);
         }
         $this->pagedata['total'] =  $total;
