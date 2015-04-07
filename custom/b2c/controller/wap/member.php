@@ -142,6 +142,12 @@ class b2c_ctl_wap_member extends wap_frontpage{
             // 当前会员实际可以使用的积分
             $obj_extend_point->get_usage_point($this->member['member_id'], $real_usage_point);
         }
+        
+        //来自微信的是否允许推出
+        if(kernel::single('weixin_wechat')->from_weixin() && !WX_AOUTH_AUTO_REG){
+        	$this->pagedata['is_show_logout'] = '1';
+        }
+        
         if ($real_usage_point < 0)
             $real_usage_point = 0;
         $this->member['point'] = $real_usage_point;
