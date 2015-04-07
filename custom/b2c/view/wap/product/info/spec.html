@@ -3,6 +3,7 @@
     <{if $smarty.foreach.this.iteration eq 1}>
         <select name="" id="" onchange="location.href = this.value;">
             <{foreach from=$spec key=item_key item=item}>
+			<{if $item.marketable != 'false'}>
                 <{if $item_key==$page_product_basic.spec.product.$key}>
                     <option selected><{$item.spec_value}></option>
                 <{else}>
@@ -10,6 +11,7 @@
                         <option value="<{link app=b2c ctl=wap_product act=index arg0=$item.product_id}>"><{$item.spec_value}></option>
                     <{/if}>
                 <{/if}>
+			<{/if}>	
             <{/foreach}>
         </select>
         <b class="arr down"></b>
