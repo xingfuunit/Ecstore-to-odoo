@@ -6,16 +6,21 @@
 	margin:0px;
 }
 </style>
-
+<{capture name="header"}>
+<{css src="ome.css" app="ome"}>
+<{/capture}>
 <div class="tableform">
+<{tabber}>
+<{tab name="自评论"}>
+
 <form action="index.php?app=b2c&ctl=admin_member_selfdiscuss&act=index" method="post" name='form1'>
 <table id='self_discuss_table'>
 <tr><td  width='80px;'>是否匿名</td><td><input type="radio" name="hidden_name" value="1" checked="checked" />是 
 <input type="radio" name="hidden_name" value="0"  checked="checked" />否 </td></tr>
-<tr><td>会员名</td><td><input class='author_input' type='text' id='author' name='author' onkeydown="keydown(event)"></td></tr>
+<tr><td>会员名</td><td><input class='author_input' type='text' id='author' name='author' onblur="keydown(event)"></td></tr>
 <tr><td>会员ID</td><td><input style="background-color:#eee;" readonly class='author_input' type='text' id='author_id' name='author_id' ></td></tr>
 
-<tr><td>货号</td><td><input class='author_input' type='text' id='product_bn' name='product_bn' onkeydown="keydown2(event)"></td></tr>
+<tr><td>货号</td><td><input class='author_input' type='text' id='product_bn' name='product_bn' onblur="keydown2(event)"></td></tr>
 <tr><td>货品名</td><td><input style="background-color:#eee;" readonly class='author_input' type='text' id='product_name' name='product_name' ></td></tr>
 <tr><td>货品ID</td><td><input style="background-color:#eee;" readonly class='author_input' type='text' id='product_id' name='product_id' ></td></tr>
 <tr><td>商品ID</td><td><input style="background-color:#eee;" readonly class='author_input' type='text' id='goods_id' name='goods_id' ></td></tr>
@@ -45,15 +50,14 @@
 </td></tr>
 
 <tr><td>评论内容</td><td>
-<textarea rows="5" cols="50" name='comment' id='comment'>
-
-</textarea>
+<textarea rows="5" cols="50" name='comment' id='comment'></textarea>
 </td></tr>
 
 <tr><td></td><td><input id="sub" type="button" value="提交"></td></tr>
 </table>
 </form>
-
+<{/tab}>
+<{/tabber}>
 </div>
 
 <script type="text/javascript">
@@ -102,11 +106,9 @@
  
        }
 function keydown(event){   
-	if(event.keyCode == 13){                        
 		var author = document.getElementById('author').value;
 		var author_id = document.getElementById('author_id').value;		
-		ajax('index.php?app=b2c&ctl=admin_member_selfdiscuss&act=getUser&author='+author+'&author_id='+author_id);		
-	}            
+		ajax('index.php?app=b2c&ctl=admin_member_selfdiscuss&act=getUser&author='+author+'&author_id='+author_id);			            
 }
 
        function ajax2(url,param) {
@@ -155,10 +157,8 @@ function keydown(event){
  
        }
 function keydown2(event){   
-	if(event.keyCode == 13){                        
 		var product_bn = document.getElementById('product_bn').value;		
-		ajax2('index.php?app=b2c&ctl=admin_member_selfdiscuss&act=getProduct&product_bn='+product_bn);		
-	}            
+		ajax2('index.php?app=b2c&ctl=admin_member_selfdiscuss&act=getProduct&product_bn='+product_bn);		          
 }
 var sub = document.getElementById('sub');
 sub.onclick=function(){

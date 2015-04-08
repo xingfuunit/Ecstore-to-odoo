@@ -18,7 +18,7 @@ class b2c_ctl_admin_member_selfdiscuss extends desktop_controller{
 
     function index(){
 		
-		if($_POST){
+		if($_POST){			
 			$aData['goods_id'] = $_POST['goods_id'];
 			
 			$aData['author_id'] = $_POST['author_id'];
