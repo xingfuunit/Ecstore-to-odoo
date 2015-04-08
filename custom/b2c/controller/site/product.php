@@ -45,7 +45,6 @@ class b2c_ctl_site_product extends b2c_frontpage{
         $setting['acomment']['switch']['discuss'] = $this->app->getConf('comment.switch.discuss');
 		//评论数 bySam 20150408
 		$sql = "select count(*) as _count from sdb_b2c_member_comments where display = 'true' and for_comment_id = '0' and object_type = 'discuss' and type_id = '{$goods_id}'";
-		var_dump($sql);
 		$count = kernel::database()->select($sql);
 		$setting['acomment']['switch']['discuss_count'] = $count[0]['_count'];
         //是否开启评分
