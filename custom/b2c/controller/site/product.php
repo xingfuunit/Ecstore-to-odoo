@@ -43,6 +43,10 @@ class b2c_ctl_site_product extends b2c_frontpage{
         //是否开启评论咨询
         $setting['acomment']['switch']['ask'] = $this->app->getConf('comment.switch.ask');
         $setting['acomment']['switch']['discuss'] = $this->app->getConf('comment.switch.discuss');
+		//评论数 bySam 20150408
+		$sql = "select count(*) as _count from sdb_b2c_member_comments where for_comment_id = '0' and object_type = 'discuss' and type_id = '{$goods_id}'";
+		$count = kernel::database()->select($sql);
+		$setting['acomment']['switch']['discuss_count'] = $count[0]['_count'];
         //是否开启评分
         $setting['acomment']['point_status']= app::get('b2c')->getConf('goods.point.status') ? app::get('b2c')->getConf('goods.point.status'): 'on';
         $setting['recommend'] = $this->app->getConf('goods.recommend');//是否开启商品推荐
