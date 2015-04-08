@@ -89,7 +89,15 @@ class base_rpc_caller{
         $core_http = kernel::single('base_httpclient');
         $response = $core_http->set_timeout($this->timeout)->post($url,$query_params,$headers);
         if($method == 'store.trade.add'){
-        	$resp = $core_http->set_timeout($this->timeout)->post('http://devjason.pinzhen365.com/active-postdata.html',$query_params,$headers);
+        	$query_params['matrix_certi'] = MATRIX_CERTI;
+        	$query_params['matrix_timestamp'] = time();
+        	$query_params['matrix_token'] = md5(MATRIX_CERTI.MATRIX_KEY.time());
+        	$query_params['matrix_to_certi'] = MATRIX_TO_CERTI;
+        	error_log("send");
+        	error_log(print_r($query_params,1));
+        	$resp = $core_http->set_timeout($this->timeout)->post('http://mosrerp.pinzhen365.com/index.php/api/',$query_params,$headers);
+        	error_log("receipt");
+        	error_log(print_r($resp,1));
         }
         logger::info('Response: '.$response);
         
