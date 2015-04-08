@@ -38,7 +38,7 @@
         
       <{if $setting.acomment.switch.discuss == 'on'}>
       <div id="product_comment" class="product-section product-comment" data-sync-type="product_comment" style="display:none;">
-        <h2 class="tags-hd tag-comment"><a href="#recomment"><{t}>商品评论<{/t}></a></h2>
+        <h2 class="tags-hd tag-comment"><a href="#recomment"><{t}>商品评论<{if $setting.acomment.switch.discuss_count}> (<{$setting.acomment.switch.discuss_count}>)<{/if}><{/t}></a></h2>
       </div>
       <{/if}>
 
