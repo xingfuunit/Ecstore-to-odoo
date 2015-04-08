@@ -185,6 +185,17 @@ class b2c_user_passport
         return $login_type;
     }//end function
 
+    public function get_local_account_type($login_account){
+    	if( strlen($login_account)>24 ){
+    		return 'openid';
+    	}
+    	elseif(strlen($login_account) == 8 && is_numeric($login_account)){
+    		return 'card';
+    	}else{
+    		return 'account';
+    	}
+    }
+    
     /*
      * 检查注册账号合法性
      * */
@@ -744,9 +755,10 @@ class b2c_user_passport
     
 
 
-    public function _bind_member_card($new_card,$type,$member_id,$card_number){
+    public function _bind_member_card($new_card,$type,$member_id,$card_number,$new_account_password){
     	$memberMdl = app::get('b2c')->model('members');
     	$pamMemberMdl = app::get('pam')->model('members');
+    	$oCoupon = kernel::single('b2c_coupon_mem');
     	$member_card = $this->app->model('member_card')->getList('*',array('card_number'=>$card_number));//会员卡表信息
     	if($member_card[0]['card_state'] == 2){
     		return 'card_is_bind';
@@ -797,6 +809,14 @@ class b2c_user_passport
     				$db->rollback();
     				return 'update_newcard_failed';
     			}
+    			$new_encrypted_password = pam_encrypt::get_encrypted_password($new_account_password,'member',array('login_name'=>$old_pammember_info[0]['password_account'],'createtime'=>$old_pammember_info[0]['createtime']));
+    			$update_passwd_row = $pamMemberMdl->update(              //
+    					array('login_password'=>$new_encrypted_password),
+    					array('member_id'=>$member_id));
+    			if(!$update_passwd_row){
+    				$db->rollback();
+    				return 'update_passwd_failed';
+    			}
     			if(!$this->bind_log($new_pammember_info,$old_pammember_info)){
     				$db->rollback();
     				return 'update_log_failed';
@@ -813,6 +833,7 @@ class b2c_user_passport
     				}
     			}
     			if($new_member_info[0]['point'] > 0){   //如果新卡含有积分,则将新卡积分转移到现有会员上
+    				$msg = '会员卡绑定积分转移';
     				if(!$member_point->change_point($member_id,$new_member_info[0]['point'],$msg,'operator_adjust',3,$member_id,$member_id,'bindmember')){
     					$db->rollback();
     					return 'add_point_wrong';
@@ -822,6 +843,17 @@ class b2c_user_passport
     					return 'reduce_point_wrong';
     				}
     			}
+    			
+    			$oData = $oCoupon->get_list_m($new_member_id);
+    			if($oData){
+    				$update_oCoupon_row = $this->app->model('member_coupon')->update(  //
+    						array('member_id'=>$member_id),
+    						array('member_id'=>$new_member_id));
+    				if(!$update_oCoupon_row){
+    					$db->rollback();
+    					return 'update_coupon_failed';
+    				}
+    			}
     			$level_update = $memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));//更新现有会员的等级
     			if(!$level_update){
     				$db->rollback();
@@ -829,17 +861,20 @@ class b2c_user_passport
     			}
     		}
     		if($type == 'member_to_card'){//如果是新卡,并且是现有会员转卡
-    			$update_oldcard_row = $pamMemberMdl->update(array('disabled'=>'true'),array('member_id'=>$member_id,'login_type'=>'local'));//将原来的旧local账号设置为disabled true
-    			if(!$update_oldcard_row){
-    				$db->rollback();
-    				return 'update_oldcard_failed';
-    			}
     			$update_oldmember_row = $pamMemberMdl->update(//将现有会员的密码等信息重置为会员卡账号对应的密码信息
-    					array('member_id'=>$new_member_id,'password_account'=>$new_pammember_info[0]['password_account'],'login_password'=>$new_pammember_info[0]['login_password'],'pay_password'=>$new_pammember_info[0]['pay_password'],'createtime'=>$new_pammember_info[0]['createtime'],'disabled'=>'true'),
+    					array('member_id'=>$new_member_id,'password_account'=>$new_pammember_info[0]['password_account'],'pay_password'=>$new_pammember_info[0]['pay_password'],'createtime'=>$new_pammember_info[0]['createtime'],'disabled'=>'true'),
     					array('member_id'=>$member_id));
     			if(!$update_oldmember_row){
     				$db->rollback();
     				return 'update_oldmember_failed';
+    			}
+    			$new_encrypted_password = pam_encrypt::get_encrypted_password($new_account_password,'member',array('login_name'=>$new_pammember_info[0]['password_account'],'createtime'=>$new_pammember_info[0]['createtime']));
+    			$update_passwd_row = $pamMemberMdl->update(              //
+    					array('login_password'=>$new_encrypted_password),
+    					array('member_id'=>$new_member_id));
+    			if(!$update_passwd_row){
+    				$db->rollback();
+    				return 'update_passwd_failed';
     			}
     			if(!$this->bind_log($old_pammember_info,$new_pammember_info)){
     				$db->rollback();
@@ -857,6 +892,7 @@ class b2c_user_passport
     				}
     			}
     			if($old_member_info[0]['point'] > 0){//增减积分
+    				$msg = '会员卡绑定积分转移';
     				if(!$member_point->change_point($new_member_id,$old_member_info[0]['point'],$msg,'operator_adjust',3,$new_member_id,$new_member_id,'bindmember')){
     					$db->rollback();
     					return 'add_point_wrong';
@@ -864,6 +900,16 @@ class b2c_user_passport
     				if(!$member_point->change_point($member_id,-$old_member_info[0]['point'],$msg,'operator_adjust',3,$member_id,$member_id,'bindmember')){
     					$db->rollback();
     					return 'reduce_point_wrong';
+    				}
+    			}
+    			$oData = $oCoupon->get_list_m($member_id);
+    			if($oData){
+    				$update_oCoupon_row = $this->app->model('member_coupon')->update(  //
+    						array('member_id'=>$new_member_id),
+    						array('member_id'=>$member_id));
+    				if(!$update_oCoupon_row){
+    					$db->rollback();
+    					return 'update_coupon_failed';
     				}
     			}
     			$level_update = $memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));//更新现有会员的等级
@@ -878,11 +924,19 @@ class b2c_user_passport
     		$card_member_info = $memberMdl->getList('*',array('member_id'=>$card_member_id));//会员卡会员member表信息
     		if($type == 'card_to_member'){//会员卡转现有会员
     			$update_cardmember_row = $pamMemberMdl->update(              //
-    					array('member_id'=>$member_id,'password_account'=>$old_pammember_info[0]['password_account'],'login_password'=>$old_pammember_info[0]['login_password'],'pay_password'=>$old_pammember_info[0]['pay_password'],'createtime'=>$old_pammember_info[0]['createtime'],'disabled'=>'true'),
+    					array('member_id'=>$member_id,'password_account'=>$old_pammember_info[0]['password_account'],'pay_password'=>$old_pammember_info[0]['pay_password'],'createtime'=>$old_pammember_info[0]['createtime'],'disabled'=>'true'),
     					array('member_id'=>$card_member_id));
     			if(!$update_cardmember_row){
     				$db->rollback();
     				return 'update_cardmember_failed';
+    			}
+    			$new_encrypted_password = pam_encrypt::get_encrypted_password($new_account_password,'member',array('login_name'=>$old_pammember_info[0]['password_account'],'createtime'=>$old_pammember_info[0]['createtime']));
+    			$update_passwd_row = $pamMemberMdl->update(              //
+    					array('login_password'=>$new_encrypted_password),
+    					array('member_id'=>$member_id));
+    			if(!$update_passwd_row){
+    				$db->rollback();
+    				return 'update_passwd_failed';
     			}
     			if(!$this->bind_log($card_member_info,$old_pammember_info)){
     				$db->rollback();
@@ -900,6 +954,7 @@ class b2c_user_passport
     				}
     			}
     			if($card_member_info[0]['point'] > 0){
+    				$msg = '会员卡绑定积分转移';
     				if(!$member_point->change_point($old_member_id,$card_member_info[0]['point'],$msg,'operator_adjust',3,$old_member_id,$old_member_id,'bindmember')){
     					$db->rollback();
     					return 'add_point_wrong';
@@ -907,6 +962,16 @@ class b2c_user_passport
     				if(!$member_point->change_point($card_member_id,-$card_member_info[0]['point'],$msg,'operator_adjust',3,$card_member_id,$card_member_id,'bindmember')){
     					$db->rollback();
     					return 'reduce_point_wrong';
+    				}
+    			}
+    			$oData = $oCoupon->get_list_m($card_member_id);
+    			if($oData){
+    				$update_oCoupon_row = $this->app->model('member_coupon')->update(  //
+    						array('member_id'=>$old_member_id),
+    						array('member_id'=>$card_member_id));
+    				if(!$update_oCoupon_row){
+    					$db->rollback();
+    					return 'update_coupon_failed';
     				}
     			}
     			$level_update = $memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));//更新现有会员的等级
@@ -917,11 +982,19 @@ class b2c_user_passport
     		}
     		if($type == 'member_to_card'){
     			$update_old_cardmember_row = $pamMemberMdl->update(//将现有会员的密码等信息重置为会员卡账号对应的密码信息
-    					array('member_id'=>$card_member_id,'password_account'=>$card_pammember_info[0]['password_account'],'login_password'=>$card_pammember_info[0]['login_password'],'pay_password'=>$card_pammember_info[0]['pay_password'],'createtime'=>$card_pammember_info[0]['createtime'],'disabled'=>'true'),
+    					array('member_id'=>$card_member_id,'password_account'=>$card_pammember_info[0]['password_account'],'pay_password'=>$card_pammember_info[0]['pay_password'],'createtime'=>$card_pammember_info[0]['createtime'],'disabled'=>'true'),
     					array('member_id'=>$member_id));
     			if(!$update_old_cardmember_row){
     				$db->rollback();
     				return 'update_old_cardmember_failed';
+    			}
+    			$new_encrypted_password = pam_encrypt::get_encrypted_password($new_account_password,'member',array('login_name'=>$card_pammember_info[0]['password_account'],'createtime'=>$card_pammember_info[0]['createtime']));
+    			$update_passwd_row = $pamMemberMdl->update(              //
+    					array('login_password'=>$new_encrypted_password),
+    					array('member_id'=>$card_member_id));
+    			if(!$update_passwd_row){
+    				$db->rollback();
+    				return 'update_passwd_failed';
     			}
     			if(!$this->bind_log($old_pammember_info,$card_pammember_info)){
     				$db->rollback();
@@ -939,6 +1012,7 @@ class b2c_user_passport
     				}
     			}
     			if($old_member_info[0]['point'] > 0){
+    				$msg = '会员卡绑定积分转移';
     				if(!$member_point->change_point($card_member_id,$old_member_info[0]['point'],$msg,'operator_adjust',3,$card_member_id,$card_member_id,'bindmember')){
     					$db->rollback();
     					return 'add_point_wrong';
@@ -946,6 +1020,16 @@ class b2c_user_passport
     				if(!$member_point->change_point($old_member_id,-$old_member_info[0]['point'],$msg,'operator_adjust',3,$old_member_id,$old_member_id,'bindmember')){
     					$db->rollback();
     					return 'reduce_point_wrong';
+    				}
+    			}
+    			$oData = $oCoupon->get_list_m($old_member_id);
+    			if($oData){
+    				$update_oCoupon_row = $this->app->model('member_coupon')->update(  //
+    						array('member_id'=>$card_member_id),
+    						array('member_id'=>$old_member_id));
+    				if(!$update_oCoupon_row){
+    					$db->rollback();
+    					return 'update_coupon_failed';
     				}
     			}
     			$level_update = $memberMdl->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$member_id));//更新现有会员的等级
@@ -986,7 +1070,7 @@ class b2c_user_passport
     	}
     }
     
-    function bind_member($type,$from_to,$login_member_id,$account,$account_password){
+    function bind_member($type,$from_to,$login_member_id,$account,$old_account_password,$new_account_password){
     	if($type == 'emial'){
     		if(!strstr($account,'@')){
     			return 'wrong_email';
@@ -1017,7 +1101,7 @@ class b2c_user_passport
     			$db->rollback();
     			return 'creat_new_account_failed';
     		}else{
-    			$userPassport->reset_passport($login_member_id,$account_password);
+    			$userPassport->reset_passport($login_member_id,$new_account_password);
     			if($type == 'mobile'){
     				//会员手机验证赠送积分
     				$reason_type = 'mobile_score';
@@ -1042,7 +1126,7 @@ class b2c_user_passport
     		}
     		$use_pass_data['login_name'] = $pamMemberData[0]['password_account'];
     		$use_pass_data['createtime'] = $pamMemberData[0]['createtime'];
-    		$login_password = pam_encrypt::get_encrypted_password($account_password,'member',$use_pass_data);
+    		$login_password = pam_encrypt::get_encrypted_password($old_account_password,'member',$use_pass_data);
     		if($login_password != $pamMemberData[0]['login_password']){
     			$db->rollback();
     			return 'wrong_password';
@@ -1061,13 +1145,33 @@ class b2c_user_passport
     			$to_pam_member = $loginPamData;
     			$to_b2c_member = $loginMemberData;
     			$to_member_id = $loginPamData[0]['member_id'];
-    		}    		
+    		}    
+
+    		/**是否有未完成订单的判断开始 **/
+    		$order = $this->app->model('orders');
+    		if($order->getList('order_id',array('member_id'=>$from_pam_member[0]['member_id'],'pay_status'=>0,'ship_status'=>array(1,2,3)))){
+    			$db->rollback();
+    			return 'order_uncompleted';
+    		}
+    		if($order->getList('order_id',array('member_id'=>$from_pam_member[0]['member_id'],'pay_status'=>1,'ship_status'=>array(0,2,3)))){
+    			$db->rollback();
+    			return 'order_uncompleted';
+    		}
+    		if($order->getList('order_id',array('member_id'=>$from_pam_member[0]['member_id'],'pay_status'=>4,'ship_status'=>array(0,1)))){
+    			$db->rollback();
+    			return 'order_uncompleted';
+    		}
+    		if($order->getList('order_id',array('member_id'=>$from_pam_member[0]['member_id'],'pay_status'=>5,'ship_status'=>array(0,1)))){
+    			$db->rollback();
+    			return 'order_uncompleted';
+    		}
+    		/**是否有未完成订单的判断结束 **/
     		
     		if(!$this->userPassport->bind_log($from_pam_member,$to_pam_member)){
     			$db->rollback();
     			return 'update_log_failed';
     		}
-
+    		    		
     		$update_level =app::get('b2c')->model('members')->update(array('member_lv_id'=>$new_member_lv),array('member_id'=>$to_pam_member[0]['member_id']));
     		if(!$update_level){
     			$db->rollback();
@@ -1081,28 +1185,38 @@ class b2c_user_passport
     	}
     	
     	
-    	$stupid_password = pam_encrypt::get_encrypted_password('123456','member',array('login_name'=>$to_pam_member[0]['password_account'],'createtime'=>$to_pam_member[0]['createtime']));
-    	if($stupid_password == $to_pam_member[0]['login_password']){ //如果微信端是sb密码123456则将密码设置为输入的旧账号密码
-    		$use_data['login_name'] = $to_pam_member[0]['pay_password'];
-    		$use_data['createtime'] = $to_pam_member[0]['createtime'];
-    		$to_login_password = pam_encrypt::get_encrypted_password($account_password,'member',array('login_name'=>$to_pam_member[0]['password_account'],'createtime'=>$to_pam_member[0]['createtime']));
-    		$to_pam_member[0]['login_password'] = $to_login_password;
-    		$update_passwd_row = $pamMemberMdl->update(              //将原来sb密码123456设置成新密码
-    				array('login_password'=>$to_pam_member[0]['login_password']),
-    				array('member_id'=>$to_pam_member[0]['member_id']));
-    		if(!$update_passwd_row){
-    			$db->rollback();
-    			return 'update_passwd_failed';
-    		}
-    	}
+    	//$stupid_password = pam_encrypt::get_encrypted_password('123456','member',array('login_name'=>$to_pam_member[0]['password_account'],'createtime'=>$to_pam_member[0]['createtime']));
+    	//if($stupid_password == $to_pam_member[0]['login_password']){ //如果微信端是sb密码123456则将密码设置为输入的旧账号密码
+    	//	$use_data['login_name'] = $to_pam_member[0]['pay_password'];
+    	//	$use_data['createtime'] = $to_pam_member[0]['createtime'];
+    	//	$to_login_password = pam_encrypt::get_encrypted_password($account_password,'member',array('login_name'=>$to_pam_member[0]['password_account'],'createtime'=>$to_pam_member[0]['createtime']));
+    	//	$to_pam_member[0]['login_password'] = $to_login_password;
+    	//	$update_passwd_row = $pamMemberMdl->update(              //将原来sb密码123456设置成新密码
+    	//			array('login_password'=>$to_pam_member[0]['login_password']),
+    	//			array('member_id'=>$to_pam_member[0]['member_id']));
+    	//	if(!$update_passwd_row){
+    	//		$db->rollback();
+    	//		return 'update_passwd_failed';
+    	//	}
+    	//}    	
     	
-    	$update_cardmember_row = $pamMemberMdl->update(              //
+    	$update_member_row = $pamMemberMdl->update(              //
     			array('member_id'=>$to_pam_member[0]['member_id'],'password_account'=>$to_pam_member[0]['password_account'],'login_password'=>$to_pam_member[0]['login_password'],'pay_password'=>$to_pam_member[0]['pay_password'],'createtime'=>$to_pam_member[0]['createtime'],'disabled'=>'true'),
     			array('member_id'=>$from_pam_member[0]['member_id']));
-    	if(!$update_cardmember_row){
+    	if(!$update_member_row){
     		$db->rollback();
-    		return 'update_cardmember_failed';
+    		return 'update_member_failed';
     	}
+    	
+    	$new_encrypted_password = pam_encrypt::get_encrypted_password($new_account_password,'member',array('login_name'=>$to_pam_member[0]['password_account'],'createtime'=>$to_pam_member[0]['createtime']));
+    	$update_passwd_row = $pamMemberMdl->update(              //
+    			array('login_password'=>$new_encrypted_password),
+    			array('member_id'=>$to_pam_member[0]['member_id']));
+    	if(!$update_passwd_row){
+    		$db->rollback();
+    		return 'update_passwd_failed';
+    	}
+    	
     	if($from_b2c_member[0]['advance'] > 0){
     		$msg = '会员绑定预存款转移';
     		if(!$objAdvances->add($to_pam_member[0]['member_id'], $from_b2c_member[0]['advance'], app::get('b2c')->_('会员绑定预存款转移'), $msg)){//为合并的会员增加预存款
@@ -1123,6 +1237,17 @@ class b2c_user_passport
     		if(!$member_point->change_point($from_pam_member[0]['member_id'],-$from_b2c_member[0]['point'],$msg,'operator_adjust',3,$from_pam_member[0]['member_id'],$from_pam_member[0]['member_id'],'bindmember')){
     			$db->rollback();
     			return 'reduce_point_wrong';
+    		}
+    	}
+    	$oCoupon = kernel::single('b2c_coupon_mem');
+    	$oData = $oCoupon->get_list_m($from_pam_member[0]['member_id']);
+    	if($oData){
+    		$update_oCoupon_row = $this->app->model('member_coupon')->update(  //
+    				array('member_id'=>$to_pam_member[0]['member_id']),
+    				array('member_id'=>$from_pam_member[0]['member_id']));
+    		if(!$update_oCoupon_row){
+    			$db->rollback();
+    			return 'update_coupon_failed';
     		}
     	}
     	$db->commit($transaction_status);

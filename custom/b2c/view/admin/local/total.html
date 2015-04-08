@@ -16,7 +16,9 @@
 							<{/foreach}>
 					</select></td>
 					<td width="100px"><h3 style="color: #305C89;"><{t}>时间：<{/t}></h3></td>
-					<td width="100px"><input type="text" name='today' value="<{$today}>">
+					<td width="100px">
+					<input type="hidden" name="today" value="today" />
+                <input class="logintext1"  size="10" maxlength="10" autocomplete="off" type="text" name="today" value="<{$today}>" id="today" vtype="date"  />
 					</td>
 					<td>
 						<button type="submit" class="btn">
@@ -75,4 +77,14 @@
 
 	<{/tab}> <{/tabber}>
 </div>
+<script>
+	try {
+		Ex_Loader("picker", function() {
+			$('today').makeCalable();
 
+		});
+		} catch (e) {
+		$('today').makeCalable();
+
+	}
+</script>		

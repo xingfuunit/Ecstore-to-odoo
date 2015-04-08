@@ -21,7 +21,7 @@ class ome_mdl_dailycash extends dbeav_model{
 	
 	function get_total($date_line,$branch_id) {
 		$total = array();
-		$branch_where = '';
+		$branch_where = ' and branch_id > 0 ';
 		if ($branch_id>0) {
 			$branch_where = "and branch_id='{$branch_id}'";
 		}
