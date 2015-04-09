@@ -28,14 +28,14 @@ class b2c_apiv_exchanges_request implements b2c_api_rpc_request_interface{
             return false;
 
         //取到版本映射关系
-        base_kvstore::instance('b2c_apiv')->fetch('apiv.mapper', $apiv_mapper);
+        //base_kvstore::instance('b2c_apiv')->fetch('apiv.mapper', $apiv_mapper);
 
         //循环绑定表
-        $obj_shop = $this->app->model('shop');
-        $obj_shop_filter = array('status' => 'bind');
-        $arr_shops = $obj_shop->getList('*',$obj_shop_filter);
+        //$obj_shop = $this->app->model('shop');
+        //$obj_shop_filter = array('status' => 'bind');
+        $arr_shops = array(array('shop_id'=>1,'name'=>'jason','node_id'=>'1964932234','node_type'=>'ecos.ome','status'=>'bind','node_apiv'=>'2.2'));
         $result = false;
-        if( $arr_shops && $apiv_mapper )
+        if( $arr_shops)
         {
             foreach($arr_shops as $arr_shop)
             {
@@ -45,7 +45,7 @@ class b2c_apiv_exchanges_request implements b2c_api_rpc_request_interface{
 
 
                 //得到 本地api版本号
-                $local_apiv = $apiv_mapper[ $node_type . '_' . $node_apiv ];
+                $local_apiv = '2.0';
                 if( !$local_apiv )
                     continue;
 
