@@ -1198,19 +1198,26 @@ window.addEvent('domready', function(){
         var type = input.getParent('.p-packs') ? 'packs' : input.getParent('.cart-exchange') ? 'exchange' : 'product';
         var typeName = typeJSON[type];
         var p = input.getParent('tr');
+		var bn_add_info = $$("div .bn_add_info");
         if(!inputCheck(input, {min: getQuantity(p, 'min'), max: getQuantity(p, 'max'), 'default': value, type: type, store: getQuantity(p, 'stock')}) && input.value == value) {
             return;
         }
-        new Request({
-            url: '<{link app=b2c act=update ctl=site_cart}>',
-            data: p.toQueryString()+"&response_json=true",
-            onComplete: function(rs){
-                rs = JSON.decode(rs);
-                if(rs.success) {
-                    updateCart(rs, p);
-                }
-            }
-        }).post();
+		if(parseFloat(input.value) > parseFloat(getQuantity(p, 'max'))){			
+			bn_add_info.set('html','此商品库存不足，仅剩 '+getQuantity(p, 'max'));			
+		}
+		else{
+			bn_add_info.set('html','正在加载...');
+			new Request({
+				url: '<{link app=b2c act=update ctl=site_cart}>',
+				data: p.toQueryString()+"&response_json=true",
+				onComplete: function(rs){
+					rs = JSON.decode(rs);
+					if(rs.success) {
+						updateCart(rs, p);
+					}
+				}
+			}).post();
+		}
     }
     
     //== 更新购物车信息统一入口
