@@ -786,7 +786,7 @@ class b2c_ctl_site_gallery extends b2c_frontpage{
             $sdf_point = $pointModel->get_single_point_arr($gids);
             foreach($goodsData as $key=>$row){
                 $goodsData[$key]['goods_point'] = $sdf_point[$row['goods_id']];
-                #$goodsData[$key]['comments_count'] = $sdf_point[$row['goods_id']]['comments_count'];
+                $goodsData[$key]['comments_count'] = $sdf_point[$row['goods_id']]['comments_count'];
             }
         }
         return $goodsData;
