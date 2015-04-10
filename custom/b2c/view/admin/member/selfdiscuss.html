@@ -1,0 +1,184 @@
+<style type="text/css">
+.tableform #self_discuss_table tr td{
+	height:20px;
+}
+.tableform #self_discuss_table tr td p{
+	margin:0px;
+}
+</style>
+<{capture name="header"}>
+<{css src="ome.css" app="ome"}>
+<{/capture}>
+<div class="tableform">
+<{tabber}>
+<{tab name="自评论"}>
+
+<form action="index.php?app=b2c&ctl=admin_member_selfdiscuss&act=index" method="post" name='form1'>
+<table id='self_discuss_table'>
+<tr><td  width='80px;'>是否匿名</td><td><input type="radio" name="hidden_name" value="1" checked="checked" />是 
+<input type="radio" name="hidden_name" value="0"  checked="checked" />否 </td></tr>
+<tr><td>会员名</td><td><input class='author_input' type='text' id='author' name='author' onblur="keydown(event)"></td></tr>
+<tr><td>会员ID</td><td><input style="background-color:#eee;" readonly class='author_input' type='text' id='author_id' name='author_id' ></td></tr>
+
+<tr><td>货号</td><td><input class='author_input' type='text' id='product_bn' name='product_bn' onblur="keydown2(event)"></td></tr>
+<tr><td>货品名</td><td><input style="background-color:#eee;" readonly class='author_input' type='text' id='product_name' name='product_name' ></td></tr>
+<tr><td>货品ID</td><td><input style="background-color:#eee;" readonly class='author_input' type='text' id='product_id' name='product_id' ></td></tr>
+<tr><td>商品ID</td><td><input style="background-color:#eee;" readonly class='author_input' type='text' id='goods_id' name='goods_id' ></td></tr>
+
+<tr><td>评论时间</td><td><input style="float:left;" class='author_input' type='text' id='time' name='time' ><p style="color:red;font-size:10px;float:left;">*日期格式为 2015-01-01 09:00 ,不填则为当前时间</p></td></tr>
+
+<tr><td>综合评分</td><td>
+<input type="radio" name="point_type[1][point]" value="1"  />1
+<input type="radio" name="point_type[1][point]" value="2"  />2
+<input type="radio" name="point_type[1][point]" value="3"  />3
+<input type="radio" name="point_type[1][point]" value="4"  />4
+<input type="radio" name="point_type[1][point]" value="5" checked="checked" />5
+</td></tr>
+<tr><td>物流</td><td>
+<input type="radio" name="point_type[2][point]" value="1"  />1
+<input type="radio" name="point_type[2][point]" value="2"  />2
+<input type="radio" name="point_type[2][point]" value="3"  />3
+<input type="radio" name="point_type[2][point]" value="4"  />4
+<input type="radio" name="point_type[2][point]" value="5" checked="checked" />5
+</td></tr>
+<tr><td>新鲜度</td><td>
+<input type="radio" name="point_type[3][point]" value="1"  />1
+<input type="radio" name="point_type[3][point]" value="2"  />2
+<input type="radio" name="point_type[3][point]" value="3"  />3
+<input type="radio" name="point_type[3][point]" value="4"  />4
+<input type="radio" name="point_type[3][point]" value="5" checked="checked" />5
+</td></tr>
+
+<tr><td>评论内容</td><td>
+<textarea rows="5" cols="50" name='comment' id='comment'></textarea>
+</td></tr>
+
+<tr><td></td><td><input id="sub" type="button" value="提交"></td></tr>
+</table>
+</form>
+<{/tab}>
+<{/tabber}>
+</div>
+
+<script type="text/javascript">
+     
+       function ajax(url,param) {
+           //先声明一个异步请求对象
+           var xmlHttpReg = null;
+           if (window.ActiveXObject) {//如果是IE
+ 
+               xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");
+ 
+           } else if (window.XMLHttpRequest) {
+ 
+               xmlHttpReg = new XMLHttpRequest(); //实例化一个xmlHttpReg
+           }
+ 
+           //如果实例化成功,就调用open()方法,就开始准备向服务器发送请求
+           if (xmlHttpReg != null) {
+               xmlHttpReg.open("get", url, true);
+                xmlHttpReg.send(param);
+               xmlHttpReg.onreadystatechange = doResult; //设置回调函数
+ 
+           }
+ 
+           //回调函数
+           //一旦readyState的值改变,将会调用这个函数,readyState=4表示完成相应
+ 
+           //设定函数doResult()
+           function doResult() {
+           
+               if (xmlHttpReg.readyState == 4) {//4代表执行完成
+                  
+                  
+                   if (xmlHttpReg.status == 200) {//200代表执行成功
+                       //将xmlHttpReg.responseText的值赋给ID为resText的元素
+					   //document.getElementById("resText").innerHTML= xmlHttpReg.responseText;
+					   var m = xmlHttpReg.responseText;					   
+					   var obj = JSON.parse(m); 
+                       document.getElementById("author").value = obj.login_account;
+                       document.getElementById("author_id").value = obj.member_id;
+                   }
+               }
+ 
+           }
+         
+ 
+       }
+function keydown(event){   
+		var author = document.getElementById('author').value;
+		var author_id = document.getElementById('author_id').value;		
+		ajax('index.php?app=b2c&ctl=admin_member_selfdiscuss&act=getUser&author='+author+'&author_id='+author_id);			            
+}
+
+       function ajax2(url,param) {
+           //先声明一个异步请求对象
+           var xmlHttpReg = null;
+           if (window.ActiveXObject) {//如果是IE
+ 
+               xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");
+ 
+           } else if (window.XMLHttpRequest) {
+ 
+               xmlHttpReg = new XMLHttpRequest(); //实例化一个xmlHttpReg
+           }
+ 
+           //如果实例化成功,就调用open()方法,就开始准备向服务器发送请求
+           if (xmlHttpReg != null) {
+               xmlHttpReg.open("get", url, true);
+                xmlHttpReg.send(param);
+               xmlHttpReg.onreadystatechange = doResult; //设置回调函数
+ 
+           }
+ 
+           //回调函数
+           //一旦readyState的值改变,将会调用这个函数,readyState=4表示完成相应
+ 
+           //设定函数doResult()
+           function doResult() {
+           
+               if (xmlHttpReg.readyState == 4) {//4代表执行完成
+                  
+                  
+                   if (xmlHttpReg.status == 200) {//200代表执行成功
+                       //将xmlHttpReg.responseText的值赋给ID为resText的元素
+					   //document.getElementById("resText").innerHTML= xmlHttpReg.responseText;
+					   var m = xmlHttpReg.responseText;					   
+					   var obj = JSON.parse(m); 
+                       document.getElementById("product_bn").value = obj.bn;
+                       document.getElementById("product_id").value = obj.product_id;
+					   document.getElementById("goods_id").value = obj.goods_id;
+					   document.getElementById("product_name").value = obj.name;
+                   }
+               }
+ 
+           }
+         
+ 
+       }
+function keydown2(event){   
+		var product_bn = document.getElementById('product_bn').value;		
+		ajax2('index.php?app=b2c&ctl=admin_member_selfdiscuss&act=getProduct&product_bn='+product_bn);		          
+}
+var sub = document.getElementById('sub');
+sub.onclick=function(){
+	var author_id = document.getElementById('author_id').value;	
+	var product_id = document.getElementById('product_id').value;
+	var comment = document.getElementById('comment').value;
+	if(author_id==''){
+		alert('会员不能为空');
+		form1.author.focus();
+	}
+	else if(product_id==''){
+		alert('货品不能为空');
+		form1.product_bn.focus();
+	}
+	else if(comment==''){
+		alert('评论不能为空');
+		form1.comment.focus();
+	}else{
+		form1.submit();
+	}
+}
+
+</script>

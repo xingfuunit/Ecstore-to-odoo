@@ -171,6 +171,7 @@
             <menu controller='admin_member_msgbox' action='index' permission='disask' display='true' order='150'>站内消息</menu>
             <menu controller='admin_member_disask' action='basic_setting' permission='settingdisask' display='true' order='160'>消息设置</menu>
             <menu controller='admin_member_withdrawal' action='index' permission='disask' display='true' order='170'>提现列表</menu>
+			<menu controller='admin_member_selfdiscuss' action='index' permission='disask' display='true' order='110'>自评论</menu>
         </menugroup>
         
         <menugroup name="会员卡">
