@@ -85,22 +85,10 @@ class base_rpc_caller{
             $query_params['sign'] = kernel::single('system_shopmatrix')->get_sign($query_params,base_shopnode::node_id($this->app->app_id));
             $url = kernel::single('system_shopmatrix')->get_api_url(base_shopnode::node_id($this->app->app_id));
         }
-        
+        error_log('method:'.$method);
+        error_log(print_r($query_params,1));
         $core_http = kernel::single('base_httpclient');
-    	if($method == 'store.trade.add'){
-        	$query_params['matrix_certi'] = MATRIX_CERTI;
-        	$query_params['matrix_timestamp'] = time();
-        	$query_params['matrix_token'] = md5(MATRIX_CERTI.MATRIX_KEY.time());
-        	$query_params['matrix_to_certi'] = MATRIX_TO_CERTI;
-        	
-        	$query_params['from_node_id'] = MATRIX_FROM_NODE;
-        	$query_params['to_node_id'] = MATRIX_TO_NODE;
-        	
-        	$response = $core_http->set_timeout($this->timeout)->post(MATRIX_URL,$query_params,$headers);
-        	
-        }else{
-        	$response = $core_http->set_timeout($this->timeout)->post($url,$query_params,$headers);
-        }
+        $response = $core_http->set_timeout($this->timeout)->post($url,$query_params,$headers);
         
         logger::info('Response: '.$response);
         

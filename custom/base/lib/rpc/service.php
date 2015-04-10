@@ -217,6 +217,8 @@ class base_rpc_service{
             $apilog_services = kernel::single('apiactionlog_router_logging');
             $apilog_services->save_log($service,$method,$data);
             $api_module = app::get('base')->getConf($service.'.'.$method);
+            error_log("api_module:".print_r($api_module,1));
+            error_log("data:".print_r($data,1));
             if( isset($api_module['function'])  ){
                 $object = kernel::single($api_module['class']);
                 $result = $object->$method($params,$this);
