@@ -201,6 +201,7 @@ class base_certificate{
     			$this->send_user_error('4003', 'pz_matrix sign error');
     			return false;
     		}
+    		return $pz_sign_check;
     	}
     }
     
