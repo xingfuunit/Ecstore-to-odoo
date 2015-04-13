@@ -115,11 +115,13 @@ class base_rpc_service{
             $sign_check = kernel::single('system_shopmatrix')->get_sign($request);
         }
 
-        if($sign != $sign_check){
-            $this->send_user_error('4003', 'sign error');
-            return false;
+        if(isset($sign) || !empty($sign)){
+        	if($sign != $sign_check){
+        		$this->send_user_error('4003', 'sign error');
+        		return false;
+        	}
         }
-
+        
         $system_params = array('app_id','method','date','format','certi_id','v','sign','node_id');
         foreach($system_params as $name){
             $call[$name] = $request[$name];
