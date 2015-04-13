@@ -117,7 +117,7 @@ class base_shopnode
      * @return string 结构sign
      */
     static function gen_sign($params,$app_id){
-    	if(!$request['matrix_token']){
+    	if(!PZ_MATRIX){
     		//原有认证信息
     		return strtoupper(md5(strtoupper(md5(self::assemble($params))) . self::token($app_id)));
     	}
@@ -125,7 +125,6 @@ class base_shopnode
     		//pz认证信息
     		$pz_sign_check = base_certificate::pz_matrix_sign($request);
     		if($request['matrix_token'] != $pz_sign_check){
-    			$this->send_user_error('4003', 'pz_matrix sign error');
     			return false;
     		}
     		return $pz_sign_check;

@@ -190,7 +190,7 @@ class base_certificate{
             unlink(ROOT_DIR.'/config/certi.php');
     }
     static function gen_sign($params){
-    	if(!$request['matrix_token']){
+    	if(!PZ_MATRIX){
     		//原有认证信息
     		return strtoupper(md5(strtoupper(md5(self::assemble($params))) . self::token()));
     	}
@@ -198,7 +198,6 @@ class base_certificate{
     		//pz认证信息
     		$pz_sign_check = base_certificate::pz_matrix_sign($request);
     		if($request['matrix_token'] != $pz_sign_check){
-    			$this->send_user_error('4003', 'pz_matrix sign error');
     			return false;
     		}
     		return $pz_sign_check;
