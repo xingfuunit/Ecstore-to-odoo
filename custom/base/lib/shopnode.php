@@ -123,8 +123,8 @@ class base_shopnode
     	}
     	else{
     		//pz认证信息
-    		$pz_sign_check = base_certificate::pz_matrix_sign($request);
-    		if($request['sign'] != $pz_sign_check){
+    		$pz_sign_check = base_certificate::pz_matrix_sign($params);
+    		if($params['sign'] != $pz_sign_check){
     			return false;
     		}
     		return $pz_sign_check;

@@ -196,8 +196,8 @@ class base_certificate{
     	}
     	else{
     		//pz认证信息
-    		$pz_sign_check = base_certificate::pz_matrix_sign($request);
-    		if($request['sign'] != $pz_sign_check){
+    		$pz_sign_check = base_certificate::pz_matrix_sign($params);
+    		if($params['sign'] != $pz_sign_check){
     			return false;
     		}
     		return $pz_sign_check;
@@ -208,7 +208,7 @@ class base_certificate{
      * pz 矩阵认证处理
      */
     static public function pz_matrix_sign($params){
-    	return md5(MATRIX_TO_CERTI.MATRIX_KEY.$params['matrix_timestamp']);
+    	return md5(MATRIX_CERTI.MATRIX_KEY.$params['matrix_timestamp']);
     }
     
     static function assemble($params) 
