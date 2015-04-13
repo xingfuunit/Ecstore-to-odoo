@@ -28,28 +28,24 @@ class b2c_apiv_exchanges_request implements b2c_api_rpc_request_interface{
             return false;
 
         //取到版本映射关系
-        //base_kvstore::instance('b2c_apiv')->fetch('apiv.mapper', $apiv_mapper);
+        base_kvstore::instance('b2c_apiv')->fetch('apiv.mapper', $apiv_mapper);
 
         //循环绑定表
-        //$obj_shop = $this->app->model('shop');
-        //$obj_shop_filter = array('status' => 'bind');
-        $arr_shops = array(array('shop_id'=>1,'name'=>'jason','node_id'=>'1964932234','node_type'=>'ecos.ome','status'=>'bind','node_apiv'=>'2.2'));
+        $obj_shop = $this->app->model('shop');
+        $obj_shop_filter = array('status' => 'bind');
+        $arr_shops = $obj_shop->getList('*',$obj_shop_filter);
         $result = false;
-        if( $arr_shops)
+        if( $arr_shops && $apiv_mapper )
         {
             foreach($arr_shops as $arr_shop)
             {
                 $node_id = $arr_shop['node_id'];
                 $node_type = $arr_shop['node_type'];
                 $node_apiv = $arr_shop['node_apiv'];
-
-
                 //得到 本地api版本号
-                $local_apiv = '2.0';
+                $local_apiv = $apiv_mapper[ $node_type . '_' . $node_apiv ];
                 if( !$local_apiv )
                     continue;
-
-
                 #error_log(var_export($sdf,1),3,DATA_DIR."/hhhh.log");
                 //根据 本地api版本号 + 目标平台 + 动作，判断是否有对应的service
                 $apiv_service = kernel::service( 'apiv_' . $local_apiv . '_' . $node_type . '_' . $method );
@@ -63,20 +59,13 @@ class b2c_apiv_exchanges_request implements b2c_api_rpc_request_interface{
                         $title = $apiv_service->get_title();
                         $timeout = $apiv_service->get_timeout();
                         $async = $apiv_service->is_async();
-
-
                         $params_addon = array(
                             'node_type' => $node_type,
                             'from_api_v' => $local_apiv,
                             'to_node_id' => $node_id,
                             'to_api_v' => $node_apiv,
                             );
-
-
                         $params = array_merge($params_addon, $params);
-
-
-
                         $result = $this->request($request_method, $params, $callback, $title, $timeout, null, $async);
                     }
                 }
