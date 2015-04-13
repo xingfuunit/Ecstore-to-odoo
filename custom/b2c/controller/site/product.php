@@ -546,6 +546,11 @@ class b2c_ctl_site_product extends b2c_frontpage{
         		echo json_encode(array('error'=>app::get('b2c')->_('库存不足')));
         		return;
         	}
+			//当输入重量大于库存时提示库存不足
+			if($erp_store < $weigh){
+        		echo json_encode(array('error'=>app::get('b2c')->_('库存不足')));
+        		return;
+        	}
         }else{
         	if($product[0]['store'] <= 10){ //hack by Jason 如果是门店的操作,则不用检查库存
         		echo json_encode(array('error'=>app::get('b2c')->_('库存有限')));
