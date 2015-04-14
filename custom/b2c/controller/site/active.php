@@ -37,6 +37,7 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	  if(!$active_name){
     	  	$this->redirect('/');
     	  }
+		  $this->pagedata['IMG_PZFRESH'] = IMG_PZFRESH;
     	  $this->pagedata['active_name'] = $active_name;
           $this->page('site/active/'.$active_name.'/index.html');
     }

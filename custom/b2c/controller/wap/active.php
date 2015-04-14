@@ -20,6 +20,7 @@ class b2c_ctl_wap_active extends wap_frontpage{
     	  if(!$active_name){
     	  	$this->redirect('/');
     	  }
+		  $this->pagedata['IMG_PZFRESH'] = IMG_PZFRESH;
     	  $this->pagedata['active_name'] = $active_name;
           $this->page('wap/active/'.$active_name.'/index.html');
     }
