@@ -1131,7 +1131,7 @@ class b2c_user_passport
     			$db->rollback();
     			return 'wrong_password';
     		}
-    		$new_member_lv = $memberData[0]['card_lv_id'] > $loginMemberData[0]['member_lv_id'] ? $memberData[0]['card_lv_id'] : $loginMemberData[0]['member_lv_id'];//对比得出新等级ID
+    		$new_member_lv = $memberData[0]['member_lv_id'] > $loginMemberData[0]['member_lv_id'] ? $memberData[0]['member_lv_id'] : $loginMemberData[0]['member_lv_id'];//对比得出新等级ID
     		//开始事务
     		if($from_to == 'weixin_to_old'){
     			$from_pam_member = $loginPamData;
