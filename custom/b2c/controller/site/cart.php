@@ -188,6 +188,8 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             $this->pagedata['local_store']  = $_SESSION['local_store'];
             $this->pagedata['store_cart']   = 'yes';
             if( $_SESSION['account']['staff']>0) {
+				$_SESSION['account']['access_token'] = md5((string)(time()).'pzfresh');
+				$this->pagedata['access_token'] = $_SESSION['account']['access_token'];				
                 $this->page('site/cart/storeindex.html');
             } else {
                 $this->redirect(array('app'=>'b2c', 'ctl'=>'site_storepassport', 'act'=>'index'));
@@ -1217,7 +1219,11 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     {
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         $this->begin();
-        if(!empty($_POST['yu_amount'])&&$_POST['yu_amount']>0){
+
+		if(empty($_POST['access_token']) || $_POST['access_token'] != $_SESSION['account']['access_token']){
+			$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('令牌校验失败，请稍后重试！'),true,null);
+		}
+        elseif(!empty($_POST['yu_amount'])&&$_POST['yu_amount']>0){
         	$pay_way = array(
         			'1'=>'现金',
         			'2'=>'刷卡',

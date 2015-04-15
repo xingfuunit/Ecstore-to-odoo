@@ -1334,7 +1334,7 @@ window.addEvent('domready', function(){
 			    }
                         });
                         yu_amount = document.getElementById("yu_amount").value;
-                        
+                        access_token = document.getElementById("access_token").value;
                         var _dom  = document.getElementsByName('exp_pay_way')[0];
                         var _dom2 = document.getElementsByName('exp_pay_way')[1];
                         
@@ -1343,7 +1343,7 @@ window.addEvent('domready', function(){
                         }else{
                         	var exp_pay_way = 2;
                         }
-                        var data = 'yu_amount='+yu_amount+'&exp_pay_way='+exp_pay_way;
+                        var data = 'yu_amount='+yu_amount+'&exp_pay_way='+exp_pay_way+'&access_token='+access_token;
                         myRequest.send(data);
                    }
     });
