@@ -23,13 +23,14 @@ define('LOG_FILE', $root_dir.'/data/logs/queue/{date}.php');
 require_once($script_dir."/lib/runtime.php");
 set_error_handler('error_handler');
 //-------------------------------------------------------------------------------------
-if (!isset($argv[1])) {
-    echo "Hey boy or girl, Please give me the queue name!\n";
-    exit;
- }
-$queue_name = $argv[1];
+//if (!isset($argv[1])) {
+//    echo "Hey boy or girl, Please give me the queue name!\n";
+//    exit;
+// }
+$queue_name = 'quick';
 
 if($queue_message = system_queue::instance()->get($queue_name)){
+	error_log("queue_message:".print_r($queue_message,1));
     system_queue::instance()->run_task($queue_message);
     //echo $queue_message->get_id();
     system_queue::instance()->ack($queue_message);
