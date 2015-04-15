@@ -141,8 +141,8 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $this->pagedata['switch_lv'] = $oMem_lv->get_member_lv_switch($this->member['member_lv']);
         $this->pagedata['member'] = $this->member;
         $this->pagedata['local_store'] = $_SESSION['local_store'];
-        
-      
+
+
         $cart_type = $this->_request->get_get('type');
         $this->pagedata['cart_type'] = $cart_type;
         
@@ -1219,34 +1219,37 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     {
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         $this->begin();
+		if( $_SESSION['account']['staff']>0 && $_SESSION['account']['access_token']) {
+			if(empty($_POST['access_token']) || $_POST['access_token'] != $_SESSION['account']['access_token']){
+				$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('令牌校验失败，请稍后重试！'),true,array('status'=>'error','msg'=>app::get('b2c')->_('令牌校验失败，请重新登录后或刷新后重试！')));
+			}
+			elseif(!empty($_POST['yu_amount'])&&$_POST['yu_amount']>0){
+				$pay_way = array(
+						'1'=>'现金',
+						'2'=>'刷卡',
+						);
+				
+				$arrMember = $this->get_current_member();
+				$member_id = $arrMember['member_id'];
+				$psm = $_POST['yu_amount'];
+				$msg = 'pos预存款充值';
+				$objAdvance = $this->app->model("member_advance");
+				$paymenthod = $_POST['exp_pay_way'] == 1 ? 'xianjin' : 'shuaka';
+				$branch_id = intval($_SESSION['local_store']['branch_id']);
+				$status = $objAdvance->add($member_id, $psm, app::get('b2c')->_('pos['.$pay_way[$_POST['exp_pay_way']].']预存款充值'), $msg,'','',$paymenthod,'',0,true,$branch_id);
 
-		if(empty($_POST['access_token']) || $_POST['access_token'] != $_SESSION['account']['access_token']){
-			$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('令牌校验失败，请稍后重试！'),true,null);
-		}
-        elseif(!empty($_POST['yu_amount'])&&$_POST['yu_amount']>0){
-        	$pay_way = array(
-        			'1'=>'现金',
-        			'2'=>'刷卡',
-        			);
-        	
-            $arrMember = $this->get_current_member();
-            $member_id = $arrMember['member_id'];
-            $psm = $_POST['yu_amount'];
-            $msg = 'pos预存款充值';
-            $objAdvance = $this->app->model("member_advance");
-            $paymenthod = $_POST['exp_pay_way'] == 1 ? 'xianjin' : 'shuaka';
-            $branch_id = intval($_SESSION['local_store']['branch_id']);
-            $status = $objAdvance->add($member_id, $psm, app::get('b2c')->_('pos['.$pay_way[$_POST['exp_pay_way']].']预存款充值'), $msg,'','',$paymenthod,'',0,true,$branch_id);
-
-            // 增加经验值
-            $obj_member = $this->app->model('members');
-            $obj_member->change_exp($member_id, floor($psm));
-            
-            //计算精度
-            bcscale(2);
-            $this->splash('success',$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')), app::get('b2c')->_('会员充值成功！'),true,array('uname'=>$arrMember['uname'],'yu_amount'=>bcadd($psm,0.00),'advance'=>bcadd($psm,$arrMember['advance']),'exp_way'=>$pay_way[$_POST['exp_pay_way']]));
-        }else{
-        	$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('会充值失败，系统错误，请稍后重试！'),true,null);
+				// 增加经验值
+				$obj_member = $this->app->model('members');
+				$obj_member->change_exp($member_id, floor($psm));
+				
+				//计算精度
+				bcscale(2);
+				$this->splash('success',$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')), app::get('b2c')->_('会员充值成功！'),true,array('status'=>'success','uname'=>$arrMember['uname'],'yu_amount'=>bcadd($psm,0.00),'advance'=>bcadd($psm,$arrMember['advance']),'exp_way'=>$pay_way[$_POST['exp_pay_way']]));
+			}else{
+				$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('会充值失败，系统错误，请稍后重试！'),true,array('status'=>'error','msg'=>app::get('b2c')->_('会充值失败，系统错误，请稍后重试！')));
+			}
+		} else {
+                $this->redirect(array('app'=>'b2c', 'ctl'=>'site_storepassport', 'act'=>'index'));
         }
     }
     
