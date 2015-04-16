@@ -1249,7 +1249,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
 				$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('会充值失败，系统错误，请稍后重试！'),true,array('status'=>'error','msg'=>app::get('b2c')->_('会充值失败，系统错误，请稍后重试！')));
 			}
 		} else {
-                $this->redirect(array('app'=>'b2c', 'ctl'=>'site_storepassport', 'act'=>'index'));
+                $this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('登录超时，请重新登录！'),true,array('status'=>'reload','msg'=>app::get('b2c')->_('登录超时，请重新登录！')));
         }
     }
     

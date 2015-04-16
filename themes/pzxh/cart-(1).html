@@ -1329,6 +1329,9 @@ window.addEvent('domready', function(){
                                         window.CallCSharpMethod("softprint",storeprint);
 									} catch(e) {}
 									winReload();
+								}else if(data.status == 'reload'){
+									bn_add_info.set('html',data.msg);
+									winReload();
 								}else{
 									bn_add_info.set('html',data.msg);
 								}
