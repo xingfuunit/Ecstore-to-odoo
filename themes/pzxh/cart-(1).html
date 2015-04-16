@@ -1322,19 +1322,27 @@ window.addEvent('domready', function(){
 			    },
 			    onSuccess: function(responseText){
                                 var data = responseText.data;
-			    				var storeprint ="<{$local_store.name}>充值单\n操作员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n用户名："+data.uname+"\n充值数额："+data.yu_amount+"\n帐号余额："+data.advance+"\n支付方式："+data.exp_way+"付款\n\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
-                                bn_add_info.set('html','充值成功……');
-                                try {
+								if(data.status == 'success'){
+									var storeprint ="<{$local_store.name}>充值单\n操作员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n用户名："+data.uname+"\n充值数额："+data.yu_amount+"\n帐号余额："+data.advance+"\n支付方式："+data.exp_way+"付款\n\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
+									bn_add_info.set('html','充值成功……');
+									try {
                                         window.CallCSharpMethod("softprint",storeprint);
-                                } catch(e) {}
-                                winReload();
+									} catch(e) {}
+									winReload();
+								}else if(data.status == 'reload'){
+									bn_add_info.set('html',data.msg);
+									winReload();
+								}else{
+									bn_add_info.set('html',data.msg);
+								}
+			    				
 			    },
 			    onFailure: function(){
 			        bn_add_info.set('html','充值失败，请稍后重试');
 			    }
                         });
                         yu_amount = document.getElementById("yu_amount").value;
-                        
+                        access_token = document.getElementById("access_token").value;
                         var _dom  = document.getElementsByName('exp_pay_way')[0];
                         var _dom2 = document.getElementsByName('exp_pay_way')[1];
                         
@@ -1343,7 +1351,7 @@ window.addEvent('domready', function(){
                         }else{
                         	var exp_pay_way = 2;
                         }
-                        var data = 'yu_amount='+yu_amount+'&exp_pay_way='+exp_pay_way;
+                        var data = 'yu_amount='+yu_amount+'&exp_pay_way='+exp_pay_way+'&access_token='+access_token;
                         myRequest.send(data);
                    }
     });
