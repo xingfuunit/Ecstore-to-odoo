@@ -73,7 +73,13 @@
         <{/if}>
         <{/if}>
         <i class="separator"></i><a href="<{link app=b2c ctl=site_member act=orderdetail arg0=$order.order_id arg1=$archive}>"><{t}>查看订单<{/t}></a>
+		
+        <{if $order.status == 'active' && $order.pay_status == '0' && $order.ship_status == '0' && $order.promotion_type != 'prepare'}>
+        <i class="separator"></i><a class="btn-cancel" href="<{link app=b2c ctl=site_member act=cancel arg0=$order.order_id arg1=$archive}>"><{t}>取消订单<{/t}></a>
+        <{else}>
         <i class="separator"></i><a href="<{link app=b2c ctl=site_member act=reAddCart arg0=$order.order_id arg1=$archive}>"><{t}>再次购买<{/t}></a>
+        <{/if}>
+		
       </td>
     </tr>
     <tr class="goods-row">
