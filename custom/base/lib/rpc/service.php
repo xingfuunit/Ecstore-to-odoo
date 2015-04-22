@@ -35,6 +35,8 @@ class base_rpc_service{
             $this->process_rpc();
         }else{
 			if(strpos($path, '/openapi') !== false){
+				sleep(3);
+				error_log('ec_callback:'.print_r($_POST,1));
 				$args = explode('/',substr($path,9));
 				$service_name = 'openapi.'.array_shift($args);
 				$method = array_shift($args);
@@ -197,7 +199,9 @@ class base_rpc_service{
         set_error_handler(array(&$this,'user_error_handle'),E_USER_ERROR);
 
         $this->start_time = $_SERVER['REQUEST_TIME']?$_SERVER['REQUEST_TIME']:time();
+        error_log("ec_get_from_matrix:".print_r($_REQUEST,1));
         list($service,$method,$params) = $this->parse_rpc_request($_REQUEST);
+        error_log('service:'.$service.'-method:'.$method.'-class:'.$api_module['class']);
         $data = array(
             'apilog'=>$_REQUEST['task'],
             'calltime'=>$this->start_time,
@@ -217,8 +221,7 @@ class base_rpc_service{
             $apilog_services = kernel::single('apiactionlog_router_logging');
             $apilog_services->save_log($service,$method,$data);
             $api_module = app::get('base')->getConf($service.'.'.$method);
-            error_log("api_module:".print_r($api_module,1));
-            error_log("data:".print_r($data,1));
+            
             if( isset($api_module['function'])  ){
                 $object = kernel::single($api_module['class']);
                 $result = $object->$method($params,$this);
@@ -257,6 +260,7 @@ class base_rpc_service{
         );
 
         $this->rpc_response_end($result, $this->process_id, $result_json);
+        error_log('ec_result_jason:'.print_r($result_json,1));
         echo json_encode($result_json);
     }
 
@@ -304,7 +308,6 @@ class base_rpc_service{
     }
 
     public function async_result_handler($params){
-
         $this->begin(__FUNCTION__);
 
         $apilog_mdl = app::get('apiactionlog')->model('apilog');

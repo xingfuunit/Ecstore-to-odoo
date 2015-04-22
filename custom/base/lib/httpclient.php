@@ -39,7 +39,7 @@ class base_httpclient{
     }
 
 	function set_timeout($timeout){
-        $this->netcore->set_timeout($timeout);
+        $this->netcore->set_timeout(30);
         $this->timeout = $timeout;
 		return $this;
     }

@@ -85,11 +85,10 @@ class base_rpc_caller{
             $query_params['sign'] = kernel::single('system_shopmatrix')->get_sign($query_params,base_shopnode::node_id($this->app->app_id));
             $url = kernel::single('system_shopmatrix')->get_api_url(base_shopnode::node_id($this->app->app_id));
         }
-        error_log('method:'.$method);
-        error_log(print_r($query_params,1));
+        error_log('ec_send_to_matrix'.print_r($query_params,1));
         $core_http = kernel::single('base_httpclient');
         $response = $core_http->set_timeout($this->timeout)->post($url,$query_params,$headers);
-        
+        error_log('ec_resp_from_matrix:'.$response);
         logger::info('Response: '.$response);
         
         if($response===HTTP_TIME_OUT){
