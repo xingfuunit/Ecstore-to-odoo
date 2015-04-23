@@ -201,7 +201,7 @@ final class weixin_payment_plugin_wxpayjsapi extends ectools_payment_app impleme
             'openid'           => strval($_GET['openid']),
             'body'             => strval( str_replace(' ', '', (isset($payment['body']) && $payment['body']) ? $payment['body'] : app::get('weixin')->_('网店订单') ) ),
             'out_trade_no'     => strval( $payment['payment_id'] ),
-            'total_fee'        => strval( ceil($payment['cur_money'] * 100) ),
+            'total_fee'        => strval( ceil(intval($payment['cur_money'] * 100)) ),
             'notify_url'       => strval( $this->notify_url ),
             'trade_type'       => 'JSAPI',
             'mch_id'           => strval($mch_id),
