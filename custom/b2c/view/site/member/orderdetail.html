@@ -38,6 +38,7 @@
           <{/if}>
           <{/if}>
           <{if !$archive}>
+          &nbsp;<{* //会员中心隐藏【我要留言】bySam 20150423
           <button type="button" class="btn btn-simple action-leave-message"><span><span><{t}>我要留言<{/t}></span></span></button>
           <!-- 我要留言弹框 -->
           <div id="member_message_box" style="display:none;">
@@ -49,7 +50,7 @@
               </ul>
               <input type="hidden" name="msg[orderid]" value="<{$order.order_id}>"/>
             </form>
-          </div>
+          </div>*}>
           <{/if}>
           <{/if}>
         </div>
