@@ -142,7 +142,7 @@ final class ectools_payment_plugin_unionpay extends ectools_payment_app implemen
             "commodityQuantity"=>"",//商品数量
             "transferFee"=>"",//运输费用
             "commodityDiscount"=>"",//优惠信息
-            "orderAmount"=>ceil(intval($payment['cur_money'] * 100)),//交易金额
+            "orderAmount"=>intval($payment['cur_money'] * 100),//交易金额
             "orderCurrency"=>156,//交易币种
             "customerName"=>"",//持卡人姓名
             "defaultPayType"=>"",//默认支付方式

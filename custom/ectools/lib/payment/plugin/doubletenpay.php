@@ -128,7 +128,7 @@ final class ectools_payment_plugin_doubletenpay extends ectools_payment_app impl
         $payment['currency'] = "1";    //$order->M_Currency = "1";
 
         $orderdate = date("Ymd",$payment['t_begin']);    //$order->M_Time
-        $payment['M_Amount'] = ceil(intval($payment['cur_money'] * 100));    //$order->M_Amount
+        $payment['M_Amount'] = intval($payment['cur_money'] * 100);    //$order->M_Amount
         $v_orderid = $merId.$orderdate.substr($payment['payment_id'],-10);
 
         $subject = $payment['orders'][0]['rel_id'];
