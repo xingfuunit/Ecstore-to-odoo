@@ -122,13 +122,14 @@ final class ectools_payment_plugin_doubletenpay extends ectools_payment_app impl
      */
 	public function dopay($payment){
         //var_dump($payment);
+		bcscale(2);
         $merId = $this->getConf('mer_id', __CLASS__);
         $ikey = $this->getConf('PrivateKey', __CLASS__);
         $trade_mode = $this->getConf('authtype',__CLASS__);
         $payment['currency'] = "1";    //$order->M_Currency = "1";
 
         $orderdate = date("Ymd",$payment['t_begin']);    //$order->M_Time
-        $payment['M_Amount'] = intval($payment['cur_money'] * 100);    //$order->M_Amount
+        $payment['M_Amount'] = bcadd($payment['cur_money'],0) * 100;    //$order->M_Amount
         $v_orderid = $merId.$orderdate.substr($payment['payment_id'],-10);
 
         $subject = $payment['orders'][0]['rel_id'];
