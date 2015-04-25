@@ -22,7 +22,7 @@ class b2c_mdl_member_addrs extends dbeav_model{
 
     public function set_default_addr($arr_data=array(), $addr_id=0, $member_id=0, &$msg='')
     {
-        $filter = array('member_id' => $member_id);
+        $filter = array('member_id' => $member_id,'local_id'=>array(0,-1)); // 门店自提地址不算进数量
         $cnt = $this->count($filter);
         if ($cnt < $this->addrLimit && $arr_data['def_addr']){
             $arr_update['def_addr'] = 0;
