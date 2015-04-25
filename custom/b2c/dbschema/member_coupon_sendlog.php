@@ -33,7 +33,14 @@ $db['member_coupon_sendlog']=array (
       'comment' => app::get('b2c')->_('会员列表'),
       'label' => app::get('b2c')->_('会员列表'),
     ),
-    	
+	'member_id' =>
+	array (
+		'type' => 'longtext',
+		'editable' => false,
+		'in_list' => true,
+		'comment' => app::get('b2c')->_('会员ID列表'),
+		'label' => app::get('b2c')->_('会员ID列表'),
+	),
     'cpns_name' =>
     array (
       'type' => 'varchar(100)',
