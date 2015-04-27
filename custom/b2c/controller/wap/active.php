@@ -15,7 +15,7 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function index(){
     	
     	
-    	if( $_GET['qr'] ){
+    	if( $active_name=='51meat' ){
     		 
     		//判断是否来自微信， 来自微信获取 openid
     		
