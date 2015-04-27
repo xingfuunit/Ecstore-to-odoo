@@ -44,7 +44,11 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	  }
 		  $this->pagedata['IMG_PZFRESH'] = IMG_PZFRESH;
     	  $this->pagedata['active_name'] = $active_name;
-          $this->page('site/active/'.$active_name.'/index.html',true);
+          if($active_name=='51meat'){
+          	$this->page('site/active/'.$active_name.'/index.html',true);
+          }else{
+          	$this->page('site/active/'.$active_name.'/index.html');
+          }
     }
     private function meat_active_get_time(){
     	//结束日期
