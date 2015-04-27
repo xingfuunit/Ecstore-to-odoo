@@ -73,7 +73,7 @@ function index(){
     		$db = kernel::database();
     		
     		$sql = 'select * from sdb_b2c_member_coupon where member_id=\''.$member_id.'\' and cpns_id=\''.$coupons_id.'\'';
-    		error_log($sql);
+    		//error_log($sql);
     		$row = $db->select($sql);
     		if($row && $row[0]['memc_code']){
     			echo json_encode(array('error'=>'亲！您已领取过该优惠券了'));
