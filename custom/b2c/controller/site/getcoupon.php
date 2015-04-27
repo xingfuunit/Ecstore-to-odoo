@@ -63,7 +63,9 @@ function index(){
     			echo json_encode(array('error'=>'您还没有登录，请登录','url'=>$this->gen_url( array('app'=>'b2c','ctl'=>'site_passport','act'=>'login') )));
     			return;
     		}
-    		$member_id = $userObject->get_member_id_by_username($_POST['user']);
+    		//$member_id = $userObject->get_member_id_by_username($_POST['user']);
+    		$this->member = $this->get_current_member();
+    		$member_id = $this->member['member_id'];
     		if (empty($member_id)){
     			echo json_encode(array('error'=>'用户名:'.$_POST['user'].'不存在！'));
     			return;

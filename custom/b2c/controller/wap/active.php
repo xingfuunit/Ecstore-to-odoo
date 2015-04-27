@@ -12,7 +12,25 @@ class b2c_ctl_wap_active extends wap_frontpage{
         
     }
 
-    public function index(){	
+    public function index(){
+    	
+    	
+    	if( $active_name=='51meat' ){
+    		 
+    		//判断是否来自微信， 来自微信获取 openid
+    		
+    	if(kernel::single('weixin_wechat')->from_weixin()){
+        		//如果来自微信 且已关注  自动登录并加入购物车
+        		$openid = parent::$this->openid;
+				$bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>$_GET['state'],'status'=>'active'));
+				$uinfo = kernel::single('weixin_wechat')->get_basic_userinfo($bind['id'],$openid);
+					//未关注跳到关注页面
+					if (!$uinfo['subscribe']) {
+						$this->redirect('http://mp.weixin.qq.com/s?__biz=MzAxMjEwMjg2OA==&mid=206449921&idx=1&sn=61b0dc425fdba4925b6a42ac34f758f8#rd');
+	        		}
+        	}
+    	}
+    	
     	  $this->title = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
     	  $this->keywords = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
     	  $this->description = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
@@ -24,6 +42,11 @@ class b2c_ctl_wap_active extends wap_frontpage{
     	  	$this->member = $this->get_current_member();
     	  	$this->pagedata['member'] = $this->member;
     	  	$this->meat_active_get_time();
+    	  	
+    	  	$this->title = app::get('b2c')->_('9块9包邮抢购澳洲进口牛扒！品珍私享奢华零距离！每天限抢50份！抢完即止~');
+    	  	$this->keywords = app::get('b2c')->_('9块9包邮抢购澳洲进口牛扒！品珍私享奢华零距离！每天限抢50份！抢完即止~');
+    	  	$this->description = app::get('b2c')->_('9块9包邮抢购澳洲进口牛扒！品珍私享奢华零距离！每天限抢50份！抢完即止~');
+    	  	
     	  }
 		  $this->pagedata['IMG_PZFRESH'] = IMG_PZFRESH;
     	  $this->pagedata['active_name'] = $active_name;
