@@ -242,8 +242,12 @@ new timeCount(timeNow,timeStart, 'timer');
 								
 											if(responseText.success)
                                                 alert(responseText.success);
-											else
+											else{
 												alert(responseText.error);
+												if(responseText.url){
+													window.location.href = responseText.url;
+												}
+											}
                                  },
              			        onFailure: function(){
 									alert('请求失败');
