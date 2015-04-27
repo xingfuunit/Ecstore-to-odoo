@@ -53,6 +53,12 @@
         <disable>false</disable>
     </module>
 
+	<module id='b2c' controller='wap_getcoupon' >
+        <name>getcoupon</name>
+        <title>购物车</title>
+        <disable>false</disable>
+    </module>
+    
     <module id='b2c' controller='wap_tools' >
         <name>tools</name>
         <title>工具</title>
