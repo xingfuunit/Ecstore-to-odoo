@@ -90,7 +90,7 @@ function index(){
     		$e_time = strtotime($d2);
     		$sql = 'select count(*) as count from sdb_b2c_member_coupon where '.' cpns_id=\''.$coupons_id.'\' and memc_gen_time>\''.$s_time.'\' and  memc_gen_time<\''.$e_time.'\'';
     		$row = $db->select($sql);
-    		if($row && $row[0]['count']>=50){
+    		if($row && $row[0]['count']>=20){
     			echo json_encode(array('error'=>'亲！优惠券领完了，明天继续喔'));
     			return;
     		}
