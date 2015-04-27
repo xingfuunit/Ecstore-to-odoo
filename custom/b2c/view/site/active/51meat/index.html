@@ -1,3 +1,23 @@
+<{lang_script src="lang.js" app="site"}>
+<{if defined("DONOTUSE_CSSFRAMEWORK")&&DONOTUSE_CSSFRAMEWORK}>
+<{else}>
+<{css src="typical.css" app="site" pdir="css_mini"}>
+<{/if}>
+<{if defined("DONOTUSE_JSFRAMEWORK")&&DONOTUSE_JSFRAMEWORK}>
+<{else}>
+	<{if defined("DEBUG_JS") && DEBUG_JS}>
+	    <{script src="lab.js" app="site"}>
+	    <{script src="mootools.js" app="site"}>
+	    <{script src="moomore.js" app="site"}>
+	    <{script src="jstools.js" app="site"}>
+	    <{script src="formplus.js" app="site"}>
+	    <{script src="popup.js" app="site"}>
+	    <{script src="switchable.js" app="site"}>
+	<{else}>
+	    <{script src="moo.min.js" app="site" pdir="js_mini"}>
+	    <{script src="ui.min.js" app="site" pdir="js_mini"}>
+	<{/if}>
+<{/if}>
 <div id='meat_main'>
 <link rel="stylesheet" href="/public/app/b2c/statics/active/51meat/css/base.css">
 <div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_01.jpg) no-repeat center; width:100%; height:357px;"></div>
@@ -6,7 +26,7 @@
  <div style="width:1279px; height:159px; margin:0 auto; position:relative">
 		<input type="hidden" name="" id="start_time" value="<{$start_time}>">
         <input type="hidden" name="" id="end_time" value="<{$end_time}>">
-   <div style="position:absolute; left:490px; top:67px; font-size:60px; color: #e02842; font-family:Geneva, Arial, Helvetica, sans-serif" class="time" id="timer">   
+   <div style="position:absolute; left:484px; top:77px; font-size:60px; color: #e02842; font-family:Geneva, Arial, Helvetica, sans-serif" class="time" id="timer">   
             <span style=" float:left;margin-left:10px; width:70px; height:50px;"><i class="hours">00</i></span>
             <span style=" float:left;margin-left:60px;width:70px; height:50px;"><i class="minutes">00</i></span>
             <span style=" float:left;margin-left:67px;  width:70px; height:50px;"><i class="seconds">00</i></span>
@@ -83,8 +103,8 @@
 <div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_56.jpg) no-repeat center; width:1279px; height:570px; margin:0 auto"></div>
 <div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_59.jpg) no-repeat center; width:1279px; height:394px; margin:0 auto"></div>
 <div style="background:#8e8574; width:100%; height:189px;">
-<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_61.jpg) no-repeat center; width:1279px; height:188px; margin:0 auto">
- <a href="#" style=" width:188px; height:188px; display:block "></a>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_61.png) no-repeat center; width:1279px; height:188px; margin:0 auto">
+ <a href="/" style=" width:188px; height:188px; display:block "></a>
 </div>
 </div></div>
 <script>
@@ -222,8 +242,12 @@ new timeCount(timeNow,timeStart, 'timer');
 								
 											if(responseText.success)
                                                 alert(responseText.success);
-											else
+											else{
 												alert(responseText.error);
+												if(responseText.url){
+													window.location.href = responseText.url;
+												}
+											}
                                  },
              			        onFailure: function(){
 									alert('请求失败');
@@ -257,4 +281,14 @@ $('getticket2').addEvent("click",function(E){
                              myRequest1.send(data);
 });
 
+</script>
+<script>
+<{*此页不用head和foot，需加上统计代码以便统计*}>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?739e2995d40f81cbaf33e2e48d91a272";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
 </script>

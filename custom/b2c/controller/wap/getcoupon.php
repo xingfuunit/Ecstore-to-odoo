@@ -17,7 +17,7 @@
  * @author Wanglei <flaboy@zovatech.com>
  * @license Commercial
  */
-class b2c_ctl_site_getcoupon extends b2c_frontpage {
+class b2c_ctl_wap_getcoupon extends wap_frontpage {
 function index(){
 
 	$s_date = '2015-05-06 00:00:00';
@@ -60,7 +60,7 @@ function index(){
     			$coupons_id = $coupons_arr[0]['cpns_id'];
     		}
     		if(empty($_POST['user'])){
-    			echo json_encode(array('error'=>'您还没有登录，请登录','url'=>$this->gen_url( array('app'=>'b2c','ctl'=>'site_passport','act'=>'login') )));
+    			echo json_encode(array('error'=>'您还没有登录，请登录'));
     			return;
     		}
     		$member_id = $userObject->get_member_id_by_username($_POST['user']);
