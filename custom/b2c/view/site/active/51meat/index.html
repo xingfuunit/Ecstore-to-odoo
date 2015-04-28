@@ -26,6 +26,11 @@
  <div style="width:1279px; height:159px; margin:0 auto; position:relative">
 		<input type="hidden" name="" id="start_time" value="<{$start_time}>">
         <input type="hidden" name="" id="end_time" value="<{$end_time}>">
+   <{if($qiangwan)}>     
+        <!--增加层开始-->
+ <div style="position:absolute; left:310px;  top:75px; z-index:999;"><img src="/public/app/b2c/statics/active/51meat/images/continue.png" /></div>
+ <!--增加层结束-->
+        <{/if}>
    <div style="position:absolute; left:484px; top:77px; font-size:60px; color: #e02842; font-family:Geneva, Arial, Helvetica, sans-serif" class="time" id="timer">   
             <span style=" float:left;margin-left:10px; width:70px; height:50px;"><i class="hours">00</i></span>
             <span style=" float:left;margin-left:60px;width:70px; height:50px;"><i class="minutes">00</i></span>
