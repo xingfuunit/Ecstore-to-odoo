@@ -71,5 +71,30 @@ class b2c_ctl_wap_active extends wap_frontpage{
     		 
     	}
     	$this->pagedata['start_time'] = $start_time;
+    	
+    	//是否已抢50份
+    	$db = kernel::database();
+    			$cpns_prefix = 'BXSP';
+    			$coupons_arr = $this->app->model('coupons')->getList("*",array('cpns_prefix'=>$cpns_prefix));
+    			$coupons_id = $coupons_arr[0]['cpns_id'];
+    			
+    	//每天限50张start
+    	$d = new DateTime("00:00:00", new DateTimeZone("Asia/Shanghai"));//每日开始时间
+    	$d2 = $d->format("Y-m-d H:i:s");
+    	$s_time = strtotime($d2);
+    	$d = new DateTime("23:59:59", new DateTimeZone("Asia/Shanghai"));//每日开始时间
+    	$d2 = $d->format("Y-m-d H:i:s");
+    	$e_time = strtotime($d2);
+
+    	$sql = 'select count(*) as count from sdb_b2c_member_coupon where '.' cpns_id=\''.$coupons_id.'\' and memc_gen_time>\''.$s_time.'\' and  memc_gen_time<\''.$e_time.'\'';
+
+    	//error_log($sql);
+    	$row = $db->select($sql);
+    	if($row && $row[0]['count']>=50){
+    		$this->pagedata['qiangwan'] = true;
+    	}else{
+    		$this->pagedata['qiangwan'] = false;
+    	}
+    	//每天限50张end
     }
 }
