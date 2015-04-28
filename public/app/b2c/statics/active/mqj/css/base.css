@@ -1,4 +1,7 @@
-#content {background:#f2eee5; padding:0; margin:0;}
+#content {background:#fee4e2; padding:0; margin:0;}
+#mqj_main{font-size:0px;background:#fee4e2;width:100%;min-width: 1278px;
+  margin-left: auto;
+  margin-right: auto;}
 #mqj_main div{ padding:0; margin:0;}
 #mqj_main  li{ list-style:none; line-height:35px; font-size:14px; text-indent:10px;}
 #mqj_main  img{ margin:0; padding:0;}
