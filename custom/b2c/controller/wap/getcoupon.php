@@ -81,6 +81,18 @@ function index(){
     			echo json_encode(array('error'=>'亲！您已领取过该优惠券了'));
     			return;
     		}
+    		//记cookie限制一台电脑抢一次start
+    		if($_POST['coupons_tab']=='1'){
+    			$q_cookie='wuyi_meat_active_q1';
+    		}else{
+    			$q_cookie='wuyi_meat_active_q2';
+    		}
+    		
+    		if(isset($_COOKIE[$q_cookie]) && $_COOKIE[$q_cookie]){
+    			echo json_encode(array('error'=>'亲！您已领取过该优惠券了'));
+    			return;
+    		}
+    		//记cookie限制一台电脑抢一次end
     		//每天限50张start
     		$d = new DateTime("00:00:00", new DateTimeZone("Asia/Shanghai"));//每日开始时间
     		$d2 = $d->format("Y-m-d H:i:s");
@@ -99,6 +111,7 @@ function index(){
 				$ret = $this->send_cp($coupons_id,$member_ids);
 				$ret1 = $this->send_cp($coupons_id2,$member_ids);
 				if($ret && $ret1){
+					$this->set_cookie('wuyi_meat_active_q1',$coupons_id,time()+31536000);//用于记住该电脑已抢券
 					echo json_encode(array('success'=>'优惠券领取成功'));
 					return;
 				}else{
@@ -108,6 +121,7 @@ function index(){
 			}else{
 				$ret = $this->send_cp($coupons_id,$member_ids);
 				if($ret){
+					$this->set_cookie('wuyi_meat_active_q2',$coupons_id,time()+31536000);//用于记住该电脑已抢券
 					echo json_encode(array('success'=>'优惠券领取成功'));
 					return;
 				}else{

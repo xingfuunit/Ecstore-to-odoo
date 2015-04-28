@@ -92,7 +92,6 @@ class b2c_ctl_site_active extends b2c_frontpage{
     		$this->pagedata['qiangwan'] = false;
     	}
     	//每天限50张end
-    	
     }
     /**
      * 金枪鱼众筹 活动
