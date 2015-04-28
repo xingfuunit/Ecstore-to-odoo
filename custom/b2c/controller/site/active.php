@@ -44,8 +44,12 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	  }
 		  $this->pagedata['IMG_PZFRESH'] = IMG_PZFRESH;
     	  $this->pagedata['active_name'] = $active_name;
-          if($active_name=='51meat'){
-          	$this->page('site/active/'.$active_name.'/index.html',true);
+    	  $active = array(
+    	  		'51meat',//51活动
+    	  		'mqj',//母亲节
+    	  		);
+          if(in_array($active_name,$active)){
+          	$this->page('site/active/'.$active_name.'/index.html',true);//活动页面全屏，不要head和foot
           }else{
           	$this->page('site/active/'.$active_name.'/index.html');
           }

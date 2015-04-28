@@ -1,0 +1,53 @@
+<{lang_script src="lang.js" app="site"}>
+<{if defined("DONOTUSE_CSSFRAMEWORK")&&DONOTUSE_CSSFRAMEWORK}>
+<{else}>
+<{css src="typical.css" app="site" pdir="css_mini"}>
+<{/if}>
+<{if defined("DONOTUSE_JSFRAMEWORK")&&DONOTUSE_JSFRAMEWORK}>
+<{else}>
+	<{if defined("DEBUG_JS") && DEBUG_JS}>
+	    <{script src="lab.js" app="site"}>
+	    <{script src="mootools.js" app="site"}>
+	    <{script src="moomore.js" app="site"}>
+	    <{script src="jstools.js" app="site"}>
+	    <{script src="formplus.js" app="site"}>
+	    <{script src="popup.js" app="site"}>
+	    <{script src="switchable.js" app="site"}>
+	<{else}>
+	    <{script src="moo.min.js" app="site" pdir="js_mini"}>
+	    <{script src="ui.min.js" app="site" pdir="js_mini"}>
+	<{/if}>
+<{/if}>
+<div id='mqj_main'>
+<link rel="stylesheet" href="/public/app/b2c/statics/active/mqj/css/base.css">
+<div style=" background:url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/mqj/images/mortherday_01.png) no-repeat center; width:100%; height:616px; min-width:1279px;"></div>
+
+<div style="background:url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/mqj/images/mortherday_03.png) no-repeat center; width:100%; height:200px; min-width:1279px;"></div>
+<div style="background:url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/mqj/images/mortherday_05.png) no-repeat center; width:100%; height:438px; min-width:1279px;">
+<div style=" width:1279px; height:438px; margin:0 auto">
+<a  style="width:50%; height:438px; display:block; float:left" href="http://www.pzfresh.com/product-1967.html"></a>
+<a  style="width:50%; height:438px; display:block; float:left" href="http://www.pzfresh.com/product-1093.html"></a>
+</div>
+</div>
+<div style="background:url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/mqj/images/mortherday_06.png) no-repeat center; width:100%; height:222px; min-width:1279px;"></div>
+<div style="background:url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/mqj/images/mortherday_07.png) no-repeat center; width:100%; height:852px; min-width:1279px;">
+<a href="http://www.pzfresh.com/product-1996.html" style="height:852px; width:1279px; display:block; margin:0 auto"></a>
+</div>
+<div style="background:url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/mqj/images/mortherday_08.png) no-repeat center; width:100%; height:373px; min-width:1279px;"></div>
+
+<div style="background:#8f6e6d; width:100%; height:189px;">
+<div style="background:url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/mqj/images/mortherday_09.png) no-repeat center; width:1279px; height:189px; margin:0 auto">
+ <a href="/" style=" width:188px; height:188px; display:block "></a>
+</div>
+</div></div>
+
+<script>
+<{*此页不用head和foot，需加上统计代码以便统计*}>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?739e2995d40f81cbaf33e2e48d91a272";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
