@@ -35,7 +35,9 @@ class base_rpc_caller{
     public function call($method,$params,$rpc_id=null,$gzip=false){
 
         $api_log = kernel::single('apiactionlog_router_logging');
+        error_log('rpc_id0:'.$rpc_id);
         $rpc_id = $api_log->request_log($method,$params,$rpc_id);
+        error_log('rpc_id1:'.$rpc_id);
         if(!$rpc_id){
             $microtime = utils::microtime();
             $rpc_id = str_replace('.','',strval($microtime));
@@ -43,6 +45,7 @@ class base_rpc_caller{
             $rpc_id .= strval($randval);
             $rpc_id = md5($rpc_id);
         }
+        error_log('rpc_id2:'.$rpc_id);
         $headers = array(
             /*'Connection'=>$this->timeout,*/
             'Connection'=>'Close',
