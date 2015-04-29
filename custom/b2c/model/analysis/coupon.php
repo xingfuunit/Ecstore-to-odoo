@@ -264,10 +264,10 @@ class b2c_mdl_analysis_coupon extends dbeav_model {
 		}
 		
 		if(isset($filter['time_from']) && $filter['time_from']){
-			$filter['time_from'] = strtotime($filter['time_from']);
-			$filter['time_to'] = (strtotime($filter['time_to'])+86400);
-		
-			$where [] = ' sdb_b2c_member_coupon.memc_gen_time <' . (strtotime ( $filter ['memc_gen_time'] ) + 86400);
+			//$filter['time_from'] = strtotime($filter['time_from']);
+			//$filter['time_to'] = (strtotime($filter['time_to'])+86400);
+			$where [] = ' sdb_b2c_member_coupon.memc_gen_time >' . (strtotime ( $filter ['time_from'] ) );
+			$where [] = ' sdb_b2c_member_coupon.memc_gen_time <' . (strtotime ( $filter ['time_to'] ) + 86400);
 		}
 		if (isset ( $filter ['cpns_name'] ) && $filter ['cpns_name']) {
 			$where [] = ' sdb_b2c_coupons.cpns_name = ' . '\'' . $filter ['cpns_name'] . '\'';

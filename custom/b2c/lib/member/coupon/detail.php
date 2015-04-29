@@ -9,7 +9,7 @@
 class b2c_member_coupon_detail extends ectools_analysis_abstract implements ectools_analysis_interface
 {
     public $detail_options = array(
-        'hidden' => false,
+        'hidden' => true,
         'force_ext' => false,
     );
     public $graph_options = array(
