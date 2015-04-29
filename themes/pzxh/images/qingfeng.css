@@ -3,7 +3,8 @@
 	Copyright: hnqss.cn  清风创科设计团队 
 	Tel:(86)0731-82229293  企业QQ�?800017602
 =====================================================*/
-body{font:12px/1.5 'Microsoft Yahei',simsun,Arial,Helvetica,sans-serif;color:#666;background:#FFF}
+/* add min-width to fix backgroud display error */
+body{min-width:1280px;font:12px/1.5 'Microsoft Yahei',simsun,Arial,Helvetica,sans-serif;color:#666;background:#FFF}
 a{color:#666;}
 a:hover{color:#603002;text-decoration:none;}
 .fl{float:left;_display:inline}

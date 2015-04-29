@@ -122,7 +122,8 @@ final class ectools_payment_plugin_unionpay extends ectools_payment_app implemen
     public function dopay($payment){
         $merId = $this->getConf('mer_id', __CLASS__);//客户号
         $mer_key=$this->getConf('mer_key', __CLASS__);//私钥
-
+		
+        bcscale(2);
         //组织给银联打过去要签名的数据 $args
         $args = array(
             "version"=>"1.0.0",//消息版本号
@@ -142,7 +143,7 @@ final class ectools_payment_plugin_unionpay extends ectools_payment_app implemen
             "commodityQuantity"=>"",//商品数量
             "transferFee"=>"",//运输费用
             "commodityDiscount"=>"",//优惠信息
-            "orderAmount"=>ceil(intval($payment['cur_money'] * 100)),//交易金额
+            "orderAmount"=>bcadd($payment['cur_money'],0) * 100,//交易金额
             "orderCurrency"=>156,//交易币种
             "customerName"=>"",//持卡人姓名
             "defaultPayType"=>"",//默认支付方式

@@ -196,20 +196,20 @@ final class weixin_payment_plugin_wxpay extends ectools_payment_app implements e
      */
     public function dopay($payment)
     {
-
+    	bcscale(2);
         $appId      = trim($this->getConf('appId',      __CLASS__)); // appid
         $paySignKey = trim($this->getConf('paySignKey', __CLASS__)); // PaySignKey 对应亍支付场景中的 appKey 值
         // $appSecret  = $this->getConf('appSecret',  __CLASS__); // app支付时使用
         $partnerId  = trim($this->getConf('partnerId',  __CLASS__)); // 财付通商户身份的标识
         $partnerKey = trim($this->getConf('partnerKey', __CLASS__)); // 财付通商户权限密钥 Key
 
-        $price = ceil(intval($payment['cur_money'] * 100));
+        $price = intval($payment['cur_money'] * 100);
 
         $this->add_field("bank_type"          , "WX" );
         $this->add_field("body"               , strval( str_replace(' ', '', (isset($payment['body']) && $payment['body']) ? $payment['body'] : app::get('weixin')->_('网店订单') ) ) );
         $this->add_field("partner"            , strval( $partnerId ) );
         $this->add_field("out_trade_no"       , strval( $payment['payment_id'] ) );
-        $this->add_field("total_fee"          , strval( ceil($payment['cur_money'] * 100) ) );
+        $this->add_field("total_fee"          , strval( bcadd($payment['cur_money'],0) * 100 ) );
         $this->add_field("fee_type"           , "1" );
         $this->add_field("notify_url"         , strval( $this->notify_url ) );
         $this->add_field("spbill_create_ip"   , strval( $payment['ip'] ) );

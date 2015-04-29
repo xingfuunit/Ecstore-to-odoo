@@ -1,0 +1,299 @@
+<{lang_script src="lang.js" app="site"}>
+<{if defined("DONOTUSE_CSSFRAMEWORK")&&DONOTUSE_CSSFRAMEWORK}>
+<{else}>
+<{css src="typical.css" app="site" pdir="css_mini"}>
+<{/if}>
+<{if defined("DONOTUSE_JSFRAMEWORK")&&DONOTUSE_JSFRAMEWORK}>
+<{else}>
+	<{if defined("DEBUG_JS") && DEBUG_JS}>
+	    <{script src="lab.js" app="site"}>
+	    <{script src="mootools.js" app="site"}>
+	    <{script src="moomore.js" app="site"}>
+	    <{script src="jstools.js" app="site"}>
+	    <{script src="formplus.js" app="site"}>
+	    <{script src="popup.js" app="site"}>
+	    <{script src="switchable.js" app="site"}>
+	<{else}>
+	    <{script src="moo.min.js" app="site" pdir="js_mini"}>
+	    <{script src="ui.min.js" app="site" pdir="js_mini"}>
+	<{/if}>
+<{/if}>
+<div id='meat_main'>
+<link rel="stylesheet" href="/public/app/b2c/statics/active/51meat/css/base.css">
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_01.jpg) no-repeat center; width:100%; height:357px;"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_02.jpg) no-repeat center; width:100%; height:159px;">
+
+ <div style="width:1279px; height:159px; margin:0 auto; position:relative">
+		<input type="hidden" name="" id="start_time" value="<{$start_time}>">
+        <input type="hidden" name="" id="end_time" value="<{$end_time}>">
+   <{if($qiangwan)}>     
+        <!--增加层开始-->
+ <div style="position:absolute; left:310px;  top:75px; z-index:999;"><img src="/public/app/b2c/statics/active/51meat/images/continue.png" /></div>
+ <!--增加层结束-->
+        <{/if}>
+   <div style="position:absolute; left:484px; top:77px; font-size:60px; color: #e02842; font-family:Geneva, Arial, Helvetica, sans-serif" class="time" id="timer">   
+            <span style=" float:left;margin-left:10px; width:70px; height:50px;"><i class="hours">00</i></span>
+            <span style=" float:left;margin-left:60px;width:70px; height:50px;"><i class="minutes">00</i></span>
+            <span style=" float:left;margin-left:67px;  width:70px; height:50px;"><i class="seconds">00</i></span>
+   </div>
+ </div>
+</div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_03.jpg) no-repeat center; width:100%; height:420px;"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_04.jpg) no-repeat center; width:100%; height:94px;">
+ <div style="width:450px; height:94px; margin:0 auto">
+  <a style="float:left;cursor: pointer;" id="getticket1"><img style="border:0px;" src="/public/app/b2c/statics/active/51meat/images/51meat_ticket_01.jpg" /></a>
+  <a style="float:left" href="http://www.pzfresh.com/product-1093.html "><img style="border:0px;"  src="/public/app/b2c/statics/active/51meat/images/51meat_ticket_02.jpg" /></a>
+ </div>
+</div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_05.jpg) no-repeat center; width:100%; height:147px;"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_06.jpg) no-repeat center; width:100%; height:426px;">
+ <div style="width:1279px; height:426px; margin:0 auto">
+  <div style="width:200px; height:380px; float:right; color:#FFFFFF; margin-left:5px;">
+  <marquee style="WIDTH: 200px; HEIGHT: 380px" scrollamount="3" direction="up" >
+  <li>13580****869:2份 138元</li>
+  <li>18974****460:1份 69元</li>
+  <li>13800****789:2份 138元</li>
+  <li>15919****746:1份 69元</li>
+  <li>18984****463:2份 138元</li>
+  <li>18976****746:1份 69元</li>
+  <li>13846****563:1份 69元</li>
+  <li>18745****990:2份 138元</li>
+  <li>13980****991:2份 138元</li>
+  <li>15269****990:1份 69元</li>
+  <li>13862****990:2份 138元</li>
+  <li>13746****730:2份 138元</li>
+  <li>18796****990:2份 138元</li>
+  <li>15974****165:2份 138元</li>
+  <li>18653****990:1份 69元</li>
+  <li>13785****894:2份 138元</li>
+  <li>15976****463:2份 138元</li>
+  <li>15937****784:2份 138元</li>
+  <li>18696****796:2份 138元</li>
+  <li>13836****534:1份 69元</li>
+  
+  </marquee >
+  </div>
+ </div>
+</div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_07.jpg) no-repeat center; width:100%; height:87px;">
+  <div style="width:450px; height:94px; margin:0 auto">
+  <a style="float:left;cursor: pointer;" id="getticket2"><img style="border:0px;" src="/public/app/b2c/statics/active/51meat/images/51meat_ticket2_01.jpg" /></a>
+  <a style="float:left" href="http://www.pzfresh.com/product-1429.html"><img style="border:0px;"  src="/public/app/b2c/statics/active/51meat/images/51meat_ticket2_02.jpg" /></a>
+ </div>
+</div>
+<div style=" background:url(/public/app/b2c/statics/active/51meat/images/51meat_09.jpg) no-repeat center ;width:1279px; height:385px; margin:0 auto">
+  <div style="float:left">
+    <a href="http://www.pzfresh.com/product-1093.html " class="51meat_alink" style="float:left;"><img src="/public/app/b2c/statics/active/51meat/images/51meat_pro_01.jpg" /></a>
+    <a href="http://www.pzfresh.com/product-1293.html" class="51meat_alink" style="float:left"><img src="/public/app/b2c/statics/active/51meat/images/51meat_pro_02.jpg" /></a>
+    <a href="http://www.pzfresh.com/product-1219.html" class="51meat_alink" style="float:left"><img src="/public/app/b2c/statics/active/51meat/images/51meat_pro_03.jpg" /></a>
+    <a href="http://www.pzfresh.com/product-1181.html" class="51meat_alink" style="float:left"><img src="/public/app/b2c/statics/active/51meat/images/51meat_pro_04.jpg" /></a>
+  </div>
+</div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_12.jpg) no-repeat center; width:100%; height:390px;"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_14.jpg) no-repeat center; width:100%; height:460px;"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_15.jpg) no-repeat center; width:100%; height:160px;"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_17.jpg) no-repeat center; width:1279px; height:375px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_20.jpg) no-repeat center; width:1279px; height:318px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_23.jpg) no-repeat center; width:1279px; height:314px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_26.jpg) no-repeat center; width:1279px; height:357px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_29.jpg) no-repeat center; width:1279px; height:410px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_32.jpg) no-repeat center; width:1279px; height:517px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_35.jpg) no-repeat center; width:1279px; height:419px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_38.jpg) no-repeat center; width:1279px; height:349px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_41.jpg) no-repeat center; width:1279px; height:647px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_44.jpg) no-repeat center; width:1279px; height:270px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_47.jpg) no-repeat center; width:1279px; height:641px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_50.jpg) no-repeat center; width:1279px; height:498px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_53.jpg) no-repeat center; width:1279px; height:515px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_56.jpg) no-repeat center; width:1279px; height:570px; margin:0 auto"></div>
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_59.jpg) no-repeat center; width:1279px; height:394px; margin:0 auto"></div>
+<div style="background:#8e8574; width:100%; height:189px;">
+<div style="background:url(/public/app/b2c/statics/active/51meat/images/51meat_61.png) no-repeat center; width:1279px; height:188px; margin:0 auto">
+ <a href="/" style=" width:188px; height:188px; display:block "></a>
+</div>
+</div></div>
+<script>
+var timeCount = new Class({
+    inner: {
+        date: '.date',
+        hours: '.hours',
+        minutes: '.minutes',
+        seconds: '.seconds'
+    },
+    initialize:function(timeNow,timeEnd,dom,isReload){
+        this.isReload = isReload || true;
+		if(timeEnd){
+        var diff = Math.abs((timeNow.getTime() - timeEnd.getTime())/1000);
+        var secondDiff = diff % 60;
+        var minuteDiff = ((diff - secondDiff)/60) % 60;
+        var hourDiff = (diff - secondDiff  - minuteDiff*60) / 3600;
+        if(hourDiff > 24){
+            var dayDiff = parseInt(hourDiff/24);
+            hourDiff = hourDiff - dayDiff * 24;
+            var timeDiff = [hourDiff,minuteDiff,secondDiff,dayDiff];
+        }else{
+            var timeDiff = [hourDiff,minuteDiff,secondDiff];
+        }
+        this.s = this.calcTime.periodical(1000,this,{
+            time:timeDiff,
+            dom:dom
+        });
+        if(document.getElement('.desc')){
+            this.desc = 10;
+            this.d = this.calcDesc.periodical(100,this);
+            (function(){$('timer').setStyle('display','block')}).delay(1100);
+        }
+		}
+    },
+    addZero: function(timeDiff){
+        for(var i=0;i<timeDiff.length;i++){
+            if(timeDiff[i].toString().length < 2){
+                timeDiff[i] = "0" + timeDiff[i].toString();
+            }
+        }
+        return timeDiff;
+    },
+    formatToInt: function(timeDiff){
+        for(var i=0;i<timeDiff.length;i++){
+            timeDiff[i] = parseInt(timeDiff[i]);
+        }
+        return timeDiff;
+    },
+    judgeTime: function(timeDiff){
+        if(timeDiff[2]< 0  && timeDiff[1]>0){
+            timeDiff[2] = 59;
+            timeDiff[1]--;
+            return timeDiff;
+        }else if(timeDiff[2] <0 && timeDiff[1]==0 && timeDiff[0]>0){
+            timeDiff[2] = 59;
+            timeDiff[1] = 59;
+            timeDiff[0]--;
+            return timeDiff;
+        }else if(timeDiff[2]==0 && timeDiff[1]==0 && timeDiff[0]==0){
+            clearInterval(this.s);
+            if(document.getElement('.desc')){ clearInterval(this.d); document.getElement('.desc').innerHTML = 0; }
+            if(this.isReload){
+                if(typeOf(this.isReload) == 'function'){
+                    this.isReload();
+                }else{
+                    location.reload();
+                }
+            }
+            return;
+        }
+    },
+    calcTime: function (obj){
+        if(!obj.dom) return;
+        var _timeDiff = obj.time;
+        this.addZero(_timeDiff);
+        this.formatToInt(_timeDiff);
+        _timeDiff[2]--;
+        this.judgeTime(_timeDiff);
+        this.addZero(_timeDiff);
+        var dom = $(obj.dom);
+        var inner = this.inner;
+        dom.date = dom.getElement(inner.date);
+        dom.hours = dom.getElement(inner.hours);
+        dom.minutes = dom.getElement(inner.minutes);
+        dom.seconds = dom.getElement(inner.seconds);
+
+        if(_timeDiff[3]){
+            if(dom.date) dom.date.innerHTML = _timeDiff[3];
+            if(dom.seconds){
+                // var domBox = dom.seconds.getParent('span');
+                // if(domBox) domBox.hide();
+                dom.seconds.innerHTML = _timeDiff[2];
+            }
+            if(dom.minutes) dom.minutes.innerHTML = _timeDiff[1];
+            if(dom.hours) dom.hours.innerHTML = _timeDiff[0];
+        }else{
+            if(dom.date) {
+                var domBox = dom.date.getParent('span');
+                if(domBox) domBox.hide();
+            }
+            if(dom.seconds){
+                dom.seconds.innerHTML = _timeDiff[2];
+            };
+            if(dom.minutes) dom.minutes.innerHTML = _timeDiff[1];
+            if(dom.hours) dom.hours.innerHTML = _timeDiff[0];
+        }
+    },
+    calcDesc:function(){
+        this.desc--;
+        document.getElement('.desc').innerHTML = this.desc;
+        if(this.desc == 0)
+            this.desc = 10;
+    }
+});
+if($('start_time').value!=0){
+	var timeStart =new Date(($('start_time').value)*1000);
+}else{
+	var timeStart = 0;
+}
+var timeNow = new Date;
+
+//根据状态改变显示
+new timeCount(timeNow,timeStart, 'timer');
+
+				$('getticket1').addEvent("click",function(E){
+							var url = '<{link app=b2c ctl=site_getcoupon act=index}>';
+							var myRequest = new Request.JSON({
+                                 url         : url,
+                                 method      : 'post',
+                                 onRequest   : function() {
+
+                                 },
+             			        onSuccess   : function(responseText){
+								
+											if(responseText.success)
+                                                alert(responseText.success);
+											else{
+												alert(responseText.error);
+												if(responseText.url){
+													window.location.href = responseText.url;
+												}
+											}
+                                 },
+             			        onFailure: function(){
+									alert('请求失败');
+                                 }
+                             });
+                             var data    = 'user=<{$member.uname}>';
+                                 data	+= '&coupons_tab=1';
+                             myRequest.send(data);
+							 
+
+});
+$('getticket2').addEvent("click",function(E){
+							var url = '<{link app=b2c ctl=site_getcoupon act=index}>';
+							var myRequest1 = new Request.JSON({
+                                 url         : url,
+                                 method      : 'post',
+                                 onRequest   : function() {
+                                 },
+             			        onSuccess   : function(responseText){
+                                              if(responseText.success)
+                                                alert(responseText.success);
+											else
+												alert(responseText.error);
+                                 },
+             			        onFailure: function(){
+									alert('请求失败');
+                                 }
+                             });
+                             var data    = 'user=<{$member.uname}>';
+                                 data	+= '&coupons_tab=3';
+                             myRequest1.send(data);
+});
+
+</script>
+<script>
+<{*此页不用head和foot，需加上统计代码以便统计*}>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?739e2995d40f81cbaf33e2e48d91a272";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>

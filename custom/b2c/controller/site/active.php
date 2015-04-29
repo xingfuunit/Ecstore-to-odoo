@@ -29,7 +29,7 @@ class b2c_ctl_site_active extends b2c_frontpage{
         
     }
 
-    public function index(){       
+    public function index(){
     	  $this->title = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
     	  $this->keywords = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
     	  $this->description = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
@@ -37,11 +37,66 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	  if(!$active_name){
     	  	$this->redirect('/');
     	  }
+    	  if($active_name=='51meat'){
+    	  	$this->member = $this->get_current_member();
+    	  	$this->pagedata['member'] = $this->member;
+    	  	$this->meat_active_get_time();
+    	  }
 		  $this->pagedata['IMG_PZFRESH'] = IMG_PZFRESH;
     	  $this->pagedata['active_name'] = $active_name;
-          $this->page('site/active/'.$active_name.'/index.html');
+    	  $active = array(
+    	  		'51meat',//51活动
+    	  		'mqj',//母亲节
+    	  		);
+          if(in_array($active_name,$active)){
+          	$this->page('site/active/'.$active_name.'/index.html',true);//活动页面全屏，不要head和foot
+          }else{
+          	$this->page('site/active/'.$active_name.'/index.html');
+          }
     }
-    
+    private function meat_active_get_time(){
+    	//结束日期
+    	$s_date = '2015-05-06 00:00:00';
+    	$date1 = strtotime($s_date);
+    	$date2 = time();
+    	$d1= getdate();
+    	if($date2<$date1){
+    		if($d1['hours']<10){
+    			$d = new DateTime("10:00", new DateTimeZone("Asia/Shanghai"));//每日开始时间
+    			$d2 = $d->format("Y-m-d H:i:s");
+    			$start_time = strtotime($d2);
+    		}else{
+    			$start_time = 0;
+    		}
+    	
+    	}
+    	$this->pagedata['start_time'] = $start_time;
+    	
+    	//是否已抢50份
+    	$db = kernel::database();
+    			$cpns_prefix = 'BXSP';
+    			$coupons_arr = $this->app->model('coupons')->getList("*",array('cpns_prefix'=>$cpns_prefix));
+    			$coupons_id = $coupons_arr[0]['cpns_id'];
+    			
+    	//每天限50张start
+    	$d = new DateTime("00:00:00", new DateTimeZone("Asia/Shanghai"));//每日开始时间
+    	$d2 = $d->format("Y-m-d H:i:s");
+    	$s_time = strtotime($d2);
+    	$d = new DateTime("23:59:59", new DateTimeZone("Asia/Shanghai"));//每日开始时间
+    	$d2 = $d->format("Y-m-d H:i:s");
+    	$e_time = strtotime($d2);
+
+    	$sql = 'select count(*) as count from sdb_b2c_member_coupon where '.' cpns_id=\''.$coupons_id.'\' and memc_gen_time>\''.$s_time.'\' and  memc_gen_time<\''.$e_time.'\'';
+
+    	//error_log($sql);
+    	$row = $db->select($sql);
+    	if($row && $row[0]['count']>=50){
+    		$this->pagedata['qiangwan'] = true;
+    	}else{
+    		$this->pagedata['qiangwan'] = false;
+    	}
+    	//每天限50张end
+    }
     /**
      * 金枪鱼众筹 活动
      */
@@ -117,7 +172,7 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	}
     	$this->pagedata['count'] = $count_arry;
     	$this->page('site/active/meatstyle/index.html');
-    }
+    }   
     
 
     public function postdata(){

@@ -723,21 +723,33 @@ function  loadGoods(el) {
     Cookie.write('checkout_b2c_goods_buy_info', goods_info, {path:Shop.base_url});
     order.goods.filled(goods_info);
 }
+
 //设当前选中状态
 function switchSelected(el, load) {
     var parent = (el.match('li') ? el : el.getParent('li')).addClass('selected');
     var label = parent.getElement('label');
-    parent.retrieve('html:source') || label && parent.store('html:source', label.innerHTML);
+    
+    //-- edit start author:francis
+    label && parent.store('html:source', label.innerHTML);
+    // 修改收货地址时，html:source 有改动，但是如果已经设置了 html:source ，那么就不会修改 html:source，
+    // 造成下次switchSelected时，会使用原有的未修改的html:source覆盖修改完成后的html
+    // @see cover-label-html@switchSelected
+    // parent.retrieve('html:source') || label && parent.store('html:source', label.innerHTML);
+    //-- edit end
+
     if(el.match('li') || el.hasClass('action-edit-address')) {
         if(Browser.ie) order.shipping.change.getElement('.action-change-shipping:checked').checked = false;
         parent.getElement('.action-change-shipping').checked = true;
     }
     load && loadShipping(el);
     var selected = parent.getSiblings('li.selected')[0];
+    
+    // cover-label-html@switchSelected
     if(selected) {
         selected.removeClass('selected').retrieve('html:source') && selected.getElement('label').set('html', selected.retrieve('html:source'));
     }
 }
+
 //= 保存收货地址
 function saveShipping(el) {
     var parent = el.getParent('li');
