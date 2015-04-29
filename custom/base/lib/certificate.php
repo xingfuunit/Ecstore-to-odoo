@@ -205,7 +205,13 @@ class base_certificate{
      * pz 矩阵认证处理
      */
     static public function pz_matrix_sign($params){
-    	return md5(MATRIX_CERTI.MATRIX_KEY.$params['matrix_timestamp']);
+    	if($params['method'] == 'ectools.branch.sync'){//这里是仓库同步,需要用回原来的sign
+    		return strtoupper(md5(strtoupper(md5(self::assemble($params))) . self::token()));
+    	}else{
+    		return md5(MATRIX_CERTI.MATRIX_KEY.$params['matrix_timestamp']);
+    	}
+    	 
+    	
     }
     
     static function assemble($params) 
