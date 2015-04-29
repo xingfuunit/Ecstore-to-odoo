@@ -59,15 +59,16 @@ function index(){
     			$coupons_arr = $this->app->model('coupons')->getList("*",array('cpns_prefix'=>$cpns_prefix));
     			$coupons_id = $coupons_arr[0]['cpns_id'];
     		}
-    		if(empty($_POST['user'])){
+    		/* if(empty($_POST['user'])){
     			echo json_encode(array('error'=>'您还没有登录，请登录'));
     			return;
-    		}
+    		} */
     		//$member_id = $userObject->get_member_id_by_username($_POST['user']);
     		$this->member = $this->get_current_member();
     		$member_id = $this->member['member_id'];
     		if (empty($member_id)){
-    			echo json_encode(array('error'=>'用户名:'.$_POST['user'].'不存在！'));
+    			echo json_encode(array('error'=>'您还没有登录，请登录'));
+    			//echo json_encode(array('error'=>'用户名:'.$_POST['user'].'不存在！'));
     			return;
     		}
     		$member_ids = array();
