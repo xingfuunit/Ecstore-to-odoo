@@ -232,8 +232,8 @@ class b2c_user_object{
             foreach((array)$data as $row){
                 $arr_name[$row['login_type']] = $row['login_account'];
             }
-            
-           if(isset($row_member[0]['tag_name'])){
+			$row_member[0]['tag_name'] = trim($row_member[0]['tag_name']);
+           if(!empty($row_member[0]['tag_name'])){
                $login_name = $row_member[0]['tag_name'];
            }else{
             if( isset($arr_name['local']) ){
