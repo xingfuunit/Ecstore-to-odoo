@@ -17,7 +17,7 @@
  * @author Wanglei <flaboy@zovatech.com>
  * @license Commercial
  */
-class b2c_ctl_site_getcoupon extends b2c_frontpage {
+class b2c_ctl_wap_getcoupon extends wap_frontpage {
 function index(){
 
 	$s_date = '2015-05-06 00:00:00';
@@ -60,14 +60,14 @@ function index(){
     			$coupons_id = $coupons_arr[0]['cpns_id'];
     		}
     		/* if(empty($_POST['user'])){
-    			echo json_encode(array('error'=>'您还没有登录，请登录','url'=>$this->gen_url( array('app'=>'b2c','ctl'=>'site_passport','act'=>'login') )));
+    			echo json_encode(array('error'=>'您还没有登录，请登录'));
     			return;
     		} */
     		//$member_id = $userObject->get_member_id_by_username($_POST['user']);
     		$this->member = $this->get_current_member();
     		$member_id = $this->member['member_id'];
     		if (empty($member_id)){
-    			echo json_encode(array('error'=>'您还没有登录，请登录','url'=>$this->gen_url( array('app'=>'b2c','ctl'=>'site_passport','act'=>'login') )));
+    			echo json_encode(array('error'=>'您还没有登录，请登录'));
     			//echo json_encode(array('error'=>'用户名:'.$_POST['user'].'不存在！'));
     			return;
     		}
@@ -102,7 +102,6 @@ function index(){
     		$d2 = $d->format("Y-m-d H:i:s");
     		$e_time = strtotime($d2);
     		$sql = 'select count(*) as count from sdb_b2c_member_coupon where '.' cpns_id=\''.$coupons_id.'\' and memc_gen_time>\''.$s_time.'\' and  memc_gen_time<\''.$e_time.'\'';
-    		//error_log($sql);
     		$row = $db->select($sql);
     		if($row && $row[0]['count']>=50){
     			echo json_encode(array('error'=>'亲！优惠券领完了，明天继续喔'));

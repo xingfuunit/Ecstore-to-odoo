@@ -340,7 +340,7 @@ class b2c_order_iframe extends base_controller{
 
         $objPayment = app::get('ectools')->model('payment_cfgs');
         
-        $aRet = $objPayment->getList('*', array('status' => 'true', 'platform'=>array('iscommon','ispc','iswap'), 'is_frontend' => true));
+        $aRet = $objPayment->getList('*', array('status' => 'true', 'platform'=>array('iscommon','ispc','iswap','iswx'), 'is_frontend' => true));
         if (!$aORet['member_id'])
         {
             if ($aRet)
