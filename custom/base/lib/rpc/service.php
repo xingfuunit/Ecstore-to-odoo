@@ -35,10 +35,6 @@ class base_rpc_service{
             $this->process_rpc();
         }else{
 			if(strpos($path, '/openapi') !== false){								
-				if($_POST['matrix_certi']){
-					error_log('in sleep');
-					sleep(1);
-				}
 				error_log('ec_callback:'.print_r($_POST,1));
 				$args = explode('/',substr($path,9));
 				$service_name = 'openapi.'.array_shift($args);
