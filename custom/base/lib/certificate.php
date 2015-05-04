@@ -208,7 +208,7 @@ class base_certificate{
     	if($params['method'] == 'ectools.branch.sync'){//这里是仓库同步,需要用回原来的sign
     		return strtoupper(md5(strtoupper(md5(self::assemble($params))) . self::token()));
     	}else{
-    		return md5(MATRIX_TO_NODE.MATRIX_KEY.$params['matrix_timestamp']);
+    		return md5($params['node_id'].MATRIX_KEY.$params['matrix_timestamp']);
     	}
     	 
     	
