@@ -26,6 +26,7 @@ class base_httpclient{
 
     function post($url,$data,$headers=null,$callback=null,$ping_only=false){
     	if(PZ_MATRIX == '1'){
+    		$data['matrix_certi'] = MATRIX_CERTI;
     		$data['matrix_timestamp'] = time();
     		$data['sign'] = md5(MATRIX_CERTI.MATRIX_KEY.$data['matrix_timestamp']);   		 
     		return $this->netcore->action(__FUNCTION__,MATRIX_URL,$headers,$callback,$data,$ping_only);
