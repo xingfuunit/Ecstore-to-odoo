@@ -73,18 +73,22 @@ class b2c_order_iframe extends base_controller{
     {
         
         $secret_key = $params['secret_key'];
-        if( !$this->check_secret_key($secret_key) ) {
-            exit('server reject');
+        //pz矩阵不校验key
+        if(!PZ_MATRIX){
+        	
+	        if( !$this->check_secret_key($secret_key) ) {
+	            exit('server reject');
+	        }
+	        else {
+	            $new_secret_key = $secret_key . '.edited';
+	            $this->change_secret_key( $secret_key, $new_secret_key );
+	        }
         }
-        else {
-            $new_secret_key = $secret_key . '.edited';
-            $this->change_secret_key( $secret_key, $new_secret_key );
-        }
-
-        if( !( $orderid = $params['tid'] ) )
+	        
+	    if( !( $orderid = $params['tid'] ) )
             exit('server reject');
-
-        if( !( $notify_url = base64_decode(str_replace('%252F', '/', $params['notify_url'])) ) )
+	
+	    if( !( $notify_url = base64_decode(str_replace('%252F', '/', $params['notify_url'])) ) )
             exit('server reject');
 
         $objOrder = $this->app->model('orders');
