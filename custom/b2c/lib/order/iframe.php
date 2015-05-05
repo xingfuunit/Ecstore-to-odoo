@@ -397,12 +397,16 @@ class b2c_order_iframe extends base_controller{
 
     public function save($params)
     {
-        $secret_key = $_POST['secret_key'];
-        //校验key
-        if( !$this->check_secret_key($secret_key) )
-        {
-            header('Content-Type:text/jcmd; charset=utf-8');
-            echo '{error:"server reject",_:null}';exit;
+    	$secret_key = $_POST['secret_key'];
+        
+        //pz矩阵不校验key
+        if(!PZ_MATRIX){
+	        //校验key
+	        if( !$this->check_secret_key($secret_key) )
+	        {
+	            header('Content-Type:text/jcmd; charset=utf-8');
+	            echo '{error:"server reject",_:null}';exit;
+	        }
         }
 
 
