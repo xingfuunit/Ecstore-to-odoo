@@ -494,7 +494,7 @@ class wap_controller extends base_controller
             $this->extract_widgets_css($html);
             $html = str_replace('<%wap_widgets_css%>', app::get('wap')->base_url(1).'widgetsproinstance-get_css-'.$current_theme.'-'.base64_encode($tmpl_file).'.html', $html);
 
-            #图片地址替换 by francis
+            //图片地址替换 by francis
             if (defined('IMG_SERVER')) {
                 $img_array = unserialize(constant('IMG_SERVER'));
                 if ($img_array) {
