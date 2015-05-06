@@ -17,7 +17,11 @@ class base_httpclient{
 	}
     function get($url,$headers=null,$callback=null,$ping_only=false){
     	if(PZ_MATRIX == '1'){
-    		return $this->netcore->action(__FUNCTION__,MATRIX_URL,$headers,$callback,null,$ping_only);
+    		if(in_array($url, unserialize(PZ_PASS_URL))){
+    			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
+    		}else{
+    			return $this->netcore->action(__FUNCTION__,MATRIX_URL,$headers,$callback,null,$ping_only);
+    		}
     	}else{
     		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     	}
@@ -26,10 +30,14 @@ class base_httpclient{
 
     function post($url,$data,$headers=null,$callback=null,$ping_only=false){
     	if(PZ_MATRIX == '1'){
-    		$data['matrix_certi'] = MATRIX_CERTI;
-    		$data['matrix_timestamp'] = time();
-    		$data['sign'] = md5(MATRIX_CERTI.MATRIX_KEY.$data['matrix_timestamp']);   		 
-    		return $this->netcore->action(__FUNCTION__,MATRIX_URL,$headers,$callback,$data,$ping_only);
+    		if(in_array($url, unserialize(PZ_PASS_URL))){
+    			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
+    		}else{
+    			$data['matrix_certi'] = MATRIX_CERTI;
+    			$data['matrix_timestamp'] = time();
+    			$data['sign'] = md5(MATRIX_CERTI.MATRIX_KEY.$data['matrix_timestamp']);
+    			return $this->netcore->action(__FUNCTION__,MATRIX_URL,$headers,$callback,$data,$ping_only);
+    		}    		
     	}else{
         	return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     	}
