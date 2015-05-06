@@ -35,9 +35,7 @@ class base_rpc_caller{
     public function call($method,$params,$rpc_id=null,$gzip=false){
 
         $api_log = kernel::single('apiactionlog_router_logging');
-        error_log('rpc_id0:'.$rpc_id);
         $rpc_id = $api_log->request_log($method,$params,$rpc_id);
-        error_log('rpc_id1:'.$rpc_id);
         if(!$rpc_id){
             $microtime = utils::microtime();
             $rpc_id = str_replace('.','',strval($microtime));
@@ -45,7 +43,6 @@ class base_rpc_caller{
             $rpc_id .= strval($randval);
             $rpc_id = md5($rpc_id);
         }
-        error_log('rpc_id2:'.$rpc_id);
         $headers = array(
             /*'Connection'=>$this->timeout,*/
             'Connection'=>'Close',
@@ -88,10 +85,8 @@ class base_rpc_caller{
             $query_params['sign'] = kernel::single('system_shopmatrix')->get_sign($query_params,base_shopnode::node_id($this->app->app_id));
             $url = kernel::single('system_shopmatrix')->get_api_url(base_shopnode::node_id($this->app->app_id));
         }
-        error_log('ec_send_to_matrix'.print_r($query_params,1));
         $core_http = kernel::single('base_httpclient');
         $response = $core_http->set_timeout($this->timeout)->post($url,$query_params,$headers);
-        error_log('ec_resp_from_matrix:'.$response);
         logger::info('Response: '.$response);
         
         if($response===HTTP_TIME_OUT){

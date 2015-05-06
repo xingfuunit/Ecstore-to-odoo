@@ -303,7 +303,6 @@ class b2c_ctl_site_order extends b2c_frontpage{
                     $obj_order_create->rpc_caller_request($order_data);
                     }*/
               //新的版本控制api
-              error_log('webpos_data:'.print_r($order_data,1));
               $obj_apiv = kernel::single('b2c_apiv_exchanges_request');
               $obj_apiv->rpc_caller_request($order_data, 'ordercreate');
             }

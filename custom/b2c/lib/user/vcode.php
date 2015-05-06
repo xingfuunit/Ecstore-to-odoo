@@ -30,10 +30,7 @@ class b2c_user_vcode{
     public function set_vcode($account,$type='signup',&$msg){
         $vcodeData = $this->get_vcode($account,$type);
         if($vcodeData && !strpos($account,'@')){
-            if( $vcodeData['createtime'] == date('Ymd') && $vcodeData['count'] == 6 ){
-                $msg = $this->app->_('每天只能进行6次验证');
-                return false;
-            }
+            
 
             if( time() - $vcodeData['lastmodify'] < 120 ){
                $msg = $this->app->_('2分钟发送一次,还没到两分钟则不进行发送');

@@ -35,7 +35,6 @@ class base_rpc_service{
             $this->process_rpc();
         }else{
 			if(strpos($path, '/openapi') !== false){								
-				error_log('ec_callback:'.print_r($_POST,1));
 				$args = explode('/',substr($path,9));
 				$service_name = 'openapi.'.array_shift($args);
 				$method = array_shift($args);
@@ -198,9 +197,7 @@ class base_rpc_service{
         set_error_handler(array(&$this,'user_error_handle'),E_USER_ERROR);
 
         $this->start_time = $_SERVER['REQUEST_TIME']?$_SERVER['REQUEST_TIME']:time();
-        error_log("ec_get_from_matrix:".print_r($_REQUEST,1));
         list($service,$method,$params) = $this->parse_rpc_request($_REQUEST);
-        error_log('service:'.$service.'-method:'.$method.'-class:'.$api_module['class']);
         $data = array(
             'apilog'=>$_REQUEST['task'],
             'calltime'=>$this->start_time,
@@ -259,7 +256,6 @@ class base_rpc_service{
         );
 
         $this->rpc_response_end($result, $this->process_id, $result_json);
-        error_log('ec_result_jason:'.print_r($result_json,1));
         echo json_encode($result_json);
     }
 

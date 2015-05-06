@@ -20,24 +20,13 @@ class b2c_ctl_site_sync {
 		$erpData = kernel::single('base_db_connect')->select($sql);
 
 		if($erpData){
-			error_log(date("Y-m-d H:i:s")."	".json_encode($erpData)."\n",3,ROOT_DIR.'/data/logs/sync_branch_log.php');
 			$ids = array();
 			foreach ($erpData as $key=>$value) {
 					$sql ='SELECT branch_id,branch_name_user from sdb_b2c_orders where order_id = \''.$value['order_bn'].'\'';
-
 					$ecData = kernel::database()->select($sql);
-					$ecData = $ecData[0];
-					
-					$sql = 'UPDATE sdb_ome_orders SET branch_id='.'\''.$ecData['branch_id'].'\''.' , '.'branch_name_user='.'\''.$ecData['branch_name_user'].'\''.' WHERE order_bn='.'\''.$value['order_bn'].'\'';
-
-					error_log("	".$sql,3,ROOT_DIR.'/data/logs/sync_branch_log.php');
-					
-					$erpSync = kernel::single('base_db_connect')->select($sql);
-					
-					error_log("	".json_encode($erpSync)."\n",3,ROOT_DIR.'/data/logs/sync_branch_log.php');
-					
-					
-					
+					$ecData = $ecData[0];					
+					$sql = 'UPDATE sdb_ome_orders SET branch_id='.'\''.$ecData['branch_id'].'\''.' , '.'branch_name_user='.'\''.$ecData['branch_name_user'].'\''.' WHERE order_bn='.'\''.$value['order_bn'].'\'';					
+					$erpSync = kernel::single('base_db_connect')->select($sql);					
 			}			
 		}
 		echo '--end--'; 
