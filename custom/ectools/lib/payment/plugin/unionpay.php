@@ -153,7 +153,6 @@ final class ectools_payment_plugin_unionpay extends ectools_payment_app implemen
             "origQid"=>"",//交易流水号
             "merReserved"=>"",//商户保留域
         );
-		error_log('do_payment:'.print_r($args,1));
         //生成签名
         $chkvalue = $this->sign($args, 'MD5',$mer_key);
         //循环给表单赋值

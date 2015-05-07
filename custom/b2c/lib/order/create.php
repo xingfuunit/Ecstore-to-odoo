@@ -616,7 +616,6 @@ class b2c_order_create extends b2c_api_rpc_request
         }
         else
         {
-        	error_log('save order_id:'.$order_id);
             return true;
         }
     }

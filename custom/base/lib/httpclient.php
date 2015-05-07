@@ -17,6 +17,13 @@ class base_httpclient{
 	}
     function get($url,$headers=null,$callback=null,$ping_only=false){
     	if(PZ_MATRIX == '1'){
+    		//发送端区分同步异步
+    		if(strstr(strtolower($url),'sync')){
+    			$url = MATRIX_URL.'/sync';
+    		}else{
+    			$url = MATRIX_URL;
+    		}
+    		
     		if(in_array($url, unserialize(PZ_PASS_URL))){
     			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     		}else{
@@ -29,7 +36,14 @@ class base_httpclient{
     }
 
     function post($url,$data,$headers=null,$callback=null,$ping_only=false){
-    	if(PZ_MATRIX == '1'){
+    	if(PZ_MATRIX == '1'){    		
+    		//发送端区分同步异步
+    		if(strstr(strtolower($url),'sync')){
+    			$url = MATRIX_URL.'/sync';
+    		}else{
+    			$url = MATRIX_URL;
+    		}    	
+    			
     		if(in_array($url, unserialize(PZ_PASS_URL))){
     			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     		}else{

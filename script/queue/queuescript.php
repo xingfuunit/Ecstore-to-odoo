@@ -30,7 +30,6 @@ if (!isset($argv[1])) {
 $queue_name = $argv[1];
 
 if($queue_message = system_queue::instance()->get($queue_name)){
-	error_log("queue_message:".print_r($queue_message,1));
     system_queue::instance()->run_task($queue_message);
     //echo $queue_message->get_id();
     system_queue::instance()->ack($queue_message);
