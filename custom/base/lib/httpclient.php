@@ -21,7 +21,7 @@ class base_httpclient{
     			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     		}else{
     			//发送端区分同步异步
-    			if(strstr(strtolower($url),'sync')){
+    			if(strstr(strtolower($url),'/sync')){
     				$url = MATRIX_URL.'/sync';
     			}else{
     				$url = MATRIX_URL;
@@ -40,7 +40,7 @@ class base_httpclient{
     			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     		}else{    			
     			//发送端区分同步异步
-    			if(strstr(strtolower($url),'sync')){
+    			if(strstr(strtolower($url),'/sync')){
     				$url = MATRIX_URL.'/sync';
     			}else{
     				$url = MATRIX_URL;
