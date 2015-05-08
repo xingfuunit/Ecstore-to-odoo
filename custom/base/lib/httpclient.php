@@ -16,18 +16,23 @@ class base_httpclient{
 		}
 	}
     function get($url,$headers=null,$callback=null,$ping_only=false){    	
-    	if(PZ_MATRIX == '1'){    		    		
-    		if(in_array($url, unserialize(PZ_PASS_URL))){
-    			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
-    		}else{
-    			//发送端区分同步异步
-    			if(strstr(strtolower($url),'/sync')){
-    				$url = MATRIX_URL.'/sync';
-    			}else{
-    				$url = MATRIX_URL;
+    	if(PZ_MATRIX == '1'){  
+    		$url_array = unserialize(PZ_PASS_URL);
+    		foreach($url_array as $ua){
+    			if(strstr(strtolower($url),$ua)){
+    				return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     			}
-    			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
+    		}		    		
+    			//发送端区分同步异步
+    		if(strstr(strtolower($url),'/sync')){
+    			$url = MATRIX_URL.'/sync';
+    		}else{
+    			$url = MATRIX_URL;
     		}
+    		$data['matrix_certi'] = MATRIX_CERTI;
+    		$data['matrix_timestamp'] = time();
+    		$data['sign'] = md5(MATRIX_CERTI.MATRIX_KEY.$data['matrix_timestamp']);
+    		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     	}else{
     		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     	}
@@ -36,20 +41,22 @@ class base_httpclient{
 
     function post($url,$data,$headers=null,$callback=null,$ping_only=false){
     	if(PZ_MATRIX == '1'){    		   	    			
-    		if(in_array($url, unserialize(PZ_PASS_URL))){
-    			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
-    		}else{    			
-    			//发送端区分同步异步
-    			if(strstr(strtolower($url),'/sync')){
-    				$url = MATRIX_URL.'/sync';
-    			}else{
-    				$url = MATRIX_URL;
-    			}    			
-    			$data['matrix_certi'] = MATRIX_CERTI;
-    			$data['matrix_timestamp'] = time();
-    			$data['sign'] = md5(MATRIX_CERTI.MATRIX_KEY.$data['matrix_timestamp']);
-    			return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
-    		}    		
+    		$url_array = unserialize(PZ_PASS_URL);
+    		foreach($url_array as $ua){
+    			if(strstr(strtolower($url),$ua)){
+    				return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
+    			}
+    		}	    			
+    		//发送端区分同步异步
+    		if(strstr(strtolower($url),'/sync')){
+    			$url = MATRIX_URL.'/sync';
+    		}else{
+    			$url = MATRIX_URL;
+    		}    			
+    		$data['matrix_certi'] = MATRIX_CERTI;
+    		$data['matrix_timestamp'] = time();
+    		$data['sign'] = md5(MATRIX_CERTI.MATRIX_KEY.$data['matrix_timestamp']);
+    		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     	}else{
         	return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     	}
