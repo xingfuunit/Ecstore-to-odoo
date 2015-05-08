@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="images/styles.css" />
+    <{wapheader}>
+</head>
+<body>
+    <div class="main">
+        <{wap_require file="block/header_cat.html"}>
+        <{wap_main}>
+        <{wap_require file="block/footer.html"}>
+    </div>
+</body>
+<script>
+    $('.gallery-header .cat-name').click(function(){
+        $('#list_fruit').toggle();
+    });
+</script>
+</html>
