@@ -16,7 +16,7 @@ class base_httpclient{
 		}
 	}
     function get($url,$headers=null,$callback=null,$ping_only=false){    	
-    	if(PZ_MATRIX == '1'){  
+    	if(PZ_MATRIX == '1' && strstr(strtolower($url),'shopex.cn')){  
     		$url_array = unserialize(PZ_PASS_URL);
     		foreach($url_array as $ua){
     			if(strstr(strtolower($url),$ua)){
@@ -40,7 +40,7 @@ class base_httpclient{
     }
 
     function post($url,$data,$headers=null,$callback=null,$ping_only=false){
-    	if(PZ_MATRIX == '1'){    		   	    			
+    	if(PZ_MATRIX == '1' && strstr(strtolower($url),'shopex.cn')){    		   	    			
     		$url_array = unserialize(PZ_PASS_URL);
     		foreach($url_array as $ua){
     			if(strstr(strtolower($url),$ua)){
