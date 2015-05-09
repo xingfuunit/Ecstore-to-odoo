@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?><theme>
+    <name>品珍专属模板</name>
+    <id>pinzhen</id>
+    <version>0.1</version>
+    <info>1211</info>
+    <author>by</author>
+    <site></site>
+    <update_url></update_url>
+
+    <borders>
+            </borders>
+    <views>
+            </views>
+    <config>      
+            </config>
+
+    <widgets>
+                <widget app="" theme="pinzhen" file="default.html" slot="3" type="brand_list" order="12" title="" domid="1346304537697" border="__none__" classname="" tpl="default.html" coreid="hot_brand">
+        <![CDATA[a:0:{}]]>
+        </widget>
+                <widget app="" theme="pinzhen" file="index.html" slot="1" type="main_slide" order="0" title="" domid="1372139582395" border="__none__" classname="" tpl="default.html" coreid="main_slide">
+        <![CDATA[a:1:{s:3:&quot;pic&quot;;a:3:{i:1422351685535;a:4:{s:2:&quot;id&quot;;s:13:&quot;1422351685535&quot;;s:4:&quot;link&quot;;s:109:&quot;http://shopadmin.pzfresh.com/public/images/5a/73/77/ba028f6ed0b3051d0701c3110e00a22dd4f50587.jpg?1423816286#w&quot;;s:10:&quot;linktarget&quot;;s:57:&quot;http://www.pzfresh.com/wap/gallery.html?scontent=n,德运&quot;;s:8:&quot;linkinfo&quot;;s:12:&quot;牛奶促销&quot;;}i:1423444477442;a:4:{s:2:&quot;id&quot;;s:13:&quot;1423444477442&quot;;s:4:&quot;link&quot;;s:109:&quot;http://shopadmin.pzfresh.com/public/images/06/fb/2d/cf4f066848dbd2206acf16f6ba98bf57ee0b1858.jpg?1423560577#w&quot;;s:10:&quot;linktarget&quot;;s:1:&quot;#&quot;;s:8:&quot;linkinfo&quot;;s:12:&quot;春节促销&quot;;}i:1423816171049;a:4:{s:2:&quot;id&quot;;s:13:&quot;1423816171049&quot;;s:4:&quot;link&quot;;s:109:&quot;http://shopadmin.pzfresh.com/public/images/62/08/0a/11c6403dd92ea4a03e8e9d9b3a9941795f718134.jpg?1423444617#w&quot;;s:10:&quot;linktarget&quot;;s:1:&quot;#&quot;;s:8:&quot;linkinfo&quot;;s:24:&quot;关注微信参与抽奖&quot;;}}}]]>
+        </widget>
+                <widget app="" theme="pinzhen" file="index.html" slot="0" type="custom_html" order="1" title="" domid="1423561827858" border="__none__" classname="" tpl="default.html" coreid="main_slide">
+        <![CDATA[a:1:{s:10:&quot;usercustom&quot;;s:341:&quot;&lt;font size=&quot;2&quot; color=&quot;#ff0000&quot;&gt;&lt;b&gt;
+&amp;nbsp;通知：&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#b45f06&quot; size=&quot;2&quot;&gt;因快递蜀黍回家过年，2月14日-2月24日将停止发货。截单时间：佛山地区2月13日下午4点前，其余地区为2月13日前。春节期间可正常下单，2月25日起优先发货。品珍鲜活祝各位新年快乐！&lt;/font&gt;&quot;;}]]>
+        </widget>
+            </widgets>
+
+</theme>
