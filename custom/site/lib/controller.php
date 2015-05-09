@@ -433,16 +433,16 @@ class site_controller extends base_controller
 
         $this->pre_display($content);
 
-		#图片地址替换 by michael
+        #图片地址替换 by michael
         if (defined('IMG_SERVER')) {
-        	$img_array = unserialize(constant('IMG_SERVER'));
-        	if ($img_array) {
-	        	foreach ($img_array as $key=>$value) {
-	        		$content = str_replace($key,$value,$content);
-	        	}
-        	}
+            $img_array = unserialize(constant('IMG_SERVER'));
+            if ($img_array) {
+                foreach ($img_array as $key=>$value) {
+                    $content = str_replace($key,$value,$content);
+                }
+            }
         }
-		
+       
         if($fetch === true){
             return $content;
         }else{
