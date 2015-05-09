@@ -173,6 +173,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
 #            }
 #        }
 
+        
         if(in_array('product-index', $this->weixin_share_page)){
             $this->pagedata['from_weixin'] = $this->from_weixin;
             $this->pagedata['weixin']['appid'] = $this->weixin_a_appid;

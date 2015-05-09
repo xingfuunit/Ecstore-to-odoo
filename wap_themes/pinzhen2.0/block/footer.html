@@ -1,191 +1,28 @@
-<div class="block"></div>
-<div id="footer_menu">
-    <ul class="tbl">
-        <li>
-            <a href="gallery-cat.html">
-                <span class="channel-icon icon"></span>
-                <span class="tle">频道</span>
-            </a>
-        </li>
-        <li>
-            <a href="<{link app=b2c ctl=wap_cart act=index}>">
-                <span class="cart-icon icon"></span>
-                <span class="tle">购物车</span>
-            </a>
-        </li>
-        <li>
-            <a href="<{link app=b2c ctl=wap_gallery act=index}>?scontent=特惠&virtual_cat_id=2">
-                <span class="th-icon icon"></span>
-                <span class="tle">特惠</span>
-            </a>
-        </li>
-        <li>
-            <a href="<{link app=b2c ctl=wap_member act=index}>">
-                <span class="uc-icon icon"></span>
-                <span class="tle">个人中心</span>
-            </a>
-        </li>
-    </ul>
-    <div class="return_div" style="display:none;"><label><i id="cur_page">1</i>/<i id="page_total"></i></label></div>
-    <a class="return_top" style="display:none;" onclick="gotoTOP();"></a>
+<div class="full-screen">
+    <div class="home-nav-down">
+        <table width="100%">
+            <tr>
+                <td><a href="./">首页</a></td>
+                <td><a href="<{link app=b2c ctl=wap_gallery act=cat}>" class="item bg1">商品分类</a></td>
+                <td><a href="<{link app=b2c ctl=wap_cart act=index}>" class="item bg2">购物车</a></td>
+                <td><a href="<{link app=b2c ctl=wap_member act=favorite}>" class="item bg3">收藏</a></td>
+                <td><a href="<{link app=b2c ctl=wap_member act=orders}>" class="item bg4">订单</a></td>
+                <td><a href="<{link app=b2c ctl=wap_member act=index}>" class="item bg5">会员</a></td>
+            </tr>
+        </table>
+    </div>
+    <div class="home-to-top">
+        <a href="#" class="to-top">返回顶部</a>
+        <div id="footerlogin">
+        <a href="<{link app=b2c ctl=wap_passport act=login}>" class="lnk">登陆</a> | <a href="<{link app=b2c ctl=wap_passport act=signup}>" class="lnk">注册</a>
+        </div>
+        <div id="footerlogout" style="display:none">
+        您好，<span id="footerloginuname"></span>！| <a href="<{link app=b2c ctl=wap_passport act=logout}>" class="lnk">退出</a>
+        </div>
+    </div>
+    <div class="footer">
+        触屏版 | <a href="<{$env.pc_url}>?ignore_ua_check=1" class="lnk">电脑版</a>
+        <{wapfooter}>
+    </div>
 </div>
-<div class="bq">
-    <{wapfooter}>
-</div>
-<script>
-    //document.addEventListener('DOMContentLoaded', loaded, false);
-    (function(){
-        var url='<{link app=b2c ctl=wap_gallery act=index_scroll_goods}>';
-        var page = 1;
-        var pagetotal = 2;
-        var total = 0;
-        var post = $('#loading2').length;
-        var sear = location.search ? location.search.substr(1) : '';
-        var form_data = $('#j_form').length ? $('#j_form').serialize() : '';
-        var params = ['showtype=all','page='+page, sear, form_data].filter(function(d){return d;}).join('&');
-        if(post){
-            $.get(url,params,function(data){
-                if(data && data.html){
-                    $('.img_list').append(data.html);
-                    $('#page_total').text(data.total);
-                    total = data.total;
-                    pagetotal = data.pagetotal;
-                    hid_load();
-                    var img = $('.img_list img:first');
-                    img.attr('src',img.attr('img'));
-                    img.attr('img','');
-                    $('.img_list li').scrollspy().on('inview:scrollspy:amui', _load_img);
-                    if(total > 0) {
-                        $('.scrollspy').scrollspy().on('inview:scrollspy:amui', function () {
-                            $(".return_div").show();
-                        });
-                    }
-                }
-            },'json');
-        }
-
-        function request_post(){
-            page++;
-            params = ['showtype=all','page='+page, sear, form_data].filter(function(d){return d;}).join('&');
-            $.get(url, params, function (data) {
-                if (data.html) {
-                    $('.img_list').append(data.html);
-                    $('#page_total').text(data.total);
-                    total = data.total;
-                    pagetotal = data.pagetotal;
-                    hid_load();
-                    $('.img_list li').scrollspy().on('inview:scrollspy:amui', _load_img);
-                }
-            }, 'json');
-        }
-
-        function _load_img(){
-            var img = $(this).find('img');
-            var pic = img.attr('img');
-            if(pic){
-                img.css('opacity',0);
-                img.attr('src',pic);
-                img.attr('img','');
-                img.animate({opacity: 1},500);
-            }
-        }
-        $(window).scroll(function(){
-            ass();
-            var list = $('.img_list li');
-            var cur_index = 0;
-            var length = list.length-1;
-            for(var k in list){
-                var v = list[k];
-                if(v.offsetTop  < $(this).scrollTop() + 370){
-                    cur_index = parseInt(k);
-                    $('#cur_page').text(cur_index+1);
-                }
-            }
-
-            if(length == cur_index && page < pagetotal && $('#loading2').css('display') == 'none'){
-                show_load();
-                request_post();
-            }
-        });
-
-        function show_load(){
-            $('#loading2').show();
-            $('#b-bg').show();
-        }
-
-        function hid_load(){
-            $('#loading2').hide();
-            $('#b-bg').hide();
-        }
-
-        function ass(){
-            var pages_height=$(window).height();
-            var top=$(document.body).scrollTop();
-            //alert(top+'--'+pages_height)
-            $('.gw_active').attr('style','');
-            if(top>pages_height){
-                $(".return_top").css("display",'block');
-                $('.gw_active').css('top',0);
-            }else if(top<=pages_height){
-                $(".return_top").css("display",'none');
-                $('.gw_active').css('bottom','47px');
-            }
-        }
-        $("#footer_menu").find("ul").find("li").click(function(){
-            $(this).css({"background-color":"#f08300"});
-            $(this).find("a").css({"color":"#000"});
-            $(this).find("img").attr("src",$(this).find("img").attr("mover"));
-        });
-    })()
-    function gotoTOP(){
-        scroll(0, 100);
-        $(document.body).animate({scrollTop:0},1000);
-    }
-
-    function scroll(scrollTo, time) {
-        var scrollFrom = parseInt($(document.body).scrollTop()),
-                i = 0,
-                runEvery = 5; // run every 5ms
-
-        scrollTo = parseInt(scrollTo);
-        time /= runEvery;
-
-        var interval = setInterval(function () {
-            i++;
-
-            document.body.scrollTop = (scrollTo - scrollFrom) / time * i + scrollFrom;
-
-            if (i >= time) {
-                clearInterval(interval);
-            }
-        }, runEvery);
-    }
-    $('.search-icon').click(function(){
-        $(this).toggleClass("search-icon-click");
-        if($(this).hasClass('search-icon-click')){
-            $(this).parent().css('background','rgba(0, 0, 0, 0.80)');
-            $('#search_list').show();
-        }else{
-            hide_search();
-        }
-    });
-
-    function hide_search(obj){
-        $('.search-icon').removeClass('search-icon-click');
-        $('.search-icon').parent().css('background','none');
-        $('#search_list').hide();
-    }
-
-//            .on('inview:scrollspy:amui', function() {
-//        var _img = $(this).find('img');
-//        _img = _img[0];
-//        if(_img.readyState == 'loaded' || _img.readyState== 'complete'){
-//           // $(this).animate({opacity: 1});
-//            $(this).show();
-//        }
-//    })
-
-    function load_img(e){
-        $(e).parents('li').show();
-    }
-</script>
+<{wap_widgets id="fb"}>

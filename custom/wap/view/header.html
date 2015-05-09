@@ -2,6 +2,11 @@
     <{css src="styles.css" app="wap"}>
 <{else}>
     <{css src="styles.css" app="wap" pdir="css_mini"}>
+	
+	<{css src="amazeui.min.css" app="wap" pdir="css_mini"}>
+	<{css src="app.css" app="wap" pdir="css_mini"}>
+	<{css src="main_style.css" app="wap" pdir="css_mini"}>
+	
 <{/if}>
 
 <{if defined("DEBUG_JS") && DEBUG_JS}>
@@ -12,5 +17,7 @@
     <{script src="zepto.cookie.js" app="wap"}>
 <{else}>
     <{script src="shop.min.js" app="wap" pdir="js_mini"}>
-    <{script src="amazeui.js" app="wap" pdir="js_mini"}>
+	
+    <{script src="amazeui.min.js" app="wap" pdir="js_mini"}>
+	<{script src="jquery.min.js" app="wap" pdir="js_mini"}>
 <{/if}>
