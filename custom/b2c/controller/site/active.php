@@ -47,6 +47,7 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	  $active = array(
     	  		'51meat',//51活动
     	  		'mqj',//母亲节
+    	  		'vipday',//会员日
     	  		);
           if(in_array($active_name,$active)){
           	$this->page('site/active/'.$active_name.'/index.html',true);//活动页面全屏，不要head和foot
