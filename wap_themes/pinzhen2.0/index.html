@@ -1,59 +1,384 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="images/styles.css" />
+   
     <{wapheader}>
 </head>
 <body>
     <{wap_require file="block/header.html"}>
-    <div class="page">
-        <!-- 搜索 -->
-        <{wap_widgets id="search"}>
-        <!-- 活动图 -->
-        <{wap_widgets id="main_slide"}>
-        <!-- 登录注册 -->
-        <{wap_widgets id="topbar_member"}>
-        <!-- 自定义促销商品 -->
-        <div class="home-hot">
-            <div class="tab J-tab">
-                <ul class="trigger-list">
-                    <li class="trigger act">
-                    促销商品
-                    </li>
-                    <li class="trigger">
-                    最新商品
-                    </li>
-                    <li class="trigger">
-                    最热商品
-                    </li>
-                </ul>
-                <ul class="panel-list">
-                    <li class="panel c-fix act">
-                        <{wap_widgets id="cuxiao_goods"}>
-                    </li>
-                    <li class="panel c-fix" <{if $backend}>style="display:block;"<{/if}>>
-                        <{wap_widgets id="new_goods"}>
-                    </li>
-                    <li class="panel c-fix" <{if $backend}>style="display:block;"<{/if}>>
-                        <{wap_widgets id="hot_goods"}>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- 分类入口 -->
-        <{wap_widgets id="goodscat"}>
-        <!-- 各分类/虚拟分类中的排行 -->
-        <!-- 服饰鞋帽销售榜 -->
-        <{wap_widgets id="goodssort"}>
-        <!-- 手机数码销售榜 -->
-        <{wap_widgets id="goodssort2"}>
-        <!-- 品牌汇 -->
-        <{wap_widgets id="brandlist"}>
-        <!-- 用户评论 -->
-        <{wap_widgets id="commentlist"}>
-        <!-- 促销公告 -->
-        <{wap_widgets id="rightnews"}>
-    </div>
+    
+	
+	<!-- Header -->
+	
+	<header data-am-widget="header" class="am-header am-header-default tt_bg">
+	  <h1 class="am-header-title">
+	    <a href="#title-link">品珍鲜活</a>
+	  </h1>
+	</header>
+	
+	
+	<!-- Slider -->
+	<div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{&quot;directionNav&quot;:false}'>
+	  <ul class="am-slides">
+	    <li>
+	      <img src="http://cn.bing.com/az/hprichv/LondonTrainStation_GettyRR_139321755_ZH-CN742316019.jpg">
+	    </li>
+	    <li>
+	      <img src="http://cn.bing.com/az/hprichv/LondonTrainStation_GettyRR_139321755_ZH-CN742316019.jpg">
+	    </li>
+	    <li>
+	      <img src="http://cn.bing.com/az/hprichv/LondonTrainStation_GettyRR_139321755_ZH-CN742316019.jpg">
+	    </li>
+	    <li>
+	      <img src="http://cn.bing.com/az/hprichv/LondonTrainStation_GettyRR_139321755_ZH-CN742316019.jpg">
+	    </li>
+	  </ul>
+	</div>
+	
+	
+	<!--搜索开始-->
+	<div data-am-widget="list_news" class="am-list-news am-list-news-default">
+	<form action="" class="am-form">
+	  <div class="am-form-group am-form-icon">
+	    <i class="am-icon-search"></i>
+	    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字">
+	  </div>
+	</form></div>
+	<!--搜索结束-->
+	
+	<!--图片导航-->
+	
+	<div style="clear:both">
+	<nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
+	  <a href="javascript: void(0)" class=" am-menu-toggle four_cut" style="width:25% !important; position:relative !important; height:auto !important">
+	  <span class="am-menu-toggle-title">菜单</span>
+	  <img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k1.jpg" style="width:100% !important; height:auto !important; "></a>
+	  <div class="am-offcanvas">
+	    <div class="am-offcanvas-bar">
+	      <ul class="am-menu-nav am-avg-sm-1">
+	        <li class="am-parent">
+	          <a href="##" class="">肉类</a>
+	          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
+	            <li class="">
+	              <a href="##" class="">公司</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">人物</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">趋势</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">投融资</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">创业公司</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">创业人物</a>
+	            </li>
+	            <li class="am-menu-nav-channel">
+	              <a href="##" class="" title="公司">进入栏目 &raquo;</a>
+	            </li>
+	          </ul>
+	        </li>
+	        <li class="am-parent">
+	          <a href="##" class="">海鲜</a>
+	          <ul class="am-menu-sub am-collapse  am-avg-sm-3 ">
+	            <li class="">
+	              <a href="##" class="">公司</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">人物</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">趋势</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">投融资</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">创业公司</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">创业人物</a>
+	            </li>
+	          </ul>
+	        </li>
+	        <li class="am-parent">
+	          <a href="#c3" class="">水果</a>
+	          <ul class="am-menu-sub am-collapse  am-avg-sm-4 ">
+	            <li class="">
+	              <a href="##" class="">公司</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">人物</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">趋势</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">投融资</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">创业公司</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">创业人物</a>
+	            </li>
+	            <li class="am-menu-nav-channel">
+	              <a href="#c3" class="" title="趋势">泥煤 &raquo;</a>
+	            </li>
+	          </ul>
+	        </li>
+	        <li class="am-parent">
+	          <a href="##" class="">精选食品</a>
+	          <ul class="am-menu-sub am-collapse  am-avg-sm-3 ">
+	            <li class="">
+	              <a href="##" class="">公司</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">人物</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">趋势</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">投融资</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">创业公司</a>
+	            </li>
+	            <li class="">
+	              <a href="##" class="">创业人物</a>
+	            </li>
+	          </ul>
+	        </li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+	
+	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k2.jpg"></a>
+	<a href="products_hot_list.html" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k3.jpg"></a>
+	<a href="login.html" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k4.jpg"></a>
+	</div>
+	<!--图片导航结束-->
+	
+	<!--公告开始-->
+	<div class="am-alert am-alert-danger " style=" float:left; width:100%; margin-top:-40px;">
+	有些不顺眼，在这里专门做一下说明。
+	</div>
+	<!--公告结束-->
+	
+	<!--保证和优惠券开始-->
+	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/mm.jpg"></a>
+	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/yhq1.jpg"></a>
+	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/yhq5.jpg"></a>
+	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/yhq3.jpg"></a>
+	<!--保证和优惠券结束-->
+	
+	
+	<!--广告-->
+	<a href="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pic01.jpg"></a>
+	<a href="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pic02.jpg"></a>
+	<a href="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pic03.jpg"></a>
+	<a href="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pic04.jpg"></a>
+	<!--广告结束-->
+	
+	<a href="products_normal_list.html" onClick="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt01.jpg"></a>
+	<!-- List -->
+	
+	
+	
+	<!-- Gallery -->
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
+	  am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
+	 <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			 </div>
+	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a> <a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	</ul>
+	
+	<a href="products_normal_list.html" onClick="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt2.jpg"></a>
+	<!-- List -->
+	
+	
+	
+	<!-- Gallery -->
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
+	  am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	 <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a><a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a><a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a> <a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a><a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	</ul>
+	
+	
+	<a href="#"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt03.jpg"></a>
+	<!-- List -->
+	
+	
+	
+	<!-- Gallery -->
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
+	  am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	 <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a> <a href="" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a><a href="" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a><a href="" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="am-gallery-item">
+	      <a href="products.html">
+	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			</div>
+	      </a><a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	    </div>
+	  </li>
+	</ul>
+	
+	<!-- List -->
+	<a href="#"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt04.jpg"></a>
+	<p style="text-align: center;"><iframe width="300" height="225" allowfullscreen="true" src="http://v.qq.com/iframe/player.html?vid=s0141ozwbxp&amp;tiny=0&amp;auto=0" class="edui-faked-video"></iframe></p>
+	<img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/qming.jpg">
+	<!-- Footer -->
+	<footer data-am-widget="footer" class="am-footer am-footer-default"></footer>
+	<div id="am-footer-mode" class="am-modal am-modal-no-btn am-switch-mode-m am-switch-mode-m-default">
+	  <div class="am-modal-dialog">
+	    <div class="am-modal-hd am-modal-footer-hd">
+	      <a href="javascript:void(0)" data-dismiss="modal" class="am-close am-close-spin"
+	         data-am-modal-close>&times;</a>
+	    </div>
+	    <div class="am-modal-bd">您正在浏览的是
+	      <span class="am-switch-mode-owner">云适配</span>
+	      <span class="am-switch-mode-slogan">为您当前手机订制的移动网站。</span>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- Navbar -->
+	<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+	     id="">
+	  <ul class="am-navbar-nav am-cf am-avg-sm-4"  style="background:#309ab2 !important">
+	    <li> <a href="tel:123456789"> <span class="am-icon-phone"></span> <span class="am-navbar-label">呼叫</span> </a> </li>
+	    <li data-am-navbar-share> <a href="#"> <span class="am-icon-share-square-o"></span> <span class="am-navbar-label">分享</span> </a> </li>
+	    <li data-am-navbar-qrcode> <a href="#"> <span class="am-icon-qrcode"></span> <span class="am-navbar-label">二维码</span> </a> </li>
+	    <li> <a href="https://github.com/allmobilize/amazeui/issues"> <span class="am-icon-location-arrow"></span> <span class="am-navbar-label">Bug 反馈</span> </a> </li>
+	  </ul>
+	</div>
+	
     <{wap_require file="block/footer.html"}>
 </body>
 </html>

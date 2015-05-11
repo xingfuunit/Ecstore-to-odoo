@@ -7,7 +7,7 @@ ul,li{ list-style:none}
 .header p {font-size: 14px;}
 
 /*¹«ÓÃ*/
-.tt_bg{ background:url(../i/examples/tt.jpg) repeat-x}
+.tt_bg{ background:url(../images/tt.jpg) repeat-x}
 .full_img{width:100%}
 .four_cut{width:25%; float:left}
 .am-slider .am-slides img{ width:auto !important}
