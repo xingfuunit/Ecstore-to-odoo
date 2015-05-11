@@ -1,17 +1,29 @@
-<div class="full-screen">
-    <div class="head-nav">
-        <div class="back" ><a href="javascript:history.back()"></a></div>
-        <div style="box-flex: 1; -webkit-box-flex: 1; -moz-box-flex: 1; display: block;line-height: 45px;text-align: center;color:#21292c;"><a class="passport login current">登录</a><a href="<{link app=b2c ctl=wap_passport act=signup}>" class="passport signup">注册</a></div>
-        <div class="home" ><a href="./"></a></div>
-    </div>
-    <div class="full-padding">
-        <{include file='wap/passport/signin.html'}>
-        <{if $login_image_url.0}>
-        <div id="trust_signin" class="trust-signin">
-            <{foreach from=$login_image_url item=login_image_url}>
-            <{$login_image_url}>
-            <{/foreach}>
-        </div>
-        <{/if}>
-    </div>
+<div class="header">
+<div><img style="width:100%;" src="/public/app/b2c/statics/images/loginbg.jpg"></div>
+</div>
+<div class="am-g">
+  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+    <br>
+
+    <form method="post" class="am-form">
+      <label for="email">邮箱:</label>
+      <input type="email" name="" id="email" value="">
+      <br>
+      <label for="password">密码:</label>
+      <input type="password" name="" id="password" value="">
+      <br>
+      <label for="remember-me">
+        <input id="remember-me" type="checkbox">
+        记住密码
+      </label>
+      <br />
+      <div class="am-cf">
+        <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl">
+		<input type="button" name="" value="立即注册" onclick="javascript:window.location.href='verification.html'" class="am-btn am-btn-warning am-btn-sm am-fl" style="margin-left:10px;">
+        <input type="submit" name="" value="忘记密码 ^_^? " class="am-btn am-btn-default am-btn-sm am-fr">
+      </div>
+    </form>
+    <hr>
+    <p>© 2015 pzfresh.com, Inc. 品珍鲜活版权所有</p>
+  </div>
 </div>
