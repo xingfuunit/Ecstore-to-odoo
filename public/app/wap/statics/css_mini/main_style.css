@@ -1,0 +1,21 @@
+/* CSS Document */
+/*基础*/
+ul,li{ list-style:none}
+/*头部*/
+.header { text-align: center;}
+.header h1 { font-size: 200%;color: #333;margin-top: 30px;}
+.header p {font-size: 14px;}
+
+/*公用*/
+.tt_bg{ background:url(../images/tt.jpg) repeat-x}
+.full_img{width:100%}
+.four_cut{width:25%; float:left}
+.am-slider .am-slides img{ width:auto !important}
+.am-comment-success.am-comment-flip .am-comment-main::after {
+border-left-color: #5eb95e !important;
+}
+.am-comment-main::after {
+ border-right-color: #ffffff !important;}
+ *, *::before, *::after {
+    box-sizing: border-box;
+}

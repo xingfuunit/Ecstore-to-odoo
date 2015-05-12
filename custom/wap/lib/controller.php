@@ -474,6 +474,7 @@ class wap_controller extends base_controller
         if (!$params['response_type']){
             $current_theme = ($params['theme'])?$params['theme']:kernel::single('wap_theme_base')->get_default();
             $is_preview = (isset($_COOKIE['wap']['preview'])&&$_COOKIE['wap']['preview']=='true')?true:false;
+            
             if($no_theme==false && $current_theme){
                 $this->set_theme($current_theme);
                 $this->pagedata['_MAIN_'] = $view;      //强制替换
@@ -485,6 +486,8 @@ class wap_controller extends base_controller
                     $tmpl = $tmplObj->get_default($tmpl, $current_theme);
                     $tmpl_file = ($tmpl) ? $tmpl : (($tmpl_default = $tmplObj->get_default('default', $current_theme)) ? $tmpl_default : 'default.html');
                 }//如果有模版，检测当前theme下是否有此模板
+                
+                
                 $this->set_tmpl_main_app_id($app_id);
                 $html = $this->fetch_tmpl($tmpl_file,$is_preview);
             }else{
