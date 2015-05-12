@@ -139,10 +139,10 @@ class b2c_ctl_wap_passport extends wap_frontpage{
             $this->splash('failed',null,$msg,'','',true);exit;
         }
 
-        if(kernel::single('b2c_service_vcode')->status() && empty($_POST['verifycode'])){
+        /* if(kernel::single('b2c_service_vcode')->status() && empty($_POST['verifycode'])){
             $msg = app::get('b2c')->_('请输入验证码!');
             $this->splash('failed',null,$msg,'','',true);exit;
-        }
+        } */
 
         $member_id = kernel::single('pam_passport_site_basic')->login($userData,$_POST['verifycode'],$msg);
         if(!$member_id){
