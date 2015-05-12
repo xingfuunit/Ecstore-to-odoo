@@ -1,65 +1,142 @@
-<form action="<{link app=b2c ctl=wap_cart act=add arg0=goods}>" method="post" id="buy_form" data-type="ajax">
-    <input type="hidden" name="btype" class="btype"><!-- value="is_fastbuy" 立即购买提交的时候要带上这个值 -->
-    <input type="hidden" name="goods[goods_id]" value="<{$page_product_basic.goods_id}>"/>
-    <input type="hidden" name="goods[product_id]" value="<{$page_product_basic.product_id}>"/ >
-    <input type="hidden" name="min" value="1" class="min-num" />
-    <input type="hidden" name="max" value="<{$product_store.store}>" class="max-num" />
-    <input type="hidden" name="mini_cart" value="true"/>
-    <div class="goods" style="display: none;">
-        <{include file='wap/product/info/pic.html'}>
-        <ul class="goods_title tbl">
-            <li class="goods_title_left" id='share_recommend'>
-                <{if $login=='nologin'}>
-  <!-- favarite -->
-  <a id='fav' href="<{link app=b2c ctl=wap_passport act=login}>"><span class='nfav'></span></a>
-  <{else}>
-  <a id='fav' href="javascript:void(0);"><span class='<{if $page_product_basic.is_fav}>fav<{else}>nfav<{/if}>'></span></a>
-  <{/if}>
-                <span class='name'><{$page_product_basic.title}> <span class='brief'><{$page_product_basic.brief}></span></span>
-            </li>
-            <{if $discussCount}>
-            <li class="goods_title_right">
-                <div style="width: 6em;">
-                    <span class="pl-icon"></span>
-                    <label><{$discussCount|default:'0'}></label>
-                </div>
-            </li>
-            <{/if}>
-        </ul>
-    </div>
-    <div class="ui-content content-p"> <{$page_product_basic.wapintro}></div>
-    <div class="gw_active_wrap">
-        <div class="gw_active" style="bottom:47px">
-            <ul>
-                <li class="border_right">
-                    <{if $page_product_basic.goods_marketable == 'true'}>
-                        <{include file='wap/product/info/price.html'}>
-                    <{/if}>
-                </li>
-                <li class="border_right jt-btn">
-                <{if $page_product_basic.spec.goods}>
-                    <{include file='wap/product/info/spec.html'}>
-                <{else}>
-                    <select name="" id=""></select>
-                <{/if}>
-                </li>
-                <li><{include file='wap/product/info/btn.html'}></li>
-            </ul>
+<!-- Header -->
+
+<div class="valuedetail" style="width:100%; height:49px; background:#000000;display:none; position:fixed; z-index:9998">
+<div style="width:40%; height:49px; background:#FF6633;white-space:nowrap; line-height:49px; font-size:21px; color:#FFFFFF; float:left">
+<span style="font-size:14px"> ￥</span>1999.0 /<span style="font-size:14px"> 500g</span>
+</div>
+<ul style="width:40%; height:auto; position:absolute; left:0; top:49px; line-height:49px; background:#333333; font-size:21px; color:#FFFFFF; list-style:none; margin:0; padding:0;">
+<li > <span style="font-size:14px">￥</span>1999.0 /<span style="font-size:14px"> 500g</span></li>
+<li> <span style="font-size:14px">￥</span>1999.0 /<span style="font-size:14px"> 500g</span></li>
+
+</ul>
+<div style="width:60%; height:49px; font-size:12px; color:#cccccc;float:left;line-height:49px; ">库存100件
+<div style="float:right">
+<a href="" class="am-icon-btn am-icon-search" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>
+<a href="" class="am-icon-btn am-icon-star" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></a>
+<a href="" class="am-icon-btn am-icon-comments-o" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" >
+<span style=" font-size:8px; color:#FF9900; float:left; line-height:8px;">1000+</span></a></div>
+</div>
+</div>
+<div class="valuepay" style="width:100%; height:100px; background:#000000;display:none; position:fixed; bottom:0; z-index:9998; padding:10px;">
+<div style="color:#999999; line-height:18px; height:50px; float:left">
+<a href="" class="am-icon-plus-circle am-icon-lg" style="float:left;color:#999999;" ></a>
+<input type="text" style="float:left; height:30px; width:10%; margin:5px;">
+<a href="" class="am-icon-minus-circle am-icon-lg"  style="float:left;color:#999999;"></a>
+<a href="shopingpay.html"><img  style="width:50%" src="assets/i/examples/buy_btn.png"></a>
+<a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px; position:relative"> 
+<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:0px; right:0px; display:block"></span></a>
+</div>
+<div style="font-size:14px; color:#FFFFFF; height:30px; line-height:14px; width:100%; clear:both">此商品仅限网上购买，如需购买请网上下单。买即包邮，享受95折优惠</div>
+</div>
+<div class="valuehide" style="height:1136px; width:100%; background:#fff;
+filter:alpha(opacity=0); /*IE*/-moz-opacity:0; /*Firefox0%*/
+opacity:0;/*其他*/display:none;  position:fixed; z-index:9997"></div>
+
+
+
+<!-- main -->
+<div data-am-widget="slider" class="am-slider am-slider-default valueshow" 
+  data-am-slider='{&quot;controlNav&quot;:false,&quot;slideshow&quot;:false}'>
+
+  <ul class="am-slides">
+
+    <{if $page_product_basic.images}>
+        <{$imgCount = 0}>
+        <{foreach from=$page_product_basic.images item=image}>
+
+        <{if ++$imgCount==1}>
+        <div style="width:100%; height:auto; text-align:center; margin-top:30%; position:absolute; color:#FFFFFF;  background:#000000;filter:alpha(opacity=50); /*IE滤镜*/-moz-opacity:0.5; /*Firefox私有*/opacity:0.5;/*其他*/">
+         <h1><{$page_product_basic.title}></h1>
+         <{if $page_product_basic.brief}><p><{$page_product_basic.brief}></p><{/if}>
+         <p>仅售：<{$page_product_basic.price}></p>
         </div>
-        <div class="go_Home ">
-            <a href="javascript:history.back();"><span class="home-icon"></span></a>
-        </div>
+        <{/if}>
+
+        <li class="showvaluebox">
+          <img src="<{$image.image_id|storager:'s'}>" alt="<{$page_product_basic.title}>">
+        </li>
+        <{/foreach}>
+    <{else}>
+        <li class="showvaluebox"><img src="<{$setting.imageDefault.S.default_image|storager}>" alt="<{$page_product_basic.title}>"></li>
+    <{/if}>
+
+
+
+  <!-- comments -->
+  <li class="showvaluebox">
+      <div class="doc-example" style="padding:10px;">
+     <ul class="am-comments-list am-comments-list-flip">
+      <ul class="am-pagination am-pagination-centered"><li class="am-disabled"><a href="#" class="am-panel-hd">2015-05-07</a></li> </ul>
+    <li class="am-comment">
+      <a href="#link-to-user-home">
+      <img width="48" height="48" class="am-comment-avatar" alt="" src="assets/i/examples/bw-2014-06-19.jpg"></a>
+      <div class="am-comment-main">
+    <div class="am-comment-bd am-alert-default"><p><a href="#lurenyi">@路人乙</a>你好你好啊，这个很不错哦！</p></div></div>
+    </li>
+    <li class="am-comment ">
+      <a href="#link-to-user-home">
+    <img width="48" height="48" class="am-comment-avatar" alt="" src="assets/i/examples/bw-2014-06-19.jpg"></a>
+    <div class="am-comment-main">
+      <div class="am-comment-bd am-alert-default"><p><a href="#lurenyi">@路人乙</a>不错，好评！</p></div></div>
+    </li>  
+    <li class="am-comment am-comment-flip am-comment-success"><a href="#link-to-user-home"><img width="48" height="48" class="am-comment-avatar" alt="" src="http://amui.qiniudn.com/bw-2014-06-19.jpg?imageView/1/w/96/h/96"></a><div class="am-comment-main"><div class="am-comment-bd am-alert-success"><p><a href="#lurenyi">品珍客服</a>谢谢光临！</p></div></div></li>
+     <li class="am-comment ">
+      <a href="#link-to-user-home">
+    <img width="48" height="48" class="am-comment-avatar" alt="" src="assets/i/examples/bw-2014-06-19.jpg"></a>
+    <div class="am-comment-main">
+      <div class="am-comment-bd am-alert-default"><p><a href="#lurenyi">@路人乙</a>不错，好评！</p></div></div>
+    </li>  
+    
+   <ul class="am-pagination am-pagination-centered"><li class="am-disabled"><a href="#" class="am-panel-hd">2015-05-08</a></li> </ul>
+   
+     <li class="am-comment ">
+      <a href="#link-to-user-home">
+    <img width="48" height="48" class="am-comment-avatar" alt="" src="assets/i/examples/bw-2014-06-19.jpg"></a>
+    <div class="am-comment-main">
+      <div class="am-comment-bd am-alert-default"><p><a href="#lurenyi">@路人乙</a>不错，好评！</p></div></div>
+    </li>     
+    <li class="am-comment am-comment-flip am-comment-success"><a href="#link-to-user-home"><img width="48" height="48" class="am-comment-avatar" alt="" src="http://amui.qiniudn.com/bw-2014-06-19.jpg?imageView/1/w/96/h/96"></a><div class="am-comment-main"><div class="am-comment-bd  am-alert-success"><p><a href="#lurenyi">品珍客服</a>谢谢光临！</p></div></div></li>
+     <li class="am-comment ">
+      <a href="#link-to-user-home">
+    <img width="48" height="48" class="am-comment-avatar" alt="" src="assets/i/examples/bw-2014-06-19.jpg"></a>
+    <div class="am-comment-main">
+      <div class="am-comment-bd am-alert-default"><p><a href="#lurenyi">@路人乙</a>不错，好评！</p></div></div>
+    </li>  
+    <li class="am-comment am-comment-flip am-comment-success"><a href="#link-to-user-home"><img width="48" height="48" class="am-comment-avatar" alt="" src="http://amui.qiniudn.com/bw-2014-06-19.jpg?imageView/1/w/96/h/96"></a><div class="am-comment-main"><div class="am-comment-bd am-alert-success"><p><a href="#lurenyi">品珍客服</a>谢谢光临！！</p></div></div></li>
+    </ul>
+    <div class="am-fr"><a href="#" class="am-text-danger">还有1000条评论</a></div>
     </div>
-    <input type="hidden" name="goods[num]" id="goods_num" value="1" class="num-ipt">
-</form>
+    </li>
+
+
+  </ul>
+</div>
+
+
+<div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
+<a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="#"></a>
+</div>
+
+
+<!-- Footer -->
+<footer data-am-widget="footer" class="am-footer am-footer-default"></footer>
+
+
+<!-- Navbar -->
+
+
 <script type="text/javascript">
-    $('#fav').on('click',function(){
-        var _this = $(this);
-        if(_this.find('.fav').length || "<{$login}>" == 'nologin') return;
-        var data = 'gid=<{$page_product_basic.goods_id}>&type=goods';
-        $.post('<{link app=b2c ctl=wap_member act=ajax_fav}>',data,function(re){
-               _this.find('span').addClass('fav');
-        });
-        return false;
-    });
+$(document).ready(function(){
+  $(".showvaluebox").click(function(){
+  $(".valuedetail").show();
+  $(".valuepay").show(); 
+  $(".valuehide").show();   
+  });  
+  $(".valuehide").click(function(){
+  $(".valuehide").hide();
+  $(".valuepay").hide();
+  $(".valuedetail").hide();
+  
+   });  
+});
 </script>

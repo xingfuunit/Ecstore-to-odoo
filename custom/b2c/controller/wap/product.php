@@ -126,10 +126,10 @@ class b2c_ctl_wap_product extends wap_frontpage{
         $aGoods['product'] = $itemProduct[0];
 
         //设置模板
-        if( $aGoods['goods_setting']['goods_template'] ){
-            $this->set_tmpl_file($aGoods['goods_setting']['goods_template']);                 //添加模板
-        }
-        $this->set_tmpl('product');
+        // if( $aGoods['goods_setting']['goods_template'] ){
+        //     $this->set_tmpl_file($aGoods['goods_setting']['goods_template']);                 //添加模板
+        // }
+        // $this->set_tmpl('product');
 
         //规格默认图片
         $this->pagedata['spec_default_pic'] = $this->app->getConf('spec.default.pic');
@@ -139,6 +139,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
         //基本信息
         $productBasic = $this->_get_product_basic($productId,$aGoods,$siteMember);
         $this->pagedata['page_product_basic'] = $productBasic;
+        // var_dump($productBasic);exit;
 
 #        $goodsAdjunct = $this->_get_goods_adjunct($aGoods);//配件信息
         $this->pagedata['page_goods_adjunct'] = $goodsAdjunct;
@@ -181,6 +182,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
             $this->pagedata['weixin']['shareTitle'] = $this->title;
             $this->pagedata['weixin']['descContent'] = $this->pagedata['page_product_basic']['brief'];
         }
+        
         $this->page('wap/product/index.html');
     }
 
