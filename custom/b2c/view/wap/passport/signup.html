@@ -121,7 +121,7 @@
 																	'#mobile')
 																	.val(),
 															"vcode":$('#vcode').val(),
-															"license":$('#license').val(),
+															"license":$('#license').is(':checked')?'on':false,
 															"pam_account[login_password]" : $(
 																	'#password')
 																	.val()
@@ -132,7 +132,15 @@
 														timeout : 3000,
 
 														error : function() {
-															alert('请求失败');
+															$('#my-alert')
+															.children(
+																	'.am-modal-dialog')
+															.children(
+																	".am-modal-bd")
+															.html('请求失败');
+													$('#my-alert')
+															.modal();
+															//alert('请求失败');
 														},
 
 														success : function(
