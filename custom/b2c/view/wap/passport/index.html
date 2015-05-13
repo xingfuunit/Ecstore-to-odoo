@@ -36,7 +36,7 @@
 		</div>
 	</div>
 </form>
-<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert-login">
   <div class="am-modal-dialog">
     <div class="am-modal-hd">错误</div>
     <div class="am-modal-bd">
@@ -67,13 +67,13 @@
 				timeout : 3000,
 
 				error : function() {
-					$('#my-alert')
+					$('#my-alert-login')
 					.children(
 							'.am-modal-dialog')
 					.children(
 							".am-modal-bd")
 					.html('请求失败');
-			$('#my-alert')
+			$('#my-alert-login')
 					.modal();
 					//alert('请求失败');
 				},
@@ -84,8 +84,8 @@
 					 	location.href=jsonobj.redirect;
 					}
 					else{
-						$('#my-alert').children('.am-modal-dialog').children(".am-modal-bd").html(jsonobj.error);
-						$('#my-alert').modal();
+						$('#my-alert-login').children('.am-modal-dialog').children(".am-modal-bd").html(jsonobj.error);
+						$('#my-alert-login').modal();
 					}
 				}
 
