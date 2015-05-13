@@ -20,18 +20,11 @@
 	<!-- Slider -->
 	<div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{&quot;directionNav&quot;:false}'>
 	  <ul class="am-slides">
+	  	<{foreach from=$roll_ads item=r}>
 	    <li>
-	      <img src="http://cn.bing.com/az/hprichv/LondonTrainStation_GettyRR_139321755_ZH-CN742316019.jpg">
+	      <a href=""><img src="<{$r.img_url}>"></a>
 	    </li>
-	    <li>
-	      <img src="http://cn.bing.com/az/hprichv/LondonTrainStation_GettyRR_139321755_ZH-CN742316019.jpg">
-	    </li>
-	    <li>
-	      <img src="http://cn.bing.com/az/hprichv/LondonTrainStation_GettyRR_139321755_ZH-CN742316019.jpg">
-	    </li>
-	    <li>
-	      <img src="http://cn.bing.com/az/hprichv/LondonTrainStation_GettyRR_139321755_ZH-CN742316019.jpg">
-	    </li>
+		<{/foreach}>
 	  </ul>
 	</div>
 	
@@ -51,109 +44,28 @@
 	<div style="clear:both">
 	<nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
 	  <a href="javascript: void(0)" class=" am-menu-toggle four_cut" style="width:25% !important; position:relative !important; height:auto !important">
-	  <span class="am-menu-toggle-title">菜单</span>
+	  <span class="am-menu-toggle-title">&nbsp;</span>
 	  <img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k1.jpg" style="width:100% !important; height:auto !important; "></a>
 	  <div class="am-offcanvas">
 	    <div class="am-offcanvas-bar">
 	      <ul class="am-menu-nav am-avg-sm-1">
+	      	<{foreach from=$catmap item=cat key=k}>
 	        <li class="am-parent">
-	          <a href="##" class="">肉类</a>
+	          <a href="##" class=""><{$cat.title}></a>
+			  <{if $cat.items}>
 	          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
+	          	<{foreach from=$cat.items item=cat2 key=k2}>
 	            <li class="">
-	              <a href="##" class="">公司</a>
+	              <a href="##" class=""><{$cat2.title}></a>
 	            </li>
-	            <li class="">
-	              <a href="##" class="">人物</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">趋势</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">投融资</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">创业公司</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">创业人物</a>
-	            </li>
-	            <li class="am-menu-nav-channel">
+				<{/foreach}>
+	            <!--<li class="am-menu-nav-channel">
 	              <a href="##" class="" title="公司">进入栏目 &raquo;</a>
-	            </li>
+	            </li>-->
 	          </ul>
+			  <{/if}>
 	        </li>
-	        <li class="am-parent">
-	          <a href="##" class="">海鲜</a>
-	          <ul class="am-menu-sub am-collapse  am-avg-sm-3 ">
-	            <li class="">
-	              <a href="##" class="">公司</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">人物</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">趋势</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">投融资</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">创业公司</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">创业人物</a>
-	            </li>
-	          </ul>
-	        </li>
-	        <li class="am-parent">
-	          <a href="#c3" class="">水果</a>
-	          <ul class="am-menu-sub am-collapse  am-avg-sm-4 ">
-	            <li class="">
-	              <a href="##" class="">公司</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">人物</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">趋势</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">投融资</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">创业公司</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">创业人物</a>
-	            </li>
-	            <li class="am-menu-nav-channel">
-	              <a href="#c3" class="" title="趋势">泥煤 &raquo;</a>
-	            </li>
-	          </ul>
-	        </li>
-	        <li class="am-parent">
-	          <a href="##" class="">精选食品</a>
-	          <ul class="am-menu-sub am-collapse  am-avg-sm-3 ">
-	            <li class="">
-	              <a href="##" class="">公司</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">人物</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">趋势</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">投融资</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">创业公司</a>
-	            </li>
-	            <li class="">
-	              <a href="##" class="">创业人物</a>
-	            </li>
-	          </ul>
-	        </li>
+	        <{/foreach}>
 	      </ul>
 	    </div>
 	  </div>
@@ -172,18 +84,16 @@
 	<!--公告结束-->
 	
 	<!--保证和优惠券开始-->
-	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/mm.jpg"></a>
-	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/yhq1.jpg"></a>
-	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/yhq5.jpg"></a>
-	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/yhq3.jpg"></a>
+	<{foreach from=$coup_ads item=c}>
+		<a href="<{$c.ad_url}>" class="four_cut"><img class="full_img" src="<{$c.img_url}>"></a>
+	<{/foreach}>
 	<!--保证和优惠券结束-->
 	
 	
 	<!--广告-->
-	<a href="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pic01.jpg"></a>
-	<a href="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pic02.jpg"></a>
-	<a href="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pic03.jpg"></a>
-	<a href="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pic04.jpg"></a>
+	<{foreach from=$pic_ads item=p}>
+	<a href="<{$p.ad_url}>"><img class="full_img" src="<{$p.img_url}>"></a>
+	<{/foreach}>
 	<!--广告结束-->
 	
 	<a href="products_normal_list.html" onClick="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt01.jpg"></a>
@@ -192,52 +102,20 @@
 	
 	
 	<!-- Gallery -->
-	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
-	  am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
+	  <{foreach from=$pz_hs key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
+	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
 	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 	    </div>
 	  </li>
-	  <li>
-	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
-			 </div>
-	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-	    </div>
-	  </li>
-	  <li>
-	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
-			</div>
-	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-	    </div>
-	  </li>
-	  <li>
-	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
-			</div>
-	      </a> <a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-	    </div>
-	  </li>
+		<{/foreach}>
 	</ul>
 	
 	<a href="products_normal_list.html" onClick="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt2.jpg"></a>
@@ -246,52 +124,20 @@
 	
 	
 	<!-- Gallery -->
-	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
-	  am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	 <{foreach from=$pz_xr key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
+	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
 	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
-	      </a><a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 	    </div>
 	  </li>
-	  <li>
-	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
-			</div>
-	      </a><a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-	    </div>
-	  </li>
-	  <li>
-	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
-			</div>
-	      </a> <a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-	    </div>
-	  </li>
-	  <li>
-	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
-			</div>
-	      </a><a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-	    </div>
-	  </li>
+	  <{/foreach}>
 	</ul>
 	
 	
@@ -301,52 +147,20 @@
 	
 	
 	<!-- Gallery -->
-	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
-	  am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	 <{foreach from=$pz_xg key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
+	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
 	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
+			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
-	      </a> <a href="" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 	    </div>
 	  </li>
-	  <li>
-	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
-			</div>
-	      </a><a href="" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-	    </div>
-	  </li>
-	  <li>
-	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
-			</div>
-	      </a><a href="" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-	    </div>
-	  </li>
-	  <li>
-	    <div class="am-gallery-item">
-	      <a href="products.html">
-	        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-	        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left">￥35.00</h1>
-			</div>
-	      </a><a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-	    </div>
-	  </li>
+	  <{/foreach}>
 	</ul>
 	
 	<!-- List -->
@@ -382,3 +196,25 @@
     <{wap_require file="block/footer.html"}>
 </body>
 </html>
+<script>
+    $('#J_buy_btn').on('click',function(e){
+        var data = $('#buy_form').serialize();
+        $.post($('#buy_form').attr('action'),data,function(re){
+            if(re){
+                try{
+                    result = $.parseJSON(re);
+                    alert(result.error);
+                } catch (e){
+                    //alert('加入购物车成功');
+                    new Dialog(re,{'type':'confirm'});
+                    var  cartNum = $.fn.cookie('S[CART_NUMBER]')?$.fn.cookie('S[CART_NUMBER]'):'';
+                    if(cartNum)$('.cart-num').html(cartNum);
+                    else $('.cart-num').hide();
+                }
+
+            }
+        });
+
+        return false;
+    });
+</script>

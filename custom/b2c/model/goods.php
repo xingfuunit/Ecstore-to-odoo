@@ -1756,4 +1756,59 @@ class b2c_mdl_goods extends dbeav_model{
 
 	//	return true;
 	//}
+	
+    /**
+     * 
+     * @param string $catname
+     */
+    public function get_good_list_by_cat_catname($catname,$goodsfilter){
+    	$catModel = app::get('b2c')->model('goods_cat');
+    	$productModel =app::get('b2c')->model('products');
+    	$pz_xg_cat_id = $catModel->getRow('cat_id', array('cat_name' => $catname));
+    	$arr = array_merge($pz_xg_cat_id,$goodsfilter);
+//     	print_r($arr);exit;
+    	if($pz_xg_cat_id){
+    		$goodsData = $this->getList('*', $arr);
+    		
+    		//goods 数据处理
+    		if($goodsData){
+		    	foreach($goodsData as $key=>$goods_row){
+		            if(in_array($goods_row['goods_id'],$gfav)){
+		                $goodsData[$key]['is_fav'] = 'true';
+		            }
+		            if($goods_row['udfimg'] == 'true' && $goods_row['thumbnail_pic']){
+		                $goodsData[$key]['image_default_id'] = $goods_row['thumbnail_pic'];
+		            }
+		            $gids[$key] = $goods_row['goods_id'];
+		        }
+		       
+		        $productModel =app::get('b2c')->model('products');
+		        $products =  $productModel->getList('*',array('goods_id'=>$gids,'is_default'=>'true','marketable'=>'true'));
+		        $sdf_product = array();
+		        foreach($products as $key=>$row){
+		            $sdf_product[$row['goods_id']] = $row;
+		        }
+		        foreach ($goodsData as $gk=>$goods_row){
+		            $product_row = $sdf_product[$goods_row['goods_id']];
+		            $goodsData[$gk]['products'] = $product_row;
+		            //市场价
+		            if($show_mark_price =='true'){
+		                if($product_row['mktprice'] == '' || $product_row['mktprice'] == null)
+		                    $goodsData[$gk]['products']['mktprice'] = $productModel->getRealMkt($product_row['price']);
+		            }
+		
+		            //库存
+		            if($goods_row['nostore_sell'] || $product_row['store'] === null){
+		                $goodsData[$gk]['products']['store'] = 999999;
+		            }else{
+		                $store = $product_row['store'] - $product_row['freez'];
+		                $goodsData[$gk]['products']['store'] = $store > 0 ? $store : 0;
+		            }
+		        }
+    		}
+    		return $goodsData;
+    		
+    	}
+    	return array();
+    }
 }

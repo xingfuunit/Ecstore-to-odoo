@@ -517,6 +517,14 @@ $db['goods']=array (
       'width' => 30,
       'editable' => false,
     ),
+    'wap_recommend' =>
+    array (
+    	'type' => 'intbool',
+    	'default' => '0',
+    	'label' => app::get('b2c')->_('wap推荐商品'),
+    	'width' => 30,
+    	'editable' => false,
+    ),
 
     'p_1' =>
     array (
