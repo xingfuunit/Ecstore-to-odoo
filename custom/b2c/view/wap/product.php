@@ -171,6 +171,8 @@ class b2c_ctl_wap_product extends wap_frontpage{
             $this->pagedata['weixin']['shareTitle'] = $this->title;
             $this->pagedata['weixin']['descContent'] = $this->pagedata['page_product_basic']['brief'];
         }
+
+
         $this->page('wap/product/index.html');
     }
 
@@ -1035,6 +1037,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
             }
             $productPromotion['gift'] = $aGift;
         }
+
         return $productPromotion;
     }
 
