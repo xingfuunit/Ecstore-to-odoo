@@ -1,0 +1,65 @@
+<form action="<{link app=b2c ctl=wap_cart act=add arg0=goods}>" method="post" id="buy_form" data-type="ajax">
+    <input type="hidden" name="btype" class="btype"><!-- value="is_fastbuy" 立即购买提交的时候要带上这个值 -->
+    <input type="hidden" name="goods[goods_id]" value="<{$page_product_basic.goods_id}>"/>
+    <input type="hidden" name="goods[product_id]" value="<{$page_product_basic.product_id}>"/ >
+    <input type="hidden" name="min" value="1" class="min-num" />
+    <input type="hidden" name="max" value="<{$product_store.store}>" class="max-num" />
+    <input type="hidden" name="mini_cart" value="true"/>
+    <div class="goods" style="display: none;">
+        <{include file='wap/product/info/pic.html'}>
+        <ul class="goods_title tbl">
+            <li class="goods_title_left" id='share_recommend'>
+                <{if $login=='nologin'}>
+  <!-- favarite -->
+  <a id='fav' href="<{link app=b2c ctl=wap_passport act=login}>"><span class='nfav'></span></a>
+  <{else}>
+  <a id='fav' href="javascript:void(0);"><span class='<{if $page_product_basic.is_fav}>fav<{else}>nfav<{/if}>'></span></a>
+  <{/if}>
+                <span class='name'><{$page_product_basic.title}> <span class='brief'><{$page_product_basic.brief}></span></span>
+            </li>
+            <{if $discussCount}>
+            <li class="goods_title_right">
+                <div style="width: 6em;">
+                    <span class="pl-icon"></span>
+                    <label><{$discussCount|default:'0'}></label>
+                </div>
+            </li>
+            <{/if}>
+        </ul>
+    </div>
+    <div class="ui-content content-p"> <{$page_product_basic.wapintro}></div>
+    <div class="gw_active_wrap">
+        <div class="gw_active" style="bottom:47px">
+            <ul>
+                <li class="border_right">
+                    <{if $page_product_basic.goods_marketable == 'true'}>
+                        <{include file='wap/product/info/price.html'}>
+                    <{/if}>
+                </li>
+                <li class="border_right jt-btn">
+                <{if $page_product_basic.spec.goods}>
+                    <{include file='wap/product/info/spec.html'}>
+                <{else}>
+                    <select name="" id=""></select>
+                <{/if}>
+                </li>
+                <li><{include file='wap/product/info/btn.html'}></li>
+            </ul>
+        </div>
+        <div class="go_Home ">
+            <a href="javascript:history.back();"><span class="home-icon"></span></a>
+        </div>
+    </div>
+    <input type="hidden" name="goods[num]" id="goods_num" value="1" class="num-ipt">
+</form>
+<script type="text/javascript">
+    $('#fav').on('click',function(){
+        var _this = $(this);
+        if(_this.find('.fav').length || "<{$login}>" == 'nologin') return;
+        var data = 'gid=<{$page_product_basic.goods_id}>&type=goods';
+        $.post('<{link app=b2c ctl=wap_member act=ajax_fav}>',data,function(re){
+               _this.find('span').addClass('fav');
+        });
+        return false;
+    });
+</script>

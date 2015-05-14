@@ -43,8 +43,18 @@
 <footer data-am-widget="footer" class="am-footer am-footer-default"></footer>
 
 
-<!-- Navbar -->
 
+<form id="formBuyNow" style="display:none">
+    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$page_product_basic.goods_id}>" />
+    <input id="productId" type="text" name="goods[product_id]" value="<{$page_product_basic.product_id}>" />
+    <input id="num" type="text" name="goods[num]" value="1" />
+    <input id="stock" type="text" name="stock" value="" />
+    <input id="limit_nums" type="text" name="limit_nums" value="" />
+
+
+    <input type="text" name="btype" value="is_fastbuy" />
+    <input type="text" name="response_json" value="1" />
+</form>
 
 <script type="text/javascript">
 
@@ -52,14 +62,14 @@ $(document).ready(function(){
   $('#productComments').css('height',document.documentElement.clientHeight);
   $(".showvaluebox").click(function(){
   $(".valuedetail").show();
-  $(".valuepay").show(); 
-  $(".valuehide").show();   
-  });  
+  $(".valuepay").show();
+  $(".valuehide").show();
+  });
   $(".valuehide").click(function(){
   $(".valuehide").hide();
   $(".valuepay").hide();
   $(".valuedetail").hide();
-  });  
+  });
 
   $('#productMain').flexslider({
     slideshow: false,
@@ -67,12 +77,41 @@ $(document).ready(function(){
     touch:true,
   });
 
+    // specification click
+    $('#curSpec').click(function(){
+        if(document.getElementById('specList').style.display=='none') 
+            document.getElementById('specList').style.display='block';
+        else 
+            document.getElementById('specList').style.display='none';
+    });
 
     // specification select
     $('#specList').on('click','li',function(){
         $('#curSpec .specPrice').html($(this).find('.specPrice').html());
         $('#curSpec .specValue').html($(this).find('.specValue').html());
+        var curSpec = $.parseJSON( $(this).attr('specData') );
+        $('#curStore').html(curSpec.store );
+
+        $('#productId').val( curSpec.product_id );
+        
+
+        $('#specList').hide();
     });
+
+    $('#btnAdd2Fav').click(function(){
+        $.ajax({
+            url:'<{link app=b2c ctl=member act=ajax_fav}>',
+            data:'type=goods&gid='+$('#goodsId').val(),
+            method:'POST',
+            dataType:'json',
+            success:function($data){
+                if(data.success){
+                    // todo: change img
+                }
+            }
+        });
+    });
+
 
     // product amount change
     $('#amountPlus').click(function(){
