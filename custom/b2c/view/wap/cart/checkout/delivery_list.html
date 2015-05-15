@@ -7,29 +7,61 @@
     <{*</div>*}>
 <{*</li>*}>
 <{*<{/foreach}>*}>
-<div class="full-screen">
-    <div id="zxps" class="paiing" >
-    	<dl>
-        <{foreach from=$shippings item="shipping" key="key" name="shippings"}>
-        <dd class="paiing-span<{if $smarty.get.id eq $shipping.dt_id}> selected<{/if}>" value='{"id":<{$shipping.dt_id}>,"has_cod":"<{$shipping.has_cod}>","dt_name":"<{$shipping.dt_name}>","money":"<{$shipping.money}>"}'><{$shipping.dt_name}></dd>    <!-- 当前选中状态  加样式   selected  -->
-        <{/foreach}>
-        </dl>
-    </div>
+
+<!-- Header -->
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>
+    </a>
+  </div>
+  <h1 class="am-header-title">
+    <a href="#title-link">配送方式</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>
+    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+  </div>
+</header>
 
 
-    <div style="<{if $smarty.get.id neq 2}>display:none;<{/if}>"  class="ps-div" id="select_zt">
-        <div class="ps-div-title">自提地点</div>                <!-- 弹出选择框选择  -->
-        <{foreach from=$branchlist item="branchs"}>
-        <div class="ps-div-address" value='<{$branchs.branch_id}>'><{$branchs.name_b}></div>
-        <{/foreach}>
-    </div>
-    
-    <div class="invoice no-border">
-        <a id="submit_del" href="javascript:;" class="invoice_submit">确定</a>
-    </div>
+  
+<div class="am-list-news-bd paiing" id="zxps">
+    <ul class="am-list">
+     <div style="clear:both; width:100%; margin-top:10px; margin-left:10px;" class="am-btn-group doc-js-btn-1" data-am-button>
+     <{foreach from=$shippings item="shipping" key="key" name="shippings"}>
+     <label style="margin-left:10px;" class="am-btn am-btn-default paiing-span<{if $smarty.get.id eq $shipping.dt_id}> selected<{/if}>" value='{"id":<{$shipping.dt_id}>,"has_cod":"<{$shipping.has_cod}>","dt_name":"<{$shipping.dt_name}>","money":"<{$shipping.money}>"}'>
+    	<input type="radio" name="options" class=""  id="option<{$key}>"> <{$shipping.dt_name}>
+  	 </label>
+	 <{/foreach}>		 
+	  </div>
+    </ul>
 </div>
+  
+  <div data-am-widget="list_news" style="<{if $smarty.get.id neq 2}>display:none;<{/if}>" class="am-list-news am-list-news-default ps-div" id="select_zt">
+  <!--列表标题-->
+  <div class="am-list-news-bd" >
+    <h1 class="am-list-item-text ps-div-title">自提地点</h1>
+    <ul class="am-list" >
+    <{foreach from=$branchlist item="branchs"}>
+      <li class="am-g am-list-item-desced ps-div-address" value='<{$branchs.branch_id}>'  style="border-top:0px;"> <a href="#"  class="am-list-item-hd"><{$branchs.name_b}><span class="am-list-news-more am-fr" style=" color: #FF9900"> <i class="am-icon-map-marker am-icon-md"></i></span></a> </li>
+    <{/foreach}>
+    </ul>
+    </div>
+  </div>
+<div style="float:left; width:100%;" >
+  <div class="am-panel-hd" style="background:#CCCCCC; border-top:1px solid #aaaaaa">
+  <a id="submit_del" href="javascript:;" class="invoice_submit">
+  <img src="/public/app/b2c/statics/images/buy_sure.png" width="531" height="107" style="width:50%;margin-left:25%">
+  </a></div>
+</div>
+
 <script>
-    $('#zxps .paiing-span').click(function () {
+    $('#zxps .paiing-span').click(function () {    	
         $('#zxps .paiing-span').removeClass('selected');
         $(this).addClass('selected');
         var data = $.parseJSON($(this).attr('value'));

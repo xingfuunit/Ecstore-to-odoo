@@ -1,24 +1,64 @@
-<div class="full-screen">
-    <div class="paiing_title"><label>选择收货地址：</label><a class="add_address" href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>">添加收货地址</a></div>
-    <div class="address_list" id="A_list">
-        <ul>
-            <{foreach from=$member_addr_list item=addr key=key}>
-            <li class="<{if $def_addr.addr_id eq $addr.addr_id}> selected<{/if}>" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}'>
-                <div class="address_list_back">
-                    <span class="address_user"><{$addr.name}></span>
-                    <span class="address_phone"><{if $addr.tel}><{$addr.tel}><{else}><{$addr.mobile}><{/if}></span>
-                    <span class="address_address"><{$addr.area|ship_area}><{$addr.addr}></span>
-                </div>
-            </li>
-            <{/foreach}>
-        </ul>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>    </a>  </div>
+  <h1 class="am-header-title">
+    <a href="#title-link">收货地址修改</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
+</header>
+<button type="button" class="am-btn am-btn-primary  am-btn-warning am-margin add_address" onclick="javascript:window.location.href='<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>'">新增收货地址</button>
+<div   style=" text-align:left" >
+  <div  style="font-size:14px;">
+    <div class="am-modal-bd"  style=" text-align:left" >
+      <div class="am-panel-group" id="accordion">
+ 
+<{foreach from=$member_addr_list item=addr key=key}>   
+  <div class="am-panel am-panel-default">
+    <div class="am-panel-hd" style=" position:relative">
+      <h4 class="am-panel-title"  data-am-collapse="{parent: '#accordion', target: '#do-not-say-<{$key}>'}">
+        <{$key+1}>.<{$addr.area|ship_area}><{$addr.addr}>
+      </h4>
+	  <a  class="<{if $def_addr.addr_id eq $addr.addr_id}> selected<{/if}> addr_list" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}' style=" position:absolute; right:20px; top:5px; color:<{if $def_addr.addr_id eq $addr.addr_id}>#339900<{else}>#999999<{/if}>" href="#">
+	  <i class="am-icon-check-circle-o am-icon-sm"></i></a>
     </div>
+    <div id="do-not-say-<{$key}>" class="am-panel-collapse am-collapse <{if $def_addr.addr_id eq $addr.addr_id}>am-in<{/if}>">
+      <div class="am-panel-bd"  style="padding:0;">
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <div class="am-list-news-bd">
+    <ul class="am-list">
+      <li class="am-g">
+       <input class="am-form-field" type="text" placeholder="<{$addr.name}>">
+      </li>
+      <li class="am-g">
+      <input class="am-form-field" type="text" placeholder="<{if $addr.tel}><{$addr.tel}><{else}><{$addr.mobile}><{/if}>">
+      </li>
+      <li class="am-g">
+       <input class="am-form-field" type="text" placeholder="<{$addr.area|ship_area}><{$addr.addr}>">
+      </li>
+    </ul>
+  </div>
 </div>
+      </div>
+    </div>
+  </div>
+<{/foreach}>   
+  
+  </div>
+    </div>
+
+  </div>
+</div>
+
 <script>
     function shipping_confirm(data){
 
     }
-    $('#A_list li').click(function(){
+    $('#accordion .addr_list').click(function(){
         //$('#A_list li').removeClass('selected');
         //$(this).addClass('selected');
         $.post('<{link app=b2c ctl=wap_cart act=shipping_confirm}>','address='+$(this).attr('value'),function(re){

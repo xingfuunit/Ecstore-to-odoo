@@ -1,114 +1,65 @@
-    <div class="d-line">
-        <span class="k">
-            商品金额：
-        </span>
-        <span class="v">
-            <div class="price">
-                <{$order_detail.cost_item|cur_odr:$order_detail.currency}>
-            </div>
-        </span>
-    </div>
-    <div class="d-line">
-        <span class="k">
-            运费：
-        </span>
-        <span class="v">
-            <div class="price">
-                <{$order_detail.cost_freight|cur_odr:$order_detail.currency}>
-            </div>
-        </span>
-    </div>
-    <{if $order_detail.cost_protect > 0}>
-    <div class="d-line">
-        <span class="k">
-            配送保价费：
-        </span>
-        <span class="v">
-            <div class="price">
-                  <{$order_detail.cost_protect|cur_odr:$order_detail.currency}>
-            </div>
-        </span>
-    </div>
-    <{/if}>
-    <{if $order_detail.pmt_order}>
-    <div class="d-line">
-        <span class="k">
-            优惠金额：
-        </span>
-        <span class="v">
-            <div class="price">
-                  <{if $order_detail.pmt_order < 0}>
-                  +<{(0-$order_detail.pmt_order)|cur_odr:$order_detail.currency}>
-                  <{else}>
-                  -<{$order_detail.pmt_order|cur_odr:$order_detail.currency}>
-                  <{/if}>
-            </div>
-        </span>
-    </div>
-    <{/if}>
-    <{if $order_detail.cost_payment > 0}>
-    <div class="d-line">
-        <span class="k">
-            客户承担支付手续费
-        </span>
-        <span class="v">
-            <div class="price">
-                <{$order_detail.cost_payment|cur_odr:$order_detail.currency}>
-            </div>
-        </span>
-    </div>
-    <{/if}>
-    <{if $order_detail.cost_tax>0}>
-    <div class="d-line">
-        <span class="k">
-            开发票所需税金：
-        </span>
-        <span class="v">
-            <div class="price">
-                  <{$order_detail.cost_tax|cur_odr:$order_detail.currency}>
-            </div>
-        </span>
-    </div>
-    <{/if}>
-    <{if $order_detail.totalConsumeScore <> 0}>
-    <div class="d-line">
-        <span class="k">
-            消费积分：
-        </span>
-        <span class="v">
-            <div class="price">
-                  <{$order_detail.totalConsumeScore}>
-            </div>
-        </span>
-    </div>
-    <{/if}>
-    <{if $order_detail.totalGainScore <> 0}>
-          <div class="d-line">
-        <span class="k">
-            订单可得积分：
-        </span>
-        <span class="v">
-            <div class="price">
-                  <{$order_detail.totalGainScore}>
-            </div>
-        </span>
-    </div>
-    <{/if}>
-    <{*<div class="d-line total">*}>
-        <{*<span class="k">*}>
-            <{*总金额：*}>
-        <{*</span>*}>
-        <{*<span class="v">*}>
-            <{*<div class="price">*}>
-                <{*<{$order_detail.total_amount|cur_odr:$order_detail.currency}>*}>
-            <{*</div>*}>
-        <{*</span>*}>
-    <{*</div>*}>
-    <div class="clear_line"></div>
-    <div class="settlement">
-        <div>
-            <div class="block">总额</div>
-            <div class="block"><label class="fonts-color1"><{$order_detail.total_amount|cur_odr:$order_detail.currency}></label></div>
-        </div>
-        <button type="submit" class="js_btn" rel="_request">提交</button>
-    </div>
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">商品金额<span class="am-list-news-more am-fr" style="color:#FF6600"><{$order_detail.cost_item|cur_odr:$order_detail.currency}></span></a>      
+	  </li>
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">运费<span class="am-list-news-more am-fr" style="color:#FF6600"><{$order_detail.cost_freight|cur_odr:$order_detail.currency}></span></a>      
+	  </li>
+	  <{if $order_detail.cost_protect > 0}>
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">配送保价费<span class="am-list-news-more am-fr" style="color:#FF6600"><{$order_detail.cost_protect|cur_odr:$order_detail.currency}></span></a>      
+	  </li>
+	  <{/if}>
+	  
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">优惠金额
+        <span class="am-list-news-more am-fr" style="color:#FF6600">
+		<{if $order_detail.pmt_order < 0}>
+        +<{(0-$order_detail.pmt_order)|cur_odr:$order_detail.currency}>
+        <{else}>
+        -<{$order_detail.pmt_order|cur_odr:$order_detail.currency}>
+        <{/if}>
+		</span></a>      
+	  </li>
+	 
+	  <{if $order_detail.cost_payment > 0}>
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">客户承担支付手续费
+        <span class="am-list-news-more am-fr" style="color:#FF6600">
+        <{$order_detail.cost_payment|cur_odr:$order_detail.currency}>
+        </span></a>      
+	  </li>
+	  <{/if}>
+	  <{if $order_detail.cost_tax>0}>
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">开发票所需税金
+        <span class="am-list-news-more am-fr" style="color:#FF6600">
+        <{$order_detail.cost_tax|cur_odr:$order_detail.currency}>
+        </span></a>      
+	  </li>
+	  <{/if}>
+	  <{if $order_detail.totalConsumeScore <> 0}>
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">消费积分
+        <span class="am-list-news-more am-fr" style="color:#FF6600">
+        <{$order_detail.totalConsumeScore}>
+        </span></a>      
+	  </li>
+	  <{/if}>
+	  <{if $order_detail.totalGainScore <> 0}>
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">订单可得积分
+        <span class="am-list-news-more am-fr" style="color:#FF6600">
+        <{$order_detail.totalGainScore}>
+        </span></a>      
+	  </li>
+	  <{/if}>
+	  
+<div style="float:left; width:100%;" >
+    <div class="am-panel-hd" style="float:left; background:#CCCCCC; border-top:1px solid #aaaaaa">
+	<div style="color:#FF0000;float:left; font-size:1.5em; font-weight:bold">
+	<span style=" font-size:14px; color:#666666; font-weight:normal">总额：</span>
+	<{$order_detail.total_amount|cur_odr:$order_detail.currency}>
+	</div>
+	 <a style="float:right; width:50%" href="#"><img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pay_btn.png"></a>
+	</div>
+</div>

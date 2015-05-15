@@ -1,6 +1,20 @@
-<{wap_require file="block/ur_here.html"}>
+<!-- Header -->
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>    </a>	</div>
+  <h1 class="am-header-title">
+    <a href="#title-link">品珍鲜活</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
+</header>
+
 <div class="full-screen" id="checkout_wrap">
-    <form action="<{link app=b2c ctl=wap_order act=create}>" method="post"  class="form" data-type="ajax">
+<form action="<{link app=b2c ctl=wap_order act=create}>" method="post"  class="form" data-type="ajax">
         <{if $is_fastbuy}>
         <input type="hidden" name="isfastbuy" value="true" />
         <{/if}>
@@ -12,136 +26,218 @@
         <input type="hidden" name="point[rate]" value="<{$discount_rate}>">
         <input type="hidden" name="point[score]" >
         <{/if}>
-        <div class="section">
-            <{if $def_addr}>
-            <div class="address_info">
-                <a href="<{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=shipping_list">
-                    <div class="address_back">
-                        <span class="address_user"><{$def_addr.name}></span>
-                        <span class="address_phone"><{if $def_addr.tel}><{$def_addr.tel}><{else}><{$def_addr.mobile}><{/if}></span>
-                        <span class="address_address"> <{$def_addr.area|ship_area}><{$def_addr.addr}></span>
-                    </div>
-                </a>
-                <input type="hidden" name="address" value='{"addr_id":<{$def_addr.addr_id}>,"area":<{$def_addr.area|ship_area_id}>}' />
 
-            </div>
-            <{else}>
-            <a href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>" class="btn address-btn bg-orange">
-                添加收货地址
-            </a>
-            <{/if}>
-        </div>
-        <div class="section">
-            <{include file='wap/cart/checkout/cart_main.html' app='b2c'}>
-        </div>
-        <div class="section" id="D_L">
-        <{if $shipping_method.shipping_name}>
-				  <div class="ps_function">
-		              <a href="/wap/cart-checkout_wrap.html?show=delivery_change">
-		                  <span class="left">配送方式</span>
-		                    <span class="right">
-		                        <span class="font_margin2"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}></span>
-		                        <input name="shipping" value='{"id":<{$shipping_method.shipping_id}>,"has_cod":"<{$shipping_method.has_cod}>","dt_name":"<{$shipping_method.shipping_name}>","money":"<{$shipping_method.money}>"}' type="hidden">
-		                    </span>
-		              </a>
-		          </div>
-		 <{else}>
-				  <div class="ps_function">
-		              <a href="/wap/cart-checkout_wrap.html?show=delivery_change">
-		                  <span class="left">配送方式</span>
-		                    <span class="right">
-		                        <span class="font_margin2">请选择</span>
-		                    </span>
-		              </a>
-		          </div>
-		 <{/if}>
-        </div>
-        <div class="section" id="P_L">
-            <{if $def_addr}>
+		<div class="am-list-news-bd">       
+        <{include file='wap/cart/checkout/cart_main.html' app='b2c'}>
+		</div>
+
+  <div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <!--列表标题-->
+  <div class="am-list-news-bd" >
+    <ul class="am-list" >
+        <{if $def_addr}>
+      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" > <a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=shipping_list" class="am-list-item-hd">此产品将寄往：<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
+            <div class="am-list-item-text"  style="color:#CCCCCC" >收货人：<{$def_addr.name}></div>
+        	<div class="am-list-item-text"  style="color:#CCCCCC" ><{if $def_addr.tel}>电话号码：<{$def_addr.tel}><{else}>手机号码：<{$def_addr.mobile}><{/if}></div>
+        	<div class="am-list-item-text"  style="color:#CCCCCC" ><{$def_addr.area|ship_area}><{$def_addr.addr}></div>
+      		</li>
+      <{else}>
+      		<a href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>" class="btn address-btn bg-orange">
+      <{/if}>
+
+
+	  <{if $shipping_method.shipping_name}>	 
+      <li class="am-g am-list-item-desced" style="color:#CCCCCC" >
+        <a style="color:#CCCCCC"  href="/wap/cart-checkout_wrap.html?show=delivery_change" class="am-list-item-hd"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}>
+        <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
+      </li>
+      <{else}>
+      <li class="am-g am-list-item-desced" style="color:#CCCCCC" >
+        <a style="color:#CCCCCC"  href="/wap/cart-checkout_wrap.html?show=delivery_change" class="am-list-item-hd">请选择配送方式
+        <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
+      </li>
+      <{/if}>
+      
+      <{if $def_addr}>
             <{include file='wap/cart/checkout/payment_confirm.html' app='b2c'}>
-            <{/if}>
-        </div>
+      <{/if}>
 
-        <div class="section order-msg">
-            <div class="c-g">
-                <input type="text" name="memo" placeholder="订单留言" class="text"/>
-            </div>
-        </div>
-        <{if $point_dis_html}>
-        <div class="section">
-            <div class="ps_function J_point_dis">
-                <a href="javascriot:;">
-                    <span class="left">积分抵扣</span>
-                   <span class="right">
-                        <span class="font_margin2">使用积分</span>
-                   </span>
-                </a>
-            </div>
-            <div id="point_dis" style="display:none;">
-                <!-- 积分抵扣 -->
-                <{$point_dis_html}>
-            </div>
-        </div>
-        <{/if}>
-        <div class="section">
-            <div class="ps_function J_coupon">
-                <span class="left">优惠券</span>
-                   <span class="right">
-                        <span class="font_margin2"> 使用优惠券<{if $aCart.object.coupon|count > 0 }><{$aCart.object.coupon|count}>张<{/if}></span>
-                   </span>
-            </div>
-            <div id="usecoupon" style="display:none;">
-                <{include file='wap/cart/checkout/coupon.html' app='b2c'}>
-            </div>
-        </div>        
-        <{if $tax_setting}>
-        <div class="section">
-            <div class="ps_function J_fp">
-                <a href="javascript:;">
-                    <span class="left">发票信息</span>
-                      <span class="right">
-                         <div class="l-v c-fix" id="fp">
-                             <{include file='wap/cart/checkout/invoice.html' app='b2c'}>
-                         </div>
-                      </span>
-                </a>
-            </div>
-
-        </div>
-        <{/if}>
-
-        <{if $aCart.promotion.order}>
-        <div class="pre ob">
-            <div class="d-line c-fix" id="J_sel_pre">
-                订单优惠：
-                <{foreach from=$aCart.promotion.order item=item}>
-                <span class="pre-list">
-                    <span class="icon red"><{$item.desc_tag}></span>
-                </span>
-                <{/foreach}>
-                <i class="arr down"></i>
-            </div>
-            <div class="pre-info hide" id="J_pre_info">
-                <{foreach from=$aCart.promotion.order item=item}>
-                <div class="box">
-                    <span class="col f-red">[<{$item.desc}>]</span>
-                    <span class="col"><{$item.name}></span>
-                </div>
-                <{/foreach}>
-            </div>
-        </div>
-        <{/if}>
-
-        <div class="section" id="checkout_total">
-        <{include file='wap/cart/checkout/checkout_total.html' app='b2c'}>
-        </div>
-        <{*<div class="section">*}>
-            <{*<div class="order-btn-bar">*}>
-                <{*<button type="submit" class="btn red" rel="_request">提交订单</button>*}>
-            <{*</div>*}>
-        <{*</div>*}>
-    </form>
+      
+	  
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" data-am-modal="{target: '#my-alert01',width: 320}" class="am-list-item-hd ">
+        	<span class="J_coupon">使用优惠券<{if $aCart.object.coupon|count > 0 }><{$aCart.object.coupon|count}>张<{/if}></span>
+		<span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>      
+	  </li>
+	  
+	  <{include file='wap/cart/checkout/coupon.html' app='b2c'}>
+	  
+	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" data-am-modal="{target: '#my-alert02'}" class="am-list-item-hd">留言<span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>      
+	  </li>	 
+        
+	   <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
+        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">订单优惠<span class="am-badge am-badge-warning am-radius am-fr">送积分</span></a>      
+	  </li>
+	  
+	  <{include file='wap/cart/checkout/checkout_total.html' app='b2c'}>
+	  
+	  
+    </ul>
+  </div>
 </div>
+
+
+<!--留言板弹出层信息开始-->
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert02"  style=" text-align:left" >
+  <div class="am-modal-dialog" style="font-size:14px;">
+    <div class="am-modal-hd" style="text-align:center">留言
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div style="padding:10px;">
+	
+	<!--留言开始-->
+	 <div class="am-form-group" style="width:100%">
+      <textarea  style="width:100%" rows="5" id="doc-ta-1"></textarea>
+    </div>
+   <!--留言结束-->
+    <div class="am-modal-footer">
+	<button class="am-btn  am-btn-danger am-round am-fr"  type="button">确定</button>
+    </div>
+	
+   </div>	
+
+  </div>
+</div>
+<!--留言板弹出层信息结束-->
+
+<!--弹出层信息开始-->
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert"  style=" text-align:left" >
+  <div class="am-modal-dialog" style="font-size:14px;">
+    <div class="am-modal-hd" >收货地址修改
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd"  style=" text-align:left" >
+      <div class="am-panel-group" id="accordion">
+  <div class="am-panel am-panel-default">
+    <div class="am-panel-hd" style=" position:relative">
+      <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-1'}">
+        1.北京市海淀区五里居街道惠科大厦705室
+      </h4>
+	  <a style=" position:absolute; right:20px; top:5px; color:#339900" href="#"><i class="am-icon-check-circle-o am-icon-sm"></i></a>
+	  <a style=" position:absolute; right:0px; top:5px; color:#FF3300" href="#"><i class="am-icon-times-circle-o am-icon-sm"></i></a>
+    </div>
+    <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
+      <div class="am-panel-bd"  style="padding:0;">
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <div class="am-list-news-bd">
+    <ul class="am-list">
+      <li class="am-g">
+       <input class="am-form-field" type="text" placeholder="刘国钧">
+      </li>
+      <li class="am-g">
+      <input class="am-form-field" type="text" placeholder="18922177116">
+      </li>
+	   	   <li class="am-g">选择城市
+         <div class="am-dropdown" data-am-dropdown>
+           <button class="am-btn  am-dropdown-toggle" data-am-dropdown-toggle>省<span class="am-icon-caret-down"></span></button>
+             <ul class="am-dropdown-content">
+                <li class="am-dropdown-header">标题</li>
+                <li><a href="#">快乐的方式不只一种</a></li>
+
+              </ul>
+           </div>
+		    <div class="am-dropdown" data-am-dropdown>
+           <button class="am-btn  am-dropdown-toggle" data-am-dropdown-toggle>市<span class="am-icon-caret-down"></span></button>
+             <ul class="am-dropdown-content">
+                <li class="am-dropdown-header">标题</li>
+                <li><a href="#">快乐的方式不只一种</a></li>
+              </ul>
+           </div>
+		    <div class="am-dropdown" data-am-dropdown>
+           <button class="am-btn  am-dropdown-toggle" data-am-dropdown-toggle>区/县<span class="am-icon-caret-down"></span></button>
+             <ul class="am-dropdown-content">
+                <li class="am-dropdown-header">标题</li>
+                <li><a href="#">快乐的方式不只一种</a></li>
+              </ul>
+           </div>
+		    <div class="am-dropdown" data-am-dropdown>
+           <button class="am-btn  am-dropdown-toggle" data-am-dropdown-toggle>镇<span class="am-icon-caret-down"></span></button>
+             <ul class="am-dropdown-content">
+                <li class="am-dropdown-header">标题</li>
+                <li><a href="#">快乐的方式不只一种</a></li>
+              </ul>
+           </div>
+      </li>
+      <li class="am-g">
+       <input class="am-form-field" type="text" placeholder="北京市海淀区五里居街道惠科大厦705室">
+      </li>
+    </ul>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="am-panel am-panel-default">
+    <div class="am-panel-hd" style=" position:relative">
+      <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-2'}">
+       2.广州市区天河区五山路
+      </h4>
+     <a style=" position:absolute; right:20px; top:5px; color:#999999" href="#"><i class="am-icon-check-circle-o am-icon-sm"></i></a>
+	  <a style=" position:absolute; right:0px; top:5px; color:#FF3300" href="#"><i class="am-icon-times-circle-o am-icon-sm"></i></a>
+    </div>
+    <div id="do-not-say-2" class="am-panel-collapse am-collapse">
+      <div class="am-list-news-bd">
+    <ul class="am-list">
+      <li class="am-g">
+       <input class="am-form-field" type="text" placeholder="刘国钧">
+      </li>
+      <li class="am-g">
+      <input class="am-form-field" type="text" placeholder="18922177116">
+      </li>
+	   <li class="am-g">选择城市
+         <div class="am-dropdown" data-am-dropdown>
+           <button class="am-btn  am-dropdown-toggle" data-am-dropdown-toggle>省份<span class="am-icon-caret-down"></span></button>
+             <ul class="am-dropdown-content">
+                <li class="am-dropdown-header">标题</li>
+                <li><a href="#">快乐的方式不只一种</a></li>
+
+              </ul>
+           </div>
+		    <div class="am-dropdown" data-am-dropdown>
+           <button class="am-btn  am-dropdown-toggle" data-am-dropdown-toggle>城市<span class="am-icon-caret-down"></span></button>
+             <ul class="am-dropdown-content">
+                <li class="am-dropdown-header">标题</li>
+                <li><a href="#">快乐的方式不只一种</a></li>
+              </ul>
+           </div>
+		    <div class="am-dropdown" data-am-dropdown>
+           <button class="am-btn  am-dropdown-toggle" data-am-dropdown-toggle>区县<span class="am-icon-caret-down"></span></button>
+             <ul class="am-dropdown-content">
+                <li class="am-dropdown-header">标题</li>
+                <li><a href="#">快乐的方式不只一种</a></li>
+              </ul>
+           </div>
+      </li>
+      <li class="am-g">
+       <input class="am-form-field" type="text" placeholder="广州市区天河区五山路">
+      </li>
+    </ul>
+  </div>
+    </div>
+  </div>
+  
+</div>
+    <div class="am-modal-footer">
+	<button class="am-btn  am-btn-danger am-round am-fr"  type="button">确定</button>
+    </div>
+    </div>
+  </div>
+</div>
+</form>
+</div>
+<!--弹出层信息结束-->
+
 <script>
     (function(){
         function getTotal(){
@@ -167,7 +263,8 @@
             var html = ' ';
             if(couponResult && couponResult.length) {
                 $.each(couponResult, function(index,item){
-                    html += '<li><span class="del" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
+                	//html += '<span style="width:70%;float:left;line-height:31px;">'+item.coupon+'-'+item.name+'</span><button type="button" style="width:30%;" class="am-btn btn am-btn-xs am-fl del" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'" data-code="">取消使用</button>';
+                    html += '<li><span class="del" style="float:right;color:blue;" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
                 });
             }
             $('.used').html(html);
@@ -369,6 +466,125 @@
             });
           }
         });
+        
+     // 移除商品
+        $('.J-remove').bind('click',function(e){
+            if(!confirm('确认移除商品“'+$(this).parents('li').find('.pt-h-name').text().trim()+'”？'))return false;
+            var oo = $(e.target);
+            var data = $('<form action=""></form>').append($(this).parents('.pt-h-item').clone()).serialize();
+            $.post($(this).attr('href'),data+"&response_type=true",function(re){
+                var rs = JSON.parse(re);
+                if(rs.is_empty) return location.reload();
+                $('#J_total .price').html(rs.sub_total.promotion_subtotal);
+                $('#J_total .num').html(rs.number.cart_number);
+                if(rs.error) return alert(rs.error);
+                oo.parents('.pt-h-item').remove();
+                // if(p.hasClass('item') && $('.pt-list').children().length == 2){
+                //     oo.parents('.pt-h-item').remove();
+                //     $('cart-pt').remove();
+                // }else{
+                //     p.destroy();
+                // }
+
+                location.reload();
+            });
+            return false;
+        });
+     
+     
+     // 设置商品数量
+        function setQuantity(el,flag){
+            var ipt = el.parent().find('.num-ipt'),
+                max = parseInt(el.parents('.pt-h-item').find('.max-num').val()),
+                min = parseInt(el.parents('.pt-h-item').find('.min-num').val()),
+                val = ipt.val();
+
+            switch(flag){
+                case 1:
+                    if(!/^\d+$/.test(val)) 
+                        ipt.val(min);
+                    else if(val > min)
+                        ipt.val( val-1 );
+                    else if(val == min)
+                        popup('此商品最少购买' + min + '件');
+                    break;
+                case 2:
+                    if(val < max)
+                        ipt.val( +val+1 );
+                    else if(val == max)
+                        popup('此商品最多只能购买' + max + '件');
+                    break;
+                case 3:
+                    if(!/^\d+$/.test(val)) {
+                        ipt.val(min);
+                    } else if(val > max){
+                        popup('此商品最多只能购买' + max + '件');
+                        ipt.val(max);
+                    } else if(val < min){
+                        popup('此商品最少购买' + min + '件');
+                        ipt.val(min);
+                    }
+                    break;
+            }
+            function popup(msg) {
+                var tpl = $('<div class="popup">' + msg + '</div>').appendTo(document.body);
+                var timer = setTimeout(function(){
+                    tpl.remove();
+                }, 3000);
+            }
+
+            var data = $('<form action=""></form>').append(el.parents('.pt-h-item').clone()).serialize();
+            $.post('<{link app=b2c ctl=wap_cart act=update}>',data+"&response_type=true",function(re){
+                //document.write(re);
+                var o = JSON.parse(re),
+                    promotion = $('#order_promotion .content'),
+                    unuse_rule = $('#unused_promotion .content'),
+                    ul = '';
+                if(o.promotion){
+                    if(o.promotion.order){
+                        $.each(o.promotion.order,function(){
+                            ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
+                        });
+                        promotion.html(ul);
+                        ul = '';
+                    }else{
+                        promotion.html('');
+                    }
+                }else{
+                    promotion.html('');
+                }
+                if(o.unuse_rule){
+                    $.each(o.unuse_rule,function(){
+                        ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
+                    unuse_rule.html(ul);
+                    });
+                }else{
+                    unuse_rule.html('');
+                }
+
+                //el.parents('.pt-h-item').find('#bprice').html(o.edit_ajax_data.buy_price);
+                $('#subtotal').html(o.sub_total.promotion_subtotal);
+                $('#discount_amount_order').html(o.sub_total.js);
+                $('#J_total .num').html(o.number.cart_number);
+            });
+
+        }
+        $('.J-pt-num').bind('click',function(e){
+            var el = $(e.srcElement),
+                n = 0;
+            console.log(el);
+            if( !el.hasClass('btn') )return;
+            
+            if( el.hasClass('minus') )n=1;
+            if( el.hasClass('plus') )n=2;
+
+            setQuantity(el,n);
+
+        });
+        $('.num-ipt').bind('change',function(){
+            setQuantity( $(this),3 );
+        });
+     
         //输入抵扣积分，可抵扣金额同步变化
         $('input[name="point_score"]').on('input',function(event){
             var rate = $('input[name="point_rate"]').val();
