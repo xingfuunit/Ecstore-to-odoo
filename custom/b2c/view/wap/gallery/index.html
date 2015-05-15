@@ -1,256 +1,212 @@
-<div class="img_list"></div>
-<{if $goodsData}>
-<div id="loading2" class="popup"><div class="load-pic">正在加载....</div></div>
-<div id="b-bg"></div>
-<{else}>
-    <div class="popup" style="background-color: rgba(0,0,0,0.8);">暂时没有该商品</div>
-<{/if}>
+
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+<a class="" href="#left-link">
+<i class="am-header-icon am-icon-reply"></i>
+</a>
+</div>
+  <h1 class="am-header-title">
+    <a href="#title-link">品珍鲜活</a>
+  </h1>
+<div class="am-header-right am-header-nav">
+<a class="" href="#right-link">
+<i class="am-header-icon am-icon-home"></i>
+</a>
+</div>
+</header>
+
+<!-- Menu -->
+
+<!--搜索开始-->
+<div class="am-list-news am-list-news-default am-no-layout" data-am-widget="list_news">
+<form action="" class="am-form am-form-inline">
+  <div class="am-form-group am-form-icon">
+    <i class="am-icon-search"></i>
+    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字">
+  </div>  
+</form>
+</div>
+<!--搜索结束-->
+<div style=" color:#1d88a0; font-size:14px; text-indent:10px;">最热关键字：鲜果 龙虾 澳洲鲍鱼  阿拉斯加帝王蟹  </div>
+<br>
+<!-- List -->
+<div data-am-widget="slider" class="am-slider am-slider-a4" data-am-slider='{}' id="my-slider">
+  <ul class="am-slides">
+  
+  	<{foreach from=$pagetotal_arr item=pa key=key}>
+    <li>
+	    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
+	    	
+			<li>
+			    <div class="am-gallery-item">
+			      <a href="products.html">
+			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+			        <div class="am-gallery-desc" >
+					 <h1 style="color:#FF0000;float:left">￥35.00</h1>
+					 <a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
+			      </a>
+			    </div>
+			  </li>
+			  <li>
+			    <div class="am-gallery-item">
+			      <a href="products.html">
+			       <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+			        <div class="am-gallery-desc" >
+					<h1 style="color:#FF0000;float:left">￥35.00</h1>
+					 <a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
+			      </a>
+			    </div>
+			  </li>
+			  <li>
+			    <div class="am-gallery-item">
+			      <a href="products.html">
+			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+			        <div class="am-gallery-desc" >
+					<h1 style="color:#FF0000;float:left">￥35.00</h1>
+					<a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
+			      </a>
+			    </div>
+			  </li>
+			  <li>
+			    <div class="am-gallery-item">
+			      <a href="products.html">
+			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro02.png">        
+					<h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+			        <div class="am-gallery-desc" >
+					<h1 style="color:#FF0000;float:left">￥35.00</h1>
+					<a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
+			      </a>
+			    </div>
+			  </li>
+			    <li>
+			    <div class="am-gallery-item">
+			      <a href="products.html">
+			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro02.png">
+			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+			        <div class="am-gallery-desc" >
+					<h1 style="color:#FF0000;float:left">￥35.00</h1>
+					<a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
+			      </a>
+			    </div>
+			  </li>
+			  <li>
+			    <div class="am-gallery-item">
+			      <a href="products.html">
+			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
+			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
+			        <div class="am-gallery-desc" >
+					<h1 style="color:#FF0000;float:left">￥35.00</h1>
+					<a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
+			      </a>
+			    </div>
+			  </li>
+			
+			
+		</ul>
+    </li>
+	<{/foreach}>
+	
+  </ul>
+</div>
+
+<!-- Gallery -->
+
+
+<div id="CuPlayer"><div id="js_play" style="cursor:pointer;">
+ <iframe id="js_ifr" scrolling="no" marginwidth="0" allowtransparency="allowtransparency" src="" marginheight="0" style="width: 270px; height: 150px; display:none" frameborder="0"></iframe></div>
+</div>
+<script>
+$("#js_play").click(function(){
+$(this).hide();
+$("#js_ifr").fadeIn('fast').attr("src","http://player.youku.com/player.php/sid/XOTEzNzU3MjE2/v.swf");
+});
+</script>
+<!-- Footer -->
+<div id="am-footer-mode" class="am-modal am-modal-no-btn am-switch-mode-m am-switch-mode-m-default">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd am-modal-footer-hd">
+      <a href="javascript:void(0)" data-dismiss="modal" class="am-close am-close-spin"
+         data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd">您正在浏览的是
+      <span class="am-switch-mode-owner">云适配</span>
+      <span class="am-switch-mode-slogan">为您当前手机订制的移动网站。</span>
+    </div>
+  </div>
+</div>
+
+<div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
+<a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="#"></a>
+</div>
+<div class="return_div" style="display:none;"><label><i id="cur_page">1</i>/<i id="page_total"></i></label></div>
+<!-- Navbar -->
+<script>
+$(function (){
+	$('#my-slider').flexslider({
+		touch: true,
+		controlNav: false,
+		start: function(){
+			console.log('start');
+			
+		},
+		before: function(){
+			
+			console.log(1);
+		},
+
+  });
+  
+  
+  	var url='<{link app=b2c ctl=wap_gallery act=gallery_scroll_goods}>';
+    var page = 1;
+    var pagetotal = 2;
+    var total = 0;
+    var post = $('#loading2').length;
+    var sear = location.search ? location.search.substr(1) : '';
+    var form_data = $('#j_form').length ? $('#j_form').serialize() : '';
+    var params = ['showtype=all','page='+page, sear, form_data].filter(function(d){return d;}).join('&');
+    if(post){
+            $.get(url,params,function(data){
+                if(data && data.html){
+                    $('.img_list').append(data.html);
+                    $('#page_total').text(data.total);
+                    total = data.total;
+                    pagetotal = data.pagetotal;
+                    hid_load();
+                    var img = $('.img_list img:first');
+                    img.attr('src',img.attr('img'));
+                    img.attr('img','');
+                    $('.img_list li').scrollspy().on('inview:scrollspy:amui', _load_img);
+                    if(total > 0) {
+                        $('.scrollspy').scrollspy().on('inview:scrollspy:amui', function () {
+                            $(".return_div").show();
+                        });
+                    }
+                }
+            },'json');
+        }
+		
+	
+	  function show_load(){
+        $('#loading2').show();
+        $('#b-bg').show();
+       }
+
+    function hid_load(){
+        $('#loading2').hide();
+        $('#b-bg').hide();
+    }
+
+});
+
+	
+</script>
+
 <script>
 (function(){
-    var url = '<{link app=b2c ctl=wap_gallery act=ajax_get_goods}>';
-    var page = '<{$page}>';
-    var cat_id = '<{$screen.cat_id}>';
-    var container = document.body;
-    var priceSeq = 'price';
-    var salesSeq = 'buy_w_count';
-    $('.list_button li').on('click',function(){
-        if($(this).find('a').hasClass('list_pp')){
-            $(this).toggleClass("act");
-            $('.pp_list').toggle();
-            //$('this').addClass('desc');
-        }else{
-            $(this).toggleClass("desc");
-            if($(this).hasClass('desc')){
-                $('.list_button li').not(this).removeClass('desc');
-            }
-            //$('.list_button li').removeClass('desc');
-            hide_search();
-            filterGoods($(this));
-        }
-    });
-    $('.pp_list dd').click(function(event) {
-        var _this = this,
-        t = $(event.target),
-                tag = t[0].tagName.toLowerCase(),
-                table = t.parents('table');
-        var fid = $(this).attr('data-fid');
-        $('.pp_list dd').css('color','');
-        $(this).css('color','#f18101');
-        if(fid&&fid.length){
-            fid = fid.split('-');
-            $('#brand').attr({name:fid[0]+'[]',value:fid[1]});
-        }else{
-            $('#brand').val('');
-            $('.list_pp').parent().removeClass('desc');
-            $('.pp_list').hide();
-            $(this).css('color','');
-        }
-        filterGoods($('.trigger-list .act'),t);
-        hide_search();
-    });
-
-    $('#J_search').on('tap',_search);
-    $('#J_filter .a-search-ipt').blur(_search);
-
-    function _search(){
-        var prt = $(this).parent();
-        prt.submit();
-    }
-    $('#J_search_pt').on('submit',function(){
-        if($.trim($(this).find('.a-search-ipt').val()) == ''){
-            return false;
-        }
-    });
-    function filterGoods(e){
-        var orderby = 'orderBy=',
-                p = '',
-                sear = '',
-                search = location.search;
-        if(e&&e.hasClass('price-seq')) orderby += priceSeq;
-        else if(e&&e.hasClass('sales-seq')) orderby += salesSeq;
-
-        if(e&&e.hasClass('desc')){
-            orderby += ' desc';
-        }else{
-            orderby =  e ? ' asc' : '';
-        }
-        if(search) sear = search.substr(1);
-        var params = ['showtype=all', p, encodeURI(orderby), sear, $('#j_form').serialize()].filter(function(d){
-            return d;
-        }).join('&');
-        $.post(url, params, function(re){
-            $('.img_list').html(re);
-
-            var reg = new RegExp(location.hash || location.href, 'i');
-            window.history.pushState({url: location.href, html: container.innerHTML}, null, location.href.replace(reg, '#' + params));
-        });
-    }
-})();
-
-(function(){
-    return ;
-  var container = document.body;
-  var priceSeq = 'price desc';
-  var salesSeq = 'buy_w_count desc';
-  var url = '<{link app=b2c ctl=wap_gallery act=ajax_get_goods}>';
-  var page = '<{$page}>';
-  var cat_id = '<{$screen.cat_id}>';
-  var filter_dialog;
-
-  /*html5 history manage*/
-  setTimeout(function(){
-      window.history.replaceState({url: location.href, html: container.innerHTML}, null, location.href);
-  }, 0);
-
-  window.onpopstate = function(event){
-      var data;
-      if(event && event.state){
-          data = event.state;
-      }else{
-          data = {html: container.innerHTML, url: location.href};
-      }
-
-      var scripts = '';
-      var text = data.html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gi, function(all, code){
-          scripts += code + '\n';
-          return '';
-      });
-      container.innerHTML = text;
-
-      var script = document.createElement('script');
-      script.text = scripts;
-      document.body.appendChild(script);
-      // document.head.removeChild(script);
-  }
-
-
-  function filterGoods(t,e){
-    var orderby = 'orderBy=',
-        p = 'page=',
-        sear = '',
-        search = location.search;
-    if(e&&$('.trigger-list .act').hasClass('price-seq')) orderby += priceSeq;
-    else if(e&&$('.trigger-list .act').hasClass('sales-seq')) orderby += salesSeq;
-    else if(t.hasClass('price-seq')){
-        orderby += priceSeq;
-    }
-    else if(t.hasClass('sales-seq')){
-        orderby += salesSeq;
-    }
-    if(e&&e.num){
-        p += e.num;
-        page = e.num;
-    }
-    if(search) sear = search.substr(1);
-    var params = ['showtype=list', p, encodeURI(orderby), sear, $('#J_filter form').serialize()].filter(function(d){
-        return d;
-    }).join('&');
-
-    $.post(url, params, function(re){
-        $($('.J-tab .panel')[t.index()]).html(re);
-
-        var reg = new RegExp(location.hash || location.href, 'i');
-        window.history.pushState({url: location.href, html: container.innerHTML}, null, location.href.replace(reg, '#' + params));
-    });
-  }
-
-  $('.J-tab .trigger').on('touchend',function(e){e.preventDefault();}).on('tap',function(){
-    page = 1;
-    if( $(this).hasClass('sales-seq') ){
-        salesSeq = salesSeq == 'buy_w_count desc' ? 'buy_w_count asc' : 'buy_w_count desc';
-    }
-    else if ($(this).hasClass('price-seq')) {
-        if(priceSeq == 'price desc'){
-            priceSeq = 'price asc';
-            $(this).find('i')[0].className = 'arr down';
-        }else{
-            priceSeq = 'price desc';
-            $(this).find('i')[0].className = 'arr top';
-        }
-    }
-
-    filterGoods($(this));
-  });
-  $('.filter-handle').on('tap',function(){
-    page = 1;
-    filter_dialog = new Dialog('#filter_container',{'type':'confirm'});
-  });
-  $('.panel-list').on('click',function(e){
-    var t = $(e.target);
-    if(t.hasClass('flip')){
-      t.num = parseInt(t.attr('page'));
-      if(t.hasClass('next'))t.num = parseInt(page)+1;
-      if(t.hasClass('prev'))t.num = parseInt(page)-1;
-      filterGoods($('.trigger-list .act'),t);
-      return false;
-    }
-  }).on('change','select',function(){
-    var t = $(this.options[this.selectedIndex]);
-    if(t.hasClass('flip')){
-      t.num = parseInt(t.attr('page'));
-      filterGoods($('.trigger-list .act'),t);
-    }
-  });
-  $('#J_filter').on('touchend',function(e){e.preventDefault();}).on('tap',function(event){
-    var _this = this,
-    t = $(event.target),
-    tag = t[0].tagName.toLowerCase(),
-    table = t.parents('table');
-    switch(tag){
-      case 'dt':
-        if( t.hasClass('handle') ){
-          t.removeClass('handle').next().addClass('hide');
-        }else{
-          t.addClass('handle').next().removeClass('hide');
-          t.siblings('.handle').removeClass('handle').next().addClass('hide');
-        }
-        break;
-      case 'td':
-        if(t.hasClass('empty'))return;
-        table.find('td').removeClass('handle');
-        t.addClass('handle');
-        table.parent().prev().find('span').html(t.html());
-        var fid = t.attr('data-fid');
-        if(fid&&fid.length){
-          fid = fid.split('-');
-          table.prev().attr({name:fid[0]+'[]',value:fid[1]});
-          table.parent().prev().find('span').addClass('act');
-        }else{
-          var hide = table.prev();
-          if(/^cat_id/.test(hide.attr('name'))) {
-              hide.val(cat_id);
-          }
-          else {
-              hide.val('');
-          }
-          table.parent().prev().find('span').removeClass('act');
-        }
-        break;
-      case 'span':
-        if(t.hasClass('reset')){
-          $.each($(this).find('table'),function(){
-            $(this).find('td').eq(0).trigger('tap');
-          });
-        }
-        break;
-      case 'input':
-        filterGoods( $('.trigger-list .act'),t );
-        //filter_dialog.close();
-        break;
-    }
-  });
-
-  $('#J_search').on('tap',_search);
-  $('#J_filter .a-search-ipt').blur(_search);
-
-    function _search(){
-        var prt = $(this).parent();
-        prt.submit();
-    }
-  $('#J_search_pt').on('submit',function(){
-    if($.trim($(this).find('.a-search-ipt').val()) == ''){
-      return false;
-    }
-  });
+    
 })();
 </script>
