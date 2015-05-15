@@ -146,49 +146,80 @@ $("#js_ifr").fadeIn('fast').attr("src","http://player.youku.com/player.php/sid/X
 <script>
 $(function (){
 	$('#my-slider').flexslider({
+		slideshow: false,  
 		touch: true,
-		controlNav: false,
+		controlNav: true,
+		
 		start: function(){
 			console.log('start');
+			get_next_page();
 			
 		},
 		before: function(){
-			
-			console.log(1);
+			get_next_page();
 		},
 
   });
   
   
-  	var url='<{link app=b2c ctl=wap_gallery act=gallery_scroll_goods}>';
-    var page = 1;
-    var pagetotal = 2;
-    var total = 0;
-    var post = $('#loading2').length;
-    var sear = location.search ? location.search.substr(1) : '';
-    var form_data = $('#j_form').length ? $('#j_form').serialize() : '';
-    var params = ['showtype=all','page='+page, sear, form_data].filter(function(d){return d;}).join('&');
-    if(post){
-            $.get(url,params,function(data){
-                if(data && data.html){
-                    $('.img_list').append(data.html);
-                    $('#page_total').text(data.total);
-                    total = data.total;
-                    pagetotal = data.pagetotal;
-                    hid_load();
-                    var img = $('.img_list img:first');
-                    img.attr('src',img.attr('img'));
-                    img.attr('img','');
-                    $('.img_list li').scrollspy().on('inview:scrollspy:amui', _load_img);
-                    if(total > 0) {
-                        $('.scrollspy').scrollspy().on('inview:scrollspy:amui', function () {
-                            $(".return_div").show();
-                        });
-                    }
-                }
-            },'json');
-        }
-		
+  function get_next_page(){
+  	var roll_list = $(".am-slides").children("li");
+	
+//	console.log(roll_list);
+	
+	//获取当前页
+	var cur_page = 1;
+	for (var i=0; i<roll_list.length; i++){
+//		console.log(roll_list[i]);
+//		console.log(i);
+//		console.log(roll_list[i].className);
+		if(roll_list[i].className === 'am-active-slide'){
+			console.log(i);
+			cur_page = i;
+			break;
+		}
+	}
+//	console.log(cur_page);
+
+	
+	page = cur_page
+	
+  	var url = '<{link app=b2c ctl=wap_gallery act=gallery_scroll_goods}>';
+//  	var page = 1;
+  	var pagetotal = 2;
+  	var total = 0;
+//  	var sear = location.search ? location.search.substr(1) : '';
+//  	var form_data = $('#j_form').length ? $('#j_form').serialize() : '';
+	var sear = '';
+	var form_data = '';
+	
+  	var params = ['showtype=all', 'page=' + page, sear, form_data].filter(function(d){
+  		return d;
+  	}).join('&');
+	
+	console.log(params);
+	
+	
+	
+//		$.get(url, params, function(data){
+//			if (data && data.html) {
+//				$('.img_list').append(data.html);
+//				$('#page_total').text(data.total);
+//				total = data.total;
+//				pagetotal = data.pagetotal;
+//				hid_load();
+//				var img = $('.img_list img:first');
+//				img.attr('src', img.attr('img'));
+//				img.attr('img', '');
+//				$('.img_list li').scrollspy().on('inview:scrollspy:amui', _load_img);
+//				if (total > 0) {
+//					$('.scrollspy').scrollspy().on('inview:scrollspy:amui', function(){
+//						$(".return_div").show();
+//					});
+//				}
+//			}
+//		}, 'json');
+  }	
 	
 	  function show_load(){
         $('#loading2').show();

@@ -108,6 +108,8 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
      * 临时构造 page数组
      */
     private function _build_goods_page_arr($pageNum){
+    	$pageNum = 3;
+//     	print_r($pageNum);exit;
     	$arr =  array();
     	for ($x=0; $x<$pageNum; $x++) {
     		$arr[$x] = array();
