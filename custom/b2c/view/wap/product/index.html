@@ -43,7 +43,6 @@
 <footer data-am-widget="footer" class="am-footer am-footer-default"></footer>
 
 
-
 <form id="formBuyNow" style="display:none">
     <input id="goodsId" type="text" name="goods[goods_id]" value="<{$page_product_basic.goods_id}>" />
     <input id="productId" type="text" name="goods[product_id]" value="<{$page_product_basic.product_id}>" />
@@ -55,7 +54,6 @@
     <input type="text" name="btype" value="is_fastbuy" />
     <input type="text" name="response_json" value="1" />
 </form>
-
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -94,19 +92,19 @@ $(document).ready(function(){
 
         $('#productId').val( curSpec.product_id );
         
-
         $('#specList').hide();
     });
 
     $('#btnAdd2Fav').click(function(){
         $.ajax({
-            url:'<{link app=b2c ctl=member act=ajax_fav}>',
+            url:'<{link app=b2c ctl=wap_member act=ajax_fav}>',
             data:'type=goods&gid='+$('#goodsId').val(),
             method:'POST',
             dataType:'json',
-            success:function($data){
+            success:function(data){
                 if(data.success){
                     // todo: change img
+                    
                 }
             }
         });
@@ -126,7 +124,18 @@ $(document).ready(function(){
         }
     });
 
-
+    $('#btnBuyNow').click(function(){
+        $.ajax({
+            url:'<{link app=b2c ctl=wap_cart act=add arg0=goods}>',
+            data:$('#formBuyNow').serialize(),
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success)
+                    document.location.href=data.redirect;
+            }
+        });
+    });
 
 
 });

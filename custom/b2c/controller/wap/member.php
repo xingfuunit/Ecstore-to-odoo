@@ -960,12 +960,42 @@ class b2c_ctl_wap_member extends wap_frontpage{
 
     function ajax_fav() {
         $object_type = $_POST['type'];
-        $nGid = $_POST['gid'];
-        if (!kernel::single('b2c_member_fav')->add_fav($this->app->member_id,$object_type,$nGid)){
-            $this->splash('failed', app::get('b2c')->_('商品收藏添加失败！'), '', '', true);
+        $goods_id = $_POST['gid'];
+
+        $obj_goods = $this->app->model('goods');
+
+        $isGoodsMarketable = $obj_goods->count(array('goods_id'=>$goods_id,'marketable'=>true));
+
+        if( $isGoodsMarketable==0 )
+            $this->splash('failed', null, 'not marketable', '', '', true);
+
+        $obj_member_goods = $this->app->model('member_goods');
+
+        $member_id = $this->app->member_id;
+
+        $filter = array(
+            'goods_id'=>$goods_id,
+            'member_id'=>$member_id,
+            'type'=>'fav',
+            'object_type'=>'goods'
+        );
+        $isGoodsFaved = $obj_member_goods->parent_count($filter);
+
+        if($isGoodsFaved == 0){
+            if (!kernel::single('b2c_member_fav')->add_fav($this->app->member_id,$object_type,$goods_id)){
+                $this->splash('failed', null, app::get('b2c')->_('商品收藏添加失败！'), '', '', true);
+            }else{
+                $this->set_cookie('S[GFAV]'.'['.$this->app->member_id.']',$this->get_member_fav($this->app->member_id),false);
+                // change to json for ajax request
+                $this->splash('success', null, 'saved', '', '', true);
+            }
         }else{
-            $this->set_cookie('S[GFAV]'.'['.$this->app->member_id.']',$this->get_member_fav($this->app->member_id),false);
-            $this->splash('success',$url,app::get('b2c')->_('商品收藏添加成功'));
+            if(!$obj_member_goods->delFav($member_id,$goods_id)){
+                $this->splash('failed', null, 'db error', '', '', true);
+            }else{
+                $this->set_cookie('S[GFAV]'.'['.$this->app->member_id.']',$this->get_member_fav($this->app->member_id),false);
+                $this->splash('success', null, 'deleted', '', '', true);
+            }
         }
     }
 
