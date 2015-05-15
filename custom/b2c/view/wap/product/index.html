@@ -1,6 +1,5 @@
 <{include file='wap/product/popup.html'}>
 
-
 <!-- main -->
 <div id="productMain" data-am-widget="slider" class="am-slider am-slider-default valueshow" style="height:100%">
 
@@ -43,17 +42,30 @@
 <footer data-am-widget="footer" class="am-footer am-footer-default"></footer>
 
 
+<!-- hidden area -->
 <form id="formBuyNow" style="display:none">
     <input id="goodsId" type="text" name="goods[goods_id]" value="<{$page_product_basic.goods_id}>" />
     <input id="productId" type="text" name="goods[product_id]" value="<{$page_product_basic.product_id}>" />
-    <input id="num" type="text" name="goods[num]" value="1" />
+    <input id="goodsNum" type="text" name="goods[num]" value="1" />
     <input id="stock" type="text" name="stock" value="" />
     <input id="limit_nums" type="text" name="limit_nums" value="" />
 
-
-    <input type="text" name="btype" value="is_fastbuy" />
     <input type="text" name="response_json" value="1" />
 </form>
+
+<button class="am-btn am-btn-primary" data-am-modal="{target: '#my-alert'}">Alert</button>
+
+<div id="modalAddToCart" class="am-modal am-modal-alert" tabindex="-1">
+  <div class="am-modal-dialog">
+    <div class="am-modal-bd">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">继续购物</span>
+    </div>
+  </div>
+</div>
+
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -114,20 +126,20 @@ $(document).ready(function(){
     // product amount change
     $('#amountPlus').click(function(){
         var amount = parseInt($('#amount').val());
-        $('#amount').val(++amount);
+        $('#amount,#goodsNum').val(++amount);
     });
 
     $('#amountMinus').click(function(){
         var amount = parseInt($('#amount').val());
         if(amount>0){
-            $('#amount').val(--amount);
+            $('#amount,#goodsNum').val(--amount);
         }
     });
 
     $('#btnBuyNow').click(function(){
         $.ajax({
             url:'<{link app=b2c ctl=wap_cart act=add arg0=goods}>',
-            data:$('#formBuyNow').serialize(),
+            data:$('#formBuyNow').serialize()+'&btype=is_fastbuy',
             method:'POST',
             dataType:'json',
             success:function(data){
@@ -137,6 +149,25 @@ $(document).ready(function(){
         });
     });
 
+    $('#btnAddToCart').click(function(){
+        $.ajax({
+            url:'<{link app=b2c ctl=wap_cart act=add arg0=goods}>',
+            data:$('#formBuyNow').serialize()+'&mini_cart=1',
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success){
+                    $('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
+                    $('#modalAddToCart').modal();
+                }
+                else{
+                    $('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
+                    $('#modalAddToCart').modal();
+                }
+
+            }
+        });
+    });
 
 });
 </script>
