@@ -494,8 +494,18 @@ class wap_controller extends base_controller
                 $html = $this->fetch($view, $app_id,$is_preview);
             }
 
-           $this->extract_widgets_css($html);
+            $this->extract_widgets_css($html);
             $html = str_replace('<%wap_widgets_css%>', app::get('wap')->base_url(1).'widgetsproinstance-get_css-'.$current_theme.'-'.base64_encode($tmpl_file).'.html', $html);
+
+            //图片地址替换 by francis
+            if (defined('IMG_SERVER')) {
+                $img_array = unserialize(constant('IMG_SERVER'));
+                if ($img_array) {
+                    foreach ($img_array as $key=>$value) {
+                        $html = str_replace($key,$value,$html);
+                    }
+                }
+            }
 
             //filter html special
             if($this->enable_strip_whitespace){

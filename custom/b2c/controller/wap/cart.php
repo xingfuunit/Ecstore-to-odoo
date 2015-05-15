@@ -201,11 +201,11 @@ class b2c_ctl_wap_cart extends wap_frontpage{
 
         if(!$obj_ident){
             if($_POST['mini_cart']){
-                $this->pagedata['errormsg'] = $msg;
-                $this->page('site/cart/mini_cart_error.html', true);
-                return;
-            } else {
-                $this->splash('error',$url,$msg,'','',$data['response_type']);
+                // $this->pagedata['errormsg'] = $msg;
+                // $this->page('site/cart/mini_cart_error.html', true);
+                // return;
+            // } else {
+                $this->splash('error',null,$msg,'','',true);
             }
         } else {
             if(isset($aData['btype']) && $aData['btype'] == 'is_fastbuy') {
@@ -213,11 +213,12 @@ class b2c_ctl_wap_cart extends wap_frontpage{
             }else{
                 if($_POST['mini_cart']){
                     $arr = $this->app->model("cart")->get_objects();
-                    $temp = $arr['_cookie'];
-                    $this->pagedata['cartCount']      = $temp['CART_COUNT'];
-                    $this->pagedata['cartNumber']     = $temp['CART_NUMBER'];
-                    $this->pagedata['cartTotalPrice'] = $temp['CART_TOTAL_PRICE'];
-                    $this->page('wap/cart/mini_cart.html', true);
+                    // $temp = $arr['_cookie'];
+                    // $this->pagedata['cartCount']      = $temp['CART_COUNT'];
+                    // $this->pagedata['cartNumber']     = $temp['CART_NUMBER'];
+                    // $this->pagedata['cartTotalPrice'] = $temp['CART_TOTAL_PRICE'];
+                    // $this->page('wap/cart/mini_cart.html', true);
+                    $this->splash('success',null,$msg,'','',true);
                     return;
                 }
                 // coupon

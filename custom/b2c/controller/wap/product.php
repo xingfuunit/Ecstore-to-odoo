@@ -126,10 +126,10 @@ class b2c_ctl_wap_product extends wap_frontpage{
         $aGoods['product'] = $itemProduct[0];
 
         //设置模板
-        if( $aGoods['goods_setting']['goods_template'] ){
-            $this->set_tmpl_file($aGoods['goods_setting']['goods_template']);                 //添加模板
-        }
-        $this->set_tmpl('product');
+        // if( $aGoods['goods_setting']['goods_template'] ){
+        //     $this->set_tmpl_file($aGoods['goods_setting']['goods_template']);                 //添加模板
+        // }
+        // $this->set_tmpl('product');
 
         //规格默认图片
         $this->pagedata['spec_default_pic'] = $this->app->getConf('spec.default.pic');
@@ -139,6 +139,20 @@ class b2c_ctl_wap_product extends wap_frontpage{
         //基本信息
         $productBasic = $this->_get_product_basic($productId,$aGoods,$siteMember);
         $this->pagedata['page_product_basic'] = $productBasic;
+
+        // imgs of detail
+        $intro = $productBasic['intro'];
+        $product_imgs=array();
+        if(preg_match_all('<img src=\"([^"\']*)\">', $intro, $matches)){
+            $product_imgs = $matches[1];
+        }
+        $this->pagedata['product_imgs'] = $product_imgs;
+
+        // comment
+        // todo: ajax load 瀑布流
+        $comments = kernel::single("b2c_goods_description_comments")->show($productBasic['goods_id'],'discuss',20);
+        $this->pagedata['comments'] = $comments;
+        // echo '<pre>';var_export($comments);exit;
 
 #        $goodsAdjunct = $this->_get_goods_adjunct($aGoods);//配件信息
         $this->pagedata['page_goods_adjunct'] = $goodsAdjunct;
@@ -173,6 +187,8 @@ class b2c_ctl_wap_product extends wap_frontpage{
 #            }
 #        }
 
+        // echo '<pre>';var_export($this->pagedata['page_product_basic']['spec']);
+
         if(in_array('product-index', $this->weixin_share_page)){
             $this->pagedata['from_weixin'] = $this->from_weixin;
             $this->pagedata['weixin']['appid'] = $this->weixin_a_appid;
@@ -181,6 +197,11 @@ class b2c_ctl_wap_product extends wap_frontpage{
             $this->pagedata['weixin']['shareTitle'] = $this->title;
             $this->pagedata['weixin']['descContent'] = $this->pagedata['page_product_basic']['brief'];
         }
+
+        $goodsPromotion = kernel::single('b2c_goods_object')->get_goods_promotion($goodsId);
+        $this->pagedata['goodsPromotion'] = $goodsPromotion;
+        // echo '<pre>';var_export($goodsPromotion);exit;
+        
         $this->page('wap/product/index.html');
     }
 
@@ -354,6 +375,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
             'act'=>'ajax_discuss','args'=>array($gid,($tmp = time())))),
             'token'=>$tmp
         );
+
         $this->page('wap/product/tab/discuss.html');
     }
 
@@ -746,7 +768,14 @@ class b2c_ctl_wap_product extends wap_frontpage{
 
         //规格
         $goodsSpec = $this->_get_goods_spec($aGoods);
+
+        $curSpecTypeId = key($goodsSpec['product']);
+        $curPrivateSpecValueId = current($goodsSpec['product']);
+        $this->pagedata['curSpecTypeId'] = $curSpecTypeId;
+        $this->pagedata['curPrivateSpecValueId'] = $curPrivateSpecValueId;
         $productBasic['spec'] = $goodsSpec;//商品规格
+
+        // echo '<pre>';var_export($goodsSpec['goods']);exit;
 
         #货品价格 货品库存 ajax调用
 
@@ -809,24 +838,41 @@ class b2c_ctl_wap_product extends wap_frontpage{
     //获取货品规格数据
     function _get_goods_spec($aGoods){
         $goodsSpec = array();
-        $products = app::get('b2c')->model('products')->getList('product_id,spec_desc,store,freez,marketable',array('goods_id'=>$aGoods['goods_id']));
+        $products = app::get('b2c')->model('products')->getList('product_id,spec_desc,store,freez,price,marketable',array('goods_id'=>$aGoods['goods_id']));
+
+        // echo '<pre>';var_dump($aGoods);exit;
         if($aGoods['spec_desc']){
+            $specTypeId=key($aGoods['spec_desc']);
+
             $goodsSpec['goods'] = $aGoods['spec_desc'];
             $goodsSpec['product'] = $aGoods['product']['spec_desc']['spec_private_value_id'];
+            // echo '<pre>';var_export($goodsSpec['goods']);var_export($products);exit;
             foreach($products as $row){
                 $products_spec = $row['spec_desc']['spec_private_value_id'];
                 $diff_class = array_diff_assoc($products_spec,$goodsSpec['product']);//求出当前货品和其他货品规格的差集
-                if(count($diff_class) === 1){
-                    $goodsSpec['goods'][key($diff_class)][current($diff_class)]['product_id'] = $row['product_id'];
-                    $goodsSpec['goods'][key($diff_class)][current($diff_class)]['marketable'] = $row['marketable'];
-                    if($row['store'] === '' || $row['store'] === null){
-                        $product_store = '999999';
-                    }else{
-                        $product_store = $row['store']-$row['freez'];
-                    }
-                    $goodsSpec['goods'][key($diff_class)][current($diff_class)]['store'] = $product_store;
+
+                $goodsSpec['goods'][$specTypeId][$products_spec[$specTypeId]]['product_id']=$row['product_id'];
+                $goodsSpec['goods'][$specTypeId][$products_spec[$specTypeId]]['price']=$row['price'];
+                if($row['store'] === '' || $row['store'] === null || $aGoods['nostore_sell']){
+                    $product_store = '99';
+                }else{
+                    $product_store = $row['store']-$row['freez'];
                 }
+                $goodsSpec['goods'][$specTypeId][$products_spec[$specTypeId]]['store'] = $product_store;
+
+                // if(count($diff_class) === 1){
+                //     $goodsSpec['goods'][key($diff_class)][current($diff_class)]['product_id'] = $row['product_id'];
+                //     $goodsSpec['goods'][key($diff_class)][current($diff_class)]['marketable'] = $row['marketable'];
+                //     if($row['store'] === '' || $row['store'] === null){
+                //         $product_store = '999999';
+                //     }else{
+                //         $product_store = $row['store']-$row['freez'];
+                //     }
+                //     $goodsSpec['goods'][key($diff_class)][current($diff_class)]['store'] = $product_store;
+                // }
             }
+
+            // echo '<pre>';var_export($goodsSpec);exit;
 
             foreach($aGoods['spec_desc'] as $specId=>$specValue){
                 $arrSpecId['spec_id'][] = $specId;

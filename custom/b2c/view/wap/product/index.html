@@ -1,65 +1,173 @@
-<form action="<{link app=b2c ctl=wap_cart act=add arg0=goods}>" method="post" id="buy_form" data-type="ajax">
-    <input type="hidden" name="btype" class="btype"><!-- value="is_fastbuy" 立即购买提交的时候要带上这个值 -->
-    <input type="hidden" name="goods[goods_id]" value="<{$page_product_basic.goods_id}>"/>
-    <input type="hidden" name="goods[product_id]" value="<{$page_product_basic.product_id}>"/ >
-    <input type="hidden" name="min" value="1" class="min-num" />
-    <input type="hidden" name="max" value="<{$product_store.store}>" class="max-num" />
-    <input type="hidden" name="mini_cart" value="true"/>
-    <div class="goods" style="display: none;">
-        <{include file='wap/product/info/pic.html'}>
-        <ul class="goods_title tbl">
-            <li class="goods_title_left" id='share_recommend'>
-                <{if $login=='nologin'}>
-  <!-- favarite -->
-  <a id='fav' href="<{link app=b2c ctl=wap_passport act=login}>"><span class='nfav'></span></a>
-  <{else}>
-  <a id='fav' href="javascript:void(0);"><span class='<{if $page_product_basic.is_fav}>fav<{else}>nfav<{/if}>'></span></a>
-  <{/if}>
-                <span class='name'><{$page_product_basic.title}> <span class='brief'><{$page_product_basic.brief}></span></span>
-            </li>
-            <{if $discussCount}>
-            <li class="goods_title_right">
-                <div style="width: 6em;">
-                    <span class="pl-icon"></span>
-                    <label><{$discussCount|default:'0'}></label>
-                </div>
-            </li>
-            <{/if}>
-        </ul>
-    </div>
-    <div class="ui-content content-p"> <{$page_product_basic.wapintro}></div>
-    <div class="gw_active_wrap">
-        <div class="gw_active" style="bottom:47px">
-            <ul>
-                <li class="border_right">
-                    <{if $page_product_basic.goods_marketable == 'true'}>
-                        <{include file='wap/product/info/price.html'}>
-                    <{/if}>
-                </li>
-                <li class="border_right jt-btn">
-                <{if $page_product_basic.spec.goods}>
-                    <{include file='wap/product/info/spec.html'}>
-                <{else}>
-                    <select name="" id=""></select>
-                <{/if}>
-                </li>
-                <li><{include file='wap/product/info/btn.html'}></li>
-            </ul>
-        </div>
-        <div class="go_Home ">
-            <a href="javascript:history.back();"><span class="home-icon"></span></a>
-        </div>
-    </div>
-    <input type="hidden" name="goods[num]" id="goods_num" value="1" class="num-ipt">
+<{include file='wap/product/popup.html'}>
+
+<!-- main -->
+<div id="productMain" data-am-widget="slider" class="am-slider am-slider-default valueshow" style="height:100%">
+
+  <ul class="am-slides">
+
+    <{if $product_imgs}>
+        <{assign var="imgCount" value=0}>
+        <{foreach from=$product_imgs item=image}>
+        <li class="showvaluebox">
+          <{if ++$imgCount==1}>
+            <div style="width:100%; height:auto; text-align:center; margin-top:30%; position:absolute; color:#FFFFFF;  background:#000000;filter:alpha(opacity=50); /*IE滤镜*/-moz-opacity:0.5; /*Firefox私有*/opacity:0.5;/*其他*/">
+             <h1><{$page_product_basic.title}></h1>
+             <{if $page_product_basic.brief}><p><{$page_product_basic.brief}></p><{/if}>
+             <p>仅售：<{$page_product_basic.price}></p>
+            </div>
+          <{/if}>
+          <img src="<{$image}>" alt="<{$page_product_basic.title}>">
+        </li>
+        <{/foreach}>
+    <{else}>
+        <li class="showvaluebox"><img src="<{$setting.imageDefault.S.default_image|storager}>" alt="<{$page_product_basic.title}>"></li>
+    <{/if}>
+
+
+  <!-- comments -->
+  <{include file='wap/product/comments.html'}>
+  
+
+
+  </ul>
+</div>
+
+
+<div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
+<a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>"></a>
+</div>
+
+
+<!-- Footer -->
+<footer data-am-widget="footer" class="am-footer am-footer-default"></footer>
+
+
+<!-- hidden area -->
+<form id="formBuyNow" style="display:none">
+    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$page_product_basic.goods_id}>" />
+    <input id="productId" type="text" name="goods[product_id]" value="<{$page_product_basic.product_id}>" />
+    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+    <input id="stock" type="text" name="stock" value="" />
+    <input id="limit_nums" type="text" name="limit_nums" value="" />
+
+    <input type="text" name="response_json" value="1" />
 </form>
+
+<button class="am-btn am-btn-primary" data-am-modal="{target: '#my-alert'}">Alert</button>
+
+<div id="modalAddToCart" class="am-modal am-modal-alert" tabindex="-1">
+  <div class="am-modal-dialog">
+    <div class="am-modal-bd">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">继续购物</span>
+    </div>
+  </div>
+</div>
+
+
 <script type="text/javascript">
-    $('#fav').on('click',function(){
-        var _this = $(this);
-        if(_this.find('.fav').length || "<{$login}>" == 'nologin') return;
-        var data = 'gid=<{$page_product_basic.goods_id}>&type=goods';
-        $.post('<{link app=b2c ctl=wap_member act=ajax_fav}>',data,function(re){
-               _this.find('span').addClass('fav');
-        });
-        return false;
+
+$(document).ready(function(){
+  $('#productComments').css('height',document.documentElement.clientHeight);
+  $(".showvaluebox").click(function(){
+  $(".valuedetail").show();
+  $(".valuepay").show();
+  $(".valuehide").show();
+  });
+  $(".valuehide").click(function(){
+  $(".valuehide").hide();
+  $(".valuepay").hide();
+  $(".valuedetail").hide();
+  });
+
+  $('#productMain').flexslider({
+    slideshow: false,
+    controlNav:false,
+    touch:true,
+  });
+
+    // specification click
+    $('#curSpec').click(function(){
+        if(document.getElementById('specList').style.display=='none') 
+            document.getElementById('specList').style.display='block';
+        else 
+            document.getElementById('specList').style.display='none';
     });
+
+    // specification select
+    $('#specList').on('click','li',function(){
+        $('#curSpec .specPrice').html($(this).find('.specPrice').html());
+        $('#curSpec .specValue').html($(this).find('.specValue').html());
+        var curSpec = $.parseJSON( $(this).attr('specData') );
+        $('#curStore').html(curSpec.store );
+
+        $('#productId').val( curSpec.product_id );
+        
+        $('#specList').hide();
+    });
+
+    $('#btnAdd2Fav').click(function(){
+        $.ajax({
+            url:'<{link app=b2c ctl=wap_member act=ajax_fav}>',
+            data:'type=goods&gid='+$('#goodsId').val(),
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success){
+                    // todo: change img
+                    
+                }
+            }
+        });
+    });
+
+
+    // product amount change
+    $('#amountPlus').click(function(){
+        var amount = parseInt($('#amount').val());
+        $('#amount,#goodsNum').val(++amount);
+    });
+
+    $('#amountMinus').click(function(){
+        var amount = parseInt($('#amount').val());
+        if(amount>0){
+            $('#amount,#goodsNum').val(--amount);
+        }
+    });
+
+    $('#btnBuyNow').click(function(){
+        $.ajax({
+            url:'<{link app=b2c ctl=wap_cart act=add arg0=goods}>',
+            data:$('#formBuyNow').serialize()+'&btype=is_fastbuy',
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success)
+                    document.location.href=data.redirect;
+            }
+        });
+    });
+
+    $('#btnAddToCart').click(function(){
+        $.ajax({
+            url:'<{link app=b2c ctl=wap_cart act=add arg0=goods}>',
+            data:$('#formBuyNow').serialize()+'&mini_cart=1',
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success){
+                    $('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
+                    $('#modalAddToCart').modal();
+                }
+                else{
+                    $('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
+                    $('#modalAddToCart').modal();
+                }
+
+            }
+        });
+    });
+
+});
 </script>
