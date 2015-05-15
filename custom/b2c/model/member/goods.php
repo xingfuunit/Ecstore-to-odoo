@@ -151,6 +151,10 @@ class b2c_mdl_member_goods extends dbeav_model{
 		return $is_delete;
      }
 
+    function parent_count($filter=null){
+        return parent::count($filter);
+    }
+
 	 function count($filter=null,$type=null){
 		if (!$filter || !$filter['member_id']) return 0;
 

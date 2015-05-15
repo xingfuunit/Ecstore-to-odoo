@@ -72,6 +72,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         $this->pagedata['showtype'] = $params['showtype'];
         $this->pagedata['is_store'] = $params['is_store'];
         $this->pagedata['goodsData'] = $goodsData;
+        
         $objCat = app::get('b2c')->model('goods_cat');
         $this->pagedata['cur_cat'] = empty($cat_id) ? (empty($_GET['scontent']) ? array('cat_name'=>'全部商品') : array('cat_name'=>  str_replace('n,', '',$_GET['scontent']))) :$objCat->getRow('*',array('cat_id'=>$cat_id));
 
@@ -97,10 +98,26 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             $this->pagedata['weixin']['shareTitle'] = $this->title;
             $this->pagedata['weixin']['descContent'] = $this->description;
         }
-        $this->set_tmpl('gallery');
         $this->pagedata['catlist'] = $objCat->getList('*', array('parent_id' => 0), $offset=0, $limit=-1, 'p_order ASC');
+        
+//         print_r($this->pagedata);exit;
         $this->page('wap/gallery/index.html');
     }
+    
+    /*
+     * 临时构造 page数组
+     */
+    private function _build_goods_page_arr($pageNum){
+    	$pageNum = 3;
+//     	print_r($pageNum);exit;
+    	$arr =  array();
+    	for ($x=0; $x<$pageNum; $x++) {
+    		$arr[$x] = array();
+    	}
+    	
+    	$this->pagedata['pagetotal_arr'] = $arr;
+    }
+    
 
     /*
      * 面包屑数据设置
@@ -418,6 +435,33 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             exit();
         }
     }
+    
+    /*
+     * 商品详情页 滑动分页
+    * */
+    public function gallery_scroll_goods(){
+    	$tmp_params = $this->filter_decode($_GET);
+    	$params = $tmp_params['filter'];
+    	$orderby = empty($tmp_params['orderby']) ? 'd_order desc' : $tmp_params['orderby'];
+    	$showtype = $tmp_params['showtype'];
+    	if($tmp_params['limit']){
+    		$pagelimit=$tmp_params['limit'];
+    	}
+    	$page = $tmp_params['page'] ? $tmp_params['page'] : 1;
+    	$goodsData = $this->get_goods($params,$page,$orderby);
+    	$this->pagedata['goodsData'] = $goodsData;
+    	$view = 'wap/gallery/type/'.$showtype.'.html';
+    	if($goodsData){
+    		$arr['page'] = $page;
+    		$arr['pagetotal'] = $this->_pagetotal;
+    		$arr['total'] = $this->_total;
+    		$arr['html'] = $this->fetch($view);
+    		echo json_encode($arr);
+    		exit();
+    	}else{
+    		exit();
+    	}
+    }
 
     /*
      * 返回搜索条件
@@ -565,7 +609,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
 
         $page = $page ? $page : 1;
        // $pageLimit = $this->app->getConf('gallery.display.listnum');
-        $pageLimit = ($filter['limit'] ? $filter['limit'] : 10);
+        $pageLimit = ($filter['limit'] ? $filter['limit'] : 6);
        // $pageLimit=1;
         $this->pagedata['pageLimit'] = $pageLimit;
         $orderby = empty($orderby) ? 'd_order desc,goods_id desc' : $orderby;
@@ -589,6 +633,8 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             'link' =>$this->gen_url(array('app'=>'b2c', 'ctl'=>'wap_gallery','act'=>'ajax_get_goods')),
         );
         $gfav = explode(',',$_COOKIE['S']['GFAV'][$siteMember['member_id']]);
+        
+        $this->_build_goods_page_arr($pagetotal);
        
         foreach($goodsData as $key=>$goods_row){
             if(in_array($goods_row['goods_id'],$gfav)){

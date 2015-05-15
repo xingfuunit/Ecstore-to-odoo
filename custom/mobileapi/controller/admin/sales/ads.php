@@ -3,8 +3,7 @@
 class mobileapi_ctl_admin_sales_ads extends desktop_controller{
 
     var $workground = 'mobileapi.wrokground.mobileapi';
-
-
+    
     function index(){
         $this->finder('mobileapi_mdl_sales_ads',array(
             'title'=>app::get('b2c')->_('首页广告'),
@@ -16,17 +15,7 @@ class mobileapi_ctl_admin_sales_ads extends desktop_controller{
     }
 
     function create(){
-        $ads_position = array(
-            0 => array(
-                'id' => '1',
-                'name' => '促销页面'
-            ),
-            1 => array(
-                'id' => '2',
-                'name' => '商品列表页面'
-            )
-        );
-        $this->pagedata['ads_position'] = $ads_position;
+        $this->pagedata['ads_position'] = $this->app->model('sales_ads')->get_sales_ads_position_list();
     	$this->singlepage('admin/sales/ads_detail.html');
     }
 
@@ -49,17 +38,7 @@ class mobileapi_ctl_admin_sales_ads extends desktop_controller{
         $objAd = $this->app->model('sales_ads');
         $this->pagedata['adInfo'] = $objAd->dump($ad_id);
 
-        $ads_position = array(
-            0 => array(
-                'id' => '1',
-                'name' => '促销页面'
-            ),
-            1 => array(
-                'id' => '2',
-                'name' => '商品列表页面'
-            )
-        );
-        $this->pagedata['ads_position'] = $ads_position;
+        $this->pagedata['ads_position'] = $this->app->model('sales_ads')->get_sales_ads_position_list();
         $this->singlepage('admin/sales/ads_detail.html');
     }
 

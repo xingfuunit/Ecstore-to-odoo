@@ -79,7 +79,7 @@ class wap_ctl_default extends wap_controller{
             'link' =>$this->gen_url(array('app'=>'b2c', 'ctl'=>'wap_gallery','act'=>'ajax_get_goods')),
         );
         
-         foreach($goodsData as $key=>$goods_row){
+        foreach($goodsData as $key=>$goods_row){
             if(in_array($goods_row['goods_id'],$gfav)){
                 $goodsData[$key]['is_fav'] = 'true';
             }
@@ -113,9 +113,9 @@ class wap_ctl_default extends wap_controller{
             }
         }
         
+        $this->_new_index_data();
         
         $this->pagedata['goodsData'] = $goodsData;
-      
         $this->page('index.html');
     }
 
@@ -125,6 +125,40 @@ class wap_ctl_default extends wap_controller{
         $vcode->length($len);
         $vcode->verify_key($key);
         $vcode->display();
+    }
+    
+    /**
+     * 新首页获取数据
+     */
+    private function _new_index_data(){
+    	$goodsModel = app::get('b2c')->model('goods');
+    	$filter =array('wap_recommend'=>1); 
+    	
+    	//品珍海鲜
+    	$this->pagedata['pz_hs'] = $goodsModel->get_good_list_by_cat_catname('鲜活海鲜',$filter);
+    	//品珍鲜肉
+    	$this->pagedata['pz_xr'] = $goodsModel->get_good_list_by_cat_catname('精品肉类',$filter);
+    	//品珍鲜果
+    	$this->pagedata['pz_xg'] = $goodsModel->get_good_list_by_cat_catname('时令水果',$filter);
+    	
+//     	print_r($this->pagedata['pz_hs']);exit;
+
+    	$ads_model = app::get('mobileapi')->model('sales_ads');
+    	//首页滚动广告
+    	$this->pagedata['roll_ads'] = $ads_model->get_sales_ads('index_roll_banner');
+    	//首页优惠券 广告
+    	$this->pagedata['coup_ads'] = $ads_model->get_sales_ads('index_coup_banner');
+    	//促销图片广告
+    	$this->pagedata['pic_ads'] = $ads_model->get_sales_ads('index_pic_banner');
+    	
+    	//商品分类
+    	$objCat = app::get('b2c')->model('goods_cat');
+//     	$catlist = $objCat->getList('*', array('parent_id' => $cat_id), $offset=0, $limit=-1, 'p_order desc');
+    	
+    	$catmap = $objCat->getmap();
+    	$this->pagedata['catmap'] = $catmap;
+    	
+//     	print_r($catmap);exit;
     }
     
 
