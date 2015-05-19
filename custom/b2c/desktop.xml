@@ -78,6 +78,7 @@
         <permission id="salescoupon" display='true' parent='0' workground='b2c.wrokground.sale'>优惠券</permission>
         <permission id="weixin" display='true' parent='0' workground='b2c.wrokground.sale'>微信促销</permission>
         <permission id="salesfororder" display='true' parent='0' workground='b2c.wrokground.sale'>优惠券</permission>
+        <permission id="vipday" display='true' parent='0' workground='b2c.wrokground.sale'>会员日设置</permission>
         <!--报表-->
         <permission id="analysis" display='true' parent='0' workground='b2c.wrokground.analysis'>经营概况</permission>
         <permission id="saleanalysis" display='true' parent='0' workground='b2c.wrokground.analysis'>销售收入统计</permission>
@@ -206,8 +207,7 @@
             <menu controller='admin_sales_fororder' action='index' permission='salesfororder' display='true' order='80'>凑单功能配置</menu>
         </menugroup>
         <menugroup name="会员日">
-            <menu controller='admin_vipday' action='index' permission='sales' display='true' order='81'>会员日设置</menu>
-
+            <menu controller='admin_vipday' action='index' permission='vipday' display='true' order='81'>会员日设置</menu>
         </menugroup>
     </workground>
 
