@@ -30,7 +30,7 @@
       
       <li class="am-g am-list-item-desced  am-list-item-thumb-left" style=" width:96%;margin:2%; border:1px solid #ccc; border-radius:5px;">
         <div style="border-bottom:1px dotted #ddd; margin-bottom:5px;" >
-          <div class="am-list-news-hd am-cf am-padding"> 订单编号：<span class="am-text-warning"><{$order.order_id}></span>
+          <div class="am-list-news-hd am-cf am-padding"><span style="float:left;"> 订单编号：</span><a style="float:left;" href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id arg1=$archive}>"><span class="am-text-warning"><{$order.order_id}></span></a>
               <button type="button"   <{if($order.status=='finish')}> class="am-btn-success am-btn am-round am-btn-xs am-fr" <{elseif($order.status=='dead')}> class="am-btn am-btn-default am-round am-btn-xs am-fr" <{else}> class="am-btn am-btn-warning am-round am-btn-xs am-fr"  <{/if}> ><{switch from=$order.status}>
                 <{case value='finish'}><{t}>已完成<{/t}>
                 <{case value='dead'}><{t}>已作废<{/t}>
