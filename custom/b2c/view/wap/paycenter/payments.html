@@ -1,83 +1,65 @@
+<{script src="shop.min.js" app="wap" pdir="js_mini"}>
+
 <header data-am-widget="header" class="am-header am-header-default tt_bg">
 <div class="am-header-left am-header-nav">
-  <a href="javascript:history.back()" class="">
-      <i class="am-header-icon am-icon-reply"></i>    </a>  </div>
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>
+    </a>
+	</div>
   <h1 class="am-header-title">
-    <a >订单详情</a>
+    <a href="#title-link">订单付款</a>
   </h1>
   <div class="am-header-right am-header-nav">
     <a href="search.html" class="">
-      <i class="am-header-icon am-icon-search"></i>    </a>
-   <a href="/wap/"" class="">
-      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
+      <i class="am-header-icon am-icon-search"></i>
+    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+	</div>
 </header>
-
-<div id="widget-list" >
-    <form action="<{$form_action}>" method="post" id="paycenter_form">
+<form action="<{$form_action}>" method="post" id="paycenter_form">
         <input type="hidden" name="payment[order_id]" value="<{$order.order_id}>">
         <input type="hidden" name="payment[combination_pay]" value="false">
         <input type="hidden" name="payment[def_pay][cur_money]" value="<{$order.cur_money}>">
         <input type="hidden" name="payment[def_pay][pay_app_id]" value="<{$order.payinfo.pay_app_id}>">
         <input type="hidden" name="payment[memo]" value="<{$order.memo}>">
-<ul class="am-list  icon-gray-color" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
-<li class="am-padding">订单号：<{$order.order_id}><span class="am-fr   am-text-warning"
-<{if($order.status=='finish')}> class="am-text-success am-fr" <{elseif($order.status=='dead')}> class="am-text-default am-fr" <{else}> class="am-text-warning am-fr"  <{/if}>
+<div style=" padding:10px;">
+<p>付款方式：<{$order.payinfo.pay_app_id|payname}></p>
 
-><{switch from=$order.status}>
-                <{case value='finish'}><{t}>已完成<{/t}>
-                <{case value='dead'}><{t}>已作废<{/t}>
-                <{case}>
-                <{switch from=$order.pay_status}>
-                <{case value='1'}><{t}>已付款<{/t}>
-                <{switch from=$order.ship_status}>
-                <{case value='1'}><{t}>[已发货]<{/t}>
-                <{case value='2'}><{t}>[部分发货]<{/t}>
-                <{case value='3'}><{t}>[部分退货]<{/t}>
-                <{case value='4'}><{t}>[已退货]<{/t}>
-                <{case}><{t}>[正在备货]<{/t}>
-                <{/switch}>
-                <{case value='2'}><{t}>已付款至担保方<{/t}>
-                <{case value='3'}><{t}>等待补款<{/t}>
-                <{switch from=$order.ship_status}>
-                <{case value='1'}><{t}>[已发货]<{/t}>
-                <{case value='2'}><{t}>[部分发货]<{/t}>
-                <{case value='3'}><{t}>[部分退货]<{/t}>
-                <{case value='4'}><{t}>[已退货]<{/t}>
-                <{/switch}>
-                <{case value='4'}><{t}>部分退款<{/t}>
-                <{switch from=$order.ship_status}>
-                <{case value='0'}><{t}>[未发货]<{/t}>
-                <{case value='1'}><{t}>[已发货]<{/t}>
-                <{case value='2'}><{t}>[部分发货]<{/t}>
-                <{case value='3'}><{t}>[部分退货]<{/t}>
-                <{case value='4'}><{t}>[已退货]<{/t}>
-                <{/switch}>
-                <{case value='5'}><{t}>已退款<{/t}>
-                <{switch from=$order.ship_status}>
-                <{case value='0'}><{t}>[未发货]<{/t}>
-                <{case value='1'}><{t}>[已发货]<{/t}>
-                <{case value='2'}><{t}>[部分发货]<{/t}>
-                <{case value='3'}><{t}>[部分退货]<{/t}>
-                <{case value='4'}><{t}>[已退货]<{/t}>
-                <{/switch}>
-                <{case}><{t}>等待付款<{/t}>
-                <{switch from=$order.ship_status}>
-                <{case value='1'}><{t}>[已发货]<{/t}>
-                <{case value='2'}><{t}>[部分发货]<{/t}>
-                <{case value='3'}><{t}>[部分退货]<{/t}>
-                <{case value='4'}><{t}>[已退货]<{/t}>
-                <{/switch}>
-                <{/switch}>
-                <{/switch}></span></li>
-<li class="am-padding">下单时间：<{$order.createtime|cdate:FDATE_STIME}></li>
-<li class="am-padding">收货人:<{$order.consignee.name}>&nbsp;&nbsp;<{if $order.consignee.mobile}>手机:<{$order.consignee.mobile}>&nbsp;&nbsp;<{/if}>
-                    <{if $order.consignee.telephone}>电话:<{$order.consignee.telephone}>&nbsp;&nbsp;<{/if}><br>
-<span style="color:#999999"><{$order.consignee.area|ship_area}><br><{$order.consignee.addr}></span></li>
-<li class="am-padding">配送时间<span class="am-fr  am-text-defult" style="color:#999999"><{$order.consignee.r_time}></span></li>
-<li class="am-padding">支付方式
-<span  id="J_defpay" class="am-fr  am-text-warning" style="color:#999999"><{$order.payinfo.pay_app_id|payname}></span></li>
-<li class="am-padding">应付金额<span class="am-fr  am-text-warning" >
-                        <{if $order.promotion_type!='prepare'}>
+<{if $order.payinfo.pay_app_id=='deposit'}>
+                                余额：<span class="price"><{$deposit_money|cur_odr:$order.currency}></span>
+                                <input type="hidden" name="payment[combination_pay]" value="false">
+                                <{if $deposit_money-$order.total_amount < 0}>
+                                    <em>您需要为<a href="<{link app=b2c ctl=wap_member act=deposit}>" class="btn red">预存款充值</a></em>
+                                <{/if}>
+                            <{/if}>
+
+<{if $order.promotion_type!='prepare'}>
+                                <{if !($order.payinfo.pay_app_id == '-1' || $order.payinfo.pay_app_id == 'offline')}>
+                                    <{if $order.payinfo.pay_app_id == 'deposit'}>
+                                        <{if $order.cur_money - $deposit_money <= 0}>
+                                            <p><button type="submit" class="am-btn am-btn-danger am-round">去付款</button></p>
+                                        <{/if}>
+                                    <{else}>
+                                        <{if $order.payinfo.platform =='iscommon' || $order.payinfo.platform == $device_is_wx ? 'iswx' :'iswap'}>
+                                            <p><button type="submit" class="am-btn am-btn-danger am-round">去付款</button></p>
+                                        <{else}>
+                                            <label class="f-red">(支付方式不支持手机版，请选择其他支付方式支付！)</label>
+                                        <{/if}>
+                                    <{/if}>
+                                <{/if}>
+                            <{/if}>
+<{if $order.payinfo.pay_app_id != '-1'}>
+                              <a><span id="J_pay_change">
+                                更换支付方式
+                              <i class="arr right"></i>
+                              </span></a>
+                            <{/if}>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"
+/>
+<p>订单号：<{$order.order_id}></p>
+<p>应付金额：<span class="am-text-danger"><{if $order.promotion_type!='prepare'}>
                             <{$order.cur_money|cur:$order.currency}>
                         <{/if}>
                          <!--预售信息的判断-->
@@ -112,75 +94,56 @@
                          <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.begin_time_final && $prepare.nowtime < $prepare.end_time_final && $prepare.status=='true'
                         }>
                           <{$order.total_amount-$prepare.preparesell_price|cur:$order.currency}>
-                        <{/if}>
-                    </span></li>
-<li class="am-padding">已付金额<span class="am-fr  am-text-warning" ><{$order.payed|cur:$order.currency}></span></li>
+                        <{/if}></span></p>
+<p>已付金额：<span class="am-text-danger"><{$order.payed|cur:$order.currency}></span></p>
+<p>订单商品数量：<{$order.quantity}></p>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"
+/>
+<p>收货信息：
+<ul>
+ <li>收货人：<{$order.consignee.name}></li>
+ <li>地区：<{$order.consignee.area|ship_area}></li>
+ <li>详细地址：<{$order.consignee.addr}></li>
+ <li><{if $order.consignee.mobile}>手机:<{$order.consignee.mobile}><br /><{/if}>
+                    <{if $order.consignee.telephone}>电话:<{$order.consignee.telephone}><br /><{/if}>
+                    <{if $order.consignee.zip}>邮编：<{$order.consignee.zip}><br /><{/if}></li>
+ <li>配送时间：<{$order.consignee.r_time}></li>
 </ul>
-</div>
-<h4 class="am-padding">商品清单（共<{$order.itemnum}>件商品）</h4>
-<{*   <ul class="am-list">
-      <!--缩略图在标题左边-->
-      <!-- goods -->
-                <{if $order.goods_items}>
-                    <{foreach from=$order.goods_items item=item_goods name=goods_item}>
-      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-        <div class="am-u-sm-4 am-list-thumb">
-		<a href='<{$item_goods.product.link_url}>' title="<{$item_goods.product.quantity}>--<{$item_goods.product.name}>">
-                            <img src='<{$item_goods.product.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>' />
-                            </a></div>
-        <div class="am-u-sm-8 am-list-main" style="width:40%; float:right; color:#999999">
-          <h3 class="am-list-item-hd">
-            <a style=" color:#999999" href="#"><{$item_goods.product.name}></a>
-          </h3>
-          <div class="am-list-item-text"> <{foreach from=$item_goods.product.minfo item=minfo key=name}>
-                    <{$minfo.label}>：<{$minfo.value}>
-                <{/foreach}>
-                <{if $item_goods.product.attr}>
-                    <{$item_goods.product.attr}>
-                <{/if}> </div>
-                <div class="am-list-item-text"> 数量：<{$item_goods.product.quantity}> </div>
-		  <!-- <div style="clear:both; color:#FF0000;"><h1 style="float:left">￥35.00</h1></div> -->
-        </div>
-                       
-      </li>
-      <{/foreach}>
-      <{/if}>
-    </ul>
-    *}>
-
-<div style="float:left; width:100%;" >
-  <div class="am-panel-hd" style="float:right; width:100%;background:#CCCCCC;">
-  
-   <!-- <button type="button" class="am-btn am-btn-default am-fr">取消订单</button> -->
-   
-   <!-- 预存款支付 -->
-                            <{if $order.payinfo.pay_app_id=='deposit'}>
-                                <{$order.payinfo.pay_app_id|payname}>,余额：<span class="price"><{$deposit_money|cur_odr:$order.currency}></span>
-                                <input type="hidden" name="payment[combination_pay]" value="false">
-                                <{if $deposit_money-$order.total_amount < 0}>
-                                    <em>您需要为<a href="<{link app=b2c ctl=wap_member act=deposit}>" class="btn red">预存款充值</a></em>
-                                <{/if}>
-                            <{/if}>
-                            
-
-                            <!-- 非货到付款或线下支付显示去付款 -->
-                            <{if $order.promotion_type!='prepare'}>
-                                <{if !($order.payinfo.pay_app_id == '-1' || $order.payinfo.pay_app_id == 'offline')}>
-                                    <{if $order.payinfo.pay_app_id == 'deposit'}>
-                                        <{if $order.cur_money - $deposit_money <= 0}>
-                                            <button type="submit"  class="am-btn am-btn-warning am-fr btn red">去付款</button>
-                                        <{/if}>
-                                    <{else}>
-                                        <{if $order.payinfo.platform =='iscommon' || $order.payinfo.platform == $device_is_wx ? 'iswx' :'iswap'}>
-                                            <button type="submit"  class="am-btn am-btn-warning am-fr btn red">去付款</button>
-                                        <{else}>
-                                            <label class="f-red">(支付方式不支持手机版，请选择其他支付方式支付！)</label>
-                                        <{/if}>
-                                    <{/if}>
-                                <{/if}>
-                            <{/if}>
-                            
-   
-  </div>
-</div>
+</p>
+</div>  
 </form>
+<div class="am-panel-hd" style="background:#CCCCCC; border-top:1px solid #aaaaaa; width:100%">
+<div>
+您还可以：<a href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id}>">查看订单 <i class="am-icon-chevron-right"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="<{link app='wap' ctl='default' act='index' }>">继续购物 <i class="am-icon-chevron-right"></i></a>
+</div>
+	 
+	</div>
+	
+	<script>
+
+    (function(){
+        var pay_change;
+        $('#J_pay_change').bind('click',function(e){
+            var data='shipping[shipping_id]=<{$order.shipping.shipping_id}>&payment[def_pay][pay_app_id]=<{$order.payinfo.pay_app_id}>&no_offline=<{$order.promotion_type}>';
+            $.post('order-select_payment.html',data,function(re){
+              pay_change = new Dialog(re);
+
+                $('#J_pay_list').bind('click',function(e){
+                    var el = $(e.target);
+                    if(el.hasClass('paiing-span')) {
+                      $('input[name="payment[def_pay][pay_app_id]"]').val( el.attr('payment_app_id') );
+                      $('#J_defpay').text( el.attr('payment_app_name') );
+                      $.post(
+                        '<{link app=b2c ctl=wap_order act=payment_change}>',
+                        'payment[pay_app_id]=' + encodeURIComponent( el.attr('value') )+ '&order_id=<{$order.order_id}>&payment[currency]=',
+                        function(re){
+                          location.reload();
+                      });
+                    }
+                });
+
+            });
+        });
+    })();
+
+</script>
