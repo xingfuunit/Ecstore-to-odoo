@@ -42,12 +42,22 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	  	$this->pagedata['member'] = $this->member;
     	  	$this->meat_active_get_time();
     	  }
+    	  if($active_name=='vipday'){
+    	  	$aData = kernel::database ()->select ( "SELECT vipday_name from sdb_b2c_vipday where current='true'" );
+    	  	$aData = $aData[0];
+    	  	if($aData['vipday_name']!=='seafood'){
+    	  		$active_name = $active_name.'_'.$aData['vipday_name'];
+    	  	}
+    	  }
+    	  
+    	  
 		  $this->pagedata['IMG_PZFRESH'] = IMG_PZFRESH;
     	  $this->pagedata['active_name'] = $active_name;
     	  $active = array(
     	  		'51meat',//51活动
     	  		'mqj',//母亲节
-    	  		'vipday',//会员日
+    	  		'vipday',//会员日-海鲜类（seafood）
+    	  		'vipday_meat',//会员日-肉类（meat）
     	  		);
           if(in_array($active_name,$active)){
           	$this->page('site/active/'.$active_name.'/index.html',true);//活动页面全屏，不要head和foot

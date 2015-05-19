@@ -1,0 +1,9 @@
+#vipday_meat_main_wechat {margin:0; padding:0;font-size: 0px;}
+#vipday_meat_main_wechat{font-family:"微软雅黑";}
+#vipday_meat_main_wechat a{border:0;}
+#vipday_meat_main_wechat img{border:0;}
+#vipday_meat_main_wechat div{width:100%; height:auto; overflow:hidden;}
+#vipday_meat_main_wechat div img{width:100%;height:auto; overflow:hidden;}
+#vipday_meat_main_wechat .left{ width:50%; float:left;}
+#vipday_meat_main_wechat .right{width:33.3%; float:left;}
+#vipday_meat_main_wechat .conent{width:20%; height:124px; position:fixed; top:50%; left:50%; margin:-62px 0 0 -10%; display:none; }

@@ -181,6 +181,7 @@
     </workground>
 
     <workground name="营销" id="b2c.wrokground.sale" controller="admin_sales_order" action="index" order="40">
+    
         <menugroup name="促销">
             <menu controller='admin_sales_order' action='index' permission='sales' display='true' order='1'>订单促销</menu>
             <menu controller='admin_sales_order' action='add' permission='sales' display='false' order='20'>添加规则</menu>
@@ -203,6 +204,10 @@
 		
         <menugroup name="凑单">
             <menu controller='admin_sales_fororder' action='index' permission='salesfororder' display='true' order='80'>凑单功能配置</menu>
+        </menugroup>
+        <menugroup name="会员日">
+            <menu controller='admin_vipday' action='index' permission='sales' display='true' order='81'>会员日设置</menu>
+
         </menugroup>
     </workground>
 
