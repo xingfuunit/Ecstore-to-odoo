@@ -1,23 +1,37 @@
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <a href="javascript:history.back()" class="a-back">
-            <i class="arr left"></i>
-            返回
-        </a>
-        <div class="a-name">
-            <{$title}>
-        </div>
-        <div style="width: 10%;"></div>
-    </div>
-    </header>
-    <div class="full-padding">
-        <{if $orders}>
-        <ul class="mem-order-list">
-            <{foreach from=$orders item="order" name=orders key="key"}>
-            <li class="mem-order-item">
-            <div class="icon orange">
-                <{switch from=$order.status}>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="javascript:history.back()" class="">
+      <i class="am-header-icon am-icon-reply"></i>    </a>  </div>
+  <h1 class="am-header-title">
+    <a href="#title-link">我的订单</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>    </a>
+   <a href="/wap/" class="">
+      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
+</header>
+
+<div class="am-btn-group am-btn-group-justify" style="margin:5px 0;">
+
+<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='nopayed'}>'"  class="am-btn am-btn-default" type="button">待支付</button>
+
+<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='daishouhuo'}>'"  class="am-btn am-btn-default" type="button">待收货</button>
+
+<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='all'}>'" class="am-btn am-btn-default" type="button">全部</button>
+</div>
+
+<div class="am-list-news-bd">
+<{if $orders}>
+    <ul class="am-list">
+      <!--缩略图在标题左边-->
+      
+      <{foreach from=$orders item="order" name=orders key="key"}>
+      
+      <li class="am-g am-list-item-desced  am-list-item-thumb-left" style=" width:96%;margin:2%; border:1px solid #ccc; border-radius:5px;">
+        <div style="border-bottom:1px dotted #ddd; margin-bottom:5px;" >
+          <div class="am-list-news-hd am-cf am-padding"> 订单编号：<span class="am-text-warning"><{$order.order_id}></span>
+              <button type="button"   <{if($order.status=='finish')}> class="am-btn-success am-btn am-round am-btn-xs am-fr" <{elseif($order.status=='dead')}> class="am-btn am-btn-default am-round am-btn-xs am-fr" <{else}> class="am-btn am-btn-warning am-round am-btn-xs am-fr"  <{/if}> ><{switch from=$order.status}>
                 <{case value='finish'}><{t}>已完成<{/t}>
                 <{case value='dead'}><{t}>已作废<{/t}>
                 <{case}>
@@ -62,97 +76,57 @@
                 <{case value='4'}><{t}>[已退货]<{/t}>
                 <{/switch}>
                 <{/switch}>
-                <{/switch}>
-            </div>
-            <div class="gb">
-                <div class="col2">
-                    <div class="col">
-                        <div class="d-line">
-                            <div class="l-k">订单号：</div>
-                            <div class="l-v"><{$order.order_id}></div>
-                        </div>
-                        <div class="d-line">
-                            <div class="l-k">应付金额：</div>
-                            <div class="l-v">
-                                <span class="price"><{$order.cur_amount|cur_odr:$order.currency:false:true}></span>
-                            </div>
-                        </div>
-                        <div class="d-line">
-                            <div class="l-k">支付方式：</div>
-                            <div class="l-v">
-                                <{$order.payinfo.pay_app_id|pay_name}>
-                            </div>
-                        </div>
-                        <div class="d-line">
-                            <div class="l-k">订单时间：</div>
-                            <div class="l-v">
-                                <{$order.createtime|cdate:FDATE_STIME}>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col d-line">
-                        <div class="t-r">
-                            <{if $order.status == 'active' && ($order.pay_status=='0' || $order.pay_status=='3')}>
-                            <{if $order.payinfo.pay_app_id != '-1'}>
-                            <a href="<{link app=b2c ctl=wap_paycenter act=index arg0=$order.order_id}>" >
-                                去付款
-                                <i class="arr right"></i>
-                            </a>
-                            <{/if}>
-                            <{/if}>
-                        </div>
-                        <div class="t-r">
-                            <a href="<{link app=b2c ctl="wap_member" act="orderdetail" arg0=$order.order_id}>">
-                                查看订单
-                                <i class="arr right"></i>
-                            </a>
-                        </div>
-                        <{if $order.status == 'active' && $order.pay_status == '0' && $order.ship_status == '0' }>
-                        <div class="t-r">
-                            <a href="<{link app=b2c ctl="wap_member" act="cancel" arg0=$order.order_id}>">
-                               取消订单 
-                                <i class="arr right"></i>
-                            </a>
-                        </div>
-                        <{/if}>
-                    </div>
-                </div>
-            </div>
-            <ul class="mem-order-pt c-fix">
-                <!-- goods -->
+                <{/switch}></button>
+          </div>
+        </div>
+       <!--  <div class="am-u-sm-4 am-list-thumb" ><a href="#"><img  src="assets/i/examples/bw-2014-06-19.jpg" width="100" height="100"  alt="新西兰活绿青口800g"/></a></div>
+        <div class="am-u-sm-8 am-list-main" style="width:40%; float:right; color:#999999">
+          <h3 class="am-list-item-hd"> <a href="#">新西兰活绿青口800g</a> </h3>
+          <div class="am-list-item-text"> 规格：500g/袋 </div>
+          <div class="am-list-item-text"> 数量：2 </div>
+        </div> -->
+        <!-- goods -->
                 <{if $order.goods_items}>
                     <{foreach from=$order.goods_items item=item_goods name=goods_item}>
                         <!-- goods -->
                         <{if $item_goods.product}>
-                        <li class="mem-pt-item">
-                            <a href='<{$item_goods.product.link_url}>' title="<{$item_goods.product.quantity}>--<{$item_goods.product.name}>">
+                        <div class="am-margin am-cf">
+                            <div class="am-u-sm-4 am-list-thumb" ><a href='<{$item_goods.product.link_url}>' title="<{$item_goods.product.quantity}>--<{$item_goods.product.name}>">
                             <img src='<{$item_goods.product.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>' />
-                            </a>
-                            <i class="num"><{$item_goods.product.quantity}></i>
-                        </li>
+                            </a></div>
+                            <div class="am-u-sm-8 am-list-main" style="width:40%; float:right; color:#999999">
+          <h3 class="am-list-item-hd"> <a href="<{$item_goods.product.link_url}>"><{$item_goods.product.name}></a> </h3>
+          <div class="am-list-item-text"> <{foreach from=$item_goods.product.minfo item=minfo key=name}>
+                    <{$minfo.label}>：<{$minfo.value}>
+                <{/foreach}>
+                <{if $item_goods.product.attr}>
+                    <{$item_goods.product.attr}>
+                <{/if}> </div>
+          <div class="am-list-item-text"> 数量：<{$item_goods.product.quantity}> </div>
+        </div></div>
                         <{/if}>
                         <!-- adjunct -->
                         <{if $item_goods.adjunct_items}>
                             <{foreach from=$item_goods.adjunct_items item=item_adjunct name=adjunct_item}>
-                            <li class="mem-pt-item">
+                            <div class="am-margin am-cf">
                                 <a href='<{$item_adjunct.link_url}>' title="<{$item_adjunct.quantity}>--<{$item_adjunct.name}>--配件">
                                 <img src="<{$item_adjunct.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>"/>
                                 </a>
                                 <i class="num"><{$item_adjunct.quantity}></i>
                                 <i class="icon red">配件</i>
-                            </li>
+                            </div>
                             <{/foreach}>
                         <{/if}>
                         <!-- gift -->
                         <{if $item_goods.gift_items}>
                             <{foreach from=$item_goods.gift_items item=item_gift name=gift_item}>
-                            <li class="mem-pt-item">
+                            <div class="am-margin am-cf">
                                 <a href='#' title="<{$item_gift.quantity}>-- <{$item_gift.name}>--赠品">
                                 <img src="<{$item_gift.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>"/>
                                 </a>
                                 <i class="num"><{$item_gift.quantity}></i>
                                 <i class="icon red">赠品</i>
-                            </li>
+                            </div>
                             <{/foreach}>
                         <{/if}>
                     <{/foreach}>
@@ -161,13 +135,13 @@
                 <!-- gift -->
                 <{if $order.gift_items}>
                     <{foreach from=$order.gift_items item=item_gift name=gift_item}>
-                    <li class="mem-pt-item">
+                    <div class="am-margin am-cf">
                         <a href='#' title="<{$item_gift.quantity}>--<{$item_gift.name}>--赠">
                         <img src="<{$item_gift.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>"/>
                         </a>
                         <i class="num"><{$item_gift.quantity}></i>
                         <i class="icon red">赠品</i>
-                     </li>
+                     </div>
                     <{/foreach}>
                 <{/if}>
 
@@ -177,13 +151,30 @@
                         <{$item_extends}>
                     <{/foreach}>
                 <{/if}>
-            </ul>
-            </li>
-            <{/foreach}>
-        </ul>
-        <{else}>
+        
+        
+        
+        
+        <div style="border-top:1px dotted #ddd; margin-top:5px; clear:both " >
+          <div class="am-list-news-hd am-cf am-padding am-fl"  style="width:100%"> 共<span class="am-text-warning"><{$order.itemnum}></span>件商品，实付<span class="am-text-warning"><{$order.cur_amount|cur_odr:$order.currency:false:true}></span>元
+          
+          <{if $order.status == 'active' && ($order.pay_status=='0' || $order.pay_status=='3')}>
+                            <{if $order.payinfo.pay_app_id != '-1'}>
+                            <a href="<{link app=b2c ctl=wap_paycenter act=index arg0=$order.order_id}>" >
+                                <button type="button" class="am-btn am-btn-danger am-round am-btn-xs am-fr">立即付款</button>
+                                <i class="arr right"></i>
+                            </a>
+                            <{/if}>
+                            <{/if}>
+          
+          </div>
+        </div>
+      </li>
+       <{/foreach}>
+    </ul>
+    <{else}>
         <div style='margin:20px auto;color:red;text-align: center;font-size: 16px;'>暂无订单</div>
         <{/if}>
-    </div>
 </div>
-<{wap_pagers data=$pager}>
+<div style="text-align:center">
+<{wap_pagers data=$pager}></div>
