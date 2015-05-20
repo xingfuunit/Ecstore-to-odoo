@@ -72,6 +72,8 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         $this->pagedata['showtype'] = $params['showtype'];
         $this->pagedata['is_store'] = $params['is_store'];
         $this->pagedata['goodsData'] = $goodsData;
+        $this->pagedata['cat_id'] = $cat_id;
+        $this->pagedata['scontent'] = $_GET['scontent'];
         
         $objCat = app::get('b2c')->model('goods_cat');
         $this->pagedata['cur_cat'] = empty($cat_id) ? (empty($_GET['scontent']) ? array('cat_name'=>'全部商品') : array('cat_name'=>  str_replace('n,', '',$_GET['scontent']))) :$objCat->getRow('*',array('cat_id'=>$cat_id));
@@ -99,7 +101,6 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             $this->pagedata['weixin']['descContent'] = $this->description;
         }
         $this->pagedata['catlist'] = $objCat->getList('*', array('parent_id' => 0), $offset=0, $limit=-1, 'p_order ASC');
-        
 //         print_r($this->pagedata);exit;
         $this->page('wap/gallery/index.html');
     }
@@ -108,8 +109,6 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
      * 临时构造 page数组
      */
     private function _build_goods_page_arr($pageNum){
-    	$pageNum = 3;
-//     	print_r($pageNum);exit;
     	$arr =  array();
     	for ($x=0; $x<$pageNum; $x++) {
     		$arr[$x] = array();
@@ -443,14 +442,18 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     	$tmp_params = $this->filter_decode($_GET);
     	$params = $tmp_params['filter'];
     	$orderby = empty($tmp_params['orderby']) ? 'd_order desc' : $tmp_params['orderby'];
-    	$showtype = $tmp_params['showtype'];
+//     	$showtype = $tmp_params['showtype'];
+    	$showtype = 'gallery';
     	if($tmp_params['limit']){
     		$pagelimit=$tmp_params['limit'];
     	}
     	$page = $tmp_params['page'] ? $tmp_params['page'] : 1;
+    	$params['limit'] = '6';
+    	
     	$goodsData = $this->get_goods($params,$page,$orderby);
     	$this->pagedata['goodsData'] = $goodsData;
     	$view = 'wap/gallery/type/'.$showtype.'.html';
+    	
     	if($goodsData){
     		$arr['page'] = $page;
     		$arr['pagetotal'] = $this->_pagetotal;
@@ -692,7 +695,6 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
 
         $this->_pagetotal = $pagetotal > $max_pagetotal ? $max_pagetotal : $pagetotal;
         $this->_total = $total;
-
         return $goodsData;
     }
 

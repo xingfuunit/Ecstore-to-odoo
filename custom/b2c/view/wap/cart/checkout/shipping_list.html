@@ -32,13 +32,13 @@
   <div class="am-list-news-bd">
     <ul class="am-list">
       <li class="am-g">
-       <input class="am-form-field" type="text" placeholder="<{$addr.name}>">
+       <input class="am-form-field" type="text" value="<{$addr.name}>" readonly="readonly">
       </li>
       <li class="am-g">
-      <input class="am-form-field" type="text" placeholder="<{if $addr.tel}><{$addr.tel}><{else}><{$addr.mobile}><{/if}>">
+      <input class="am-form-field" type="text" value="<{if $addr.tel}><{$addr.tel}><{else}><{$addr.mobile}><{/if}>" readonly="readonly">
       </li>
       <li class="am-g">
-       <input class="am-form-field" type="text" placeholder="<{$addr.area|ship_area}><{$addr.addr}>">
+       <input class="am-form-field" type="text" value="<{$addr.area|ship_area}><{$addr.addr}>" readonly="readonly">
       </li>
     </ul>
   </div>

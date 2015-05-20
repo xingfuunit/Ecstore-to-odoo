@@ -158,7 +158,6 @@ class wap_ctl_default extends wap_controller{
     	$catmap = $objCat->getmap();
     	$this->pagedata['catmap'] = $catmap;
     	
-//     	print_r($catmap);exit;
     }
     
 

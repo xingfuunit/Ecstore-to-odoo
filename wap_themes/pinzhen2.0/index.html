@@ -50,12 +50,12 @@
 	      <ul class="am-menu-nav am-avg-sm-1">
 	      	<{foreach from=$catmap item=cat key=k}>
 	        <li class="am-parent">
-	          <a href="##" class=""><{$cat.title}></a>
+	          <a href="<{link app=b2c ctl=wap_gallery arg0=$cat.cat_id}>" class=""><{$cat.title}></a>
 			  <{if $cat.items}>
 	          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
 	          	<{foreach from=$cat.items item=cat2 key=k2}>
 	            <li class="">
-	              <a href="##" class=""><{$cat2.title}></a>
+	              <a href="<{link app=b2c ctl=wap_gallery arg0=$cat2.cat_id}>" class=""><{$cat2.title}></a>
 	            </li>
 				<{/foreach}>
 	            <!--<li class="am-menu-nav-channel">
