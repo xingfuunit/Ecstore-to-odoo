@@ -1,87 +1,47 @@
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <div class="a-name">
-            付款成功
-        </div>
-    </div>
-    </header>
-    <div class="section">
-        <div class="msg">
-            <div class="checkout-success">
-                已经付款成功！
-            </div>
-        </div>
-    </div>
-    <!--付款完成显示 end-->
-    <div class="section">
-        <table width="100%" class="d-table">
-            <col width="100"/>
-            <col width=""/>
-            <tr>
-                <td class="k">
-                    订单号：
-                </td>
-                <td class="v">
-                    <{$order.order_id}>
-                </td>
-            </tr>
-            <{if $order.payed !='0' && $order.cur_money != '0'}>
-            <tr>
-                <td class="k">已付金额：</td>
-                <td class="v">
-                    <span class="price">
-                        <{$order.payed|cur:$order.currency}>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="k">应付金额：</td>
-                <td class="v">
-                    <span class="price">
-                        <{$order.cur_money|cur:$order.currency}>
-                    </span>
-                </td>
-            </tr>
-            <{/if}>
-            <tr>
-                <td class="k">订单商品数量：</td>
-                <td class="v">
-                    <{$order.quantity}>
-                </td>
-            </tr>
-            <tr>
-                <td class="k">收货信息：</td>
-                <td class="v">
-                    收货人:<{$order.ship_name}><br />
-                    收货地区:<{$order.ship_area|ship_area}><br />
-                    详细地址:<{$order.ship_addr}><br />
-                    <{if $order.ship_mobile}>手机:<{$order.ship_mobile}><br /><{/if}>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>
+    </a>
+	</div>
+  <h1 class="am-header-title">
+    <a href="#title-link">付款成功</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>
+    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+	</div>
+</header>
+<!-- <div style="width:100%; text-align:center; padding:20px 0; font-size:18px" class="am-text-warning" ><h4>请您于30分钟后完成支付<br>超时订单将取消</h4></div> -->
+<div style=" padding:10px;">
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+<p>订单号：<{$order.order_id}></p>
+<p>应付金额：<span class="am-text-danger"><{$order.total_amount|cur:$order.currency}></span></p>
+<p>已付金额：<span class="am-text-danger"><{$order.payed|cur:$order.currency}></span></p>
+<p>订单商品数量：<{$order.quantity}></p>
+
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"
+/>
+<p>收货信息：
+<ul>
+ <li>收货人：<{$order.ship_name}></li>
+ <li>地区：<{$order.ship_area|ship_area}></li>
+ <li>详细地址：<{$order.ship_addr}></li>
+ <li><{if $order.ship_mobile}>手机:<{$order.ship_mobile}><br /><{/if}>
                     <{if $order.ship_tel}>电话:<{$order.ship_tel}><br /><{/if}>
-                    <{if $order.ship_zip}>邮编：<{$order.ship_zip}><br /><{/if}>
-                    配送时间:<{$order.ship_time}>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="section">
-        <div class="d-line c-fix">
-            <div class="l-k">您还可以：</div>
-            <div class="l-v">
-                <a href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id}>">
-                    查看订单
-                    <i class="arr right"></i>
-                </a>
-                &nbsp;&nbsp;
-                <a href="<{link app='wap' ctl='default' act='index'}>">
-                    继续购物
-                    <i class="arr right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
+                    <{if $order.ship_zip}>邮编：<{$order.ship_zip}><br /><{/if}></li>
+ <li>配送时间：<{$order.ship_time}></li>
+</ul>
+</p>
+</div>  
+
+<div class="am-panel-hd" style="background:#CCCCCC; border-top:1px solid #aaaaaa; width:100%">
+<div>
+您还可以：<a href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id}>">查看订单 <i class="am-icon-chevron-right"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="<{link app='wap' ctl='default' act='index'}>">继续购物 <i class="am-icon-chevron-right"></i></a>
 </div>
-<script>
-    (function(){
-    })();
-</script>
+	 
+	</div>

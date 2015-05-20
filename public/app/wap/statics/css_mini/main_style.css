@@ -1,12 +1,13 @@
 /* CSS Document */
-/*��*/
+/*基础*/
 ul,li{ list-style:none}
-/*ͷ��*/
+
+/*头部*/
 .header { text-align: center;}
 .header h1 { font-size: 200%;color: #333;margin-top: 30px;}
 .header p {font-size: 14px;}
 
-/*����*/
+/*公用*/
 .tt_bg{ background:url(../images/tt.jpg) repeat-x !important}
 .full_img{width:100%}
 .four_cut{width:25%; float:left}
@@ -19,3 +20,135 @@ border-left-color: #5eb95e !important;
  *, *::before, *::after {
     box-sizing: border-box;
 }
+}
+
+.dialog {
+  background-color: white;
+}
+.dialog .dialog-head {
+  position: relative;
+  text-align: center;
+  border-bottom: 1px solid #bfbfbf;
+}
+.paiing {
+  padding: 5px 10px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+.paiing-span {
+  padding: 4px 10px;
+  margin: 10px 5px;
+  border: 1px solid #cbcbcb;
+  cursor: pointer;
+  float: left;
+}
+.invoice {
+  padding: 8px 0px;
+  border: 1px solid #cfcfcf;
+  overflow: hidden;
+  margin: 10px 0;
+  color: #333;
+}
+#J_mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.7);
+}
+.dialog .close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  background-color: white;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 14px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+}
+.invoice_submit {
+  margin-top: 20px;
+  background-color: #f08300;
+  display: block;
+  color: #fff;
+  width: 100%;
+  padding: 5px 0;
+  border-radius: 4px;
+  display: block;
+  text-align: center;
+}
+.no-border {
+  border: 0;
+  padding: 0px 10px;
+}
+.act {
+  border-color: #900;
+}
+
+.js_btn{width:531px;height:107px;border:none;background: url('../images/pay_btn.png') no-repeat;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
