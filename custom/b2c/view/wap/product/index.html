@@ -115,8 +115,10 @@ $(document).ready(function(){
             dataType:'json',
             success:function(data){
                 if(data.success){
-                    // todo: change img
-                    
+                    if(data.success=='saved')
+                        $('#btnAdd2Fav').addClass('am-text-success');
+                    else
+                        $('#btnAdd2Fav').removeClass('am-text-success');
                 }
             }
         });
