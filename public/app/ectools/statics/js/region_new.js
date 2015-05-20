@@ -29,8 +29,10 @@ function showNextSelect(select){
     if(!nextkey)
         return;
     var nextlevel = parseInt($(select).attr('data-level')) + 1;
-    $(select).next().html( genOptions(nextlevel,nextkey) ).show();
+    $(select).next().html( genOptions(nextlevel,nextkey) ).css('display','inline-block');
 }
+
+
 
 function hideNextSelect(select){
     $(select).nextAll().html('').hide();
@@ -39,7 +41,7 @@ function hideNextSelect(select){
 function setRegionData($container){
     var ipt = $container.find('input');
     var pack = $(ipt).attr('package');
-    var sels = container.find('select');
+    var sels = $container.find('select');
     var regionArr = [];
     var text = '';
     var value = 0;
@@ -54,6 +56,31 @@ function setRegionData($container){
 
     $(ipt).val( pack+':'+regionArr.join('/')+':'+value );
     
+}
+
+function initRegionSelect($container){
+
+    var firstSelect = $container.find('select')[0];
+    firstSelect.innerHTML=genOptions(0);
+    $(firstSelect).css('display','inline-block');
+
+    var regionData = $container.find('input').val();
+    var regionDataArr = regionData.split(':');
+    var regionTextArr = regionDataArr[1].split('/');
+
+    $.each(regionTextArr,function(k,v){
+        var thisSelect = $container.find('select[data-level='+k+']')[0];
+
+        $(thisSelect).find('option').each(function(key,value){
+            if($(this).html()==v){
+                $(this).attr("selected", true);
+                return false;
+            }
+        });
+        
+        showNextSelect(thisSelect);
+    })
+
 }
 
 function checkRegionSelect($container){
