@@ -1,97 +1,89 @@
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <a href="<{link app=b2c ctl=wap_cart act=checkout}>" class="a-back">
-            <i class="arr left"></i>
-            返回
-        </a>
-        <div class="a-name">
-            添加收货地址
-        </div>
-        <div class="a-right">
-        </div>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>    </a>  </div>
+  <h1 class="am-header-title">
+    <a href="#title-link">新增收货地址</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
+</header>
+<div   style=" text-align:left" >
+  <div  style="font-size:14px;">
+    <div class="am-modal-bd"  style=" text-align:left" >
+      <div class="am-panel-group" id="accordion">
+  <div class="am-panel am-panel-default">
+    <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
+      <div class="am-panel-bd"  style="padding:0;">
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <div class="am-list-news-bd">
+    <form class="am-form am-form-horizontal form" action="<{link app=b2c ctl=wap_cart act=shipping_save arg0=$is_fastbuy}>" method="post" data-type="ajax">
+    <div>
+    <label for="doc-ipt-3" class="col-sm-2 am-form-label">地区</label>
+    <div class="col-sm-10">
+      <select data-am-selected>
+  		<option value="a">Apple</option>
+  		<option value="b">Banana</option>
+  		<option value="o">Orange</option>
+  		<option value="m">Mango</option>
+	  </select>
     </div>
-    </header>
-    <div class="address-form">
-        <form action="<{link app=b2c ctl=wap_cart act=shipping_save arg0=$is_fastbuy}>" class="form" method="post" data-type="ajax">
-            <div class="c-g" style="height:auto">
-                <label class="c-l">地区</label>
-                <div class="c">
+  </div>
+  <div>
+    <label for="doc-ipt-3" class="col-sm-2 am-form-label">收货地址</label>
+    <div class="col-sm-10">
+      <input type="hidden" class="text" name="addr_area" />
+      <input type="text" id="doc-ipt-3" class="text am-input-sm" name="addr" value="<{$edit_addr.addr}>" placeholder="收货地址" required="required" data-caution="请填写收货地址"/>
+    </div>
+  </div>
 
-                    <{input app=ectools type="region" platform="iswap" name='area' vtype='area' value=$edit_addr.area callback="selectArea"}>
-                </div>
-            </div>
-            <div class="c-g">
-                <label class="c-l">收货地址</label>
-                <div class="c">
-                    <input type="hidden" class="text" name="addr_area" />
-                    <input type="text" class="text" name="addr" value="<{$edit_addr.addr}>" required="required" data-caution="请填写收货地址"/>
-                </div>
-            </div>
-            <div class="c-g">
-                <label class="c-l">邮编</label>
-                <div class="c">
-                    <input type="text" class="text" name="zip" value="<{$edit_addr.zip}>" <{if $site_checkout_zipcode_required_open == 'true'}> required="required" data-caution="邮编不能为空"<{/if}>/>
-                </div>
-            </div>
-            <div class="c-g">
-                <label class="c-l">收货人姓名</label>
-                <div class="c">
-                    <input type="text" class="text" name="name" value="<{$edit_addr.name}>" required="required" data-caution="请填写收货人姓名"/>
-                </div>
-            </div>
-            <div class="c-g">
-                <label class="c-l">手机</label>
-                <div class="c">
-                    <input type="text" class="text" name="mobile" value="<{$edit_addr.mobile}>" vtype="mobile" data-caution="请填写手机号码"/>
-                </div>
-            </div>
-            <div class="c-g">
-                <label class="c-l">固定电话</label>
-                <div class="c">
-                    <input type="text" class="text" name="tel" value="<{$edit_addr.tel}>" vtype="tel"/>
-                </div>
-            </div>
-            <{if $site_checkout_receivermore_open == 'true'}>
-            <div class="c-g-c">
-                <input type="checkbox" id="J_del_time"/>
-                <label for="J_del_time">送货时间</label>
-            </div>
-            <div class="c-g del-time hide" style="height:auto">
-                <label class="c-l">时间段</label>
-                <div class="c">
-                    <{if $edit_addr.day && $edit_addr.day != '任意日期' && $edit_addr.day != '仅工作日' && $edit_addr.day != '仅休息日'}>
-                    <{assign var='special' value='special'}>
-                    <{assign var='special_val' value=$edit_addr.day}>
-                    <{/if}>
-                    <select class="select" name="day">
-                        <option value="">请选择</option>
-                        <option<{if !$edit_addr.day}> selected="selected"<{elseif $edit_addr.day == '任意日期'}> selected="selected"<{/if}> value="任意日期">任意日期</option>
-                        <option<{if $edit_addr.day == '仅工作日'}> selected="selected"<{/if}> value="仅工作日>">仅工作日</option>
-                        <option<{if $edit_addr.day == '仅休息日'}> selected="selected"<{/if}> value="仅休息日">仅休息日</option>
-                        <option<{if $special == 'special'}> selected="selected"<{/if}> value="special">指定日期</option>
-                    </select>
-                    <span class="special-delivery-day" <{if !$special}>style="display:none;"<{/if}>>
-                    <input type="date" name="special" value=$special_val ></span>
-                    <select name="time" id="" class="action-select-times select">
-                        <option<{if $edit_addr.time == '任意时间段'}> selected<{/if}> value="任意时间段">任意时间段</option>
-                       <option<{if $edit_addr.time == '上午'}> selected<{/if}> value="上午">上午</option>
-                        <option<{if $edit_addr.time == '下午'}> selected<{/if}> value="下午">下午</option>
-                        <option<{if $edit_addr.time == '晚上'}> selected<{/if}> value="晚上">晚上</option>
-                    </select>
-                </div>
-            </div>
-            <{/if}>
-            <div class="c-g-c">
-                <input type="checkbox" name="def_addr" value="1" id="def_addr_check" />
-                <label for="def_addr_check">设为默认收货地址</label>
-            </div>
-            <div class="btn-bar">
-                <button type="submit" class="btn" rel="_request">保存地址</button>
-            </div>
-        </form>
+  <div>
+    <label for="doc-ipt-pwd-2" class="col-sm-2 am-form-label">邮编</label>
+    <div class="col-sm-10">
+      <input type="text" id="doc-ipt-pwd-2" class="text am-input-sm" name="zip" value="<{$edit_addr.zip}>" placeholder="邮编" <{if $site_checkout_zipcode_required_open == 'true'}> required="required" data-caution="邮编不能为空"<{/if}>/>
     </div>
+  </div>
+  
+   <div>
+    <label for="doc-ipt-pwd-2" class="col-sm-2 am-form-label">收货人姓名</label>
+    <div class="col-sm-10">
+      <input type="text" class="text am-input-sm" id="doc-ipt-pwd-2" name="name" value="<{$edit_addr.name}>" required="required" data-caution="请填写收货人姓名" placeholder="收货人姓名"/>
+    </div>
+  </div>
+  
+   <div>
+    <label for="doc-ipt-pwd-2" class="col-sm-2 am-form-label">手机</label>
+    <div class="col-sm-10">
+      <input type="text" class="text am-input-sm" id="doc-ipt-pwd-2" name="mobile" value="<{$edit_addr.mobile}>" vtype="mobile" data-caution="请填写手机号码" placeholder="手机"/>
+    </div>
+  </div>
+  
+     <div>
+    <label for="doc-ipt-pwd-2" class="col-sm-2 am-form-label">固定电话</label>
+    <div class="col-sm-10">
+      <input type="text" class="text am-input-sm" name="tel" value="<{$edit_addr.tel}>" vtype="tel" id="doc-ipt-pwd-2" placeholder="固定电话"/>
+    </div>
+  </div>
+  
+  
+  
+</form>
+
+  </div>
 </div>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+    </div>
+<button type="button" class="am-btn am-btn-primary  am-btn-danger am-margin ">保存</button>
+  </div>
+</div>
+
 <script>
     (function(){
         $('.c-g-c').bind('click',function(e){
