@@ -19,3 +19,5 @@ border-left-color: #5eb95e !important;
  *, *::before, *::after {
     box-sizing: border-box;
 }
+
+.js_btn{width:531px;height:107px;border:none;background: url('../images/pay_btn.png') no-repeat;}

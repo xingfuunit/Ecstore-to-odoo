@@ -1,4 +1,17 @@
-<{wap_require file="block/ur_here.html"}>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>    </a>	</div>
+  <h1 class="am-header-title">
+    <a href="#title-link">购物车</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
+</header>
+
 <div class="ui-content ui-content-list ">
     <div class="cart-pt">    <!-- 购物列表  -->
         <{if $is_empty}>
@@ -10,6 +23,7 @@
             </ul>
         <{/if}>
     </div>
+    <{if !$is_empty}>
     <div class="clear_line"></div>  <!-- 空间占位模块 -->
     <div class="clear_line"></div>  <!-- 空间占位模块 -->
     <div class="settlement<{if $aCart.items_quantity==0}> hide<{/if}>" id="J_total">       <!-- 结算操作        固定在菜单上面 -->
@@ -23,6 +37,7 @@
         </div>
         <a href="#" class="js_btn J_settlement">去结算</a>
     </div>
+    <{/if}>
 </div>
 <script>
 (function(){

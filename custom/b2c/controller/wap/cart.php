@@ -53,6 +53,10 @@ class b2c_ctl_wap_cart extends wap_frontpage{
     }
 
     public function index(){
+    	//hack by jason 购物车直接跳转到checkout begin
+    	$url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'checkout'));
+    	$this->redirect($url);
+    	//hack by jason 购物车直接跳转到checkout end
         $GLOBALS['runtime']['path'][] = array('link'=>$this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'index')),'title'=>'购物车');
         $this->_common(1);
         $this->_response->set_header('Cache-Control','no-store');
@@ -541,11 +545,12 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $this->_common(false,$isfastbuy);
         $this->begin(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'index'));
 
-        // 购物车是否为空
-        if ($this->pagedata['is_empty'])
-        {
-            $this->end(false, app::get('b2c')->_('购物车为空！'));
-        }
+//         // 购物车是否为空 cancle by jason
+//         if ($this->pagedata['is_empty'])
+//         {
+//         	//$this->page('wap/cart/checkout/index.html',false,$app_id);
+//             $this->end(false, app::get('b2c')->_('购物车为空！'));
+//         }
 
         // 购物是否满足起订量和起订金额
         if ((isset($this->pagedata['aCart']['cart_status']) && $this->pagedata['aCart']['cart_status'] == 'false') && (isset($this->pagedata['aCart']['cart_error_html']) && $this->pagedata['aCart']['cart_error_html'] != ""))
@@ -814,7 +819,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         	$bind = app::get('weixin')->model('bind')->getRow('id',array('weixin_account'=>WEIXIN_ACCOUNT,'status'=>'active'));
         	$this->pagedata['signPackage'] = kernel::single('weixin_jssdk')->getSignPackage($bind);
 //         }
-        
+      
         $this->page('wap/cart/checkout/index.html',false,$app_id);
     }
 
