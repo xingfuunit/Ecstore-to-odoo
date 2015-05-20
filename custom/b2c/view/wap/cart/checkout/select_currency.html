@@ -1,3 +1,21 @@
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>
+    </a>
+	</div>
+  <h1 class="am-header-title">
+    <a href="#title-link">修改支付方式</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>
+    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+	</div>
+</header>
 
 <{if count($currencys) > 1}>
     <caption class="select-currency">选择货币类型：
@@ -8,25 +26,30 @@
     </caption>
     <{/foreach}>
 <{/if}>
-<div id="zxzf" class="paiing">
-<{foreach from=$payments item="payment" key="key" name="payments"}>
-    <{if $payment.app_id eq 'deposit'}>
-    <span class="paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
-        <{$payment.app_display_name}>
-    </span>
-    <{elseif $payment.app_id neq 'deposit'}>
-        <span class="paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
-            <{$payment.app_display_name}>
-        </span>
-    <{/if}>
-<{/foreach}>
+
+<div class="am-list-news-bd paiing" id="zxzf">
+    <ul class="am-list">
+     <div style="clear:both; width:100%; margin-top:10px; margin-left:10px;">
+     <{foreach from=$payments item="payment" key="key" name="payments"}>
+     <{if $payment.app_id eq 'deposit'}>
+		 <button type="button" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>" data-am-button><{$payment.app_display_name}></button>
+	 <{elseif $payment.app_id neq 'deposit'}>
+	 	 <button type="button" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>" data-am-button><{$payment.app_display_name}></button>
+	 <{/if}>
+	 <{/foreach}>		 
+	  </div>
+    </ul>
 </div>
-<div class="invoice no-border">
-    <a id="P_L_bt<{$_page}>" href="javascript:;" class="invoice_submit">确定</a>
+  
+<div style="float:left; width:100%;" >
+  <div class="am-panel-hd" style="background:#CCCCCC; border-top:1px solid #aaaaaa">
+  <a id="P_L_bt<{$_page}>" href="javascript:;" class="invoice_submit">
+  <img src="/public/app/b2c/statics/images/buy_sure.png" width="531" height="107" style="width:50%;margin-left:25%">
+  </a></div>
 </div>
 
 
-<{*<div id="pay_way">*}>
+<!-- <{*<div id="pay_way">*}>
     <{*<div class="paiing_title">支持以下银行</div>*}>
     <{*<div id="yh-zf" class="paiing">*}>
         <{*<div>*}>
@@ -57,7 +80,7 @@
     <{*<li class="pay-item gb t-c" payment_app_id="-1" payment_app_name="货到付款" value='{"pay_app_id":"-1","payment_name":"货到付款"}' id="pay_app_id_0">*}>
         <{*货到付款*}>
     <{*</li>*}>
-<{*<{/if}>*}>
+<{*<{/if}>*}> -->
 <script>
     $('#zxzf .paiing-span').click(function(){
         $('#zxzf .paiing-span').removeClass('selected');
@@ -72,9 +95,9 @@
         }
         var url = '<{link app=b2c ctl=wap_cart act=payment_confirm}>';
         $.post(url,data,function(re){
-            if(re){
+/*             if(re){ */
                 location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
-            }
+/*             } */
         });
     });
 </script>

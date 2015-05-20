@@ -1,81 +1,172 @@
-<div class="full-screen">
-  <div class="head-nav">
-        <div class="back" ><a href="javascript:history.back()"></a></div>
-        <div style="box-flex: 1; -webkit-box-flex: 1; -moz-box-flex: 1; display: block;line-height: 45px;text-align: center;color:#21292c;"><a href="<{link app=b2c ctl=wap_passport act=login}>" class="passport login">登陆</a><a class="passport signup current">注册</a></div>
-        <div class="home" ><a href="./"></a></div>
+<form
+	action="<{link app=b2c ctl=wap_passport act=create args01=$next_url}>"
+	method="post" class="form" data-type="ajax">
+	<input name="forward" type="hidden" value="<{$options.url}>"> <input
+		name="mini" type="hidden" value="<{$mini_passport}>">
+
+
+	<div class="header">
+		<div>
+			<img style="width: 100%;"
+				src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/loginbg.jpg">
+		</div>
+	</div>
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+			<br>
+
+			<form method="post" class="am-form">
+				<label for="mobile" style="clear: both; width: 100%;">手机号:</label> <input
+					type="mobile" name="mobile" id="mobile" class="a-account" value=""
+					style="width: 70%; float: left"> <a
+					href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>"
+					style="width: 30%; float: right; text-align: center"
+					class="  am-btn am-btn-warning am-btn-sm am-fl btn-send1 ">获取验证码</a>
+				<br> <label for="" style="clear: both; width: 100%;">
+					短信验证： </label> <input type="" id="vcode" name="vcode" maxlength="6"
+					placeholder="短信验证码" required="required" pattern=".{6,20}"
+					class="text" data-caution="短信验证码不能为空"> <label
+					for="password" style="clear: both; width: 100%;">密码:</label> <input
+					type="password" name="" id="password" value="" class="text">
+				<br />
+				<div class="c-g-c">
+					<input type="checkbox" name="license" id="license"
+						checked="checked"> <label for="license"> <{t}>同意<a
+						href="<{link app=b2c ctl=wap_passport act=license}>"
+						class="license lnk">注册协议</a><{/t}>
+					</label>
+				</div>
+				<div class="am-cf">
+				<input type="button" id="ajax_login" name="" value="登 录" 
+				 onclick="javascript:window.location.href='passport.html'"
+						class="am-btn am-btn-primary am-btn-sm am-fl">
+					<input type="button" id="ajax-singup" name="" value="立即注册"
+						class="am-btn am-btn-warning am-btn-sm am-fl"
+						style="margin-left: 10px;">
+				</div>
+			</form>
+			<hr>
+			<p>© 2015 pzfresh.com, Inc. 品珍鲜活版权所有</p>
+		</div>
+	</div>
+
+
+
+
+</form>
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert-signup">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">错误</div>
+    <div class="am-modal-bd">
+      
     </div>
-  <div class="full-padding">
-    <form action="<{link app=b2c ctl=wap_passport act=create args01=$next_url}>" method="post" class="form" data-type="ajax">
-      <input name="forward" type="hidden" value="<{$options.url}>">
-      <input name="mini" type="hidden" value="<{$mini_passport}>">
-      <div class="c-g">
-        <label for="" class="c-l">
-          <em class="f-red">*</em>手机号：
-        </label>
-        <div class="c">
-          <input type="text" name="pam_account[login_name]" class="text a-account" placeholder="请输入手机号" required="required" maxlength="11" pattern="^1[3458]\d{9}$" autofocus data-caution="手机号不能为空"><a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>" class="btn btn-send orange ib-btn">获取验证码</a>
-        </div>
-      </div>
-      <div class="notice"></div>
-      <div class="c-g">
-        <label for="" class="c-l">
-          <em class="f-red">*</em>短信验证：
-        </label>
-        <div class="c">
-          <input type="text" name="vcode" maxlength="20" placeholder="短信验证码" required="required" pattern=".{6,20}" class="text" data-caution="短信验证码不能为空">
-        </div>
-      </div>
-      <div class="notice"></div>
-      <div class="c-g">
-        <label for="" class="c-l">
-          <em class="f-red">*</em>密码：
-        </label>
-        <div class="c">
-          <input type="password" name="pam_account[login_password]" maxlength="20" placeholder="6-16位字符" required="required" pattern=".{6,16}" class="text" data-caution="密码不能为空">
-        </div>
-      </div>
-      <div class="notice"></div>
-      <div class="c-g-c">
-        <input type="checkbox" name="license" id="license" checked="checked">
-        <label for="license">
-          <{t}>同意<a href="<{link app=b2c ctl=wap_passport act=license}>" class="license lnk">注册协议</a><{/t}>
-        </label>
-      </div>
-      <div class="btn-bar">
-        <button type="submit" class="btn orange" rel="_request">立即注册</button>
-      </div>
-    </form>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
   </div>
 </div>
 <script>
-$('.form .btn-send').click(function (e) {
-    e.preventDefault();
-    var el = $('.form .a-account');
-    if($(this).hasClass('disabled')) return false;
-    sendVerify(this, 'uname=' + el.val() + '&type=signup');
-});
+	$(document)
+			.ready(
+					function() {
+						$('.form .btn-send1').click(
+								function(e) {
+									e.preventDefault();
+									var el = $('.form .a-account');
+									if ($(this).hasClass('disabled'))
+										return false;
+									sendVerify(this, 'uname=' + el.val()
+											+ '&type=signup');
+								});
 
-function sendVerify(el, data) {
-    var url = el.href;
-    $(el).addClass('disabled');
-    var cd = new countdown(el, {
-        start: 120,
-        secondOnly: true,
-        callback: function(e) {
-            $(el).removeClass('disabled').html('重发验证码');
-        }
-    });
-    $.post(url, data, function(rs) {
-        if(rs) {
-            try{
-                rs = $.parseJSON(rs);
-            } catch (e) {}
-            if(rs.error) {
-                $(el).removeClass('disabled').html('重发验证码');
-                clearTimeout(cd.timer);
-                if(typeof rs.error === 'string') alert(rs.error);
-            }
-        }
-    });
-}
+						function sendVerify(el, data) {
+							var url = el.href;
+							$(el).addClass('disabled');
+							var cd = new countdown(el,
+									{
+										start : 120,
+										secondOnly : true,
+										callback : function(e) {
+											$(el).removeClass('disabled').html(
+													'重发验证码');
+										}
+									});
+							$.post(url, data, function(rs) {
+								if (rs) {
+									try {
+										rs = $.parseJSON(rs);
+									} catch (e) {
+									}
+									if (rs.error) {
+										$(el).removeClass('disabled').html(
+												'重发验证码');
+										clearTimeout(cd.timer);
+										if (typeof rs.error === 'string')
+											alert(rs.error);
+									}
+								}
+							});
+						}
+
+						$("#ajax-singup")
+								.bind(
+										"click",
+										function() {
+
+											$
+													.ajax({
+														url : "<{link app=b2c ctl=wap_passport act=create args01=$next_url}>",
+
+														type : 'POST',
+
+														data : {
+															"pam_account[login_name]" : $(
+																	'#mobile')
+																	.val(),
+															"vcode":$('#vcode').val(),
+															"license":$('#license').is(':checked')?'on':false,
+															"pam_account[login_password]" : $(
+																	'#password')
+																	.val()
+														},
+
+														dataType : 'html',
+
+														timeout : 3000,
+
+														error : function() {
+															$('#my-alert-signup')
+															.children(
+																	'.am-modal-dialog')
+															.children(
+																	".am-modal-bd")
+															.html('请求失败');
+													$('#my-alert-signup')
+															.modal();
+															//alert('请求失败');
+														},
+
+														success : function(
+																result) {
+															jsonobj = eval('('
+																	+ result
+																	+ ')');
+															if (jsonobj.success) {
+																location.href = jsonobj.redirect;
+															} else {
+																$('#my-alert-signup')
+																		.children(
+																				'.am-modal-dialog')
+																		.children(
+																				".am-modal-bd")
+																		.html(
+																				jsonobj.error);
+																$('#my-alert-signup')
+																		.modal();
+															}
+														}
+
+													});
+										});
+					});
 </script>

@@ -1,210 +1,147 @@
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <a href="javascript:history.back()" class="a-back">
-            <i class="arr left"></i>
-            返回
-        </a>
-        <div class="a-name">
-            我的订单
-        </div>
-    </div>
-    </header>
-    <div class="section">
-        <div class="col2">
-        <{if $order.payinfo.pay_app_id != '-1'}>
-          <{if ($order.pay_status == '0' || $order.pay_status == '3') && $order.status != 'dead' && $order.status != 'finish'}>
-            <div class="col">
-              <a href="<{link app=b2c ctl=wap_paycenter act=index arg0=$order.order_id}>">
-                更改付款方式
-                <i class="arr right"></i>
-              </a>
-            </div>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="javascript:history.back()" class="">
+      <i class="am-header-icon am-icon-reply"></i>    </a>  </div>
+  <h1 class="am-header-title">
+    <a >订单详情</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>    </a>
+   <a href="/wap/"" class="">
+      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
+</header>
 
-            <div class="col">
-            <{if $order.payinfo.pay_app_id != 'offline'}>
-                <{if $prepare.prepare_type != 'prepare'}>
-                      <a href="<{link app=b2c ctl=wap_paycenter act=index arg0=$order.order_id}>">
-                        去付款
-                        <i class="arr right"></i>
-                      </a>
-                <{/if}>
-                <{if $prepare.prepare_type == 'prepare' && $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.end_time  && $order.pay_status=='0' && $prepare.status=='true'}>
-                      <a href="<{link app=b2c ctl=wap_paycenter act=index arg0=$order.order_id}>">
-                        去付订金
-                        <i class="arr right"></i>
-                      </a>
-                <{/if}>
-                <{if $prepare.prepare_type == 'prepare'&& $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.begin_time_final  && $order.pay_status=='3' && $prepare.status=='true'}>
-                        等待支付尾款
-                        <i class="arr right"></i>
-                <{/if}>
-                <{if $prepare.prepare_type == 'prepare'&& $prepare.nowtime > $prepare.begin_time_final && $prepare.nowtime < $prepare.end_time_final  && $order.pay_status=='3' && $prepare.status=='true'}>
-                        支付尾款
-                        <i class="arr right"></i>
-                <{/if}>
-                <{if $prepare.prepare_type == 'prepare'&& $prepare.nowtime > $prepare.end_time_final && $prepare.status=='true'}>
-                        活动结束
-                        <i class="arr right"></i>
-                <{/if}>
+<div id="widget-list" >
 
-            <{else}>
-              <a href="<{link app=b2c ctl='wap_member' act='add_order_msg' arg0=$order.order_id arg1='1'}>">
-                我已经付款
-                <i class="arr right"></i>
-              </a>
-            <{/if}>
-            </div>
-          <{/if}>
-        <{/if}>
-        </div>
-    </div>
+<ul class="am-list  icon-gray-color" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+<li class="am-padding">订单号：<{$order.order_id}><span class="am-fr   am-text-warning"
+<{if($order.status=='finish')}> class="am-text-success am-fr" <{elseif($order.status=='dead')}> class="am-text-default am-fr" <{else}> class="am-text-warning am-fr"  <{/if}>
 
-    <!-- 订单留言 -->
-    <{if $ordermsg}>
-    <div class="section">
-        <div class="d-line c-fix">
-            <span class="l-k">付款信息：</span>
-            <{foreach from=$ordermsg item=msgitem name="ordermsg"}>
-            <span class="l-v">
-            <span class="bold">
-            <{$msgitem.title}>:<{$msgitem.time|cdate:FDATE_STIME}>
-            </span>
-            <br />
-            （<{$msgitem.comment|nl2br}>）
-            </span>
-            <{/foreach}>
-        </div>
-    </div>
-    <{/if}>
+><{switch from=$order.status}>
+                <{case value='finish'}><{t}>已完成<{/t}>
+                <{case value='dead'}><{t}>已作废<{/t}>
+                <{case}>
+                <{switch from=$order.pay_status}>
+                <{case value='1'}><{t}>已付款<{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{case}><{t}>[正在备货]<{/t}>
+                <{/switch}>
+                <{case value='2'}><{t}>已付款至担保方<{/t}>
+                <{case value='3'}><{t}>等待补款<{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{/switch}>
+                <{case value='4'}><{t}>部分退款<{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='0'}><{t}>[未发货]<{/t}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{/switch}>
+                <{case value='5'}><{t}>已退款<{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='0'}><{t}>[未发货]<{/t}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{/switch}>
+                <{case}><{t}>等待付款<{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{/switch}>
+                <{/switch}>
+                <{/switch}></span></li>
+<li class="am-padding">下单时间：<{$order.createtime|cdate:FDATE_STIME}></li>
+<li class="am-padding">收货人:<{$order.consignee.name}>&nbsp;&nbsp;<{if $order.consignee.mobile}>手机:<{$order.consignee.mobile}>&nbsp;&nbsp;<{/if}>
+                    <{if $order.consignee.telephone}>电话:<{$order.consignee.telephone}>&nbsp;&nbsp;<{/if}><br>
+<span style="color:#999999"><{$order.consignee.area|ship_area}><br><{$order.consignee.addr}></span></li>
+<li class="am-padding">配送时间<span class="am-fr  am-text-defult" style="color:#999999"><{$order.consignee.r_time}></span></li>
+<li class="am-padding">支付方式
+<span  id="J_defpay" class="am-fr  am-text-warning" style="color:#999999"><{$order.payinfo.pay_app_id|payname}></span></li>
+<li class="am-padding">应付金额<span class="am-fr  am-text-warning" >
+                        <{if $order.promotion_type!='prepare'}>
+                            <{$order.cur_money|cur:$order.currency}>
+                        <{/if}>
+                         <!--预售信息的判断-->
+                        <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.end_time&& $order.pay_status=='0' && $prepare.status=='true' && $prepare.promotion_price > $prepare.preparesell_price
+                        }>
+                          <{$prepare.preparesell_price|cur:$order.currency}>
+                        <{/if}>
 
-    <div class="section">
-        <div class="d-line c-fix">
-            <span class="l-k">订单号：</span>
-            <span class="l-v"><{$order.order_id}></span>
+                        <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.end_time&& $order.pay_status=='0' && $prepare.status=='true' && $prepare.promotion_price == $prepare.preparesell_price
+                        }>
+                           <{$order.cur_money|cur:$order.currency}>
+                        <{/if}>
 
-            <span class="l-k">总金额：</span>
-            <span class="l-v"><{$order.total_amount|cur_odr:$order.currency}></span>
+                        <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.begin_time_final && $order.pay_status=='3'
+                        && $prepare.status=='true'
+                        }>
+                          尾款支付时间还未开始，敬请等待！
+                        <{/if}>
 
-            <span class="l-k">订单状态：</span>
-            <span class="l-v"><{if $order.status == 'dead'}><{t}>已作废<{/t}><{elseif $order.status == 'finish'}><{t}>已完成<{/t}><{else}><{if $order.pay_status == '0'}><{t}>未付款<{/t}><{elseif $order.pay_status == '1'}><{t}>已支付<{/t}><{elseif $order.pay_status == '2'}><{t}>已付款至担保方<{/t}><{elseif $order.pay_status == '3'}><{t}>部分付款<{/t}><{elseif $order.pay_status == '4'}><{t}>部分退款<{/t}><{else}><{t}>全额退款<{/t}><{/if}> <{if $order.ship_status == '0'}><{t}>[未发货]<{/t}><{elseif $order.ship_status == '1'}><{t}>已发货<{/t}><{elseif $order.ship_status == '2'}><{t}>部分发货<{/t}><{elseif $order.ship_status == '3'}><{t}>部分退货<{/t}><{else}><{t}>已退货<{/t}><{/if}><{/if}></span>
+                        <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.end_time && $prepare.nowtime < $prepare.begin_time_final && $order.pay_status=='0'
+                        && $prepare.status=='true'
+                        }>
+                          订金支付时间已过,无法支付！
+                        <{/if}>
 
-            <span class="l-k">下单日期：</span>
-            <span class="l-v"><{$order.createtime|cdate}></span>
-        </div>
-    </div>
-    <div class="section">
-        <div class="d-line c-fix">
-            <span class="l-k">配送地区：</span>
-            <span class="l-v"><{$order.consignee.area}></span>
+                        <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.end_time_final && ($order.pay_status=='3' || $order.pay_status=='0')
+                        && $prepare.status=='true'
+                        }>
+                          尾款支付时间已过！
+                        <{/if}>
 
-            <span class="l-k">收货地址：</span>
-            <span class="l-v"><{$order.consignee.addr}>,<{$order.consignee.zip}>,<{$order.consignee.name}>,<{if $order.consignee.telephone}><{$order.consignee.telephone}><{if $order.consignee.mobile}> | <{/if}><{/if}><{$order.consignee.mobile}></span>
-        </div>
-    </div>
-    <div class="section">
-        <div class="d-line c-fix">
-            <span class="l-k">配送方式：</span>
-            <span class="l-v">
-                <div class="col2">
-                    <div class="col"><{$order.shipping.shipping_name}><{if $order.shipping.shipping_name == '门店自提' && $order.branch_name_user }>【<{$order.branch_name_user}>】<{/if}></div>
-                    <div class="col t-r">运费<span class="f-red"><{$order.shipping.cost_shipping|cur_odr:$order.currency}></span>元</div>
-                </div>
-            </span>
-        </div>
-    </div>
-    <div class="section">
-        <div class="d-line c-fix">
-            <span class="l-k">支付方式：</span>
-            <span class="l-v"><{$order.payinfo.pay_app_id|pay_name}></span>
-        </div>
-    </div>
-    <div class="section">
-        <div class="d-line">
-            <span class="k">商品清单：</span>
-        </div>
-        <{if $prepare.prepare_type != 'prepare'}>
-            <div class="pre ob">
-                <div class="d-line c-fix" id="J_sel_pre">
-                    优惠：
-                    <span class="pre-list">
-                        <{foreach from=$order.order_pmt item=item}>
-                        <span class="icon red">
-                            <{$item.pmt_tag}>
-                        </span>
-                        <{/foreach}>
-                        <{foreach from=$order.goods_pmt item=item}>
-                        <{foreach from=$item item=goodpro}>
-                        <span class="icon red">
-                            <{$goodpro.pmt_tag}>
-                        </span>
-                        <{/foreach}>
-                        <{/foreach}>
-                    </span>
-                    <i class="arr down"></i>
-                </div>
-                <div class="pre-info hide" id="J_pre_info">
-                    <{if count($order.order_pmt)>0}>
-                    <div class="pre-type">订单优惠</div>
-                    <div class="box">
-                        <{foreach from=$order.order_pmt item=item}>
-                        <span class="col f-red">[<{$item.pmt_tag}>]</span>
-                        <span class="col"><{$item.pmt_describe}></span>
-                        <{/foreach}>
-                    </div>
-                    <{/if}>
-                    <{if count($order.goods_pmt)>0}>
-                    <div class="pre-type">商品优惠</div>
-                    <div class="box">
-                        <{foreach from=$order.goods_pmt item=item}>
-                        <{foreach from=$item item=goodpro}>
-                        <span class="col f-red">[<{$goodpro.pmt_tag}>]</span>
-                        <span class="col"><{$goodpro.pmt_describe}></span>
-                        <{/foreach}>
-                        <{/foreach}>
-                    </div>
-                    <{/if}>
-                </div>
-            </div>
-        <{/if}>
-
-<{if count($order.goods_items) > 0}>
-<{foreach from=$order.goods_items item=goods name="order_items"}>
-<!-- 商品 -->
-<{if $goods.product}>
-<ul class="pt-list">
-    <li class="pt-h-item c-fix">
-    <a href="<{$goods.product.link_url}>" class="pt-h-link">
-        <div class="pt-h-img"><img src="<{$goods.product.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>" /></div>
-        <div class="pt-h-info">
-            <div class="pt-h-name">
-                <{$goods.product.name}>
-            </div>
-            <div class="pt-h-other">
-                <{foreach from=$goods.product.minfo item=minfo key=name}>
+                         <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.begin_time_final && $prepare.nowtime < $prepare.end_time_final && $prepare.status=='true'
+                        }>
+                          <{$order.total_amount-$prepare.preparesell_price|cur:$order.currency}>
+                        <{/if}>
+                    </span></li>
+<li class="am-padding">已付金额<span class="am-fr  am-text-warning" ><{$order.payed|cur:$order.currency}></span></li>
+</ul>
+</div>
+<h4 class="am-padding">商品清单（共<{$order.itemnum}>件商品）</h4>
+   <ul class="am-list">
+      <!--缩略图在标题左边-->
+      <!-- goods -->
+                <{if $order.goods_items}>
+                    <{foreach from=$order.goods_items item=item_goods name=goods_item}>
+      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+        <div class="am-u-sm-4 am-list-thumb">
+		<a href='<{$item_goods.product.link_url}>' title="<{$item_goods.product.quantity}>--<{$item_goods.product.name}>">
+                            <img src='<{$item_goods.product.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>' />
+                            </a></div>
+        <div class="am-u-sm-8 am-list-main" style="width:40%; float:right; color:#999999">
+          <h3 class="am-list-item-hd">
+            <a style=" color:#999999" href="#"><{$item_goods.product.name}></a>
+          </h3>
+          <div class="am-list-item-text"> <{foreach from=$item_goods.product.minfo item=minfo key=name}>
                     <{$minfo.label}>：<{$minfo.value}>
                 <{/foreach}>
-                <{if $goods.product.attr}>
-                    <{$goods.product.attr}>
-                <{/if}>
-            </div>
-            <div class="col2">
-                <div class="col price">
-                    <{$goods.product.amount|cur_odr:$order.currency}>
-                </div>
-                <div class="col t-r">
-                    数量：<{$goods.product.quantity}>
-                </div>
-            </div>
+                <{if $item_goods.product.attr}>
+                    <{$item_goods.product.attr}>
+                <{/if}> </div>
+                <div class="am-list-item-text"> 数量：<{$item_goods.product.quantity}> </div>
+		   <div style="clear:both; color:#FF0000;"><h1 style="float:left"><{$item_goods.product.amount|cur_odr:$order.currency}></h1></div> 
         </div>
-    </a>
-    </li>
-</ul>
-<{/if}>
-
-<!-- 配件 -->
-<{if $goods.adjunct_items}>
-<{foreach from=$goods.adjunct_items item=ajuncts name="ajunctsItem"}>
+                       
+      </li>
+      
+      <!-- 配件 -->
+<{if $item_goods.adjunct_items}>
+<{foreach from=$item_goods.adjunct_items item=ajuncts name="ajunctsItem"}>
 <ul class="pt-list">
     <li class="pt-h-item c-fix">
     <a href="<{$ajuncts.link_url}>" class="pt-h-link">
@@ -238,8 +175,8 @@
 
 <{if $prepare.prepare_type != 'prepare'}>
 <!-- 赠送赠品 -->
-<{if $goods.gift_items}>
-<{foreach from=$goods.gift_items item=gifts name="giftsItem"}>
+<{if $item_goods.gift_items}>
+<{foreach from=$item_goods.gift_items item=gifts name="giftsItem"}>
 <ul class="pt-list">
     <li class="pt-h-item c-fix">
     <a href="#" class="pt-h-link">
@@ -271,112 +208,51 @@
 <{/foreach}>
 <{/if}>
 <{/if}>
+      
+      <{/foreach}>
+      <{/if}>
+    </ul>
+    
+    
+    <div style="float:left; width:100%;" >
+  <div class="am-panel-hd" style="float:right; width:100%;background:#CCCCCC;">
 
-<{/foreach}>
-<{/if}>
 
-
-<{if $prepare.prepare_type != 'prepare'}>
-<!-- 赠品 -->
-<{if $order.gift_items}>
-<{foreach from=$order.gift_items item="item" key="key"}>
-<ul class="pt-list">
-    <li class="pt-h-item c-fix">
-    <a href="#" class="pt-h-link">
-        <div class="pt-h-img"><img src="<{$gifts.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>" /></div>
-        <div class="pt-h-info">
-            <div class="pt-h-name">
-                <{$item.name}>
-            </div>
-            <div class="pt-h-other">
-                
-            </div>
-            <div class="col2">
-                <div class="col price">
-                    <{$item.amount|cur_odr:$order.currency}>
-                </div>
-                <div class="col t-r">
-                    数量：<{$item.nums}>
-                </div>
-            </div>
-        </div>
-    </a>
-    </li>
-</ul>
-<{/foreach}>
-<{/if}>
-<{/if}>
-
-<!-- 其他 -->
-<{if $order.extends_items}>
-<{if count($order.goods_items) <= 0}>
-<{foreach from=$order.extends_items item="aExtends"}>
-    <{$aExtends}>
-<{/foreach}>
-<{/if}>
-<{/if}>
-
-    </div>
-    <div class="section">
-        <div class="d-line c-fix">
-            <span class="l-k">订单留言：</span>
-            <span class="l-v">
-                <{if $order.memo}>
-                <{$order.memo}>
-                <{else}>
-                无
+<{if $order.payinfo.pay_app_id != '-1'}>
+<{if ($order.pay_status == '0' || $order.pay_status == '3') && $order.status != 'dead' && $order.status != 'finish'}>    
+<{if $order.payinfo.pay_app_id != 'offline'}>
+                <{if $prepare.prepare_type != 'prepare'}>
+                      <a href="<{link app=b2c ctl=wap_paycenter act=index arg0=$order.order_id}>">
+                        <button type="button" class="am-btn am-btn-warning am-fr">去付款</button>
+                        <i class="arr right"></i>
+                      </a>
                 <{/if}>
-            </span>
-        </div>
-    </div>
-    <div class="section">
-        <div class="d-line">
-            <span class="k">
-                商品金额：
-            </span>
-            <span class="v">
-                <div class="price">
-                    <{$order.cost_item|cur_odr:$order.currency}>
-                </div>
-            </span>
-        </div>
-        <div class="d-line">
-            <span class="k">
-                运费：
-            </span>
-            <span class="v">
-                <div class="price">
-                    <{$order.shipping.cost_shipping|cur_odr:$order.currency}>
-                </div>
-            </span>
-        </div>
-        <div class="d-line">
-            <span class="k">
-                优惠金额：
-            </span>
-            <span class="v">
-                <div class="price">
-                    -<{$order.pmt_order|cur_odr:$order.currency}>
-                </div>
-            </span>
-        </div>
-        <div class="d-line total">
-            <span class="k">
-                总金额：
-            </span>
-            <span class="v">
-                <div class="price">
-                    <{$order.total_amount|cur_odr:$order.currency}>
-                </div>
-            </span>
-        </div>
-    </div>
+                <{if $prepare.prepare_type == 'prepare' && $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.end_time  && $order.pay_status=='0' && $prepare.status=='true'}>
+                      <a href="<{link app=b2c ctl=wap_paycenter act=index arg0=$order.order_id}>">
+                        <button type="button" class="am-btn am-btn-warning am-fr">去付订金</button>
+                        <i class="arr right"></i>
+                      </a>
+                <{/if}>
+                <{if $prepare.prepare_type == 'prepare'&& $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.begin_time_final  && $order.pay_status=='3' && $prepare.status=='true'}>
+                        等待支付尾款
+                        <i class="arr right"></i>
+                <{/if}>
+                <{if $prepare.prepare_type == 'prepare'&& $prepare.nowtime > $prepare.begin_time_final && $prepare.nowtime < $prepare.end_time_final  && $order.pay_status=='3' && $prepare.status=='true'}>
+                        支付尾款
+                        <i class="arr right"></i>
+                <{/if}>
+                <{if $prepare.prepare_type == 'prepare'&& $prepare.nowtime > $prepare.end_time_final && $prepare.status=='true'}>
+                        活动结束
+                        <i class="arr right"></i>
+                <{/if}>
+
+            <{else}>
+              <a href="<{link app=b2c ctl='wap_member' act='add_order_msg' arg0=$order.order_id arg1='1'}>">
+                <button type="button" class="am-btn am-btn-default am-fr">我已经付款</button>
+                <i class="arr right"></i>
+              </a>
+            <{/if}>
+            <{/if}>
+            <{/if}>
+  </div>
 </div>
-<script>
-    (function(){
-        $('#J_sel_pre').bind('click',function(e){
-            $('#J_pre_info').toggleClass('hide');
-            $(this).find('.pre-list').toggleClass('hide');
-        });
-    })();
-</script>

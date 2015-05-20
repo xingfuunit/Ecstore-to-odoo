@@ -139,10 +139,10 @@ class b2c_ctl_wap_passport extends wap_frontpage{
             $this->splash('failed',null,$msg,'','',true);exit;
         }
 
-        if(kernel::single('b2c_service_vcode')->status() && empty($_POST['verifycode'])){
+        /* if(kernel::single('b2c_service_vcode')->status() && empty($_POST['verifycode'])){
             $msg = app::get('b2c')->_('请输入验证码!');
             $this->splash('failed',null,$msg,'','',true);exit;
-        }
+        } */
 
         $member_id = kernel::single('pam_passport_site_basic')->login($userData,$_POST['verifycode'],$msg);
         if(!$member_id){
@@ -466,22 +466,33 @@ class b2c_ctl_wap_passport extends wap_frontpage{
 
     public function resetpassword(){
         $this->check_login();
-        $userVcode = kernel::single('b2c_user_vcode');
-        $vcodeData = $userVcode->get_vcode($_POST['account'],'forgot');
-        $key = $userVcode->get_vcode_key($_POST['account'],'forgot');
-        if($_POST['account'] !=$vcodeData['account']  || $_POST['key'] != md5($vcodeData['vcode'].$key) ){
-            $msg = app::get('b2c')->_('页面已过期,请重新找回密码');
-            $this->splash('failed',null,$msg,'','',true);exit;
+        
+        if( !$_POST['mobile'] ){
+        	$msg = app::get('b2c')->_('请填写正确的手机号码');
+        	$this->splash('failed',null,$msg,'','',true);
         }
-
+        
+        $member_id = $this->userObject->get_member_id_by_username($_POST['mobile']);
+        if(!$member_id){
+        	$url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_passport','act'=>'lost'));
+        	$msg = app::get('b2c')->_('该账号不存在，请检查');
+        	$this->splash('error',null,$msg,'','',true);
+        }
+        
         if( !$this->userPassport->check_passport($_POST['login_password'],$_POST['psw_confirm'],$msg) ){
-            $this->splash('failed',null,$msg,'','',true);exit;
-        } 
-
-        $member_id = $this->userObject->get_member_id_by_username($_POST['account']);
+            $this->splash('error',null,$msg,'','',true);
+        }
+        
+        $send_type = $_POST['send_type'];
+        $vcodeData = kernel::single('b2c_user_vcode')->verify($_POST[$send_type.'vcode'],$_POST[$send_type],'forgot');
+        if( !$vcodeData ){
+        	$msg = app::get('b2c')->_('验证码错误');
+        	$this->splash('failed',null,$msg,'','',true);
+        }
+        
         if( !$this->userPassport->reset_passport($member_id,$_POST['login_password']) ){
             $msg = app::get('b2c')->_('密码重置失败,请重试');
-            $this->splash('failed',null,$msg,'','',true);
+            $this->splash('error',null,$msg,'','',true);
         }
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_passport','login'));
         $msg = app::get('b2c')->_('新密码设置成功，请用新密码登录');

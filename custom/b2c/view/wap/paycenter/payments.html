@@ -1,54 +1,47 @@
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <div class="a-name">
-            订单付款
-        </div>
-    </div>
-    </header>
-    <{if $newOrder == 'true'}>
-    <div class="section">
-        <div class="msg">
-            <div class="checkout-success">
-                订单已经提交成功请尽快付款
-            </div>
-        </div>
-    </div>
-    <{/if}>
-    <form action="<{$form_action}>" method="post" id="paycenter_form">
-        <input type="hidden" name="payment[order_id]" value="<{$order.order_id}>">
-        <input type="hidden" name="payment[combination_pay]" value="false">
-        <input type="hidden" name="payment[def_pay][cur_money]" value="<{$order.cur_money}>">
-        <input type="hidden" name="payment[def_pay][pay_app_id]" value="<{$order.payinfo.pay_app_id}>">
-        <input type="hidden" name="payment[memo]" value="<{$order.memo}>">
-        <div class="section">
-            <div class="d-line c-fix">
-                <div class="l-k bold">付款方式：</div>
-                <div class="l-v">
-                    <div class="col2">
-                        <div class="col">
-                            <div>
-                            <span id="J_defpay"><{$order.payinfo.pay_app_id|payname}></span>
-                            <!-- 预存款支付 -->
-                            <{if $order.payinfo.pay_app_id=='deposit'}>
-                                ,余额：<span class="price"><{$deposit_money|cur_odr:$order.currency}></span>
-                                <input type="hidden" name="payment[combination_pay]" value="false">
-                                <{if $deposit_money-$order.total_amount < 0}>
-                                    <em>您需要为<a href="<{link app=b2c ctl=wap_member act=deposit}>" class="btn red">预存款充值</a></em>
-                                <{/if}>
-                            <{/if}>
-                            </div>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>
+    </a>
+	</div>
+  <h1 class="am-header-title">
+    <a href="#title-link">订单提交</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>
+    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+	</div>
+</header>
 
-                            <!-- 非货到付款或线下支付显示去付款 -->
-                            <{if $order.promotion_type!='prepare'}>
+<div style=" padding:10px;">
+<p>付款方式：<{$order.payinfo.pay_app_id|payname}></p>
+<form action="<{$form_action}>" method="post" id="paycenter_form">
+<input type="hidden" name="payment[order_id]" value="<{$order.order_id}>">
+<input type="hidden" name="payment[combination_pay]" value="false">
+<input type="hidden" name="payment[def_pay][cur_money]" value="<{$order.cur_money}>">
+<input type="hidden" name="payment[def_pay][pay_app_id]" value="<{$order.payinfo.pay_app_id}>">
+<input type="hidden" name="payment[memo]" value="<{$order.memo}>">
+<{if $order.payinfo.pay_app_id=='deposit'}>
+,余额：<span class="price"><{$deposit_money|cur_odr:$order.currency}></span>
+<input type="hidden" name="payment[combination_pay]" value="false">
+<{if $deposit_money-$order.total_amount < 0}>
+<em>您需要为<a href="<{link app=b2c ctl=wap_member act=deposit}>" class="btn red">预存款充值</a></em>
+<{/if}>
+<{/if}>
+
+<{if $order.promotion_type!='prepare'}>
                                 <{if !($order.payinfo.pay_app_id == '-1' || $order.payinfo.pay_app_id == 'offline')}>
                                     <{if $order.payinfo.pay_app_id == 'deposit'}>
                                         <{if $order.cur_money - $deposit_money <= 0}>
-                                            <button type="submit" class="btn red">去付款</button>
+                                        <p><button type="submit" class="am-btn am-btn-danger am-round btn red">去付款</button></p>
                                         <{/if}>
                                     <{else}>
                                         <{if $order.payinfo.platform =='iscommon' || $order.payinfo.platform == $device_is_wx ? 'iswx' :'iswap'}>
-                                            <button type="submit" class="btn red">去付款</button>
+                                            <p><button type="submit" class="am-btn am-btn-danger am-round btn red">去付款</button></p>
                                         <{else}>
                                             <label class="f-red">(支付方式不支持手机版，请选择其他支付方式支付！)</label>
                                         <{/if}>
@@ -64,16 +57,16 @@
                                                 活动还没到时间!
                                             <{/if}>
                                             <{if $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.end_time  && $order.pay_status=='0' && $prepare.status=='true'}>
-                                                <button type="submit" class="btn red">去付订金</button>
+                                                <p><button type="submit" class="am-btn am-btn-danger am-round btn red">去付订金</button></p>
                                             <{/if}>
                                              <{if $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.begin_time_final  && $order.pay_status=='3' && $prepare.status=='true'}>
-                                                <button type="submit" class="btn red" disabled="false">等待支付尾款</button>
+                                                <p><button type="submit" class="am-btn am-btn-danger am-round btn red" disabled="false">等待支付尾款</button></p>
                                             <{/if}>
                                             <{if $prepare.nowtime > $prepare.begin_time_final && $prepare.nowtime < $prepare.end_time_final  && $order.pay_status=='3' && $prepare.status=='true'}>
-                                                <button type="submit" class="btn red">支付尾款</button>
+                                                <p><button type="submit" class="am-btn am-btn-danger am-round btn red">支付尾款</button></p>
                                             <{/if}>
                                             <{if $prepare.nowtime > $prepare.end_time_final && $prepare.status=='true'}>
-                                                <button type="submit" disabled="false" class="btn red">活动结束</button>
+                                                <p><button type="submit" class="am-btn am-btn-danger am-round btn red" disabled="false">活动结束</button></p>
                                             <{/if}>
                                         <{/if}>
                                     <{else}>
@@ -82,21 +75,21 @@
                                                 活动还未开始!
                                             <{/if}>
                                             <{if $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.end_time  && $order.pay_status=='0' && $prepare.status=='true'}>
-                                                <button type="submit" class="btn red">去付订金</button>
+                                                <p><button type="submit" class="am-btn am-btn-danger am-round btn red">去付订金</button></p>
                                             <{/if}>
                                              <{if $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.begin_time_final  && $order.pay_status=='3' && $prepare.status=='true'}>
-                                                <button type="submit" class="btn red" disabled="false">等待支付尾款!</button>
+                                                <p><button type="submit" class="am-btn am-btn-danger am-round btn red" disabled="false">等待支付尾款</button></p>
                                             <{/if}>
 
                                             <{if $prepare.nowtime > $prepare.end_time && $prepare.nowtime < $prepare.begin_time_final  && $order.pay_status=='0' && $prepare.status=='true'}>
-                                                <button type="submit" class="btn red" disabled="false">订金支付时间已过！</button>
+                                                <p><button type="submit" class="am-btn am-btn-danger am-round btn red" disabled="false">订金支付时间已过！</button></p>
                                             <{/if}>
 
                                             <{if $prepare.nowtime > $prepare.begin_time_final && $prepare.nowtime < $prepare.end_time_final  && $order.pay_status=='3' && $prepare.status=='true'}>
-                                                <button type="submit" class="btn red" >支付尾款</button>
+                                                <p><button type="submit" class="am-btn am-btn-danger am-round btn red">支付尾款</button></p>
                                             <{/if}>
                                             <{if $prepare.nowtime > $prepare.end_time_final && $prepare.status=='true'}>
-                                                <button type="submit" class="btn red" disabled="false">活动结束</button>
+                                                <p><button type="submit" class="am-btn am-btn-danger am-round btn red" disabled="false">活动结束</button></p>
                                             <{/if}>
                                         <{else}>
                                             <label class="f-red">(支付方式不支持手机版，请选择其他支付方式支付！)</label>
@@ -104,87 +97,16 @@
                                     <{/if}>
                                 <{/if}>
                             <{/if}>
-                        </div>
-                        <div class="col t-r">
+
+</form>
                             <{if $order.payinfo.pay_app_id != '-1'}>
-                              <span id="J_pay_change">
-                                更换支付方式
-                              <i class="arr right"></i>
-                              </span>
+                            <p><a href="javascript:void(0);" id="J_pay_change">更换支付方式></a></p>
                             <{/if}>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    <!--付款完成显示-->
-<!--    <div class="section">
-        <div class="col2">
-            <div class="col">
-                订单：<{$order.order_id}>
-            </div>
-            <div class="col">
-                应付金额：
-                <span class="price">
-                    <{if $order.promotion_type!='prepare'}>
-                        <{$order.cur_money|cur:$order.currency}>
-                    <{/if}>
-                    预售信息的判断
-                    <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.end_time  && $order.pay_status=='0' && $prepare.status=='true' && $prepare.promotion_price > $prepare.preparesell_price
-                    }>
-                      <{$prepare.preparesell_price|cur:$order.currency}>
-                    <{/if}>
-
-                    <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.end_time  && $order.pay_status=='0' && $prepare.status=='true' && $prepare.promotion_price == $prepare.preparesell_price
-                    }>
-                       <{$order.cur_money|cur:$order.currency}>
-                    <{/if}>
-
-                    <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.begin_time && $prepare.nowtime < $prepare.begin_time_final && $order.pay_status=='3'
-                    && $prepare.status=='true'
-                    }>
-                      等待支付尾款!
-                    <{/if}>
-
-                    <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.end_time && $prepare.nowtime < $prepare.begin_time_final && $order.pay_status=='0'
-                    && $prepare.status=='true'
-                    }>
-                      订金支付时间已过！
-                    <{/if}>
-
-                    <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.end_time_final && ($order.pay_status=='3' || $order.pay_status=='0')
-                    && $prepare.status=='true'
-                    }>
-                      尾款支付时间已过！
-                    <{/if}>
-
-                     <{if $order.promotion_type=='prepare' && $prepare.nowtime > $prepare.begin_time_final && $prepare.nowtime < $prepare.end_time_final && $prepare.status=='true'
-                    }>
-                      <{$order.total_amount-$prepare.preparesell_price|cur:$order.currency}>
-                    <{/if}>
-                </span>
-            </div>
-        </div>
-    </div>-->
-    <!--付款完成显示 end-->
-    <div class="section">
-        <table width="100%" class="d-table">
-            <col width="100"/>
-            <col width=""/>
-            <tr>
-                <td class="k">
-                    订单号：
-                </td>
-                <td class="v">
-                    <{$order.order_id}>
-                </td>
-            </tr>
-            <tr>
-                <td class="k">应付金额：</td>
-                <td>
-                    <span class="price">
-                        <{if $order.promotion_type!='prepare'}>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+<p>订单号：<{$order.order_id}></p>
+<p>应付金额：
+<span class="am-text-danger">
+<{if $order.promotion_type!='prepare'}>
                             <{$order.cur_money|cur:$order.currency}>
                         <{/if}>
                          <!--预售信息的判断-->
@@ -220,54 +142,31 @@
                         }>
                           <{$order.total_amount-$prepare.preparesell_price|cur:$order.currency}>
                         <{/if}>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="k">已付金额：</td>
-                <td>
-                    <span class="price">
-                        <{$order.payed|cur:$order.currency}>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="k">订单商品数量：</td>
-                <td class="v">
-                    <{$order.quantity}>
-                </td>
-            </tr>
-            <tr>
-                <td class="k">收货信息：</td>
-                <td class="v">
-                    收货人:<{$order.consignee.name}><br />
-                    地区:<{$order.consignee.area|ship_area}><br />
-                    详细地址:<{$order.consignee.addr}><br />
-                    <{if $order.consignee.mobile}>手机:<{$order.consignee.mobile}><br /><{/if}>
-                    <{if $order.consignee.telephone}>电话:<{$order.consignee.telephone}><br /><{/if}>
-                    <{if $order.consignee.zip}>邮编：<{$order.consignee.zip}><br /><{/if}>
-                    配送时间:<{$order.consignee.r_time}>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="section">
-        <div class="d-line c-fix">
-            <div class="l-k">您还可以：</div>
-            <div class="l-v">
-                <a href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id}>">
-                    查看订单
-                    <i class="arr right"></i>
-                </a>
-                &nbsp;&nbsp;
-                <a href="<{link app='wap' ctl='default' act='index' }>">
-                    继续购物
-                    <i class="arr right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
+</span></p>
+<p>已付金额：<span class="am-text-danger"><{$order.payed|cur:$order.currency}></span></p>
+<p>订单商品数量：<{$order.quantity}></p>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"
+/>
+<p>收货信息：
+<ul>
+ <li>收货人：<{$order.consignee.name}></li>
+ <li>地区：<{$order.consignee.area|ship_area}></li>
+ <li>详细地址：<{$order.consignee.addr}></li>
+ <{if $order.consignee.mobile}><li>手机:<{$order.consignee.mobile}></li><{/if}>
+ <{if $order.consignee.telephone}><li>电话:<{$order.consignee.telephone}></li><{/if}>
+ <{if $order.consignee.zip}><li>邮编：<{$order.consignee.zip}></li><{/if}>
+ <li>配送时间：<{$order.consignee.r_time}></li>
+</ul>
+</p>
+</div>  
+
+<div class="am-panel-hd" style="background:#CCCCCC; border-top:1px solid #aaaaaa; width:100%">
+<div>
+您还可以：<a href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id}>">查看订单 <i class="am-icon-chevron-right"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="<{link app='wap' ctl='default' act='index' }>">继续购物 <i class="am-icon-chevron-right"></i></a>
 </div>
+</div>
+
+
 <script>
 
     (function(){
