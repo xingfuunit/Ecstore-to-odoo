@@ -8,7 +8,6 @@
     <select data-level = "4" style="display:none"></select>
 </span>
 
-
 <script type="text/javascript">
 var path ='<{$env.statics_host_url}>/ectools/statics/js/';
 var data_path ='<{$env.base_url}>/data/misc/';
@@ -18,17 +17,15 @@ var str = container.find('input').value;
 var sels = container.find('select');
 
 
-
-
-
-
 $(function(){
+    $(container).on('change','select',function(){
 
-    $(sels).change(function(){
+        if( $(this).find('option:selected').val()==0 )
+            hideNextSelect(this);
+        else
+            showNextSelect(this);
 
-        fillNextSelect(this);
-        $(this).show();
-
+        setRegionData(container);
     });
     
     sels[0].innerHTML=genOptions(0);

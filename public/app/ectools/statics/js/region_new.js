@@ -21,12 +21,50 @@ function genOptions(level,key){
     }
 
     return html;
-
 }
 
-function fillNextSelect(select){
+function showNextSelect(select){
     selectedOption = $(select).find('option:selected');
     var nextkey = $(selectedOption).attr('data-key');
+    if(!nextkey)
+        return;
     var nextlevel = parseInt($(select).attr('data-level')) + 1;
-    $(select).next().innerHTML = genOptions(nextlevel,nextkey);
+    $(select).next().html( genOptions(nextlevel,nextkey) ).show();
+}
+
+function hideNextSelect(select){
+    $(select).nextAll().html('').hide();
+}
+
+function setRegionData($container){
+    var ipt = $container.find('input');
+    var pack = $(ipt).attr('package');
+    var sels = container.find('select');
+    var regionArr = [];
+    var text = '';
+    var value = 0;
+    $.each(sels,function(k,v){
+        var curVal = $(v).find('option:selected').val();
+        if(curVal == '0' || curVal == undefined)
+            return false;
+
+        regionArr.push( $(v).find('option:selected').html() );
+        value=curVal;
+    });
+
+    $(ipt).val( pack+':'+regionArr.join('/')+':'+value );
+    
+}
+
+function checkRegionSelect($container){
+    var sels = container.find('select');
+    var status = true;
+
+    $.each(sels,function(k,v){
+        if(!$(v).is(':hidden') && $(v).find('option:selected').val() == '0'){
+            status = false;
+            return false;
+        }
+    });
+    return status;
 }
