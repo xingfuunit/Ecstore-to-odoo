@@ -1,12 +1,10 @@
 <{if count($shippings) > 0}>
-<li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-<div class="ps_function">
-<a style="color:#CCCCCC" href="/wap/cart-checkout_wrap.html?show=payment_change" class="am-list-item-hd">
+<li class="am-g am-list-item-desced" style="color:#CCCCCC" >
+<a style="color:#CCCCCC" href="javascript:;" id="P_L" class="am-list-item-hd">
 <{if $arr_def_payment}><{$arr_def_payment.app_display_name}><{else}>
 请选择支付方式
 <{/if}>
 <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>   
-</div>   
 <input name="payment[pay_app_id]" value='{"pay_app_id":"<{$arr_def_payment.pay_app_id}>","payment_name":"<{$arr_def_payment.app_display_name}>"}' type="hidden"/>
 <input type="hidden" name="payment[currency]" value='<{$currency}>' />
 </li>

@@ -32,25 +32,7 @@ border-left-color: #5eb95e !important;
   text-align: center;
   border-bottom: 1px solid #bfbfbf;
 }
-.paiing {
-  padding: 5px 10px;
-  overflow: hidden;
-  margin-top: 20px;
-}
-.paiing-span {
-  padding: 4px 10px;
-  margin: 10px 5px;
-  border: 1px solid #cbcbcb;
-  cursor: pointer;
-  float: left;
-}
-.invoice {
-  padding: 8px 0px;
-  border: 1px solid #cfcfcf;
-  overflow: hidden;
-  margin: 10px 0;
-  color: #333;
-}
+
 #J_mask {
   position: absolute;
   top: 0;
@@ -72,17 +54,7 @@ border-left-color: #5eb95e !important;
   -webkit-border-radius: 14px;
   -moz-border-radius: 14px;
 }
-.invoice_submit {
-  margin-top: 20px;
-  background-color: #f08300;
-  display: block;
-  color: #fff;
-  width: 100%;
-  padding: 5px 0;
-  border-radius: 4px;
-  display: block;
-  text-align: center;
-}
+
 .no-border {
   border: 0;
   padding: 0px 10px;
