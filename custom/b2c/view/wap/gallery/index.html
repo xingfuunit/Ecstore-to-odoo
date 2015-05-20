@@ -19,14 +19,15 @@
 
 <!--搜索开始-->
 <div class="am-list-news am-list-news-default am-no-layout" data-am-widget="list_news">
-<form action="" class="am-form am-form-inline">
-  <div class="am-form-group am-form-icon">
-    <i class="am-icon-search"></i>
-    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字">
-  </div>  
-</form>
+	<form action="<{link app=b2c ctl=wap_search act=result}>" class="am-form am-form-inline" method="post" enctype="multipart/form-data">
+	  <div class="am-form-group am-form-icon">
+	    <i class="am-icon-search"></i>
+	    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字" name="search_keywords">
+	  </div>  
+	</form>
 </div>
 <!--搜索结束-->
+
 <div style=" color:#1d88a0; font-size:14px; text-indent:10px;">最热关键字：鲜果 龙虾 澳洲鲍鱼  阿拉斯加帝王蟹  </div>
 <br>
 <!-- List -->
@@ -35,75 +36,8 @@
   
   	<{foreach from=$pagetotal_arr item=pa key=key}>
     <li>
-	    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
-	    	
-			<li>
-			    <div class="am-gallery-item">
-			      <a href="products.html">
-			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-			        <div class="am-gallery-desc" >
-					 <h1 style="color:#FF0000;float:left">￥35.00</h1>
-					 <a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
-			      </a>
-			    </div>
-			  </li>
-			  <li>
-			    <div class="am-gallery-item">
-			      <a href="products.html">
-			       <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-			        <div class="am-gallery-desc" >
-					<h1 style="color:#FF0000;float:left">￥35.00</h1>
-					 <a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
-			      </a>
-			    </div>
-			  </li>
-			  <li>
-			    <div class="am-gallery-item">
-			      <a href="products.html">
-			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-			        <div class="am-gallery-desc" >
-					<h1 style="color:#FF0000;float:left">￥35.00</h1>
-					<a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
-			      </a>
-			    </div>
-			  </li>
-			  <li>
-			    <div class="am-gallery-item">
-			      <a href="products.html">
-			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro02.png">        
-					<h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-			        <div class="am-gallery-desc" >
-					<h1 style="color:#FF0000;float:left">￥35.00</h1>
-					<a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
-			      </a>
-			    </div>
-			  </li>
-			    <li>
-			    <div class="am-gallery-item">
-			      <a href="products.html">
-			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro02.png">
-			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-			        <div class="am-gallery-desc" >
-					<h1 style="color:#FF0000;float:left">￥35.00</h1>
-					<a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
-			      </a>
-			    </div>
-			  </li>
-			  <li>
-			    <div class="am-gallery-item">
-			      <a href="products.html">
-			        <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pro01.png">
-			        <h3 class="am-gallery-title">新疆库尔勒香梨4个</h3>
-			        <div class="am-gallery-desc" >
-					<h1 style="color:#FF0000;float:left">￥35.00</h1>
-					<a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
-			      </a>
-			    </div>
-			  </li>
-			
+	    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default  glist" data-am-gallery="{ pureview:flase }">
+			<div class="roll_loding">正在加载...</div>
 			
 		</ul>
     </li>
@@ -111,7 +45,9 @@
 	
   </ul>
 </div>
-
+<div><span class="show_cur_page">1</span>/<{$pagetotal}></div>
+<div id="cur_cat" style="display:none;"><{$cat_id}></div>
+<div id="scontent" style="display:none;"><{$scontent}></div>
 <!-- Gallery -->
 
 
@@ -148,57 +84,56 @@ $(function (){
 	$('#my-slider').flexslider({
 		slideshow: false,  
 		touch: true,
-		controlNav: true,
+		controlNav: false,
 		
-		start: function(){
-			console.log('start');
-			get_next_page();
+		start: function(slider){
+			console.log('before');
+			var page = slider.currentSlide +1 ;
+			get_next_page(page);
 			
 		},
-		before: function(){
-			get_next_page();
+		after: function(slider){
+			console.log('after');
+			var page = slider.currentSlide +1 ;
+			get_next_page(page);
 		},
-
   });
   
   
-  function get_next_page(){
+  function get_next_page(page){
   	var roll_list = $(".am-slides").children("li");
 	
-//	console.log(roll_list);
-	
-	//获取当前页
-	var cur_page = 1;
-	for (var i=0; i<roll_list.length; i++){
-//		console.log(roll_list[i]);
-//		console.log(i);
-//		console.log(roll_list[i].className);
-		if(roll_list[i].className === 'am-active-slide'){
-			console.log(i);
-			cur_page = i;
-			break;
-		}
-	}
-//	console.log(cur_page);
-
-	
-	page = cur_page
-	
+	show_page(page);
+		
   	var url = '<{link app=b2c ctl=wap_gallery act=gallery_scroll_goods}>';
-//  	var page = 1;
-  	var pagetotal = 2;
-  	var total = 0;
-//  	var sear = location.search ? location.search.substr(1) : '';
-//  	var form_data = $('#j_form').length ? $('#j_form').serialize() : '';
 	var sear = '';
 	var form_data = '';
+	//商品分类搜索
+	var cur_cat = $('#cur_cat').html() ? $('#cur_cat').html() : 0;
+	var cat = 'cat_id='+cur_cat;
 	
-  	var params = ['showtype=all', 'page=' + page, sear, form_data].filter(function(d){
+	//商品关键字搜索
+	var scontent = $("#scontent").html();
+	var scontent = 'scontent='+scontent;
+	
+  	var params = ['showtype=all', 'page=' + page, cat, scontent].filter(function(d){
   		return d;
   	}).join('&');
-	
 	console.log(params);
 	
+	$.get(url, params, function(data){
+		
+			var obj = $('.glist');
+			
+			var is_show = $('.glist').eq(data.page).find('.roll_loding');
+			//没有加载过的才加载
+			if(is_show.data('is_show') !=0 ){
+				hid_load(obj.eq(data.page));
+				obj.eq(data.page).append(data.html);
+			}
+			
+			
+	}, 'json');
 	
 	
 //		$.get(url, params, function(data){
@@ -221,15 +156,21 @@ $(function (){
 //		}, 'json');
   }	
 	
-	  function show_load(){
-        $('#loading2').show();
-        $('#b-bg').show();
+	  function show_load(obj){
+        obj.children('.roll_loding').show();
+		
        }
 
-    function hid_load(){
-        $('#loading2').hide();
-        $('#b-bg').hide();
+    function hid_load(obj){
+        obj.children('.roll_loding').hide();
+		obj.children('.roll_loding').data('is_show',0);
     }
+	
+	function show_page(page){
+		console.log(page);
+		$(".show_cur_page").html(page);
+	}
+	
 
 });
 

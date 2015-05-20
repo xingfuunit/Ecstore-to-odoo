@@ -1,0 +1,16 @@
+<{if $goodsData}>
+	<{foreach from=$goodsData key=key item=goods_row}>
+		<li>
+		<div class="am-gallery-item">
+		  <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+		    <img src="<{$goods_row.image_default_id|storager:'s'}>">
+		    <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
+		    <div class="am-gallery-desc" >
+			 <h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
+			 <a href="#" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a></div>
+		  </a>
+		</div>
+		</li>
+	<{/foreach}>
+<{/if}>
+			  
