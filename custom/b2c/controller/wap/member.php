@@ -926,12 +926,16 @@ class b2c_ctl_wap_member extends wap_frontpage{
     /*
      *删除商品收藏
      * */
-     function ajax_del_fav($gid=null,$object_type='goods'){
+     function ajax_del_fav($object_type='goods'){
+     	$gid = intval($_POST['gid']);
+     	 
         if(!$gid){
-            $this->splash('error',null,app::get('b2c')->_('参数错误！'));
+          //  $this->splash('error',null,app::get('b2c')->_('参数错误！'));
+            $this->splash('error', null, app::get('b2c')->_('参数错误！'), '', '', true);
         }
         if (!kernel::single('b2c_member_fav')->del_fav($this->app->member_id,$object_type,$gid,$maxPage)){
-            $this->splash('error',null,app::get('b2c')->_('移除失败！'));
+         //   $this->splash('error',null,app::get('b2c')->_('移除失败！'));
+            $this->splash('error', null, app::get('b2c')->_('移除失败！'), '', '', true);
         }else{
             $this->set_cookie('S[GFAV]'.'['.$this->app->member_id.']',$this->get_member_fav($this->app->member_id),false);
 
@@ -939,7 +943,8 @@ class b2c_ctl_wap_member extends wap_frontpage{
             if ($current_page > $maxPage){
                 $current_page = $maxPage;
                 $reload_url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_member','act'=>'favorite','args'=>array($current_page)));
-                $this->splash('success',$reload_url,app::get('b2c')->_('成功移除！'));
+             //   $this->splash('success',$reload_url,app::get('b2c')->_('成功移除！'));
+                $this->splash('success', null, app::get('b2c')->_('成功移除！'), '', '', true);
             }
             $aData = kernel::single('b2c_member_fav')->get_favorite($this->app->member_id,$this->member['member_lv'],$current_page);
             $aProduct = $aData['data'];
@@ -954,10 +959,24 @@ class b2c_ctl_wap_member extends wap_frontpage{
             $this->pagedata['favorite'] = $aProduct;
             $this->pagedata['defaultImage'] = $imageDefault['S']['default_image'];
             $reload_url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_member','act'=>'favorite'));
-            $this->splash('success',$reload_url,app::get('b2c')->_('成功移除！'));
+            //$this->splash('success',$reload_url,app::get('b2c')->_('成功移除！'));
+            $this->splash('success', null, app::get('b2c')->_('成功移除！'), '', '', true);
         }
     }
-
+    /*
+     *删除全部商品收藏
+     * */
+    function ajax_del_all_fav() {
+        if (!kernel::single('b2c_member_fav')->del_fav($this->app->member_id,'goods')){
+            $this->splash('error', null, app::get('b2c')->_('移除失败！'), '', '', true);
+        }else{
+        	
+            $this->set_cookie('S[GFAV]'.'['.$this->app->member_id.']',$this->get_member_fav($this->app->member_id),false);
+            $this->splash('success', null, app::get('b2c')->_('成功移除！'), '', '', true);
+        }
+    }
+    
+	
     function ajax_fav() {
         $object_type = $_POST['type'];
         $goods_id = $_POST['gid'];
