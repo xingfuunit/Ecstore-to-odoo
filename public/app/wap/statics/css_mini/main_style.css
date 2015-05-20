@@ -82,3 +82,6 @@ border-left-color: #5eb95e !important;
   border: 0;
   padding: 0px 10px;
 }
+.act {
+  border-color: #900;
+}
