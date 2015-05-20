@@ -51,6 +51,17 @@
 <!-- Gallery -->
 
 
+<div id="modalAddToCart" class="am-modal am-modal-alert" tabindex="-1">
+	  <div class="am-modal-dialog">
+	    <div class="am-modal-bd">
+	    </div>
+	    <div class="am-modal-footer">
+	    	<span class="am-modal-btn" data-am-modal-confirm >进入购物车</span>
+	      	<span class="am-modal-btn" data-am-modal-cancel >继续购物</span>
+	    </div>
+	  </div>
+</div>
+
 <div id="CuPlayer"><div id="js_play" style="cursor:pointer;">
  <iframe id="js_ifr" scrolling="no" marginwidth="0" allowtransparency="allowtransparency" src="" marginheight="0" style="width: 270px; height: 150px; display:none" frameborder="0"></iframe></div>
 </div>
@@ -87,13 +98,13 @@ $(function (){
 		controlNav: false,
 		
 		start: function(slider){
-			console.log('before');
+			//console.log('before');
 			var page = slider.currentSlide +1 ;
 			get_next_page(page);
 			
 		},
 		after: function(slider){
-			console.log('after');
+			//console.log('after');
 			var page = slider.currentSlide +1 ;
 			get_next_page(page);
 		},
@@ -106,8 +117,6 @@ $(function (){
 	show_page(page);
 		
   	var url = '<{link app=b2c ctl=wap_gallery act=gallery_scroll_goods}>';
-	var sear = '';
-	var form_data = '';
 	//商品分类搜索
 	var cur_cat = $('#cur_cat').html() ? $('#cur_cat').html() : 0;
 	var cat = 'cat_id='+cur_cat;
@@ -135,28 +144,9 @@ $(function (){
 			
 	}, 'json');
 	
-	
-//		$.get(url, params, function(data){
-//			if (data && data.html) {
-//				$('.img_list').append(data.html);
-//				$('#page_total').text(data.total);
-//				total = data.total;
-//				pagetotal = data.pagetotal;
-//				hid_load();
-//				var img = $('.img_list img:first');
-//				img.attr('src', img.attr('img'));
-//				img.attr('img', '');
-//				$('.img_list li').scrollspy().on('inview:scrollspy:amui', _load_img);
-//				if (total > 0) {
-//					$('.scrollspy').scrollspy().on('inview:scrollspy:amui', function(){
-//						$(".return_div").show();
-//					});
-//				}
-//			}
-//		}, 'json');
   }	
 	
-	  function show_load(obj){
+	function show_load(obj){
         obj.children('.roll_loding').show();
 		
        }
@@ -167,7 +157,6 @@ $(function (){
     }
 	
 	function show_page(page){
-		console.log(page);
 		$(".show_cur_page").html(page);
 	}
 	
@@ -175,10 +164,7 @@ $(function (){
 });
 
 	
+	
 </script>
 
-<script>
-(function(){
-    
-})();
-</script>
+

@@ -27,14 +27,14 @@
 	  </ul>
 	</div>
 	
-	
 	<!--搜索开始-->
 	<div data-am-widget="list_news" class="am-list-news am-list-news-default">
-	<form action="" class="am-form">
+	<form action="<{link app=b2c ctl=wap_search act=result}>" class="am-form am-form-inline" method="post" enctype="multipart/form-data">
 	  <div class="am-form-group am-form-icon">
 	    <i class="am-icon-search"></i>
-	    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字">
-	  </div>
+	    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字" name="search_keywords">
+	  </div>  
+	</form>
 	</form></div>
 	<!--搜索结束-->
 	
@@ -95,9 +95,8 @@
 	<{/foreach}>
 	<!--广告结束-->
 	
-	<a href="products_normal_list.html" onClick="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt01.jpg"></a>
+	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_hs_cat.cat_id}>" onClick=""><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt01.jpg"></a>
 	<!-- List -->
-	
 	
 	
 	<!-- Gallery -->
@@ -111,15 +110,23 @@
 	        <div class="am-gallery-desc" >
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
-	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	      </a>
+		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+		  <form  style="display:none" class="formBuyNow">
+			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+			    <input id="stock" type="text" name="stock" value="" />
+			    <input id="limit_nums" type="text" name="limit_nums" value="" />
+			    <input type="text" name="response_json" value="1" />
+			</form>
 	    </div>
 	  </li>
 		<{/foreach}>
 	</ul>
 	
-	<a href="products_normal_list.html" onClick="products_normal_list.html"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt2.jpg"></a>
+	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xr_cat.cat_id}>" onClick=""><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt2.jpg"></a>
 	<!-- List -->
-	
 	
 	
 	<!-- Gallery -->
@@ -133,14 +140,23 @@
 	        <div class="am-gallery-desc" >
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
-	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	      </a>
+		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+		  <form  style="display:none" class="formBuyNow">
+			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+			    <input id="stock" type="text" name="stock" value="" />
+			    <input id="limit_nums" type="text" name="limit_nums" value="" />
+			    <input type="text" name="response_json" value="1" />
+			</form>
 	    </div>
 	  </li>
 	  <{/foreach}>
 	</ul>
 	
 	
-	<a href="#"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt03.jpg"></a>
+	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xg_cat.cat_id}>"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt03.jpg"></a>
 	<!-- List -->
 	
 	
@@ -156,7 +172,16 @@
 	        <div class="am-gallery-desc" >
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
-	      </a><a href="shopingcart.html" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+	      </a>
+		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+		  <form  style="display:none" class="formBuyNow">
+			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+			    <input id="stock" type="text" name="stock" value="" />
+			    <input id="limit_nums" type="text" name="limit_nums" value="" />
+			    <input type="text" name="response_json" value="1" />
+			</form>
 	    </div>
 	  </li>
 	  <{/foreach}>
@@ -181,7 +206,19 @@
 	  </div>
 	</div>
 	
+	<div id="modalAddToCart" class="am-modal am-modal-alert" tabindex="-1">
+	  <div class="am-modal-dialog">
+	    <div class="am-modal-bd">
+	    </div>
+	    <div class="am-modal-footer">
+	    	<span class="am-modal-btn" data-am-modal-confirm >进入购物车</span>
+	      	<span class="am-modal-btn" data-am-modal-cancel >继续购物</span>
+	    </div>
+	  </div>
+	</div>
+	
 	<!-- Navbar -->
+	<!--
 	<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
 	     id="">
 	  <ul class="am-navbar-nav am-cf am-avg-sm-4"  style="background:#309ab2 !important">
@@ -191,12 +228,13 @@
 	    <li> <a href="https://github.com/allmobilize/amazeui/issues"> <span class="am-icon-location-arrow"></span> <span class="am-navbar-label">Bug 反馈</span> </a> </li>
 	  </ul>
 	</div>
+	-->
 	
     <{wap_require file="block/footer.html"}>
 </body>
 </html>
 <script>
-    $('#J_buy_btn').on('click',function(e){
+    /*$('#J_buy_btn').on('click',function(e){
         var data = $('#buy_form').serialize();
         $.post($('#buy_form').attr('action'),data,function(re){
             if(re){
@@ -215,5 +253,39 @@
         });
 
         return false;
+    });
+	*/
+	
+	//加入购物车 操作
+	$('.btnAddToCart').click(function(){
+		var obj = $(this).siblings(".formBuyNow");
+        $.ajax({
+            url:'/wap/cart-add-goods.html',
+            data:obj.serialize()+'&mini_cart=1',
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success){
+					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
+                    $('#modalAddToCart').modal({
+						relatedTarget: this,
+							//进入购物车
+					      onConfirm: function(e) {
+					         window.location.href='/wap/cart.html';
+					      },
+						  	//继续购物
+					      onCancel: function(e) {
+					        return false;
+					      }
+						
+					});
+                }
+                else{
+					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
+                    $('#modalAddToCart').modal();
+                }
+
+            }
+        });
     });
 </script>
