@@ -1,7 +1,7 @@
 <span class="region" vtype="<{$params.vtype}>" id="<{$params.id}>">
     <input name="<{$params.name}>" package="<{$params.package}>" type="hidden" value="<{$params.value}>" />
 
-    <select data-level = "0"><option data-key="0" value="0">请选择</option></select>
+    <select data-level = "0" style="display:none"></select>
     <select data-level = "1" style="display:none"></select>
     <select data-level = "2" style="display:none"></select>
     <select data-level = "3" style="display:none"></select>
@@ -17,11 +17,20 @@ var callback = '<{$params.callback}>';
 var str = container.find('input').value;
 var sels = container.find('select');
 
-$.getScript(,function(){
-    // init region
-
-    // bind event
-});
 
 
+
+
+
+$(function(){
+
+    $(sels).change(function(){
+        // $('this').find('option:selected').
+
+
+    });
+    
+    sels[0].innerHTML=genOptions(0);
+    $(sels[0]).show();
+})
 </script>
