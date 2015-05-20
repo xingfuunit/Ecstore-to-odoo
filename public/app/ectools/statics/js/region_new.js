@@ -24,7 +24,9 @@ function genOptions(level,key){
 
 }
 
-function fillSelect(select,key){
-    level = $(select).attr('data-level');
-    select.innerHTML = genOptions(level,key);
+function fillNextSelect(select){
+    selectedOption = $(select).find('option:selected');
+    var nextkey = $(selectedOption).attr('data-key');
+    var nextlevel = parseInt($(select).attr('data-level')) + 1;
+    $(select).next().innerHTML = genOptions(nextlevel,nextkey);
 }
