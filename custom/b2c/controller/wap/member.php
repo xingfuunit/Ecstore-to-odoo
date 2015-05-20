@@ -246,6 +246,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
             $order_status = array();
             if ($pay_status == 'nopayed')
             {
+            	$this->title = '待支付';
                 $order_status['pay_status'] = 0;
                 $order_status['status'] = 'active';
             }
