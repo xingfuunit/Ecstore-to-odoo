@@ -51,9 +51,8 @@
       		<a href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>" class="btn address-btn bg-orange">
       <{/if}>
 
-	  <div id="D_L">
 	  <{if $shipping_method.shipping_name}>	 
-      <li class="am-g am-list-item-desced" style="color:#CCCCCC" >
+      <li class="am-g am-list-item-desced" style="color:#CCCCCC" id="D_L">
         <a style="color:#CCCCCC"  href="/wap/cart-checkout_wrap.html?show=delivery_change" class="am-list-item-hd"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}>
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
@@ -65,14 +64,10 @@
       </li>
       <{/if}>
       
-      <div id="P_L">
       <{if $def_addr}>
             <{include file='wap/cart/checkout/payment_confirm.html' app='b2c'}>
       <{/if}>
-	  </div>
-	  </div>
-      
-	  
+	        	  
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
         <a style="color:#CCCCCC" href="#" data-am-modal="{target: '#my-alert01',width: 320}" class="am-list-item-hd ">
         	<span class="J_coupon">使用优惠券<{if $aCart.object.coupon|count > 0 }><{$aCart.object.coupon|count}>张<{/if}></span>
