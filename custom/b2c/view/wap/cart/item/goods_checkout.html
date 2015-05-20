@@ -13,16 +13,27 @@
 		<a href="<{link app=b2c ctl=wap_cart act=remove}>" style="color:#FF0000; position:absolute; left:0px; top:-10px;" class="J-remove"><i class="am-icon-times-circle-o am-icon-sm"></i></a>
 		<a href="<{link app=b2c ctl=wap_product arg0=$goods.obj_items.products.0.product_id}>"><img src="<{$goods.obj_items.products.0.thumbnail|storager:'s'}>" /></a></div>
 
-        <div class="am-u-sm-8 am-list-main" style="width:40%; float:right; color:#999999">
+        <div class="am-u-sm-8 am-list-main" style="width:50%; float:right; color:#999999">
           <h3 class="am-list-item-hd">
             <a style=" color:#999999" href="<{link app=b2c ctl=wap_product arg0=$goods.obj_items.products.0.product_id}>" class="pt-h-name"><{$goods.obj_items.products.0.name}></a>
             [<{$goods.obj_items.products.0.spec_info}>]
           </h3>
-          <div class="am-list-item-text J-pt-num">
-		     <a href="javascript:void(0);" class="am-icon-minus-circle am-icon-lg plus btn" style="float:left;color:#999999;" ></a>
+          <{if $goods.gift}>
+          <{foreach from=$goods.gift item=gift key=_gift_key}>
+          <div class="am-list-item-text am-text-warning">
+          	<span class="am-badge am-badge-warning am-radius" style="margin-right:10px;margin-bottom:10px;" data-am-popover="{content: '<{$gift.name}>[<{$gift.spec_info}>] * <{$gift.quantity}>', trigger: 'click focus'}" >赠品<{_gift_key+1}></span>
+          </div>
+          <{/foreach}>
+          <{/if}>
+
+          <div class="am-list-item-text pt-num J-pt-num">
+		     <a href="javascript:void(0);" class="am-icon-minus-circle am-icon-lg minus btn" style="float:left;color:#999999;" ></a>
+		     <div class="num">
 		     <input type="text" style="float:left; height:30px; width:30%; margin:5px;" name="modify_quantity[<{$goods.obj_ident}>][quantity]" value="<{$goods.quantity}>" class="num-ipt">
-             <a href="javascript:void(0);" class="am-icon-plus-circle am-icon-lg minus btn"  style="float:left;color:#999999;"></a>
+             </div>
+             <a href="javascript:void(0);" class="am-icon-plus-circle am-icon-lg plus btn"  style="float:left;color:#999999;"></a>
 		  </div>
+		  <{if $goods.store.store <= 5}><div class="am-fl" style="width:100%"><span class="am-badge am-badge-danger am-radius am-fl" >剩余不多</span></div><{/if}>
 		  <div style="clear:both; color:#FF0000;"><h1 style="float:left"><{$goods.obj_items.products.0.price.buy_price|cur_odr}></h1></div>
         </div>
       </li>   

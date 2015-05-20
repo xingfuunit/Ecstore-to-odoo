@@ -1,0 +1,61 @@
+<{if $goodsData}>
+	<{foreach from=$goodsData key=key item=goods_row}>
+		<li>
+		<div class="am-gallery-item">
+		  <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+		    <img src="<{$goods_row.image_default_id|storager:'s'}>">
+		    <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
+		    <div class="am-gallery-desc" >
+			 <h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
+			 </div>
+		  </a>
+		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+		
+		  <form  style="display:none" class="formBuyNow">
+			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+			    <input id="stock" type="text" name="stock" value="" />
+			    <input id="limit_nums" type="text" name="limit_nums" value="" />
+			    <input type="text" name="response_json" value="1" />
+			</form>
+		</div>
+		</li>
+	<{/foreach}>
+<{/if}>
+
+			  
+<script>
+	//加入购物车 操作
+	$('.btnAddToCart').click(function(){
+		var obj = $(this).siblings(".formBuyNow");
+        $.ajax({
+            url:'/wap/cart-add-goods.html',
+            data:obj.serialize()+'&mini_cart=1',
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success){
+					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
+                    $('#modalAddToCart').modal({
+						relatedTarget: this,
+							//进入购物车
+					      onConfirm: function(e) {
+					         window.location.href='/wap/cart.html';
+					      },
+						  	//继续购物
+					      onCancel: function(e) {
+					        return false;
+					      }
+						
+					});
+                }
+                else{
+					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
+                    $('#modalAddToCart').modal();
+                }
+
+            }
+        });
+    });
+</script>

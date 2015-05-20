@@ -129,7 +129,7 @@ class b2c_mdl_goods_cat extends dbeav_model{
         $ret = array();
         foreach($rows as $k=>$row){
             if($depth<0 || substr_count($row['cat_path'],',') < $depth){
-                $cats[$row['cat_id']] = array('type'=>'gcat','parent_id'=>$row['parent_id'],'title'=>$row['cat_name'],'link'=>app::get('site')->router()->gen_url(array('app'=>'b2c', 'ctl'=>'site_gallery','act'=>'index','args'=>array($row['cat_id']) )));
+                $cats[$row['cat_id']] = array('cat_id'=>$row['cat_id'],'type'=>'gcat','parent_id'=>$row['parent_id'],'title'=>$row['cat_name'],'link'=>app::get('site')->router()->gen_url(array('app'=>'b2c', 'ctl'=>'site_gallery','act'=>'index','args'=>array($row['cat_id']) )));
             }
         }
         foreach($cats as $cid=>$cat){

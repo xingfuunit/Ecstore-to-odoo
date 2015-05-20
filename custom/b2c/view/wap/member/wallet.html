@@ -1,63 +1,28 @@
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>
+    </a>
+	</div>
+  <h1 class="am-header-title">
+   余额
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>
+    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+	</div>
+</header>
+<div style="width:100%; text-align:center; padding:20px 0; font-size:18px"><h4>现存余额：<span class="am-text-danger" ><{$member.advance|cur_odr}></span>元</h4></div>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
 
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <a href="<{link app=b2c ctl=wap_member}>" class="a-back">
-            <i class="arr left"></i>
-            返回
-        </a>
-        <div class="a-name">
-            <{$title}>
-        </div>
-        <div style="width: 10%;"></div>
-    </div>
-    </header>
-  
-            <div class="gb mem-deposit">
-                <div class="d-line box">
-                    <div class="col">
-                        预存款余额：
-                        <span class="f-red"><{$member.advance|cur_odr}></span>
-                    </div>
-                    <div class="col">
-                        <a href="<{link app=b2c ctl='wap_member' full='1' act='deposit'}>">
-                            充值
-                            <i class="arr right"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="col">
-                        <a href="<{link app=b2c ctl='wap_member' full='1' act='giftcard'}>">
-                            充值券充值
-                            <i class="arr right"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="col">
-                        <a href="<{link app=b2c ctl='wap_member' full='1' act='balance'}>">
-                            交易记录
-                            <i class="arr right"></i>
-                        </a>
-                    </div>
-                   	
-                </div>
-            </div>
-            <div class="gb integration">
-                <div class="d-line box">
-                    <div class="col">
-                        账户总积分：<{$member.point}>
-                        <br />
-                        <{if $extend_point_html}>
-                        <{$extend_point_html}>
-                        <{/if}>
-                    </div>
-                    <div class="col">
-                        <a href="<{link app=b2c ctl='wap_member'  full='1' act='point_history'}>">
-                            查看历史积分
-                            <i class="arr right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-     
-</div>
+
+<div id="widget-list" >
+<ul class="am-list m-widget-list icon-gray-color" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+<li ><a data-rel="accordion" href="<{link app=b2c ctl='wap_member' full='1' act='deposit'}>">
+<span class="am-padding">充值</span> <span style="color:#CCCCCC"><i class="am-icon-chevron-right am-fr"></i></span></a></li>
+</ul>
+</div> 

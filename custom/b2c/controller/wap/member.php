@@ -1078,6 +1078,35 @@ class b2c_ctl_wap_member extends wap_frontpage{
         }
     }
 
+    function address_list(){
+        $this->title = app::get('b2c')->_('配送地址');
+        $this->path[] = array('title'=>app::get('b2c')->_('会员中心'),'link'=>$this->gen_url(array('app'=>'b2c', 'ctl'=>'wap_member', 'act'=>'index','full'=>1)));
+        $this->path[] = array('title'=>app::get('b2c')->_('收货地址'),'link'=>'#');
+        $GLOBALS['runtime']['path'] = $this->path;
+        $objMem = $this->app->model('members');
+        $this->pagedata['receiver'] = $objMem->getMemberAddr($this->app->member_id);
+        $this->pagedata['is_allow'] = (count($this->pagedata['receiver'])<10 ? 1 : 0);
+        $this->pagedata['num'] = count($this->pagedata['receiver']);
+        $this->pagedata['res_url'] = $this->app->res_url;
+        
+        // $obj_member = $this->app->model('members');
+        // if($obj_member->check_addr($addrId,$this->app->member_id)){
+        //     if($aRet = $obj_member->getAddrById($addrId)){
+        //         $aRet['defOpt'] = array('0'=>app::get('b2c')->_('否'), '1'=>app::get('b2c')->_('是'));
+        //          $this->pagedata = $aRet;
+        //     }else{
+        //         $this->_response->set_http_response_code(404);
+        //         $this->_response->set_body(app::get('b2c')->_('修改的收货地址不存在！'));
+        //         exit;
+        //     }
+        //     $this->page('wap/member/address_list.html');
+        // }else{
+        //     echo app::get('b2c')->_("参数错误");exit;
+        // }
+
+        $this->page('wap/member/address_list.html');
+    }
+
     /*
      *保存收货地址
      * */

@@ -9,6 +9,7 @@
 <{/foreach}>
 </span>
 
+
 <script>
 (function() {
 //var isDebug = '<{if defined("DEBUG_JS") && DEBUG_JS}>js<{else}>js_mini<{/if}>/',
@@ -16,6 +17,7 @@ var path ='<{$env.statics_host_url}>/ectools/statics/js/';
 var data_path ='<{$env.base_url}>/data/misc/';
 var container = $('<{$params.id}>');
 var callback = '<{$params.callback}>';
+
 var str = container.getElement('input').value;
 var sels = container.getElements('select');
 // var validate_area;

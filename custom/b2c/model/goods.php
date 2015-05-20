@@ -1758,7 +1758,7 @@ class b2c_mdl_goods extends dbeav_model{
 	//}
 	
     /**
-     * 
+     * 根据 分类名字 ，获得商品
      * @param string $catname
      */
     public function get_good_list_by_cat_catname($catname,$goodsfilter){

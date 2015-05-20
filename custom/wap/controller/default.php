@@ -132,14 +132,19 @@ class wap_ctl_default extends wap_controller{
      */
     private function _new_index_data(){
     	$goodsModel = app::get('b2c')->model('goods');
+    	$catModel = app::get('b2c')->model('goods_cat');
     	$filter =array('wap_recommend'=>1); 
     	
     	//品珍海鲜
     	$this->pagedata['pz_hs'] = $goodsModel->get_good_list_by_cat_catname('鲜活海鲜',$filter);
+    	$this->pagedata['pz_hs_cat']= $catModel->getRow('cat_id', array('cat_name' => "鲜活海鲜"));
+    	
     	//品珍鲜肉
     	$this->pagedata['pz_xr'] = $goodsModel->get_good_list_by_cat_catname('精品肉类',$filter);
+    	$this->pagedata['pz_xr_cat']= $catModel->getRow('cat_id', array('cat_name' => "精品肉类"));
     	//品珍鲜果
     	$this->pagedata['pz_xg'] = $goodsModel->get_good_list_by_cat_catname('时令水果',$filter);
+    	$this->pagedata['pz_xg_cat']= $catModel->getRow('cat_id', array('cat_name' => "时令水果"));
     	
 //     	print_r($this->pagedata['pz_hs']);exit;
 
@@ -158,7 +163,6 @@ class wap_ctl_default extends wap_controller{
     	$catmap = $objCat->getmap();
     	$this->pagedata['catmap'] = $catmap;
     	
-//     	print_r($catmap);exit;
     }
     
 
