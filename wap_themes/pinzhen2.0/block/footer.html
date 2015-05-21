@@ -1,0 +1,19 @@
+<!-- common modal -->
+<div id="commonModal" class="am-modal am-modal-alert" tabindex="-999">
+  <div class="am-modal-dialog">
+    <div class="am-modal-bd">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn"></span>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+function commonModal(text,buttonText='确定'){
+    $('#commonModal').find('.am-modal-bd').html(text);
+    $('#commonModal').find('.am-modal-btn').html(buttonText);
+    $('#commonModal').modal();
+    window.setTimeout("$('#commonModal').modal();", 3000);
+}
+</script>
