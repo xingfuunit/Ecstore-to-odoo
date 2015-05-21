@@ -111,8 +111,8 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
-		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart formaddcart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-		  <form  style="display:none" class="formBuyNow">
+		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
 			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
 			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
@@ -141,8 +141,8 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
-		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart formaddcart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-		  <form  style="display:none" class="formBuyNow">
+		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
 			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
 			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
@@ -173,8 +173,8 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
-		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart formaddcart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-		  <form  style="display:none" class="formBuyNow">
+		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
 			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
 			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
@@ -233,27 +233,4 @@
     <{wap_require file="block/footer.html"}>
 </body>
 </html>
-<script>
-    /*$('#J_buy_btn').on('click',function(e){
-        var data = $('#buy_form').serialize();
-        $.post($('#buy_form').attr('action'),data,function(re){
-            if(re){
-                try{
-                    result = $.parseJSON(re);
-                    alert(result.error);
-                } catch (e){
-                    //alert('加入购物车成功');
-                    new Dialog(re,{'type':'confirm'});
-                    var  cartNum = $.fn.cookie('S[CART_NUMBER]')?$.fn.cookie('S[CART_NUMBER]'):'';
-                    if(cartNum)$('.cart-num').html(cartNum);
-                    else $('.cart-num').hide();
-                }
 
-            }
-        });
-
-        return false;
-    });
-	*/
-	
-</script>

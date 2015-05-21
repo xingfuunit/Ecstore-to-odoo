@@ -65,43 +65,44 @@ function js_alert(id,msg,bnt1,bnt2){
 	}else{		
 		$('#'+id).modal();
 	}
-	
-	
-	//加入购物车 操作
-	$('.btnAddToCart').click(function(){
-		var obj = $(this).siblings(".formaddcart");
-		console.log(obj);
-        $.ajax({
-            url:'/wap/cart-add-goods.html',
-            data:obj.serialize()+'&mini_cart=1',
-            method:'POST',
-            dataType:'json',
-            success:function(data){
-                if(data.success){
-					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
-                    $('#modalAddToCart').modal({
-						relatedTarget: this,
-							//进入购物车
-					      onConfirm: function(e) {
-					         window.location.href='/wap/cart.html';
-					      },
-						  	//继续购物
-					      onCancel: function(e) {
-					        return false;
-					      }
-						
-					});
-                }
-                else{
-					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
-                    $('#modalAddToCart').modal();
-                }
-
-            }
-        });
-    });
-	
 }
+	
+	$(document).ready(function(){
+		
+		//加入购物车 操作
+		$('.btnAddToCart').click(function(){
+			var obj = $(this).siblings(".formaddcart");
+//			console.log(obj);
+	        $.ajax({
+	            url:'/wap/cart-add-goods.html',
+	            data:obj.serialize()+'&mini_cart=1',
+	            method:'POST',
+	            dataType:'json',
+	            success:function(data){
+	                if(data.success){
+						$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
+	                    $('#modalAddToCart').modal({
+							relatedTarget: this,
+								//进入购物车
+						      onConfirm: function(e) {
+						         window.location.href='/wap/cart.html';
+						      },
+							  	//继续购物
+						      onCancel: function(e) {
+						        return false;
+						      }
+							
+						});
+	                }
+	                else{
+						$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
+	                    $('#modalAddToCart').modal();
+	                }
+	
+	            }
+	        });
+	    });
+	});
 </script>
 
 <script type="text/javascript">
