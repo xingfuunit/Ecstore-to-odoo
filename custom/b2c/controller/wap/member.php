@@ -251,7 +251,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $order = $this->app->model('orders');
         if ($pay_status == 'all')
         {
-            $aData = $order->fetchByMember($this->app->member_id,$nPage-1);
+            $aData = $order->fetchByMember($this->app->member_id,$nPage);
         }
         else
         {
@@ -275,7 +275,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
             }
             //bySam 20150521
             //$order_status = array('pay_status'=>0,'ship_status'=>array(1,2,3));
-            $aData = $order->fetchByMember($this->app->member_id,$nPage-1,$order_status);
+            $aData = $order->fetchByMember($this->app->member_id,$nPage,$order_status);
         }
         $this->get_order_details($aData,'member_orders');
         $oImage = app::get('image')->model('image');
