@@ -1069,6 +1069,8 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $this->pagedata['is_allow'] = (count($this->pagedata['receiver'])<10 ? 1 : 0);
         $this->pagedata['num'] = count($this->pagedata['receiver']);
         $this->pagedata['res_url'] = $this->app->res_url;
+
+        var_export($this->pagedata['receiver'][0]);
         
         // $obj_member = $this->app->model('members');
         // if($obj_member->check_addr($addrId,$this->app->member_id)){
