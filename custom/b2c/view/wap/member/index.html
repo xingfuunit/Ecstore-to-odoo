@@ -1,4 +1,57 @@
 
+
+<{include file='wap/product/popup.html'}>
+
+
+<!-- Header -->
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>    </a>  </div>
+  <h1 class="am-header-title">
+    <a href="#title-link">会员中心</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
+</header>
+
+<div class="am-g" style="background:#eeeeee; padding:5px 0;">
+<div class="am-fl" style="width:30%; height:100px;display:block"><span class="am-text-top"></span></div>
+<div class="am-fl" style="width:40%; text-align:center"><img width="100" height="100" alt="" src="/public/app/b2c/statics/images/pz_logo.jpg"></div>
+<div class="am-fl" style="width:30%; height:100px;display:block"><span class="am-text-bottom"></span></div>
+<div class="am-fl" style="width:100%; height:30px; line-height:30px; text-align:center"><span class="am-text-middle" style="width:100%">
+<{if $tag_name}><{$tag_name}><{else}><{if $weixin_bind != '0'}><{$bind_info.bind_account}><{/if}><{/if}>
+
+</span></div>
+</div>
+
+<div id="widget-list" >
+<ul class="am-list m-widget-list icon-gray-color" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+<li><a data-rel="accordion" href="<{link app=b2c ctl='wap_member' act='orders'}>">
+<span><i  class="am-icon-edit" style="margin:0 5px;"></i>我的订单</span><span class="am-fr   am-text-warning" style="margin-right:10%"><{$member.order_num}></span></a></li>
+<li><a data-rel="divider" href="<{link app=b2c ctl='wap_member' act='weixinset'}>">
+<span><i  class="am-icon-map-marker" style="margin:0 5px;"></i>绑定手机</span></a></li>
+<li><a data-rel="duoshuo" href="<{link app=b2c ctl='wap_member' act='favorite'}>">
+<span><i  class="am-icon-heart" style="margin:0 5px;"></i>我的收藏</span></a></li>
+<li><a data-rel="figure" href="#">
+<span><i  class="am-icon-group" style="margin:0 5px;"></i>会员等级</span><span class="am-fr  am-text-defult" style="margin-right:10%"><{$member.levelname}></span></a></li>
+<li><a data-rel="footer" href="#">
+<span><i  class="am-icon-database" style="margin:0 5px;"></i>积分</span><span class="am-fr  am-text-warning" style="margin-right:10%"><{$member.point}></span></a></li>
+<li><a data-rel="gallery" href="<{link app=b2c ctl='wap_member' act='wallet'}>">
+<span><i  class="am-icon-jpy" style="margin:0 5px;"></i>品珍钱包</span><span class="am-fr am-text-warning" style="margin-right:10%">余额：￥<{$member.advance}></span></a></li>
+<li><a data-rel="gotop" href="<{link app=b2c ctl='wap_member' act='coupon'}>">
+<span><i  class="am-icon-ticket" style="margin:0 5px;"></i>优惠券</span><span class="am-fr  am-text-defult" style="margin-right:10%"><{$member.coupon_num}></span></a> </li>
+</ul>
+</div>
+<!--
+<button type="button" class="am-btn am-btn-primary am-btn-block am-btn-warning">注销</button>
+-->
+
+
+<!--
 <div class="full-screen">
     <div class="head-nav">
         <div class="back" ><a href="javascript:history.back()"></a></div>
@@ -50,3 +103,4 @@
     if(e) $("#cartNum").text(e);
 </script>
 
+-->
