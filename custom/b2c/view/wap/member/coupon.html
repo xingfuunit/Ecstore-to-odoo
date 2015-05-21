@@ -1,27 +1,43 @@
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <a href="javascript:history.back()" class="a-back">
-            <i class="arr left"></i>
-            返回
-        </a>
-        <div class="a-name"><{$title}></div>
-        <div style="width: 10%;"></div>
-    </div>
-    </header>
-    <div class="coupons">
-        <{if count($coupons)>0}>
-        <{foreach from=$coupons item=item}>
-        <div class="gb">
-            <span class="icon <{if $item.memc_isvalid eq true}>orange<{else}>gray<{/if}>"><{$item.memc_status}></span>
-            <span style="margin-top:10px;">优惠券名称：<{$item.coupons_info.cpns_name}></span>
-            <span style="margin-top:10px;">优惠券号码：<{$item.memc_code}></span>
-            <span style="margin-top:10px;">使用条件：<{$item.time.description}></span>
-            <span style="margin-top:10px;">有效期：<{$item.time.from_time|cdate:SDATE_STIME}>到<{$item.time.to_time|cdate:SDATE_STIME}></span>
-        </div>
-        <{/foreach}>
-        <{else}>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>    </a>  </div>
+  <h1 class="am-header-title">
+    <a href="#title-link">我的优惠券</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
+</header>
+
+<div class="am-list-news-bd">
+<{if count($coupons)>0}>
+        
+    <ul class="am-list">
+    <{foreach from=$coupons item=item}>
+      <!--缩略图在标题左边-->
+      <li class="am-g am-list-item-desced  am-list-item-thumb-left" style=" width:96%;margin:2%; border:1px solid #ccc; border-radius:5px;">
+	  <div style="border-bottom:1px dotted #ddd; margin-bottom:5px;" >
+	  <div class="am-list-news-hd am-cf am-padding">
+	  
+         优惠券编号：<span class="am-text-warning"><{$item.memc_code}></span> <button type="button" class="am-btn   <{if $item.coupons_info.cpns_status eq true}> am-btn-warning <{else}> am-btn-default <{/if}>   am-round am-btn-xs am-fr"><{$item.memc_status}></button>
+		</div> 
+	  </div>
+        
+        <div style=" margin-top:5px; clear:both " >
+	      <div class="am-list-news-hd am-cf am-padding am-fl"  style="width:100%">优惠券名称：<{$item.coupons_info.cpns_name}> </div> 
+		  <div class="am-list-news-hd am-cf am-padding am-fl"  style="width:100%">使用条件：<{$item.time.description}></div>
+		  <div class="am-list-news-hd am-cf am-padding am-fl"  style="width:100%">有效期：<{$item.time.from_time|cdate:SDATE_STIME}>到<{$item.time.to_time|cdate:SDATE_STIME}></div>
+		  
+	    </div>
+      </li>
+ 
+      <{/foreach}>
+        
+    </ul>
+    <{else}>
           尚无任何优惠券
         <{/if}>
-    </div>
 </div>
