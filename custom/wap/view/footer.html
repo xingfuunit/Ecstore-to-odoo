@@ -33,7 +33,9 @@
 </div>
 
 <script type="text/javascript">
-function js_alert(id,msg,bnt1='确定',bnt2='取消'){
+function js_alert(id,msg,bnt1,bnt2){
+	var bnt1=arguments[2]?arguments[2]:'确定';
+	var bnt2=arguments[3]?arguments[3]:'取消';
 	$('#'+id+'_msg').html(msg);
 	$('#'+id+'_bnt1').html(bnt1);
 	$('#'+id+'_bnt2').html(bnt2);
