@@ -24,5 +24,19 @@
 <ul class="am-list m-widget-list icon-gray-color" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
 <li ><a data-rel="accordion" href="<{link app=b2c ctl='wap_member' full='1' act='deposit'}>">
 <span class="am-padding">充值</span> <span style="color:#CCCCCC"><i class="am-icon-chevron-right am-fr"></i></span></a></li>
+
+<li ><a data-rel="accordion" href="<{link app=b2c ctl='wap_member' full='1' act='giftcard'}>">
+<span class="am-padding">充值券充值</span> <span style="color:#CCCCCC"><i class="am-icon-chevron-right am-fr"></i></span></a></li>
+
+<li ><a data-rel="accordion" href="<{link app=b2c ctl='wap_member' full='1' act='balance'}>">
+<span class="am-padding">交易记录</span> <span style="color:#CCCCCC"><i class="am-icon-chevron-right am-fr"></i></span></a></li>
+<li ><a data-rel="accordion" href="<{link app=b2c ctl='wap_member'  full='1' act='point_history'}>">
+<span class="am-padding">历史积分</span> <span style="color:#CCCCCC"><i class="am-icon-chevron-right am-fr"></i></span></a><span class="am-padding">账户总积分：<{$member.point}>
+                        
+                        <{if $extend_point_html}>
+                        <{$extend_point_html}>
+                        <{/if}></span></li>
+
+
 </ul>
 </div> 
