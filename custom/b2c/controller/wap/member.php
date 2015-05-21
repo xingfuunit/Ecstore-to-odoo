@@ -150,7 +150,19 @@ class b2c_ctl_wap_member extends wap_frontpage{
         
         if ($real_usage_point < 0)
             $real_usage_point = 0;
+        
+        
         $this->member['point'] = $real_usage_point;
+        
+        //订单数与优惠卷数
+        $obj_orders = $this->app->model('orders');
+        
+        $order_num = kernel::database()->select("select count(*) total from sdb_b2c_orders where (pay_status='0' or pay_status='1') and ship_status='0' and status='active' and member_id='".$this->app->member_id."'"); 
+        $this->member['order_num'] = $order_num[0]['total'];
+        
+        $coupon_num = kernel::database()->select("select count(*) total from sdb_b2c_member_coupon where member_id='".$this->app->member_id."' and disabled='false' and memc_isvalid='true'");
+        $this->member['coupon_num'] = $coupon_num[0]['total']; 
+        
         //输出
         $this->pagedata['member'] = $this->member;
         $this->set_tmpl('member');
@@ -1416,7 +1428,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
             }
         }
 
-        for($i=1;$i<5;$i++){
+        for($i=1;$i<=5;$i++){
         	foreach($aData as $key => $item){
         		if($aData[$key]['order'] == $i){ //将优惠券进行排序:1.可以使用;2未开始;3.已过期;4.已使用;5.其他
         			$sortAdata[] = $item;

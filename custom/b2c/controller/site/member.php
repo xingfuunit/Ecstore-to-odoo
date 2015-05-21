@@ -1805,14 +1805,15 @@ class b2c_ctl_site_member extends b2c_frontpage{
             }
         }
 
-        for($i=1;$i<5;$i++){
+
+        for($i=1;$i<=5;$i++){
         	foreach($aData as $key => $item){
         		if($aData[$key]['order'] == $i){ //将优惠券进行排序:1.可以使用;2未开始;3.已过期;4.已使用;5.其他
         			$sortAdata[] = $item;
         		}
         	}
         }
-
+        
         $total = $oCoupon->get_list_m($this->app->member_id);
         $this->pagination($nPage,ceil(count($total)/$this->pagesize),'coupon');
         $this->pagedata['browser'] = $this->get_browser();
