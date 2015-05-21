@@ -246,6 +246,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
             $order_status = array();
             if ($pay_status == 'nopayed')
             {
+            	$this->title = '待支付';
                 $order_status['pay_status'] = 0;
                 $order_status['status'] = 'active';
             }
@@ -1999,7 +2000,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
 			if(!base_vcode::verify('b2c_wap_gc',$_POST['verifycode']))
 			{
 				$msg = app::get('b2c')->_("验证码输入错误!");
-				$this->splash('failed',$url,$msg);
+				$this->splash('failed',$url,$msg,false,0,true);
 				exit;
 			}
 		}
@@ -2049,24 +2050,24 @@ class b2c_ctl_wap_member extends wap_frontpage{
 							$obj_member = $this->app->model('members');
 							$obj_member->change_exp($member_id, floor($gc_info['gcard_money']));
 							
-							$this->end(true,app::get('b2c')->_('充值券充值成功！'));
+							$this->end(true,app::get('b2c')->_('充值券充值成功！'),null,false,true);
 						}else{
 							$db->rollback();
-							$this->end(false,$errMsg);
+							$this->end(false,$errMsg,null,false,true);
 						}
 					}else{
 						$db->rollback();
-						$this->end(false,app::get('b2c')->_('您发出了重复的请求，该请求只能生效一次！'));
+						$this->end(false,app::get('b2c')->_('您发出了重复的请求，该请求只能生效一次！'),null,false,true);
 					}
 					 
 				}else{
 					//事件回滚
 					$db->rollback();
-					$this->end(false,app::get('b2c')->_('充值券状态更新失败！'));
+					$this->end(false,app::get('b2c')->_('充值券状态更新失败！'),null,false,true);
 				}
 		
 			}else{
-				$this->splash('failed',$url,$msg);
+				$this->splash('failed',$url,$msg,false,0,true);
 				exit;
 			}
 			 

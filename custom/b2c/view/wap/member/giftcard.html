@@ -1,51 +1,95 @@
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <a href="<{link app=b2c ctl=wap_member act=wallet}>" class="a-back">
-            <i class="arr left"></i>
-            返回
-        </a>
-        <div class="a-name">
-            充值券充值
-        </div>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>
+    </a>
+	</div>
+  <h1 class="am-header-title">
+    <a href="#title-link">充值券充值</a>
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>
+    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+	</div>
+</header>
+<div style="width:100%; text-align:center; padding:20px 0; font-size:18px"><h4>现存余额：<span class="am-text-danger" ><{$total|cur_odr}></span>元</h4></div>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+<div style=" padding:10px;">
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="col-sm-2 am-form-label">充值券号码：</label>
+    <div class="col-sm-10">
+      <input type="text" name="giftcard[gcard_code]" required="required" min="1" id='deposit'>
     </div>
-    </header>
-    <form action='<{link app="b2c" ctl="wap_member" act="gc_dopayment" arg0="giftcard"}>' method="post">
-    <div class="deposit">
-        <div class="count">
-            目前预存款金额：<em class="f-red"><{$total|cur_odr}></em>
-        </div>
-        <div class="deposit-num">
-            <label>充值券号码：</label>
-            <input type="text" name="giftcard[gcard_code]" required="required" min="1" id='deposit'>
-        </div>
-        <div class="deposit-way">
-			    <label class="c-l">验证码:</label>
-			    <div class="c">
-			      <{input type="vcode" name="verifycode" class="verify-input" placeholder="请输入验证码" key='b2c_wap_gc' label='换一张'}>
-			  </div>
-        </div>
-        <button type="submit" class="btn" >去充值</button>
+  </div>
+  
+  <label for="doc-ipt-3" class="col-sm-2 am-form-label">验证码:</label>
+  <div style="clear:both; width:100%; margin-top:10px; margin-left:0px;">
+		 <{input type="vcode" name="verifycode" class="verify-input" placeholder="请输入验证码" key='b2c_wap_gc' label='换一张'}>
+	  </div>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>  
+  <button type="button" id="ajax-do-payment" class="am-btn am-btn-primary am-btn-block am-btn-warning">确认充值</button>
+</div> 
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert-signup">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">错误</div>
+    <div class="am-modal-bd">
+      
     </div>
-    </form>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
+  </div>
 </div>
-
 <script>
-/*
-$('button[type=submit]').bind('click',function(){
-    var form = $(this).parents('form');
-    var money   = form.find('input[name="payment[money]"]').val();
-    var payment = form.find('input[name="payment[pay_app_id]"]').val();
-    if(isNaN(money) || parseInt(money)<=0 || !money){
-        alert('充值金额请填写大于0的数值!');
-        return false;
-    }
-    if(!payment){
-        alert('必须选择一个支付方式!');
-        return false;
-    }
-});
-*/
+$(document)
+.ready(
+		function() {
+$("#ajax-do-payment")
+.bind(
+		"click",
+		function() {
+
+			$
+					.ajax({
+						url : '<{link app="b2c" ctl="wap_member" act="gc_dopayment" arg0="giftcard"}>',
+
+						type : 'POST',
+
+						data : {
+							"giftcard[gcard_code]" : $(
+									'#deposit')
+									.val(),
+							"verifycode":$("input[name='verifycode']").val()
+							
+						},
+
+						dataType : 'html',
+
+						timeout : 3000,
+
+						error : function() {
+							js_alert('js-alert','请求失败');
+							//alert('请求失败');
+						},
+
+						success : function(
+								result) {
+							jsonobj = eval('('
+									+ result
+									+ ')');
+							if (jsonobj.success) {
+								location.href = jsonobj.redirect;
+							} else {
+								js_alert('js-alert',jsonobj.error);
+								
+							}
+						}
+
+					});
+		});
+		});
 </script>
-
-
