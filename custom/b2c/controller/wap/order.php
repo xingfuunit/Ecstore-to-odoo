@@ -526,7 +526,7 @@ class b2c_ctl_wap_order extends wap_frontpage{
         	$pay_plan = 'iswap';
         }
 
-        $this->pagedata['payment_html'] = $obj_payment_select->select_pay_method($this, $sdf, false,false,array('iscommon',$pay_plan),'wap/cart/checkout/select_currency.html');
+        $this->pagedata['payment_html'] = $obj_payment_select->select_pay_method($this, $sdf, false,false,array('iscommon',$pay_plan),'wap/cart/checkout/select_currency2.html');
         echo $this->fetch('wap/order/select_payment.html');
         exit;
     }

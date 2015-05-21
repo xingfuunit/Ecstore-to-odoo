@@ -342,6 +342,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
             $order_status = array();
             if ($pay_status == 'nopayed')
             {
+            	$this->title = '待支付';
                 $order_status['pay_status'] = 0;
                 $order_status['status'] = 'active';
             }
@@ -1142,12 +1143,12 @@ class b2c_ctl_wap_member extends wap_frontpage{
             if($obj_member->set_to_def($addrId,$member_id,$message,$disabled)){
 		        setcookie("purchase[shipping]", "", time() - 3600, kernel::base_url().'/');
 		        setcookie("purchase[payment]", "", time() - 3600, kernel::base_url().'/');
-                $this->splash('success',$url,$message);
+                $this->splash('success',$url,$message,'','',true);
             }else{
-                $this->splash('failed',$url,$message);
+                $this->splash('failed',$url,$message,'','',true);
             }
         }else{
-            $this->splash('failed', 'back', app::get('b2c')->_('参数错误'));
+            $this->splash('failed', 'back', app::get('b2c')->_('参数错误'),true);
         }
     }
 
@@ -1184,21 +1185,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $this->pagedata['is_allow'] = (count($this->pagedata['receiver'])<10 ? 1 : 0);
         $this->pagedata['num'] = count($this->pagedata['receiver']);
         $this->pagedata['res_url'] = $this->app->res_url;
-        
-        // $obj_member = $this->app->model('members');
-        // if($obj_member->check_addr($addrId,$this->app->member_id)){
-        //     if($aRet = $obj_member->getAddrById($addrId)){
-        //         $aRet['defOpt'] = array('0'=>app::get('b2c')->_('否'), '1'=>app::get('b2c')->_('是'));
-        //          $this->pagedata = $aRet;
-        //     }else{
-        //         $this->_response->set_http_response_code(404);
-        //         $this->_response->set_body(app::get('b2c')->_('修改的收货地址不存在！'));
-        //         exit;
-        //     }
-        //     $this->page('wap/member/address_list.html');
-        // }else{
-        //     echo app::get('b2c')->_("参数错误");exit;
-        // }
+
 
         $this->page('wap/member/address_list.html');
     }
@@ -1230,7 +1217,6 @@ class b2c_ctl_wap_member extends wap_frontpage{
     }
 
 
-
     //删除收货地址
     function del_rec($addrId=null){
         if(!$addrId) $this->splash('failed', 'back', app::get('b2c')->_('参数错误'),'','',true);
@@ -1252,9 +1238,6 @@ class b2c_ctl_wap_member extends wap_frontpage{
             $this->splash('failed', 'null', app::get('b2c')->_('操作失败'),'','',true);
         }
     }
-
-
-
 
     /*
         过滤POST来的数据,基于安全考虑,会把POST数组中带HTML标签的字符过滤掉
@@ -2112,7 +2095,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
 			if(!base_vcode::verify('b2c_wap_gc',$_POST['verifycode']))
 			{
 				$msg = app::get('b2c')->_("验证码输入错误!");
-				$this->splash('failed',$url,$msg);
+				$this->splash('failed',$url,$msg,false,0,true);
 				exit;
 			}
 		}
@@ -2162,24 +2145,24 @@ class b2c_ctl_wap_member extends wap_frontpage{
 							$obj_member = $this->app->model('members');
 							$obj_member->change_exp($member_id, floor($gc_info['gcard_money']));
 							
-							$this->end(true,app::get('b2c')->_('充值券充值成功！'));
+							$this->end(true,app::get('b2c')->_('充值券充值成功！'),null,false,true);
 						}else{
 							$db->rollback();
-							$this->end(false,$errMsg);
+							$this->end(false,$errMsg,null,false,true);
 						}
 					}else{
 						$db->rollback();
-						$this->end(false,app::get('b2c')->_('您发出了重复的请求，该请求只能生效一次！'));
+						$this->end(false,app::get('b2c')->_('您发出了重复的请求，该请求只能生效一次！'),null,false,true);
 					}
 					 
 				}else{
 					//事件回滚
 					$db->rollback();
-					$this->end(false,app::get('b2c')->_('充值券状态更新失败！'));
+					$this->end(false,app::get('b2c')->_('充值券状态更新失败！'),null,false,true);
 				}
 		
 			}else{
-				$this->splash('failed',$url,$msg);
+				$this->splash('failed',$url,$msg,false,0,true);
 				exit;
 			}
 			 

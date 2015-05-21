@@ -1,14 +1,63 @@
-<div class="msg" id="success">
-  <table align="center">
-    <tr>
-      <td>
-        <div class="checkout-success"></div>
-      </td>
-    </tr>
-  </table>
+<div class="am-modal am-modal-alert" tabindex="-1" id="js-tips">
+  <div class="am-modal-dialog">
+  <div class="am-modal-hd"><a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a></div>
+    <div class="am-modal-bd"  id="js-tips_msg">
+      	提交成功！
+    </div>
+  </div>
 </div>
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="js-alert">
+  <div class="am-modal-dialog">
+  <div class="am-modal-hd"><a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a></div>
+    <div class="am-modal-bd" id="js-alert_msg">
+      	提交成功！
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" id="js-alert_bnt1">确定</span>
+    </div>
+  </div>
+</div>
+
+<div class="am-modal am-modal-confirm" tabindex="-1" id="js-alert-confirm">
+  <div class="am-modal-dialog">
+  <div class="am-modal-hd"></div>
+    <div class="am-modal-bd" id="js-alert-confirm_msg">
+      你，确定要删除这条记录吗？
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel id="js-alert-confirm_bnt1">确定</span>
+      <span class="am-modal-btn" data-am-modal-confirm id="js-alert-confirm_bnt2">取消</span>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
-    $(function(){
+function js_alert(id,msg,bnt1,bnt2){
+	var bnt1=arguments[2]?arguments[2]:'确定';
+	var bnt2=arguments[3]?arguments[3]:'取消';
+	$('#'+id+'_msg').html(msg);
+	$('#'+id+'_bnt1').html(bnt1);
+	$('#'+id+'_bnt2').html(bnt2);
+	if(id == 'js-alert-confirm'){
+		$('#js-alert-confirm').modal({
+	        relatedTarget: this,
+	        onConfirm: function(options) {
+	          return true;
+	        },
+	        onCancel: function() {
+	          return false;
+	        }
+	      });
+	}else{		
+		$('#'+id).modal();
+	}
+	
+}
+</script>
+
+<script type="text/javascript">
+    (function(){
         //tab组建
         $('.J-tab .trigger').on('tap',function(e){
             if($(this).attr('data-url') && $(this).attr('data-url') != 'true'){
@@ -20,6 +69,8 @@
             $(this).add($('.J-tab .panel')[$(this).index()]).addClass('act').siblings('.act').removeClass('act');
         });
 
+
+        
         //点击更换验证码
         function changeVerify(element, hasEvent) {
             $.each(element,function(){
@@ -93,7 +144,7 @@
                         }
                         else {
                             $('#success .checkout-success').html(re.success);
-                            new Dialog('#success',{title:'提交成功！',type:'noclose'});
+                            $('#js-tips').modal();
                             setTimeout(function(){location.href = re.redirect},1000);
                         }
                     }
@@ -105,8 +156,8 @@
         });
 
 
-        var e = $.fn.cookie('UNAME')?$.fn.cookie('UNAME'):'',
-            cartNum = $.fn.cookie('S[CART_NUMBER]')?$.fn.cookie('S[CART_NUMBER]'):'';
+        var e = $.cookie('UNAME')?$.cookie('UNAME'):'',
+            cartNum = $.cookie('S[CART_NUMBER]')?$.cookie('S[CART_NUMBER]'):'';
         if(e){
             $("#footerloginuname").text(decodeURIComponent(e));
             $("#footerlogout").show();

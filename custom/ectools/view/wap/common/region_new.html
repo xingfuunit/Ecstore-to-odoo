@@ -1,13 +1,12 @@
 <span class="region" vtype="<{$params.vtype}>" id="<{$params.id}>">
     <input name="<{$params.name}>" package="<{$params.package}>" type="hidden" value="<{$params.value}>" />
 
-    <select data-level = "0"><option data-key="0" value="0">请选择</option></select>
-    <select data-level = "1" style="display:none"></select>
-    <select data-level = "2" style="display:none"></select>
-    <select data-level = "3" style="display:none"></select>
-    <select data-level = "4" style="display:none"></select>
+    <select data-level = "0" style="display:none;width:auto;"></select>
+    <select data-level = "1" style="display:none;width:auto;"></select>
+    <select data-level = "2" style="display:none;width:auto;"></select>
+    <select data-level = "3" style="display:none;width:auto;"></select>
+    <select data-level = "4" style="display:none;width:auto;"></select>
 </span>
-
 
 <script type="text/javascript">
 var path ='<{$env.statics_host_url}>/ectools/statics/js/';
@@ -17,11 +16,19 @@ var callback = '<{$params.callback}>';
 var str = container.find('input').value;
 var sels = container.find('select');
 
-$.getScript(,function(){
-    // init region
+$(function(){
+    $(container).on('change','select',function(){
 
-    // bind event
-});
+        if( $(this).find('option:selected').val()==0 )
+            hideNextSelect(this);
+        else
+            showNextSelect(this);
 
-
+        setRegionData(container);
+    });
+    
+    sels[0].innerHTML=genOptions(0);
+    
+    $(sels[0]).css('display','inline-block');
+})
 </script>
