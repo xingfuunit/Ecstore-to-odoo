@@ -1059,12 +1059,12 @@ class b2c_ctl_wap_member extends wap_frontpage{
             if($obj_member->set_to_def($addrId,$member_id,$message,$disabled)){
 		        setcookie("purchase[shipping]", "", time() - 3600, kernel::base_url().'/');
 		        setcookie("purchase[payment]", "", time() - 3600, kernel::base_url().'/');
-                $this->splash('success',$url,$message);
+                $this->splash('success',$url,$message,'','',true);
             }else{
-                $this->splash('failed',$url,$message);
+                $this->splash('failed',$url,$message,'','',true);
             }
         }else{
-            $this->splash('failed', 'back', app::get('b2c')->_('参数错误'));
+            $this->splash('failed', 'back', app::get('b2c')->_('参数错误'),true);
         }
     }
 
@@ -1102,22 +1102,6 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $this->pagedata['num'] = count($this->pagedata['receiver']);
         $this->pagedata['res_url'] = $this->app->res_url;
 
-        var_export($this->pagedata['receiver'][0]);
-        
-        // $obj_member = $this->app->model('members');
-        // if($obj_member->check_addr($addrId,$this->app->member_id)){
-        //     if($aRet = $obj_member->getAddrById($addrId)){
-        //         $aRet['defOpt'] = array('0'=>app::get('b2c')->_('否'), '1'=>app::get('b2c')->_('是'));
-        //          $this->pagedata = $aRet;
-        //     }else{
-        //         $this->_response->set_http_response_code(404);
-        //         $this->_response->set_body(app::get('b2c')->_('修改的收货地址不存在！'));
-        //         exit;
-        //     }
-        //     $this->page('wap/member/address_list.html');
-        // }else{
-        //     echo app::get('b2c')->_("参数错误");exit;
-        // }
 
         $this->page('wap/member/address_list.html');
     }
@@ -1149,7 +1133,6 @@ class b2c_ctl_wap_member extends wap_frontpage{
     }
 
 
-
     //删除收货地址
     function del_rec($addrId=null){
         if(!$addrId) $this->splash('failed', 'back', app::get('b2c')->_('参数错误'),'','',true);
@@ -1171,9 +1154,6 @@ class b2c_ctl_wap_member extends wap_frontpage{
             $this->splash('failed', 'null', app::get('b2c')->_('操作失败'),'','',true);
         }
     }
-
-
-
 
     /*
         过滤POST来的数据,基于安全考虑,会把POST数组中带HTML标签的字符过滤掉
