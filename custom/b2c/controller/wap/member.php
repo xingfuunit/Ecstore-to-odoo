@@ -172,6 +172,90 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $this->page('wap/member/index.html');
     }   
     
+    /*
+    *	会员等级页
+    */
+    function bership() {
+        $obj_pam_members = app::get('pam')->model('bind_tag');
+        $aUser_name = $obj_pam_members->dump(array('member_id' => $this->app->member_id));
+        $this->pagedata['tag_name'] = $aUser_name['tag_name'];
+        $wei_member = app::get('pam')->model('members')->getList('*',array('member_id'=>$this->app->member_id));
+        if(count($wei_member) > 1){
+        	foreach($wei_member as $row){
+        		if($row['login_type'] == 'mobile'){
+        			$data['bind_type'] = '手机';
+        			$data['bind_account'] = $row['login_account'];
+        			break;
+        		}
+        	
+        		if($row['login_type'] == 'email'){
+        			$data['bind_type'] = '邮件';
+        			$data['bind_account'] = $row['login_account'];
+        			break;
+        		}
+        	
+        		if($row['login_type'] == 'local'){
+        			if(strlen($row['login_account']) < 24){
+        				$userPassport = kernel::single('b2c_user_passport');
+        				$bind_type = $userPassport->get_local_account_type($row['login_account']);
+        				if($bind_type == 'card'){
+        					$data['bind_type'] = '会员卡';
+        				}else{
+        					$data['bind_type'] = '账号';
+        				}
+        				$data['bind_account'] = $row['login_account'];
+        				break;
+        			}       			
+        		}
+        	}
+        	$this->pagedata['bind_info'] = $data;
+        	$this->pagedata['weixin_bind'] = '1';
+        }else{
+        	$this->pagedata['weixin_bind'] = '0';
+        }
+        
+        #获取会员等级
+        
+        $obj_mem_lv = $this->app->model('member_lv');
+        $levels = $obj_mem_lv->getList('name,lv_logo,disabled,member_lv_id,experience,point,dis_count',array('name|noequal'=>'门店店员'),0,10,'experience asc');
+        
+        $this->member['next_lv'] = '';
+        $this->member['next_lv_experience'] = '';
+        $this->member['next_lv_percent'] = '100';
+        
+        $is_next = false;
+        
+        foreach ($levels as $key=>$value) {
+        	if ($is_next == true) {
+        		$is_next = false;
+        		$this->member['next_lv'] = $value['name'];
+        		$this->member['next_lv_experience'] =  $value['experience'] - $this->member['experience'];
+        		$this->member['next_lv_percent'] =  $this->member['experience']/$value['experience']*100;
+        	}
+        	if ($value['member_lv_id'] == $this->member['member_lv']) {
+	            $this->member['levelname'] = $value['name'];
+	            $this->member['lv_logo'] = $value['lv_logo'];
+	            $is_next = true;
+        	}
+        }
+        
+        //echo '<xmp>';
+        //var_dump($this->member);
+      //  echo '</xmp>';
+          /*
+        var_dump($levels);
+      
+        if($levels[0]['disabled']=='false'){
+            $this->member['levelname'] = $levels[0]['name'];
+            $this->member['lv_logo'] = $levels[0]['lv_logo'];
+        }*/
+        $this->pagedata['levels'] = $levels;
+        $this->pagedata['member'] = $this->member;
+        
+        
+    	$this->page('wap/member/bership.html');
+    }
+    
     public  function wallet(){
         $this->title = '品鲜钱包';
         $this->pagedata['member'] = $this->member;  
