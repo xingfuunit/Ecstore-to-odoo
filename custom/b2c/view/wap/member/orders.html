@@ -1,17 +1,4 @@
-<header data-am-widget="header" class="am-header am-header-default tt_bg">
-<div class="am-header-left am-header-nav">
-  <a href="javascript:history.back()" class="">
-      <i class="am-header-icon am-icon-reply"></i>    </a>  </div>
-  <h1 class="am-header-title">
-    <a href="#title-link"><{$title}></a>
-  </h1>
-  <div class="am-header-right am-header-nav">
-    <a href="search.html" class="">
-      <i class="am-header-icon am-icon-search"></i>    </a>
-   <a href="/wap/" class="">
-      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
-</header>
-
+<{include file='wap/member/header.html' title=$title goback='/wap/member.html'}>
 <div class="am-btn-group am-btn-group-justify" style="margin:5px 0;">
 
 <button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='nopayed'}>'"  class="am-btn am-btn-default" type="button">待支付</button>

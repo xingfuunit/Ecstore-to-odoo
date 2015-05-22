@@ -1,30 +1,18 @@
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <a href="javascript:history.back()" class="a-back">
-            <i class="arr left"></i>
-            返回
-        </a>
-        <div class="a-name">
-            未评价商品
-        </div>
-        <div class="a-right">
-            <div class="a-search"></div>
-        </div>
-    </div>
-    </header>
-  <div id="member_nocomment">
-    <{if $list}>
-    <table class="mem-comment-list" width="100%">
+<{include file='wap/member/header.html' title='未评论商品' goback='/wap/member.html'}>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+<div id="member_nocomment">
+    <{if $list && $goods}>
+    <table class="mem-comment-list am-table am-table-bd am-table-bdrs am-table-striped am-table-hover" width="100%">
       <thead>
         <tr>
           <th colspan="2"><{t}>商品<{/t}></th>
           <th><{t}>购买时间<{/t}></th>
-          <th><{t}>操作<{/t}></th>
+          <th style="min-width:50px;"><{t}>操作<{/t}></th>
         </tr>
       </thead>
       <tbody>
       <{foreach from=$list item=item name=name}>
+      <{if $goods.[$item.goods_id]}>
         <tr <{if $smarty.foreach.name.iteration == '1'}>class="first"<{/if}>>
           <td class="goods-pic">
             <a href="<{link app=b2c ctl=wap_product arg0=$item.product_id}>">
@@ -42,6 +30,7 @@
         <tr>
           <td colspan="4" class="comment-cell"></td>
         </tr>
+        <{/if}>
       <{/foreach}>
       </tbody>
       <tfoot>
@@ -54,33 +43,34 @@
               <div class="publish_comment">
                   <{foreach from=$comment_goods_type item=comment_goods_type}>
                   <div class="grades">
-                    <span class="tag"><{$comment_goods_type.name}>：</span>
+                    <span class="tag" style="display:inline-block;text-align:right;width:100px;"><{$comment_goods_type.name}>：</span>
                     <div class="star big s_5"></div>
                     <input type="hidden" class="action-score" name="point_type[<{$comment_goods_type.type_id}>][point]" value="5">
                   </div>
                   <{/foreach}>
                   <div class="sub-label-side"><{$submit_comment_notice}></div>
-                  <div class="textarea">
-                      <textarea class="action-fill-textarea" name="comment" placeholder="欢迎发表回复，最多1000字。"></textarea>
-                      <span class="current">还可以输入<b>1000</b>字</span>
-                  </div>
-                  <{if $verifyCode == 'on'}>
-                  <div class="item">
-                      <label>验证码</label>
-                       <{input type="vcode" class="verify-input" id="discuss_verifycode" name="discussverifyCode" size="4" key="DISSVCODE" placeholder="填写验证码" label="换一个"}>
-                  </div>
-                  <{/if}>
-                  <div class="mt10"><input type="checkbox" name="hidden_name" value="YES"  id=""> <{t}>匿名发表<{/t}>&nbsp;&nbsp;</div>
-                  <button type="submit" class="btn" rel="_request">发表评论</button>
+                  
+                  
+                  <!--留言开始-->
+	 <div class="am-form-group" style="width:100%">
+      <textarea  style="width:100%" rows="5"  placeholder="欢迎发表回复，最多1000字。" name="comment" id="doc-ta-1"></textarea>
+    </div>
+   <!--留言结束-->
+   <div class="am-margin-bottom-xs"><input type="checkbox" name="hidden_name" value="YES"  id=""> <{t}>匿名发表<{/t}>&nbsp;&nbsp;</div>
+                  
+    <div class="am-modal-footer" style="width:100%">
+	<button id="ajax-submit" class="am-btn  am-btn-warning am-fr"  style="width:100%" type="button">提交</button>
+    </div>
+
               </div>
             </form>
           </td>
         </tr>
       </tfoot>
     </table>
-    <{wap_pagers data=$pager}>
+    <div style="text-align:center;"><{wap_pagers data=$pager}></div>
     <{else}>
-    <table class="member-grid">
+    <table class="member-grid am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
       <tbody class="first">
         <tr><td colspan="4" class="no-information"><{t}>暂无未评论商品<{/t}></td></tr>
       </tbody>
@@ -89,8 +79,7 @@
     <!--
     说明：由于三个月后的订单将被归档，所以请在下单三个月内对完成订单的商品进行评价，超过三个月将无法进行评价！
     -->
-  </div>
-</div>
+  </div>  
 <{if $list}>
 <script>
 var container = $('#member_nocomment');
@@ -115,7 +104,8 @@ $('.action-fill-textarea').on('input',function(){
   var cur = $(this).next().find('b'), max = 1000;
   if(this.value.length > max) {
       this.value = this.value.substr(0, max);
-      alert('内容超限，最多输入 ' + max + ' 字');
+      js_alert('js-alert','内容超限，最多输入 ' + max + ' 字');
+      //alert('内容超限，最多输入 ' + max + ' 字');
   }
   cur.text(1000 - this.value.length);
 });
@@ -148,5 +138,57 @@ $('.star').on('click',function(event){
         return;
     }
 });
+
+$("#ajax-submit")
+.bind(
+		"click",
+		function() {
+
+			$
+					.ajax({
+						url : '<{link app=b2c ctl=wap_comment act=toComment arg0=discuss}>',
+
+						type : 'POST',
+
+						data : {
+							<{foreach from=$comment_goods_type item=comment_goods_type}>
+							"point_type[<{$comment_goods_type.type_id}>][point]":$("input[name='point_type[<{$comment_goods_type.type_id}>][point]']").val(),
+							<{/foreach}>
+							"hidden_name":$("input[name='hidden_name']").val(),
+							"comment":$("#doc-ta-1").val(),
+							"goods_id":$("input[name='goods_id']").val(),
+							"product_id":$("input[name='product_id']").val(),
+							"order_id":$("input[name='order_id']").val(),
+							"hidden_name":$("input[name='hidden_name']").val()
+							
+						},
+
+						dataType : 'html',
+
+						timeout : 3000,
+
+						error : function() {
+							js_alert('js-alert','请求失败');
+							//alert('请求失败');
+						},
+
+						success : function(
+								result) {
+							jsonobj = eval('('
+									+ result
+									+ ')');
+							if (jsonobj.success) {
+								location.href = jsonobj.redirect;
+							} else {
+								js_alert('js-alert',jsonobj.error);
+								if(jsonobj.redirect){
+									location.href = jsonobj.redirect;
+								}
+							}
+						}
+
+					});
+		});
+
 </script>
 <{/if}>

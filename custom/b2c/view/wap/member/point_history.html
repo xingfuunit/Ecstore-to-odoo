@@ -1,21 +1,4 @@
-<header data-am-widget="header" class="am-header am-header-default tt_bg">
-<div class="am-header-left am-header-nav">
-  <a href="products.html" class="">
-      <i class="am-header-icon am-icon-reply"></i>
-    </a>
-	</div>
-  <h1 class="am-header-title">
-   历史积分
-  </h1>
-  <div class="am-header-right am-header-nav">
-    <a href="search.html" class="">
-      <i class="am-header-icon am-icon-search"></i>
-    </a>
-   <a href="index2.html" class="">
-      <i class="am-header-icon am-icon-home"></i>
-    </a>
-	</div>
-</header>
+<{include file='wap/member/header.html' title='历史积分' goback='/wap/member.html'}>
 <div style="width:100%; text-align:center; padding:20px 0 0 0px; font-size:18px"><h4>当前有效积分：<span class="am-text-danger" ><{$total}></span></h4></div>
 
 <div style="width:100%; text-align:center; padding:0px 0 0 0px; font-size:18px"><h4>消费冻结：<span class="am-text-danger" ><{if $expense_point}><{$expense_point}><{else}>0<{/if}></span></h4></div>
