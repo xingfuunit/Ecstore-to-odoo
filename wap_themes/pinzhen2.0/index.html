@@ -71,8 +71,8 @@
 	</nav>
 	
 	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k2.jpg"></a>
-	<a href="products_hot_list.html" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k3.jpg"></a>
-	<a href="login.html" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k4.jpg"></a>
+	<a href="<{link app=b2c ctl=wap_gallery act=productsHot }>" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k3.jpg"></a>
+	<a href="<{link app=b2c ctl=wap_member }>" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k4.jpg"></a>
 	</div>
 	<!--图片导航结束-->
 	
@@ -112,7 +112,7 @@
 			</div>
 	      </a>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-		  <form  style="display:none" class="formBuyNow">
+		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
 			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
 			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
@@ -142,7 +142,7 @@
 			</div>
 	      </a>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-		  <form  style="display:none" class="formBuyNow">
+		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
 			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
 			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
@@ -174,7 +174,7 @@
 			</div>
 	      </a>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
-		  <form  style="display:none" class="formBuyNow">
+		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
 			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
 			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
@@ -218,74 +218,19 @@
 	</div>
 	
 	<!-- Navbar -->
-	<!--
+	
 	<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
 	     id="">
 	  <ul class="am-navbar-nav am-cf am-avg-sm-4"  style="background:#309ab2 !important">
-	    <li> <a href="tel:123456789"> <span class="am-icon-phone"></span> <span class="am-navbar-label">呼叫</span> </a> </li>
-	    <li data-am-navbar-share> <a href="#"> <span class="am-icon-share-square-o"></span> <span class="am-navbar-label">分享</span> </a> </li>
-	    <li data-am-navbar-qrcode> <a href="#"> <span class="am-icon-qrcode"></span> <span class="am-navbar-label">二维码</span> </a> </li>
-	    <li> <a href="https://github.com/allmobilize/amazeui/issues"> <span class="am-icon-location-arrow"></span> <span class="am-navbar-label">Bug 反馈</span> </a> </li>
+	    <li> <a href="tel:1008611"> <span class="am-icon-phone"></span> <span class="am-navbar-label">呼叫</span> </a> </li>
+	    <li> <a href="<{link app=b2c ctl=wap_cart }>"> <span class="am-icon-shopping-cart"></span> <span class="am-navbar-label">购物车</span> </a> </li>
+	    <li data-am-navbar-qrcode> <a href="javascript:void(0);"> <span class="am-icon-qrcode"></span> <span class="am-navbar-label">二维码</span> </a> </li>
+	    <li> <a href="<{link app=b2c ctl=wap_member }>"> <span class="am-icon-user"></span> <span class="am-navbar-label">会员中心</span> </a> </li>
 	  </ul>
 	</div>
-	-->
+	
 	
     <{wap_require file="block/footer.html"}>
 </body>
 </html>
-<script>
-    /*$('#J_buy_btn').on('click',function(e){
-        var data = $('#buy_form').serialize();
-        $.post($('#buy_form').attr('action'),data,function(re){
-            if(re){
-                try{
-                    result = $.parseJSON(re);
-                    alert(result.error);
-                } catch (e){
-                    //alert('加入购物车成功');
-                    new Dialog(re,{'type':'confirm'});
-                    var  cartNum = $.fn.cookie('S[CART_NUMBER]')?$.fn.cookie('S[CART_NUMBER]'):'';
-                    if(cartNum)$('.cart-num').html(cartNum);
-                    else $('.cart-num').hide();
-                }
 
-            }
-        });
-
-        return false;
-    });
-	*/
-	
-	//加入购物车 操作
-	$('.btnAddToCart').click(function(){
-		var obj = $(this).siblings(".formBuyNow");
-        $.ajax({
-            url:'/wap/cart-add-goods.html',
-            data:obj.serialize()+'&mini_cart=1',
-            method:'POST',
-            dataType:'json',
-            success:function(data){
-                if(data.success){
-					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
-                    $('#modalAddToCart').modal({
-						relatedTarget: this,
-							//进入购物车
-					      onConfirm: function(e) {
-					         window.location.href='/wap/cart.html';
-					      },
-						  	//继续购物
-					      onCancel: function(e) {
-					        return false;
-					      }
-						
-					});
-                }
-                else{
-					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
-                    $('#modalAddToCart').modal();
-                }
-
-            }
-        });
-    });
-</script>
