@@ -11,6 +11,13 @@ class b2c_ctl_wap_active extends wap_frontpage{
         parent::__construct($app);
         
     }
+    
+    /**
+     * 活动列表页
+     */
+    public function alist(){
+    	$this->page('wap/active/list.html');
+    }
 
     public function index(){
     	

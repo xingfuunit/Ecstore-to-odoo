@@ -136,6 +136,7 @@ function index(){
     	
     }
     
+    
 	function send_cp($coupons_id,$member_ids){
 		//发送优惠卷
 		$send_coupon = $this->_send_coupon($coupons_id,$member_ids);
@@ -190,6 +191,47 @@ function index(){
 		return $coupons_txt;
 	}
 	
+	/**
+	 * wap端首页领取优惠券
+	 */
+	function wap_index_coupon_ajax(){
+		
+		$coupons_id = $_POST['coupons_id'];
+		$this->member = $this->get_current_member();
+		$member_id = $this->member['member_id'];
+		if (empty($member_id)){
+			echo json_encode(array('error'=>'您还没有登录，请登录'));
+			return;
+		}
+		$member_ids = array();
+		$member_ids[] = $member_id;
+		
+		//验证优惠券id
+		$couponsModel = $this->app->model('coupons');
+		$is_coupon = $couponsModel->getRow('*',array('cpns_id'=>$coupons_id));
+		if(!$is_coupon){
+			echo  json_encode(array("error"=>'优惠券参数错误'));
+			return ;
+		}
+		
+		//判断是否已领取过
+		$member_coupons = $this->app->model('member_coupon');
+		$is_get = $member_coupons->getRow('*',array('cpns_id'=>$coupons_id,'member_id'=>$member_id));
+		
+		if($is_get){
+			echo  json_encode(array("error"=>'你已领取，马上购物吧！'));
+			return ;
+		}
+		
+		$ret = $this->send_cp($coupons_id,$member_ids);
+		if($ret){
+			echo json_encode(array('success'=>'优惠券领取成功'));
+			return;
+		}else{
+			echo json_encode(array('error'=>'优惠券领取失败，请稍后重试'));
+			return;
+		}
+	}
 	
 
 }

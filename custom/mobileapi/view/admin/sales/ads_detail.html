@@ -8,7 +8,7 @@
   <td><{input type="text" name="ad_name" style="width:120px" vtype="required" value=$adInfo.ad_name}><em><font color='red'>*</font></em></td>
 </tr>
 <tr>
-  <th><{t}>链接地址：<{/t}></th>
+  <th><{t}>链接地址/优惠券ID：<{/t}></th>
   <td><{input type="text" name="ad_url" style="width:120px" vtype="required" value=$adInfo.ad_url}><em><font color='red'>*</font></em></td>
 </tr>
 <tr>
@@ -25,11 +25,13 @@
   <th><{t}>链接类型：<{/t}></th>
   <td>
     <select name="url_type" id="url_type">
-         <option value='goods' <{if $adInfo.url_type == 'goods'}>selected<{/if}> ><{t}>产品<{/t}></option>
+		 <option value='goods' <{if $adInfo.url_type == 'goods'}>selected<{/if}> ><{t}>产品<{/t}></option>
+		 <option value='coupon' <{if $adInfo.url_type == 'coupon'}>selected<{/if}> ><{t}>送优惠券<{/t}></option>
          <option value='cat' <{if $adInfo.url_type == 'cat'}>selected<{/if}> ><{t}>分类<{/t}></option>
          <option value='virtual_cat' <{if $adInfo.url_type == 'virtual_cat'}>selected<{/if}> ><{t}>虚拟分类<{/t}></option>
          <option value='article' <{if $adInfo.url_type == 'article'}>selected<{/if}> ><{t}>文章<{/t}></option>
          <option value='none' <{if $adInfo.url_type == 'none'}>selected<{/if}> ><{t}>不链接<{/t}></option>
+		 
     </select>
   </td>
 </tr>
