@@ -20,7 +20,7 @@
       <div class="am-panel-bd"  style="padding:0;">
         <div data-am-widget="list_news" class="am-list-news am-list-news-default">
   <div class="am-list-news-bd">
-    <form class="am-form am-form-horizontal form" action="<{link app=b2c ctl=wap_cart act=shipping_save arg0=$is_fastbuy}>" method="post" data-type="ajax">
+    <form class="am-form am-form-horizontal form" id="address_form" action="<{link app=b2c ctl=wap_cart act=shipping_save arg0=$is_fastbuy}>" method="post" data-type="ajax">
     <div>
     <label for="doc-ipt-3" class="col-sm-2 am-form-label">地区</label>
     <div class="col-sm-10">
@@ -93,24 +93,7 @@
 <script>
     (function(){
         $('.btn').bind('click',function(e){
-            if($(this).find('input[type=checkbox]').prop('checked') == false){
-                $(this).find('input[type=checkbox]').prop('checked',true);
-                if($(this).find('#J_del_time').length > 0){
-                    $('.del-time').removeClass('hide');
-                }
-            }else{
-                $(this).find('input[type=checkbox]').prop('checked',false);
-                if($(this).find('#J_del_time').length > 0){
-                    $('.del-time').addClass('hide');
-                }
-            }
-        });
-        $('select[name="day"]').bind('change',function(e){
-            if($(this).val()=='special'){
-                $('.special-delivery-day').show();
-            }else{
-                $('.special-delivery-day').hide();
-            }
+        	$('#address_form').submit();
         });
     })();
 </script>
