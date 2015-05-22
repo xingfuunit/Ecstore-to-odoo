@@ -155,6 +155,8 @@ class wap_ctl_default extends wap_controller{
     	$this->pagedata['coup_ads'] = $ads_model->get_sales_ads('index_coup_banner');
     	//促销图片广告
     	$this->pagedata['pic_ads'] = $ads_model->get_sales_ads('index_pic_banner');
+    	//送免邮券广告
+    	$this->pagedata['mianyou_ads'] = $ads_model->get_sales_ads('index_coup_mianyou');
     	
     	//商品分类
     	$objCat = app::get('b2c')->model('goods_cat');

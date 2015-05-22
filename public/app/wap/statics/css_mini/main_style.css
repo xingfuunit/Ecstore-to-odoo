@@ -132,4 +132,20 @@ border-left-color: #5eb95e !important;
     border-radius: .6em;
     opacity: 0.3;
     -moz-opacity: 0.3;
+
+.m-widget-list a::after {
+    color: #ccc;
+    content: "";
+    display: inline-block;
+    font-family: FontAwesome,sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    margin-top: -8px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    vertical-align: baseline;
 }
+.icon-gray-color a{ color:#999999}
+
