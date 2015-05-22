@@ -127,7 +127,10 @@ $(function(){
 
     $('#btnAddAddr').click(function(){
         if(pzg_add_count>=10){
-            
+            js_alert('js-alert','最多只能创建10个收货地址！');
+        }
+        else{
+            window.location.href='<{link ctl=wap_cart act=shipping_edit}>';
         }
     });
     

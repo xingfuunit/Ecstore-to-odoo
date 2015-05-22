@@ -55,7 +55,7 @@
 
 <button class="am-btn am-btn-primary" data-am-modal="{target: '#my-alert'}">Alert</button>
 
-<div id="modalAddToCart" class="am-modal am-modal-alert" tabindex="-1">
+<div id="modalAddToCart" class="am-modal am-modal-alert" tabindex="-1" style="z-index:9999">
   <div class="am-modal-dialog">
     <div class="am-modal-bd">
     </div>
@@ -161,12 +161,12 @@ $(document).ready(function(){
                 if(data.success){
                     $('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
                     $('#modalAddToCart').modal();
+                    $('#btnAddToCart').html('<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:0px; right:0px; display:block"></span>');
                 }
                 else{
                     $('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
                     $('#modalAddToCart').modal();
                 }
-
             }
         });
     });
