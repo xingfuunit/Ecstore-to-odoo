@@ -181,18 +181,20 @@
             $.post('order-select_payment.html',data,function(re){           	
             	$('#my-alert01').html(re);
             	$('#pay_button').click();
-                $('#J_pay_list').bind('click',function(e){
-                    var el = $(e.target);
-                    if(el.hasClass('paiing-span')) {                   	
-                      $('input[name="payment[def_pay][pay_app_id]"]').val( el.attr('payment_app_id') );
-                      $('#J_defpay').text( el.attr('payment_app_name') );
-                      $.post(
-                        '<{link app=b2c ctl=wap_order act=payment_change}>',
-                        'payment[pay_app_id]=' + encodeURIComponent( el.attr('value') )+ '&order_id=<{$order.order_id}>&payment[currency]=',
-                        function(re){
-                          location.reload();
-                      });
+                $('#P_L_bt').click(function(){
+                    var data = 'payment[pay_app_id]='+encodeURIComponent( $('#zxzf .selected').attr('value') )+ '&order_id=<{$order.order_id}>&payment[currency]=';
+                    $('input[name="payment[def_pay][pay_app_id]"]').val( $('#zxzf .selected').attr('payment_app_id') );
+                    $('#J_defpay').text( $('#zxzf .selected').attr('payment_app_name') );
+                    if($('#zxzf .selected').length == false){
+                        js_alert('js-alert','请选择支付方式');
+                        return;
                     }
+                    var url = '<{link app=b2c ctl=wap_order act=payment_change}>';
+                    $.post(url,data,function(re){
+            /*             if(re){ */
+                            location.reload();
+            /*             } */
+                    });
                 });
 
             });

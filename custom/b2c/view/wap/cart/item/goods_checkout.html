@@ -10,7 +10,7 @@
     <input type="hidden" name="max" value="<{$goods.store.real}>" class="max-num" />
     <input type="hidden" name="stock" value="<{$goods.store.store}>" />
         <div class="am-u-sm-4 am-list-thumb" style="position:relative">
-		<a href="<{link app=b2c ctl=wap_cart act=remove}>" style="color:#FF0000; position:absolute; left:0px; top:-10px;" class="J-remove"><i class="am-icon-times-circle-o am-icon-sm"></i></a>
+		<a id="<{link app=b2c ctl=wap_cart act=remove}>" href="javascript:void(0);" style="color:#FF0000; position:absolute; left:0px; top:-10px;" class="J-remove"><i class="am-icon-times-circle-o am-icon-md"></i></a>
 		<a href="<{link app=b2c ctl=wap_product arg0=$goods.obj_items.products.0.product_id}>"><img src="<{$goods.obj_items.products.0.thumbnail|storager:'s'}>" /></a></div>
 
         <div class="am-u-sm-8 am-list-main" style="width:50%; float:right; color:#999999">
