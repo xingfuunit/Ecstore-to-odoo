@@ -32,20 +32,20 @@
 <br>
 <!-- List -->
 <div data-am-widget="slider" class="am-slider am-slider-a4" data-am-slider='{}' id="my-slider">
-  <ul class="am-slides">
-  
-  	<{foreach from=$pagetotal_arr item=pa key=key}>
-    <li>
-	    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default  glist" data-am-gallery="{ pureview:flase }">
-			<div class="roll_loding">正在加载...</div>
-			
-		</ul>
-    </li>
-	<{/foreach}>
 	
-  </ul>
+	  <ul class="am-slides">
+	  	<{foreach from=$pagetotal_arr item=pa key=key}>
+	    <li>
+		    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default  glist" data-am-gallery="{ pureview:flase }">
+				<div class="roll_loding" style="text-align:center"><i class="am-icon-spinner am-icon-spin am-icon-lg"></i></div>
+			</ul>
+	    </li>
+		<{/foreach}>
+	  </ul>
+
 </div>
-<div><span class="show_cur_page">1</span>/<{$pagetotal}></div>
+<div class="return_div"><label><i class="show_cur_page">1</i>/<i id="page_total"><{$pagetotal}></i></label></div>
+<!--<div><span class="show_cur_page">1</span>/<{$pagetotal}></div>-->
 <div id="cur_cat" style="display:none;"><{$cat_id}></div>
 <div id="scontent" style="display:none;"><{$scontent}></div>
 <!-- Gallery -->
@@ -88,7 +88,7 @@ $("#js_ifr").fadeIn('fast').attr("src","http://player.youku.com/player.php/sid/X
 <div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
 <a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="#"></a>
 </div>
-<div class="return_div" style="display:none;"><label><i id="cur_page">1</i>/<i id="page_total"></i></label></div>
+
 <!-- Navbar -->
 <script>
 $(function (){
