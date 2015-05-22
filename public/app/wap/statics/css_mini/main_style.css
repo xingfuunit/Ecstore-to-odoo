@@ -65,4 +65,50 @@ border-left-color: #5eb95e !important;
 
 .js_btn{width:531px;height:107px;border:none;background: url('../images/pay_btn.png') no-repeat;}
 
+.hide {
+  display: none !important;
+}
+.star {
+	display: inline-block;
+	width: 66px;
+	height: 11px;
+	background: url(../images/star.png) no-repeat 0 -80px
+}
 
+.star b {
+	display: inline-block;
+	height: 100%;
+	background: url(../images/star.png) no-repeat
+}
+
+.star.big {
+	line-height: 20px;
+	vertical-align: -4px;
+	width: 125px;
+	height: 20px;
+	background: url(../images/star_b.png) no-repeat 0 -100px
+}
+
+.star.big b {
+	background: url(../images/star_b.png) no-repeat
+}
+
+.star.s_1 {
+	background-position: 0 -80px
+}
+
+.star.s_2 {
+	background-position: 0 -60px
+}
+
+.star.s_3 {
+	background-position: 0 -40px
+}
+
+.star.s_4 {
+	background-position: 0 -20px
+}
+
+.star.s_5 {
+	background-position: 0 0
+}
