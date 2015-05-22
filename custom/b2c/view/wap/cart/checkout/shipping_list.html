@@ -37,7 +37,7 @@
        <input class="am-form-field" type="text" value="<{$addr.name}>" readonly="readonly">
       </li>
       <li class="am-g">
-      <input class="am-form-field" type="text" value="<{if $addr.tel}><{$addr.tel}><{else}><{$addr.mobile}><{/if}>" readonly="readonly">
+      <input class="am-form-field" type="text" value="<{if $addr.mobile}><{$addr.mobile}><{else}><{$addr.tel}><{/if}>" readonly="readonly">
       </li>
       <li class="am-g">
        <input class="am-form-field" type="text" value="<{$addr.area|ship_area}><{$addr.addr}>" readonly="readonly">
