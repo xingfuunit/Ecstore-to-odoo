@@ -116,9 +116,9 @@ $(document).ready(function(){
             success:function(data){
                 if(data.success){
                     if(data.success=='saved')
-                        $('#btnAdd2Fav').addClass('am-text-success');
+                        $('#btnAdd2Fav').addClass('am-text-success').removeClass('not-faved-star');
                     else
-                        $('#btnAdd2Fav').removeClass('am-text-success');
+                        $('#btnAdd2Fav').removeClass('am-text-success').addClass('not-faved-star');
                 }
             }
         });

@@ -14,6 +14,6 @@ function commonModal(text,buttonText='确定'){
     $('#commonModal').find('.am-modal-bd').html(text);
     $('#commonModal').find('.am-modal-btn').html(buttonText);
     $('#commonModal').modal();
-    window.setTimeout("$('#commonModal').modal();", 3000);
+    window.setTimeout("$('#commonModal').modal('close');", 3000);
 }
 </script>

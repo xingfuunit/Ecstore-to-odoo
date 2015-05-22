@@ -1,4 +1,4 @@
-<li id="productComments" class="showvaluebox" style="height:100%; overflow-y:scroll">
+<li id="productComments" class="showvaluebox" ><!-- style="height:100%; overflow-y:scroll" -->
     <div class="doc-example" style="padding:10px;">
       <ul class="am-comments-list am-comments-list-flip">
 
@@ -44,7 +44,10 @@
 
     </ul>
 
-    <!--<div class="am-fr"><a href="#" class="am-text-danger">还有1000条评论</a></div>-->
+    <!-- todo: link to discuss list page -->
+    <{if($discussCount>7)}>
+      <div class="am-fr"><a href="#" class="am-text-danger">还有<{($discussCount-7)}>条评论</a></div>
+    <{/if}>
     </div>
 
   </li>

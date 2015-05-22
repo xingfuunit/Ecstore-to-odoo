@@ -22,11 +22,10 @@
         <div style="float:right">
             <a href="javascript:void(0);" class="am-icon-btn am-icon-search" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>
 
-            <!-- todo: is fav img -->
-            <{if $page_product_basic.is_fav}><{/if}>
-            <a id="btnAdd2Fav" href="javascript:void(0);" class="am-icon-btn am-icon-star" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></a>
+            <a id="btnAdd2Fav" href="javascript:void(0);" class="am-icon-btn am-icon-star 
+            <{if $page_product_basic.is_fav}>am-text-success<{else}>not-faved-star<{/if}>" style="float:left; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></a>
 
-
+            <!-- todo: link to discuss list page -->
             <a href="javascript:void(0);" class="am-icon-btn am-icon-comments-o" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" >
             <span style=" font-size:8px; color:#FF9900; float:left; line-height:8px;"><{$comments.discussCount|default:'0'}></span>
             </a>

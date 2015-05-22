@@ -149,8 +149,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
         $this->pagedata['product_imgs'] = $product_imgs;
 
         // comment
-        // todo: ajax load 瀑布流
-        $comments = kernel::single("b2c_goods_description_comments")->show($productBasic['goods_id'],'discuss',20);
+        $comments = kernel::single("b2c_goods_description_comments")->show($productBasic['goods_id'],'discuss',7);
         $this->pagedata['comments'] = $comments;
         // echo '<pre>';var_export($comments);exit;
 
@@ -174,6 +173,10 @@ class b2c_ctl_wap_product extends wap_frontpage{
         if($aComment['switch']['discuss'] == "on") {
             $this->pagedata['discussCount'] = $this->app->model("member_comments")->count(array('object_type'=>'discuss', 'display'=>'true', 'type_id'=>$goodsId));
         }
+
+        if(!$this->pagedata['discussCount'])
+            $this->pagedata['discussCount'] = 0;
+
         $this->pagedata['btn_page_list'] = $this->_get_servicelist_by('b2c_products_index_btn');
 #        $this->pagedata['async_request_list'] = $this->get_body_async_url($productBasic);
 
