@@ -2009,17 +2009,17 @@ class b2c_ctl_wap_member extends wap_frontpage{
             }
             if( $objMessage->send($_POST) ) {
             if($_POST['has_sent'] == 'false'){
-                $this->splash('success','member/index.html',app::get('b2c')->_('保存到草稿箱成功'),$_POST['response_json']);
+                $this->splash('success','member/index.html',app::get('b2c')->_('保存到草稿箱成功'),$_POST['response_json'],'',true);
             }else{
-                $this->splash('success','member/index.html',app::get('b2c')->_('发送成功'),$_POST['response_json']);
+                $this->splash('success','member/index.html',app::get('b2c')->_('发送成功'),$_POST['response_json'],'',true);
             }
             } else {
-                $this->splash('failed','wap/member/member_message.html',app::get('b2c')->_('发送失败'),$_POST['response_json']);
+                $this->splash('failed','wap/member/member_message.html',app::get('b2c')->_('发送失败'),$_POST['response_json'],'',true);
             
 			}
         }
         else {
-            $this->splash('failed','member-message.html',app::get('b2c')->_('必填项不能为空'),$_POST['response_json']);
+            $this->splash('failed','member-message.html',app::get('b2c')->_('必填项不能为空'),'','',true);
         
 		}
 		

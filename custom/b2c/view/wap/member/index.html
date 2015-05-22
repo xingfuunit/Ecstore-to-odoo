@@ -30,8 +30,14 @@
 
 <div id="widget-list" >
 <ul class="am-list m-widget-list icon-gray-color" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+
+<li><a data-rel="accordion" href="<{link app=b2c ctl='wap_member' act='weixinset'}>">
+<span><i  class="am-icon-star-o" style="margin:0 5px;"></i>设置登录帐号</span><span class="am-fr   am-text-warning" style="margin-right:10%"><{if $weixin_bind != '0'}>已绑定<{$bind_info.bind_type}>:<{$bind_info.bind_account}><{/if}></span></a></li>
+
+
 <li><a data-rel="accordion" href="<{link app=b2c ctl='wap_member' act='orders'}>">
 <span><i  class="am-icon-edit" style="margin:0 5px;"></i>我的订单</span><span class="am-fr   am-text-warning" style="margin-right:10%"><{$member.order_num}></span></a></li>
+
 <li><a data-rel="divider" href="<{link app=b2c ctl='wap_member' act='weixinset'}>">
 <span><i  class="am-icon-map-marker" style="margin:0 5px;"></i>绑定手机</span></a></li>
 <li><a data-rel="duoshuo" href="<{link app=b2c ctl='wap_member' act='favorite'}>">
@@ -44,6 +50,10 @@
 <span><i  class="am-icon-jpy" style="margin:0 5px;"></i>品珍钱包</span><span class="am-fr am-text-warning" style="margin-right:10%">余额：￥<{$member.advance}></span></a></li>
 <li><a data-rel="gotop" href="<{link app=b2c ctl='wap_member' act='coupon'}>">
 <span><i  class="am-icon-ticket" style="margin:0 5px;"></i>优惠券</span><span class="am-fr  am-text-defult" style="margin-right:10%"><{$member.coupon_num}></span></a> </li>
+
+<li><a data-rel="gotop" href="<{link app=b2c ctl='wap_member' act='message'}>">
+<span><i  class="am-icon-comments" style="margin:0 5px;"></i>意见反馈</span><span class="am-fr  am-text-defult" style="margin-right:10%"><{$member.coupon_num}></span></a> </li>
+
 </ul>
 </div>
 
