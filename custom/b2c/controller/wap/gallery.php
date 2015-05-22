@@ -102,6 +102,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         }
         $this->pagedata['catlist'] = $objCat->getList('*', array('parent_id' => 0), $offset=0, $limit=-1, 'p_order ASC');
 //         print_r($this->pagedata);exit;
+
         $this->page('wap/gallery/index.html');
     }
     
@@ -116,6 +117,74 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     	
     	$this->pagedata['pagetotal_arr'] = $arr;
     }
+    
+    
+    /**
+     * 商品热门列表
+     */
+    public function productsHot(){
+    	
+    	$goodsModel = app::get('b2c')->model('goods');
+    	//最多10条
+    	$filter = array(
+//     				''=>1
+    			);
+    	
+    	$goodsData = $goodsModel->getList('*',$filter,0,10);
+    	foreach($goodsData as $key=>$goods_row){
+    		if(in_array($goods_row['goods_id'],$gfav)){
+    			$goodsData[$key]['is_fav'] = 'true';
+    		}
+    		if($goods_row['udfimg'] == 'true' && $goods_row['thumbnail_pic']){
+    			$goodsData[$key]['image_default_id'] = $goods_row['thumbnail_pic'];
+    		}
+    		$gids[$key] = $goods_row['goods_id'];
+    	}
+    	 
+    	$productModel =app::get('b2c')->model('products');
+    	$products =  $productModel->getList('*',array('goods_id'=>$gids,'is_default'=>'true','marketable'=>'true'));
+    	$sdf_product = array();
+    	foreach($products as $key=>$row){
+    		$sdf_product[$row['goods_id']] = $row;
+    	}
+    	foreach ($goodsData as $gk=>$goods_row){
+    		$product_row = $sdf_product[$goods_row['goods_id']];
+    		$goodsData[$gk]['products'] = $product_row;
+    		//市场价
+    		if($show_mark_price =='true'){
+    			if($product_row['mktprice'] == '' || $product_row['mktprice'] == null)
+    				$goodsData[$gk]['products']['mktprice'] = $productModel->getRealMkt($product_row['price']);
+    		}
+    	
+    		//库存
+    		if($goods_row['nostore_sell'] || $product_row['store'] === null){
+    			$goodsData[$gk]['products']['store'] = 999999;
+    		}else{
+    			$store = $product_row['store'] - $product_row['freez'];
+    			$goodsData[$gk]['products']['store'] = $store > 0 ? $store : 0;
+    		}
+    		
+    	}
+    	
+    	//分组 2个商品为一页
+    	$page = 0;
+    	$goodsData_new = array();
+    	if($goodsData){
+    		foreach($goodsData as $k => $v){
+    			if($k%2==0){
+    				$goodsData_new[$page][0] = $goodsData[$k];
+    				$goodsData_new[$page][1] = $goodsData[$k+1];
+    				$page++;
+    			}
+    			
+    		}
+    	}
+//     	print_r(123);exit;
+    	$this->pagedata['goodsData'] = $goodsData_new;
+    	
+    	$this->page('wap/gallery/products_hot.html');
+    }
+    
     
 
     /*

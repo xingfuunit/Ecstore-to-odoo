@@ -1,0 +1,95 @@
+
+
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+<a class="" href="#left-link">
+<i class="am-header-icon am-icon-reply"></i></a></div>
+  <h1 class="am-header-title">
+    <a href="#title-link">品珍鲜活</a>
+  </h1>
+<div class="am-header-right am-header-nav">
+<a class="" href="#right-link">
+<i class="am-header-icon am-icon-home"></i></a></div>
+</header>
+
+<!-- Menu -->
+
+<!--搜索开始-->
+<div class="am-list-news am-list-news-default am-no-layout" data-am-widget="list_news">
+<form action="" class="am-form am-form-inline">
+  <div class="am-form-group am-form-icon">
+    <i class="am-icon-search"></i>
+    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字">
+  </div>  
+</form>
+</div>
+<!--搜索结束-->
+<div style=" color:#1d88a0; font-size:14px; text-indent:10px;">最热关键字：鲜果 龙虾 澳洲鲍鱼  阿拉斯加帝王蟹  </div>
+<br>
+<!-- List -->
+<div data-am-widget="slider" class="am-slider am-slider-a4" data-am-slider='{}'>
+   <ul class="am-slides">
+	
+	<{foreach from=$goodsData key=k item=goods}>
+    	<li>
+	    	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
+	    		<{foreach from=$goods key=k2 item=goods2}>
+				 <li style="width:100%;">
+				    <div class="am-gallery-item">
+				      <a href="<{link app=b2c ctl=wap_product arg0=$goods2.products.product_id}>">
+				        <img src="<{$goods2.image_default_id|storager:'s'}>">
+				        <h3 class="am-gallery-title"><{$goods2.name|cut:'90'}></h3>
+				        <div class="am-gallery-desc" >
+						 <h1 style="color:#FF0000;float:left"><{$goods2.products.price|cur_odr}></h1>
+						</div>
+					  	</a>
+						 <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+						 <form  style="display:none" class="formaddcart">
+							    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods2.goods_id}>" />
+							    <input id="productId" type="text" name="goods[product_id]" value="<{$goods2.products.product_id}>" />
+							    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+							    <input id="stock" type="text" name="stock" value="" />
+							    <input id="limit_nums" type="text" name="limit_nums" value="" />
+							    <input type="text" name="response_json" value="1" />
+						</form>
+				      
+				    </div>
+				  </li>
+				  <{/foreach}>
+			</ul>
+		</li>
+	<{/foreach}>
+	</ul>
+</div>
+
+<!-- Gallery -->
+
+
+<div id="CuPlayer"><div id="js_play" style="cursor:pointer;">
+ <iframe id="js_ifr" scrolling="no" marginwidth="0" allowtransparency="allowtransparency" src="" marginheight="0" style="width: 270px; height: 150px; display:none" frameborder="0"></iframe></div>
+</div>
+<script>
+$("#js_play").click(function(){
+$(this).hide();
+$("#js_ifr").fadeIn('fast').attr("src","http://player.youku.com/player.php/sid/XOTEzNzU3MjE2/v.swf");
+});
+</script>
+<!-- Footer -->
+<div id="am-footer-mode" class="am-modal am-modal-no-btn am-switch-mode-m am-switch-mode-m-default">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd am-modal-footer-hd">
+      <a href="javascript:void(0)" data-dismiss="modal" class="am-close am-close-spin"
+         data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd">您正在浏览的是
+      <span class="am-switch-mode-owner">云适配</span>
+      <span class="am-switch-mode-slogan">为您当前手机订制的移动网站。</span>
+    </div>
+  </div>
+</div>
+
+<div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
+<a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="#"></a>
+</div>
+<!-- Navbar -->
+

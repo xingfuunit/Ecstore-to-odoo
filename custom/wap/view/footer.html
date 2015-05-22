@@ -32,6 +32,19 @@
   </div>
 </div>
 
+<!-- 加入购物车弹出框  -->
+<div id="modalAddToCart" class="am-modal am-modal-alert" tabindex="-1">
+	  <div class="am-modal-dialog">
+	    <div class="am-modal-bd">
+	    </div>
+	    <div class="am-modal-footer">
+	    	<span class="am-modal-btn" data-am-modal-confirm >进入购物车</span>
+	      	<span class="am-modal-btn" data-am-modal-cancel >继续购物</span>
+	    </div>
+	  </div>
+</div>
+<!-- 加入购物车弹出框 -->
+
 <script type="text/javascript">
 function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 	var bnt1=arguments[2]?arguments[2]:'确定';
@@ -54,8 +67,44 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 	}else{		
 		$('#'+id).modal();
 	}
-	
 }
+	
+	$(document).ready(function(){
+		
+		//加入购物车 操作
+		$('.btnAddToCart').click(function(){
+			var obj = $(this).siblings(".formaddcart");
+//			console.log(obj);
+	        $.ajax({
+	            url:'/wap/cart-add-goods.html',
+	            data:obj.serialize()+'&mini_cart=1',
+	            method:'POST',
+	            dataType:'json',
+	            success:function(data){
+	                if(data.success){
+						$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
+	                    $('#modalAddToCart').modal({
+							relatedTarget: this,
+								//进入购物车
+						      onConfirm: function(e) {
+						         window.location.href='/wap/cart.html';
+						      },
+							  	//继续购物
+						      onCancel: function(e) {
+						        return false;
+						      }
+							
+						});
+	                }
+	                else{
+						$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
+	                    $('#modalAddToCart').modal();
+	                }
+	
+	            }
+	        });
+	    });
+	});
 </script>
 
 <script type="text/javascript">
