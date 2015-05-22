@@ -25,6 +25,8 @@
       </h4>
 	  <a  class="<{if $def_addr.addr_id eq $addr.addr_id}> selected<{/if}> addr_list" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}' style=" position:absolute; right:20px; top:5px; color:<{if $def_addr.addr_id eq $addr.addr_id}>#339900<{else}>#999999<{/if}>" href="#">
 	  <i class="am-icon-check-circle-o am-icon-sm"></i></a>
+	  <a class="del" style=" position:absolute; right:0px; top:5px; color:#FF3300" href="javascript:void(0);" id="<{link app=b2c ctl=wap_member act=del_rec arg0=$addr.addr_id}>">
+	  <i class="am-icon-times-circle-o am-icon-sm"></i></a>
     </div>
     <div id="do-not-say-<{$key}>" class="am-panel-collapse am-collapse <{if $def_addr.addr_id eq $addr.addr_id}>am-in<{/if}>">
       <div class="am-panel-bd"  style="padding:0;">
@@ -35,7 +37,7 @@
        <input class="am-form-field" type="text" value="<{$addr.name}>" readonly="readonly">
       </li>
       <li class="am-g">
-      <input class="am-form-field" type="text" value="<{if $addr.tel}><{$addr.tel}><{else}><{$addr.mobile}><{/if}>" readonly="readonly">
+      <input class="am-form-field" type="text" value="<{if $addr.mobile}><{$addr.mobile}><{else}><{$addr.tel}><{/if}>" readonly="readonly">
       </li>
       <li class="am-g">
        <input class="am-form-field" type="text" value="<{$addr.area|ship_area}><{$addr.addr}>" readonly="readonly">
@@ -58,6 +60,23 @@
     function shipping_confirm(data){
 
     }
+    var address_url = '';
+  //= 删除地址
+$('.del').bind('click',function(){
+	address_url = this.id;
+    js_alert('js-alert-confirm','确定删除该地址？','','',function(){
+    	$.post(address_url,function(re){ 
+            var o = JSON.parse(re);                        
+            if(o.success){
+            	js_alert('js-tips','删除成功');
+                setTimeout(function(){location.reload(true)},2000);
+            }else{
+            	js_alert('js-tips',o.error);
+            }
+        });   	
+    });
+});
+  
     $('#accordion .addr_list').click(function(){
         //$('#A_list li').removeClass('selected');
         //$(this).addClass('selected');
