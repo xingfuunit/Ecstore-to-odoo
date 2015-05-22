@@ -129,6 +129,8 @@
 <{/if}>
 
 <script>
+	var delete_obj = '';
+	var delete_e = '';
     (function(){
         function getTotal(){
             $.post('<{link app=b2c ctl=wap_cart act=total}>',$('form[class="form"]').serialize(),function(re){
@@ -366,28 +368,49 @@
           }
         });
         
+        var address_url = '';
+        //= 删除地址
+      $('.del').bind('click',function(){
+      	address_url = this.id;
+          js_alert('js-alert-confirm','确定删除该地址？','','',function(){
+          	$.post(address_url,function(re){ 
+                  var o = JSON.parse(re);                        
+                  if(o.success){
+                  	js_alert('js-tips','删除成功');
+                      setTimeout(function(){location.reload(true)},2000);
+                  }else{
+                  	js_alert('js-tips',o.error);
+                  }
+              });   	
+          });
+      });
+        
      // 移除商品
         $('.J-remove').bind('click',function(e){
-            if(!confirm('确认移除商品“'+$(this).parents('li').find('.pt-h-name').text().trim()+'”？'))return false;
-            var oo = $(e.target);
-            var data = $('<form action=""></form>').append($(this).parents('.pt-h-item').clone()).serialize();
-            $.post($(this).attr('href'),data+"&response_type=true",function(re){
-                var rs = JSON.parse(re);
-                if(rs.is_empty) return location.reload();
-                $('#J_total .price').html(rs.sub_total.promotion_subtotal);
-                $('#J_total .num').html(rs.number.cart_number);
-                if(rs.error) return js_alert('js-alert',rs.error);
-                oo.parents('.pt-h-item').remove();
-                // if(p.hasClass('item') && $('.pt-list').children().length == 2){
-                //     oo.parents('.pt-h-item').remove();
-                //     $('cart-pt').remove();
-                // }else{
-                //     p.destroy();
-                // }
+        	delete_e = e;
+        	delete_obj = this;
+            js_alert('js-alert-confirm','确认移除商品“'+$(delete_obj).parents('li').find('.pt-h-name').text().trim()+'”？','','',function(){
+            	var oo = $(delete_e.target);
+                var data = $('<form action=""></form>').append($(delete_obj).parents('.pt-h-item').clone()).serialize();
+                $.post($(delete_obj).attr('id'),data+"&response_type=true",function(re){
+                    var rs = JSON.parse(re);
+                    if(rs.is_empty) return location.reload();
+                    $('#J_total .price').html(rs.sub_total.promotion_subtotal);
+                    $('#J_total .num').html(rs.number.cart_number);
+                    if(rs.error) return js_alert('js-alert',rs.error);
+                    oo.parents('.pt-h-item').remove();
+                    // if(p.hasClass('item') && $('.pt-list').children().length == 2){
+                    //     oo.parents('.pt-h-item').remove();
+                    //     $('cart-pt').remove();
+                    // }else{
+                    //     p.destroy();
+                    // }
 
-                location.reload();
-            });
-            return false;
+                    location.reload();
+                });
+                return false; 	
+     	    });
+            
         });
      
      
