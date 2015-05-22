@@ -1,21 +1,19 @@
-<li id="productComments" class="showvaluebox" style="height:100%; overflow-y:scroll"><!--  -->
-    <div class="doc-example" style="padding:10px;">
-      <ul class="am-comments-list am-comments-list-flip">
 
         <{if $comments.list.discuss}>
-        <{assign var="currentDate" value=0 }>
+        <{assign var="currentDate" value=$curDate }>
         <{foreach from=$comments.list.discuss item=comlist name=discusslist}>
           <{assign var="commentDate" value=date('Y-m-d',$comlist['time'])}>
           <{if $currentDate != $commentDate}>
             <{assign var="currentDate" value=$commentDate}>
             <ul class="am-pagination am-pagination-centered">
               <li class="am-disabled">
-                <a href="#" class="am-panel-hd"><{$comlist.time|cdate:'SDATE'}></a>
+                <a href="#" class="am-panel-hd date-span"><{$comlist.time|cdate:'SDATE'}></a>
               </li> 
             </ul>
           <{/if}>
 
       <li class="am-comment">
+        <input type="hidden" name="comment_id" value="<{$comlist.comment_id}>" />
         <a href="#link-to-user-home">
           <img width="48" height="48" class="am-comment-avatar" alt="" src="<{if $comlist.member_lv_logo!=''}><{$comlist.member_lv_logo|storager:'s'}>"<{else}>/public/app/b2c/statics/sprites/default-avatar.png<{/if}>">
         </a>
@@ -34,19 +32,11 @@
                 <p><a href="#lurenyi"><{if $item.author==='管理员'}>品珍客服<{else}><{$item.author}><{/if}></a><{$item.comment|nl2br}></p>
               </div>
             </div>
-
           </li>
         <{/foreach}>
       <{/if}>
 
+      
+
       <{/foreach}>
       <{/if}>
-
-    </ul>
-
-    <{if($discussCount>7)}>
-      <div class="am-fr"><a href="<{link ctl=wap_product act=goods_discuss arg0=$goods_id}>" class="am-text-danger">还有<{($discussCount-7)}>条评论</a></div>
-    <{/if}>
-    </div>
-
-  </li>

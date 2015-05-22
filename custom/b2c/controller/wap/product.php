@@ -115,6 +115,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
         }
 
         $goodsId = $itemProduct[0]['goods_id'];
+        $this->pagedata['goods_id'] = $goodsId;
         $aGoodsList = $goodsModel->getList('*',array('goods_id'=>$goodsId));
         if(!$aGoodsList || $aGoodsList === false || $aGoodsList[0]['goods_type'] != 'normal' ){
             $this->_response->clean_all_headers()->set_http_response_code('404')->send_headers();
@@ -206,6 +207,37 @@ class b2c_ctl_wap_product extends wap_frontpage{
         // echo '<pre>';var_export($goodsPromotion);exit;
         
         $this->page('wap/product/index.html');
+    }
+
+    public function goods_discuss($goods_id){
+        if(!$goods_id){
+            echo '参数错误！';
+        }
+        $curDate = 0;
+        // echo '<pre>';
+        // $comments= kernel::single("b2c_goods_description_comments")->show($goods_id,'discuss',10);
+        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,0,10);
+        $this->pagedata['comments'] = $comments;
+        $this->pagedata['curDate'] = $curDate;
+        $this->pagedata['goods_id'] = $goods_id;
+
+        $this->page('wap/product/goods_discuss.html');
+
+    }
+
+    public function ajax_goods_discuss($goods_id,$last_comment_id=0,$curDate=0){
+        if(!$goods_id){
+            echo json_encode(array('error'=>'参数错误！'));
+            exit;
+        }
+        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,$last_comment_id,10);
+        $this->pagedata['comments'] = $comments;
+        $this->pagedata['curDate'] = $curDate;
+
+        // $this->set_tmpl('default');
+        $this->set_tmpl_file('default-onlycontent.html');
+
+        $this->page('wap/product/base_goods_discuss.html');
     }
 
     /*设置详情页SEO --start*/

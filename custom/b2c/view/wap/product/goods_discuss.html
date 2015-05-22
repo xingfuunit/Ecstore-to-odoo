@@ -1,0 +1,35 @@
+<div id="comments">
+    <div class="doc-example" style="padding:10px;">
+        <ul class="am-comments-list am-comments-list-flip">
+            <{include file='wap/product/base_goods_discuss.html'}>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+var goods_id = <{$goods_id}>;
+var hasNextPage = true;
+var curDate = $('.date-span:last').html();
+var last_comment_id = $('input[name=comment_id]:last').val();
+var loading = false;
+$(window).scroll(function() {
+                 
+    if(hasNextPage && !loading && ( $(document).height() - $(window).height() - $(document).scrollTop() < 10) ) {
+        loading = true;
+        $.ajax({
+            url:'/wap/product-ajax_goods_discuss-'+goods_id+'-'+last_comment_id+'.html',
+            success : function(data){
+                if(data == ''){
+                    hasNextPage = false;
+                }
+                loading = false;
+                $('#comments').find('ul.am-comments-list').append(data);
+
+                curDate = $('.date-span:last').html();
+                last_comment_id = $('input[name=comment_id]:last').val();
+            }
+        });
+    }
+});
+
+</script>
