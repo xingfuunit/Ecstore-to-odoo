@@ -26,8 +26,8 @@
       你，确定要删除这条记录吗？
     </div>
     <div class="am-modal-footer">
-      <span class="am-modal-btn" data-am-modal-cancel id="js-alert-confirm_bnt1">确定</span>
-      <span class="am-modal-btn" data-am-modal-confirm id="js-alert-confirm_bnt2">取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm id="js-alert-confirm_bnt1">确定</span>
+      <span class="am-modal-btn" data-am-modal-cancel id="js-alert-confirm_bnt2">取消</span>
     </div>
   </div>
 </div>
@@ -46,9 +46,11 @@
 <!-- 加入购物车弹出框 -->
 
 <script type="text/javascript">
-function js_alert(id,msg,bnt1,bnt2){
+function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 	var bnt1=arguments[2]?arguments[2]:'确定';
 	var bnt2=arguments[3]?arguments[3]:'取消';
+	var funYes=arguments[4]?arguments[4]:'';
+	var funNo=arguments[5]?arguments[5]:'';
 	$('#'+id+'_msg').html(msg);
 	$('#'+id+'_bnt1').html(bnt1);
 	$('#'+id+'_bnt2').html(bnt2);
@@ -56,10 +58,10 @@ function js_alert(id,msg,bnt1,bnt2){
 		$('#js-alert-confirm').modal({
 	        relatedTarget: this,
 	        onConfirm: function(options) {
-	          return true;
+	        	funYes();
 	        },
 	        onCancel: function() {
-	          return false;
+	        	funNo();
 	        }
 	      });
 	}else{		
@@ -154,7 +156,7 @@ function js_alert(id,msg,bnt1,bnt2){
                     region_false = true;
             });
             if(region_false){
-                alert('请选择完整地区！');
+            	js_alert('js-alert','请选择完整地区！');
                 return false;
             }
 
@@ -167,7 +169,7 @@ function js_alert(id,msg,bnt1,bnt2){
                     if(ipt.val()=='' && ipt.offset().height){
                         checkEmpty = ipt;
                         if(ipt.attr('data-caution'))
-                            alert(ipt.attr('data-caution'));
+                        	js_alert('js-alert',ipt.attr('data-caution'));
                         return false;
                     }
                 });
@@ -186,7 +188,7 @@ function js_alert(id,msg,bnt1,bnt2){
                             $('form .auto-change-verify-handle').trigger('tap');
                         }
                         self.find('[type=submit]').prop('disabled', false);
-                        return alert(re.error);
+                        return js_alert('js-alert',re.error);
                     }else{
                         if($(update).size()) {
                             $(update).html(re);
