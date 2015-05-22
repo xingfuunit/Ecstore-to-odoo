@@ -128,7 +128,6 @@ $(function (){
   	var params = ['showtype=all', 'page=' + page, cat, scontent].filter(function(d){
   		return d;
   	}).join('&');
-	console.log(params);
 	
 	$.get(url, params, function(data){
 		

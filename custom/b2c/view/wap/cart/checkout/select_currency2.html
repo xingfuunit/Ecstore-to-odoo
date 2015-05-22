@@ -1,0 +1,56 @@
+<{if count($currencys) > 1}>
+    <caption class="select-currency">选择货币类型：
+    <{input type="select" id="payment-cur" name="payment[currency]" rows=$currencys valueColumn="cur_code" labelColumn="cur_name" value=$current_currency class="action-select-currency" required="true"}>
+<{else}>
+    <{foreach from=$currencys item="currency_item" key="key" name="currency_item"}>
+        <input type="hidden" name="payment[currency]" value='<{$currency_item.cur_code}>' />
+    </caption>
+    <{/foreach}>
+<{/if}>
+  <div class="am-modal-dialog" style="font-size:14px;">
+    <div class="am-modal-hd" style="text-align:center">修改支付方式
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div style="padding:10px;">
+	
+  <div class="am-list-news-bd paiing" id="zxzf">
+    <ul class="am-list">
+     <div style="clear:both; width:100%; margin-top:10px; margin-left:10px;" class="am-btn-group doc-js-btn-1" data-am-button>
+     <{foreach from=$payments item="payment" key="key" name="payments"}>
+     <{if $payment.app_id eq 'deposit'}>
+     <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-sm paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
+    	<input type="radio" name="options"><{$payment.app_display_name}>
+  	 </label>
+	 <{elseif $payment.app_id neq 'deposit'}>
+	 <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-sm paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
+    	<input type="radio" name="options"><{$payment.app_display_name}>
+  	 </label>
+	 <{/if}>
+	 <{/foreach}>
+	  </div>
+    </ul>
+</div>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>  
+  <button type="button" id="P_L_bt<{$_page}>" class="am-btn am-btn-primary am-btn-block am-btn-warning invoice_submit">确认</button>
+   </div>	
+  </div>
+
+<script>
+    $('#zxzf .paiing-span').click(function(){
+        $('#zxzf .paiing-span').removeClass('selected');
+        $(this).addClass('selected');
+    });
+    $('#P_L_bt').click(function(){
+        var data = 'payment[pay_app_id]='+$('#zxzf .selected').attr('value');
+        if($('#zxzf .selected').length == false){
+            alert('请选择支付方式');
+            return;
+        }
+        var url = '<{link app=b2c ctl=wap_cart act=payment_confirm}>';
+        $.post(url,data,function(re){
+/*             if(re){ */
+                location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
+/*             } */
+        });
+    });
+</script>

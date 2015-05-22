@@ -18,7 +18,7 @@
 </header>
 
 <div style=" padding:10px;">
-<p>付款方式：<{$order.payinfo.pay_app_id|payname}></p>
+<p>付款方式：<span  id="J_defpay"><{$order.payinfo.pay_app_id|payname}></span></p>
 <form action="<{$form_action}>" method="post" id="paycenter_form">
 <input type="hidden" name="payment[order_id]" value="<{$order.order_id}>">
 <input type="hidden" name="payment[combination_pay]" value="false">
@@ -100,7 +100,7 @@
 
 </form>
                             <{if $order.payinfo.pay_app_id != '-1'}>
-                            <p><a href="javascript:void(0);" data-am-modal="{target: '#my-alert01',width: 320}">更换支付方式></a></p>
+                            <p><a href="javascript:void(0);" id="J_pay_change">更换支付方式></a></p>
                             <{/if}>
 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
 <p>订单号：<{$order.order_id}></p>
@@ -166,33 +166,11 @@
 </div>
 </div>
 
-<!--优惠券弹出层信息开始-->
-<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert01"  style=" text-align:left" >
-  <div class="am-modal-dialog" style="font-size:14px;">
-    <div class="am-modal-hd" style="text-align:center">修改支付方式
-      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-    </div>
-    <div style="padding:10px;">
-	
-  <div class="am-list-news-bd paiing" id="zxps">
-    <ul class="am-list">
-     <div style="clear:both; width:100%; margin-top:10px; margin-left:10px;" class="am-btn-group doc-js-btn-1" data-am-button>
-     <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-sm paiing-span">
-    	<input type="radio" name="options">支付宝
-  	 </label>
-  	 <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-sm paiing-span">
-    	<input type="radio" name="options">微信支付
-  	 </label>
-	  </div>
-    </ul>
-</div>
-<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>  
-  <button type="button" class="am-btn am-btn-primary am-btn-block am-btn-warning">确认充值</button>
-   </div>	
-  </div>
-</div>
-<!--优惠券弹出层信息结束-->
+<div class="am-modal am-modal-alert"  id="my-alert01"  style=" text-align:left" >
 
+</div>
+
+<input type="hidden" id="pay_button" data-am-modal="{target: '#my-alert01',width: 320}"/>
 
 <script>
 
@@ -200,12 +178,12 @@
         var pay_change;
         $('#J_pay_change').bind('click',function(e){
             var data='shipping[shipping_id]=<{$order.shipping.shipping_id}>&payment[def_pay][pay_app_id]=<{$order.payinfo.pay_app_id}>&no_offline=<{$order.promotion_type}>';
-            $.post('order-select_payment.html',data,function(re){
-              pay_change = new Dialog(re);
-
+            $.post('order-select_payment.html',data,function(re){           	
+            	$('#my-alert01').html(re);
+            	$('#pay_button').click();
                 $('#J_pay_list').bind('click',function(e){
                     var el = $(e.target);
-                    if(el.hasClass('paiing-span')) {
+                    if(el.hasClass('paiing-span')) {                   	
                       $('input[name="payment[def_pay][pay_app_id]"]').val( el.attr('payment_app_id') );
                       $('#J_defpay').text( el.attr('payment_app_name') );
                       $.post(

@@ -1,25 +1,28 @@
-<div class="full-screen">
-    <header>
-    <div class="a-bar">
-        <a href="javascript:history.back()" class="a-back">
-            <i class="arr left"></i>
-            返回
-        </a>
-        <div class="a-name">
-            预存款充值
-        </div>
-    </div>
-    </header>
-    <div class="deposit">
-        <div class="count">
-            <a href="<{link app=b2c ctl=wap_member act=deposit}>" class="f-r">
-                充值
-                <i class="arr right"></i>
-            </a>
-            目前预存款金额：<em class="f-red"><{$total|cur_odr}></em>
-        </div>
-        <{if count($advlogs)>0}>
-        <table>
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+<div class="am-header-left am-header-nav">
+  <a href="products.html" class="">
+      <i class="am-header-icon am-icon-reply"></i>
+    </a>
+	</div>
+  <h1 class="am-header-title">
+   交易记录
+  </h1>
+  <div class="am-header-right am-header-nav">
+    <a href="search.html" class="">
+      <i class="am-header-icon am-icon-search"></i>
+    </a>
+   <a href="index2.html" class="">
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+	</div>
+</header>
+<div style="width:100%; text-align:center; padding:20px 0; font-size:18px"><h4>现存余额：<span class="am-text-danger" ><{$total|cur_odr}></span>元</h4></div>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+
+
+<div id="widget-list" >
+<{if count($advlogs)>0}>
+        <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
             <tr>
                 <th>事件/时间</th>
                 <th>存入/支出</th>
@@ -36,7 +39,7 @@
                   <br />
                   <{$adv.mtime|cdate:FDATE_STIME}>
                 </td>
-                <td <{if $adv.import_money > 0}>class="f-red"<{/if}> <{if $adv.explode_money > 0}>class="trade"<{/if}>>
+                <td <{if $adv.import_money > 0}> style="color:#c60808;" <{/if}> <{if $adv.explode_money > 0}> style="color: green;" <{/if}>>
                   <{if $adv.import_money > 0}>+<{$adv.import_money|cur_odr}><{/if}>
                   <{if $adv.explode_money > 0}>-<{$adv.explode_money|cur_odr}><{/if}>
                 </td>
@@ -47,7 +50,6 @@
         <{else}>
         <div>尚无交易历史</div>
         <{/if}>
-    </div>
-</div>
-<{wap_pagers data=$pager}>
 
+<div style="text-align:center;"><{wap_pagers data=$pager}></div>
+</div>  

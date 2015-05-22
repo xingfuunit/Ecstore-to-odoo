@@ -207,7 +207,7 @@
                         });
                     });
                 }else{
-                    alert('请选择收货地址');
+                	js_alert('js-alert','请选择收货地址');
                 }
             },
             save:function(shipping_text,shipping_value){
@@ -247,7 +247,7 @@
                         });
                     });
                 }else{
-                    alert('请选择配送方式');
+                	js_alert('js-alert','请选择配送方式');
                 }
             },
             save:function(pay_text,pay_value){
@@ -276,7 +276,7 @@
             if($('input[name=shipping]').val()){
                 location.href = '<{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=payment_change';
             }else{
-                alert('请选择收货地址和配送方式');
+                js_alert('js-alert','请选择收货地址和配送方式');
             }
         });
         if($('input[name=shipping]').val()){
@@ -324,7 +324,7 @@
             $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
                 var couponResult = $.parseJSON(re);
                 if(!couponResult || couponResult.error){
-                    alert(couponResult.error);
+                    js_alert('js-alert',couponResult.error);
                     return false;
                 }
                 if(couponResult.data.length) {
@@ -333,7 +333,7 @@
                         updateCoupon(couponResult.data);
                         getTotal();
                     } else {
-                        alert('优惠券添加失败，请明确优惠券的适用范围。');
+                    	js_alert('js-alert','优惠券添加失败，请明确优惠券的适用范围。');
                         return false;
                     }
                     $('input[name="md5_cart_info"]').attr('value',couponResult.md5_cart_info);
@@ -376,7 +376,7 @@
                 if(rs.is_empty) return location.reload();
                 $('#J_total .price').html(rs.sub_total.promotion_subtotal);
                 $('#J_total .num').html(rs.number.cart_number);
-                if(rs.error) return alert(rs.error);
+                if(rs.error) return js_alert('js-alert',rs.error);
                 oo.parents('.pt-h-item').remove();
                 // if(p.hasClass('item') && $('.pt-list').children().length == 2){
                 //     oo.parents('.pt-h-item').remove();
@@ -553,7 +553,7 @@
     });
     (function(){
        if('<{$def_addr}>' == false){
-           if(confirm('您还没添加收货信息,立即添加?')){
+           if(js_alert('js-alert-confirm','您还没添加收货信息,立即添加?')){
                location.href = '<{link app=b2c ctl=wap_cart act=shipping_edit}>';
            }
        }
