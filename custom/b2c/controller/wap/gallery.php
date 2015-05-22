@@ -127,7 +127,10 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     	$goodsModel = app::get('b2c')->model('goods');
     	//最多10条
     	$filter = array(
-//     				''=>1
+     				'wap_hot'=>1,
+    				'is_line'=>1,
+   					'marketable'=>"true",
+   					'is_buildexcerpts'=>"true",
     			);
     	
     	$goodsData = $goodsModel->getList('*',$filter,0,10);
@@ -600,6 +603,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
 
         $params['marketable'] = 'true';
         $params['is_buildexcerpts'] = 'true';
+        
         $tmp_filter = $params;
 
         #价格区间筛选
@@ -632,7 +636,6 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             }
             unset($tmp_filter['pTag']);
         }
-
         $filter['filter'] = $tmp_filter;
         $filter['orderby'] = $orderby;
         $filter['showtype'] = $showtype;

@@ -16,18 +16,20 @@
 
 <!--搜索开始-->
 <div class="am-list-news am-list-news-default am-no-layout" data-am-widget="list_news">
-<form action="" class="am-form am-form-inline">
-  <div class="am-form-group am-form-icon">
-    <i class="am-icon-search"></i>
-    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字">
-  </div>  
-</form>
+	<form action="<{link app=b2c ctl=wap_search act=result}>" class="am-form am-form-inline" method="post" enctype="multipart/form-data">
+	  <div class="am-form-group am-form-icon">
+	    <i class="am-icon-search"></i>
+	    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字" name="search_keywords">
+	  </div>  
+	</form>
 </div>
 <!--搜索结束-->
+
 <div style=" color:#1d88a0; font-size:14px; text-indent:10px;">最热关键字：鲜果 龙虾 澳洲鲍鱼  阿拉斯加帝王蟹  </div>
 <br>
 <!-- List -->
 <div data-am-widget="slider" class="am-slider am-slider-a4" data-am-slider='{}'>
+	<{if $goodsData}>
    <ul class="am-slides">
 	
 	<{foreach from=$goodsData key=k item=goods}>
@@ -37,7 +39,7 @@
 				 <li style="width:100%;">
 				    <div class="am-gallery-item">
 				      <a href="<{link app=b2c ctl=wap_product arg0=$goods2.products.product_id}>">
-				        <img src="<{$goods2.image_default_id|storager:'s'}>">
+				        <img src="<{$goods2.wx_image_id|storager:'s'}>">
 				        <h3 class="am-gallery-title"><{$goods2.name|cut:'90'}></h3>
 				        <div class="am-gallery-desc" >
 						 <h1 style="color:#FF0000;float:left"><{$goods2.products.price|cur_odr}></h1>
@@ -60,6 +62,9 @@
 		</li>
 	<{/foreach}>
 	</ul>
+	<{else}>
+	<div style="text-align:center">没有相应商品..</div>
+	<{/if}>
 </div>
 
 <!-- Gallery -->

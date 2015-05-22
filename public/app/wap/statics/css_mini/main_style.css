@@ -65,4 +65,24 @@ border-left-color: #5eb95e !important;
 
 .js_btn{width:531px;height:107px;border:none;background: url('../images/pay_btn.png') no-repeat;}
 
+.return_div {
+    width: 100%;
+    z-index: 99999;
+    text-align: center;
+    top: -2.5em;
+}
+
+.return_div label {
+    text-align: center;
+    display: inline-block;
+    padding: 0px 15px;
+    margin-top:10px;
+    color: #FFF;
+    background-size: 0.5em;
+    background-color: #000;
+    border-radius: .6em;
+    opacity: 0.3;
+    -moz-opacity: 0.3;
+}
+
 
