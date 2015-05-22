@@ -1,6 +1,6 @@
 <header data-am-widget="header" class="am-header am-header-default tt_bg">
 <div class="am-header-left am-header-nav">
-  <a href="/wap/member.html" class="">
+  <a <{if($goback)}> href="<{$goback}>" <{else}> href="javascript:history.back()" <{/if}> class="">
       <i class="am-header-icon am-icon-reply"></i>
     </a>
 	</div>

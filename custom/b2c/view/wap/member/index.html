@@ -4,19 +4,7 @@
 
 
 <!-- Header -->
-<header data-am-widget="header" class="am-header am-header-default tt_bg">
-<div class="am-header-left am-header-nav">
-  <a href="products.html" class="">
-      <i class="am-header-icon am-icon-reply"></i>    </a>  </div>
-  <h1 class="am-header-title">
-    <a href="#title-link">会员中心</a>
-  </h1>
-  <div class="am-header-right am-header-nav">
-    <a href="search.html" class="">
-      <i class="am-header-icon am-icon-search"></i>    </a>
-   <a href="index2.html" class="">
-      <i class="am-header-icon am-icon-home"></i>    </a>  </div>
-</header>
+<{include file='wap/member/header.html' title='会员中心' goback='/wap/'}>
 
 <div class="am-g" style="background:#eeeeee; padding:5px 0;">
 <div class="am-fl" style="width:30%; height:100px;display:block"><span class="am-text-top"></span></div>
@@ -38,7 +26,7 @@
 <span><i  class="am-icon-heart" style="margin:0 5px;"></i>我的收藏</span></a></li>
 <li><a data-rel="figure" href="#">
 <span><i  class="am-icon-group" style="margin:0 5px;"></i>会员等级</span><span class="am-fr  am-text-defult" style="margin-right:10%"><{$member.levelname}></span></a></li>
-<li><a data-rel="footer" href="#">
+<li><a data-rel="footer" href="<{link app=b2c ctl='wap_member' act='point_history'}>">
 <span><i  class="am-icon-database" style="margin:0 5px;"></i>积分</span><span class="am-fr  am-text-warning" style="margin-right:10%"><{$member.point}></span></a></li>
 <li><a data-rel="gallery" href="<{link app=b2c ctl='wap_member' act='wallet'}>">
 <span><i  class="am-icon-jpy" style="margin:0 5px;"></i>品珍钱包</span><span class="am-fr am-text-warning" style="margin-right:10%">余额：￥<{$member.advance}></span></a></li>
