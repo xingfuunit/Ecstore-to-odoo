@@ -151,7 +151,7 @@ $(document).ready(function(){
                 }
             },
             error:function(jqXHR,textStatus,error){
-                if (textStatus == 'parseerror') 
+                if (textStatus == 'parsererror') 
                     window.location.href='/wap/passport-login.html';
                 else
                     js_alert('js-alert','服务器错误');
