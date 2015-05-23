@@ -1,5 +1,5 @@
 <div id="loading_page" style="text-align: center;">
-      <div  class="roll_loding">
+      <div class="roll_loding" style="height:auto">
         <i class="am-icon-spinner am-icon-spin am-icon-lg"></i>
       </div>
 </div>
@@ -32,7 +32,7 @@ document.getElementById('loading_page').style.height=ch+'px';
     
     <{if $product_imgs}>
         <{assign var="imgCount" value=0}>
-        <{foreach from=$product_imgs item=image}>
+        <{foreach from=$product_imgs key=key item=image}>
         <li class="showvaluebox">
           <{if ++$imgCount==1}>
             <div style="width:100%; height:auto; text-align:center; margin-top:30%; position:absolute; color:#FFFFFF;  background:#000000;filter:alpha(opacity=50); /*IE滤镜*/-moz-opacity:0.5; /*Firefox私有*/opacity:0.5;/*其他*/">
@@ -41,7 +41,7 @@ document.getElementById('loading_page').style.height=ch+'px';
              <p>仅售：<{$page_product_basic.price}></p>
             </div>
           <{/if}>
-          <img src="<{$image}>" alt="<{$page_product_basic.title}>">
+          <img <{if($key==0)}>onload="javascript:document.getElementById('loading_page').style.display='none';"<{/if}> src="<{$image}>" alt="<{$page_product_basic.title}>">
         </li>
         <{/foreach}>
     <{else}>
@@ -91,9 +91,9 @@ document.getElementById('loading_page').style.height=ch+'px';
 
 <script type="text/javascript">
 $(window).load(function(){
-  $('#loading_page').hide();
+    if(document.getElementById('loading_page').style.display!='none')
+      document.getElementById('loading_page').style.display='none';
 });
-
 $(document).ready(function(){
   $('#productComments').css('height',document.documentElement.clientHeight);
   $(".showvaluebox").click(function(){
