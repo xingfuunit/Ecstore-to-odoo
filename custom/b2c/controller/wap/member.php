@@ -86,6 +86,10 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $obj_pam_members = app::get('pam')->model('bind_tag');
         $aUser_name = $obj_pam_members->dump(array('member_id' => $this->member['member_id']));
         $this->pagedata['tag_name'] = $aUser_name['tag_name'];
+        if(empty($aUser_name['tag_name'])){
+        	$uname = kernel::single('b2c_user_object')->get_current_member();
+        	$this->pagedata['tag_name'] = $uname['uname'];
+        }
         
         $wei_member = app::get('pam')->model('members')->getList('*',array('member_id'=>$this->app->member_id));
         if(count($wei_member) > 1){
