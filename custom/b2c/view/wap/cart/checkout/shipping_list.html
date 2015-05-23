@@ -20,27 +20,27 @@
 <{foreach from=$member_addr_list item=addr key=key}>   
   <div class="am-panel am-panel-default">
     <div class="am-panel-hd" style=" position:relative">
-      <h4 class="am-panel-title"  data-am-collapse="{parent: '#accordion', target: '#do-not-say-<{$key}>'}">
+      <h4 class="am-panel-title"  data-am-collapse="{parent: '#accordion', target: '#do-not-say-<{$key}>'}" style="width:290px;">
         <{$key+1}>.<{$addr.area|ship_area}><{$addr.addr}>
       </h4>
-	  <a  class="<{if $def_addr.addr_id eq $addr.addr_id}> selected<{/if}> addr_list" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}' style=" position:absolute; right:20px; top:5px; color:<{if $def_addr.addr_id eq $addr.addr_id}>#339900<{else}>#999999<{/if}>" href="#">
-	  <i class="am-icon-check-circle-o am-icon-sm"></i></a>
+	  <a  class="<{if $def_addr.addr_id eq $addr.addr_id}> selected<{/if}> addr_list" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}' style=" position:absolute; right:27px; top:5px; color:<{if $def_addr.addr_id eq $addr.addr_id}>#339900<{else}>#999999<{/if}>" href="#">
+	  <i class="am-icon-check-circle-o am-icon-md"></i></a>
 	  <a class="del" style=" position:absolute; right:0px; top:5px; color:#FF3300" href="javascript:void(0);" id="<{link app=b2c ctl=wap_member act=del_rec arg0=$addr.addr_id}>">
-	  <i class="am-icon-times-circle-o am-icon-sm"></i></a>
+	  <i class="am-icon-times-circle-o am-icon-md"></i></a>
     </div>
     <div id="do-not-say-<{$key}>" class="am-panel-collapse am-collapse <{if $def_addr.addr_id eq $addr.addr_id}>am-in<{/if}>">
       <div class="am-panel-bd"  style="padding:0;">
         <div data-am-widget="list_news" class="am-list-news am-list-news-default">
   <div class="am-list-news-bd">
-    <ul class="am-list">
+    <ul class="am-list am-list-static am-list-border">
       <li class="am-g">
-       <input class="am-form-field" type="text" value="<{$addr.name}>" readonly="readonly">
+       <i class="am-icon-user am-icon-sm am-icon-fw"></i><{$addr.name}>
       </li>
       <li class="am-g">
-      <input class="am-form-field" type="text" value="<{if $addr.mobile}><{$addr.mobile}><{else}><{$addr.tel}><{/if}>" readonly="readonly">
+      <{if $addr.mobile}><i class="am-icon-phone am-icon-sm am-icon-fw"></i><{$addr.mobile}><{else}><i class="am-icon-phone am-icon-sm am-icon-fw"></i><{$addr.tel}><{/if}>
       </li>
       <li class="am-g">
-       <input class="am-form-field" type="text" value="<{$addr.area|ship_area}><{$addr.addr}>" readonly="readonly">
+       <i class="am-icon-home am-icon-sm am-icon-fw"></i><{$addr.area|ship_area}><{$addr.addr}>
       </li>
     </ul>
   </div>
