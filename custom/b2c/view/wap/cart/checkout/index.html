@@ -34,9 +34,11 @@
         	<div class="am-list-item-text"  style="color:#CCCCCC" ><{if $def_addr.tel}>电话号码：<{$def_addr.tel}><{else}>手机号码：<{$def_addr.mobile}><{/if}></div>
         	<div class="am-list-item-text"  style="color:#CCCCCC" ><{$def_addr.area|ship_area}><{$def_addr.addr}></div>
       		</li>
-      		<input type="hidden" name="address" value='{"addr_id":<{$def_addr.addr_id}>,"area":<{$def_addr.area|ship_area_id}>}' />
+      		<input type="hidden" name="address" id="ship_address" value='{"addr_id":<{$def_addr.addr_id}>,"area":<{$def_addr.area|ship_area_id}>}' />
       <{else}>
-      		<a href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>" class="btn address-btn bg-orange">
+      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" > 
+      		<a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>" class="am-list-item-hd">请先添加收货地址<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
+      		</li>
       <{/if}>
 
 	  <{if $shipping_method.shipping_name}>	 
@@ -538,7 +540,6 @@
             need = $('input[name="payment[is_tax]"]');
             if($(this).val()=='false'){
                 var ul = $(this).parents('ul');
-                console.log(ul);
                 $(ul[0]).siblings('.fold').remove();
             }else{
                 need.val('true');
@@ -564,9 +565,8 @@
     });
     (function(){
        if('<{$def_addr}>' == false){    	   
-    	   js_alert('js-alert-confirm','您还没添加收货信息,立即添加?','','',function(){
-    		   location.href = '<{link app=b2c ctl=wap_cart act=shipping_edit}>'; 	
-    	    });
+    	   alert('请先添加收货地址');
+           location.href = '<{link app=b2c ctl=wap_cart act=shipping_edit}>';
        }
     })()
 </script>
