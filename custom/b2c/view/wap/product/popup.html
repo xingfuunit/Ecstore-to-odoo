@@ -26,7 +26,7 @@
             <{if $page_product_basic.is_fav}>am-text-success<{else}>not-faved-star<{/if}>" style="float:left; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></a>
 
             <a href="<{link ctl=wap_product act=goods_discuss arg0=$goods_id}>" class="am-icon-btn am-icon-comments-o" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" >
-            <span style=" font-size:8px; color:#FF9900; float:left; line-height:8px;"><{$comments.discussCount|default:'0'}></span>
+            <span style="font-size:8px; color:#FF9900; float:left; line-height:8px; width:28px;text-align:center;"><{$comments.discussCount|default:'0'}></span>
             </a>
         </div>
     </div>

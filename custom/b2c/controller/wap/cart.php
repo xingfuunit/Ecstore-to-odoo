@@ -855,7 +855,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
     }
 
     //送货地址编辑
-    function shipping_edit($isfastbuy=false){
+    function shipping_edit($isfastbuy=false,$nextPage=""){
         $this->set_header();
 
         $this->pagedata['is_fastbuy'] = $isfastbuy;
@@ -874,6 +874,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         /* 是否开启配送时间的限制 */
         $this->pagedata['site_checkout_receivermore_open'] = $this->app->getConf('site.checkout.receivermore.open');
 
+        $this->pagedata['nextPage'] = $nextPage;
         $this->page('wap/cart/checkout/shipping_edit.html');
 
     }
@@ -882,7 +883,13 @@ class b2c_ctl_wap_cart extends wap_frontpage{
     function shipping_save($isfastbuy=false){
         $this->set_header();
         $arrMember = $this->get_current_member();
-        $next_url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'checkout','arg0'=>$isfastbuy));
+        if($_POST['nextPage']=='address_list'){
+            $next_url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_member','act'=>'address_list'));
+        }
+        else{
+            $next_url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'checkout','arg0'=>$isfastbuy));
+        }
+        
         if($_POST['address']){
             $address = json_decode($_POST['address'],true);
             unset($_POST['address']);
