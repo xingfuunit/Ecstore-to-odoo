@@ -235,7 +235,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
         $this->pagedata['curDate'] = $curDate;
 
         // $this->set_tmpl('default');
-        $this->set_tmpl_file('default-onlycontent.html');
+        $this->set_tmpl_file('default-onlycontents.html');
 
         $this->page('wap/product/base_goods_discuss.html');
     }

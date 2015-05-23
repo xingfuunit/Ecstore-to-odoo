@@ -24,9 +24,9 @@
             
   <{foreach from=$receiver item=items key=key}>
 
-<div class="am-panel am-panel-default">
+<div id="addr_panel_<{$items.addr_id}>" class="am-panel am-panel-default">
     <div class="am-panel-hd" style=" position:relative">
-      <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#address_detail_<{$key}>'}">
+      <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#address_detail_<{$items.addr_id}>'}">
        <{$items.area|region}>&nbsp;<{$items.addr|escape:'html'}>
       </h4>
 
@@ -39,7 +39,7 @@
       <a class="btnDelAddr" style=" position:absolute; right:0px; top:5px; color:#FF3300" href="#"><i class="am-icon-times-circle-o am-icon-sm"></i></a>
     </div>
 
-<div id="address_detail_<{$key}>" class="am-panel-collapse am-collapse">
+<div id="address_detail_<{$items.addr_id}>" class="am-panel-collapse am-collapse">
 
   <div class="am-panel-bd"  style="padding:0;">
     <div data-am-widget="list_news" class="am-list-news am-list-news-default">
@@ -133,7 +133,12 @@ $(function(){
             window.location.href='<{link ctl=wap_cart act=shipping_edit}>';
         }
     });
-    
+
+    if(<{$to_edit}>){
+        $('#address_detail_<{$to_edit}>').collapse();
+        $("html,body").animate({scrollTop: $("#addr_panel_<{$to_edit}>").offset().top}, 1000);
+    }
+      
 
     $('#accordion').on('change','select',function(){
 
