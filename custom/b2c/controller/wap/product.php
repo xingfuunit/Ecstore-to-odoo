@@ -142,7 +142,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
         $this->pagedata['page_product_basic'] = $productBasic;
 
         // imgs of detail
-        $intro = $productBasic['intro'];
+        $intro = $productBasic['wapintro'];
         $product_imgs=array();
         if(preg_match_all('<img src=\"([^"\']*)\">', $intro, $matches)){
             $product_imgs = $matches[1];

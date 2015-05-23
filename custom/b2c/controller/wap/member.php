@@ -1964,6 +1964,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
             $this->pagedata['reply'] = 1;
         }
         $this->pagedata['controller'] = "inbox";
+        $this->set_tmpl_file("/default2.html");
         //$this->output();
 		$this->page('wap/member/member_message.html');//文件路径
     }

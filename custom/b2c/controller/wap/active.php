@@ -22,7 +22,6 @@ class b2c_ctl_wap_active extends wap_frontpage{
 
     public function index(){
     	
-    	
     	$this->title = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
     	$this->keywords = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
     	$this->description = app::get('b2c')->_('品珍鲜活-您的品质生活供应商').'_'.$shopname;
