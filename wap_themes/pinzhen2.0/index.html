@@ -58,9 +58,10 @@
 	              <a href="<{link app=b2c ctl=wap_gallery arg0=$cat2.cat_id}>" class=""><{$cat2.title}></a>
 	            </li>
 				<{/foreach}>
-	            <!--<li class="am-menu-nav-channel">
-	              <a href="##" class="" title="公司">进入栏目 &raquo;</a>
-	            </li>-->
+				<div style="clear:both;"></div>
+	            <li class="am-menu-nav-channel">
+	              <a href="<{link app=b2c ctl=wap_gallery arg0=$cat.cat_id}>" class="" title="<{$cat.title}>">进入栏目 &raquo;</a>
+	            </li>
 	          </ul>
 			  <{/if}>
 	        </li>
@@ -70,7 +71,7 @@
 	  </div>
 	</nav>
 	
-	<a href="#" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k2.jpg"></a>
+	<a href="<{link app=b2c ctl=wap_active act=alist }>" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k2.jpg"></a>
 	<a href="<{link app=b2c ctl=wap_gallery act=productsHot }>" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k3.jpg"></a>
 	<a href="<{link app=b2c ctl=wap_member }>" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k4.jpg"></a>
 	</div>
@@ -84,10 +85,25 @@
 	
 	<!--保证和优惠券开始-->
 	<{foreach from=$coup_ads item=c}>
-		<a href="<{$c.ad_url}>" class="four_cut"><img class="full_img" src="<{$c.img_url}>"></a>
+		<{if $c.url_type != "coupon"}>
+			<a href="<{$c.ad_url}>" class="four_cut"><img class="full_img" src="<{$c.img_url}>"></a>
+		<{else}>
+			<a href="javascript:void(0);"  class="four_cut" onclick="getCoupon(<{$c.ad_url}>)"><img class="full_img" src="<{$c.img_url}>"></a>
+		<{/if}>
 	<{/foreach}>
 	<!--保证和优惠券结束-->
 	
+	<!-- 点击领取 -->
+	
+	<{foreach from=$mianyou_ads item=p}>
+		<{if $p.url_type != "coupon"}>
+			<a href="<{$p.ad_url}>"><img class="full_img" src="<{$p.img_url}>"></a>
+		<{else}>
+			<a href="javascript:void(0);" onclick="getCoupon(<{$p.ad_url}>)"><img class="full_img" src="<{$p.img_url}>"></a>
+		<{/if}>
+	<{/foreach}>
+	
+	<!-- 点击领取 -->
 	
 	<!--广告-->
 	<{foreach from=$pic_ads item=p}>
@@ -219,10 +235,9 @@
 	
 	<!-- Navbar -->
 	
-	<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
-	     id="">
+	<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default " id="">
 	  <ul class="am-navbar-nav am-cf am-avg-sm-4"  style="background:#309ab2 !important">
-	    <li> <a href="tel:1008611"> <span class="am-icon-phone"></span> <span class="am-navbar-label">呼叫</span> </a> </li>
+	    <li> <a href="tel:400-930-9303"> <span class="am-icon-phone"></span> <span class="am-navbar-label">呼叫</span> </a> </li>
 	    <li> <a href="<{link app=b2c ctl=wap_cart }>"> <span class="am-icon-shopping-cart"></span> <span class="am-navbar-label">购物车</span> </a> </li>
 	    <li data-am-navbar-qrcode> <a href="javascript:void(0);"> <span class="am-icon-qrcode"></span> <span class="am-navbar-label">二维码</span> </a> </li>
 	    <li> <a href="<{link app=b2c ctl=wap_member }>"> <span class="am-icon-user"></span> <span class="am-navbar-label">会员中心</span> </a> </li>
@@ -234,3 +249,25 @@
 </body>
 </html>
 
+<script type="application/javascript">
+	
+function getCoupon(coupons_id){
+	$.ajax({
+            url:'/wap/getcoupon-wap_index_coupon_ajax.html',
+            data:{coupons_id:coupons_id},
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success){
+					js_alert('js-alert',data.success);
+                }
+                else{
+					js_alert('js-alert',data.error);
+                }
+
+            }
+        });
+	
+}
+
+</script>

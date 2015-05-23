@@ -21,8 +21,7 @@ border-left-color: #5eb95e !important;
  *, *::before, *::after {
     box-sizing: border-box;
 }
-}
-}
+
 
 .dialog {
   background-color: white;
@@ -67,6 +66,54 @@ border-left-color: #5eb95e !important;
 
 .checkout_box .am-ucheck-icons{line-height:38px;}
 
+.hide {
+  display: none !important;
+}
+.star {
+	display: inline-block;
+	width: 66px;
+	height: 11px;
+	background: url(../images/star.png) no-repeat 0 -80px
+}
+
+.star b {
+	display: inline-block;
+	height: 100%;
+	background: url(../images/star.png) no-repeat
+}
+
+.star.big {
+	line-height: 20px;
+	vertical-align: -4px;
+	width: 125px;
+	height: 20px;
+	background: url(../images/star_b.png) no-repeat 0 -100px
+}
+
+.star.big b {
+	background: url(../images/star_b.png) no-repeat
+}
+
+.star.s_1 {
+	background-position: 0 -80px
+}
+
+.star.s_2 {
+	background-position: 0 -60px
+}
+
+.star.s_3 {
+	background-position: 0 -40px
+}
+
+.star.s_4 {
+	background-position: 0 -20px
+}
+
+.star.s_5 {
+	background-position: 0 0
+}
+
 .return_div {
     width: 100%;
     z-index: 99999;
@@ -85,6 +132,20 @@ border-left-color: #5eb95e !important;
     border-radius: .6em;
     opacity: 0.3;
     -moz-opacity: 0.3;
-}
 
+.m-widget-list a::after {
+    color: #ccc;
+    content: "";
+    display: inline-block;
+    font-family: FontAwesome,sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    margin-top: -8px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    vertical-align: baseline;
+}
+.icon-gray-color a{ color:#999999}
 

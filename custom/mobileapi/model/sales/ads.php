@@ -17,7 +17,7 @@ class mobileapi_mdl_sales_ads extends dbeav_model{
 	var $defaultOrder = array('ad_id',' DESC');
 	
 	var $ads_position = array(
-			1 => array(
+			/*1 => array(
 					'id' => '1',
 					'name' => '促销页面',
 					'key' => 'promo_page'
@@ -26,10 +26,10 @@ class mobileapi_mdl_sales_ads extends dbeav_model{
 					'id' => '2',
 					'name' => '商品列表页面',
 					'key' => 'goods_page',
-			),
+			),*/
 			3 => array(
 					'id' => '3',
-					'name' => '首页-顶部滚动广告',
+					'name' => '首页-顶部滚动广告 1024x640',
 					'key' => 'index_roll_banner',
 			),
 			4 => array(
@@ -41,6 +41,11 @@ class mobileapi_mdl_sales_ads extends dbeav_model{
 					'id' => '5',
 					'name' => '首页-促销图片广告 640x260',
 					'key' => 'index_pic_banner',
+			),
+			6 => array(
+					'id' => '6',
+					'name' => '首页-大图送免邮券 640x260',
+					'key' => 'index_coup_mianyou',
 			)
 	);
 	
