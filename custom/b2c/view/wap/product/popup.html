@@ -20,14 +20,12 @@
     <div style="width:60%; height:49px; font-size:12px; color:#cccccc;float:left;line-height:49px; ">库存
         <span id="curStore"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.store}></span> 件
         <div style="float:right">
-            <a href="javascript:void(0);" class="am-icon-btn am-icon-search" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>
+            <a href="<{link app=b2c ctl=wap_search act=result}>" class="am-icon-btn am-icon-search" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>
 
-            <!-- todo: is fav img -->
-            <{if $page_product_basic.is_fav}><{/if}>
-            <a id="btnAdd2Fav" href="javascript:void(0);" class="am-icon-btn am-icon-star" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></a>
+            <a id="btnAdd2Fav" href="javascript:void(0);" class="am-icon-btn am-icon-star 
+            <{if $page_product_basic.is_fav}>am-text-success<{else}>not-faved-star<{/if}>" style="float:left; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></a>
 
-
-            <a href="javascript:void(0);" class="am-icon-btn am-icon-comments-o" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" >
+            <a href="<{link ctl=wap_product act=goods_discuss arg0=$goods_id}>" class="am-icon-btn am-icon-comments-o" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" >
             <span style=" font-size:8px; color:#FF9900; float:left; line-height:8px;"><{$comments.discussCount|default:'0'}></span>
             </a>
         </div>
@@ -47,7 +45,7 @@
     <a id="btnBuyNow" href="javascript:void(0);"><img style="width:50%" src="/public/app/wap/statics/images/buy_btn.png"></a>
 
     <a id="btnAddToCart" href="javascript:void(0)" class="am-icon-btn am-icon-shopping-cart" style="float:right; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px; position:relative"> 
-    <span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:0px; right:0px; display:block"></span></a>
+    </a>
     </div>
 
     <div style="font-size:14px; color:#FFFFFF; height:30px; line-height:14px; width:100%; clear:both">
@@ -60,5 +58,5 @@
 
 <div class="valuehide" style="height:1136px; width:100%; background:#fff;
     filter:alpha(opacity=0); /*IE*/-moz-opacity:0; /*Firefox0%*/
-    opacity:0;/*其他*/display:none;  position:fixed; z-index:9997">
+    opacity:0;/*其他*/display:none;  position:fixed; z-index:99">
 </div>
