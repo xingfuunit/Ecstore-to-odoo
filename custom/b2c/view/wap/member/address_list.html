@@ -199,11 +199,11 @@ $(function(){
                         $btn.removeClass('btnUnsetDefaultAddr').addClass('btnSetDefaultAddr');
                     }
 
-                    commonModal(data.success);
+                    js_alert('js-alert',data.success);
                 }
                     
                 else
-                    commonModal(data.error);
+                    js_alert('js-alert',data.error);
             }   
         });
 
@@ -214,21 +214,26 @@ $(function(){
         var $panel = $(this).parents('.am-panel');
         var addrId = $panel.find('input[name=addr_id]').val();
 
-        $.ajax({
-            url: '/wap/member-del_rec-'+addrId+'.html',
-            type: 'get',
-            dataType: 'json',
-            success:function(data){
-                if(data.success != undefined){
-                    $panel.remove();
-                    pzg_add_count--;
-                    commonModal(data.success);
-                }
-                    
-                else
-                    commonModal(data.error);
-            }   
-        });
+        var delAddr = function(){
+            $.ajax({
+                url: '/wap/member-del_rec-'+addrId+'.html',
+                type: 'get',
+                dataType: 'json',
+                success:function(data){
+                    if(data.success != undefined){
+                        $panel.remove();
+                        pzg_add_count--;
+                        js_alert('js-alert',data.success);
+                    }
+                        
+                    else
+                        js_alert('js-alert',data.error);
+                }   
+            });
+        }
+
+        js_alert('js-alert-confirm','您确定要删除该地址吗？','确定','取消',delAddr)
+
 
     });
 })
