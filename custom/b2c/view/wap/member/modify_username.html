@@ -5,7 +5,7 @@
 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
 
 <div class="full-screen">
-  <div class="full-padding">
+  <div style="  padding-left: 1rem; padding-right: 1rem;">
     <form action="<{link app=b2c ctl='wap_member' full='1' act='bind_member'}>" method="post" class="form" data-type="ajax">
     <div class="c-g">
     <label  style="width: 100px;">
@@ -18,25 +18,25 @@
     </label>
 
     <div class="c" id="account_div_mobile" >
-          <input type="text" name="login_account_mobile" id="login_account_mobile" class="text a-account" style="width: 60%;"   placeholder="手机号" pattern="(^[0-9]{3,4}\-[0-9]{7}$)|(^[0-9]{7}$)|(^[0-9]{3,4}[0-9]{7}$)|(^0{0,1}13[0-9]{9}$)" autofocus title="手机号不正确">
-          <a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>"  class="am-btn am-btn-warning  btn-send orange ib-btn btn-sms">
+          <input type="text" name="login_account_mobile" id="login_account_mobile" class="am-form-field" style="width: 70%;float:left;"   placeholder="手机号" pattern="(^[0-9]{3,4}\-[0-9]{7}$)|(^[0-9]{7}$)|(^[0-9]{3,4}[0-9]{7}$)|(^0{0,1}13[0-9]{9}$)" autofocus title="手机号不正确">
+          <a href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>"  class="am-btn am-btn-warning  btn-send orange ib-btn btn-sms" style="line-height:1.6;height:41px;width: 30%; float: right; text-align: center">
           获取验证码
           </a>
     </div>
 
     <div class="c" id="account_div_email"  style="display: none;">
-          <input type="text" name="login_account_email" id="login_account_email" class="text a-account" style="width: 60%;"   placeholder="邮箱帐号" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" autofocus title="邮箱不正确">
-          <a href="<{link app=b2c ctl=wap_passport act=send_vcode_email}>" class="am-btn am-btn-warning  btn btn-send orange ib-btn btn-email">
+          <input type="text" name="login_account_email" id="login_account_email" class="am-form-field" style="width: 65%;float:left;"   placeholder="邮箱帐号" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" autofocus title="邮箱不正确">
+          <a href="<{link app=b2c ctl=wap_passport act=send_vcode_email}>" class="am-btn am-btn-warning  btn btn-send orange ib-btn btn-email" style="line-height:1.6;height:41px;width: 35%; float: right; text-align: center">
           获取邮件验证码
           </a>
     </div>
 
      <div class="c" id="account_div_account" style="display: none;" >
-          <input type="text" name="login_account_account" id="login_account_account" class="text a-account" style="width: 60%;"   placeholder="商城帐号"  autofocus title="商城帐号不正确">
+          <input type="text" name="login_account_account" id="login_account_account" class="am-form-field"    placeholder="商城帐号"  autofocus title="商城帐号不正确">
     </div>
 
      <div class="c" id="account_div_card" style="display: none;">
-          <input type="text" name="login_account_card" id="login_account_card" class="text a-account" style="width: 60%;"   placeholder="会员卡帐号"  autofocus title="会员卡帐号不正确">
+          <input type="text" name="login_account_card" id="login_account_card" class="am-form-field"  placeholder="会员卡帐号"  autofocus title="会员卡帐号不正确">
     </div>
 
     <div style="clear:both;"></div>
@@ -47,8 +47,8 @@
 	            <label for="" class="c-l">
 	                <em class="f-red">*</em>短信验证：
 	            </label>
-	            <div class="c">
-	                <input type="text" name="vcode_mobile" maxlength="20" style="width: 60%;" placeholder="短信验证码"   pattern=".{6,20}" class="text" data-caution="短信验证码不能为空">
+	            <div class="c" style="width:100%;">
+	                <input type="text" name="vcode_mobile" maxlength="20"  placeholder="短信验证码"   pattern=".{6,20}" class="am-form-field" data-caution="短信验证码不能为空">
 	            </div>
 	        </div>
 	      <div class="notice"></div>
@@ -76,7 +76,7 @@
 	          <em class="f-red">*</em>绑定后密码：
 	        </label>
 	        <div class="c">
-	          <input type="password" name="new_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 60%;" data-caution="密码不能为空">
+	          <input type="password" name="new_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
 	        </div>
 	      </div>
 	      <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;display:none;" id="tips_txt_mobile">此帐户已注册，设置帐户时会丢失其中一方帐户订单，请选择保留数据的帐户</div>
@@ -90,7 +90,7 @@
 	                <em class="f-red">*</em>邮箱验证：
 	            </label>
 	            <div class="c">
-	                <input type="text" name="vcode_email" maxlength="20" placeholder="邮箱验证码"   pattern=".{6,20}" class="text" data-caution="邮箱验证码不能为空">
+	                <input type="text" name="vcode_email" maxlength="20" placeholder="邮箱验证码"   pattern=".{6,20}" class="am-form-field" data-caution="邮箱验证码不能为空">
 	            </div>
 	        </div>
 	      <div class="notice"></div>
@@ -119,7 +119,7 @@
 	          <em class="f-red">*</em>绑定后密码：
 	        </label>
 	        <div class="c">
-	          <input type="password" name="new_password_email" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 60%;" data-caution="密码不能为空">
+	          <input type="password" name="new_password_email" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
 	        </div>
 	      </div>
 
@@ -144,7 +144,7 @@
 		          <em class="f-red">*</em>原账号密码：
 		        </label>
 		        <div class="c">
-		          <input type="password" name="login_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 60%;" data-caution="密码不能为空">
+		          <input type="password" name="login_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
 		        </div>
 		      </div>
 		      <div class="c-g">
@@ -152,7 +152,7 @@
 		          <em class="f-red">*</em>绑定后密码：
 		        </label>
 		        <div class="c">
-		          <input type="password" name="new_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 60%;" data-caution="密码不能为空">
+		          <input type="password" name="new_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
 		        </div>
 		      </div>
 		   <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单，请选择保留数据的帐户</div>
@@ -173,7 +173,7 @@
 		          <em class="f-red">*</em>会员卡密码：
 		        </label>
 		        <div class="c">
-		          <input type="password" name="login_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="text" style="width: 60%;" data-caution="密码不能为空">
+		          <input type="password" name="login_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
 		        </div>
 		      </div>
 		      <div class="c-g">
@@ -181,7 +181,7 @@
 		          <em class="f-red">*</em>绑定后密码：
 		        </label>
 		        <div class="c">
-		          <input type="password" name="new_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="text" style="width: 60%;" data-caution="密码不能为空">
+		          <input type="password" name="new_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
 		        </div>
 		      </div>
 		      <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失失其中一方帐户订单，请选择保留数据的帐户</div>

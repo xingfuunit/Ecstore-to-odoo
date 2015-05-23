@@ -5,13 +5,13 @@
   <div class="am-form-group">
     <label for="doc-ipt-3" class="col-sm-2 am-form-label">充值券号码：</label>
     <div class="col-sm-10">
-      <input type="text" name="giftcard[gcard_code]" required="required" min="1" id='deposit'>
+      <input type="text" name="giftcard[gcard_code]" class="am-form-field" required="required" min="1" id='deposit'>
     </div>
   </div>
   
   <label for="doc-ipt-3" class="col-sm-2 am-form-label">验证码:</label>
   <div style="clear:both; width:100%; margin-top:10px; margin-left:0px;">
-		 <{input type="vcode" name="verifycode" class="verify-input" placeholder="请输入验证码" key='b2c_wap_gc' label='换一张'}>
+		 <{input type="vcode" name="verifycode" class="am-form-field verify-input am-margin-bottom-xs"  placeholder="请输入验证码" key='b2c_wap_gc' label='换一张'}>
 	  </div>
 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>  
   <button type="button" id="ajax-do-payment" class="am-btn am-btn-primary am-btn-block am-btn-warning">确认充值</button>

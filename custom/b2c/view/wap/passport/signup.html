@@ -15,19 +15,40 @@
 		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
 			<br>
 
-			<form method="post" class="am-form">
-				<label for="mobile" style="clear: both; width: 100%;">手机号:</label> <input
+			<form method="post" class="am-form am-form-horizontal">
+				<label for="mobile" style="clear: both; width: 100%;">手机号:</label>
+				<div class="am-input-group" style="width: 70%; float: left">
+  
+  <input type="text" name="mobile" id="mobile"  value="" class="am-form-field" placeholder="请输入手机号">
+</div>
+				
+				
+				 <{* <input
 					type="mobile" name="mobile" id="mobile" class="a-account" value=""
-					style="width: 70%; float: left"> <a
+					style="width: 70%; float: left"> *}> <a
 					href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>"
-					style="width: 30%; float: right; text-align: center"
+					style="line-height:1.6;height:41px;width: 30%; float: right; text-align: center"
 					class="  am-btn am-btn-warning am-btn-sm am-fl btn-send1 ">获取验证码</a>
 				<br> <label for="" style="clear: both; width: 100%;">
-					短信验证： </label> <input type="" id="vcode" name="vcode" maxlength="6"
+					短信验证： </label> 
+					
+					<div class="am-input-group"  style="width:100%;">
+  
+  <input type="text" class="am-form-field"  id="vcode" name="vcode" maxlength="6"
+					placeholder="短信验证码"  pattern=".{6,20}">
+</div>
+					
+					<{* <input type="" id="vcode" name="vcode" maxlength="6"
 					placeholder="短信验证码" required="required" pattern=".{6,20}"
-					class="text" data-caution="短信验证码不能为空"> <label
-					for="password" style="clear: both; width: 100%;">密码:</label> <input
-					type="password" name="" id="password" value="" class="text">
+					class="text" data-caution="短信验证码不能为空"> *}> <label
+					for="password" style="clear: both; width: 100%;">密码:</label>
+					
+					<div class="am-input-group"  style="width:100%;">
+ 
+  <input type="password" id="password" class="am-form-field" placeholder="请输入密码">
+</div>
+					 <!-- <input
+					type="password" name="" id="password" value="" class="text"> -->
 				<br />
 				<div class="c-g-c">
 					<input type="checkbox" name="license" id="license"

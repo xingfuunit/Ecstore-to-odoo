@@ -11,12 +11,19 @@
 		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
 			<br>
 
-			<form method="post" class="am-form">
-				<label for="email">账户:</label> <input class="text"  type="text" id="uname" name="uname"
-					value="<{$loginName}>" placeholder="请输入用户名/手机号" required="required"
-					data-caution="用户名不能为空"> <br> <label for="password">密码:</label>
-				<input class="text"  type="password" id="password" name="password"
-					value="" placeholder="请输入密码" required="required"> <br>
+			<form method="post" class="am-form am-form-horizontal">
+				<label for="email">账户:</label> 
+				
+				<div class="am-input-group" style="width:100%;">
+
+  <input type="text" id="uname" name="uname" value="<{$loginName}>"  class="am-form-field" placeholder="请输入用户名/手机号">
+</div>
+				 <label for="password">密码:</label>
+				<div class="am-input-group" style="width:100%;">
+  
+  <input class="am-form-field"  type="password" id="password" name="password"
+					value=""  placeholder="请输入密码">
+</div>
 				<label for="remember-me"> <input id="remember-me"
 					type="checkbox" name="is_remember"<{if $site_b2c_remember
 					!= '0'}> checked="checked"<{/if}>> 记住密码
