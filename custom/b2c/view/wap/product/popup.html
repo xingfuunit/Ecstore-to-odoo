@@ -3,7 +3,7 @@
 
     <!-- current specification -->
     <div id="curSpec" style="width:40%; height:49px; background:#FF6633;white-space:nowrap; line-height:49px; font-size:21px; color:#FFFFFF; float:left">
-        <span style="font-size:14px"> ￥</span ><span class="specPrice"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.price|number:2}></span> / <span class="specValue" style="font-size:14px"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.spec_value}></span>
+        <span style="font-size:14px"> ￥</span ><span class="specPrice"><{math equation="x" format="%.2f" assign="newkey" x=$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.price}></span> / <span class="specValue" style="font-size:14px"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.spec_value}></span>
     </div>
 
     <!-- specification List -->
@@ -11,7 +11,9 @@
         <{foreach from=$page_product_basic.spec.goods key=key item=spec}>
             <{foreach from=$spec key=item_key item=item}>
                 <{if $item.marketable != 'false'}>
-                <li specData='<{json from=$item}>'><span style="font-size:14px">￥</span><span class="specPrice"><{$item.price|number:2}></span> / <span class="specValue" style="font-size:14px"><{$item.spec_value}></span></li>
+                <li specData='<{json from=$item}>'>
+                    <span style="font-size:14px">￥</span>
+                    <span class="specPrice"><{math equation="x" format="%.2f" assign="newkey" x=$item.price}></span> / <span class="specValue" style="font-size:14px"><{$item.spec_value}></span></li>
                 <{/if}>
             <{/foreach}>
         <{/foreach}>
