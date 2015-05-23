@@ -16,6 +16,7 @@ class b2c_ctl_wap_active extends wap_frontpage{
      * 活动列表页
      */
     public function alist(){
+    	$this->pagedata['title'] = "品珍活动";
     	$this->page('wap/active/list.html');
     }
 

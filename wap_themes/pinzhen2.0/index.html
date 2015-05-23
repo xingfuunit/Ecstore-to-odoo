@@ -79,7 +79,7 @@
 	
 	<!--公告开始-->
 	<div class="am-alert am-alert-danger " style=" float:left; width:100%; margin-top:-40px;">
-	有些不顺眼，在这里专门做一下说明。
+	<marquee direction="left"  scrollamount="8"><a href="<{link app=b2c ctl=wap_active act=alist }>">品珍鲜活，优惠双重享</a></marquee>
 	</div>
 	<!--公告结束-->
 	
@@ -111,13 +111,14 @@
 	<{/foreach}>
 	<!--广告结束-->
 	
-	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_hs_cat.cat_id}>" onClick=""><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt01.jpg"></a>
+	
+	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xg_cat.cat_id}>" onClick=""><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt01.jpg"></a>
 	<!-- List -->
 	
 	
 	<!-- Gallery -->
 	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
-	  <{foreach from=$pz_hs key=key item=goods_row}>
+	  <{foreach from=$pz_xg key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
 	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
@@ -141,10 +142,41 @@
 		<{/foreach}>
 	</ul>
 	
-	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xr_cat.cat_id}>" onClick=""><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt2.jpg"></a>
+	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_hs_cat.cat_id}>" onClick=""><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt2.jpg"></a>
 	<!-- List -->
 	
 	
+	<!-- Gallery -->
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	 <{foreach from=$pz_hs key=key item=goods_row}>
+	 <li>
+	    <div class="am-gallery-item">
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
+	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
+			</div>
+	      </a>
+		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
+		  <form  style="display:none" class="formaddcart">
+			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+			    <input id="stock" type="text" name="stock" value="" />
+			    <input id="limit_nums" type="text" name="limit_nums" value="" />
+			    <input type="text" name="response_json" value="1" />
+			</form>
+	    </div>
+	  </li>
+	  <{/foreach}>
+	</ul>
+	
+	
+	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xr_cat.cat_id}>"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt03.jpg"></a>
+	<!-- List -->
+	
+
 	<!-- Gallery -->
 	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
 	 <{foreach from=$pz_xr key=key item=goods_row}>
@@ -172,14 +204,12 @@
 	</ul>
 	
 	
-	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xg_cat.cat_id}>"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt03.jpg"></a>
+	<a href="<{link app=b2c ctl=wap_gallery arg0=$pz_jx_cat.cat_id}>"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/bt05.jpg"></a>
 	<!-- List -->
-	
-	
 	
 	<!-- Gallery -->
 	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
-	 <{foreach from=$pz_xg key=key item=goods_row}>
+	 <{foreach from=$pz_jx key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
 	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
