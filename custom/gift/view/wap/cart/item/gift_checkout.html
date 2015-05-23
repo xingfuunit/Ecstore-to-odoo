@@ -2,7 +2,7 @@
     <ul class="am-list">
       <!--缩略图在标题左边-->
       <{foreach from=$aCart.object.gift.cart item=cart_gift}>
-      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left pt-h-item">
+      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left pt-h-item" style="border-top:none;">
         <div class="am-u-sm-4 am-list-thumb" style="position:relative">
 		<a href="javascript:void(0);"><img src="<{$order_gift.default_image.thumbnail|storager:'s'}>" /></a>
 		<h3 class="am-list-item-hd">
@@ -25,7 +25,7 @@
     <ul class="am-list">
       <!--缩略图在标题左边-->
       <{foreach from=$aCart.object.gift.order item=order_gift}>
-      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left pt-h-item">
+      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left pt-h-item" style="border-top:none;">
         <div class="am-u-sm-4 am-list-thumb" style="position:relative">
 		<a href="javascript:void(0);"><img src="<{$order_gift.default_image.thumbnail|storager:'s'}>" /></a>
 		<h3 class="am-list-item-hd">
