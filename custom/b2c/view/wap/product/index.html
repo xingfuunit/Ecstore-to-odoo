@@ -135,8 +135,8 @@ $(document).ready(function(){
 
     $('#btnAdd2Fav').click(function(){
         $.ajax({
-            url:'<{link app=b2c ctl=wap_member act=ajax_fav}>',
-            data:'type=goods&gid='+$('#goodsId').val(),
+            url:'/wap/member-ajax_fav.html',
+            data:{'type':'goods','gid':$('#goodsId').val()},
             method:'POST',
             dataType:'json',
             success:function(data){
@@ -146,6 +146,15 @@ $(document).ready(function(){
                     else
                         $('#btnAdd2Fav').removeClass('am-text-success').addClass('not-faved-star');
                 }
+                else{
+                    
+                }
+            },
+            error:function(jqXHR,textStatus,error){
+                if (textStatus == 'parseerror') 
+                    window.location.href='/wap/passport-login.html';
+                else
+                    js_alert('js-alert','服务器错误');
             }
         });
     });
@@ -173,6 +182,8 @@ $(document).ready(function(){
             success:function(data){
                 if(data.success)
                     document.location.href=data.redirect;
+                else
+                    js_alert('js-alert',data.error);
             }
         });
     });

@@ -3,7 +3,7 @@
 
     <!-- current specification -->
     <div id="curSpec" style="width:40%; height:49px; background:#FF6633;white-space:nowrap; line-height:49px; font-size:21px; color:#FFFFFF; float:left">
-        <span style="font-size:14px"> ￥</span ><span class="specPrice"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.price}></span> / <span class="specValue" style="font-size:14px"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.spec_value}></span>
+        <span style="font-size:14px"> ￥</span ><span class="specPrice"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.price|number:2}></span> / <span class="specValue" style="font-size:14px"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.spec_value}></span>
     </div>
 
     <!-- specification List -->
@@ -11,7 +11,7 @@
         <{foreach from=$page_product_basic.spec.goods key=key item=spec}>
             <{foreach from=$spec key=item_key item=item}>
                 <{if $item.marketable != 'false'}>
-                <li specData='<{json from=$item}>'><span style="font-size:14px">￥</span><span class="specPrice"><{$item.price}></span> / <span class="specValue" style="font-size:14px"><{$item.spec_value}></span></li>
+                <li specData='<{json from=$item}>'><span style="font-size:14px">￥</span><span class="specPrice"><{$item.price|number:2}></span> / <span class="specValue" style="font-size:14px"><{$item.spec_value}></span></li>
                 <{/if}>
             <{/foreach}>
         <{/foreach}>
@@ -22,8 +22,8 @@
         <div style="float:right">
             <a href="<{link app=b2c ctl=wap_search act=result}>" class="am-icon-btn am-icon-search" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>
 
-            <a id="btnAdd2Fav" href="javascript:void(0);" class="am-icon-btn am-icon-star 
-            <{if $page_product_basic.is_fav}>am-text-success<{else}>not-faved-star<{/if}>" style="float:left; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></a>
+            <div id="btnAdd2Fav" class="am-icon-btn am-icon-star 
+            <{if $page_product_basic.is_fav}>am-text-success<{else}>not-faved-star<{/if}>" style="float:left; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></div>
 
             <a href="<{link ctl=wap_product act=goods_discuss arg0=$goods_id}>" class="am-icon-btn am-icon-comments-o" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" >
             <span style="font-size:8px; color:#FF9900; float:left; line-height:8px; width:28px;text-align:center;"><{$comments.discussCount|default:'0'}></span>
