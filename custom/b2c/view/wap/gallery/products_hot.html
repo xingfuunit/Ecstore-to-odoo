@@ -2,30 +2,22 @@
 
 <header data-am-widget="header" class="am-header am-header-default tt_bg">
 <div class="am-header-left am-header-nav">
-<a class="" href="#left-link">
-<i class="am-header-icon am-icon-reply"></i></a></div>
+	<a class="" href="javascript:history.go(-1);"><i class="am-header-icon am-icon-reply"></i></a>
+</div>
   <h1 class="am-header-title">
     <a href="#title-link">品珍鲜活</a>
   </h1>
 <div class="am-header-right am-header-nav">
-<a class="" href="#right-link">
-<i class="am-header-icon am-icon-home"></i></a></div>
+	<a class="" href="<{link app=b2c ctl=wap}>"><i class="am-header-icon am-icon-home"></i></a>
+</div>
 </header>
 
 <!-- Menu -->
 
 <!--搜索开始-->
-<div class="am-list-news am-list-news-default am-no-layout" data-am-widget="list_news">
-	<form action="<{link app=b2c ctl=wap_search act=result}>" class="am-form am-form-inline" method="post" enctype="multipart/form-data">
-	  <div class="am-form-group am-form-icon">
-	    <i class="am-icon-search"></i>
-	    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字" name="search_keywords">
-	  </div>  
-	</form>
-</div>
+	<{wap_require file="block/search.html"}>
 <!--搜索结束-->
 
-<div style=" color:#1d88a0; font-size:14px; text-indent:10px;">最热关键字：鲜果 龙虾 澳洲鲍鱼  阿拉斯加帝王蟹  </div>
 <br>
 <!-- List -->
 <div data-am-widget="slider" class="am-slider am-slider-a4" data-am-slider='{}'>

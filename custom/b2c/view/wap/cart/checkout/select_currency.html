@@ -1,21 +1,4 @@
-<header data-am-widget="header" class="am-header am-header-default tt_bg">
-<div class="am-header-left am-header-nav">
-  <a href="products.html" class="">
-      <i class="am-header-icon am-icon-reply"></i>
-    </a>
-	</div>
-  <h1 class="am-header-title">
-    <a href="#title-link">修改支付方式</a>
-  </h1>
-  <div class="am-header-right am-header-nav">
-    <a href="search.html" class="">
-      <i class="am-header-icon am-icon-search"></i>
-    </a>
-   <a href="index2.html" class="">
-      <i class="am-header-icon am-icon-home"></i>
-    </a>
-	</div>
-</header>
+<{include file='wap/member/header.html' title='修改支付方式'}>
 
 <{if count($currencys) > 1}>
     <caption class="select-currency">选择货币类型：
@@ -29,12 +12,16 @@
 
 <div class="am-list-news-bd paiing" id="zxzf">
     <ul class="am-list">
-     <div style="clear:both; width:100%; margin-top:10px; margin-left:10px;">
+     <div style="clear:both; width:100%; margin-top:10px; margin-left:10px;" class="am-btn-group doc-js-btn-1" data-am-button>
      <{foreach from=$payments item="payment" key="key" name="payments"}>
      <{if $payment.app_id eq 'deposit'}>
-		 <button type="button" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>" data-am-button><{$payment.app_display_name}></button>
+     <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
+    	<input type="radio" ><{$payment.app_display_name}>
+  	 </label>
 	 <{elseif $payment.app_id neq 'deposit'}>
-	 	 <button type="button" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>" data-am-button><{$payment.app_display_name}></button>
+	 <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
+    	<input type="radio" ><{$payment.app_display_name}>
+  	 </label>
 	 <{/if}>
 	 <{/foreach}>		 
 	  </div>

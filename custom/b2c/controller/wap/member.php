@@ -1177,7 +1177,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
         }
     }
 
-    function address_list(){
+    function address_list($to_edit=0){
         $this->title = app::get('b2c')->_('配送地址');
         $this->path[] = array('title'=>app::get('b2c')->_('会员中心'),'link'=>$this->gen_url(array('app'=>'b2c', 'ctl'=>'wap_member', 'act'=>'index','full'=>1)));
         $this->path[] = array('title'=>app::get('b2c')->_('收货地址'),'link'=>'#');
@@ -1185,9 +1185,11 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $objMem = $this->app->model('members');
         $this->pagedata['receiver'] = $objMem->getMemberAddr($this->app->member_id);
         $this->pagedata['is_allow'] = (count($this->pagedata['receiver'])<10 ? 1 : 0);
+        $this->pagedata['addr_count'] = count($this->pagedata['receiver']);
         $this->pagedata['num'] = count($this->pagedata['receiver']);
         $this->pagedata['res_url'] = $this->app->res_url;
 
+        $this->pagedata['to_edit'] = $to_edit;
 
         $this->page('wap/member/address_list.html');
     }

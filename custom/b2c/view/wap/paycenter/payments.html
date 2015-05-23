@@ -1,21 +1,4 @@
-<header data-am-widget="header" class="am-header am-header-default tt_bg">
-<div class="am-header-left am-header-nav">
-  <a href="products.html" class="">
-      <i class="am-header-icon am-icon-reply"></i>
-    </a>
-	</div>
-  <h1 class="am-header-title">
-    <a href="#title-link">订单提交</a>
-  </h1>
-  <div class="am-header-right am-header-nav">
-    <a href="search.html" class="">
-      <i class="am-header-icon am-icon-search"></i>
-    </a>
-   <a href="index2.html" class="">
-      <i class="am-header-icon am-icon-home"></i>
-    </a>
-	</div>
-</header>
+<{include file='wap/member/header.html' title='订单提交'}>
 
 <div style=" padding:10px;">
 <p>付款方式：<span  id="J_defpay"><{$order.payinfo.pay_app_id|payname}></span></p>
@@ -181,18 +164,20 @@
             $.post('order-select_payment.html',data,function(re){           	
             	$('#my-alert01').html(re);
             	$('#pay_button').click();
-                $('#J_pay_list').bind('click',function(e){
-                    var el = $(e.target);
-                    if(el.hasClass('paiing-span')) {                   	
-                      $('input[name="payment[def_pay][pay_app_id]"]').val( el.attr('payment_app_id') );
-                      $('#J_defpay').text( el.attr('payment_app_name') );
-                      $.post(
-                        '<{link app=b2c ctl=wap_order act=payment_change}>',
-                        'payment[pay_app_id]=' + encodeURIComponent( el.attr('value') )+ '&order_id=<{$order.order_id}>&payment[currency]=',
-                        function(re){
-                          location.reload();
-                      });
+                $('#P_L_bt').click(function(){
+                    var data = 'payment[pay_app_id]='+encodeURIComponent( $('#zxzf .selected').attr('value') )+ '&order_id=<{$order.order_id}>&payment[currency]=';
+                    $('input[name="payment[def_pay][pay_app_id]"]').val( $('#zxzf .selected').attr('payment_app_id') );
+                    $('#J_defpay').text( $('#zxzf .selected').attr('payment_app_name') );
+                    if($('#zxzf .selected').length == false){
+                        js_alert('js-alert','请选择支付方式');
+                        return;
                     }
+                    var url = '<{link app=b2c ctl=wap_order act=payment_change}>';
+                    $.post(url,data,function(re){
+            /*             if(re){ */
+                            location.reload();
+            /*             } */
+                    });
                 });
 
             });

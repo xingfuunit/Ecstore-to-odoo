@@ -79,10 +79,11 @@ $db ['sales_ads'] = array (
 				'url_type' => array (
 						'type' => array (
 								'goods' => app::get ( 'b2c' )->_ ( '产品' ),
+								'coupon'=> app::get ( 'b2c' )->_ ( '送优惠券' ),
 								'cat' => app::get ( 'b2c' )->_ ( '分类' ),
 								'virtual_cat' => app::get ( 'b2c' )->_ ( '虚拟分类' ),
 								'article' => app::get ( 'b2c' )->_ ( '文章' ),
-								'none' => app::get ( 'b2c' )->_ ( '不链接' ) 
+								'none' => app::get ( 'b2c' )->_ ( '不链接' ) ,
 						),
 						'default' => 'goods',
 						'label' => app::get ( 'b2c' )->_ ( '链接类型' ),

@@ -60,7 +60,25 @@
 	<span style=" font-size:14px; color:#666666; font-weight:normal">总额：</span>
 	<span id="total_amount"><{$order_detail.total_amount|cur_odr:$order_detail.currency}></span>
 	</div>
-	 <a style="float:right; width:50%" href="javascript:void(0);" onclick="document.getElementById('js_btn').click();"><img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pay_btn.png"></a>
+	 <a style="float:right; width:50%" href="javascript:void(0);" id="a_button"><img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pay_btn.png"></a>
 	 <button type="submit" class="js_btn" id="js_btn" rel="_request" style="display: none;">提交</button>
 	</div>
 </div>
+
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">正在提交...</div>
+    <div class="am-modal-bd">
+      <span class="am-icon-spinner am-icon-spin"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $('#a_button').on('click', function() {
+    	$('#my-modal-loading').modal();
+        $('#js_btn').click();
+    });
+  });
+</script>

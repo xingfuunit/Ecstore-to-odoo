@@ -13,25 +13,25 @@
     </div>
     <div style="padding:10px;">
 	
-  <div class="am-list-news-bd paiing" id="zxzf">
+<div class="am-list-news-bd paiing" id="zxzf">
     <ul class="am-list">
      <div style="clear:both; width:100%; margin-top:10px; margin-left:10px;" class="am-btn-group doc-js-btn-1" data-am-button>
      <{foreach from=$payments item="payment" key="key" name="payments"}>
      <{if $payment.app_id eq 'deposit'}>
-     <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-sm paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
-    	<input type="radio" name="options"><{$payment.app_display_name}>
+     <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
+    	<input type="radio" ><{$payment.app_display_name}>
   	 </label>
 	 <{elseif $payment.app_id neq 'deposit'}>
-	 <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-sm paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
-    	<input type="radio" name="options"><{$payment.app_display_name}>
+	 <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
+    	<input type="radio" ><{$payment.app_display_name}>
   	 </label>
 	 <{/if}>
-	 <{/foreach}>
+	 <{/foreach}>		 
 	  </div>
     </ul>
 </div>
 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>  
-  <button type="button" id="P_L_bt<{$_page}>" class="am-btn am-btn-primary am-btn-block am-btn-warning invoice_submit">确认</button>
+  <button type="button" id="P_L_bt" class="am-btn am-btn-primary am-btn-block am-btn-warning invoice_submit">确认</button>
    </div>	
   </div>
 
@@ -39,18 +39,5 @@
     $('#zxzf .paiing-span').click(function(){
         $('#zxzf .paiing-span').removeClass('selected');
         $(this).addClass('selected');
-    });
-    $('#P_L_bt').click(function(){
-        var data = 'payment[pay_app_id]='+$('#zxzf .selected').attr('value');
-        if($('#zxzf .selected').length == false){
-            alert('请选择支付方式');
-            return;
-        }
-        var url = '<{link app=b2c ctl=wap_cart act=payment_confirm}>';
-        $.post(url,data,function(re){
-/*             if(re){ */
-                location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
-/*             } */
-        });
-    });
+    });    
 </script>
