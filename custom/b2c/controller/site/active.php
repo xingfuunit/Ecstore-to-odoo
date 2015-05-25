@@ -58,6 +58,7 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	  		'mqj',//母亲节
     	  		'vipday',//会员日-海鲜类（seafood）
     	  		'vipday_meat',//会员日-肉类（meat）
+    	  		'vipday_fruit',//会员日-水果（fruit）
     	  		);
           if(in_array($active_name,$active)){
           	$this->page('site/active/'.$active_name.'/index.html',true);//活动页面全屏，不要head和foot
