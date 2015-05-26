@@ -3,8 +3,6 @@
 <head>
    
     <{wapheader}>
-<link href="/public/app/wap/statics/css_mini/index.css" rel="stylesheet" media="screen, projection" />
-<script type="text/javascript" src="/public/app/wap/statics/js/cover.js">"></script>
 </head>
 <body>
     <{wap_require file="block/header.html"}>
@@ -29,9 +27,9 @@
 	
 	<!--搜索开始-->
 	<div data-am-widget="list_news" class="am-list-news am-list-news-default">
-	<form action="<{link app=b2c ctl=wap_search act=result}>" class="am-form am-form-inline search_form" method="post" enctype="multipart/form-data">
+	<form action="<{link app=b2c ctl=wap_search act=result}>" class="am-form am-form-inline" method="post" enctype="multipart/form-data">
 	  <div class="am-form-group am-form-icon" style="display: block;">
-	    <i class="am-icon-search search_btn"></i>
+	    <i class="am-icon-search"></i>
 	    <input type="text" class="am-form-field" placeholder="搜索商品：请输入商品关键字" name="search_keywords">
 	  </div>  
 	</form>
@@ -278,12 +276,6 @@
 </html>
 
 <script type="application/javascript">
-	
-	$(document).ready(function () {
-		$(".search_btn").bind("click",function(){
-			$(".search_form").submit();
-		})
-	});
 	
 function getCoupon(coupons_id){
 	$.ajax({

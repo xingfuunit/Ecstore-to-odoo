@@ -1,9 +1,9 @@
 /*
  * Date: 2015-05-26
- * cover.call();
  * */
 var cover = {
 	call:function(){
+		/*
 		var ckName  = 'ck-cover';
 		var ckVal = $.cookie(ckName);
 		if(ckVal != '1'){
@@ -11,13 +11,17 @@ var cover = {
 			$.cookie(ckName,'1',{expires:30,path:'/'});
 			this.init();
 		};
+		*/
 	},
 	hide:function(){
+		top.location = '/';
+		/*
 		var $cover = $('#cover-body');
 		if($cover.is(':visible')){
 			$cover.flexslider('stop');
 			$cover.fadeOut();	
 		};
+		*/
 	},
 	init:function(){
 		if(!document.getElementById('cover-body')){
@@ -65,5 +69,5 @@ var cover = {
 };
 
 $(function(){
-	cover.call();
+	cover.init();
 });
