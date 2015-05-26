@@ -28,7 +28,7 @@
         <{foreach from=$comlist.items item=item}>
           <li class="am-comment am-comment-flip am-comment-success">
             <a href="#link-to-user-home">
-              <img width="48" height="48" class="am-comment-avatar" alt="" src="http://amui.qiniudn.com/bw-2014-06-19.jpg?imageView/1/w/96/h/96"></a>
+              <img width="48" height="48" class="am-comment-avatar" alt="" src="<{$IMG_PZFRESH}>/public/app/wap/statics/images/admin-face.jpg"></a>
             <div class="am-comment-main">
               <div class="am-comment-bd  am-alert-success">
                 <p><a href="#lurenyi"><{if $item.author==='管理员'}>品珍客服<{else}><{$item.author}><{/if}></a><{$item.comment|nl2br}></p>
