@@ -41,6 +41,7 @@
       		</li>
       <{/if}>
 
+	  <{if $def_addr}>
 	  <{if $shipping_method.shipping_name}>	 
       <li class="am-g am-list-item-desced" style="color:#CCCCCC" id="D_L">
         <a style="color:#CCCCCC"  href="/wap/cart-checkout_wrap.html?show=delivery_change" class="am-list-item-hd"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}>
@@ -53,6 +54,7 @@
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
       <{/if}>
+      <{/if}>
       
       <{if $def_addr}>
             <{include file='wap/cart/checkout/payment_confirm.html' app='b2c'}>
@@ -60,7 +62,7 @@
 	        	  
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
         <a style="color:#CCCCCC" href="#" data-am-modal="{target: '#my-alert01',width: 320}" class="am-list-item-hd ">
-        	<span class="J_coupon">使用优惠券<{if $aCart.object.coupon|count > 0 }><{$aCart.object.coupon|count}>张<{/if}></span>
+        	<span class="J_coupon">使用优惠券<{if $used_coupon_num > 0 }><{$used_coupon_num}>张<{/if}></span>
 		<span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>      
 	  </li>
 	  
@@ -146,7 +148,7 @@
             if(couponResult && couponResult.length) {
                 $.each(couponResult, function(index,item){
                 	//html += '<span style="width:70%;float:left;line-height:31px;">'+item.coupon+'-'+item.name+'</span><button type="button" style="width:30%;" class="am-btn btn am-btn-xs am-fl del" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'" data-code="">取消使用</button>';
-                    html += '<li><span class="del" style="float:right;color:blue;" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
+                    html += '<li><span class="del_coupon" style="float:right;color:blue;" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
                 });
             }
             $('.used').html(html);
@@ -315,6 +317,7 @@
           var postdata = 'coupon=' + o.prev().val() + '&response_type=true&is_fastbuy=<{$is_fastbuy}>';
             $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
                 var couponResult = $.parseJSON(re);
+                console.log(couponResult);
                 if(!couponResult || couponResult.error){
                     js_alert('js-alert',couponResult.error);
                     return false;
@@ -332,7 +335,7 @@
                 }
             });
           }
-          if( o.hasClass('del') ){
+          if( o.hasClass('del_coupon') ){
             var postdata = 'cpn_ident=' + o.attr('rel') + '&response_type=true';
             $.post('<{link app=b2c ctl=wap_cart act=removeCartCoupon arg0=coupon}>',postdata,function(re){
                 var couponResult = $.parseJSON(re);
@@ -557,16 +560,5 @@
 
     })();
 
-    Zepto(function($) {
-        $('#checkout_goods_list').flexslider({
-            directionNav:false,
-            controlNav:false
-        });
-    });
-    (function(){
-       if('<{$def_addr}>' == false){    	   
-    	   alert('请先添加收货地址');
-           location.href = '<{link app=b2c ctl=wap_cart act=shipping_edit}>';
-       }
-    })()
+
 </script>
