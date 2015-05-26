@@ -14,7 +14,7 @@ var cover = {
 		*/
 	},
 	hide:function(){
-		top.location = '/';
+		top.location = '/wap';
 		/*
 		var $cover = $('#cover-body');
 		if($cover.is(':visible')){
