@@ -43,8 +43,15 @@ class wap_ctl_default extends wap_controller{
             $this->userObject = kernel::single('b2c_user_object');
             $member_id = $this->login($userData,'',$msg);
             $this->userObject->set_member_session($member_id);
+            
+            //判断微信是否第一次进入
+            if(!isset($_COOKIE['ck-cover'])){
+            	setcookie('ck-cover',1,time()+3600*24*30);		//30天
+            	$this->redirect(array('app'=>'wap','ctl'=>'default','act'=>'wepcover'),1);
+            }
+            
         }
-         
+        
         $GLOBALS['runtime']['path'][] = array('title'=>app::get('wap')->_('首页'),'link'=>kernel::base_url(1));
         $this->set_tmpl('index');
         $this->title=app::get('wap')->getConf('wap.shopname');
@@ -170,6 +177,14 @@ class wap_ctl_default extends wap_controller{
     	$catmap = $objCat->getmap();
     	$this->pagedata['catmap'] = $catmap;
     	
+    }
+    
+    
+    /**
+     * 手机首次进入封面页
+     */
+    public function wepcover(){
+    	$this->page('wap/cover.html');
     }
     
 
