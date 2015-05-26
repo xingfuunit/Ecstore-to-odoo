@@ -28,6 +28,7 @@
     	<li>
 	    	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
 	    		<{foreach from=$goods key=k2 item=goods2}>
+				<{if $goods2}>
 				 <li style="width:100%;">
 				    <div class="am-gallery-item">
 				      <a href="<{link app=b2c ctl=wap_product arg0=$goods2.products.product_id}>">
@@ -49,6 +50,7 @@
 				      
 				    </div>
 				  </li>
+				  <{/if}>
 				  <{/foreach}>
 			</ul>
 		</li>
