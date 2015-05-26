@@ -200,6 +200,38 @@
       <{/if}>
     </ul>
     
+    <{if $prepare.prepare_type != 'prepare'}>
+<!-- 赠品 -->
+<{if $order.gift_items}>
+<{foreach from=$order.gift_items item="item" key="key"}>
+<ul class="pt-list">
+    <li class="pt-h-item c-fix">
+    <a href="#" class="pt-h-link">
+        <div class="pt-h-img"><img src="<{$gifts.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>" /></div>
+        <div class="pt-h-info">
+            <div class="pt-h-name">
+                <{$item.name}>
+            </div>
+            <div class="pt-h-other">
+                
+            </div>
+            <div class="col2">
+                <div class="col price">
+                    <{$item.amount|cur_odr:$order.currency}>
+                </div>
+                <div class="col t-r">
+                    数量：<{$item.nums}>
+                </div>
+            </div>
+        </div>
+    </a>
+    </li>
+</ul>
+<{/foreach}>
+<{/if}>
+<{/if}>
+    
+    
     
     <div style="float:left; width:100%;" >
   <div class="am-panel-hd" style="float:right; width:100%;background:#CCCCCC;">
