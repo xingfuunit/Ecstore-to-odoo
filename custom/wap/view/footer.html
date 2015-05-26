@@ -47,6 +47,7 @@
 
 <script type="text/javascript">
 function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
+	$('.am-modal-loading').modal('close');
 	var bnt1=arguments[2]?arguments[2]:'确定';
 	var bnt2=arguments[3]?arguments[3]:'取消';
 	var funYes=arguments[4]?arguments[4]:'';

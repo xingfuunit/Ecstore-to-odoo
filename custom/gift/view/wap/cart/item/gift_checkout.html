@@ -1,0 +1,45 @@
+<{if $aCart.object.gift.cart}>
+    <ul class="am-list">
+      <!--缩略图在标题左边-->
+      <{foreach from=$aCart.object.gift.cart item=cart_gift}>
+      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left pt-h-item" style="border-top:none;">
+        <div class="am-u-sm-4 am-list-thumb" style="position:relative">
+		<a href="javascript:void(0);"><img src="<{$order_gift.default_image.thumbnail|storager:'s'}>" /></a>
+		<h3 class="am-list-item-hd">
+             <a style=" color:#999999" href="javascript:void(0);">[积分兑换赠品] <{$cart_gift.name}></a>
+          </h3>
+          <div class="am-list-item-text">
+		    <{$cart_gift.spec_info}>
+		  </div>
+          <div class="am-list-item-text">
+		   数量：<{$cart_gift.quantity}>
+		  </div>
+		  <div style="clear:both; color:#FF0000;"><h1 style="float:left"><{$cart_gift.price.price|cur_odr}></h1></div>
+		</div>        
+      </li>   
+      <{/foreach}>   
+    </ul>   
+<{/if}>
+
+<{if $aCart.object.gift.order}>
+    <ul class="am-list">
+      <!--缩略图在标题左边-->
+      <{foreach from=$aCart.object.gift.order item=order_gift}>
+      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left pt-h-item" style="border-top:none;">
+        <div class="am-u-sm-4 am-list-thumb" style="position:relative">
+		<a href="javascript:void(0);"><img src="<{$order_gift.default_image.thumbnail|storager:'s'}>" /></a>
+		<h3 class="am-list-item-hd">
+             <a style=" color:#999999" href="javascript:void(0);">[订单赠品] <{$order_gift.name}></a>
+          </h3>
+          <div class="am-list-item-text">
+		    <{$order_gift.spec_info}>
+		  </div>
+          <div class="am-list-item-text">
+		    数量：<{$order_gift.quantity}>
+		  </div>
+		  <div style="clear:both; color:#FF0000;"><h1 style="float:left"><{$order_gift.price.price|cur_odr}></h1></div>
+		</div>        
+      </li>   
+      <{/foreach}>   
+    </ul>   
+<{/if}>

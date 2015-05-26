@@ -3,14 +3,14 @@
 
 
 
-
-
-
 <!-- Header -->
 
 <{include file='wap/member/header.html' title='收藏夹' goback='/wap/member.html'}>
 
 <{if !$favorite}>
+<div class="am-list-news-bd">
+<div style="margin:20px auto;color:red;text-align: center;font-size: 16px;">暂无收藏</div>
+</div>
 <{else}>
 <div class="am-list-news-bd">
     <ul class="am-list">
