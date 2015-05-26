@@ -45,6 +45,17 @@
 </div>
 <!-- 加入购物车弹出框 -->
 
+<!-- 提交等待 弹出框 -->
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="cart-modal-loading">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">正在提交...</div>
+    <div class="am-modal-bd">
+      <span class="am-icon-spinner am-icon-spin"></span>
+    </div>
+  </div>
+</div>
+<!-- 提交等待 弹出框 -->
+
 <script type="text/javascript">
 function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 	$('.am-modal-loading').modal('close');
@@ -74,7 +85,11 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 		
 		//加入购物车 操作
 		$('.btnAddToCart').click(function(){
+			//弹出等待框
+			$('#cart-modal-loading').modal();
+			
 			var obj = $(this).siblings(".formaddcart");
+			
 //			console.log(obj);
 	        $.ajax({
 	            url:'/wap/cart-add-goods.html',
@@ -82,6 +97,9 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 	            method:'POST',
 	            dataType:'json',
 	            success:function(data){
+					//隐藏等待框
+					$('.am-modal-loading').modal('close');
+					
 	                if(data.success){
 						$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
 	                    $('#modalAddToCart').modal({
@@ -105,6 +123,11 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 	            }
 	        });
 	    });
+		
+		//搜索按钮提交
+		$(".search_btn").bind("click",function(){
+			$(".search_form").submit();
+		})
 	});
 </script>
 
