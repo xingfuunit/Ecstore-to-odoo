@@ -1,6 +1,7 @@
 <{include file='wap/member/header.html' title='充值券充值' goback='/wap/member.html'}>
 <div style="width:100%; text-align:center; padding:20px 0; font-size:18px"><h4>现存余额：<span class="am-text-danger" ><{$total|cur_odr}></span>元</h4></div>
 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+<form>
 <div style=" padding:10px;">
   <div class="am-form-group">
     <label for="doc-ipt-3" class="col-sm-2 am-form-label">充值券号码：</label>
@@ -16,6 +17,7 @@
 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>  
   <button type="button" id="ajax-do-payment" class="am-btn am-btn-primary am-btn-block am-btn-warning">确认充值</button>
 </div> 
+</form>
 <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert-signup">
   <div class="am-modal-dialog">
     <div class="am-modal-hd">错误</div>
