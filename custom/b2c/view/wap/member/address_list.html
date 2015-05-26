@@ -163,7 +163,8 @@ $(function(){
     });
 
     $('#accordion').on('click','a',function(){
-
+        if( ! $btn.hasClass('btnSetDefaultAddr') && !$btn.hasClass('btnUnsetDefaultAddr') )
+          return false;
         var $btn = $(this);
 
         var disable = 1;
