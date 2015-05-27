@@ -221,7 +221,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
         $curDate = 0;
         // echo '<pre>';
         // $comments= kernel::single("b2c_goods_description_comments")->show($goods_id,'discuss',10);
-        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,0,1);
+        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,0,15);
         $this->pagedata['comments'] = $comments;
         $this->pagedata['curDate'] = $curDate;
         $this->pagedata['goods_id'] = $goods_id;
