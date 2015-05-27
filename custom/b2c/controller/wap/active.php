@@ -3,21 +3,11 @@ class b2c_ctl_wap_active extends wap_frontpage{
 
     var $noCache = true;
     var $show_gotocart_button = true;
-    
-    
 
     public function __construct(&$app) {
 
         parent::__construct($app);
         
-    }
-    
-    /**
-     * 活动列表页
-     */
-    public function alist(){
-    	$this->pagedata['title'] = "品珍活动";
-    	$this->page('wap/active/list.html');
     }
 
     public function index(){
@@ -104,4 +94,66 @@ class b2c_ctl_wap_active extends wap_frontpage{
     	}
     	//每天限50张end
     }
+    
+    
+    /**
+     * wap活动列表页
+     */
+    public function alist(){
+    	
+    	//倒序 显示
+    	$alist_date = $this->alist_date;
+    	krsort($alist_date);
+    	foreach($alist_date as $k => &$v){
+    		$alist_date[$k]['is_start'] = 0;  
+    		if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
+    			$alist_date[$k]['is_start'] = 1;
+    		}
+    		//格式转换
+    		$v['start_time'] = date('Y.m.d',strtotime($v['start_time']));
+    		$v['end_time'] = date('Y.m.d',strtotime($v['end_time']));
+    	}
+    	$this->pagedata['alist_date'] = $alist_date; 
+    	$this->pagedata['title'] = "品珍活动";
+    	$this->page('wap/active/list.html');
+    }
+    
+    var $alist_date = array(
+    		0=>array(
+    				'start_time'=>'2015-04-27 00:00:00',
+    				'end_time'=>'2015-05-5 23:59:59',
+    				'alt'=>'品珍私享奢华零距离·和牛',
+    				'image_name'=>'99.jpg',
+    				'active_url'=>'javascirpt:void(0);'
+    		),
+    		1=>array(
+    				'start_time'=>'2015-05-10 00:00:00',
+    				'end_time'=>'2015-05-10 23:59:59',
+    				'alt'=>'母亲节—不赚钱·只为妈妈美丽健康',
+    				'image_name'=>'mqj.jpg',
+    				'active_url'=>'javascirpt:void(0);'
+    		),
+    		2=>array(
+    				'start_time'=>'2015-05-13 00:00:00',
+    				'end_time'=>'2015-05-13 23:59:59',
+    				'alt'=>'周三会员日-全场海鲜8.8折',
+    				'image_name'=>'hx.jpg',
+    				'active_url'=>'javascirpt:void(0);'
+    		),
+    		3=>array(
+    				'start_time'=>'2015-05-20 00:00:00',
+    				'end_time'=>'2015-05-20 23:59:59',
+    				'alt'=>'周三会员日-全场肉品8.8折',
+    				'image_name'=>'rl.jpg',
+    				'active_url'=>'javascirpt:void(0);'
+    		),
+    		4=>array(
+    				'start_time'=>'2015-05-27 00:00:00',
+    				'end_time'=>'2015-05-27 23:59:59',
+    				'alt'=>'周三会员日-全场水果8.8折',
+    				'image_name'=>'sg.jpg',
+    				'active_url'=>'http://www.pzfresh.com/active.html?name=vipday'
+    		),
+    
+    );
 }

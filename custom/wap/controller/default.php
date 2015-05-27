@@ -143,7 +143,12 @@ class wap_ctl_default extends wap_controller{
     private function _new_index_data(){
     	$goodsModel = app::get('b2c')->model('goods');
     	$catModel = app::get('b2c')->model('goods_cat');
-    	$filter =array('wap_recommend'=>1); 
+    	$filter =array(
+    			'wap_recommend'=>1,
+    			'is_line'=>1,
+   				'marketable'=>"true",
+   				'is_buildexcerpts'=>"true",
+    			); 
     	
     	//品珍鲜果
     	$this->pagedata['pz_xg'] = $goodsModel->get_good_list_by_cat_catname('时令水果',$filter);
