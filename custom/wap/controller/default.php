@@ -3,48 +3,58 @@ class wap_ctl_default extends wap_controller{
     
 
      function index(){
-        kernel::single('base_session')->start();
-        if( !empty($_GET['signature']) &&  !empty($_GET['openid']) ){
-            $bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>$_GET['u_eid'],'status'=>'active'));
-            $flag = kernel::single('weixin_object')->check_wechat_sign($_GET['signature'], $_GET['openid']);
-            if( $flag && !empty($bind)){
-                $openid = $_GET['openid'];
-            }
-        }elseif( !empty($_GET['code']) && !empty($_GET['state']) ){
-            $bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>$_GET['state'],'status'=>'active'));
-            if( !empty($bind) &&  kernel::single('weixin_wechat')->get_oauth2_accesstoken($bind['id'],$_GET['code'],$result) ){
-                $openid = $result['openid'];
-            }
-        }
+//千色修改的代码，现在发现 是没用的
+//         kernel::single('base_session')->start();
+//         if( !empty($_GET['signature']) &&  !empty($_GET['openid']) ){
+//             $bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>$_GET['u_eid'],'status'=>'active'));
+//             $flag = kernel::single('weixin_object')->check_wechat_sign($_GET['signature'], $_GET['openid']);
+//             if( $flag && !empty($bind)){
+//                 $openid = $_GET['openid'];
+//             }
+//         }elseif( !empty($_GET['code']) && !empty($_GET['state']) ){
+//             $bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>$_GET['state'],'status'=>'active'));
+//             if( !empty($bind) &&  kernel::single('weixin_wechat')->get_oauth2_accesstoken($bind['id'],$_GET['code'],$result) ){
+//                 $openid = $result['openid'];
+//             }
+//         }
           
-        if( $openid ){
-            $bindTagData = app::get('pam')->model('bind_tag')->getRow('*',array('open_id'=>$openid));
-            if( $bindTagData ){
-                $_SESSION['weixin_u_nickname'] = $bindTagData['tag_name'];
-            }else{
-                $res = kernel::single('weixin_wechat')->get_basic_userinfo($bind['id'],$openid);
-                $_SESSION['weixin_u_nickname'] = $res['nickname'];
-            }
-            $_SESSION['weixin_u_openid'] = $openid;
-            $_SESSION['is_bind_weixin'] = false;
+//         if( $openid ){
+//             $bindTagData = app::get('pam')->model('bind_tag')->getRow('*',array('open_id'=>$openid));
+//             if( $bindTagData ){
+//                 $_SESSION['weixin_u_nickname'] = $bindTagData['tag_name'];
+//             }else{
+//                 $res = kernel::single('weixin_wechat')->get_basic_userinfo($bind['id'],$openid);
+//                 $_SESSION['weixin_u_nickname'] = $res['nickname'];
+//             }
+//             $_SESSION['weixin_u_openid'] = $openid;
+//             $_SESSION['is_bind_weixin'] = false;
             
-            //一键登陆
-            $deed = $_SESSION['weixin_u_nickname'];
-            $pam_members_model = app::get('pam')->model('members');
-            $flag = $pam_members_model->getList('member_id',array('login_account'=>trim($deed)));
-            if($flag[0]['member_id'] == ''){
-                $this->create($deed);
-            }
-            $userData = array(
-                'login_account' => $deed,
-                'login_password' => "123456"
-            );
-            $this->weixinObject = kernel::single('weixin_object');
-            $this->userObject = kernel::single('b2c_user_object');
-            $member_id = $this->login($userData,'',$msg);
-            $this->userObject->set_member_session($member_id);
+//             //一键登陆
+//             $deed = $_SESSION['weixin_u_nickname'];
+//             $pam_members_model = app::get('pam')->model('members');
+//             $flag = $pam_members_model->getList('member_id',array('login_account'=>trim($deed)));
+//             if($flag[0]['member_id'] == ''){
+//                 $this->create($deed);
+//             }
+//             $userData = array(
+//                 'login_account' => $deed,
+//                 'login_password' => "123456"
+//             );
+//             $this->weixinObject = kernel::single('weixin_object');
+//             $this->userObject = kernel::single('b2c_user_object');
+//             $member_id = $this->login($userData,'',$msg);
+//             $this->userObject->set_member_session($member_id);
+//         }
+        
+        
+        if($this->openid){
+        	//判断微信是否第一次进入
+        	if(!isset($_COOKIE['ck-cover'])){
+        		setcookie('ck-cover',1,time()+3600*24*30);		//30天
+        		$this->redirect(array('app'=>'wap','ctl'=>'default','act'=>'wepcover'),1);
+        	}
         }
-         
+        
         $GLOBALS['runtime']['path'][] = array('title'=>app::get('wap')->_('首页'),'link'=>kernel::base_url(1));
         $this->set_tmpl('index');
         $this->title=app::get('wap')->getConf('wap.shopname');
@@ -133,7 +143,12 @@ class wap_ctl_default extends wap_controller{
     private function _new_index_data(){
     	$goodsModel = app::get('b2c')->model('goods');
     	$catModel = app::get('b2c')->model('goods_cat');
-    	$filter =array('wap_recommend'=>1); 
+    	$filter =array(
+    			'wap_recommend'=>1,
+    			'is_line'=>1,
+   				'marketable'=>"true",
+   				'is_buildexcerpts'=>"true",
+    			); 
     	
     	//品珍鲜果
     	$this->pagedata['pz_xg'] = $goodsModel->get_good_list_by_cat_catname('时令水果',$filter);
@@ -170,6 +185,14 @@ class wap_ctl_default extends wap_controller{
     	$catmap = $objCat->getmap();
     	$this->pagedata['catmap'] = $catmap;
     	
+    }
+    
+    
+    /**
+     * 手机首次进入封面页
+     */
+    public function wepcover(){
+    	$this->page('wap/cover.html');
     }
     
 

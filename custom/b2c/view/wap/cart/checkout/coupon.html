@@ -34,7 +34,7 @@
   <div class="used" style="float:left;width:100%">
   <{foreach from=$aCart.object.coupon item=coupon}>
    <{if $coupon.used}>
-	<li><span class="del" style="float:right;color:blue;" rel="<{$coupon.obj_ident}>" data-coupon="<{$coupon.cpns_id}>" data-code="<{$coupon.coupon}>">取消使用</span><{$coupon.coupon}>-<{$coupon.name}></li>
+	<li><span class="del_coupon" style="float:right;color:blue;" rel="<{$coupon.obj_ident}>" data-coupon="<{$coupon.cpns_id}>" data-code="<{$coupon.coupon}>">取消使用</span><{$coupon.coupon}>-<{$coupon.name}></li>
     </li>   
    <{/if}>
    <{/foreach}>
