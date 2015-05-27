@@ -819,7 +819,15 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         	$bind = app::get('weixin')->model('bind')->getRow('id',array('weixin_account'=>WEIXIN_ACCOUNT,'status'=>'active'));
         	$this->pagedata['signPackage'] = kernel::single('weixin_jssdk')->getSignPackage($bind);
 //         }
-      
+
+        $used_coupon_num = 0;
+        foreach($this->pagedata['aCart']['object']['coupon'] as $aoc){
+        	if($aoc['used']){
+        		$used_coupon_num = $used_coupon_num + 1;
+        	}
+        }
+        $this->pagedata['used_coupon_num'] = $used_coupon_num;
+        
         $this->page('wap/cart/checkout/index.html',false,$app_id);
     }
 

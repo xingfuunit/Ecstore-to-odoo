@@ -213,6 +213,11 @@ class b2c_ctl_wap_product extends wap_frontpage{
         if(!$goods_id){
             echo '参数错误！';
         }
+
+        $this->title = app::get('b2c')->_('评论列表');
+        $this->keywords = app::get('b2c')->_('商品页').'_'.'评论列表';
+        $this->description = app::get('b2c')->_('商品页').'_'.'评论列表';
+
         $curDate = 0;
         // echo '<pre>';
         // $comments= kernel::single("b2c_goods_description_comments")->show($goods_id,'discuss',10);

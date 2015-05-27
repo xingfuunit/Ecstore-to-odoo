@@ -96,9 +96,9 @@
                         <{if $item_goods.adjunct_items}>
                             <{foreach from=$item_goods.adjunct_items item=item_adjunct name=adjunct_item}>
                             <div class="am-margin am-cf">
-                                <a href='<{$item_adjunct.link_url}>' title="<{$item_adjunct.quantity}>--<{$item_adjunct.name}>--配件">
+                                <div class="am-u-sm-4 am-list-thumb" ><a href='<{$item_adjunct.link_url}>' title="<{$item_adjunct.quantity}>--<{$item_adjunct.name}>--配件">
                                 <img src="<{$item_adjunct.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>"/>
-                                </a>
+                                </a></div>
                                 <i class="num"><{$item_adjunct.quantity}></i>
                                 <i class="icon red">配件</i>
                             </div>
@@ -108,9 +108,9 @@
                         <{if $item_goods.gift_items}>
                             <{foreach from=$item_goods.gift_items item=item_gift name=gift_item}>
                             <div class="am-margin am-cf">
-                                <a href='#' title="<{$item_gift.quantity}>-- <{$item_gift.name}>--赠品">
+                                <div class="am-u-sm-4 am-list-thumb" ><a href='#' title="<{$item_gift.quantity}>-- <{$item_gift.name}>--赠品">
                                 <img src="<{$item_gift.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>"/>
-                                </a>
+                                </a></div>
                                 <i class="num"><{$item_gift.quantity}></i>
                                 <i class="icon red">赠品</i>
                             </div>
@@ -123,9 +123,9 @@
                 <{if $order.gift_items}>
                     <{foreach from=$order.gift_items item=item_gift name=gift_item}>
                     <div class="am-margin am-cf">
-                        <a href='#' title="<{$item_gift.quantity}>--<{$item_gift.name}>--赠">
+                        <div class="am-u-sm-4 am-list-thumb" ><a href='#' title="<{$item_gift.quantity}>--<{$item_gift.name}>--赠">
                         <img src="<{$item_gift.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>"/>
-                        </a>
+                        </a></div>
                         <i class="num"><{$item_gift.quantity}></i>
                         <i class="icon red">赠品</i>
                      </div>
