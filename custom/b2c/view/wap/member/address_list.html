@@ -163,10 +163,11 @@ $(function(){
     });
 
     $('#accordion').on('click','a',function(){
-        if( ! $btn.hasClass('btnSetDefaultAddr') && !$btn.hasClass('btnUnsetDefaultAddr') )
-          return false;
         var $btn = $(this);
 
+        if( ! $btn.hasClass('btnSetDefaultAddr') && !$btn.hasClass('btnUnsetDefaultAddr') )
+          return false;
+        
         var disable = 1;
         if($btn.hasClass('btnSetDefaultAddr')){
             disable = 2;
@@ -191,7 +192,6 @@ $(function(){
 
                     js_alert('js-alert',data.success);
                 }
-                    
                 else
                     js_alert('js-alert',data.error);
             }   
