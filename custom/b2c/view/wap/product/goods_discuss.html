@@ -23,7 +23,7 @@ $(window).scroll(function() {
     if(hasNextPage && !loading && ( $(document).height() - $(window).height() - $(document).scrollTop() < 10) ) {
         loading = true;
         $.ajax({
-            url:'/wap/product-ajax_goods_discuss-'+goods_id+'-'+last_comment_id+'.html',
+            url:'/wap/product-ajax_goods_discuss-'+goods_id+'-'+last_comment_id+'-'+curDate+'.html',
             success : function(data){
                 if(data == ''){
                     hasNextPage = false;

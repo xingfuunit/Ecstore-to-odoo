@@ -221,7 +221,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
         $curDate = 0;
         // echo '<pre>';
         // $comments= kernel::single("b2c_goods_description_comments")->show($goods_id,'discuss',10);
-        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,0,10);
+        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,0,1);
         $this->pagedata['comments'] = $comments;
         $this->pagedata['curDate'] = $curDate;
         $this->pagedata['goods_id'] = $goods_id;
@@ -230,12 +230,15 @@ class b2c_ctl_wap_product extends wap_frontpage{
 
     }
 
-    public function ajax_goods_discuss($goods_id,$last_comment_id=0,$curDate=0){
+    public function ajax_goods_discuss($goods_id,$last_comment_id=0,$curYear=0,$curMonth=0,$curDay=0){
         if(!$goods_id){
             echo json_encode(array('error'=>'参数错误！'));
             exit;
         }
-        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,$last_comment_id,10);
+
+        $curDate = "20$curYear-$curMonth-$curDay";
+
+        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,$last_comment_id,15);
         $this->pagedata['comments'] = $comments;
         $this->pagedata['curDate'] = $curDate;
 
