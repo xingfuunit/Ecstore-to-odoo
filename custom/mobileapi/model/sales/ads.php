@@ -46,6 +46,11 @@ class mobileapi_mdl_sales_ads extends dbeav_model{
 					'id' => '6',
 					'name' => '首页-大图送免邮券 640x260',
 					'key' => 'index_coup_mianyou',
+			),
+			7 => array(
+					'id' => '7',
+					'name' => '首页-滚动文字',
+					'key' => 'index_roll_text',
 			)
 	);
 	

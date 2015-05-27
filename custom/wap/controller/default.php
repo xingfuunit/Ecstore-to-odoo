@@ -178,6 +178,9 @@ class wap_ctl_default extends wap_controller{
     	//送免邮券广告
     	$this->pagedata['mianyou_ads'] = $ads_model->get_sales_ads('index_coup_mianyou');
     	
+    	//滚动文字
+    	$this->pagedata['roll_text'] = $ads_model->get_sales_ads('index_roll_text');
+    	
     	//商品分类
     	$objCat = app::get('b2c')->model('goods_cat');
 //     	$catlist = $objCat->getList('*', array('parent_id' => $cat_id), $offset=0, $limit=-1, 'p_order desc');

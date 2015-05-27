@@ -219,13 +219,13 @@ function index(){
 		$is_get = $member_coupons->getRow('*',array('cpns_id'=>$coupons_id,'member_id'=>$member_id));
 		
 		if($is_get){
-			echo  json_encode(array("error"=>'你已领取，马上购物吧！'));
+			echo  json_encode(array("error"=>sprintf('你已领取"%s"，马上购物吧！',$is_coupon['cpns_name'])));
 			return ;
 		}
 		
 		$ret = $this->send_cp($coupons_id,$member_ids);
 		if($ret){
-			echo json_encode(array('success'=>'优惠券领取成功'));
+			echo json_encode(array('success'=>sprintf('"%s"领取成功'),$is_coupon['spns_name']));
 			return;
 		}else{
 			echo json_encode(array('error'=>'优惠券领取失败，请稍后重试'));
