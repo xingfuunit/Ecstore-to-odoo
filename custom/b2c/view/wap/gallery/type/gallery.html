@@ -28,6 +28,9 @@
 <script>
 	//加入购物车 操作
 	$('.btnAddToCart').click(function(){
+		//弹出等待框
+		$('#cart-modal-loading').modal();
+		
 		var obj = $(this).siblings(".formBuyNow");
         $.ajax({
             url:'/wap/cart-add-goods.html',
@@ -35,6 +38,10 @@
             method:'POST',
             dataType:'json',
             success:function(data){
+				
+				//隐藏等待框
+				$('.am-modal-loading').modal('close');
+				
                 if(data.success){
 					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
                     $('#modalAddToCart').modal({
