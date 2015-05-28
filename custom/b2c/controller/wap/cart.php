@@ -852,6 +852,10 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         if(empty($_GET['show'])){
             return ;
         }
+        if(!$this->member_status){
+        	$this->begin(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'index'));
+        	$this->end(false,'请先登录!',$this->gen_url(array('app'=>'b2c','ctl'=>'wap_passport','act'=>'index')));
+        }
         if(method_exists($this,$_GET['show'])){
             $fn = $_GET['show'];
             $_filter = array();
