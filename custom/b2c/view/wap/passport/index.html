@@ -58,7 +58,7 @@
 	$(document).ready(function() {
 
 		$("#ajax_login").bind("click", function() {
-
+			$('#cart-modal-loading').modal();
 			$.ajax({
 				url : "<{link app=b2c ctl=wap_passport act=post_login}>",
 
@@ -74,6 +74,8 @@
 				timeout : 3000,
 
 				error : function() {
+					//隐藏等待框
+					$('.am-modal-loading').modal('close');
 					$('#my-alert-login')
 					.children(
 							'.am-modal-dialog')
@@ -86,6 +88,8 @@
 				},
 
 				success : function(result) {
+					//隐藏等待框
+					$('.am-modal-loading').modal('close');
 					jsonobj = eval('(' + result + ')');
 					if (jsonobj.success){
 					 	location.href=jsonobj.redirect;
