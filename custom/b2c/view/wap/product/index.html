@@ -183,8 +183,10 @@ $(document).ready(function(){
             success:function(data){
                 if(data.success)
                     document.location.href=data.redirect;
-                else
+                else{
+                    $('#cart-modal-loading').modal();
                     js_alert('js-alert',data.error);
+                }
             }
         });
     });
