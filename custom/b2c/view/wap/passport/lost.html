@@ -126,7 +126,7 @@
 								.bind(
 										"click",
 										function() {
-
+											$('#cart-modal-loading').modal();
 											$
 													.ajax({
 														url : "<{link app=b2c ctl=wap_passport act=resetpassword }>",
@@ -152,6 +152,8 @@
 														timeout : 3000,
 
 														error : function() {
+															//隐藏等待框
+															$('.am-modal-loading').modal('close');
 															$('#my-alert-signup')
 															.children(
 																	'.am-modal-dialog')
@@ -165,6 +167,8 @@
 
 														success : function(
 																result) {
+															//隐藏等待框
+															$('.am-modal-loading').modal('close');
 															jsonobj = eval('('
 																	+ result
 																	+ ')');
