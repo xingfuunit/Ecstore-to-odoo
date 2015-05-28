@@ -1244,6 +1244,25 @@ class b2c_ctl_site_cart extends b2c_frontpage{
 				
 				//计算精度
 				bcscale(2);
+				
+				//记录操作日志
+				$webposLog = $this->app->model("webpos_log");
+				$sdf_webpos_log = array(
+						//'order_id' => $order_id,
+						'op_id' => $_SESSION['account']['staff'],
+						'op_name' => $_SESSION['account']['staff_name'],
+						'op_branch_id'=>$branch_id,
+						'member_id' => $arrMember['member_id'],
+						'op_time' => time(),
+						'op_type'=>'recharge',
+						'money'=>$psm,
+						'pay_way'=>$pay_way[$_POST['exp_pay_way']],
+						'result' => 'SUCCESS', 
+						'log_text' => $msg,
+						'addon'=>serialize($_POST),
+				);
+				$log_id = $webposLog->save($sdf_webpos_log); 
+				
 				$this->splash('success',$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')), app::get('b2c')->_('会员充值成功！'),true,array('status'=>'success','uname'=>$arrMember['uname'],'yu_amount'=>bcadd($psm,0.00),'advance'=>bcadd($psm,$arrMember['advance']),'exp_way'=>$pay_way[$_POST['exp_pay_way']]));
 			}else{
 				$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('会充值失败，系统错误，请稍后重试！'),true,array('status'=>'error','msg'=>app::get('b2c')->_('会充值失败，系统错误，请稍后重试！')));

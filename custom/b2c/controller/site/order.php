@@ -358,7 +358,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
         );
 
         $log_id = $orderLog->save($sdf_order_log);
-
+        
         if ($result)
         {
             foreach(kernel::servicelist('b2c_save_post_om') as $object)
@@ -581,6 +581,23 @@ class b2c_ctl_site_order extends b2c_frontpage{
             }
           $cart_type = $this->_request->get_post('type');
           if($_POST['is_store'] == 1){
+          	//记录操作日志
+          	$webposLog = $this->app->model("webpos_log");
+          	$sdf_webpos_log = array(
+          			'order_id' => $order_id,
+          			'op_id' => $order_data['staff_id'],
+          			'op_name' => $order_data['staff_name'],
+          			'op_branch_id'=>intval($_POST['branch_id']),
+          			'member_id' => $arrMember['member_id'],
+          			'op_time' => time(),
+          			'op_type'=>'order_creat',
+          			'money'=>$order_data['total_amount'],
+          			'pay_way'=>$payment_id['payment_name'],
+          			'result' => 'SUCCESS',
+          			'log_text' => 'webpos生成订单',
+          			'addon'=>serialize($arr_args),
+          	);
+          	$log_id = $webposLog->save($sdf_webpos_log);
             /*
             $objOrders = $this->app->model('orders');
               // 更新订单支付信息
