@@ -61,13 +61,14 @@
     });
 
     $('#submit_del').click(function(){
+    	$('.am-modal-loading').modal();
         var data = 'shipping='+$('#zxps .selected').attr('value');
         
         var selectedData = $.parseJSON($('#zxps .selected').attr('value'));
         
         if (selectedData.dt_name == '门店自提') {
         	if ($('#select_zt .selected').attr('value') == undefined) {
-        		alert('请选择自提门店');return ;
+        		js_alert('js-alert','请选择自提门店');return ;
         	}
         	data = data + "&branch_id="+ $('#select_zt .selected').attr('value');
         }

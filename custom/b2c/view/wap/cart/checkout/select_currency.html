@@ -74,7 +74,7 @@
         $(this).addClass('selected');
     });
     $('#P_L_bt').click(function(){
-        console.log(1111);
+    	$('.am-modal-loading').modal();
         var data = 'payment[pay_app_id]='+$('#zxzf .selected').attr('value');
         if($('#zxzf .selected').length == false){
             js_alert('js-alert','请选择支付方式');
