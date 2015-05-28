@@ -6,7 +6,7 @@
 
 <div class="full-screen">
   <div style="  padding-left: 1rem; padding-right: 1rem;">
-    <form action="<{link app=b2c ctl='wap_member' full='1' act='bind_member'}>" method="post" class="form" data-type="ajax">
+    <form action="<{link app=b2c ctl='wap_member' full='1' act='bind_member'}>" method="post" class="form" data-type="ajax" data-am-validator>
     <div class="c-g">
     <label  style="width: 100px;">
     <select name="bind_type" id="bind_type">   
@@ -64,11 +64,11 @@
 	      </div>
 
 	      <div class="c-g" style="display:none;" id="new_password_mobile">
-	        <label for="" class="c-l" style="width: 100px;">
+	        <label for="" class="c-l" style="width: 200px;">
 	          <em class="f-red">*</em>原账号密码：
 	        </label>
 	        <div class="c">
-	          <input type="password" name="login_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 60%;" data-caution="密码不能为空">
+	          <input type="password" name="login_password_mobile" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
 	        </div>
 	      </div>
 	      <div class="c-g">
@@ -106,11 +106,11 @@
 	      </div>
 
 	      <div class="c-g" style="display:none;" id="new_password_email">
-	        <label for="" class="c-l" style="width: 100px;">
+	        <label for="" class="c-l" style="width: 200px;">
 	          <em class="f-red">*</em>原账号密码：
 	        </label>
 	        <div class="c">
-	          <input type="password" name="login_password_email" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="text" style="width: 60%;" data-caution="密码不能为空">
+	          <input type="password" name="login_password_email" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="am-form-field" style="width: 60%;" data-caution="密码不能为空">
 	        </div>
 	      </div>
 	      
@@ -237,7 +237,6 @@
     $('.form .btn-email').click(function (e) {
         e.preventDefault();
         var el = $(this).siblings('.a-account');
-        console.log(el.val());
        if($(this).hasClass('disabled')) return false;
         sendemailVerify(this, 'uname=' + el.val() + '&type=reset');
     });
@@ -250,10 +249,13 @@
             if(rs) {
                 try{
                     rs = $.parseJSON(rs);
+                    
                 } catch (e) {}
                 if(rs.error) {
                     $(el).removeClass('disabled').html('重发邮件验证码');
                     if(typeof rs.error === 'string') js_alert('js-alert',rs.error);
+                } else {
+                	js_alert("js-alert",'发送成功');
                 }
             }
         });
