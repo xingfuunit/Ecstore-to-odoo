@@ -282,12 +282,17 @@
 <script type="application/javascript">
 	
 function getCoupon(coupons_id){
+	
+	//弹出等待框
+	$('#cart-modal-loading').modal();
 	$.ajax({
             url:'/wap/getcoupon-wap_index_coupon_ajax.html',
             data:{coupons_id:coupons_id},
             method:'POST',
             dataType:'json',
             success:function(data){
+				//隐藏等待框
+				$('.am-modal-loading').modal('close');
                 if(data.success){
 					js_alert('js-alert',data.success);
                 }
