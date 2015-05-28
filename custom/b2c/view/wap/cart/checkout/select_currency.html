@@ -77,7 +77,7 @@
         console.log(1111);
         var data = 'payment[pay_app_id]='+$('#zxzf .selected').attr('value');
         if($('#zxzf .selected').length == false){
-            alert('请选择支付方式');
+            js_alert('js-alert','请选择支付方式');
             return;
         }
         var url = '<{link app=b2c ctl=wap_cart act=payment_confirm}>';
