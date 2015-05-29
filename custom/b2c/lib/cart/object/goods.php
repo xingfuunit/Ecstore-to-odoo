@@ -190,7 +190,7 @@ class b2c_cart_object_goods implements b2c_interface_cart_object{
             $result = null;
             $flag = $this->_check_adjunct($arr_data, $goods_id,$result);
             if( !$flag ) {
-                $msg = '配件验证失败！';
+                $msg = '加入购物车失败，库存不足！';
                 return false;
             } else {
                 foreach( kernel::servicelist('b2c_addtocart_check') as $object ) {

@@ -116,7 +116,7 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 						});
 	                }
 	                else{
-						$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
+						$('#modalAddToCart').find('.am-modal-bd').html(data.error);
 	                    $('#modalAddToCart').modal();
 	                }
 	

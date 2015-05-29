@@ -207,7 +207,7 @@ $(document).ready(function(){
                     $('#btnAddToCart').html('<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:0px; right:0px; display:block"></span>');
                 }
                 else{
-                    js_alert('js-alert','加入购物车失败');
+                    js_alert('js-alert',data.error);
                 }
             }
         });
