@@ -55,7 +55,7 @@ class ectools_payment_select
         }
 
         if ($arrPayments)
-        {
+        {                  	
             foreach($arrPayments as $key=>$payment)
             {
                 
@@ -114,9 +114,25 @@ class ectools_payment_select
                     }
                 }
             }
+
             ksort($payments);
             $controller->pagedata['def_payments'] = $def_payments;
-            $controller->pagedata['arr_def_payment'] = (isset($_COOKIE['purchase']['payment']) && $_COOKIE['purchase']['payment']) ? unserialize($_COOKIE['purchase']['payment']) : '';
+            if(isset($_COOKIE['purchase']['payment']) && $_COOKIE['purchase']['payment']){
+            	$controller->pagedata['arr_def_payment'] = unserialize($_COOKIE['purchase']['payment']);
+            }else{
+            	if($front_tpl == 'site/common/choose_payment2.html'){
+            		$controller->pagedata['arr_def_payment'] = array(
+            				'pay_app_id'=>'wxpayjsapi',
+            				'app_display_name'=>'微信支付',
+            		);
+            		$controller->pagedata['need_def_payment'] = 'yes';
+            	}else{
+            		$controller->pagedata['arr_def_payment'] = '';
+            	}
+            	         
+            }
+
+            //$controller->pagedata['arr_def_payment'] = (isset($_COOKIE['purchase']['payment']) && $_COOKIE['purchase']['payment']) ? unserialize($_COOKIE['purchase']['payment']) : '';
             $controller->pagedata['is_def_payment_match'] = ($is_def_payment_match) ? 1 : 0;
             $controller->pagedata['payments'] = &$payments;
             $controller->pagedata['order'] = &$sdf;

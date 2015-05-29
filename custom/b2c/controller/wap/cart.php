@@ -593,28 +593,24 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         /* 是否开启配送时间的限制 */
         $this->pagedata['site_checkout_receivermore_open'] = $this->app->getConf('site.checkout.receivermore.open');
         /*收货地址 end*/
-        if($def_addr){
             //是否有默认的当前的配送方式
             $area = explode(':',$def_addr['area']);
             $this->pagedata['dlytype_html'] = kernel::single('b2c_order_dlytype')->select_delivery_method($this,$area[2],$this->pagedata['aCart'],"",'wap/cart/checkout/delivery_confirm.html');
-            $this->pagedata['shipping_method'] = (isset($_COOKIE['purchase']['shipping']) && $_COOKIE['purchase']['shipping']) ? unserialize($_COOKIE['purchase']['shipping']) : '';
-            
-            if ($this->pagedata['shipping_method']['shipping_name'] == '门店自提' &&  $def_addr['local_id'] != '-1') {
-            	$this->pagedata['shipping_method'] = '';
-            }
+                        
+//             if ($this->pagedata['shipping_method']['shipping_name'] == '门店自提' &&  $def_addr['local_id'] != '-1') {
+//             	$this->pagedata['shipping_method'] = '';
+//             }
             
             $this->pagedata['shipping_branch_name'] = $_COOKIE['purchase']['branch_name'];
 			$this->pagedata['shipping_branch_name_b'] = $_COOKIE['purchase']['branch_name_b'];
             $this->pagedata['shipping_branch_id'] = $_COOKIE['purchase']['branch_id'];
             
             $this->pagedata['has_cod'] = (isset($this->pagedata['shipping_method']['has_code']) && $this->pagedata['shipping_method']['has_cod']) ? $this->pagedata['shipping_method']['has_cod'] : 'false';
-        }
+
 //var_dump($this->pagedata['shipping_method']);
         $currency = app::get('ectools')->model('currency');
         if($this->pagedata['shipping_method']){
         	
-            // 是否有默认的支付方式
-            $this->pagedata['arr_def_payment'] = (isset($_COOKIE['purchase']['payment']) && $_COOKIE['purchase']['payment']) ? unserialize($_COOKIE['purchase']['payment']) : '';
             /*支付方式列表*/
             $currency = app::get('ectools')->model('currency');
             $this->pagedata['currencys'] = $currency->getList('cur_id,cur_code,cur_name');
@@ -628,9 +624,9 @@ class b2c_ctl_wap_cart extends wap_frontpage{
             $aCur = $currency->getcur($str_def_currency);
             $this->pagedata['current_currency'] = $str_def_currency;
             $obj_payments = kernel::single('ectools_payment_select');
-            $this->pagedata['payment_html'] = $obj_payments->select_pay_method($this, $arrDefCurrency, $arrMember['member_id']);
+            $this->pagedata['payment_html'] = $obj_payments->select_pay_method($this, $arrDefCurrency, $arrMember['member_id'],false,array('iscommon','ispc'),'site/common/choose_payment2.html');
             /*end*/
-
+            
             $ret = $currency->getFormat();
             $ret =array(
                 'decimals'=>$this->app->getConf('system.money.decimals'),
@@ -687,7 +683,6 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         
         $this->pagedata['coupon_lists'] = $aData;
         /*end*/
-
 
         $total_item = $this->objMath->number_minus(array($this->pagedata['aCart']["subtotal"], $this->pagedata['aCart']['discount_amount_prefilter']));
         // 取到商店积分规则
@@ -827,7 +822,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         	}
         }
         $this->pagedata['used_coupon_num'] = $used_coupon_num;
-        
+
         $this->page('wap/cart/checkout/index.html',false,$app_id);
     }
 
@@ -1033,7 +1028,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
             'is_protect'=>$_POST['is_protect'],
         );
         //setcookie('purchase[shipping]',"", time()-1111, kernel::base_url() . '/');
-        setcookie('purchase[shipping]', serialize($arr_shipping), time()+3600, kernel::base_url() . '/');
+        setcookie('purchase[shipping]', serialize($arr_shipping), 0, kernel::base_url() . '/');
         setcookie("purchase[payment]", "", time() - 3600, kernel::base_url().'/');
         $this->pagedata['shipping_method'] = $arr_shipping;
         
@@ -1563,5 +1558,6 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         header('Progma: no-cache');
         header('Content-Type:text/html; charset=utf-8');
     }
+    
 }
 

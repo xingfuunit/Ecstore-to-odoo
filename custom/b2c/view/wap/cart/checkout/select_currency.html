@@ -83,7 +83,8 @@
         var url = '<{link app=b2c ctl=wap_cart act=payment_confirm}>';
         $.post(url,data,function(re){
 /*             if(re){ */
-                location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
+				history.go(-1);
+                //location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
 /*             } */
         });
     });

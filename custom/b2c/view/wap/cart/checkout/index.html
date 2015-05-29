@@ -41,10 +41,9 @@
       		</li>
       <{/if}>
 
-	  <{if $def_addr}>
 	  <{if $shipping_method.shipping_name}>	 
       <li class="am-g am-list-item-desced" style="color:#CCCCCC" id="D_L">
-        <a style="color:#CCCCCC"  href="/wap/cart-checkout_wrap.html?show=delivery_change" class="am-list-item-hd click_loading"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}>
+        <a style="color:#CCCCCC"  href="javascript:void(0);" class="am-list-item-hd change_shipping"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}>
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
       <input name="shipping" value='{"id":<{$shipping_method.shipping_id}>,"has_cod":"<{$shipping_method.has_cod}>","dt_name":"<{$shipping_method.shipping_name}>","money":"<{$shipping_method.money}>"}' type="hidden">
@@ -54,15 +53,22 @@
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
       <{/if}>
-      <{/if}>
       
-      <{if $def_addr}>
-            <{include file='wap/cart/checkout/payment_confirm.html' app='b2c'}>
-      <{/if}>
+      <{include file='wap/cart/checkout/payment_confirm.html' app='b2c'}>
 	        	  
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
         <a style="color:#CCCCCC" href="javascript:void(0);" data-am-modal="{target: '#my-alert01',width: 320}" class="am-list-item-hd ">
-        	<span class="J_coupon">使用优惠券<{if $used_coupon_num > 0 }><{$used_coupon_num}>张<{/if}></span>
+        	<span class="J_coupon">
+        	<{if $aCart.object.coupon}>
+        	优惠券：<{foreach from=$aCart.object.coupon item=coupon key=key}>
+   				 <{if $coupon.used}>
+   				 <{$coupon.name}><{if ($key+1) != $aCart.object.coupon|count}>、<{/if}>
+   				 <{/if}>
+   				 <{/foreach}>
+        	<{else}>
+        	使用优惠券
+        	<{/if}>
+        	</span>
 		<span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>      
 	  </li>
 	  
@@ -123,7 +129,50 @@
 <script>
 	var delete_obj = '';
 	var delete_e = '';
+	
     (function(){
+		function set_default_dlt_pay(){
+			var dlt_data = 'shipping={"id":1,"has_cod":"false","dt_name":"顺丰","money":"15"}';
+			var dlt_url = '<{link app=b2c ctl=wap_cart act=delivery_confirm}>';
+			var pay_data = 'payment[pay_app_id]={"pay_app_id":"wxpayjsapi","payment_name":"微信支付"}';
+			var pay_url = '<{link app=b2c ctl=wap_cart act=payment_confirm}>';
+			$.post(dlt_url,dlt_data,function(re){
+	        });
+			$.post(pay_url,pay_data,function(re){
+	        });
+		}
+		if('<{$need_def_payment}>' == 'yes' && '<{$need_shipping_method}>' == 'yes'){
+			set_default_dlt_pay();
+		}		
+		
+		function auto_coupon(){
+
+	          var postdata = 'coupon=<{$coupon_lists[0]['memc_code']}>&response_type=true&is_fastbuy=<{$is_fastbuy}>';
+	            $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
+	                var couponResult = $.parseJSON(re);
+	                if(!couponResult || couponResult.error){
+	                    js_alert('js-alert',couponResult.error);
+	                    return false;
+	                }
+	                console.log(couponResult.data);
+	                if(couponResult.data.length) {
+	                    if(couponResult.data.length) {
+	                        $('.J_coupon').html('优惠券:'+couponResult.data[0].name+' <i class="arr right"></i>');
+	                        updateCoupon(couponResult.data);
+	                        getTotal();
+	                    } else {
+	                    	js_alert('js-alert','优惠券添加失败，请明确优惠券的适用范围。');
+	                        return false;
+	                    }
+	                    $('input[name="md5_cart_info"]').attr('value',couponResult.md5_cart_info);
+	                }
+	            });
+
+		}
+		if('<{$aCart.object.coupon[0].cpns_id}>' == '' && '<{$coupon_lists[0].cpns_id}>' != ''){
+			auto_coupon();
+		}
+				
         function getTotal(){
             $.post('<{link app=b2c ctl=wap_cart act=total}>',$('form[class="form"]').serialize(),function(re){
                 $('#checkout_total').html(re);
@@ -266,6 +315,15 @@
                 $('#D_L').html(re);
             });*/
         }
+        $('.change_shipping').bind('click',function(e){ 
+        	$('.am-modal-loading').modal();
+            if('<{$def_addr}>' == false){
+            	$('.am-modal-loading').modal('close');
+            	js_alert('js-alert','你还没有添加收货地址，请先添加收货地址！');
+            }else{
+            	location.href = '<{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=delivery_change';
+            }
+        });
         $('#P_L').click(function(){
         	$('.am-modal-loading').modal();
             if($('input[name=shipping]').val()){
@@ -318,14 +376,23 @@
           var postdata = 'coupon=' + o.prev().val() + '&response_type=true&is_fastbuy=<{$is_fastbuy}>';
             $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
                 var couponResult = $.parseJSON(re);
-                console.log(couponResult);
                 if(!couponResult || couponResult.error){
                     js_alert('js-alert',couponResult.error);
                     return false;
                 }
                 if(couponResult.data.length) {
+                	console.log(couponResult.data);
                     if(couponResult.data.length) {
-                        $('.J_coupon').html('使用优惠券'+couponResult.data.length+'张 <i class="arr right"></i>');
+                    	var cp_data = '';
+                   	 	$.each(couponResult.data,function(n,value) {  
+                   	 		if(n == couponResult.data.length-1){
+                   	 			cp_data = cp_data + value.name;
+                   	 		}else{
+                   	 			cp_data = cp_data + value.name + '、';
+                   	 		}
+                   	 		
+                     	}); 
+                        $('.J_coupon').html('优惠券：'+cp_data+'<i class="arr right"></i>');
                         updateCoupon(couponResult.data);
                         getTotal();
                     } else {
@@ -343,7 +410,16 @@
                 if(!couponResult.data) {
                     $('.J_coupon').html('使用优惠券 <i class="arr right"></i>');
                 } else {
-                    $('.J_coupon').html('使用优惠券'+couponResult.data.length+'张 <i class="arr right"></i>');
+                	var cp_data = '';
+               	 	$.each(couponResult.data,function(n,value) {  
+               	 		if(n == couponResult.data.length-1){
+               	 			cp_data = cp_data + value.name;
+               	 		}else{
+               	 			cp_data = cp_data + value.name + '、';
+               	 		}
+               	 		
+                 	}); 
+               	 $('.J_coupon').html('优惠券：'+cp_data+'<i class="arr right"></i>');
                 }
                 updateCoupon(couponResult.data);
                 getTotal();
