@@ -72,7 +72,7 @@ $db ['webpos_log'] = array (
 						'comment' => app::get ( 'b2c' )->_ ( '操作门店ID' ) 
 				),
 				'op_time' => array (
-						'type' => 'varchar(100)',
+						'type' => 'time',
 						'label' => app::get ( 'b2c' )->_ ( '操作时间' ),
 						'width' => 110,
 						'editable' => false,
