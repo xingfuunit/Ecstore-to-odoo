@@ -1,25 +1,7 @@
 <!-- Top -->
 <div class="valuedetail" style="width:100%; height:49px; background:#000000;display:none; position:fixed; z-index:9998">
 
-    <!-- current specification -->
-    <div id="curSpec" style="-o-text-overflow: ellipsis;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width:40%; height:49px; background:#FF6633; line-height:49px; font-size:21px; color:#FFFFFF; float:left">
-        <span style="font-size:14px"> ￥</span ><span class="specPrice"><{math equation="x" format="%.2f" assign="newkey" x=$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.price}></span> / <span class="specValue" style="font-size:14px"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.spec_value}></span>
-    </div>
-
-    <!-- specification List -->
-    <ul id="specList" style="display:none;min-width:40%;width:auto; height:auto; position:absolute; left:0; top:49px; line-height:49px; background:#333333; font-size:21px; color:#FFFFFF; list-style:none; margin:0; padding:0;">
-        <{foreach from=$page_product_basic.spec.goods key=key item=spec}>
-            <{foreach from=$spec key=item_key item=item}>
-                <{if $item.marketable != 'false'}>
-                <li specData='<{json from=$item}>'>
-                    <span style="font-size:14px">￥</span>
-                    <span class="specPrice"><{math equation="x" format="%.2f" assign="newkey" x=$item.price}></span> / <span class="specValue" style="font-size:14px"><{$item.spec_value}></span></li>
-                <{/if}>
-            <{/foreach}>
-        <{/foreach}>
-    </ul>
-
-    <div style="width:60%; height:49px; font-size:12px; color:#cccccc;float:left;line-height:49px; ">库存
+    <div style="width:100%; height:49px; font-size:12px; color:#cccccc;float:left;line-height:49px; padding-left:10px; padding-right:10px;">库存
         <span id="curStore"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.store}></span> 件
         <div style="float:right">
             <a href="<{link app=b2c ctl=wap_search act=result}>" class="am-icon-btn am-icon-search" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>
@@ -33,7 +15,26 @@
         </div>
     </div>
 
+    <!-- specification List -->
+    <ul id="specList" style="width:100%; height:auto; position:absolute; left:0; top:49px; line-height:49px; background:#333333; font-size:21px; color:#FFFFFF; list-style:none; margin:0; padding:0;">
+        <{foreach from=$page_product_basic.spec.goods key=key item=spec}>
+            <{foreach from=$spec key=item_key item=item}>
+                <{if $item.marketable != 'false'}>
+                <li id="<{$item.product_id}>" specData='<{json from=$item}>' <{if $curPrivateSpecValueId==$item_key}>class="choosed-spec"<{/if}> >
+                    <span style="font-size:14px">￥</span>
+                    <span class="specPrice"><{math equation="x" format="%.2f" assign="newkey" x=$item.price}></span> / <span class="specValue" style="font-size:14px"><{$item.spec_value}></span></li>
+                <{/if}>
+            <{/foreach}>
+        <{/foreach}>
+    </ul>
+
 </div>
+
+<!-- current specification -->
+    <div id="curSpec" style="display:none;width:100%; height:49px; font-size:12px; color:#cccccc;float:left;line-height:49px; padding-left:10px; padding-right:10px; ">
+        <span style="font-size:14px"> ￥</span ><span class="specPrice"><{math equation="x" format="%.2f" assign="newkey" x=$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.price}></span> / <span class="specValue" style="font-size:14px"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.spec_value}></span>
+    </div>
+
 
 <!-- bottom -->
 <div class="valuepay" style="width:100%; height:100px; background:#000000;display:none; position:fixed; bottom:0; z-index:9998; padding:10px;">

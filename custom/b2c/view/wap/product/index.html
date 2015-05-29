@@ -111,7 +111,7 @@ $(document).ready(function(){
 
   $('#productMain').flexslider({
     slideshow: false,
-    controlNav:false,
+    // controlNav:false,
     touch:true,
   });
 
@@ -125,14 +125,19 @@ $(document).ready(function(){
 
     // specification select
     $('#specList').on('click','li',function(){
+        $('#'+$('#productId').val() ).removeClass('choosed-spec');
+
         $('#curSpec .specPrice').html($(this).find('.specPrice').html());
         $('#curSpec .specValue').html($(this).find('.specValue').html());
         var curSpec = $.parseJSON( $(this).attr('specData') );
         $('#curStore').html(curSpec.store );
 
         $('#productId').val( curSpec.product_id );
-        
-        $('#specList').hide();
+
+
+        $('#'+curSpec.product_id).addClass('choosed-spec');
+
+        // $('#specList').hide();
     });
 
     $('#btnAdd2Fav').click(function(){
