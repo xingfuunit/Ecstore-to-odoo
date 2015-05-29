@@ -67,6 +67,7 @@
         <permission id="member_license" display='true' parent='editmember' workground='b2c.wrokground.license"'>注册协议和隐私保护</permission>
         <permission id="disask" display='true' parent='0' workground='b2c.wrokground.member'>查看咨询评论</permission>
         <permission id="storetotal" display='true' parent='0' workground='b2c.wrokground.member'>门店日结</permission>
+        <permission id="storelog" display='true' parent='0' workground='b2c.wrokground.member'>门店操作日志</permission>
         <permission id="settingdisask" display='true' parent='0' workground='b2c.wrokground.member'>设置咨询评论</permission>
 
         <permission id="send_email" display='true' parent='member' workground='b2c.wrokground.member'>群发邮件</permission>
@@ -161,6 +162,7 @@
              <menu controller='admin_local_charge' action='index' permission='disask' display='true' order='90'>交接班结账单</menu>
             <menu controller='admin_local_dailycash' action='index' permission='disask' display='true' order='90'>现金日结记录</menu>
             <menu controller='admin_local_dailycash' action='total' permission='storetotal' display='true' order='90'>门店日结</menu>
+            <menu controller='admin_local_webpos' action='index' permission='storelog' display='true' order='90'>门店操作日志</menu>
         </menugroup>
         <!-- WEBPOS yinhui end-->
         <menugroup name="咨询评论">
