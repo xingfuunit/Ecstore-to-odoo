@@ -152,7 +152,7 @@ class b2c_ctl_wap_active extends wap_frontpage{
     				'end_time'=>'2015-05-27 23:59:59',
     				'alt'=>'周三会员日-全场水果8.8折',
     				'image_name'=>'sg.jpg',
-    				'active_url'=>'http://www.pzfresh.com/active.html?name=vipday'
+    				'active_url'=>'http://www.pzfresh.com/wap/active.html?name=vipday'
     		),
     
     );
