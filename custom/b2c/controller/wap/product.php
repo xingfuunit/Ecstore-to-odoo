@@ -80,19 +80,19 @@ class b2c_ctl_wap_product extends wap_frontpage{
         //获得推广代码
         $this->pagedata['buy_code'] = $_getParams[1];
         if( $_GET['qr'] ){
-        	
-        	//判断是否来自微信， 来自微信获取 openid
-        	if(kernel::single('weixin_wechat')->from_weixin()){
-        		$bind = app::get('weixin')->model('bind')->getRow('*',array('weixin_account'=>WEIXIN_ACCOUNT));
-        		
-        		$url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'qrCodeAddCart','full'=>1,'arg0'=>$productId));
-        		$wx_url = kernel::single('weixin_wechat')->build_wx_oauth2_url($bind['id'],$url);
-        		
-				$this->redirect($wx_url);
-        	}else{
-        		$url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'qrCodeAddCart','arg0'=>$productId));
-        		$this->redirect($url);
-        	}
+            
+            //判断是否来自微信， 来自微信获取 openid
+            if(kernel::single('weixin_wechat')->from_weixin()){
+                $bind = app::get('weixin')->model('bind')->getRow('*',array('weixin_account'=>WEIXIN_ACCOUNT));
+                
+                $url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'qrCodeAddCart','full'=>1,'arg0'=>$productId));
+                $wx_url = kernel::single('weixin_wechat')->build_wx_oauth2_url($bind['id'],$url);
+                
+                $this->redirect($wx_url);
+            }else{
+                $url = $this->gen_url(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'qrCodeAddCart','arg0'=>$productId));
+                $this->redirect($url);
+            }
 
         }
 
@@ -204,7 +204,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
 
         $goodsPromotion = kernel::single('b2c_goods_object')->get_goods_promotion($goodsId);
         $this->pagedata['goodsPromotion'] = $goodsPromotion;
-        // echo '<pre>';var_export($goodsPromotion);exit;
+        // echo '<pre>';var_export($this->pagedata['page_product_basic']['spec']['goods']);exit;
         
         $this->page('wap/product/index.html');
     }
@@ -891,9 +891,11 @@ class b2c_ctl_wap_product extends wap_frontpage{
             $goodsSpec['product'] = $aGoods['product']['spec_desc']['spec_private_value_id'];
             // echo '<pre>';var_export($goodsSpec['goods']);var_export($products);exit;
             foreach($products as $row){
+                    
                 $products_spec = $row['spec_desc']['spec_private_value_id'];
                 $diff_class = array_diff_assoc($products_spec,$goodsSpec['product']);//求出当前货品和其他货品规格的差集
 
+                $goodsSpec['goods'][$specTypeId][$products_spec[$specTypeId]]['marketable']=$row['marketable'];
                 $goodsSpec['goods'][$specTypeId][$products_spec[$specTypeId]]['product_id']=$row['product_id'];
                 $goodsSpec['goods'][$specTypeId][$products_spec[$specTypeId]]['price']=$row['price'];
                 if($row['store'] === '' || $row['store'] === null || $aGoods['nostore_sell']){
@@ -916,12 +918,15 @@ class b2c_ctl_wap_product extends wap_frontpage{
             }
 
             // echo '<pre>';var_export($goodsSpec);exit;
+            // echo '<pre>';
+            // var_export($aGoods['spec_desc']);
 
             foreach($aGoods['spec_desc'] as $specId=>$specValue){
                 $arrSpecId['spec_id'][] = $specId;
             }
 
             $arrSpecName = app::get('b2c')->model('specification')->getList('spec_name,spec_id,spec_type',$arrSpecId);
+
             foreach($arrSpecName as $specItem){
                 $goodsSpec['specification']['spec_name'][$specItem['spec_id']] = $specItem['spec_name'];
                 $goodsSpec['specification']['spec_type'][$specItem['spec_id']] = $specItem['spec_type'];
