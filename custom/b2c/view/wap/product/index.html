@@ -96,15 +96,17 @@ $(window).load(function(){
 });
 $(document).ready(function(){
   $('#productComments').css('height',document.documentElement.clientHeight);
+
   $(".showvaluebox").click(function(){
-  $(".valuedetail").show();
-  $(".valuepay").show();
-  $(".valuehide").show();
+    $(".valuedetail").show();
+    $(".valuepay").show();
+    $(".valuehide").show();
   });
+  
   $(".valuehide").click(function(){
-  $(".valuehide").hide();
-  $(".valuepay").hide();
-  $(".valuedetail").hide();
+    $(".valuehide").hide();
+    $(".valuepay").hide();
+    $(".valuedetail").hide();
   });
 
   $('#productMain').flexslider({
