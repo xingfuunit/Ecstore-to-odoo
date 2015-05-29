@@ -117,7 +117,18 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 	                }
 	                else{
 						$('#modalAddToCart').find('.am-modal-bd').html(data.error);
-	                    $('#modalAddToCart').modal();
+	                    $('#modalAddToCart').modal({
+							relatedTarget: this,
+								//进入购物车
+						      onConfirm: function(e) {
+						         window.location.href='/wap/cart.html';
+						      },
+							  	//继续购物
+						      onCancel: function(e) {
+						        return false;
+						      }
+							
+						});
 	                }
 	
 	            }
