@@ -11,6 +11,7 @@ class b2c_ctl_admin_local_webpos extends desktop_controller {
 				'title'=>app::get('b2c')->_('门店员工操作日志'),
 				'allow_detail_popup'=>false,
 				'use_buildin_filter'=>false,
+				'orderBy' =>'op_time DESC',
 		));
 	}
 }

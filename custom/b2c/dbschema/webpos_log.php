@@ -77,6 +77,7 @@ $db ['webpos_log'] = array (
 						'width' => 110,
 						'editable' => false,
 						'filtertype' => 'time',
+						'orderby' => true,
 						'filterdefault' => true,
 						'in_list' => true,
 						'order'=>'7',
