@@ -31,12 +31,12 @@
           <div class="am-list-item-text pt-num J-pt-num">
           <{if $is_fastbuy}>
 		     <div class="num">
-		     <input type="text" style="float:left; height:30px; width:30%; margin:5px;" readonly="readonly" name="modify_quantity[<{$goods.obj_ident}>][quantity]" value="<{$goods.quantity}>" class="num-ipt">
+		     <input type="text" style="float:left; height:30px; width:30%; margin:5px;text-align: center;" readonly="readonly" name="modify_quantity[<{$goods.obj_ident}>][quantity]" value="<{$goods.quantity}>" class="num-ipt">
              </div>
           <{else}>
           	 <a href="javascript:void(0);" class="am-icon-minus-circle am-icon-lg minus btn" style="float:left;color:#999999;line-height: 37px;" ></a>
 		     <div class="num">
-		     <input type="text" style="float:left; height:30px; width:30%; margin:5px;" name="modify_quantity[<{$goods.obj_ident}>][quantity]" value="<{$goods.quantity}>" class="num-ipt">
+		     <input type="text" style="float:left; height:30px; width:30%; margin:5px;text-align: center;" name="modify_quantity[<{$goods.obj_ident}>][quantity]" value="<{$goods.quantity}>" class="num-ipt">
              </div>
              <a href="javascript:void(0);" class="am-icon-plus-circle am-icon-lg plus btn"  style="float:left;color:#999999;line-height: 37px;"></a>
           <{/if}>
