@@ -346,9 +346,9 @@ class b2c_ctl_wap_order extends wap_frontpage{
 
             // 生成cookie有效性的验证信息
             setcookie('ST_ShopEx-Order-Buy', md5($this->app->getConf('certificate.token').$order_id));
-            setcookie("purchase[addr][usable]", "", time() - 3600, kernel::base_url().'/');
-            setcookie("purchase[shipping]", "", time() - 3600, kernel::base_url().'/');
-            setcookie("purchase[payment]", "", time() - 3600, kernel::base_url().'/');
+//            setcookie("purchase[addr][usable]", "", time() - 3600, kernel::base_url().'/');
+//             setcookie("purchase[shipping]", "", time() - 3600, kernel::base_url().'/');
+//             setcookie("purchase[payment]", "", time() - 3600, kernel::base_url().'/');
             setcookie("checkout_b2c_goods_buy_info", "", time() - 3600, kernel::base_url().'/');
 
             // 得到物流公司名称

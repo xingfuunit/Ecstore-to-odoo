@@ -31,7 +31,7 @@
     <h1 class="am-list-item-text ps-div-title">自提地点</h1>
     <ul class="am-nav" >
     <{foreach from=$branchlist item="branchs"}>
-      <li class="am-g am-list-item-desced ps-div-address" value='<{$branchs.branch_id}>'  style="border-top:0px;"> <a href="#"  class="am-list-item-hd"><{$branchs.name_b}><span class="am-list-news-more am-fr" style=" color: #FF9900"> <i class="am-icon-map-marker am-icon-md"></i></span></a> </li>
+      <li class="am-g am-list-item-desced ps-div-address" value='<{$branchs.branch_id}>'  style="border-top:0px;"> <a href="javascript:void(0);"  class="am-list-item-hd"><{$branchs.name_b}><span class="am-list-news-more am-fr" style=" color: #FF9900"> <i class="am-icon-map-marker am-icon-md"></i></span></a> </li>
     <{/foreach}>
     </ul>
     </div>
@@ -61,20 +61,22 @@
     });
 
     $('#submit_del').click(function(){
+    	$('.am-modal-loading').modal();
         var data = 'shipping='+$('#zxps .selected').attr('value');
         
         var selectedData = $.parseJSON($('#zxps .selected').attr('value'));
         
         if (selectedData.dt_name == '门店自提') {
         	if ($('#select_zt .selected').attr('value') == undefined) {
-        		alert('请选择自提门店');return ;
+        		js_alert('js-alert','请选择自提门店');return ;
         	}
         	data = data + "&branch_id="+ $('#select_zt .selected').attr('value');
         }
         var url = '<{link app=b2c ctl=wap_cart act=delivery_confirm}>';
         $.post(url,data,function(re){
             if(re){
-                location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
+            	history.go(-1);
+                //location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
             }
         });
     });
