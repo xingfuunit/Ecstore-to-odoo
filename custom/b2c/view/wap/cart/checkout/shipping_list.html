@@ -69,12 +69,7 @@ $('.del').bind('click',function(){
         //$('#A_list li').removeClass('selected');
         //$(this).addClass('selected');
         $.post('<{link app=b2c ctl=wap_cart act=shipping_confirm}>','address='+$(this).attr('value'),function(re){
-            if(re.error){
-                alert(re.error);
-            }else{
-            	history.go(-1);
-                //location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
-            }
+           location.href = '<{link app=b2c ctl=wap_cart act=checkout arg0=$is_fastbuy}>';
         });
     });
 

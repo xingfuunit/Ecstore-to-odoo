@@ -842,10 +842,14 @@ class b2c_ctl_wap_cart extends wap_frontpage{
     }
 
     //送货地址列表
-    public function checkout_wrap($isfastbuy=false){
+    public function checkout_wrap($isfastbuy=''){
+
         //$this->set_header();
         if(empty($_GET['show'])){
             return ;
+        }
+        if($isfastbuy){
+        	$this->pagedata['is_fastbuy'] = $isfastbuy;
         }
         if(!$this->member_status){
         	$this->begin(array('app'=>'b2c','ctl'=>'wap_cart','act'=>'index'));

@@ -74,10 +74,7 @@
         }
         var url = '<{link app=b2c ctl=wap_cart act=delivery_confirm}>';
         $.post(url,data,function(re){
-            if(re){
-            	history.go(-1);
-                //location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
-            }
+        	location.href = '<{link app=b2c ctl=wap_cart act=checkout arg0=$is_fastbuy}>';
         });
     });
 </script>

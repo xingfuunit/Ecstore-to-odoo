@@ -27,11 +27,17 @@
           <{/if}>
 
           <div class="am-list-item-text pt-num J-pt-num">
-		     <a href="javascript:void(0);" class="am-icon-minus-circle am-icon-lg minus btn" style="float:left;color:#999999;" ></a>
+          <{if $is_fastbuy}>
+		     <div class="num">
+		     <input type="text" style="float:left; height:30px; width:30%; margin:5px;" readonly="readonly" name="modify_quantity[<{$goods.obj_ident}>][quantity]" value="<{$goods.quantity}>" class="num-ipt">
+             </div>
+          <{else}>
+          	 <a href="javascript:void(0);" class="am-icon-minus-circle am-icon-lg minus btn" style="float:left;color:#999999;" ></a>
 		     <div class="num">
 		     <input type="text" style="float:left; height:30px; width:30%; margin:5px;" name="modify_quantity[<{$goods.obj_ident}>][quantity]" value="<{$goods.quantity}>" class="num-ipt">
              </div>
              <a href="javascript:void(0);" class="am-icon-plus-circle am-icon-lg plus btn"  style="float:left;color:#999999;"></a>
+          <{/if}>
 		  </div>
 		  <{if $goods.store.store <= 5}><div class="am-fl" style="width:100%"><span class="am-badge am-badge-danger am-radius am-fl" >剩余不多</span></div><{/if}>
 		  <div style="clear:both; color:#FF0000;"><h1 style="float:left"><{$goods.obj_items.products.0.price.buy_price|cur_odr}></h1></div>

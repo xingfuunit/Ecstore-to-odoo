@@ -9,7 +9,7 @@
 <div class="full-screen" id="checkout_wrap">
 <form action="<{link app=b2c ctl=wap_order act=create}>" method="post" id="checout_form" class="form" data-type="ajax">
         <{if $is_fastbuy}>
-        <input type="hidden" name="isfastbuy" value="true" />
+        <input type="hidden" name="isfastbuy" value="true" id="isfastbuy" />
         <{/if}>
         <input type="hidden" name="purchase[addr_id]" value="<{$def_addr.addr_id}>" />
         <input type="hidden" name="purchase[def_area]" value="<{$def_area}>" />
@@ -29,7 +29,9 @@
   <div class="am-list-news-bd" >
     <ul class="am-list" >
         <{if $def_addr}>
-      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" > <a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=shipping_list" class="am-list-item-hd click_loading">此产品将寄往：<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
+      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" >
+      		 <a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=checkout_wrap arg0=$is_fastbuy}>?show=shipping_list" class="am-list-item-hd click_loading">
+      		此产品将寄往：<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
             <div class="am-list-item-text"  style="color:#CCCCCC" >收货人：<{$def_addr.name}></div>
         	<div class="am-list-item-text"  style="color:#CCCCCC" ><{if $def_addr.tel}>电话号码：<{$def_addr.tel}><{else}>手机号码：<{$def_addr.mobile}><{/if}></div>
         	<div class="am-list-item-text"  style="color:#CCCCCC" ><{$def_addr.area|ship_area}><{$def_addr.addr}></div>
@@ -321,13 +323,13 @@
             	$('.am-modal-loading').modal('close');
             	js_alert('js-alert','你还没有添加收货地址，请先添加收货地址！');
             }else{
-            	location.href = '<{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=delivery_change';
+            	location.href = '<{link app=b2c ctl=wap_cart act=checkout_wrap arg0=$is_fastbuy}>?show=delivery_change';
             }
         });
         $('#P_L').click(function(){
         	$('.am-modal-loading').modal();
             if($('input[name=shipping]').val()){
-                location.href = '<{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=payment_change';
+                location.href = '<{link app=b2c ctl=wap_cart act=checkout_wrap arg0=$is_fastbuy}>?show=payment_change';
             }else{
                 js_alert('js-alert','请选择收货地址和配送方式');
             }
