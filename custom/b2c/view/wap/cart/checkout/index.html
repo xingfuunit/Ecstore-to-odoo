@@ -65,7 +65,7 @@
       <input name="shipping" value='{"id":<{$shipping_method.shipping_id}>,"has_cod":"<{$shipping_method.has_cod}>","dt_name":"<{$shipping_method.shipping_name}>","money":"<{$shipping_method.money}>"}' type="hidden">
       <{else}>
       <li class="am-g am-list-item-desced" style="color:#CCCCCC" >
-        <a style="color:#CCCCCC"  href="/wap/cart-checkout_wrap.html?show=delivery_change" class="am-list-item-hd click_loading">请选择配送方式
+        <a style="color:#CCCCCC"  href="javascript:void(0);" class="am-list-item-hd ">当前地区不支持配送
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
       <{/if}>

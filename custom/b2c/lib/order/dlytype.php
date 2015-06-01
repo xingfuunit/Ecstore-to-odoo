@@ -64,7 +64,9 @@ class b2c_order_dlytype
                 $controller->pagedata['is_shipping_match'] = 1;
             }
         }
+        
         $controller->pagedata['shippings'] = &$shipping;
+
 		foreach ((array)$obj_dlytype_detail_extends = kernel::servicelist('b2c.dlytype.detail.extends') as $obj)
 		{
 			if (method_exists($obj, 'extends_shipping_detail'))
@@ -75,7 +77,7 @@ class b2c_order_dlytype
 		if(isset($_COOKIE['purchase']['shipping']) && $_COOKIE['purchase']['shipping']){
 			$controller->pagedata['shipping_method'] = unserialize($_COOKIE['purchase']['shipping']);
 		}else{
-			if($tpl == 'wap/cart/checkout/delivery_confirm.html'){
+			if($tpl == 'wap/cart/checkout/delivery_confirm.html' && ($shipping || !$area_id)){
 				$controller->pagedata['shipping_method'] = array(
 						'shipping_id'=>'1',
 						'shipping_name'=>'顺丰',
