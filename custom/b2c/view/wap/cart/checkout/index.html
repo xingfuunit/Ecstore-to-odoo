@@ -162,15 +162,13 @@
 		}		
 		
 		function auto_coupon(){
-
-	          var postdata = 'coupon=<{$coupon_lists[0]['memc_code']}>&response_type=true&is_fastbuy=<{$is_fastbuy}>';
+	          var postdata = 'coupon=<{$first_coupon['memc_code']}>&response_type=true&is_fastbuy=<{$is_fastbuy}>';
 	            $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
 	                var couponResult = $.parseJSON(re);
 	                if(!couponResult || couponResult.error){
 	                    js_alert('js-alert',couponResult.error);
 	                    return false;
 	                }
-	                console.log(couponResult.data);
 	                if(couponResult.data.length) {
 	                    if(couponResult.data.length) {
 	                        $('.J_coupon').html('优惠券:'+couponResult.data[0].name+' <i class="arr right"></i>');
@@ -185,7 +183,7 @@
 	            });
 
 		}
-		if('<{$aCart.object.coupon[0].cpns_id}>' == '' && '<{$coupon_lists[0].cpns_id}>' != ''){
+		if('<{$aCart.object.coupon[0].cpns_id}>' == '' ){
 			auto_coupon();
 		}
 				

@@ -683,6 +683,8 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         
         $this->pagedata['coupon_lists'] = $aData;
         /*end*/
+        
+        $this->pagedata['first_coupon'] = current($aData);
 
         $total_item = $this->objMath->number_minus(array($this->pagedata['aCart']["subtotal"], $this->pagedata['aCart']['discount_amount_prefilter']));
         // 取到商店积分规则
