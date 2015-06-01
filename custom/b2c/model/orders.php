@@ -53,7 +53,21 @@ class b2c_mdl_orders extends dbeav_model{
         $is_save = parent::save($sdf, $mustUpdate,$mustInsert);
         return $is_save;
     }
-
+	public function countByMember($member_id, $order_status=array()){
+		$filter = array(
+				'member_id' => $member_id,
+		);
+		
+		if (isset($order_status['pay_status']))
+			$filter['pay_status'] = $order_status['pay_status'];
+		if (isset($order_status['ship_status']))
+			$filter['ship_status'] = $order_status['ship_status'];
+		if (isset($order_status['status']))
+			$filter['status'] = $order_status['status'];
+		
+		$sdf_orders = $this->count($filter);
+		return $sdf_orders;
+	}
     /**
      * 通过会员的编号得到orders标准数据格式
      * @params string member id
