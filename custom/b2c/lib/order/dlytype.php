@@ -75,7 +75,9 @@ class b2c_order_dlytype
 			}
 		}
 		if(isset($_COOKIE['purchase']['shipping']) && $_COOKIE['purchase']['shipping']){
-			$controller->pagedata['shipping_method'] = unserialize($_COOKIE['purchase']['shipping']);
+			if($tpl == 'wap/cart/checkout/delivery_confirm.html' && ($shipping || !$area_id)){
+				$controller->pagedata['shipping_method'] = unserialize($_COOKIE['purchase']['shipping']);
+			}
 		}else{
 			if($tpl == 'wap/cart/checkout/delivery_confirm.html' && ($shipping || !$area_id)){
 				$controller->pagedata['shipping_method'] = array(
