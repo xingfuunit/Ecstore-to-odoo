@@ -1,5 +1,9 @@
 <!-- Header -->
+<{if $is_fastbuy}>
+<{include file='wap/member/header.html' title='订单确认'}>
+<{else}>
 <{include file='wap/member/header.html' title='购物车'}>
+<{/if}>
 
 <{if $is_empty}>
 <div style="margin-top:10%;"><img style="width:100%" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/big_cart.png"></div>
@@ -7,6 +11,16 @@
 <p style="width:100%; text-align:center" ><a class="am-text-warning" href="./"><span style="margin-top:10%;"></span>马上购物 >></a></p>
 <{else}>
 <div class="full-screen" id="checkout_wrap">
+<{if $is_fastbuy}>
+<form id="formBuyNow" style="display:none">
+    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$aCart.object.goods[0].obj_items.products.0.goods_id}>" />
+    <input id="productId" type="text" name="goods[product_id]" value="<{$aCart.object.goods[0].obj_items.products.0.product_id}>" />
+    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+    <input id="stock" type="text" name="stock" value="" />
+    <input id="limit_nums" type="text" name="limit_nums" value="" />
+    <input type="text" name="response_json" value="1" />
+</form>
+<{/if}>
 <form action="<{link app=b2c ctl=wap_order act=create}>" method="post" id="checout_form" class="form" data-type="ajax">
         <{if $is_fastbuy}>
         <input type="hidden" name="isfastbuy" value="true" id="isfastbuy" />
@@ -374,8 +388,19 @@
         });
         $('.coupon-use').on('click',function(event){
           var o = $(event.target);
+          var coupon = '';
+          
           if( o.hasClass('btn') ){
-          var postdata = 'coupon=' + o.prev().val() + '&response_type=true&is_fastbuy=<{$is_fastbuy}>';
+        	 var $checked = $('.coupon-use').find('.am-checked');
+        	 if( $checked.size() ){
+        		 coupon = $checked.attr('data-value');
+        	 }
+        	 
+        	if(coupon == ''){
+        		js_alert('js-alert','请选择优惠券！');
+        		return false;
+        	}
+          var postdata = 'coupon=' + coupon + '&response_type=true&is_fastbuy=<{$is_fastbuy}>';
             $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
                 var couponResult = $.parseJSON(re);
                 if(!couponResult || couponResult.error){
@@ -383,7 +408,6 @@
                     return false;
                 }
                 if(couponResult.data.length) {
-                	console.log(couponResult.data);
                     if(couponResult.data.length) {
                     	var cp_data = '';
                    	 	$.each(couponResult.data,function(n,value) {  
@@ -491,6 +515,7 @@
                 max = parseInt(el.parents('.pt-h-item').find('.max-num').val()),
                 min = parseInt(el.parents('.pt-h-item').find('.min-num').val()),
                 val = ipt.val();
+            
            
             switch(flag){
                 case 1:
@@ -525,42 +550,54 @@
                     tpl.remove();
                 }, 3000);
             }
-
-            var data = $('<form action=""></form>').append(el.parents('.pt-h-item').clone()).serialize();
-            $.post('<{link app=b2c ctl=wap_cart act=update}>',data+"&response_type=true",function(re){
-                //document.write(re);
-                var o = JSON.parse(re),
-                    promotion = $('#order_promotion .content'),
-                    unuse_rule = $('#unused_promotion .content'),
-                    ul = '';
-                if(o.promotion){
-                    if(o.promotion.order){
-                        $.each(o.promotion.order,function(){
-                            ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
-                        });
-                        promotion.html(ul);
+            if('<{$is_fastbuy}>' == 'true'){
+            	$('#goodsNum').val(ipt.val());
+            	var data = $('#formBuyNow').serialize()+'&btype=is_fastbuy';
+            	$.ajax({
+                    url:'<{link app=b2c ctl=wap_cart act=add arg0=goods}>',
+                    data:$('#formBuyNow').serialize()+'&btype=is_fastbuy',
+                    method:'POST',
+                    dataType:'json',
+                    success:function(data){
+                    	location.reload();
+                    }
+                });
+            }else{
+            	var data = $('<form action=""></form>').append(el.parents('.pt-h-item').clone()).serialize();
+                $.post('<{link app=b2c ctl=wap_cart act=update}>',data+"&response_type=true",function(re){
+                    //document.write(re);
+                    var o = JSON.parse(re),
+                        promotion = $('#order_promotion .content'),
+                        unuse_rule = $('#unused_promotion .content'),
                         ul = '';
+                    if(o.promotion){
+                        if(o.promotion.order){
+                            $.each(o.promotion.order,function(){
+                                ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
+                            });
+                            promotion.html(ul);
+                            ul = '';
+                        }else{
+                            promotion.html('');
+                        }
                     }else{
                         promotion.html('');
                     }
-                }else{
-                    promotion.html('');
-                }
-                if(o.unuse_rule){
-                    $.each(o.unuse_rule,function(){
-                        ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
-                    unuse_rule.html(ul);
-                    });
-                }else{
-                    unuse_rule.html('');
-                }
-                //el.parents('.pt-h-item').find('#bprice').html(o.edit_ajax_data.buy_price);
-                $('#subtotal').html(o.sub_total.promotion_subtotal);
-                $('#discount_amount_order').html(o.sub_total.js);
-                $('#J_total .num').html(o.number.cart_number);
-                location.reload();
-            });
-
+                    if(o.unuse_rule){
+                        $.each(o.unuse_rule,function(){
+                            ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
+                        unuse_rule.html(ul);
+                        });
+                    }else{
+                        unuse_rule.html('');
+                    }
+                    //el.parents('.pt-h-item').find('#bprice').html(o.edit_ajax_data.buy_price);
+                    $('#subtotal').html(o.sub_total.promotion_subtotal);
+                    $('#discount_amount_order').html(o.sub_total.js);
+                    $('#J_total .num').html(o.number.cart_number);
+                    location.reload();
+                });
+            }
         }
         $('.J-pt-num').bind('click',function(e){
             var el = $(e.srcElement || e.target),

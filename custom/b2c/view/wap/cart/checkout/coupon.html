@@ -10,7 +10,7 @@
    <h2 class="am-text-warning am-fl"  style="width:100%; text-align:left">已有优惠券</h2>
 	<hr data-am-widget="divider"  class="am-divider am-divider-default"/>
     <div class="am-form-group  am-fl invoice_title invoice-top marg" style="width:100%">
-      <select id="doc-select-1" name="coupon" style="width:80%; height:40px;float:left;">
+      <select id="doc-select-1" name="coupon" style="width:80%; height:40px;float:left;" data-am-selected="{btnWidth:240}">
       	<option value="">选择优惠券</option>
         <{if $coupon_lists}>
             <{foreach from=$coupon_lists item=list_coupon}>
@@ -18,7 +18,7 @@
             <{/foreach}>
         <{/if}>
       </select>
-      <button  type="button" class="am-btn btn am-btn-default am-btn-warning am-fl" style="width:20%">使用</button>
+      <button  type="button" class="am-btn btn am-btn-default am-btn-warning am-fl" style="width:20%;float:right;">使用</button>
     </div>
   
 	<!--已有优惠券结束-->
@@ -34,7 +34,7 @@
   <div class="used" style="float:left;width:100%">
   <{foreach from=$aCart.object.coupon item=coupon}>
    <{if $coupon.used}>
-	<li><span class="del_coupon" style="float:right;color:blue;cursor: pointer;" rel="<{$coupon.obj_ident}>" data-coupon="<{$coupon.cpns_id}>" data-code="<{$coupon.coupon}>">取消使用</span><{$coupon.coupon}>-<{$coupon.name}></li>
+	<li><span class="del_coupon" style="float:right;color:blue;cursor: pointer;" rel="<{$coupon.obj_ident}>" id="<{$coupon.obj_ident}>" data-coupon="<{$coupon.cpns_id}>" data-code="<{$coupon.coupon}>">取消使用</span><{$coupon.coupon}>-<{$coupon.name}></li>
     </li>   
    <{/if}>
    <{/foreach}>
