@@ -59,6 +59,7 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	  		'vipday',//会员日-海鲜类（seafood）
     	  		'vipday_meat',//会员日-肉类（meat）
     	  		'vipday_fruit',//会员日-水果（fruit）
+    	  		'vipday_jingxuan',//会员日-精选食品（jingxuan）
     	  		'childrenday',//儿童节
     	  		);
           if(in_array($active_name,$active)){
