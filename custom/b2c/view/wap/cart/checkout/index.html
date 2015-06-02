@@ -161,12 +161,12 @@
 			set_default_dlt_pay();
 		}		
 		
-		function auto_coupon(){
-	          var postdata = 'coupon=<{$first_coupon['memc_code']}>&response_type=true&is_fastbuy=<{$is_fastbuy}>';
+		function auto_coupon(){	          
+	          if('<{$aCart.object.coupon[0].cpns_id}>' == '' && '<{$first_coupon}>' != 'empty'){
+	        	var postdata = 'coupon=<{$first_coupon['memc_code']}>&response_type=true&is_fastbuy=<{$is_fastbuy}>';
 	            $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
 	                var couponResult = $.parseJSON(re);
 	                if(!couponResult || couponResult.error){
-	                    js_alert('js-alert',couponResult.error);
 	                    return false;
 	                }
 	                if(couponResult.data.length) {
@@ -175,17 +175,14 @@
 	                        updateCoupon(couponResult.data);
 	                        getTotal();
 	                    } else {
-	                    	js_alert('js-alert','优惠券添加失败，请明确优惠券的适用范围。');
 	                        return false;
 	                    }
 	                    $('input[name="md5_cart_info"]').attr('value',couponResult.md5_cart_info);
 	                }
 	            });
-
+	          }
 		}
-		if('<{$aCart.object.coupon[0].cpns_id}>' == '' && '<{$first_coupon}>' != 'empty'){
-			auto_coupon();
-		}
+		auto_coupon();
 				
         function getTotal(){
             $.post('<{link app=b2c ctl=wap_cart act=total}>',$('form[class="form"]').serialize(),function(re){
