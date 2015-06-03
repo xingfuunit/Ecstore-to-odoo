@@ -179,7 +179,7 @@ class pluploader{
 		$chunk = isset($_REQUEST["chunk"]) ? intval($_REQUEST["chunk"]) : 0;
 		$chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 0;
 
-		
+
 		// Open temp file
 		if (!$out = @fopen("{$filePath}.part", $chunks ? "ab" : "wb")) {
 			$this->SendMsg('107.未能打开输出流.'."{$filePath}.part");
