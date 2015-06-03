@@ -183,6 +183,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     		}
     	}
 //     	print_r(123);exit;
+    	$this->title = app::get('b2c')->_('热门商品');
     	$this->pagedata['goodsData'] = $goodsData_new;
     	
     	$this->page('wap/gallery/products_hot.html');
