@@ -194,12 +194,15 @@ $(function(){
             }   
         });
 
-    })
+    });
+
+    var $panel;
+    var addrId;
 
     $('a.btnDelAddr').click(function(){
 
-        var $panel = $(this).parents('.am-panel');
-        var addrId = $panel.find('input[name=addr_id]').val();
+        $panel = $(this).parents('.am-panel');
+        addrId = $panel.find('input[name=addr_id]').val();
 
         var delAddr = function(){
             $.ajax({
