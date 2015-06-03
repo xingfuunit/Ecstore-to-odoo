@@ -12,7 +12,7 @@
             <{if $items.label != '我要开店'}>
 	    <li class="curr-<{$smarty.foreach.msubmenu.iteration}>">
              <a href="<{if $items.href}><{$items.href}><{else}><{link app=$items.app ctl=$items.ctl act=$items.link args=$items.args}><{/if}>"<{if $current == $items.link || $items.link == $controller}> class="active"<{/if}>>
-		<{$items.label}><{if(isset($items.num) && $items.num)}><span style="color:red;">(<{$items.num}>)</span><{/if}>
+		<{$items.label}><{if(isset($items.num) && $items.num)}><span style="color:red;font-weight:bold;">(<{$items.num}>)</span><{/if}>
 	     </a>
             </li>
 	    <{/if}>
