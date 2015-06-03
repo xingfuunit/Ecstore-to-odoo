@@ -207,7 +207,7 @@
             if(couponResult && couponResult.length) {
                 $.each(couponResult, function(index,item){
                 	//html += '<span style="width:70%;float:left;line-height:31px;">'+item.coupon+'-'+item.name+'</span><button type="button" style="width:30%;" class="am-btn btn am-btn-xs am-fl del" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'" data-code="">取消使用</button>';
-                    html += '<li><span class="del_coupon" style="float:right;color:blue;" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
+                    html += '<li><span class="del_coupon" style="float:right;color:blue;cursor: pointer;" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
                 });
             }
             $('.used').html(html);
