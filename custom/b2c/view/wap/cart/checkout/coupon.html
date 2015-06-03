@@ -10,7 +10,7 @@
    <h2 class="am-text-warning am-fl"  style="width:100%; text-align:left">已有优惠券</h2>
 	<hr data-am-widget="divider"  class="am-divider am-divider-default"/>
     <div class="am-form-group  am-fl invoice_title invoice-top marg" style="width:100%">
-      <select id="doc-select-1" name="coupon" style="width:80%; height:40px;float:left;" data-am-selected="{btnWidth:240}">
+      <select id="doc-select-1" name="coupon" style="width:80%; height:40px;float:left;" data-am-selected="{btnWidth:240,maxHeight:200}">
       	<option value="">选择优惠券</option>
         <{if $coupon_lists}>
             <{foreach from=$coupon_lists item=list_coupon}>
