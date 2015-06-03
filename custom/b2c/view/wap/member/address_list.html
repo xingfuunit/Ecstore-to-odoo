@@ -145,14 +145,31 @@ $(function(){
 
     $('button.saveAddr').click(function(e){
         e.preventDefault();
+
+        var select_list = $(this).parents('form').find('div.region select');
+        if( !checkRegionSelect(select_list) ){
+            js_alert('js-alert','请选择完整的地区！');
+            return false;
+        }
+        var form = $(this).parents('form');
+
         $.ajax({
             url: '/wap/member-save_rec.html',
-            data: $(this).parents('form').serialize(),
+            data: $(form).serialize(),
             type: 'post',
             dataType: 'json',
             success:function(data){
-                if(data.success!=undefined)
+                if(data.success!=undefined){
+                    var panel_collapse = $(form).parents('.am-panel-collapse');
+                    var panel = $(panel_collapse).prev();
+                    var region = $(form).find('div.region input[name=area]').val();
+
+                    region = region.split(':')[1];
+                    region = region.replace(/\//g,'-');
+
+                    $(panel).find('h4').html(region + ' ' + $(form).find('input[name=addr]').val() );
                     js_alert('js-alert',data.success);
+                }
                 else
                     js_alert('js-alert',data.error);
             }   
@@ -194,12 +211,15 @@ $(function(){
             }   
         });
 
-    })
+    });
+
+    var $panel;
+    var addrId;
 
     $('a.btnDelAddr').click(function(){
 
-        var $panel = $(this).parents('.am-panel');
-        var addrId = $panel.find('input[name=addr_id]').val();
+        $panel = $(this).parents('.am-panel');
+        addrId = $panel.find('input[name=addr_id]').val();
 
         var delAddr = function(){
             $.ajax({
@@ -220,8 +240,6 @@ $(function(){
         }
 
         js_alert('js-alert-confirm','您确定要删除该地址吗？','确定','取消',delAddr)
-
-
     });
 })
 </script>
