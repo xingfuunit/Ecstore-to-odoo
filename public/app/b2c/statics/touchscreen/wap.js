@@ -9,7 +9,8 @@ var touchscreen = {
 	conf:{
 		delay	: 1000 * 60 * 5,
 		ckNameKey	: 'touchscreen_key',
-		isInit:false,
+		isInit	: false,
+		isPic	: true,	//true = pic , false =  video
 		apiUrl	: '/wap/touchscreen.html?key=',
 		apiKey	: ''
 	},
@@ -41,9 +42,7 @@ var touchscreen = {
 				if(rs.act != '1' ){
 					//write cookie key
 					touchscreen.getKey(rs.key);
-					touchscreen.conf.isInit = true;
 					touchscreen.run(rs.data);
-
 				};
 			},
 			error:function(){
@@ -51,19 +50,39 @@ var touchscreen = {
 		});
 	},
 	run:function(json){
-		this.conf.$loading.show();
-		var sb = [];
+		touchscreen.resize();
+		touchscreen.conf.$loading.show();
 		
-		for(var x in json){
-			var o  = json[x];
-			sb.push('<div class="item" style="'+touchscreen.conf.itemStyle+'"><img src="'+o['img']+'" /></div>');
+		var o = json[0];
+		
+		if(o['type']=='pic'){
+			touchscreen.init_pic(json);
+		}else{
+			touchscreen.init_vod(json);	
+		};
+		touchscreen.conf.isInit = true;
+		touchscreen.conf.$loading.hide();
+	},
+	init_pic:function(json){
+		var css = 'width:'+touchscreen.conf.width+'px;height:'+touchscreen.conf.height+'px';
+		
+		var sb = [];
+		for (var x in json) {
+			var o = json[x];
+			sb.push('<div class="item" style="' + css + '">');
+			if (o['url'].length > 5) {
+				sb.push('<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>');
+			} else {
+				sb.push('<img src="' + o['img'] + '" />');
+			};
+			sb.push('</div>');
 		};
 		var html = [
 			'<div class="sliderBox">',
 				'<div class="sliderPagerWrap">',
 					'<div class="sliderPager" id="sliderPager"></div>',
 				'</div>',
-				'<div class="slider" id="slider" style="'+touchscreen.conf.itemStyle+'">',
+				'<div class="slider" id="slider" style="'+css+'">',
 					'<div class="items">',
 					sb.join(''),
 					'</div>',
@@ -74,25 +93,82 @@ var touchscreen = {
 		
 		touchscreen.conf.$main.html(html);
 
-
-		$("#slider").scrollable({circular:true}).navigator({navi: "#sliderPager",indexed:true}).autoscroll({
+		$('#slider').scrollable({circular:true}).navigator({navi:'#sliderPager',indexed:false}).autoscroll({
 			interval: 2000,autoplay:true
 		});
 
-		//$("#slider").scrollable({circular:true}).navigator({navi: "#sliderPager",indexed:true});
-		this.conf.$loading.hide();
+		//$('#slider').scrollable({circular:true}).navigator({navi:'#sliderPager',indexed:true});	
+	},
+	init_vod:function(json){
+		touchscreen.conf.isPic  = false;
+		
+		var o = json[0],
+			vod = o['vod'],
+			url = o['url'],
+			css = 'width:'+touchscreen.conf.width+'px;height:'+touchscreen.conf.height+'px';
+
+		var html = [
+			'<div id="container">',
+				'<div id="videocover">&nbsp;</div>',
+				'<video id="video" class="video" preload="metadata" src="',vod,'" autoplay="true" loop="loop" controls="true" style="',css,'"></video>',
+			'</div>'
+		].join('');
+		
+		touchscreen.conf.$main.html(html);
+		
+		$('#container').on('click.touchscreen.video',function(){
+			if($('#video').size()){
+				$('#video').get(0).pause();	
+			};
+			self.location = url;
+			return false;
+		});
 	},
 	resize:function(){
-		this.conf.width = $('body').width();
-		this.conf.height = $('body').height();
-		this.conf.itemStyle = 'width:'+this.conf.width+'px;height:'+this.conf.height+'px';
+		touchscreen.conf.width = $('body').width();
+		touchscreen.conf.height = $('body').height();
+		
+		
+		if(touchscreen.conf.isInit){
+			//Pictures
+			if(touchscreen.conf.isPic){
+				
+				touchscreen.conf.$main.find('.item').css({
+						width:touchscreen.conf.width,
+						height:touchscreen.conf.height
+				});
+				
+				
+				var $slider = $('#slider');
+				if($slider.size()){
+					$slider.css({
+							width:touchscreen.conf.width,
+							height:touchscreen.conf.height
+					});
+					$slider.data('scrollable').begin();
+				};
+			}else{
+				//video
+				var $video = $('#video');
+				if($video.size()){
+					$video.css({
+							width:touchscreen.conf.width,
+							height:touchscreen.conf.height
+					});
+				};
+			};
+
+		};
 	},
 	init:function(){
 		this.conf.$main = $('#main');
 		this.conf.$loading = $('#loading');
-		this.resize();
+		this.conf.width = $('body').width();
+		this.conf.height = $('body').height();
+		
 		this.getData();
 		this.conf.oInter = setInterval(this.getData,this.conf.delay);
+		$(window).on('resize.touchscreen', touchscreen.resize);
 	}
 };
 

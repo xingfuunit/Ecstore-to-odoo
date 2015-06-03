@@ -77,7 +77,14 @@ $db ['sales_touchscreen'] = array (
 						'in_list' => true,
 						'default_in_list' => true 
 				),
-				
+				'vodfile' => array (
+						'type' => 'varchar(255)',
+						'comment' => app::get ( 'b2c' )->_ ( '视频地址' ),
+						'editable' => false,
+						'label' => app::get ( 'b2c' )->_ ( '视频地址' ),
+						'in_list' => false,
+						'default_in_list' => false 
+				),
 				'url_type' => array (
 						'type' => array (
 								'pic' => app::get ( 'b2c' )->_ ( '图片' ),

@@ -36,13 +36,30 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 			
 			if(isset($rs) && is_array($rs)){
 				foreach($rs as $rw){
+					//如果存在视频，即只放视频，
+					//如果不存在视频，就放全部图片
+					if($rw['url_type'] == 'video' && strlen(''.$rw['vodfile'])>5){
+						$arr = array();	
+						$arr[] = array(
+							'name' 		=> $rw['ad_name'],
+							'type' 		=> $rw['url_type'],
+							'img' 		=> $rw['img_url'],
+							'vod' 		=> $rw['vodfile'],
+							'url' 		=> $rw['ad_url'],
+							'width' 	=> $rw['ad_img_w'],
+							'height' 	=> $rw['ad_img_h']
+						);
+						break;
+					}
 					$arr[] = array(
 						'name' 		=> $rw['ad_name'],
 						'type' 		=> $rw['url_type'],
 						'img' 		=> $rw['img_url'],
+						'vod' 		=> $rw['vodfile'],
+						'url' 		=> $rw['ad_url'],
 						'width' 	=> $rw['ad_img_w'],
 						'height' 	=> $rw['ad_img_h']
-					);	
+					);
 				}
 			}
 			$key  = md5(json_encode($arr));
