@@ -14,6 +14,7 @@
         <menugroup name="促销">
             <menu controller='admin_sales_goods' action='index' permission='mobileapi' display='true' order='10'>商品促销</menu>
             <menu controller='admin_sales_ads' action='index' permission='mobileapi' display='true' order='11'>促销广告</menu>
+            <menu controller='admin_sales_touchscreen' action='index' permission='mobileapi' display='true' order='12'>电视触屏</menu>
         </menugroup>
     </workground>
 </desktop>

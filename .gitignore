@@ -4,3 +4,13 @@
 /*.buildpath
 /*.project
 /public/images
+/public/app/wap/statics/js_mini/jPlayer/test.html
+/public/app/wap/statics/js_mini/jPlayer
+/public/app/wap/statics/js_mini/jPlayer/js/jquery.jplayer.inspector.js
+/public/app/wap/statics/js_mini/jPlayer/js/jquery.jplayer.inspector.min.js
+/public/app/wap/statics/js_mini/jPlayer/js/jquery.jplayer.js
+/public/app/wap/statics/js_mini/jPlayer/js/jquery.jplayer.min.js
+/public/app/wap/statics/js_mini/jPlayer/js/jquery.jplayer.swf
+/public/app/wap/statics/js_mini/jPlayer/js/jquery-1.7.2.min.js
+/public/app/wap/statics/js_mini/jPlayer/js/jplayer.playlist.js
+/public/app/wap/statics/js_mini/jPlayer/js/jplayer.playlist.min.js
