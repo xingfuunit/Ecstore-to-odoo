@@ -426,7 +426,7 @@
             });
           }
           if( o.hasClass('del_coupon') ){
-            var postdata = 'cpn_ident=' + o.attr('rel') + '&response_type=true';
+            var postdata = 'cpn_ident=' + o.attr('rel') + '&response_type=true&is_fastbuy=<{$is_fastbuy}>';
             $.post('<{link app=b2c ctl=wap_cart act=removeCartCoupon arg0=coupon}>',postdata,function(re){
                 var couponResult = $.parseJSON(re);
                 if(!couponResult.data) {
