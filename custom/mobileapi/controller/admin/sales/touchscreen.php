@@ -68,6 +68,9 @@ class mobileapi_ctl_admin_sales_touchscreen extends desktop_controller{
     	
         $this->path[] = array('text'=>app::get('b2c')->_('电视触屏图片编辑'));
         $objAd = $this->app->model('sales_touchscreen');
+		
+        //$this->pagedata['upload_key'] = $_COOKIE['PHPSESSID'];
+		$this->pagedata['upload_key'] = md5($_COOKIE['PHPSESSID'].'视频上传');
         $this->pagedata['adInfo'] = $objAd->dump($ad_id);
 
         $this->pagedata['touchscreen_position'] = $this->app->model('sales_touchscreen')->get_sales_touchscreen_position_list();
