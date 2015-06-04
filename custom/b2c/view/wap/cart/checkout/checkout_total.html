@@ -1,17 +1,17 @@
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">商品金额<span id="subtotal" class="am-list-news-more am-fr" style="color:#FF6600"><{$order_detail.cost_item|cur_odr:$order_detail.currency}></span></a>      
+        <a style="color:#CCCCCC" href="javascript:void(0);" class="am-list-item-hd">商品金额<span id="subtotal" class="am-list-news-more am-fr" style="color:#FF6600"><{$order_detail.cost_item|cur_odr:$order_detail.currency}></span></a>      
 	  </li>
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">运费<span class="am-list-news-more am-fr" style="color:#FF6600"><{$order_detail.cost_freight|cur_odr:$order_detail.currency}></span></a>      
+        <a style="color:#CCCCCC" href="javascript:void(0);" class="am-list-item-hd">运费<span class="am-list-news-more am-fr" style="color:#FF6600"><{$order_detail.cost_freight|cur_odr:$order_detail.currency}></span></a>      
 	  </li>
 	  <{if $order_detail.cost_protect > 0}>
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">配送保价费<span class="am-list-news-more am-fr" style="color:#FF6600"><{$order_detail.cost_protect|cur_odr:$order_detail.currency}></span></a>      
+        <a style="color:#CCCCCC" href="javascript:void(0);" class="am-list-item-hd">配送保价费<span class="am-list-news-more am-fr" style="color:#FF6600"><{$order_detail.cost_protect|cur_odr:$order_detail.currency}></span></a>      
 	  </li>
 	  <{/if}>
 	  
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">优惠金额
+        <a style="color:#CCCCCC" href="javascript:void(0);" class="am-list-item-hd">优惠金额
         <span class="am-list-news-more am-fr" style="color:#FF6600">
 		<{if $order_detail.pmt_order < 0}>
         +<{(0-$order_detail.pmt_order)|cur_odr:$order_detail.currency}>
@@ -23,7 +23,7 @@
 	 
 	  <{if $order_detail.cost_payment > 0}>
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">客户承担支付手续费
+        <a style="color:#CCCCCC" href="javascript:void(0);" class="am-list-item-hd">客户承担支付手续费
         <span class="am-list-news-more am-fr" style="color:#FF6600">
         <{$order_detail.cost_payment|cur_odr:$order_detail.currency}>
         </span></a>      
@@ -31,7 +31,7 @@
 	  <{/if}>
 	  <{if $order_detail.cost_tax>0}>
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">开发票所需税金
+        <a style="color:#CCCCCC" href="javascript:void(0);" class="am-list-item-hd">开发票所需税金
         <span class="am-list-news-more am-fr" style="color:#FF6600">
         <{$order_detail.cost_tax|cur_odr:$order_detail.currency}>
         </span></a>      
@@ -39,7 +39,7 @@
 	  <{/if}>
 	  <{if $order_detail.totalConsumeScore <> 0}>
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">消费积分
+        <a style="color:#CCCCCC" href="javascript:void(0);" class="am-list-item-hd">消费积分
         <span class="am-list-news-more am-fr" style="color:#FF6600">
         <{$order_detail.totalConsumeScore}>
         </span></a>      
@@ -47,14 +47,16 @@
 	  <{/if}>
 	  <{if $order_detail.totalGainScore <> 0}>
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" class="am-list-item-hd">订单可得积分
+        <a style="color:#CCCCCC" href="javascript:void(0);" class="am-list-item-hd">订单可得积分
         <span class="am-list-news-more am-fr" id="subtotal_gain_score" style="color:#FF6600">
         <{$order_detail.totalGainScore}>
         </span></a>      
 	  </li>
 	  <{/if}>
 	  
-<div style="float:left; width:100%;" >
+<div style="width:100%;height:70px;">
+</div>
+<div style="float:left; width:100%;position:fixed; bottom:0; left:0;_position:absolute; _top:expression(documentElement.scrollTop+documentElement.clientHeight-this.offsetHeight);" >
     <div class="am-panel-hd" style="float:left; background:#CCCCCC; border-top:1px solid #aaaaaa">
 	<div style="color:#FF0000;float:left; font-size:1.5em; font-weight:bold">
 	<span style=" font-size:14px; color:#666666; font-weight:normal">总额：</span>

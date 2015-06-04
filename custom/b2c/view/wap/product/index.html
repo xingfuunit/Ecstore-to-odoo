@@ -59,8 +59,7 @@ document.getElementById('loading_page').style.height=ch+'px';
 
 
 <div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
-<a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>"></a>
-<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:0px; right:0px; display:block"></span>
+  <span id="btn_add2cart2" class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>"></span>
 </div>
 
 
@@ -97,20 +96,22 @@ $(window).load(function(){
 });
 $(document).ready(function(){
   $('#productComments').css('height',document.documentElement.clientHeight);
+
   $(".showvaluebox").click(function(){
-  $(".valuedetail").show();
-  $(".valuepay").show();
-  $(".valuehide").show();
+    $(".valuedetail").show();
+    $(".valuepay").show();
+    $(".valuehide").show();
   });
+  
   $(".valuehide").click(function(){
-  $(".valuehide").hide();
-  $(".valuepay").hide();
-  $(".valuedetail").hide();
+    $(".valuehide").hide();
+    $(".valuepay").hide();
+    $(".valuedetail").hide();
   });
 
   $('#productMain').flexslider({
     slideshow: false,
-    controlNav:false,
+    // controlNav:false,
     touch:true,
   });
 
@@ -124,14 +125,19 @@ $(document).ready(function(){
 
     // specification select
     $('#specList').on('click','li',function(){
+        $('#'+$('#productId').val() ).removeClass('choosed-spec');
+
         $('#curSpec .specPrice').html($(this).find('.specPrice').html());
         $('#curSpec .specValue').html($(this).find('.specValue').html());
         var curSpec = $.parseJSON( $(this).attr('specData') );
         $('#curStore').html(curSpec.store );
 
         $('#productId').val( curSpec.product_id );
-        
-        $('#specList').hide();
+
+
+        $('#'+curSpec.product_id).addClass('choosed-spec');
+
+        // $('#specList').hide();
     });
 
     $('#btnAdd2Fav').click(function(){
@@ -192,7 +198,7 @@ $(document).ready(function(){
         });
     });
 
-    $('#btnAddToCart').click(function(){
+    $('#btnAddToCart,#btn_add2cart2').click(function(){
         $.ajax({
             url:'<{link app=b2c ctl=wap_cart act=add arg0=goods}>',
             data:$('#formBuyNow').serialize()+'&mini_cart=1',
@@ -205,10 +211,12 @@ $(document).ready(function(){
                         window.location.href="/wap/cart.html";
                     }});
 
+                    $('#btn_add2cart2').html('<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:10px; right:10px; display:block"></span>');
+
                     $('#btnAddToCart').html('<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:0px; right:0px; display:block"></span>');
                 }
                 else{
-                    js_alert('js-alert','加入购物车失败');
+                    js_alert('js-alert',data.error);
                 }
             }
         });

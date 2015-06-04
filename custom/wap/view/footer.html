@@ -48,7 +48,7 @@
 <!-- 提交等待 弹出框 -->
 <div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="cart-modal-loading">
   <div class="am-modal-dialog">
-    <div class="am-modal-hd">正在提交...</div>
+    <div class="am-modal-hd">正在载入...</div>
     <div class="am-modal-bd">
       <span class="am-icon-spinner am-icon-spin"></span>
     </div>
@@ -116,8 +116,19 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 						});
 	                }
 	                else{
-						$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
-	                    $('#modalAddToCart').modal();
+						$('#modalAddToCart').find('.am-modal-bd').html(data.error);
+	                    $('#modalAddToCart').modal({
+							relatedTarget: this,
+								//进入购物车
+						      onConfirm: function(e) {
+						         window.location.href='/wap/cart.html';
+						      },
+							  	//继续购物
+						      onCancel: function(e) {
+						        return false;
+						      }
+							
+						});
 	                }
 	
 	            }
@@ -128,6 +139,10 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 		$(".search_btn").bind("click",function(){
 			$(".search_form").submit();
 		})
+		
+        $('.click_loading').bind('click',function(){
+        	$('.am-modal-loading').modal();
+        });
 	});
 </script>
 

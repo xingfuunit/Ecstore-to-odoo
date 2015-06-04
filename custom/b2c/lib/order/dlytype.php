@@ -64,7 +64,9 @@ class b2c_order_dlytype
                 $controller->pagedata['is_shipping_match'] = 1;
             }
         }
+        
         $controller->pagedata['shippings'] = &$shipping;
+
 		foreach ((array)$obj_dlytype_detail_extends = kernel::servicelist('b2c.dlytype.detail.extends') as $obj)
 		{
 			if (method_exists($obj, 'extends_shipping_detail'))
@@ -72,7 +74,25 @@ class b2c_order_dlytype
 				$obj->extends_shipping_detail($shipping);
 			}
 		}
-        $controller->pagedata['shipping_method'] = (isset($_COOKIE['purchase']['shipping']) && $_COOKIE['purchase']['shipping']) ? unserialize($_COOKIE['purchase']['shipping']) : '';
+		if(isset($_COOKIE['purchase']['shipping']) && $_COOKIE['purchase']['shipping']){
+			if($tpl == 'wap/cart/checkout/delivery_confirm.html' && ($shipping || !$area_id)){
+				$controller->pagedata['shipping_method'] = unserialize($_COOKIE['purchase']['shipping']);
+			}
+		}else{
+			if($tpl == 'wap/cart/checkout/delivery_confirm.html' && ($shipping || !$area_id)){
+				$controller->pagedata['shipping_method'] = array(
+						'shipping_id'=>'1',
+						'shipping_name'=>'顺丰',
+						'money'=>'13',
+						'has_cod'=>'false',
+						'is_protect'=>'',
+				);
+				$controller->pagedata['need_shipping_method'] = 'yes';
+			}else{
+				$controller->pagedata['shipping_method'] = '';
+			}
+			
+		}
         /** 暂时为商超夜间配送加入的service，可能功能改变后需要删除 **/
         $obj_service = kernel::service('b2c.dlytype.select.extends');
         if ($obj_service)

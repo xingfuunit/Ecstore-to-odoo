@@ -74,7 +74,7 @@
         $(this).addClass('selected');
     });
     $('#P_L_bt').click(function(){
-        console.log(1111);
+    	$('.am-modal-loading').modal();
         var data = 'payment[pay_app_id]='+$('#zxzf .selected').attr('value');
         if($('#zxzf .selected').length == false){
             js_alert('js-alert','请选择支付方式');
@@ -82,9 +82,7 @@
         }
         var url = '<{link app=b2c ctl=wap_cart act=payment_confirm}>';
         $.post(url,data,function(re){
-/*             if(re){ */
-                location.href = '<{link app=b2c ctl=wap_cart act=checkout}>';
-/*             } */
+        	location.href = '<{link app=b2c ctl=wap_cart act=checkout arg0=$is_fastbuy}>';
         });
     });
 </script>

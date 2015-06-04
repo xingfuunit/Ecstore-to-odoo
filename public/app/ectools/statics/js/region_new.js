@@ -83,11 +83,9 @@ function initRegionSelect($container){
 
 }
 
-function checkRegionSelect($container){
-    var sels = container.find('select');
-    var status = true;
-
-    $.each(sels,function(k,v){
+function checkRegionSelect(select_list){
+    var status=true;
+    $.each(select_list,function(k,v){
         if(!$(v).is(':hidden') && $(v).find('option:selected').val() == '0'){
             status = false;
             return false;

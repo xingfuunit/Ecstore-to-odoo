@@ -1,5 +1,9 @@
 <!-- Header -->
+<{if $is_fastbuy}>
+<{include file='wap/member/header.html' title='订单确认'}>
+<{else}>
 <{include file='wap/member/header.html' title='购物车'}>
+<{/if}>
 
 <{if $is_empty}>
 <div style="margin-top:10%;"><img style="width:100%" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/big_cart.png"></div>
@@ -7,9 +11,19 @@
 <p style="width:100%; text-align:center" ><a class="am-text-warning" href="./"><span style="margin-top:10%;"></span>马上购物 >></a></p>
 <{else}>
 <div class="full-screen" id="checkout_wrap">
+<{if $is_fastbuy}>
+<form id="formBuyNow" style="display:none">
+    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$aCart.object.goods[0].obj_items.products.0.goods_id}>" />
+    <input id="productId" type="text" name="goods[product_id]" value="<{$aCart.object.goods[0].obj_items.products.0.product_id}>" />
+    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+    <input id="stock" type="text" name="stock" value="" />
+    <input id="limit_nums" type="text" name="limit_nums" value="" />
+    <input type="text" name="response_json" value="1" />
+</form>
+<{/if}>
 <form action="<{link app=b2c ctl=wap_order act=create}>" method="post" id="checout_form" class="form" data-type="ajax">
         <{if $is_fastbuy}>
-        <input type="hidden" name="isfastbuy" value="true" />
+        <input type="hidden" name="isfastbuy" value="true" id="isfastbuy" />
         <{/if}>
         <input type="hidden" name="purchase[addr_id]" value="<{$def_addr.addr_id}>" />
         <input type="hidden" name="purchase[def_area]" value="<{$def_area}>" />
@@ -29,7 +43,9 @@
   <div class="am-list-news-bd" >
     <ul class="am-list" >
         <{if $def_addr}>
-      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" > <a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=shipping_list" class="am-list-item-hd">此产品将寄往：<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
+      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" >
+      		 <a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=checkout_wrap arg0=$is_fastbuy}>?show=shipping_list" class="am-list-item-hd click_loading">
+      		此产品将寄往：<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
             <div class="am-list-item-text"  style="color:#CCCCCC" >收货人：<{$def_addr.name}></div>
         	<div class="am-list-item-text"  style="color:#CCCCCC" ><{if $def_addr.tel}>电话号码：<{$def_addr.tel}><{else}>手机号码：<{$def_addr.mobile}><{/if}></div>
         	<div class="am-list-item-text"  style="color:#CCCCCC" ><{$def_addr.area|ship_area}><{$def_addr.addr}></div>
@@ -37,39 +53,45 @@
       		<input type="hidden" name="address" id="ship_address" value='{"addr_id":<{$def_addr.addr_id}>,"area":<{$def_addr.area|ship_area_id}>}' />
       <{else}>
       		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" > 
-      		<a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>" class="am-list-item-hd">请先添加收货地址<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
+      		<a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>" class="am-list-item-hd click_loading">请先添加收货地址<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
       		</li>
       <{/if}>
 
-	  <{if $def_addr}>
 	  <{if $shipping_method.shipping_name}>	 
       <li class="am-g am-list-item-desced" style="color:#CCCCCC" id="D_L">
-        <a style="color:#CCCCCC"  href="/wap/cart-checkout_wrap.html?show=delivery_change" class="am-list-item-hd"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}>
+        <a style="color:#CCCCCC"  href="javascript:void(0);" class="am-list-item-hd change_shipping"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}>
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
       <input name="shipping" value='{"id":<{$shipping_method.shipping_id}>,"has_cod":"<{$shipping_method.has_cod}>","dt_name":"<{$shipping_method.shipping_name}>","money":"<{$shipping_method.money}>"}' type="hidden">
       <{else}>
       <li class="am-g am-list-item-desced" style="color:#CCCCCC" >
-        <a style="color:#CCCCCC"  href="/wap/cart-checkout_wrap.html?show=delivery_change" class="am-list-item-hd">请选择配送方式
+        <a style="color:#CCCCCC"  href="javascript:void(0);" class="am-list-item-hd ">当前地区不支持配送
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
       <{/if}>
-      <{/if}>
       
-      <{if $def_addr}>
-            <{include file='wap/cart/checkout/payment_confirm.html' app='b2c'}>
-      <{/if}>
+      <{include file='wap/cart/checkout/payment_confirm.html' app='b2c'}>
 	        	  
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" data-am-modal="{target: '#my-alert01',width: 320}" class="am-list-item-hd ">
-        	<span class="J_coupon">使用优惠券<{if $used_coupon_num > 0 }><{$used_coupon_num}>张<{/if}></span>
+        <a style="color:#CCCCCC" href="javascript:void(0);" data-am-modal="{target: '#my-alert01',width: 320}" class="am-list-item-hd ">
+        	<span class="J_coupon">
+        	<{if $aCart.object.coupon}>
+        	优惠券：<{foreach from=$aCart.object.coupon item=coupon key=key}>
+   				 <{if $coupon.used}>
+   				 <{$coupon.name}><{if ($key+1) != $aCart.object.coupon|count}>、<{/if}>
+   				 <{/if}>
+   				 <{/foreach}>
+        	<{else}>
+        	使用优惠券
+        	<{/if}>
+        	</span>
 		<span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>      
 	  </li>
 	  
 	  <{include file='wap/cart/checkout/coupon.html' app='b2c'}>
 	  
 	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="#" data-am-modal="{target: '#my-alert02'}" class="am-list-item-hd">
+        <a style="color:#CCCCCC" href="javascript:void(0);" data-am-modal="{target: '#my-alert02'}" class="am-list-item-hd">
         	<span id="memo_span">留言</span>
         	<span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>  
         	<input type="hidden" id="memo_input" name="memo" placeholder="订单留言" class="text"/>    
@@ -118,12 +140,49 @@
 </form>
 </div>
 <!--弹出层信息结束-->
-<{/if}>
+
 
 <script>
 	var delete_obj = '';
 	var delete_e = '';
+	
     (function(){
+		function set_default_dlt_pay(){
+			var dlt_data = 'shipping={"id":1,"has_cod":"false","dt_name":"顺丰","money":"15"}';
+			var dlt_url = '<{link app=b2c ctl=wap_cart act=delivery_confirm}>';
+			var pay_data = 'payment[pay_app_id]={"pay_app_id":"wxpayjsapi","payment_name":"微信支付"}';
+			var pay_url = '<{link app=b2c ctl=wap_cart act=payment_confirm}>';
+			$.post(dlt_url,dlt_data,function(re){
+	        });
+			$.post(pay_url,pay_data,function(re){
+	        });
+		}
+		if('<{$need_def_payment}>' == 'yes' && '<{$need_shipping_method}>' == 'yes'){
+			set_default_dlt_pay();
+		}		
+		
+		function auto_coupon(){	          
+	          if('<{$aCart.object.coupon[0].cpns_id}>' == '' && '<{$first_coupon}>' != 'empty'){
+	        	var postdata = 'coupon=<{$first_coupon['memc_code']}>&response_type=true&is_fastbuy=<{$is_fastbuy}>';
+	            $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
+	                var couponResult = $.parseJSON(re);
+	                if(!couponResult || couponResult.error){
+	                    return false;
+	                }
+	                if(couponResult.data.length) {
+	                    if(couponResult.data.length) {
+	                        $('.J_coupon').html('优惠券:'+couponResult.data[0].name+' <i class="arr right"></i>');
+	                        updateCoupon(couponResult.data);
+	                        getTotal();
+	                    } else {
+	                        return false;
+	                    }
+	                }
+	            });
+	          }
+		}
+		auto_coupon();
+				
         function getTotal(){
             $.post('<{link app=b2c ctl=wap_cart act=total}>',$('form[class="form"]').serialize(),function(re){
                 $('#checkout_total').html(re);
@@ -148,7 +207,7 @@
             if(couponResult && couponResult.length) {
                 $.each(couponResult, function(index,item){
                 	//html += '<span style="width:70%;float:left;line-height:31px;">'+item.coupon+'-'+item.name+'</span><button type="button" style="width:30%;" class="am-btn btn am-btn-xs am-fl del" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'" data-code="">取消使用</button>';
-                    html += '<li><span class="del_coupon" style="float:right;color:blue;" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
+                    html += '<li><span class="del_coupon" style="float:right;color:blue;cursor: pointer;" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
                 });
             }
             $('.used').html(html);
@@ -266,9 +325,19 @@
                 $('#D_L').html(re);
             });*/
         }
+        $('.change_shipping').bind('click',function(e){ 
+        	$('.am-modal-loading').modal();
+            if('<{$def_addr}>' == false){
+            	$('.am-modal-loading').modal('close');
+            	js_alert('js-alert','你还没有添加收货地址，请先添加收货地址！');
+            }else{
+            	location.href = '<{link app=b2c ctl=wap_cart act=checkout_wrap arg0=$is_fastbuy}>?show=delivery_change';
+            }
+        });
         $('#P_L').click(function(){
+        	$('.am-modal-loading').modal();
             if($('input[name=shipping]').val()){
-                location.href = '<{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=payment_change';
+                location.href = '<{link app=b2c ctl=wap_cart act=checkout_wrap arg0=$is_fastbuy}>?show=payment_change';
             }else{
                 js_alert('js-alert','请选择收货地址和配送方式');
             }
@@ -313,18 +382,37 @@
         });
         $('.coupon-use').on('click',function(event){
           var o = $(event.target);
+          var coupon = '';
+          
           if( o.hasClass('btn') ){
-          var postdata = 'coupon=' + o.prev().val() + '&response_type=true&is_fastbuy=<{$is_fastbuy}>';
+        	 var $checked = $('.coupon-use').find('.am-checked');
+        	 if( $checked.size() ){
+        		 coupon = $checked.attr('data-value');
+        	 }
+        	 
+        	if(coupon == ''){
+        		js_alert('js-alert','请选择优惠券！');
+        		return false;
+        	}
+          var postdata = 'coupon=' + coupon + '&response_type=true&is_fastbuy=<{$is_fastbuy}>';
             $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
                 var couponResult = $.parseJSON(re);
-                console.log(couponResult);
                 if(!couponResult || couponResult.error){
                     js_alert('js-alert',couponResult.error);
                     return false;
                 }
                 if(couponResult.data.length) {
                     if(couponResult.data.length) {
-                        $('.J_coupon').html('使用优惠券'+couponResult.data.length+'张 <i class="arr right"></i>');
+                    	var cp_data = '';
+                   	 	$.each(couponResult.data,function(n,value) {  
+                   	 		if(n == couponResult.data.length-1){
+                   	 			cp_data = cp_data + value.name;
+                   	 		}else{
+                   	 			cp_data = cp_data + value.name + '、';
+                   	 		}
+                   	 		
+                     	}); 
+                        $('.J_coupon').html('优惠券：'+cp_data+'<i class="arr right"></i>');
                         updateCoupon(couponResult.data);
                         getTotal();
                     } else {
@@ -342,7 +430,16 @@
                 if(!couponResult.data) {
                     $('.J_coupon').html('使用优惠券 <i class="arr right"></i>');
                 } else {
-                    $('.J_coupon').html('使用优惠券'+couponResult.data.length+'张 <i class="arr right"></i>');
+                	var cp_data = '';
+               	 	$.each(couponResult.data,function(n,value) {  
+               	 		if(n == couponResult.data.length-1){
+               	 			cp_data = cp_data + value.name;
+               	 		}else{
+               	 			cp_data = cp_data + value.name + '、';
+               	 		}
+               	 		
+                 	}); 
+               	 $('.J_coupon').html('优惠券：'+cp_data+'<i class="arr right"></i>');
                 }
                 updateCoupon(couponResult.data);
                 getTotal();
@@ -406,13 +503,13 @@
             
         });
      
-     
      // 设置商品数量
         function setQuantity(el,flag){
             var ipt = el.parent().find('.num-ipt'),
                 max = parseInt(el.parents('.pt-h-item').find('.max-num').val()),
                 min = parseInt(el.parents('.pt-h-item').find('.min-num').val()),
                 val = ipt.val();
+            
            
             switch(flag){
                 case 1:
@@ -447,42 +544,54 @@
                     tpl.remove();
                 }, 3000);
             }
-
-            var data = $('<form action=""></form>').append(el.parents('.pt-h-item').clone()).serialize();
-            $.post('<{link app=b2c ctl=wap_cart act=update}>',data+"&response_type=true",function(re){
-                //document.write(re);
-                var o = JSON.parse(re),
-                    promotion = $('#order_promotion .content'),
-                    unuse_rule = $('#unused_promotion .content'),
-                    ul = '';
-                if(o.promotion){
-                    if(o.promotion.order){
-                        $.each(o.promotion.order,function(){
-                            ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
-                        });
-                        promotion.html(ul);
+            if('<{$is_fastbuy}>' == 'true'){
+            	$('#goodsNum').val(ipt.val());
+            	var data = $('#formBuyNow').serialize()+'&btype=is_fastbuy';
+            	$.ajax({
+                    url:'<{link app=b2c ctl=wap_cart act=add arg0=goods}>',
+                    data:$('#formBuyNow').serialize()+'&btype=is_fastbuy',
+                    method:'POST',
+                    dataType:'json',
+                    success:function(data){
+                    	location.reload();
+                    }
+                });
+            }else{
+            	var data = $('<form action=""></form>').append(el.parents('.pt-h-item').clone()).serialize();
+                $.post('<{link app=b2c ctl=wap_cart act=update}>',data+"&response_type=true",function(re){
+                    //document.write(re);
+                    var o = JSON.parse(re),
+                        promotion = $('#order_promotion .content'),
+                        unuse_rule = $('#unused_promotion .content'),
                         ul = '';
+                    if(o.promotion){
+                        if(o.promotion.order){
+                            $.each(o.promotion.order,function(){
+                                ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
+                            });
+                            promotion.html(ul);
+                            ul = '';
+                        }else{
+                            promotion.html('');
+                        }
                     }else{
                         promotion.html('');
                     }
-                }else{
-                    promotion.html('');
-                }
-                if(o.unuse_rule){
-                    $.each(o.unuse_rule,function(){
-                        ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
-                    unuse_rule.html(ul);
-                    });
-                }else{
-                    unuse_rule.html('');
-                }
-                //el.parents('.pt-h-item').find('#bprice').html(o.edit_ajax_data.buy_price);
-                $('#subtotal').html(o.sub_total.promotion_subtotal);
-                $('#discount_amount_order').html(o.sub_total.js);
-                $('#J_total .num').html(o.number.cart_number);
-                location.reload();
-            });
-
+                    if(o.unuse_rule){
+                        $.each(o.unuse_rule,function(){
+                            ul += '<li><b class="f-red">['+this.desc_tag+']</b>'+this.name+'</li>';
+                        unuse_rule.html(ul);
+                        });
+                    }else{
+                        unuse_rule.html('');
+                    }
+                    //el.parents('.pt-h-item').find('#bprice').html(o.edit_ajax_data.buy_price);
+                    $('#subtotal').html(o.sub_total.promotion_subtotal);
+                    $('#discount_amount_order').html(o.sub_total.js);
+                    $('#J_total .num').html(o.number.cart_number);
+                    location.reload();
+                });
+            }
         }
         $('.J-pt-num').bind('click',function(e){
             var el = $(e.srcElement || e.target),
@@ -562,3 +671,4 @@
 
 
 </script>
+<{/if}>

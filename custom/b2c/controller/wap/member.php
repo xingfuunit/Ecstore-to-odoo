@@ -120,6 +120,9 @@ class b2c_ctl_wap_member extends wap_frontpage{
         			}       			
         		}
         	}
+        	if(strlen($data['bind_account'])>=7){
+        		$data['bind_account'] = substr($data['bind_account'],0,7).'...';
+        	}
         	$this->pagedata['bind_info'] = $data;
         	$this->pagedata['weixin_bind'] = '1';
         }else{
@@ -365,6 +368,27 @@ class b2c_ctl_wap_member extends wap_frontpage{
             //$order_status = array('pay_status'=>0,'ship_status'=>array(1,2,3));
             $aData = $order->fetchByMember($this->app->member_id,$nPage,$order_status);
         }
+        
+        //添加条数显示
+        $o1 = array();
+        $o1['pay_status'] = 0;
+        $o1['status'] = 'active';
+        $c1 = $order->countByMember($this->app->member_id,$o1);//待支付
+        unset($o1);
+        $o1 = array();
+        $o1['pay_status'] = 1;
+        $o1['ship_status'] = 4;
+        $c2 = $order->countByMember($this->app->member_id,$o1);//我的退货
+        unset($o1);
+        $o1 = array();
+        $o1['pay_status'] = array(1,2);
+        $o1['ship_status'] = '0';
+        $o1['status'] = 'active';
+        $c3 = $order->countByMember($this->app->member_id,$o1);//待收货
+        unset($o1);
+        $o1 = array();
+        $c4 = $order->countByMember($this->app->member_id,$o1);//全部
+        
         $this->get_order_details($aData,'member_orders');
         $oImage = app::get('image')->model('image');
         $oGoods = app::get('b2c')->model('goods');
@@ -391,6 +415,12 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $this->pagedata['res_url'] = $this->app->res_url;
         $this->pagedata['is_orders'] = "true";
         $this->pagedata['title'] = $this->title;
+        $this->pagedata['order_num_list'] = array(
+        		'daizhifu'=>$c1,
+        		'tuihuo'=>$c2,
+        		'daishouhuo'=>$c3,
+        		'all'=>$c4,
+        		);
         $this->page('wap/member/orders.html');
     }
     

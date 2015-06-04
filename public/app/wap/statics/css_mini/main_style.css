@@ -132,6 +132,14 @@ border-left-color: #5eb95e !important;
     border-radius: .6em;
     opacity: 0.3;
     -moz-opacity: 0.3;
+  }
+
+
+.icon-gray-color a{ color:#999999;}
+
+.not-faved-star{ color: #999999;}
+
+li.choosed-spec{ background:#FF6633;}
 
 .m-widget-list a::after {
     color: #ccc;
@@ -147,9 +155,3 @@ border-left-color: #5eb95e !important;
     top: 50%;
     vertical-align: baseline;
 }
-.icon-gray-color a{ color:#999999}
-
-.not-faved-star{color: #999999;}
-
-
-
