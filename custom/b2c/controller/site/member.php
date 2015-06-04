@@ -2042,6 +2042,17 @@ class b2c_ctl_site_member extends b2c_frontpage{
           $this->splash('failed',null,$msg,true);exit;
         }
       }
+      if($verifyType == 'verifymobile'){
+		//PC端会员手机验证赠送积分 bySam 20150604
+		$reason_type = 'mobile_score';
+		$point = 300;
+		$data_rand = rand(0,10);
+		$error_msg = 'PC端绑定手机赠送积分';   				
+		$member_id = $this->app->member_id;    			
+		app::get('b2c')->model('member_point')->change_point($member_id,+$point,$error_msg,$reason_type,$data_rand,$member_id,$member_id);
+		}
+      
+      
       //增加会员同步 2012-05-15
       if( $member_rpc_object = kernel::service("b2c_member_rpc_sync") ) {
           $member_rpc_object->modifyActive($this->app->member_id);
