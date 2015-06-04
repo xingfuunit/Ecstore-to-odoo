@@ -13,7 +13,7 @@
 	    <li class="curr-<{$smarty.foreach.msubmenu.iteration}>">
 			
 			<{if $items.label == '站内信'}>
-				<a id="member-menu-letter" href="<{if $items.href}><{$items.href}><{else}><{link app=$items.app ctl=$items.ctl act=$items.link args=$items.args}><{/if}>"<{if $current == $items.link || $items.link == $controller}> class="active"<{/if}>>
+				<a id="member-menu-letter"  <{if(isset($items.num) && $items.num)}> style="background:url('/themes/pzxh/images/i/comment.png') no-repeat 105px 16px;" <{/if}> href="<{if $items.href}><{$items.href}><{else}><{link app=$items.app ctl=$items.ctl act=$items.link args=$items.args}><{/if}>"<{if $current == $items.link || $items.link == $controller}> class="active"<{/if}>>
 				<{$items.label}>
 				<{if(isset($items.num) && $items.num)}>
 					<div class="letter-num">
