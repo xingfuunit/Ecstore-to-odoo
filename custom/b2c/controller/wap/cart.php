@@ -684,7 +684,15 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $this->pagedata['coupon_lists'] = $aData;
         /*end*/
         if($aData){
-        	$this->pagedata['first_coupon'] = current($aData);
+        	foreach($aData as $key => $item){
+        		if ($this->app->model("coupons")->useMemberCoupon($item['memc_code'], $arrMember['member_lv'])){
+        			$this->pagedata['first_coupon'] = $item;
+        			break;
+        		}
+        	}
+        	if(!$this->pagedata['first_coupon']){
+        		$this->pagedata['first_coupon'] = 'empty';
+        	}
         }else{
         	$this->pagedata['first_coupon'] = 'empty';
         }
