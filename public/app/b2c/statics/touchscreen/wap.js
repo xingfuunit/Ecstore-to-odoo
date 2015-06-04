@@ -94,7 +94,7 @@ var touchscreen = {
 		touchscreen.conf.$main.html(html);
 
 		$('#slider').scrollable({circular:true}).navigator({navi:'#sliderPager',indexed:false}).autoscroll({
-			interval: 2000,autoplay:true
+			interval: 2000,autoplay:true,autopause:false
 		});
 
 		//$('#slider').scrollable({circular:true}).navigator({navi:'#sliderPager',indexed:true});	
