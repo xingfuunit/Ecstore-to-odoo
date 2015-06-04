@@ -79,5 +79,8 @@
     <service id="desktop_finder.mobileapi_mdl_sales_ads">
         <class>mobileapi_finder_sales_ads</class>
     </service>
-    
+	
+    <service id="desktop_finder.mobileapi_mdl_sales_touchscreen">
+        <class>mobileapi_finder_sales_touchscreen</class>
+    </service>
 </services>
