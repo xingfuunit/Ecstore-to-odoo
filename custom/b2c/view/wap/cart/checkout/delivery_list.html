@@ -38,7 +38,7 @@
   </div>
 <div style="float:left; width:100%;" >
   <div class="am-panel-hd" style="background:#CCCCCC; border-top:1px solid #aaaaaa">
-  <a id="submit_del" href="javascript:;" class="invoice_submit">
+  <a id="submit_del" href="javascript:void(0);" class="invoice_submit">
   <img src="/public/app/b2c/statics/images/buy_sure.png" width="531" height="107" style="width:50%;margin-left:25%">
   </a></div>
 </div>
@@ -56,8 +56,8 @@
     });
     
     $('#select_zt .ps-div-address').click(function () {
-    	$('#select_zt .ps-div-address').removeClass('selected');
-    	$(this).addClass('selected');
+    	$('#select_zt .ps-div-address').removeClass('am-active');
+    	$(this).addClass('am-active');
     });
 
     $('#submit_del').click(function(){
