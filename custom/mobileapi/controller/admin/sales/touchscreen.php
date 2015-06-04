@@ -16,7 +16,11 @@ class mobileapi_ctl_admin_sales_touchscreen extends desktop_controller{
 
             )
             ));
+
+		$html =  file_get_contents(ROOT_DIR. '/custom/mobileapi/view/admin/sales/touchscreen_help.html');
 		
+        $this->pagedata['_PAGE_CONTENT'] = $html;
+        $this->page();
     }
 
     function create(){
@@ -25,7 +29,9 @@ class mobileapi_ctl_admin_sales_touchscreen extends desktop_controller{
 			'ad_img_w' =>1920,
 			'ad_img_h' =>1080
 		);
-		
+
+        //$this->pagedata['upload_key'] = $_COOKIE['PHPSESSID'];
+		$this->pagedata['upload_key'] = md5($_COOKIE['PHPSESSID'].'视频上传');
         $this->pagedata['adInfo'] = $adInfo;
         $this->pagedata['touchscreen_position'] = $this->app->model('sales_touchscreen')->get_sales_touchscreen_position_list();
     	$this->singlepage('admin/sales/touchscreen_detail.html');
@@ -67,6 +73,7 @@ class mobileapi_ctl_admin_sales_touchscreen extends desktop_controller{
         $this->pagedata['touchscreen_position'] = $this->app->model('sales_touchscreen')->get_sales_touchscreen_position_list();
         $this->singlepage('admin/sales/touchscreen_detail.html');
     }
+	
 
 	/*
 	* 如果上传的新视频文件和旧的不相同，即删除旧文件
@@ -78,9 +85,8 @@ class mobileapi_ctl_admin_sales_touchscreen extends desktop_controller{
 			return true;
 		}
 		
-		
 		$oldPath = ROOT_DIR .$oldFile;
-		@unlink($tmpPath);
+		@unlink($oldPath);
 		return true;
 	}
 	

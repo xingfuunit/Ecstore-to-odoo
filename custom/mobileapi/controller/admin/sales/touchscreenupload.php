@@ -9,12 +9,21 @@ error_reporting(E_ALL);
 if (__FILE__ == '') { die('Fatal error code: __FILE__');}
 define('ROOT_PATH', str_replace('/custom/mobileapi/controller/admin/sales/touchscreenupload.php', '', str_replace('\\', '/', __FILE__)));
 
+//-------------------------------------------
+//检查权限
+$sid = isset($_COOKIE['PHPSESSID']) ? $_COOKIE['PHPSESSID'] : '';
+$key = isset($_REQUEST["key"]) ? $_REQUEST["key"] : '';
+if(strlen($key)<20 || strlen($sid)<5){
+	SendMsg('100.您还未登陆或登陆超时，请刷新。');
+	exit();	
+}
+if( $key != md5($sid.'视频上传')){
+	SendMsg('100.您还未登陆或登陆超时，请刷新。');
+	exit();	
+}
 
-/*****************
- * 这里检查权限代码
- * */
 
-
+//-------------------------------------------
 // 5 minutes execution time
 @set_time_limit(5 * 60);
 
@@ -46,9 +55,14 @@ class pluploader{
 	//上传 post name
 	var $filePostName = 'file';
 	
-
-	
 	public function __construct(){
+		
+		//------------------------------------------
+		
+		$newFile = isset($_REQUEST["newfile"]) ? $_REQUEST["newfile"] : '';
+		
+		//------------------------------------------
+			
 		static $tmpUploadDir = NULL;
 		if($tmpUploadDir === NULL) {
 			$tmpUploadDir = $this->get_temp_dir();
@@ -64,7 +78,7 @@ class pluploader{
 		//------------------------------------------
 		//检查暂时目录是否有权限
 		if (@is_writable($tmpUploadDir) === false){
-			$this->SendMsg('101.暂时目录没有写权限!'.$tmpUploadDir);
+			SendMsg('101.暂时目录没有写权限!'.$tmpUploadDir);
 			exit();
 		}
 
@@ -79,24 +93,21 @@ class pluploader{
 		}
 
 		if (@is_writable($saveDirAll) === false){
-			$this->SendMsg('102.上传目录没有写权限！').$saveDirAll;
+			SendMsg('102.上传目录没有写权限！').$saveDirAll;
 			exit();
 		}
 
-		$key = isset($_REQUEST["key"]) ? $_REQUEST["key"] : '';
-		$newFile = isset($_REQUEST["newfile"]) ? $_REQUEST["newfile"] : '';
-		
-		
+
 		//------------------------------------------
 		//是否有上传文件
 
 		if ( !(isset( $_FILES[$this->filePostName] ) && !is_null( $_FILES[$this->filePostName]['tmp_name'] ) && $_FILES[$this->filePostName]['name'] != '' )){
-			$this->SendMsg('103.缺少上传文件');
+			SendMsg('103.缺少上传文件');
 			exit();
 		}
 
 		if ($_FILES["file"]["error"] || !is_uploaded_file($_FILES["file"]["tmp_name"])) {
-			$this->SendMsg('104.未能将上传的文件移动。');
+			SendMsg('104.未能将上传的文件移动。');
 			exit();
 		}
 		//------------------------------------------
@@ -105,12 +116,12 @@ class pluploader{
 		
 		if($fileSize<10)
 		{   
-			$this->SendMsg('103.缺少上传文件.');
+			SendMsg('103.缺少上传文件.');
 			exit();
 		}
 
 		if($fileSize > ($this->maxSize * 1024) ){   
-			$this->SendMsg('105.上传文件大小超过了限制.最多上传('.$this->maxSize .'KB).');
+			SendMsg('105.上传文件大小超过了限制.最多上传('.$this->maxSize .'KB).');
 			exit();
 		}
 		//$fileSize = round($fileSize/1024,0);
@@ -129,7 +140,7 @@ class pluploader{
 		$fileExt = strtolower(substr( $srcName, strrpos( $srcName, '.' ) + 1 ));
 
 		if (!in_array($fileExt, $this->allowedExt)) {
-			$this->SendMsg('106.不支持该文件格式.,只支持以下格式:('. join(',', $this->allowedExt) . ').');
+			SendMsg('106.不支持该文件格式.,只支持以下格式:('. join(',', $this->allowedExt) . ').');
 			exit();
 		}
 
@@ -182,13 +193,13 @@ class pluploader{
 
 		// Open temp file
 		if (!$out = @fopen("{$filePath}.part", $chunks ? "ab" : "wb")) {
-			$this->SendMsg('107.未能打开输出流.'."{$filePath}.part");
+			SendMsg('107.未能打开输出流.'."{$filePath}.part");
 			exit();
 		}
 
 		// Read binary input stream and append it to temp file
 		if (!$in = @fopen($_FILES["file"]["tmp_name"], "rb")) {
-			$this->SendMsg('108.未能打开输入的流。');
+			SendMsg('108.未能打开输入的流。');
 			exit();
 		}
 
@@ -211,52 +222,17 @@ class pluploader{
 			} else if (copy($filePath, $newPathAll)) {
 				@unlink($filePath);
 			}else{
-				$this->SendMsg('109.上传后，移动出错！');
+				SendMsg('109.上传后，移动出错！');
 				exit();
 			}
 			*/
 		}
 		
 		//上传成功，返回新路径和原始名称
-		$this->SendMsg('', $newFile,$newPath, $srcName);
+		SendMsg('', $newFile,$newPath, $srcName);
 	}
 	
-	/*
-	 * 向页面输出
-	 * */
-	function SendMsg($msg, $newfile = '', $newpath = '',$srcfile = ''){
-			
-		// Make sure file is not cached (as it happens for example on iOS devices)
-		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		header("Cache-Control: no-store, no-cache, must-revalidate");
-		header("Cache-Control: post-check=0, pre-check=0", false);
-		header("Pragma: no-cache");
-		header('Content-type: text/html; charset=UTF-8');
-		
-		/* 
-		// Support CORS
-		header("Access-Control-Allow-Origin: *");
-		// other CORS headers if any...
-		if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-			exit; // finish preflight CORS requests here
-		}
-		*/
 
-		$hash = array(
-			'err' => 1,			//1 = error ,0 = yes
-			'msg' => $msg,
-			'newfile' => $newfile,	//新文件名，不包含路径
-			'newpath' => $newpath,	//新文件名，包括路径
-			'srcfile' => $srcfile	//原文件名，不包含路径
-		);
-		
-		if($msg == ''){
-			$hash["err"] = 0;
-		}
-		echo json_encode($hash);
-		exit();
-	}
 	
 	function get_temp_dir(){
 		$tmpDir = ''.ini_get("upload_tmp_dir");
@@ -266,5 +242,42 @@ class pluploader{
 		$tmpDir .= DIRECTORY_SEPARATOR . 'ecstore_plupload';
 		return $tmpDir;
 	}
+}
+
+/*
+ * 向页面输出
+ * */
+function SendMsg($msg, $newfile = '', $newpath = '',$srcfile = ''){
+		
+	// Make sure file is not cached (as it happens for example on iOS devices)
+	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+	header("Cache-Control: no-store, no-cache, must-revalidate");
+	header("Cache-Control: post-check=0, pre-check=0", false);
+	header("Pragma: no-cache");
+	header('Content-type: text/html; charset=UTF-8');
+	
+	/* 
+	// Support CORS
+	header("Access-Control-Allow-Origin: *");
+	// other CORS headers if any...
+	if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+		exit; // finish preflight CORS requests here
+	}
+	*/
+
+	$hash = array(
+		'err' => 1,			//1 = error ,0 = yes
+		'msg' => $msg,
+		'newfile' => $newfile,	//新文件名，不包含路径
+		'newpath' => $newpath,	//新文件名，包括路径
+		'srcfile' => $srcfile	//原文件名，不包含路径
+	);
+	
+	if($msg == ''){
+		$hash["err"] = 0;
+	}
+	echo json_encode($hash);
+	exit();
 }
 ?>

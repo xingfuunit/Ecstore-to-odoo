@@ -142,5 +142,5 @@ $db ['sales_touchscreen'] = array (
 				) 
 		),
 		'version' => '$Rev: 40656 $',
-		'comment' => app::get ( 'b2c' )->_ ( '移动首页广告' ) 
+		'comment' => app::get ( 'b2c' )->_ ( '移动触屏系统' ) 
 );

@@ -51,4 +51,20 @@ class mobileapi_mdl_sales_touchscreen extends dbeav_model{
 		return  false;
 	}
 	
+    function delete($filter, $subSdf = 'delete')
+    {
+		//------------------------------------
+		//同步删除视频文件
+        $obj = $this->app->model('sales_touchscreen');
+        $rs  = $obj->dump($filter['ad_id']);
+		if(isset($rs) && is_array($rs)){
+			$vodfile = $rs['vodfile'];
+			if(strlen($vodfile)>5){
+				@unlink(ROOT_DIR .$vodfile);
+			}
+		}
+		//------------------------------------
+        return parent::delete($filter);
+    }
+	
 }
