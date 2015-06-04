@@ -155,3 +155,9 @@ li.choosed-spec{ background:#FF6633;}
     top: 50%;
     vertical-align: baseline;
 }
+
+#select_zt .am-nav>li.am-active>a, .am-nav>li.am-active>a:hover, .am-nav>li.am-active>a:focus {
+  color: #0e90d2;
+  background-color: #EEE;
+  cursor: default;
+}
