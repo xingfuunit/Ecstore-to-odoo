@@ -737,3 +737,21 @@ ul.dl_box .notice-inline{ display:inline-block; padding:2px 0px 0px 51px; positi
 
 .form-act .form-sub-label{font-size:11px;}
 .cat-children .sub-category dd{display:none;}
+
+
+/*
+ * july
+ * */
+.fc{clear:both;font-size:0;line-height:0px;height:0px;}
+#member-menu-letter{position:relative;display:block;*height:46px;}
+.letter-num{width:16px;height:14px;line-height:14px;display:block;position:absolute;top:5px;left:116px;
+background:url('i/comment-red.png') no-repeat center center;
+font-family:arial;font-size:12px;color:#fff;text-align:center;
+}
+
+.letter-num2{background-color:#ff0000;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+}
+ 
