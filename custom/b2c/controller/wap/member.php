@@ -1836,6 +1836,18 @@ class b2c_ctl_wap_member extends wap_frontpage{
     	}
     	$status = $this->userPassport->_bind_member_card($new_card, $type, $login_member_id, $card,$new_account_password);
     	switch ($status){
+    		case 'update_log_failed' :
+    			$msg = app::get('b2c')->_('绑定日志更新失败');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
+    		case 'wrong_email' :
+    			$msg = app::get('b2c')->_('邮箱格式错误');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
+    		case 'wrong_mobile' :
+    			$msg = app::get('b2c')->_('手机格式错误');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
     		case 'update_coupon_failed' :
     			$msg = app::get('b2c')->_('更新优惠券错误');
     			$this->splash('failed',null,$msg,'','',true);
