@@ -34,14 +34,18 @@ document.getElementById('loading_page').style.height=ch+'px';
         <{assign var="imgCount" value=0}>
         <{foreach from=$product_imgs key=key item=image}>
         <li class="showvaluebox">
-          <{if ++$imgCount==1}>
+
+            <!--
+            <{if ++$imgCount==1}>
             <div style="width:100%; height:auto; text-align:center; margin-top:30%; position:absolute; color:#FFFFFF;  background:#000000;filter:alpha(opacity=50); /*IE滤镜*/-moz-opacity:0.5; /*Firefox私有*/opacity:0.5;/*其他*/">
              <h1><{$page_product_basic.title}></h1>
              <{if $page_product_basic.brief}><p><{$page_product_basic.brief}></p><{/if}>
              <p>仅售：<{$page_product_basic.price}></p>
             </div>
-          <{/if}>
-          <img <{if($key==0)}>onload="javascript:document.getElementById('loading_page').style.display='none';"<{/if}> src="<{$image}>" alt="<{$page_product_basic.title}>">
+            <{/if}>
+            -->
+
+            <img <{if($key==0)}>onload="javascript:document.getElementById('loading_page').style.display='none';"<{/if}> src="<{$image}>" alt="<{$page_product_basic.title}>">
         </li>
         <{/foreach}>
     <{else}>
@@ -57,11 +61,11 @@ document.getElementById('loading_page').style.height=ch+'px';
   </ul>
 </div>
 
-
+<!--
 <div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
   <span id="btn_add2cart2" class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>"></span>
 </div>
-
+-->
 
 <!-- Footer -->
 <footer data-am-widget="footer" class="am-footer am-footer-default"></footer>
@@ -131,6 +135,9 @@ $(document).ready(function(){
         $('#curSpec .specValue').html($(this).find('.specValue').html());
         var curSpec = $.parseJSON( $(this).attr('specData') );
         $('#curStore').html(curSpec.store );
+        if(curSpec.store <= 0){
+            // todo: change pic ,  unable to buy , 到货通知
+        }
 
         $('#productId').val( curSpec.product_id );
 
