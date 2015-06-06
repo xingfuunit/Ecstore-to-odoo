@@ -198,5 +198,12 @@ class wap_ctl_default extends wap_controller{
     	$this->page('wap/cover.html');
     }
     
+    /**
+     * 公司简介页
+     */
+    public function company(){
+    	$this->page('wap/company.html');
+    }
+    
 
 }
