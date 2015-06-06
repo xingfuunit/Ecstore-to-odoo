@@ -67,12 +67,12 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     }
 
     public function index(){
-    	$pamMemberData = app::get('pam')->model('members')->getList('*',array('login_account'=>$account));
-    	foreach($pamMemberData as $pmd){
-    		if($pmd['login_type'] == 'local' && strlen($pmd['login_account']) > 25){
-    			return 'openid_rebind';
-    		}
-    	}
+        $pamMemberData = app::get('pam')->model('members')->getList('*',array('login_account'=>$account));
+        foreach($pamMemberData as $pmd){
+           if($pmd['login_type'] == 'local' && strlen($pmd['login_account']) > 25){
+             return 'openid_rebind';
+           }
+        }
         $GLOBALS['runtime']['path'][] = array('link'=>$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'index')),'title'=>'购物车');
         $this->mCart->unset_data();
         $this->_common(1);
@@ -147,7 +147,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $this->pagedata['cart_type'] = $cart_type;
         
          /**
-         取到优惠券的信息
+         *取到优惠券的信息
          */
         $oCoupon = kernel::single('b2c_coupon_mem');
         $aData = $oCoupon->get_list_m($this->member['member_id']);
@@ -167,14 +167,14 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         
         /*获取收货地址 start*/
         if(isset($_SESSION['local_store']) && $cart_type == 'x'){
-        	$member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$this->member['member_id'], 'local_id' => $_SESSION['local_store']['branch_id']),0,1);
+            $member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$this->member['member_id'], 'local_id' => $_SESSION['local_store']['branch_id']),0,1);
                 $this->pagedata['member_addr_list'] = $member_addr_list;
-        	$def_addr = $member_addr_list[0];
-        	$this->pagedata['def_addr'] = $def_addr;
+            $def_addr = $member_addr_list[0];
+            $this->pagedata['def_addr'] = $def_addr;
         }
         
         $area = explode(':',$_SESSION['local_store']['area']);
-       // print_r($area);exit;
+        // print_r($area);exit;
         $ardr_print = "地址：".$area[1];
         $ardr_print = $ardr_print.$_SESSION['local_store']['addr']; 
         $this->pagedata['area_exp'] = $this->mbstringtoarray($ardr_print, 17, 'utf-8','\n');
@@ -188,8 +188,8 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             $this->pagedata['local_store']  = $_SESSION['local_store'];
             $this->pagedata['store_cart']   = 'yes';
             if( $_SESSION['account']['staff']>0) {
-				$_SESSION['account']['access_token'] = md5((string)(time()).'pzfresh');
-				$this->pagedata['access_token'] = $_SESSION['account']['access_token'];				
+                $_SESSION['account']['access_token'] = md5((string)(time()).'pzfresh');
+                $this->pagedata['access_token'] = $_SESSION['account']['access_token'];          
                 $this->page('site/cart/storeindex.html');
             } else {
                 $this->redirect(array('app'=>'b2c', 'ctl'=>'site_storepassport', 'act'=>'index'));
@@ -412,7 +412,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
 
         //hack by Jason 如果前端提交有优惠券的代码字母为小写,将优惠券的字母变成大写
         if($data['coupon']){
-        	$data['coupon'] = strtoupper($data['coupon']);
+            $data['coupon'] = strtoupper($data['coupon']);
         }
         //end hack
         
@@ -919,7 +919,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
      */
     public function checkout_result($isfastbuy=0,$is_czkcz=''){
         
-    	$cart_type = $this->_request->get_get('type');
+        $cart_type = $this->_request->get_get('type');
         //print_r();exit;
         $this->pagedata['checkout'] = 1;
         $this->pagedata['md5_cart_info'] = kernel::single("b2c_cart_objects")->md5_cart_objects($isfastbuy);
@@ -942,15 +942,15 @@ class b2c_ctl_site_cart extends b2c_frontpage{
 
         /*获取收货地址 start*/
         if(isset($_SESSION['local_store']) && $cart_type == 'x'){
-        	$member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'], 'local_id' => $_SESSION['local_store']['local_id']),0,1);
-        	$this->pagedata['member_addr_list'] = $member_addr_list;
-        	$def_addr = $member_addr_list[0];
-        	$this->pagedata['def_addr'] = $def_addr;
+            $member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'], 'local_id' => $_SESSION['local_store']['local_id']),0,1);
+            $this->pagedata['member_addr_list'] = $member_addr_list;
+            $def_addr = $member_addr_list[0];
+            $this->pagedata['def_addr'] = $def_addr;
         }else{
-        	$def_addr = kernel::single('b2c_member_addrs')->get_default_addr($arrMember['member_id']);
-        	$this->pagedata['def_addr'] = $def_addr;
-        	$member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'], 'local_id' => array(0,-1)));
-        	$this->pagedata['member_addr_list'] = $member_addr_list;
+            $def_addr = kernel::single('b2c_member_addrs')->get_default_addr($arrMember['member_id']);
+            $this->pagedata['def_addr'] = $def_addr;
+            $member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'], 'local_id' => array(0,-1)));
+            $this->pagedata['member_addr_list'] = $member_addr_list;
         }
         
         
@@ -968,12 +968,12 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             $this->pagedata['shipping_method'] = (isset($_COOKIE['purchase']['shipping']) && $_COOKIE['purchase']['shipping']) ? unserialize($_COOKIE['purchase']['shipping']) : '';
             
             if ($this->pagedata['shipping_method']['shipping_name'] == '门店自提' &&  $def_addr['local_id'] != '-1') {
-            	$this->pagedata['shipping_method'] = '';
+                $this->pagedata['shipping_method'] = '';
             }
             
             
             $this->pagedata['shipping_branch_name'] = $_COOKIE['purchase']['branch_name'];
-			$this->pagedata['shipping_branch_name_b'] = $_COOKIE['purchase']['branch_name_b'];
+            $this->pagedata['shipping_branch_name_b'] = $_COOKIE['purchase']['branch_name_b'];
             $this->pagedata['shipping_branch_id'] = $_COOKIE['purchase']['branch_id'];
             $this->pagedata['has_cod'] = $this->pagedata['shipping_method']['has_cod'];
         }
@@ -1034,7 +1034,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         }//end 发票
 
         /**
-         取到优惠券的信息
+         *取到优惠券的信息
          */
         $oCoupon = kernel::single('b2c_coupon_mem');
         $aData = $oCoupon->get_list_m($arrMember['member_id']);
@@ -1219,55 +1219,55 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     {
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart'))."?type=x";
         $this->begin();
-		if( $_SESSION['account']['staff']>0 && $_SESSION['account']['access_token']) {
-			if(empty($_POST['access_token']) || $_POST['access_token'] != $_SESSION['account']['access_token']){
-				$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('令牌校验失败，请稍后重试！'),true,array('status'=>'error','msg'=>app::get('b2c')->_('令牌校验失败，请重新登录后或刷新后重试！')));
-			}
-			elseif(!empty($_POST['yu_amount'])&&$_POST['yu_amount']>0){
-				$pay_way = array(
-						'1'=>'现金',
-						'2'=>'刷卡',
-						);
-				
-				$arrMember = $this->get_current_member();
-				$member_id = $arrMember['member_id'];
-				$psm = $_POST['yu_amount'];
-				$msg = 'pos预存款充值';
-				$objAdvance = $this->app->model("member_advance");
-				$paymenthod = $_POST['exp_pay_way'] == 1 ? 'xianjin' : 'shuaka';
-				$branch_id = intval($_SESSION['local_store']['branch_id']);
-				$status = $objAdvance->add($member_id, $psm, app::get('b2c')->_('pos['.$pay_way[$_POST['exp_pay_way']].']预存款充值'), $msg,'','',$paymenthod,'',0,true,$branch_id);
+       if( $_SESSION['account']['staff']>0 && $_SESSION['account']['access_token']) {
+         if(empty($_POST['access_token']) || $_POST['access_token'] != $_SESSION['account']['access_token']){
+          $this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('令牌校验失败，请稍后重试！'),true,array('status'=>'error','msg'=>app::get('b2c')->_('令牌校验失败，请重新登录后或刷新后重试！')));
+         }
+         elseif(!empty($_POST['yu_amount'])&&$_POST['yu_amount']>0){
+          $pay_way = array(
+                 '1'=>'现金',
+                 '2'=>'刷卡',
+                 );
+          
+          $arrMember = $this->get_current_member();
+          $member_id = $arrMember['member_id'];
+          $psm = $_POST['yu_amount'];
+          $msg = 'pos预存款充值';
+          $objAdvance = $this->app->model("member_advance");
+          $paymenthod = $_POST['exp_pay_way'] == 1 ? 'xianjin' : 'shuaka';
+          $branch_id = intval($_SESSION['local_store']['branch_id']);
+          $status = $objAdvance->add($member_id, $psm, app::get('b2c')->_('pos['.$pay_way[$_POST['exp_pay_way']].']预存款充值'), $msg,'','',$paymenthod,'',0,true,$branch_id);
 
-				// 增加经验值
-				$obj_member = $this->app->model('members');
-				$obj_member->change_exp($member_id, floor($psm));
-				
-				//计算精度
-				bcscale(2);
-				
-				//记录操作日志
-				$webposLog = $this->app->model("webpos_log");
-				$sdf_webpos_log = array(
-						//'order_id' => $order_id,
-						'op_id' => $_SESSION['account']['staff'],
-						'op_name' => $_SESSION['account']['staff_name'],
-						'op_branch_id'=>$branch_id,
-						'member_id' => $arrMember['member_id'],
-						'op_time' => time(),
-						'op_type'=>'recharge',
-						'money'=>$psm,
-						'pay_way'=>$pay_way[$_POST['exp_pay_way']],
-						'result' => 'SUCCESS', 
-						'log_text' => $msg,
-						'addon'=>serialize($_POST),
-				);
-				$log_id = $webposLog->save($sdf_webpos_log); 
-				
-				$this->splash('success',$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')), app::get('b2c')->_('会员充值成功！'),true,array('status'=>'success','uname'=>$arrMember['uname'],'yu_amount'=>bcadd($psm,0.00),'advance'=>bcadd($psm,$arrMember['advance']),'exp_way'=>$pay_way[$_POST['exp_pay_way']]));
-			}else{
-				$this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('会充值失败，系统错误，请稍后重试！'),true,array('status'=>'error','msg'=>app::get('b2c')->_('会充值失败，系统错误，请稍后重试！')));
-			}
-		} else {
+          // 增加经验值
+          $obj_member = $this->app->model('members');
+          $obj_member->change_exp($member_id, floor($psm));
+          
+          //计算精度
+          bcscale(2);
+          
+          //记录操作日志
+          $webposLog = $this->app->model("webpos_log");
+          $sdf_webpos_log = array(
+                 //'order_id' => $order_id,
+                 'op_id' => $_SESSION['account']['staff'],
+                 'op_name' => $_SESSION['account']['staff_name'],
+                 'op_branch_id'=>$branch_id,
+                 'member_id' => $arrMember['member_id'],
+                 'op_time' => time(),
+                 'op_type'=>'recharge',
+                 'money'=>$psm,
+                 'pay_way'=>$pay_way[$_POST['exp_pay_way']],
+                 'result' => 'SUCCESS', 
+                 'log_text' => $msg,
+                 'addon'=>serialize($_POST),
+          );
+          $log_id = $webposLog->save($sdf_webpos_log); 
+          
+          $this->splash('success',$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')), app::get('b2c')->_('会员充值成功！'),true,array('status'=>'success','uname'=>$arrMember['uname'],'yu_amount'=>bcadd($psm,0.00),'advance'=>bcadd($psm,$arrMember['advance']),'exp_way'=>$pay_way[$_POST['exp_pay_way']]));
+         }else{
+          $this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('会充值失败，系统错误，请稍后重试！'),true,array('status'=>'error','msg'=>app::get('b2c')->_('会充值失败，系统错误，请稍后重试！')));
+         }
+       } else {
                 $this->splash('error', $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')) , app::get('b2c')->_('登录超时，请重新登录！'),true,array('status'=>'reload','msg'=>app::get('b2c')->_('登录超时，请重新登录！')));
         }
     }
@@ -1292,10 +1292,10 @@ class b2c_ctl_site_cart extends b2c_frontpage{
 
     //保存送货地址
     function shipping_save(){
-	//print_r($_POST);exit();
+    //print_r($_POST);exit();
         $this->set_header();
         $arrMember = $this->get_current_member();
-		$member_id = kernel::single('b2c_user_object')->get_member_id();
+       $member_id = kernel::single('b2c_user_object')->get_member_id();
         if($_POST['address']){
             $address = json_decode($_POST['address'],true);
             unset($_POST['address']);
@@ -1408,61 +1408,61 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         setcookie("purchase[payment]", "", time() - 3600, kernel::base_url().'/');
         
         if(isset($_POST['branch_id']) && $_POST['branch_id'] > 0 && $arr_shipping['shipping_name'] == '门店自提'){
-        	$branch = app::get('ome')->model('branch')->dump($_POST['branch_id'],'branch_id, name,name_b, address,area');
-        	$arr_shipping['shipping_name'].= '【'.$branch['name_b'].'】';
-        	
-	        //门店自提，把收货地址改为门店地址
-	        $member_id = kernel::single('b2c_user_object')->get_member_id();
-	        $pickup_addr = app::get('b2c')->model('member_addrs')->getList('*',array('member_id'=>$member_id,'local_id'=>'-1'));
-	        $addrs_info = app::get('b2c')->model('member_addrs')->getList('*',array('addr_id'=>$_COOKIE['purchase']['addr']['addr_id']));
-	        if (empty($addrs_info)) {
-	        	$addrs_info = app::get('b2c')->model('member_addrs')->getList('*',array('local_id'=>'0','member_id'=>$member_id),0,1,'def_addr desc');
-	        }
-	    //   var_dump($addrs_info);
-	    //   exit;
-        	$area_explode = explode(':',$branch['area']);
-        	$area_explode[1] = str_replace('/','',$area_explode[1]);
-        	$address = str_replace($area_explode[1],'',$branch['address']);
-        	
-	        if (empty($pickup_addr)) {
-	        	$data = array();
-	        	$data['member_id'] = $member_id;
-	        	$data['name'] = $addrs_info[0]['name'];
-	        	$data['lastname'] = $addrs_info[0]['lastname'];
-	        	$data['firstname'] = $addrs_info[0]['firstname'];
-	        	$data['area'] = $branch['area'];
-	        	$data['addr'] = $address;
-	        	$data['zip'] = $addrs_info[0]['zip'];
-	        	$data['tel'] = $addrs_info[0]['tel'];
-	        	$data['mobile'] = $addrs_info[0]['mobile'];
-	        	$data['day'] = $addrs_info[0]['day'];
-	        	$data['time'] = $addrs_info[0]['time'];
-	        	$data['def_addr'] = 0;
-	        	$data['local_id'] = -1;
-	        	$addr_id = app::get('b2c')->model('member_addrs')->insert($data);
-	        } else {
-	        	$data = array();
-	        	$data['name'] = $addrs_info[0]['name'];
-	        	$data['lastname'] = $addrs_info[0]['lastname'];
-	        	$data['firstname'] = $addrs_info[0]['firstname'];
-	        	$data['area'] = $branch['area'];
-	        	$data['addr'] = $address;
-	        	$data['zip'] = $addrs_info[0]['zip'];
-	        	$data['tel'] = $addrs_info[0]['tel'];
-	        	$data['mobile'] = $addrs_info[0]['mobile'];
-	        	$data['day'] = $addrs_info[0]['day'];
-	        	$data['time'] = $addrs_info[0]['time'];
-	        	app::get('b2c')->model('member_addrs')->update($data,array('addr_id'=>$pickup_addr[0]['addr_id']));
-	        	$addr_id = $pickup_addr[0]['addr_id'];
-	        }
-	        $seKey = md5($this->obj_session->sess_id().$member_id);
-	        
-	        setcookie('purchase[branch_name]',$branch['name'] , 0, kernel::base_url() . '/');
-			setcookie('purchase[branch_name_b]',$branch['name_b'] , 0, kernel::base_url() . '/');
-	        setcookie('purchase[branch_id]',$branch['branch_id'] , 0, kernel::base_url() . '/');
-	        
-	        setcookie('purchase[addr][usable]', $seKey, 0, kernel::base_url() . '/');
-	        setcookie('purchase[addr][addr_id]', $addr_id, 0, kernel::base_url() . '/');
+            $branch = app::get('ome')->model('branch')->dump($_POST['branch_id'],'branch_id, name,name_b, address,area');
+            $arr_shipping['shipping_name'].= '【'.$branch['name_b'].'】';
+            
+            //门店自提，把收货地址改为门店地址
+            $member_id = kernel::single('b2c_user_object')->get_member_id();
+            $pickup_addr = app::get('b2c')->model('member_addrs')->getList('*',array('member_id'=>$member_id,'local_id'=>'-1'));
+            $addrs_info = app::get('b2c')->model('member_addrs')->getList('*',array('addr_id'=>$_COOKIE['purchase']['addr']['addr_id']));
+            if (empty($addrs_info)) {
+               $addrs_info = app::get('b2c')->model('member_addrs')->getList('*',array('local_id'=>'0','member_id'=>$member_id),0,1,'def_addr desc');
+            }
+        //   var_dump($addrs_info);
+        //   exit;
+            $area_explode = explode(':',$branch['area']);
+            $area_explode[1] = str_replace('/','',$area_explode[1]);
+            $address = str_replace($area_explode[1],'',$branch['address']);
+            
+            if (empty($pickup_addr)) {
+               $data = array();
+               $data['member_id'] = $member_id;
+               $data['name'] = $addrs_info[0]['name'];
+               $data['lastname'] = $addrs_info[0]['lastname'];
+               $data['firstname'] = $addrs_info[0]['firstname'];
+               $data['area'] = $branch['area'];
+               $data['addr'] = $address;
+               $data['zip'] = $addrs_info[0]['zip'];
+               $data['tel'] = $addrs_info[0]['tel'];
+               $data['mobile'] = $addrs_info[0]['mobile'];
+               $data['day'] = $addrs_info[0]['day'];
+               $data['time'] = $addrs_info[0]['time'];
+               $data['def_addr'] = 0;
+               $data['local_id'] = -1;
+               $addr_id = app::get('b2c')->model('member_addrs')->insert($data);
+            } else {
+               $data = array();
+               $data['name'] = $addrs_info[0]['name'];
+               $data['lastname'] = $addrs_info[0]['lastname'];
+               $data['firstname'] = $addrs_info[0]['firstname'];
+               $data['area'] = $branch['area'];
+               $data['addr'] = $address;
+               $data['zip'] = $addrs_info[0]['zip'];
+               $data['tel'] = $addrs_info[0]['tel'];
+               $data['mobile'] = $addrs_info[0]['mobile'];
+               $data['day'] = $addrs_info[0]['day'];
+               $data['time'] = $addrs_info[0]['time'];
+               app::get('b2c')->model('member_addrs')->update($data,array('addr_id'=>$pickup_addr[0]['addr_id']));
+               $addr_id = $pickup_addr[0]['addr_id'];
+            }
+            $seKey = md5($this->obj_session->sess_id().$member_id);
+            
+            setcookie('purchase[branch_name]',$branch['name'] , 0, kernel::base_url() . '/');
+            setcookie('purchase[branch_name_b]',$branch['name_b'] , 0, kernel::base_url() . '/');
+            setcookie('purchase[branch_id]',$branch['branch_id'] , 0, kernel::base_url() . '/');
+            
+            setcookie('purchase[addr][usable]', $seKey, 0, kernel::base_url() . '/');
+            setcookie('purchase[addr][addr_id]', $addr_id, 0, kernel::base_url() . '/');
         }
         
         
@@ -1470,28 +1470,28 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         echo $this->fetch('site/cart/checkout/delivery_confirm.html');
     }
 
-	//重新读取收货信息
-	
-	function shipping_reload() {
+    //重新读取收货信息
+    
+    function shipping_reload() {
         $arrMember = kernel::single('b2c_user_object')->get_members_data(array('members'=>'member_id,cur',));
         $arrMember = $arrMember['members'];
-		$obj_member_addrs = $this->app->model('member_addrs');
+       $obj_member_addrs = $this->app->model('member_addrs');
         /*获取收货地址 start*/
         if(isset($_SESSION['local_store']) && $cart_type == 'x'){
-        	$member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'], 'local_id' => $_SESSION['local_store']['local_id']),0,1);
-        	$this->pagedata['member_addr_list'] = $member_addr_list;
-        	$def_addr = $member_addr_list[0];
-        	$this->pagedata['def_addr'] = $def_addr;
+            $member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'], 'local_id' => $_SESSION['local_store']['local_id']),0,1);
+            $this->pagedata['member_addr_list'] = $member_addr_list;
+            $def_addr = $member_addr_list[0];
+            $this->pagedata['def_addr'] = $def_addr;
         }else{
-        	$def_addr = kernel::single('b2c_member_addrs')->get_default_addr($arrMember['member_id']);
-        	$this->pagedata['def_addr'] = $def_addr;
-        	$member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'], 'local_id' => array(0,-1)));
-        	$this->pagedata['member_addr_list'] = $member_addr_list;
+            $def_addr = kernel::single('b2c_member_addrs')->get_default_addr($arrMember['member_id']);
+            $this->pagedata['def_addr'] = $def_addr;
+            $member_addr_list = $obj_member_addrs->getList('*',array('member_id'=>$arrMember['member_id'], 'local_id' => array(0,-1)));
+            $this->pagedata['member_addr_list'] = $member_addr_list;
         }
-		
-		echo $this->fetch('site/cart/checkout/shipping_reload.html');
-	}
-	
+       
+       echo $this->fetch('site/cart/checkout/shipping_reload.html');
+    }
+    
     //支付方式根据配送方式联动
     public function payment_change(){
         $this->set_header();
@@ -1547,7 +1547,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $sdf_order['is_tax'] = $_POST['payment']['is_tax'];
         $sdf_order['tax_type'] = $_POST['payment']['tax_type'];
         $sdf_order['payment'] = $payment['pay_app_id'];
-		$member_id = kernel::single('b2c_user_object')->get_member_id();
+        $member_id = kernel::single('b2c_user_object')->get_member_id();
         $arrMember = $this->get_current_member();
         $sdf_order['member_id'] = $arrMember['member_id'];
         $sdf_order['area_id'] = $address_area[2]?$address_area[2]:$address['area'];
@@ -1574,11 +1574,11 @@ class b2c_ctl_site_cart extends b2c_frontpage{
 
         // 购物车数据项的render
         $this->pagedata['item_goods_section'] = $this->mCart->get_item_goods_render_view();
-//print_r($this->pagedata['aCart']);exit();
+        //print_r($this->pagedata['aCart']);exit();
         $tpl = 'site/cart/mini/view.html';
         $this->page($tpl, true);
     }
-	
+    
 
     public function loginBuy($isfastbuy=0)
     {
@@ -1592,9 +1592,9 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         }
 
         if($isfastbuy){
-          $_SESSION['pc_next_page'] = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'_check_checkout','arg0'=>'true'));
+            $_SESSION['pc_next_page'] = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'_check_checkout','arg0'=>'true'));
         }else{
-          $_SESSION['pc_next_page'] = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'checkout'));
+            $_SESSION['pc_next_page'] = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'checkout'));
         }
 
         $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_passport','act'=>'login','arg0'=>$_GET['mini_passport']));
@@ -1605,33 +1605,28 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             }else{
                 $_SESSION['next_page'] = $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'checkout'));
             }
-         }
-         $oAP = $this->app->controller('site_passport');
-         $oAP->gen_login_form($_GET['mini_passport']);
-         $this->pagedata['base_path'] = kernel::base_url();
+        }
+        $oAP = $this->app->controller('site_passport');
+        $oAP->gen_login_form($_GET['mini_passport']);
+        $this->pagedata['base_path'] = kernel::base_url();
 
-         foreach(kernel::servicelist('openid_imageurl') as $object)
-         {
-             if(is_object($object))
-             {
-                 if(method_exists($object,'get_image_url'))
-                 {
-                     $this->pagedata['login_image_url'][] = $object->get_image_url();
-                 }
-             }
-         }
-         if($_GET['mini_passport']){
+        foreach(kernel::servicelist('openid_imageurl') as $object)
+        {
+            if(is_object($object))
+            {
+                if(method_exists($object,'get_image_url'))
+                {
+                    $this->pagedata['login_image_url'][] = $object->get_image_url();
+                }
+            }
+        }
+        if($_GET['mini_passport']){
             $this->display($this->__tmpl);
             exit;
-         }
-         $this->set_tmpl('passport');
-         $this->page($this->__tmpl);
+        }
+        $this->set_tmpl('passport');
+        $this->page($this->__tmpl);
     }
-
-public function ajax()
-{
-	echo 111;
-}
 
     ////////////////////////////// 以下私有函数/////////////////////////////
 
@@ -2029,10 +2024,7 @@ public function ajax()
         $this->pagedata['aCart']['subtotal_prefilter'] = $this->objMath->number_minus(array($this->pagedata['aCart']['subtotal'], $this->pagedata['aCart']['discount_amount_prefilter']));
         $this->pagedata['aCart']['promotion_subtotal'] = $this->objMath->number_minus(array($this->pagedata['aCart']['subtotal'], $this->pagedata['aCart']['subtotal_discount']));
 
-        $this->set_tmpl_file('default-onlycontents.html');
-        // $this->set_tmpl('default-onlycontents.html');
-        // $this->page('site/cart/item/storegoods.html');
-        $this->page('site/cart/storecart_main.html');
+        echo $this->fetch('site/cart/storecart_main.html');exit;
     }
 
     public function ajax_webpos_add_goods_to_cart(){
