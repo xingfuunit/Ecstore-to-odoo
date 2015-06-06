@@ -11,8 +11,8 @@
     <input type="hidden" name="stock" value="<{$goods.store.store}>" />
         <div class="am-u-sm-4 am-list-thumb" style="position:relative">
 		<a href="<{link app=b2c ctl=wap_product arg0=$goods.obj_items.products.0.product_id}>"><img src="<{$goods.obj_items.products.0.thumbnail|storager:'s'}>" /></a></div>
-        <div class="am-u-sm-8 am-list-main" style="width:50%; float:right; color:#999999">
-          <h3 class="am-list-item-hd">
+        <div class="am-u-sm-8 am-list-main" style="width:60%; float:right; color:#999999">
+          <h3 class="am-list-item-hd" style="width:80%;"">
             <a style=" color:#999999" href="<{link app=b2c ctl=wap_product arg0=$goods.obj_items.products.0.product_id}>" class="pt-h-name"><{$goods.obj_items.products.0.name}></a>
             [<{$goods.obj_items.products.0.spec_info}>]
           </h3>
@@ -31,11 +31,12 @@
              </div>
              <a href="javascript:void(0);" class="am-icon-plus-circle am-icon-lg plus btn"  style="float:left;color:#999999;line-height: 41px;"></a>
 		  </div>
+		  <{if !$is_fastbuy}>
+		<a id="<{link app=b2c ctl=wap_cart act=remove}>" style="width:20%;" href="javascript:void(0);" class="J-remove"><i class="am-icon-trash am-fr am-icon-sm" style="color:#CCCCCC"></i></a>
+		<{/if}>
 		  <{if $goods.store.store <= 5}><div class="am-fl" style="width:100%"><span class="am-badge am-badge-danger am-radius am-fl" >剩余不多</span></div><{/if}>
 		  <div style="clear:both; color:#FF0000;"><h1 style="float:left"><{$goods.obj_items.products.0.price.buy_price|cur_odr}></h1></div>
-		 <{if !$is_fastbuy}>
-		<a id="<{link app=b2c ctl=wap_cart act=remove}>" href="javascript:void(0);" class="J-remove"><i class="am-icon-trash am-fr am-icon-sm" style="color:#CCCCCC"></i></a>
-		<{/if}>
+		 
         </div>
       </li>   
       <{/foreach}>   
