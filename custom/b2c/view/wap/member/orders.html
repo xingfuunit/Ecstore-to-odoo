@@ -1,11 +1,11 @@
 <{include file='wap/member/header.html' title=$title goback='/wap/member.html'}>
 <div class="am-btn-group am-btn-group-justify" style="margin:5px 0;">
 
-<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='nopayed'}>'"  class="am-btn am-btn-default" type="button">待支付</button>
+<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='nopayed'}>'"  class="am-btn am-btn-default<{if $status=='nopayed'}> am-active<{/if}>" type="button">待支付</button>
 
-<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='daishouhuo'}>'"  class="am-btn am-btn-default" type="button">待收货</button>
-<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='tuihuo'}>'" class="am-btn am-btn-default" type="button">我的退货</button>
-<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='all'}>'" class="am-btn am-btn-default" type="button">全部</button>
+<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='daishouhuo'}>'"  class="am-btn am-btn-default<{if $status=='daishouhuo'}> am-active<{/if}>" type="button">待收货</button>
+<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='tuihuo'}>'" class="am-btn am-btn-default<{if $status=='tuihuo'}> am-active<{/if}>" type="button">我的退货</button>
+<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='all'}>'" class="am-btn am-btn-default<{if $status=='all'}> am-active<{/if}>" type="button">全部</button>
 </div>
 
 <div class="am-list-news-bd">
