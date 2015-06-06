@@ -2008,5 +2008,205 @@ public function ajax()
         header('Progma: no-cache');
         header('Content-Type:text/html; charset=utf-8');
     }
+
+
+        /**
+     *
+     */
+    public function ajax_webpost_getProducts(){
+        $pamMemberData = app::get('pam')->model('members')->getList('*',array('login_account'=>$account));
+        foreach($pamMemberData as $pmd){
+            if($pmd['login_type'] == 'local' && strlen($pmd['login_account']) > 25){
+                return 'openid_rebind';
+            }
+        }
+
+        $this->pagedata['store_cart']   = 'yes';
+
+        $GLOBALS['runtime']['path'][] = array('link'=>$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'index')),'title'=>'购物车');
+        $this->mCart->unset_data();
+        $this->_common(1);
+        $this->pagedata['aCart']['subtotal_prefilter'] = $this->objMath->number_minus(array($this->pagedata['aCart']['subtotal'], $this->pagedata['aCart']['discount_amount_prefilter']));
+        $this->pagedata['aCart']['promotion_subtotal'] = $this->objMath->number_minus(array($this->pagedata['aCart']['subtotal'], $this->pagedata['aCart']['subtotal_discount']));
+
+        $this->set_tmpl_file('default-onlycontents.html');
+        // $this->set_tmpl('default-onlycontents.html');
+        // $this->page('site/cart/item/storegoods.html');
+        $this->page('site/cart/storecart_main.html');
+    }
+
+    public function ajax_webpos_add_goods_to_cart(){
+        $bn = $_POST['bn'];
+        $goods_data = $this->get_product_by_bn($bn);
+        $goods_data = json_decode($goods_data,true);
+        if(isset($goods_data['error'])){
+            $this->json_response('error',$goods_data['error']); 
+        }
+        $_GET[0]='goods';
+        $_GET[1]=$goods_data['goods_id'];
+        $_GET[2]=$goods_data['product_id'];
+        $_GET[3]=1;
+         /**
+         * 处理信息和验证过程
+         * servicelist('b2c_cart_object_apps')=>
+         * gift_cart_object_gift
+         * b2c_cart_object_coupon
+         * b2c_cart_object_goods
+         */
+        $type = 'goods';
+
+        $arr_objects = array();
+        if ($objs = kernel::servicelist('b2c_cart_object_apps'))
+        {
+            foreach ($objs as $obj)
+            {
+                if ($obj->need_validate_store()){
+                    $arr_objects[$obj->get_type()] = $obj;
+                }
+            }
+        }
+
+        $data = $this->_request->get_params(true);
+
+        // 过滤特殊字符
+        $obj_filter = kernel::single('b2c_site_filter');
+        $data = $obj_filter->check_input($data);
+        
+        if($data['response_json'] == 'true'){//ajax提交返回错误
+            $errorRequest = true;
+        }
+        //跳转到购物车
+        // $url = $this->gen_url(array('app'=>'b2c', 'ctl'=>'site_cart'));
+        /**
+         * 处理校验各自的数据是否可以加入购物车
+         */
+        if (!$arr_objects[$type])
+        {
+            $msg = app::get('b2c')->_('商品类型错误！');
+            $this->json_response('error',$msg); 
+        }
+        if (method_exists($arr_objects[$type], 'get_data'))
+        {
+            if (!$aData = $arr_objects[$type]->get_data($data,$msg))
+            {
+                $this->json_response('error',$msg); 
+            }
+        }
+        // 进行各自的特殊校验
+        if (method_exists($arr_objects[$type], 'check_object'))
+        {
+            if (!$arr_objects[$type]->check_object($aData,$msg))
+            {
+                $this->json_response('error',$msg); 
+            }
+        }
+
+
+        $obj_cart_object = kernel::single('b2c_cart_objects');
+
+        $obj_ident = $obj_cart_object->add_object($arr_objects[$type], $aData, $msg);
+
+        if(!$obj_ident){
+            $this->json_response('error',$msg,$next); 
+        } 
+        else{
+            $this->json_response('success'); 
+        }
+    }
+
+    function json_response($response_type='error',$msg='',$next=''){
+        echo json_encode( array('response'=>$response_type,'msg'=>$msg,'next'=>$next) );
+        exit;
+    }
+
+    public function get_product_by_bn($bn){
+        $this->_response->set_header('Cache-Control', 'no-store, no-cache');
+      
+//      $bn = $_POST['bn'];
+//      $product = app::get('b2c')->model('products')->getList('product_id,goods_id,marketable,store',array('bn'=>trim($bn)));
+      
+        $bn = kernel::database()->quote(trim($bn));
+      
+        $product = kernel::database()->select("select product_id,goods_id,bn,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
+      
+        if(!$product){
+        /**hack by Jason begin **/
+            if(strlen($bn) == 15){
+                $last_num = $this->barcode_last($post_bn);
+                if($last_num == substr($post_bn, -1)){
+                    $tmp_bn = $bn;
+                    $bn = kernel::database()->quote(substr($tmp_bn, 2,6));
+                    $weigh = intval(substr($tmp_bn, 8,5));
+                    $product = kernel::database()->select("select product_id,bn,goods_id,marketable,store from sdb_b2c_products where barcode=$bn or bn=$bn");
+                }
+                else{
+                    return json_encode(array('error'=>app::get('b2c')->_('商品不存在')));
+                }
+            }
+            else{
+                return json_encode(array('error'=>app::get('b2c')->_('商品不存在')));
+            }            
+        }
+      /**hack by Jason end **/
+      
+      /**hack by Jason begin **/
+        if($weigh){
+            $product[0]['num'] = $weigh;
+        }else{
+            $product[0]['num'] = 1;
+        }
+        /**hack by Jason end **/
+        //print_r($product);exit;
+        if($product[0]['marketable'] == "false"){
+            return  json_encode(array('error'=>app::get('b2c')->_('商品未上架')));
+        }
+        
+        if(isset($_COOKIE['loginType']) && $_COOKIE['loginType'] == 'store'){
+            $obj_goods = kernel::single('b2c_cart_object_goods');
+            $erp_store = $obj_goods->get_erp_store($product[0]['bn'], $_SESSION['local_store']['branch_id'], $product[0]['goods_id']);
+            if($erp_store <= 0){
+                return json_encode(array('error'=>app::get('b2c')->_('库存不足')));
+            }
+      //当输入重量大于库存时提示库存不足
+            if($erp_store < $weigh){
+                return json_encode(array('error'=>app::get('b2c')->_('库存不足')));
+            }
+        }else{
+           if($product[0]['store'] <= 10){ //hack by Jason 如果是门店的操作,则不用检查库存
+                return  json_encode(array('error'=>app::get('b2c')->_('库存有限')));
+            }
+        }
+      
+       // print_r($product);exit;
+        
+      return json_encode($product[0]);
+        // return $product[0];
+    }
+
+
+    /**
+     * 商品条形码校验位的验证
+     */
+    function barcode_last($barcode){
+        $code_array = str_split($barcode,1);
+        $even = 0;
+        $odd = 0;
+        foreach($code_array as $key => $value){
+            if($key < 12 && $key%2 == 1){
+                $even = $even + intval($value);
+            }
+            if($key < 12 && $key%2 == 0){
+                $odd = $odd + intval($value);
+            }
+        }
+        $eo = $even * 3 + $odd;
+        $sd = intval(substr($eo, -1));
+        if($sd == 0){
+            return 0;
+        }else{
+            return (10-$sd);
+        }
+    }
+}
 }
 
