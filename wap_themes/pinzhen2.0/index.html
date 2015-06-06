@@ -3,13 +3,9 @@
 <head>
    
     <{wapheader}>
-		
-<style type="text/css">
-.index-marquee{padding:0px;margin:0px;background-color:#dd514c;color:#fff;line-height:2.2rem;}
-.index-marquee a{color:#fff;font-size:0.875rem;display:block;line-height:2.2rem;width:100%;}
-.index-marquee marquee{display:block;line-height:2.2rem;width:100%;}
-.fc{clear:both;font-size:0;line-height:0px;height:0px;}
-</style>
+<link href="/public/app/wap/statics/css_mini/index.css" rel="stylesheet" media="screen, projection" />
+<script type="text/javascript" src="/public/app/wap/statics/js_mini/scrollable.full.min.js"></script>
+<script type="text/javascript" src="/public/app/wap/statics/js/index.js"></script>
 </head>
 <body>
     <{wap_require file="block/header.html"}>
@@ -75,12 +71,21 @@
 	<!--图片导航结束-->
 	
 	<!--公告开始-->
-	<div class="index-marquee">
-		<marquee direction="left" onMouseOut="this.start()" onMouseOver="this.stop()"  scrollamount="6">
-			<a href="<{$roll_text.0.ad_url}>"><{$roll_text.0.ad_name}></a>
-		</marquee>
-		<div class="fc"></div>
-	</div>
+	<div class="index-marquee" id="index-marquee"><div class="itemsBg">
+		<div class="dot">
+			<i class="am-icon-volume-down" style="display:none;"></i>
+			<i class="am-icon-volume-up" style="display:none;"></i>
+		</div>
+		<div class="itemsWrap">
+			<div class="items">
+				<{foreach from=$roll_text item=r}>
+					<div class="item">
+						<a href="<{$r.ad_url}>"><{$r.ad_name}></a>
+					</div>
+				<{/foreach}>
+			</div>
+		</div>
+	</div></div>
 	<!--公告结束-->
 	
 	<!--保证和优惠券开始-->
