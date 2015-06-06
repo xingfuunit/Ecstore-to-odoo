@@ -2208,5 +2208,4 @@ public function ajax()
         }
     }
 }
-}
 
