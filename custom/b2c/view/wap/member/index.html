@@ -7,79 +7,85 @@
 <link rel="stylesheet" href="/public/app/wap/statics/css_mini/member.css" />
 
 
-<div class="am-g" style="background:#eeeeee; padding:5px 0;">
-<div class="am-fl" style="width:30%; height:100px;display:block"><span class="am-text-top"></span></div>
-<div class="am-fl" style="width:40%; text-align:center"><img width="100" height="100" alt="" src="/public/app/b2c/statics/images/pz_logo.jpg"></div>
-<div class="am-fl" style="width:30%; height:100px;display:block"><span class="am-text-bottom"></span></div>
-<div class="am-fl" style="width:100%; height:30px; line-height:30px; text-align:center"><span class="am-text-middle" style="width:100%">
-<{if $tag_name}><{$tag_name}><{else}><{if $weixin_bind != '0'}><{$bind_info.bind_account}><{/if}><{/if}>
-
-</span></div>
+<div class="am-g" style="background: url(/public/app/b2c/statics/images/hg.jpg) no-repeat left; background-size:100%; padding:5px 0;">
+<div class="am-fl" style="width:100%; height:auto;display:block; padding:10px; margin:10px 0; ">
+ <span>账号：<{if $tag_name}><{$tag_name}><{else}><{if $weixin_bind != '0'}><{$bind_info.bind_account}><{/if}><{/if}></span>
+ <br>
+ <span>积分：<{$member.point}></span>
+ <a style=" background:#FF0000; border-radius:10px; float:right; padding:2px; font-size:12px; color:#FFFFFF" href="#"><{$member.levelname}></a>
 </div>
+<div class="am-btn-group am-btn-group-justify">
+<button  onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='nopayed'}>'"  class="am-btn am-btn-default" style="background:url(/public/app/b2c/statics/images/black_trans.png) repeat; color:#FFFFFF; border-top:0px; border-bottom:0px;border-left:0px;" type="button"><i class="am-icon-credit-card"></i><br>待付款</button>
+<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='daishouhuo'}>'"   class="am-btn am-btn-default" style="background:url(/public/app/b2c/statics/images/black_trans.png) repeat;color:#FFFFFF; border-top:0px; border-bottom:0px;"  type="button"><i class="am-icon-truck"></i><br>待收货</button>
+<button  onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='all'}>'"  class="am-btn am-btn-default" style="background:url(/public/app/b2c/statics/images/black_trans.png) repeat;color:#FFFFFF; border-top:0px; border-bottom:0px; border-right:0px;"  type="button"><i class="am-icon-file-text"></i><br>全部订单</button>
+</div>
+</div>
+
 
 <div id="widget-list" class="member-index-list" >
 <ul class="am-list m-widget-list icon-gray-color" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
 
 <li>
 	<div class="item" data-rel="accordion" onclick="self.location='<{link app=b2c ctl='wap_member' act='weixinset'}>'" >
-		<span><i class="am-icon-star-o" style="margin:0 5px;"></i>设置登录帐号</span><span class="am-fr am-text-warning" style="margin-right:10%"><{if $weixin_bind != '0'}>已绑定<{$bind_info.bind_type}>:<{$bind_info.bind_account}><{/if}></span>
+		<span class="i"><i class="am-icon-star-o" style="margin:0 5px;"></i>设置登录帐号</span><span class="am-fr am-text-warning" style="margin-right:10%"><{if $weixin_bind != '0'}>已绑定<{$bind_info.bind_type}>:<{$bind_info.bind_account}><{/if}></span>
 	</div>
 </li>
 
 <li>
 	<div class="item" data-rel="accordion" onclick="self.location='<{link app=b2c ctl='wap_member' act='orders'}>'">
-	<span><i class="am-icon-edit" style="margin:0 5px;"></i>我的订单</span><span class="am-fr am-text-warning" style="margin-right:10%"><{$member.order_num}></span>
+	<span class="i"><i class="am-icon-edit" style="margin:0 5px;"></i>我的订单</span><span class="am-fr am-text-warning" style="margin-right:10%"><{$member.order_num}></span>
 	</div>
 </li>
 <{*
 <li>
 	<div class="item" data-rel="divider" onclick="self.location='<{link app=b2c ctl='wap_member' act='weixinset'}>'">
-	<span><i class="am-icon-map-marker" style="margin:0 5px;"></i>绑定手机</span>
+	<span class="i"><i class="am-icon-map-marker" style="margin:0 5px;"></i>绑定手机</span>
 </li>
 *}>
 <li>
 	<div class="item" data-rel="duoshuo" onclick="self.location='<{link app=b2c ctl='wap_member' act='favorite'}>'">
-	<span><i class="am-icon-heart" style="margin:0 5px;"></i>我的收藏</span>
+	<span class="i"><i class="am-icon-heart" style="margin:0 5px;"></i>我的收藏</span>
 </li>
 
-<li>
+<{*<li>
 	<div class="item" data-rel="figure" onclick="self.location='<{link app=b2c ctl='wap_member' act='bership'}>'">
-	<span><i class="am-icon-group" style="margin:0 5px;"></i>会员等级</span><span class="am-fr  am-text-defult" style="margin-right:10%"><{$member.levelname}></span>
+	<span class="i"><i class="am-icon-group" style="margin:0 5px;"></i>会员等级</span><span class="am-fr  am-text-defult" style="margin-right:10%"><{$member.levelname}></span>
 	</div>
 </li>
 
 <li>
 	<div class="item" data-rel="footer" onclick="self.location='<{link app=b2c ctl='wap_member' act='point_history'}>'">
-	<span><i class="am-icon-database" style="margin:0 5px;"></i>积分</span><span class="am-fr  am-text-warning" style="margin-right:10%"><{$member.point}></span>
+	<span class="i"><i class="am-icon-database" style="margin:0 5px;"></i>积分</span><span class="am-fr  am-text-warning" style="margin-right:10%"><{$member.point}></span>
 	</div>
-</li>
+</li>*}>
+
 <li>
 	<div class="item" data-rel="gallery" onclick="self.location='<{link app=b2c ctl='wap_member' act='wallet'}>'">
-	<span><i class="am-icon-jpy" style="margin:0 5px;"></i>品珍钱包</span><span class="am-fr am-text-warning" style="margin-right:10%">余额：￥<{$member.advance}></span>
+	<span class="i"><i class="am-icon-jpy" style="margin:0 5px;"></i>品珍钱包</span><span class="am-fr am-text-warning" style="margin-right:10%">余额：￥<{$member.advance}></span>
 	</div>
 </li>
 
 <li>
 	<div class="item" data-rel="gotop" onclick="self.location='<{link app=b2c ctl='wap_member' act='coupon'}>'">
-	<span><i class="am-icon-ticket" style="margin:0 5px;"></i>优惠券</span><span class="am-fr  am-text-defult" style="margin-right:10%"><{$member.coupon_num}></span>
+	<span class="i"><i class="am-icon-ticket" style="margin:0 5px;"></i>优惠券</span><span class="am-fr  am-text-warning" style="margin-right:10%"><{$member.coupon_num}></span>
 	</div>
 </li>
 
 <li>
 	<div class="item" data-rel="gotop" onclick="self.location='<{link app=b2c ctl='wap_member' act='address_list'}>'">
-	<span><i class="am-icon-truck" style="margin:0 5px;"></i>收货地址</span><span class="am-fr  am-text-defult" style="margin-right:10%"></span>
+	<span class="i"><i class="am-icon-truck" style="margin:0 5px;"></i>收货地址</span><span class="am-fr  am-text-defult" style="margin-right:10%"></span>
 	</div>
 </li>
 
 <li>
 	<div class="item" data-rel="gotop" onclick="self.location='<{link app=b2c ctl='wap_member' act='nodiscuss'}>'">
-	<span><i class="am-icon-thumbs-up" style="margin:0 5px;"></i>未评论商品</span><span class="am-fr  am-text-defult" style="margin-right:10%"></span>
+	<span class="i"><i class="am-icon-thumbs-up" style="margin:0 5px;"></i>未评论商品</span><span class="am-fr  am-text-defult" style="margin-right:10%"></span>
 	</div>
 </li>
 
 <li>
 	<div class="item" data-rel="gotop" onclick="self.location='<{link app=b2c ctl='wap_member' act='message'}>'">
-	<span><i class="am-icon-comments" style="margin:0 5px;"></i>意见反馈</span><span class="am-fr  am-text-defult" style="margin-right:10%"></span>
+	<span class="i"><i class="am-icon-comments" style="margin:0 5px;"></i>意见反馈</span><span class="am-fr  am-text-defult" style="margin-right:10%"></span>
 	</div>
 </li>
 
