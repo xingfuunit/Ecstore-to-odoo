@@ -127,6 +127,15 @@ $(document).ready(function(){
             document.getElementById('specList').style.display='none';
     });
 
+    if(<{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.store}> <= 0){
+        $('#btnBuyNow').hide();
+        $('#btnBuyNowDisabled').show();
+    }
+    else{
+        $('#btnBuyNow').show();
+        $('#btnBuyNowDisabled').hide();
+    }
+
     // specification select
     $('#specList').on('click','li',function(){
         $('#'+$('#productId').val() ).removeClass('choosed-spec');
@@ -135,12 +144,17 @@ $(document).ready(function(){
         $('#curSpec .specValue').html($(this).find('.specValue').html());
         var curSpec = $.parseJSON( $(this).attr('specData') );
         $('#curStore').html(curSpec.store );
+
         if(curSpec.store <= 0){
-            // todo: change pic ,  unable to buy , 到货通知
+            $('#btnBuyNow').hide();
+            $('#btnBuyNowDisabled').show();
+        }
+        else{
+            $('#btnBuyNow').show();
+            $('#btnBuyNowDisabled').hide();
         }
 
         $('#productId').val( curSpec.product_id );
-
 
         $('#'+curSpec.product_id).addClass('choosed-spec');
 
