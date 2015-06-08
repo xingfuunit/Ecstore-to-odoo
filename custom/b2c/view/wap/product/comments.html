@@ -17,11 +17,11 @@
 
       <li class="am-comment">
         <a href="#link-to-user-home">
-          <img width="48" height="48" class="am-comment-avatar" alt="" src="<{if $comlist.member_lv_logo!=''}><{$comlist.member_lv_logo|storager:'s'}>"<{else}>/public/app/b2c/statics/sprites/default-avatar.png<{/if}>">
+          <img width="48" height="48" class="am-comment-avatar" alt="" src="<{if $comlist.member_lv_logo!=''}><{$comlist.member_lv_logo|storager:'s'}>"<{else}>/public/app/b2c/statics/images/faces/pzmemeber_h_0<{1|rand:9}>.jpg<{/if}>">
         </a>
         <div class="am-comment-main">
         <div class="am-comment-bd am-alert-default">
-          <p><a href="#lurenyi"><{if $comlist.addon.hidden_name =='YES' && ($comlist.author_id !=0 || $comlist.author_id !=1)}><{t}>匿名<{/t}><{else}><{$comlist.author}><{/if}></a><{$comlist.comment|nl2br}></p></div></div>
+          <p><a href="#lurenyi"><{if $comlist.addon.hidden_name =='YES' && ($comlist.author_id !=0 || $comlist.author_id !=1)}><{t}>匿名<{/t}><{else}><{$comlist.author}><{/if}> : </a><{$comlist.comment|nl2br}></p></div></div>
       </li>
 
       <{if $comlist.items}>
@@ -31,7 +31,7 @@
               <img width="48" height="48" class="am-comment-avatar" alt="" src="<{$IMG_PZFRESH}>/public/app/wap/statics/images/admin-face.jpg"></a>
             <div class="am-comment-main">
               <div class="am-comment-bd  am-alert-success">
-                <p><a href="#lurenyi"><{if $item.author==='管理员'}>品珍客服<{else}><{$item.author}><{/if}></a><{$item.comment|nl2br}></p>
+                <p><a href="#lurenyi"><{if $item.author==='管理员'}>品珍客服<{else}><{$item.author}><{/if}> : </a><{$item.comment|nl2br}></p>
               </div>
             </div>
 
