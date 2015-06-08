@@ -333,7 +333,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     }
 
     //我的订单
-    public function orders($pay_status='all', $nPage=1)
+    public function orders($pay_status='nopayed', $nPage=1)
     {
         $this->title = app::get('b2c')->_('我的订单');
          $this->path[] = array('title'=>app::get('b2c')->_('会员中心'),'link'=>$this->gen_url(array('app'=>'b2c', 'ctl'=>'wap_member', 'act'=>'index','full'=>1)));
@@ -368,6 +368,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
             //$order_status = array('pay_status'=>0,'ship_status'=>array(1,2,3));
             $aData = $order->fetchByMember($this->app->member_id,$nPage,$order_status);
         }
+        $this->pagedata['status'] = $pay_status;
         
         //添加条数显示
         $o1 = array();
@@ -1836,6 +1837,18 @@ class b2c_ctl_wap_member extends wap_frontpage{
     	}
     	$status = $this->userPassport->_bind_member_card($new_card, $type, $login_member_id, $card,$new_account_password);
     	switch ($status){
+    		case 'update_log_failed' :
+    			$msg = app::get('b2c')->_('绑定日志更新失败');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
+    		case 'wrong_email' :
+    			$msg = app::get('b2c')->_('邮箱格式错误');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
+    		case 'wrong_mobile' :
+    			$msg = app::get('b2c')->_('手机格式错误');
+    			$this->splash('failed',null,$msg,'','',true);
+    			break;
     		case 'update_coupon_failed' :
     			$msg = app::get('b2c')->_('更新优惠券错误');
     			$this->splash('failed',null,$msg,'','',true);

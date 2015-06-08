@@ -33,12 +33,14 @@
 				 <li style="width:100%;">
 				    <div class="am-gallery-item">
 				      <a href="<{link app=b2c ctl=wap_product arg0=$goods2.products.product_id}>">
+				      	<span style="position:absolute;  background:#FF3300; float:right; width:auto; white-space:nowrap; line-height:30px; padding:0 5px; font-size:10px; z-index:999;text-align:center; color:#FFFFFF; display:block">销量：<{$goods2.wap_hot_num}></>份</span>
 				        <img src="<{$goods2.wx_image_id|storager:'l'}>">
 				        <h3 class="am-gallery-title"><{$goods2.name|cut:'90'}></h3>
 				        <div class="am-gallery-desc" >
 						 <h1 style="color:#FF0000;float:left"><{$goods2.products.price|cur_odr}></h1>
 						</div>
 					  	</a>
+						<{if $goods2.store>0}>
 						 <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 						 <form  style="display:none" class="formaddcart">
 							    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods2.goods_id}>" />
@@ -48,7 +50,9 @@
 							    <input id="limit_nums" type="text" name="limit_nums" value="" />
 							    <input type="text" name="response_json" value="1" />
 						</form>
-				      
+				      	<{else}>
+						<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnEmptyCart" style="float:right; color:#666; height:30px; width:30px; background:none; border:1px solid #666; line-height:30px; margin-top:5px;"></a>
+						<{/if}>
 				    </div>
 				  </li>
 				  <{/if}>
@@ -88,10 +92,12 @@ $("#js_ifr").fadeIn('fast').attr("src","http://player.youku.com/player.php/sid/X
   </div>
 </div>
 
-<!--
+
 <div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
-<a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>"></a>
+<a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>">
+	<span id="show_cart_pot" style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:10px; right:5px; <{if !$cartCount}> display:none; <{/if}>"></span>
+</a>
 </div>
--->
+
 <!-- Navbar -->
 

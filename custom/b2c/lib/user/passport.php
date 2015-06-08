@@ -1077,7 +1077,7 @@ class b2c_user_passport
     		}
     	}
     	if($type == 'mobile'){
-    		$search ='/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
+    		$search ='/^1[34578]{1}[0-9]{9}$/';
     		if(!preg_match($search,$account)) {
     			return 'wrong_mobile';
     		}

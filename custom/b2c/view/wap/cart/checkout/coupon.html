@@ -10,12 +10,13 @@
    <h2 class="am-text-warning am-fl"  style="width:100%; text-align:left">已有优惠券</h2>
 	<hr data-am-widget="divider"  class="am-divider am-divider-default"/>
     <div class="am-form-group  am-fl invoice_title invoice-top marg" style="width:100%">
-      <select id="doc-select-1" name="coupon" style="width:80%; height:40px;float:left;" data-am-selected="{btnWidth:240}">
-      	<option value="">选择优惠券</option>
+      <select id="doc-select-1" name="coupon" style="width:80%;height:40px;float:left;" data-am-selected="{btnWidth:235,maxHeight:200}">      	
         <{if $coupon_lists}>
             <{foreach from=$coupon_lists item=list_coupon}>
                 <option value="<{$list_coupon.memc_code}>" data-coupon="<{$list_coupon.cpns_id}>"><{$list_coupon.coupons_info.cpns_name}></option>
             <{/foreach}>
+        <{else}>
+        <option value="empty" selected>没有优惠券</option>
         <{/if}>
       </select>
       <button  type="button" class="am-btn btn am-btn-default am-btn-warning am-fl" style="width:20%;float:right;">使用</button>
@@ -27,11 +28,11 @@
 	<h2 class="am-text-danger am-fl"  style="width:100%">站外获得优惠券</h2>
 	<hr data-am-widget="divider" class="am-divider am-divider-default"/>
     <div class="am-form-group  am-fl"  style="width:80%" >
-    <input type="text" name="coupon" value="" class="am-form-field"  style="width:100%" placeholder="输入优惠券号码">
+    <input type="text" name="coupon" value="" class="am-form-field"  style="width:98%" placeholder="输入优惠券号码">
     </div>
   <button type="button" class="am-btn am-btn-default am-btn-danger am-fl" style="width:20%">使用</button>
   <!--优惠券编号-->
-  <div class="used" style="float:left;width:100%">
+  <div class="used am-scrollable-vertical" style="float:left;width:100%;height:65px;" >
   <{foreach from=$aCart.object.coupon item=coupon}>
    <{if $coupon.used}>
 	<li><span class="del_coupon" style="float:right;color:blue;cursor: pointer;" rel="<{$coupon.obj_ident}>" id="<{$coupon.obj_ident}>" data-coupon="<{$coupon.cpns_id}>" data-code="<{$coupon.coupon}>">取消使用</span><{$coupon.coupon}>-<{$coupon.name}></li>

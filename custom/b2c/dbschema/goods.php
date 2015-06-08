@@ -533,6 +533,15 @@ $db['goods']=array (
     		'width' => 30,
     		'editable' => false,
     ),
+    'wap_hot_num' =>
+    array (
+    		'type' => 'int unsigned',
+    		'default' => 0,
+    		'required' => true,
+    		'editable' => false,
+    		'label' => app::get('b2c')->_('wap热门商品购买数'),
+    
+    ),
 
     'p_1' =>
     array (

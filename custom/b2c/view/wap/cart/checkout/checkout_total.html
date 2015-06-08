@@ -56,13 +56,14 @@
 	  
 <div style="width:100%;height:70px;">
 </div>
+
 <div style="float:left; width:100%;position:fixed; bottom:0; left:0;_position:absolute; _top:expression(documentElement.scrollTop+documentElement.clientHeight-this.offsetHeight);" >
-    <div class="am-panel-hd" style="float:left; background:#CCCCCC; border-top:1px solid #aaaaaa">
+    <div class="am-panel-hd" style="float:left; background:#CCCCCC; border-top:1px solid #aaaaaa;width:100%;">
 	<div style="color:#FF0000;float:left; font-size:1.5em; font-weight:bold">
 	<span style=" font-size:14px; color:#666666; font-weight:normal">总额：</span>
 	<span id="total_amount"><{$order_detail.total_amount|cur_odr:$order_detail.currency}></span>
 	</div>
-	 <a style="float:right; width:50%" href="javascript:void(0);" id="a_button"><img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/pay_btn.png"></a>
+	 <button class="am-btn am-btn-danger am-square am-fr" type="button" id="a_button" style="float:right;">立即结算</button>	 
 	 <button type="submit" class="js_btn" id="js_btn" rel="_request" style="display: none;">提交</button>
 	</div>
 </div>

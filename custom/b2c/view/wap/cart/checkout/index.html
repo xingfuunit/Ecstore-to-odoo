@@ -45,10 +45,11 @@
         <{if $def_addr}>
       		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" >
       		 <a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=checkout_wrap arg0=$is_fastbuy}>?show=shipping_list" class="am-list-item-hd click_loading">
-      		此产品将寄往：<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
+      		此产品将寄往：   <span class="am-list-news-more am-fr"> <i class="am-icon-pencil"></i></span>
             <div class="am-list-item-text"  style="color:#CCCCCC" >收货人：<{$def_addr.name}></div>
         	<div class="am-list-item-text"  style="color:#CCCCCC" ><{if $def_addr.tel}>电话号码：<{$def_addr.tel}><{else}>手机号码：<{$def_addr.mobile}><{/if}></div>
         	<div class="am-list-item-text"  style="color:#CCCCCC" ><{$def_addr.area|ship_area}><{$def_addr.addr}></div>
+      		</a>
       		</li>
       		<input type="hidden" name="address" id="ship_address" value='{"addr_id":<{$def_addr.addr_id}>,"area":<{$def_addr.area|ship_area_id}>}' />
       <{else}>
@@ -65,7 +66,7 @@
       <input name="shipping" value='{"id":<{$shipping_method.shipping_id}>,"has_cod":"<{$shipping_method.has_cod}>","dt_name":"<{$shipping_method.shipping_name}>","money":"<{$shipping_method.money}>"}' type="hidden">
       <{else}>
       <li class="am-g am-list-item-desced" style="color:#CCCCCC" >
-        <a style="color:#CCCCCC"  href="javascript:void(0);" class="am-list-item-hd ">当前地区不支持配送
+        <a style="color:#CCCCCC"  href="javascript:void(0);" class="am-list-item-hd "><span style="color:red;">当前地区不支持配送</span>
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
       <{/if}>
@@ -140,7 +141,7 @@
 </form>
 </div>
 <!--弹出层信息结束-->
-<{/if}>
+
 
 <script>
 	var delete_obj = '';
@@ -161,12 +162,12 @@
 			set_default_dlt_pay();
 		}		
 		
-		function auto_coupon(){
-	          var postdata = 'coupon=<{$first_coupon['memc_code']}>&response_type=true&is_fastbuy=<{$is_fastbuy}>';
+		function auto_coupon(){	          
+	          if('<{$aCart.object.coupon[0].cpns_id}>' == '' && '<{$first_coupon}>' != 'empty'){
+	        	var postdata = 'coupon=<{$first_coupon['memc_code']}>&response_type=true&is_fastbuy=<{$is_fastbuy}>';
 	            $.post('<{link app=b2c ctl=wap_cart act=add arg0=coupon}>',postdata,function(re){
 	                var couponResult = $.parseJSON(re);
 	                if(!couponResult || couponResult.error){
-	                    js_alert('js-alert',couponResult.error);
 	                    return false;
 	                }
 	                if(couponResult.data.length) {
@@ -175,17 +176,14 @@
 	                        updateCoupon(couponResult.data);
 	                        getTotal();
 	                    } else {
-	                    	js_alert('js-alert','优惠券添加失败，请明确优惠券的适用范围。');
 	                        return false;
 	                    }
-	                    $('input[name="md5_cart_info"]').attr('value',couponResult.md5_cart_info);
 	                }
+	                $('input[name="md5_cart_info"]').attr('value',couponResult.md5_cart_info);
 	            });
-
+	          }
 		}
-		if('<{$aCart.object.coupon[0].cpns_id}>' == '' && '<{$first_coupon}>' != 'empty'){
-			auto_coupon();
-		}
+		auto_coupon();
 				
         function getTotal(){
             $.post('<{link app=b2c ctl=wap_cart act=total}>',$('form[class="form"]').serialize(),function(re){
@@ -211,7 +209,7 @@
             if(couponResult && couponResult.length) {
                 $.each(couponResult, function(index,item){
                 	//html += '<span style="width:70%;float:left;line-height:31px;">'+item.coupon+'-'+item.name+'</span><button type="button" style="width:30%;" class="am-btn btn am-btn-xs am-fl del" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'" data-code="">取消使用</button>';
-                    html += '<li><span class="del_coupon" style="float:right;color:blue;" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
+                    html += '<li><span class="del_coupon" style="float:right;color:blue;cursor: pointer;" rel="'+item.obj_ident+'" data-coupon="'+item.cpns_id+'">取消使用</span>'+item.coupon+'-'+item.name+'</li>';
                 });
             }
             $('.used').html(html);
@@ -428,7 +426,7 @@
             });
           }
           if( o.hasClass('del_coupon') ){
-            var postdata = 'cpn_ident=' + o.attr('rel') + '&response_type=true';
+            var postdata = 'cpn_ident=' + o.attr('rel') + '&response_type=true&is_fastbuy=<{$is_fastbuy}>';
             $.post('<{link app=b2c ctl=wap_cart act=removeCartCoupon arg0=coupon}>',postdata,function(re){
                 var couponResult = $.parseJSON(re);
                 if(!couponResult.data) {
@@ -675,3 +673,4 @@
 
 
 </script>
+<{/if}>

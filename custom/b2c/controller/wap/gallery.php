@@ -101,8 +101,13 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             $this->pagedata['weixin']['descContent'] = $this->description;
         }
         $this->pagedata['catlist'] = $objCat->getList('*', array('parent_id' => 0), $offset=0, $limit=-1, 'p_order ASC');
-//         print_r($this->pagedata);exit;
-
+        
+        //购物车 是否有商品
+        $oCart = $this->app->model("cart_objects");
+        $arr = array();
+        $aData = $oCart->setCartNum( $arr );
+        $this->pagedata['cartCount'] = $aData['CART_COUNT'];
+        
         $this->page('wap/gallery/index.html');
     }
     
@@ -174,15 +179,26 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     	$goodsData_new = array();
     	if($goodsData){
     		foreach($goodsData as $k => $v){
-    			if($k%2==0){
+    			if($k%4==0){
     				$goodsData_new[$page][0] = $goodsData[$k];
     				$goodsData_new[$page][1] = $goodsData[$k+1];
+    				$goodsData_new[$page][2] = $goodsData[$k+2];
+    				$goodsData_new[$page][3] = $goodsData[$k+3];
+    				
     				$page++;
     			}
     			
     		}
     	}
-//     	print_r(123);exit;
+    	
+    	//购物车 是否有商品
+    	$oCart = $this->app->model("cart_objects");
+    	$arr = array();
+    	$aData = $oCart->setCartNum( $arr );
+    	$this->pagedata['cartCount'] = $aData['CART_COUNT'];
+    	
+//     	print_r($goodsData);exit;
+    	$this->title = app::get('b2c')->_('热门商品');
     	$this->pagedata['goodsData'] = $goodsData_new;
     	
     	$this->page('wap/gallery/products_hot.html');
