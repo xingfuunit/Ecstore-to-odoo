@@ -138,7 +138,7 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
-		  <{if $goods_row.store >0}>
+		  <{if $goods_row.store >0 or $goods_row.nostore_sell == 1 }>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
@@ -172,7 +172,7 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
-		  <{if $goods_row.store >0}>
+		  <{if $goods_row.store >0 or $goods_row.nostore_sell == 1 }>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
@@ -207,7 +207,7 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
-		  <{if $goods_row.store >0}>
+		  <{if $goods_row.store >0 or $goods_row.nostore_sell == 1 }>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
@@ -241,7 +241,7 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
-		  <{if $goods_row.store >0}>
+		  <{if $goods_row.store >0 or $goods_row.nostore_sell == 1 }>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
@@ -298,6 +298,12 @@
 	    <li data-am-navbar-qrcode> <a href="javascript:void(0);"> <span class="am-icon-qrcode"></span> <span class="am-navbar-label">二维码</span> </a> </li>
 	    <li> <a href="<{link app=b2c ctl=wap_member }>"> <span class="am-icon-user"></span> <span class="am-navbar-label">我的品珍</span> </a> </li>
 	  </ul>
+	</div>
+	
+	<div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
+	<a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>">
+		<span id="show_cart_pot" style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:10px; right:5px; <{if !$cartCount}> display:none; <{/if}>"></span>
+	</a>
 	</div>
 	
 	

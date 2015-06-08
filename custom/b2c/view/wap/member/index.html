@@ -27,7 +27,7 @@
 
 <li>
 	<div class="item" data-rel="accordion" onclick="self.location='<{link app=b2c ctl='wap_member' act='weixinset'}>'" >
-		<span class="i"><i class="am-icon-star-o" style="margin:0 5px;"></i>设置登录帐号</span><span class="am-fr am-text-warning" style="margin-right:10%"><{if $weixin_bind != '0'}>已绑定<{$bind_info.bind_type}>:<{$bind_info.bind_account}><{/if}></span>
+		<span class="i"><i class="am-icon-star-o" style="margin:0 5px;"></i>绑定帐号</span><span class="am-fr am-text-warning" style="margin-right:10%"><{if $weixin_bind != '0'}>已绑定<{$bind_info.bind_type}>:<{$bind_info.bind_account}><{/if}></span>
 	</div>
 </li>
 
@@ -61,7 +61,7 @@
 
 <li>
 	<div class="item" data-rel="gallery" onclick="self.location='<{link app=b2c ctl='wap_member' act='wallet'}>'">
-	<span class="i"><i class="am-icon-jpy" style="margin:0 5px;"></i>品珍钱包</span><span class="am-fr am-text-warning" style="margin-right:10%">余额：￥<{$member.advance}></span>
+	<span class="i"><i class="am-icon-jpy" style="margin:0 5px;"></i>预存款</span><span class="am-fr am-text-warning" style="margin-right:10%">余额：￥<{$member.advance}></span>
 	</div>
 </li>
 
