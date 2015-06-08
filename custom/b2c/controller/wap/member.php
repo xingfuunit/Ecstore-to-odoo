@@ -333,7 +333,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
     }
 
     //我的订单
-    public function orders($pay_status='all', $nPage=1)
+    public function orders($pay_status='nopayed', $nPage=1)
     {
         $this->title = app::get('b2c')->_('我的订单');
          $this->path[] = array('title'=>app::get('b2c')->_('会员中心'),'link'=>$this->gen_url(array('app'=>'b2c', 'ctl'=>'wap_member', 'act'=>'index','full'=>1)));
@@ -368,6 +368,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
             //$order_status = array('pay_status'=>0,'ship_status'=>array(1,2,3));
             $aData = $order->fetchByMember($this->app->member_id,$nPage,$order_status);
         }
+        $this->pagedata['status'] = $pay_status;
         
         //添加条数显示
         $o1 = array();
