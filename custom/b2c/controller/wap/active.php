@@ -110,8 +110,8 @@ class b2c_ctl_wap_active extends wap_frontpage{
     			$alist_date[$k]['is_start'] = 1;
     		}
     		//格式转换
-    		$v['start_time'] = date('Y.m.d',strtotime($v['start_time']));
-    		$v['end_time'] = date('Y.m.d',strtotime($v['end_time']));
+    		$v['start_time'] = date('Y.m.d H:i',strtotime($v['start_time']));
+    		$v['end_time'] = date('Y.m.d H:i',strtotime($v['end_time']));
     	}
     	$this->pagedata['alist_date'] = $alist_date; 
     	$this->pagedata['title'] = "品珍活动";

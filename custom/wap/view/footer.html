@@ -101,6 +101,7 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 					$('.am-modal-loading').modal('close');
 					
 	                if(data.success){
+						$('#show_cart_pot').show();
 						$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
 	                    $('#modalAddToCart').modal({
 							relatedTarget: this,
@@ -134,6 +135,9 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 	            }
 	        });
 	    });
+		
+		//空购物车
+		
 		
 		//搜索按钮提交
 		$(".search_btn").bind("click",function(){

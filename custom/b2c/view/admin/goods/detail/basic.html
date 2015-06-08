@@ -283,6 +283,10 @@
           <input type="radio"  name="goods[wap_hot]"<{if $goods.wap_hot eq 0}> checked="checked"<{/if}> value="0" ><{t}>否<{/t}>
         </td>
       </tr>
+	  <tr>
+        <th><{t}>热门购买数：<{/t}></th>
+        <td><{input type="text" value=$goods.wap_hot_num name="goods[wap_hot_num]" maxlength="25" style="width:60px"}></td>
+      </tr>
       <!-- 
       <tr>
         <th><{t}>门店无库存也可销售：<{/t}></th>

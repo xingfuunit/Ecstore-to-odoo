@@ -184,6 +184,12 @@ class wap_ctl_default extends wap_controller{
     	//商品分类
     	$objCat = app::get('b2c')->model('goods_cat');
 //     	$catlist = $objCat->getList('*', array('parent_id' => $cat_id), $offset=0, $limit=-1, 'p_order desc');
+
+    	//购物车 是否有商品
+    	$oCart = app::get('b2c')->model("cart_objects");
+    	$arr = array();
+    	$aData = $oCart->setCartNum( $arr );
+    	$this->pagedata['cartCount'] = $aData['CART_COUNT'];
     	
     	$catmap = $objCat->getmap();
     	$this->pagedata['catmap'] = $catmap;
