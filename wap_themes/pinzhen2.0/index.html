@@ -55,7 +55,7 @@
 				<{/foreach}>
 				<div style="clear:both;"></div>
 	            <li class="am-menu-nav-channel">
-	              <a href="<{link app=b2c ctl=wap_gallery arg0=$cat.cat_id}>" class="" title="<{$cat.title}>">进入栏目 &raquo;</a>
+	              <a href="<{link app=b2c ctl=wap_gallery arg0=$cat.cat_id}>" class="" title="<{$cat.title}>">全部商品 &raquo;</a>
 	            </li>
 	          </ul>
 			  <{/if}>
@@ -128,6 +128,7 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
+		  <{if $goods_row.store >0}>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
@@ -137,6 +138,9 @@
 			    <input id="limit_nums" type="text" name="limit_nums" value="" />
 			    <input type="text" name="response_json" value="1" />
 			</form>
+			<{else}>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnEmptyCart" style="float:right; color:#666; height:30px; width:30px; background:none; border:1px solid #666; line-height:30px; margin-top:5px;"></a>
+			<{/if}>
 	    </div>
 	  </li>
 		<{/foreach}>
@@ -158,6 +162,7 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
+		  <{if $goods_row.store >0}>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
@@ -167,6 +172,9 @@
 			    <input id="limit_nums" type="text" name="limit_nums" value="" />
 			    <input type="text" name="response_json" value="1" />
 			</form>
+			<{else}>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnEmptyCart" style="float:right; color:#666; height:30px; width:30px; background:none; border:1px solid #666; line-height:30px; margin-top:5px;"></a>
+			<{/if}>
 	    </div>
 	  </li>
 	  <{/foreach}>
@@ -189,6 +197,7 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
+		  <{if $goods_row.store >0}>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
@@ -198,6 +207,9 @@
 			    <input id="limit_nums" type="text" name="limit_nums" value="" />
 			    <input type="text" name="response_json" value="1" />
 			</form>
+			<{else}>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnEmptyCart" style="float:right; color:#666; height:30px; width:30px; background:none; border:1px solid #666; line-height:30px; margin-top:5px;"></a>
+			<{/if}>
 	    </div>
 	  </li>
 	  <{/foreach}>
@@ -219,6 +231,7 @@
 			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
+		  <{if $goods_row.store >0}>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
@@ -228,6 +241,9 @@
 			    <input id="limit_nums" type="text" name="limit_nums" value="" />
 			    <input type="text" name="response_json" value="1" />
 			</form>
+			<{else}>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnEmptyCart" style="float:right; color:#666; height:30px; width:30px; background:none; border:1px solid #666; line-height:30px; margin-top:5px;"></a>
+			<{/if}>
 	    </div>
 	  </li>
 	  <{/foreach}>
@@ -270,7 +286,7 @@
 	    <li> <a href="tel:400-930-9303"> <span class="am-icon-phone"></span> <span class="am-navbar-label">呼叫</span> </a> </li>
 	    <li> <a href="<{link app=b2c ctl=wap_cart }>"> <span class="am-icon-shopping-cart"></span> <span class="am-navbar-label">购物车</span> </a> </li>
 	    <li data-am-navbar-qrcode> <a href="javascript:void(0);"> <span class="am-icon-qrcode"></span> <span class="am-navbar-label">二维码</span> </a> </li>
-	    <li> <a href="<{link app=b2c ctl=wap_member }>"> <span class="am-icon-user"></span> <span class="am-navbar-label">会员中心</span> </a> </li>
+	    <li> <a href="<{link app=b2c ctl=wap_member }>"> <span class="am-icon-user"></span> <span class="am-navbar-label">我的品珍</span> </a> </li>
 	  </ul>
 	</div>
 	

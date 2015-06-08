@@ -12,7 +12,7 @@
     <select name="bind_type" id="bind_type">   
         <option value="mobile" selected="selected" data-coupon="">手机号</option>
         <option value="email" data-coupon="">邮箱</option>
-        <option value="account" data-coupon="">账号</option> 
+        <option value="account" data-coupon="">PC账号</option> 
         <option value="card" data-coupon="">会员卡</option>  
     </select>
     </label>
@@ -138,10 +138,10 @@
 	          <input type="radio" name="from_to_account"   value="weixin_to_old" class="text" style="width:20px">PC帐户
 	        </div>
 	      </div>
-	
+				<div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单，请选择保留数据的帐户</div>
 		        <div class="c-g">
 		        <label for="" class="c-l" style="width: 200px;">
-		          <em class="f-red">*</em>原账号密码：
+		          <em class="f-red">*</em>原PC账号密码：
 		        </label>
 		        <div class="c">
 		          <input type="password" name="login_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
@@ -155,7 +155,7 @@
 		          <input type="password" name="new_password_account" maxlength="20" placeholder="6-20位数字/字母组合"   pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
 		        </div>
 		      </div>
-		   <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失其中一方帐户订单，请选择保留数据的帐户</div>
+		   
 	</div>
 			
 	<div id="card_input"  style="display: none;">
@@ -168,6 +168,7 @@
 	          <input type="radio" name="from_to_card"   value="weixin_to_old" class="text" style="width:20px">会员卡帐户
 	        </div>
 	      </div>
+		  <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失失其中一方帐户订单，请选择保留数据的帐户</div>
 		        <div class="c-g">
 		        <label for="" class="c-l" style="width: 200px;">
 		          <em class="f-red">*</em>会员卡密码：
@@ -184,7 +185,7 @@
 		          <input type="password" name="new_password_card" maxlength="20" placeholder="6-20位数字/字母组合"  pattern=".{6,20}" class="am-form-field"  data-caution="密码不能为空">
 		        </div>
 		      </div>
-		      <div style="font-size:0.7em; color:red; width:75%; margin:0 auto;margin-bottom:5px;">设置帐户时会丢失失其中一方帐户订单，请选择保留数据的帐户</div>
+		      
      </div>
 	 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
       <div class="am-modal-footer">
