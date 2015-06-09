@@ -1160,6 +1160,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         $this->_common(false,$_POST['isfastbuy']);
         $obj_total = new b2c_order_total();
         $sdf_order = $_POST;
+        error_log('total_post:'.print_r($_POST,1));
         if($_POST){
             $payment = json_decode($_POST['payment']['pay_app_id'],true);
             $shipping = json_decode($_POST['shipping'],true);
@@ -1168,6 +1169,7 @@ class b2c_ctl_wap_cart extends wap_frontpage{
         }
         $sdf_order['cur'] = $_POST['payment']['currency'];
         $sdf_order['shipping_id'] = $shipping['id'];
+        $this->pagedata['shipping_id'] = $sdf_order['shipping_id'];
         $sdf_order['is_protect'] = $_POST['is_protect'];
         $sdf_order['is_tax'] = $_POST['payment']['is_tax'];
         $sdf_order['tax_type'] = $_POST['payment']['tax_type'];
