@@ -15,7 +15,7 @@
 <li class="am-comment">
 <input type="hidden" name="comment_id" value="<{$comlist.comment_id}>" />
 <a href="#link-to-user-home">
-  <img width="48" height="48" class="am-comment-avatar" alt="" src="<{if $comlist.member_lv_logo!=''}><{$comlist.member_lv_logo|storager:'s'}>"<{else}>/public/app/b2c/statics/images/faces/pzmemeber_h_0<{1|rand:9}>.jpg<{/if}>">
+  <img width="48" height="48" class="am-comment-avatar" alt="" src="<{if $comlist.member_lv_logo!=''}><{$comlist.member_lv_logo|storager:'s'}>"<{else}><{$comlist.face}><{/if}>">
 </a>
 <div class="am-comment-main">
 <div class="am-comment-bd am-alert-default">
