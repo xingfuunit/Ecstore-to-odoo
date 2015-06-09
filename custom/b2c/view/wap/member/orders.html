@@ -18,7 +18,7 @@
       <li class="am-g am-list-item-desced  am-list-item-thumb-left" style=" width:96%;margin:2%; border:1px solid #ccc; border-radius:5px;">
         <div style="border-bottom:1px dotted #ddd; margin-bottom:5px;" >
           <div class="am-list-news-hd am-cf am-padding"><span style="float:left;"> 订单编号：</span><a style="float:left;" href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id arg1=$archive}>"><span class="am-text-warning"><{$order.order_id}></span></a>
-              <button type="button"   <{if($order.status=='finish')}> class="am-btn-success am-btn am-round am-btn-xs am-fr" <{elseif($order.status=='dead')}> class="am-btn am-btn-default am-round am-btn-xs am-fr" <{else}> class="am-btn am-btn-warning am-round am-btn-xs am-fr"  <{/if}> ><{switch from=$order.status}>
+              <span  <{if($order.status=='finish')}> class="am-btn am-round am-btn-xs am-text-success am-fr" <{elseif($order.status=='dead')}> class="am-btn am-round am-btn-xs am-list-item-text am-fr" <{else}> class="am-btn am-round am-btn-xs am-text-warning am-fr"  <{/if}> ><{switch from=$order.status}>
                 <{case value='finish'}><{t}>已完成<{/t}>
                 <{case value='dead'}><{t}>已作废<{/t}>
                 <{case}>
@@ -63,7 +63,7 @@
                 <{case value='4'}><{t}>[已退货]<{/t}>
                 <{/switch}>
                 <{/switch}>
-                <{/switch}></button>
+                <{/switch}></span>
           </div>
         </div>
        <!--  <div class="am-u-sm-4 am-list-thumb" ><a href="#"><img  src="assets/i/examples/bw-2014-06-19.jpg" width="100" height="100"  alt="新西兰活绿青口800g"/></a></div>
