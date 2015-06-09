@@ -7,11 +7,15 @@ function AjaxRnd() { return new Date().getTime() + '' + Random(10000); };
 
 var touchscreen = {
 	conf:{
-		delay	: 1000 * 60 * 5,
+		delay	: 1000 * 60 * 1,
 		ckNameKey	: 'touchscreen_key',
 		isInit	: false,
 		isPic	: true,	//true = pic , false =  video
-		apiUrl	: '/wap/touchscreen.html?key=',
+		urls	:{
+			base:'/',
+			//base:'http://release.ecstore.pinzhen365.com/',
+			apijson:'wap/touchscreen.html?key=',
+		},
 		apiKey	: ''
 	},
 	getKey:function(val){
@@ -32,10 +36,10 @@ var touchscreen = {
 	},
 	getData:function(){
 		var key = touchscreen.getKey('');
-		
+		var url = touchscreen.conf.urls.base + touchscreen.conf.urls.apijson + key + '&a=' + AjaxRnd();
 		$.ajax({
 			type: 'get',
-			url : touchscreen.conf.apiUrl + key + '&a=' + AjaxRnd(),
+			url : url,
 			cache:false,
 			dataType:'json',
 			success: function (rs) {
@@ -43,9 +47,13 @@ var touchscreen = {
 					//write cookie key
 					touchscreen.getKey(rs.key);
 					touchscreen.run(rs.data);
+				}else{
+					//alert(rs.act);
 				};
+				
 			},
-			error:function(){
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				alert(errorThrown);
 			}
 		});
 	},
@@ -90,7 +98,7 @@ var touchscreen = {
 				'</div>',
 			'</div>'
 		].join('');
-		
+
 		touchscreen.conf.$main.html(html);
 
 		$('#slider').scrollable({circular:true}).navigator({navi:'#sliderPager',indexed:false}).autoscroll({
@@ -103,36 +111,36 @@ var touchscreen = {
 		touchscreen.conf.isPic  = false;
 		
 		var o = json[0],
-			vod = o['vod'],
-			url = o['url'],
+			vod = touchscreen.conf.apiUrlBase + o['vod'],
+			url = ''+o['url'],
 			css = 'width:'+touchscreen.conf.width+'px;height:'+touchscreen.conf.height+'px';
 
 		var html = [
 			'<div id="container">',
 				'<div id="videocover">&nbsp;</div>',
-				'<video id="video" class="video" preload="metadata" src="',vod,'" autoplay="true" loop="loop" controls="true" style="',css,'"></video>',
+				'<video id="video" class="video" preload="metadata" src="',vod,'" autoplay="true" loop="loop" controls="false" style="',css,'"></video>',
 			'</div>'
 		].join('');
-		
+
 		touchscreen.conf.$main.html(html);
 		
-		$('#container').on('click.touchscreen.video',function(){
-			if($('#video').size()){
-				$('#video').get(0).pause();	
-			};
-			self.location = url;
-			return false;
-		});
+		if(url.length>5){
+			$('#container').on('click.touchscreen.video',function(){
+				if($('#video').size()){
+					$('#video').get(0).pause();	
+				};
+				self.location = url;
+				return false;
+			});	
+		};
 	},
 	resize:function(){
 		touchscreen.conf.width = $('body').width();
 		touchscreen.conf.height = $('body').height();
 		
-		
 		if(touchscreen.conf.isInit){
 			//Pictures
 			if(touchscreen.conf.isPic){
-				
 				touchscreen.conf.$main.find('.item').css({
 						width:touchscreen.conf.width,
 						height:touchscreen.conf.height
@@ -172,6 +180,6 @@ var touchscreen = {
 	}
 };
 
- $(function(){
+$(function(){
 	touchscreen.init();
- });
+});
