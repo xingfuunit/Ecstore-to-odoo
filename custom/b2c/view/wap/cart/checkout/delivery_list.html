@@ -57,7 +57,9 @@
     
     $('#select_zt .ps-div-address').click(function () {
     	$('#select_zt .ps-div-address').removeClass('am-active');
-    	$(this).addClass('am-active');
+    	$('#select_zt .ps-div-address').removeClass('selected');
+    	$(this).addClass('am-active');    	
+    	$(this).addClass('selected');
     });
 
     $('#submit_del').click(function(){

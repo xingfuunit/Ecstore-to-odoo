@@ -63,7 +63,7 @@
 	<span style=" font-size:14px; color:#666666; font-weight:normal">总额：</span>
 	<span id="total_amount"><{$order_detail.total_amount|cur_odr:$order_detail.currency}></span>
 	</div>
-	 <button class="am-btn am-btn-danger am-square am-fr" type="button" id="a_button" style="float:right;">立即结算</button>	 
+	 <button class="am-btn am-btn-danger am-square am-fr<{if !$shipping_method.shipping_name}> am-disabled<{/if}>" type="button" id="a_button" style="float:right;">立即结算</button>	 
 	 <button type="submit" class="js_btn" id="js_btn" rel="_request" style="display: none;">提交</button>
 	</div>
 </div>
