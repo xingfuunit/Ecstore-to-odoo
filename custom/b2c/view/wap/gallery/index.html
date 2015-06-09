@@ -17,7 +17,7 @@
 <{wap_require file="block/search.html"}>
 <{wap_require file="block/hot_word.html"}>
 <!--搜索结束-->
-<div style=" color:#aaa; font-size:12px; text-indent:10px; background:#efefef;  padding:5px 10px;text-align:right">相关商品<span class="am-text-danger"><{$total}></span>个</div>
+<div style=" color:#aaa; font-size:12px; text-indent:10px; background:#efefef;  padding:5px 10px;text-align:right">相关商品<span class="am-text-danger"><{ $total ? $total : 0}></span>个</div>
 
 <br>
 <!-- List -->
