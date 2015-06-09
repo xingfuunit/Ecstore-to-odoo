@@ -25,7 +25,7 @@
        <i class="am-icon-user am-icon-sm am-icon-fw"></i><{$addr.name}>
       </li>
       <li class="am-g">
-      <{if $addr.mobile}><i class="am-icon-phone am-icon-sm am-icon-fw"></i><{$addr.mobile}><{else}><i class="am-icon-phone am-icon-sm am-icon-fw"></i><{$addr.tel}><{/if}>
+      <{if $addr.mobile}><i class="am-icon-phone am-icon-sm am-icon-fw" style="float:left;"></i><a style="padding: 0rem;" href="tel:<{$addr.mobile}>"><{$addr.mobile}></a><{else}><i class="am-icon-phone am-icon-sm am-icon-fw"></i><a href="tel:<{$addr.tel}>"><{$addr.tel}></a><{/if}>
       </li>
       <li class="am-g">
        <i class="am-icon-home am-icon-sm am-icon-fw"></i><{$addr.area|ship_area}><{$addr.addr}>
