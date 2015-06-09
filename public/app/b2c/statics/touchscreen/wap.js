@@ -12,9 +12,9 @@ var touchscreen = {
 		isInit	: false,
 		isPic	: true,	//true = pic , false =  video
 		urls	:{
-			base:'/',
+			base:'',
 			//base:'http://release.ecstore.pinzhen365.com/',
-			apijson:'wap/touchscreen.html?key=',
+			apijson:'/wap/touchscreen.html?key=',
 		},
 		apiKey	: ''
 	},
@@ -111,7 +111,7 @@ var touchscreen = {
 		touchscreen.conf.isPic  = false;
 		
 		var o = json[0],
-			vod = touchscreen.conf.apiUrlBase + o['vod'],
+			vod = touchscreen.conf.urls.base + o['vod'],
 			url = ''+o['url'],
 			css = 'width:'+touchscreen.conf.width+'px;height:'+touchscreen.conf.height+'px';
 
