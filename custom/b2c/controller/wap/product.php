@@ -152,6 +152,9 @@ class b2c_ctl_wap_product extends wap_frontpage{
         // comment
         $comments = kernel::single("b2c_goods_description_comments")->show($productBasic['goods_id'],'discuss',7);
         $this->pagedata['comments'] = $comments;
+        foreach($comments['list']['discuss'] as $k=>$v){
+            $comments['list']['discuss'][$k]['face'] = '/public/app/b2c/statics/images/faces/pzmemeber_h_0'.rand(1,9).'.jpg';
+        }
         // echo '<pre>';var_export($comments);exit;
 
 #        $goodsAdjunct = $this->_get_goods_adjunct($aGoods);//配件信息
@@ -222,10 +225,12 @@ class b2c_ctl_wap_product extends wap_frontpage{
         // echo '<pre>';
         // $comments= kernel::single("b2c_goods_description_comments")->show($goods_id,'discuss',10);
         $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,0,15);
+        foreach($comments['list']['discuss'] as $k=>$v){
+            $comments['list']['discuss'][$k]['face'] = '/public/app/b2c/statics/images/faces/pzmemeber_h_0'.rand(1,9).'.jpg';
+        }
         $this->pagedata['comments'] = $comments;
         $this->pagedata['curDate'] = $curDate;
         $this->pagedata['goods_id'] = $goods_id;
-
         $this->page('wap/product/goods_discuss.html');
 
     }
@@ -239,6 +244,9 @@ class b2c_ctl_wap_product extends wap_frontpage{
         $curDate = "20$curYear-$curMonth-$curDay";
 
         $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,$last_comment_id,15);
+        foreach($comments['list']['discuss'] as $k=>$v){
+            $comments['list']['discuss'][$k]['face'] = '/public/app/b2c/statics/images/faces/pzmemeber_h_0'.rand(1,9).'.jpg';
+        }
         $this->pagedata['comments'] = $comments;
         $this->pagedata['curDate'] = $curDate;
 
