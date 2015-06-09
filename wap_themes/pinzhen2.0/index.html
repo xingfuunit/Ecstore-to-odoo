@@ -325,7 +325,9 @@ function getCoupon(coupons_id){
             success:function(data){
 				//隐藏等待框
 				$('.am-modal-loading').modal('close');
+				console.log(data);
                 if(data.success){
+					
 					js_alert('js-alert',data.success);
                 }
                 else{

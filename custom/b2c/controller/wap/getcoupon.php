@@ -225,11 +225,11 @@ function index(){
 		
 		$ret = $this->send_cp($coupons_id,$member_ids);
 		if($ret){
-			echo json_encode(array('success'=>sprintf('你已领取一张"%s"，马上花掉吧'),$is_coupon['spns_name']));
-			return;
+			echo json_encode(array('success'=>sprintf('你已领取一张"%s"，马上去花掉吧~',$is_coupon['cpns_name'])));
+			return true;
 		}else{
 			echo json_encode(array('error'=>'优惠券领取失败，请稍后重试'));
-			return;
+			return false;
 		}
 	}
 	
