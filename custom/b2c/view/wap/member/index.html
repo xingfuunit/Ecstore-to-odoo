@@ -14,10 +14,17 @@
  <span>积分：<{$member.point}></span>
  <a style=" background:#FF0000; border-radius:10px; float:right; padding:2px; font-size:12px; color:#FFFFFF" href="#"><{$member.levelname}></a>
 </div>
-<div class="am-btn-group am-btn-group-justify">
-<button  onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='nopayed'}>'"  class="am-btn am-btn-default" style="background:url(/public/app/b2c/statics/images/black_trans.png) repeat; color:#FFFFFF; border-top:0px; border-bottom:0px;border-left:0px;" type="button"><i class="am-icon-credit-card"></i><br>待付款</button>
-<button onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='daishouhuo'}>'"   class="am-btn am-btn-default" style="background:url(/public/app/b2c/statics/images/black_trans.png) repeat;color:#FFFFFF; border-top:0px; border-bottom:0px;"  type="button"><i class="am-icon-truck"></i><br>待收货</button>
-<button  onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='all'}>'"  class="am-btn am-btn-default" style="background:url(/public/app/b2c/statics/images/black_trans.png) repeat;color:#FFFFFF; border-top:0px; border-bottom:0px; border-right:0px;"  type="button"><i class="am-icon-file-text"></i><br>全部订单</button>
+<div class="">
+	<div style="width:33%;float:left;">
+		<div onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='nopayed'}>'"  class="am-btn am-btn-default" style="width:100%;background:url(/public/app/b2c/statics/images/black_trans.png) repeat; color:#FFFFFF; border:0px;" ><i class="am-icon-credit-card"></i><br>待付款</div>
+	</div>
+	<div style="width:34%;float:left;text-align:center;">
+			<div onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='daishouhuo'}>'" class="am-btn am-btn-default" style="width:100%;margin:0 auto;background:url(/public/app/b2c/statics/images/black_trans.png) repeat;color:#FFFFFF; border:0px;border-left:2px solid #FFF;border-right:2px solid #FFF;" ><i class="am-icon-truck"></i><br>待收货</div>
+	</div>
+	<div style="width:33%;float:left;">
+			<div onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='all'}>'" class="am-btn am-btn-default" style="width:100%;background:url(/public/app/b2c/statics/images/black_trans.png) repeat;color:#FFFFFF;border:0px;"><i class="am-icon-file-text"></i><br>全部订单</div>
+	</div>
+
 </div>
 </div>
 
