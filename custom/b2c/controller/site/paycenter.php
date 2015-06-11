@@ -483,11 +483,11 @@ class b2c_ctl_site_paycenter extends b2c_frontpage{
                 if ($is_payed){
 
                     // @author francis 
-                    $member = kernel::database()->select("SELECT mobile,login_account FROM sdb_b2c_members bm inner join sdb_pam_members pm on bm.member_id=pm.member_id WHERE pm.member_id=$member_id");
+                    $member = kernel::database()->select("SELECT login_account FROM sdb_pam_members WHERE member_id=$member_id AND login_type='mobile'");
 
                     $deposit = app::get('b2c')->model('members')->getList('advance',array('member_id'=>$sdf['member_id']));
 
-                    if($mobile = $member[0]['mobile']){
+                    if($mobile = $member[0]['login_account']){
                         $data = array(
                             'passport_id'=> substr($member[0]['login_account'], -4),
                             'time'=>date('Y年m月d日h时m分',$sdf['t_confirm']),
@@ -502,23 +502,25 @@ class b2c_ctl_site_paycenter extends b2c_frontpage{
                         $messengerModel = $this->app->model('member_messenger');
                         $messengerModel->_send($sender,$tmpl_name,(string)$mobile,$data,$tmpl,$sendType);
                         
-						/*发送微信消息推送 bySam 20150611*/
-						$openid = kernel::database ()->select ( "SELECT open_id from sdb_pam_bind_tag where member_id = $member_id " );
-						$openid = $openid[0]['open_id'];
-
-                        $message ="【品珍鲜活】尊敬的客户，您的品珍鲜活账户（尾号{$data['passport_id']} ）于{$data['time']}发生支付交易，支出人民币{$data['cost']}元，当前账户余额{$data['deposit']}元。";
-                        $bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>'247644','status'=>'active'));
-						$accesstoken = kernel::single('weixin_wechat')->get_basic_accesstoken($bind['id']);
-						$weixin_push_post_url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accesstoken";
-						$weixin_push_post_data = array(
-								"touser"=>$openid,
-								"template_id"=>"5C1fzNzlIqH4yjinmta-6S4nM19ujGN9EoWMPVh-lm4",//消息模版ID，从微信消息模版库获得
-								"data"=>array("first"=>array("value"=>$message,"color"=>"#173177"),"tradeType"=>array("value"=>"yu","color"=>"#173177"),"tradeDateTime"=>array("value"=>$data['time']),"curAmount"=>array("value"=>$data['cost']))
-							);
-						$weixin_push_post_data = json_encode($weixin_push_post_data);
-						$httpclient = kernel::single('base_httpclient');
-        				$response = $httpclient->set_timeout(6)->post($weixin_push_post_url, $weixin_push_post_data);
-                        
+						
+                    }
+                    
+                    /*发送微信消息推送 bySam 20150611*/
+                    $openid = kernel::database ()->select ( "SELECT open_id from sdb_pam_bind_tag where member_id = $member_id " );
+                    if(isset($openid[0]['open_id'])){
+                    	$openid = $openid[0]['open_id'];
+	                    $message ="【品珍鲜活】尊敬的客户，您的品珍鲜活账户（尾号{$data['passport_id']} ）于{$data['time']}发生支付交易，支出人民币{$data['cost']}元，当前账户余额{$data['deposit']}元。";
+	                    $bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>'247644','status'=>'active'));
+	                    $accesstoken = kernel::single('weixin_wechat')->get_basic_accesstoken($bind['id']);
+	                    $weixin_push_post_url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accesstoken";
+	                    $weixin_push_post_data = array(
+	                    		"touser"=>$openid,
+	                    		"template_id"=>"5C1fzNzlIqH4yjinmta-6S4nM19ujGN9EoWMPVh-lm4",//消息模版ID，从微信消息模版库获得
+	                    		"data"=>array("first"=>array("value"=>$message,"color"=>"#173177"),"tradeType"=>array("value"=>"预存款消费","color"=>"#173177"),"tradeDateTime"=>array("value"=>$data['time']),"curAmount"=>array("value"=>'￥'.$data['cost'].'元'))
+	                    );
+	                    $weixin_push_post_data = json_encode($weixin_push_post_data);
+	                    $httpclient = kernel::single('base_httpclient');
+	                    $response = $httpclient->set_timeout(6)->post($weixin_push_post_url, $weixin_push_post_data);
                     }
 
                     // end
