@@ -2005,10 +2005,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     }
 
 
-        /**
-     *
-     */
-    public function ajax_webpost_getProducts(){
+    private function _get_products(){
         $pamMemberData = app::get('pam')->model('members')->getList('*',array('login_account'=>$account));
         foreach($pamMemberData as $pmd){
             if($pmd['login_type'] == 'local' && strlen($pmd['login_account']) > 25){
@@ -2016,15 +2013,31 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             }
         }
 
-        $this->pagedata['store_cart']   = 'yes';
+        $this->pagedata['store_cart'] = 'yes';
 
         $GLOBALS['runtime']['path'][] = array('link'=>$this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'index')),'title'=>'购物车');
         $this->mCart->unset_data();
         $this->_common(1);
         $this->pagedata['aCart']['subtotal_prefilter'] = $this->objMath->number_minus(array($this->pagedata['aCart']['subtotal'], $this->pagedata['aCart']['discount_amount_prefilter']));
         $this->pagedata['aCart']['promotion_subtotal'] = $this->objMath->number_minus(array($this->pagedata['aCart']['subtotal'], $this->pagedata['aCart']['subtotal_discount']));
+    }
 
-        echo $this->fetch('site/cart/storecart_main.html');exit;
+    /**
+     *
+     */
+    public function ajax_webpos_getProducts(){
+        $this->_get_products();
+
+        echo $this->fetch('site/cart/storecart_main.html');
+        echo $this->fetch('site/cart/webpos/receipt.html');
+        exit;
+    }
+
+    public function ajax_webpos_get_receipt(){
+        $this->_get_products();
+
+        echo $this->fetch('site/cart/webpos/receipt.html');
+        exit;
     }
 
     public function ajax_webpos_add_goods_to_cart(){
