@@ -300,7 +300,7 @@ class b2c_order_pay extends b2c_api_rpc_request
             		
             		
             		$message ="【品珍鲜活】尊敬的客户，您的品珍鲜活账户（尾号{$data['passport_id']} ）于{$data['time']}发生支付交易，支出人民币{$data['cost']}元，当前账户余额{$data['deposit']}元。";
-            		$bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>'247644','status'=>'active'));
+            		$bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>'573174','status'=>'active'));
             		$accesstoken = kernel::single('weixin_wechat')->get_basic_accesstoken($bind['id']);
             		$weixin_push_post_url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accesstoken";
             		$weixin_push_post_data = array(
