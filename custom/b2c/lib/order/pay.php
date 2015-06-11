@@ -259,6 +259,64 @@ class b2c_order_pay extends b2c_api_rpc_request
                 $msg = app::get('b2c')->_('订单支付状态保存失败！');
                 return false;
             }
+            if ($sdf['pay_app_id'] == 'deposit' && $is_save)
+            {
+            	$member_id = $sdf_order['member_id'];
+            	// @author francis
+            	$member = kernel::database()->select("SELECT login_account FROM sdb_pam_members WHERE member_id=$member_id AND login_type='mobile'");
+            	
+            	$deposit = app::get('b2c')->model('members')->getList('advance',array('member_id'=>$member_id));
+            	
+            	if($mobile = $member[0]['login_account']){
+            		$data = array(
+            				'passport_id'=> substr($member[0]['login_account'], -4),
+            				'time'=>date('Y年m月d日h时m分',time()),
+            				'cost'=>$sdf['money'],
+            				'deposit'=>$deposit[0]['advance'],
+            		);
+            	
+            		$sender = 'b2c_messenger_sms';
+            		$tmpl = 'deposit-change';
+            		$tmpl_name = 'messenger:b2c_messenger_sms/'.$tmpl;
+            	
+            		$messengerModel = $this->app->model('member_messenger');
+            		$messengerModel->_send($sender,$tmpl_name,(string)$mobile,$data,$tmpl,$sendType);
+            	
+            	
+            	}
+            	
+            	/*发送微信消息推送 bySam 20150611*/
+            	$openid = kernel::database ()->select ( "SELECT open_id from sdb_pam_bind_tag where member_id = $member_id " );
+            	if(isset($openid[0]['open_id'])){
+            		$openid = $openid[0]['open_id'];
+            		$deposit = app::get('b2c')->model('members')->getList('advance',array('member_id'=>$member_id));
+            		$data = array(
+            				'passport_id'=> substr($openid, -4),
+            				'time'=>date('Y年m月d日h时m分',time()),
+            				'cost'=>$sdf['money'],
+            				'deposit'=>$deposit[0]['advance'],
+            		);
+            		
+            		
+            		
+            		$message ="【品珍鲜活】尊敬的客户，您的品珍鲜活账户（尾号{$data['passport_id']} ）于{$data['time']}发生支付交易，支出人民币{$data['cost']}元，当前账户余额{$data['deposit']}元。";
+            		$bind = app::get('weixin')->model('bind')->getRow('id',array('eid'=>'247644','status'=>'active'));
+            		$accesstoken = kernel::single('weixin_wechat')->get_basic_accesstoken($bind['id']);
+            		$weixin_push_post_url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accesstoken";
+            		$weixin_push_post_data = array(
+            				"touser"=>$openid,
+            				"template_id"=>"5C1fzNzlIqH4yjinmta-6S4nM19ujGN9EoWMPVh-lm4",//消息模版ID，从微信消息模版库获得
+            				"data"=>array("first"=>array("value"=>$message,"color"=>"#173177"),"tradeType"=>array("value"=>"预存款消费","color"=>"#173177"),"tradeDateTime"=>array("value"=>$data['time']),"curAmount"=>array("value"=>'￥'.$data['cost'].'元'))
+            		);
+            		$weixin_push_post_data = json_encode($weixin_push_post_data);
+            		$httpclient = kernel::single('base_httpclient');
+            		$response = $httpclient->set_timeout(6)->post($weixin_push_post_url, $weixin_push_post_data);
+            	}
+            	
+            	// end
+            	
+            	
+            }
             if (!$obj_orders->db->affect_row()){
                 $msg = app::get('b2c')->_('订单重复支付！');
                 return false;
