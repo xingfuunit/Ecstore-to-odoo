@@ -43,11 +43,14 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 						$arr[] = array(
 							'name' 		=> $rw['ad_name'],
 							'type' 		=> $rw['url_type'],
-							'img' 		=> $rw['img_url'],
+							'img' 		=> '',
 							'vod' 		=> $rw['vodfile'],
-							'url' 		=> $rw['ad_url'],
+							'url' 		=> $rw['ad_url']
+							/*
+							,
 							'width' 	=> $rw['ad_img_w'],
 							'height' 	=> $rw['ad_img_h']
+							*/
 						);
 						break;
 					}
@@ -55,10 +58,13 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 						'name' 		=> $rw['ad_name'],
 						'type' 		=> $rw['url_type'],
 						'img' 		=> $rw['img_url'],
-						'vod' 		=> $rw['vodfile'],
-						'url' 		=> $rw['ad_url'],
+						'vod' 		=> '',
+						'url' 		=> $rw['ad_url']
+						/*
+						,
 						'width' 	=> $rw['ad_img_w'],
 						'height' 	=> $rw['ad_img_h']
+						*/
 					);
 				}
 			}
