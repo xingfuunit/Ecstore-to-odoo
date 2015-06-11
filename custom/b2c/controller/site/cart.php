@@ -2049,7 +2049,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $_GET[0]='goods';
         $_GET[1]=$goods_data['goods_id'];
         $_GET[2]=$goods_data['product_id'];
-        $_GET[3]=1;
+        $_GET[3]=$goods_data['num'];
          /**
          * 处理信息和验证过程
          * servicelist('b2c_cart_object_apps')=>
@@ -2188,28 +2188,35 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     }
 
 
-    /**
-     * 商品条形码校验位的验证
-     */
     function barcode_last($barcode){
         $code_array = str_split($barcode,1);
         $even = 0;
         $odd = 0;
         foreach($code_array as $key => $value){
-            if($key < 12 && $key%2 == 1){
-                $even = $even + intval($value);
-            }
-            if($key < 12 && $key%2 == 0){
-                $odd = $odd + intval($value);
-            }
+           if($key < 12 && $key%2 == 1){
+             $even = $even + intval($value);
+           }
+           if($key < 12 && $key%2 == 0){
+             $odd = $odd + intval($value);
+           }
         }
         $eo = $even * 3 + $odd;
         $sd = intval(substr($eo, -1));
         if($sd == 0){
-            return 0;
+           return 0;
         }else{
-            return (10-$sd);
+           return (10-$sd);
         }
+    }
+
+    function gen_barcode($one_store,$six_code,$five_weight){
+       $barcode = $one_store.$six_code.$five_weight;
+       $last_num = $this->barcode_last($barcode);
+       return $barcode.$last_num;
+    }
+
+    function test(){
+        echo $this->gen_barcode('1','111112','00010');
     }
 }
 
