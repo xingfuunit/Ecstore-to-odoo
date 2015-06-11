@@ -23,7 +23,6 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     var $show_gotocart_button = true;
 
     public function __construct(&$app) {
-
         parent::__construct($app);
         $shopname = app::get('site')->getConf('site.name');
         if(isset($shopname)){

@@ -13,6 +13,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
     var $noCache = true;
 
     public function __construct(&$app){
+        error_reporting(0);
         parent::__construct($app);
         #$shopname = app::get('site')->getConf('site.name');
         #if(isset($sysconfig)){

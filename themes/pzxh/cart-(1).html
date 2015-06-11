@@ -1005,42 +1005,6 @@ window.addEvent('domready', function(){
                             url = '<{link app=b2c ctl=site_order act=create}>',
                             bn_add_info = $$("div .bn_add_info");
 
-
-                           
-                            // var myRequest = new Request.JSON({
-                            //     url         : '<{link app=b2c ctl=site_cart act=ajax_webpos_get_receipt}>',
-                            //     method      : 'get',
-                            //     onRequest   : function() {
-                            //         bn_add_info.set('html', '正在获取小票数据……');
-                            //     },
-                            //     onSuccess : function(responseObj){
-                            //         alert(responseObj);
-                            //         var storeprint = render_receipt(responseObj.wg_receipt_deposit,data);
-                            //         alert(storeprint);
-                            //     }
-                            // });
-
-                            // myRequest.send();
-                            // return;
-                             
-                            // var myRequest = new Request.HTML({
-                            //     url: '<{link app=b2c ctl=site_cart act=ajax_webpos_get_receipt}>',
-                            //     onRequest: function(){
-                            //     },
-                            //     onSuccess: function(responseTree, responseElements, responseHTML, responseJavaScript){
-
-                            //         document.write(responseHTML);
-
-                            //     },
-                            //     onError: function(){
-                            //     },
-                            //     onFailure: function(){
-                            //     }
-                            // });
-                            // myRequest.get();
-                            // return;
-
-
                             var myRequest = new Request.JSON({
                                 url         : url,
                                 method      : 'post',
@@ -1056,7 +1020,8 @@ window.addEvent('domready', function(){
                                     try {
                                         window.CallCSharpMethod("softprint",storeprint);
                                     } catch(e) {}
-                                    winReload();
+                                    // winReload();
+                                    alert(storeprint);
                                  },
                                 onFailure: function(){
                                     pay_status = false;
@@ -1107,70 +1072,75 @@ window.addEvent('domready', function(){
         console.log('ok');
         return false;*/
     $('add_xjamount').addEvent("click",function(E){
-                if(pay_status){
-                    alert('订单正在提交中...');
-                    return false;
-                }
-            <{if !$member.uname}>
-                            alert('请先登录会员！');
-                            return false;
-                        <{/if}>
+        if(pay_status){
+            alert('订单正在提交中...');
+                return false;
+        }
+        <{if !$member.uname}>
+            alert('请先登录会员！');
+            return false;
+        <{/if}>
                         
-                        if($$(".cart-empty").length > 0){
-                            alert('你的购物车为空！');
-                            return false;
-                        }  
+        if($$(".cart-empty").length > 0){
+            alert('你的购物车为空！');
+            return false;
+        }  
                         
-                        var bn = this.value;
-                        // var url = '<{link app=b2c ctl=site_order act=create}>';
-                        var bn_add_info = $$("div .bn_add_info");
-                        var x = $$('#txtPrice').get('value');
-                        var _sex=document.getElementById("txtPrice").value;
-                        var _tol=document.getElementById("txtTotal").value;
-                        var other_cz    = '<{$iscz_date_md}>';
-                        //判断是否为充值卡商品，如果是将不允许使用该支付方式    
-                         if(other_cz == 1){
-                             alert('您好，购物车有充值卡商品，不允许支付！');
-                            return false;
-                         }
-                        if(x == 0){
-                            window.confirm("请输入实收金额");
-                            return false;
-                        }
-                        pay_status = true;
-                        var myRequest = new Request.JSON({
-                            url: '<{link app=b2c ctl=site_order act=create}>',
-                            method: 'post',
-                            onRequest: function(){
-                    bn_add_info.set('html','正在生成订单……');
-                },
-                onSuccess: function(responseText){
-                                var _order_id = responseText.redirect.match(/\d+/)[0];
-                                bn_add_info.set('html','订单生成成功……');
-                                storeprint ="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收现金："+_sex+"\n找零："+_tol+"\n付款方式：现金支付\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
-                                // var storeprint ="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收现金："+_sex+"\n找零："+_tol+"\n付款方式：现金支付\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
-                                try {
-                                        window.CallCSharpMethod("softprint",storeprint);
-                                } catch(e) {}
-                                winReload();
-                },
-                onFailure: function(){
-                    pay_status = false;
-                    bn_add_info.set('html','请求失败');
-                }
-                        });
-                        var data = 'purchase[addr_id]= <{$def_addr.addr_id}>&purchase[def_area]=&md5_cart_info=49fb00721dbddf50fd122a2e11ad6057&extends_args={'+
-                                   '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>'+
-                                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.phone}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}'+
-                                '&payment[pay_app_id]={"pay_app_id":"xianjin","payment_name":"现金付款"}&payment[currency]=&payment[tax_company]='+
-                                '&payment[tax_content]=&payment[tax_type]=false'+
-                                '&payment[is_tax]=false&payment[tax_content]=商品清单&coupon=&memo=&is_store=1&is_store_cz=<{$iscz_date_md}>';
-                            data   += '&branch_id=<{$local_store.branch_id}>';
-                            data   += '&is_auto_complete=true';
-                            data   += '&branch_name_user=<{$local_store.name}>';
-                            data   += '&staff_name=<{$staff_name}>';
-                            data   += '&staff=<{$staff}>';
-                        myRequest.send(data);
+        var bn = this.value;
+        // var url = '<{link app=b2c ctl=site_order act=create}>';
+        var bn_add_info = $$("div .bn_add_info");
+        var x = $$('#txtPrice').get('value');
+        var _sex=document.getElementById("txtPrice").value;
+        var _tol=document.getElementById("txtTotal").value;
+        var other_cz    = '<{$iscz_date_md}>';
+        //判断是否为充值卡商品，如果是将不允许使用该支付方式    
+         if(other_cz == 1){
+             alert('您好，购物车有充值卡商品，不允许支付！');
+            return false;
+         }
+        if(x == 0){
+            window.confirm("请输入实收金额");
+            return false;
+        }
+        pay_status = true;
+
+        var myRequest = new Request.JSON({
+
+            url: '<{link app=b2c ctl=site_order act=create}>',
+            method: 'post',
+
+            onRequest: function(){
+                bn_add_info.set('html','正在生成订单……');
+            },
+            onSuccess: function(responseText){
+                var _order_id = responseText.redirect.match(/\d+/)[0];
+                var data = [ ['_sex',_sex], ['_tol',_tol],['_order_id',_order_id] ] ;
+                var storeprint = render_receipt(wg_receipt_cash,data);
+                bn_add_info.set('html','订单生成成功……');
+                // var storeprint ="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收现金："+_sex+"\n找零："+_tol+"\n付款方式：现金支付\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
+                try {
+                    window.CallCSharpMethod("softprint",storeprint);
+                } catch(e) {}
+                // winReload();
+                alert(storeprint);
+            },
+            onFailure: function(){
+                pay_status = false;
+                bn_add_info.set('html','请求失败');
+            }
+        });
+        var data = 'purchase[addr_id]= <{$def_addr.addr_id}>&purchase[def_area]=&md5_cart_info=49fb00721dbddf50fd122a2e11ad6057&extends_args={'+
+                   '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>'+
+                '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.phone}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}'+
+                '&payment[pay_app_id]={"pay_app_id":"xianjin","payment_name":"现金付款"}&payment[currency]=&payment[tax_company]='+
+                '&payment[tax_content]=&payment[tax_type]=false'+
+                '&payment[is_tax]=false&payment[tax_content]=商品清单&coupon=&memo=&is_store=1&is_store_cz=<{$iscz_date_md}>';
+            data   += '&branch_id=<{$local_store.branch_id}>';
+            data   += '&is_auto_complete=true';
+            data   += '&branch_name_user=<{$local_store.name}>';
+            data   += '&staff_name=<{$staff_name}>';
+            data   += '&staff=<{$staff}>';
+        myRequest.send(data);
     });
     
     //刷卡付款
@@ -1200,27 +1170,33 @@ window.addEvent('domready', function(){
                              alert('您好，购物车有充值卡商品，不允许支付！');
                             return false;
                          }
-                        var myRequest = new Request.JSON({
-                            url: url,
-                            method: 'post',
-                            onRequest: function(){
-                    bn_add_info.set('html','正在生成订单……');
-                },
-                onSuccess: function(responseText){
-                                var _order_id = responseText.redirect.match(/\d+/)[0];
-                                var storeprint ="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收：<{$aCart.promotion_subtotal|cur_odr}>\n付款方式：刷卡支付\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
-                                bn_add_info.set('html','订单生成成功……');
-                                try {
-                                        window.CallCSharpMethod("softprint",storeprint);
-                                } catch(e) {}
-                                winReload();
-                },
-                onFailure: function(){
-                    pay_status = false;
-                    bn_add_info.set('html','请求失败');
-                }
-                        });
-                        var data = 'purchase[addr_id]= <{$def_addr.addr_id}>&purchase[def_area]=&md5_cart_info=49fb00721dbddf50fd122a2e11ad6057&extends_args={'+
+        var myRequest = new Request.JSON({
+            url: url,
+            method: 'post',
+            onRequest: function(){
+                bn_add_info.set('html','正在生成订单……');
+            },
+            onSuccess: function(responseText){
+                var _order_id = responseText.redirect.match(/\d+/)[0];
+
+                var data = [ ['_order_id',_order_id] ] ;
+                var storeprint = render_receipt(wg_receipt_card,data);
+
+                // var storeprint ="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>\n实收：<{$aCart.promotion_subtotal|cur_odr}>\n付款方式：刷卡支付\n订单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
+                bn_add_info.set('html','订单生成成功……');
+                try {
+                    window.CallCSharpMethod("softprint",storeprint);
+                } catch(e) {}
+                // winReload();
+                alert(storeprint);
+            },
+            onFailure: function(){
+                pay_status = false;
+                bn_add_info.set('html','请求失败');
+            }
+        });
+
+            var data = 'purchase[addr_id]= <{$def_addr.addr_id}>&purchase[def_area]=&md5_cart_info=49fb00721dbddf50fd122a2e11ad6057&extends_args={'+
                                    '&def_addr_id=23&address={"addr_id":<{$def_addr.addr_id}>,"area":<{$cart_area}>}&area=<{$local_store.area}>&addr=<{$local_store.addr}>'+
                                 '&zip=<{$local_store.zip}>&name=<{$local_store.name}>&mobile=<{$local_store.mobile}>&tel=<{$local_store.phone}>&shipping={"id":4,"has_cod":"false","dt_name":"门店自提","money":"0"}'+
                                 '&payment[pay_app_id]={"pay_app_id":"shuaka","payment_name":"刷卡付款"}&payment[currency]=&payment[tax_company]='+
@@ -1253,13 +1229,16 @@ window.addEvent('domready', function(){
                 },
                 onSuccess: function(responseText){
                                 
-                                var _order_id = responseText.redirect.match(/\d+/)[0];
-                                var storeprint ="<{$local_store.name}>退货单\n退货员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n总计：<{$aCart.promotion_subtotal|cur_odr}>\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n退货单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
-                                bn_add_info.set('html','退货成功……');
-                                try {
-                                        window.CallCSharpMethod("softprint",storeprint);
-                                } catch(e) {}
-                                winReload();
+                    var _order_id = responseText.redirect.match(/\d+/)[0];
+                    var data = [ ['_order_id',_order_id] ] ;
+                    var storeprint = render_receipt(wg_receipt_return,data);
+                    // var storeprint ="<{$local_store.name}>退货单\n退货员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n总计：<{$aCart.promotion_subtotal|cur_odr}>\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n退货单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
+                    bn_add_info.set('html','退货成功……');
+                    try {
+                        window.CallCSharpMethod("softprint",storeprint);
+                    } catch(e) {}
+                    // winReload();
+                    alert(storeprint);
                 },
                 onFailure: function(){
                     bn_add_info.set('html','请求失败');
@@ -1296,13 +1275,18 @@ window.addEvent('domready', function(){
                     bn_add_info.set('html','正在报损中……');
                 },
                 onSuccess: function(responseText){
-                                var _order_id = responseText.redirect.match(/\d+/)[0];
-                                var storeprint ="<{$local_store.name}>报损单\n报损员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n总计：<{$aCart.promotion_subtotal|cur_odr}>\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n报损单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
-                                bn_add_info.set('html','报损成功……');
-                                try {
-                                        window.CallCSharpMethod("softprint",storeprint);
-                                } catch(e) {}
-                                winReload();
+                    var _order_id = responseText.redirect.match(/\d+/)[0];
+
+                    var data = [ ['_order_id',_order_id] ] ;
+                    var storeprint = render_receipt(wg_receipt_loss,data);
+
+                    // var storeprint ="<{$local_store.name}>报损单\n报损员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n总计：<{$aCart.promotion_subtotal|cur_odr}>\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n报损单号："+_order_id+"\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
+                    bn_add_info.set('html','报损成功……');
+                    try {
+                        window.CallCSharpMethod("softprint",storeprint);
+                    } catch(e) {}
+                    // winReload();
+                    alert(storeprint);
                 },
                 onFailure: function(){
                     bn_add_info.set('html','请求失败');
@@ -1334,20 +1318,24 @@ window.addEvent('domready', function(){
                     bn_add_info.set('html','正在充值中……');
                 },
                 onSuccess: function(responseText){
-                                var data = responseText.data;
-                                if(data.status == 'success'){
-                                    var storeprint ="<{$local_store.name}>充值单\n操作员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n用户名："+data.uname+"\n充值数额："+data.yu_amount+"\n帐号余额："+data.advance+"\n支付方式："+data.exp_way+"付款\n\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
-                                    bn_add_info.set('html','充值成功……');
-                                    try {
-                                        window.CallCSharpMethod("softprint",storeprint);
-                                    } catch(e) {}
-                                    winReload();
-                                }else if(data.status == 'reload'){
-                                    bn_add_info.set('html',data.msg);
-                                    winReload();
-                                }else{
-                                    bn_add_info.set('html',data.msg);
-                                }
+                    var data = responseText.data;
+                    if(data.status == 'success'){
+                        var data = [ ['data.uname',data.uname], ['data.yu_amount',data.yu_amount], ['data.advance',data.advance],['data.exp_way',data.exp_way] ] ;
+                        var storeprint = render_receipt(wg_receipt_charge,data);
+
+                        // var storeprint ="<{$local_store.name}>充值单\n操作员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n用户名："+data.uname+"\n充值数额："+data.yu_amount+"\n帐号余额："+data.advance+"\n支付方式："+data.exp_way+"付款\n\n------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" 
+                        bn_add_info.set('html','充值成功……');
+                        try {
+                            window.CallCSharpMethod("softprint",storeprint);
+                        } catch(e) {}
+                        // winReload();
+                        alert(storeprint);
+                    }else if(data.status == 'reload'){
+                        bn_add_info.set('html',data.msg);
+                        winReload();
+                    }else{
+                        bn_add_info.set('html',data.msg);
+                    }
                                 
                 },
                 onFailure: function(){
@@ -1445,7 +1433,6 @@ function taskQueue() {
 
     this.taskDone = function(){
         refreshProductListTaks.active();
-        //todo: add to refresh product list task  
         this.resetIsRun();
     };
 
@@ -1560,7 +1547,7 @@ function add_to_cart(bn){
             var text;
             if(responseText.response != undefined && responseText.response=='success'){
                 text = bn+'加入成功'; 
-                
+                addGoodsTask.taskDone();
             }else{
                 // bn_add_info.set('html',responseText.error);
                 // window.location.reload();
@@ -1569,11 +1556,11 @@ function add_to_cart(bn){
                 else
                     msg = responseText.msg;
                 text = bn+'加入失败，'+msg;
+                addGoodsTask.resetIsRun();
 
             }
-            
             bn_add_info.set('html',text);
-            addGoodsTask.taskDone();
+            
         },
         onError: function(){
             addGoodsTask.resetIsRun();
@@ -1620,11 +1607,6 @@ function add_to_cart(bn){
 // }
 
 
-var wg_receipt_deposit="<{$local_store.name}>\n会员：<{$member.uname}>\n时间：<{$times_order}>\n------------------------------------\n品名      　   　数量  单价    小计\n"+ '<{if $aCart.object.goods}><{foreach from=$aCart.object.goods item=goods key=_obj_key}><{$_obj_key+1}>. <{$goods.obj_items.products.0.name}>\n      　   　      <{$goods.quantity}> .<{$goods.obj_items.products.0.price.price|cur_odr}> .<{if $is_group_orders == 'true'}>{<($goods.obj_items.products.0.price.buy_price * $goods.quantity)|cur_odr}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}>\n<{/foreach}><{/if}>'+"\n------------------------------------\n整单优惠：<{$aCart.discount_amount_order|cur_odr}>\n应付：<{$aCart.promotion_subtotal|cur_odr}>{part_print}\n付款方式：{other_print}\n订单号：{_order_id}------------------------------------\n谢谢惠顾，欢迎下次光临\n<{$area_exp}>\n电话：<{$local_store.phone}>\n" ;
-
-var wg_receipt_cash;
-var wg_receipt_card;
-
 function render_receipt(tpl,data){
     for(var i=0;i<data.length;i++){
         var search = '{'+data[i][0]+'}';
@@ -1633,6 +1615,8 @@ function render_receipt(tpl,data){
     return tpl;
 }
 </script>
+
+<{include=site/cart/webpos/receipt.html}>
 
 </body>
 </html>
