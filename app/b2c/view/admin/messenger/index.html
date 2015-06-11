@@ -24,9 +24,10 @@
         <td width="15%"><{$actinfo.label}></td>
         <{foreach from=$messenger item=item key=key}>
         <{if $actinfo[$key] != 'false'}>
+
         <td width="15%">
           <input class="c_<{$key}>" value="1" type="checkbox" <{if $call[$action][$key]}>checked="checked" <{/if}>name="actdo[<{$action}>][<{$key}>]">
-          <{if $key != 'b2c_messenger_sms' || $actinfo.sendType == 'fan-out'}>
+          <{if $key != 'b2c_messenger_sms' || $key != 'deposit-change' || $actinfo.sendType == 'fan-out'}>
           <a target="_blank" href="index.php?app=b2c&ctl=admin_member_messenger&act=edtmpl&p[0]=<{$action}>&p[1]=<{$key}>"><{t}>编辑模板<{/t}></a>
           <{else}>
           <span  onclick="new Dialog('index.php?app=b2c&ctl=admin_member_messenger&act=viewtmpl&p[0]=<{$action}>&p[1]=<{$key}>',{height:220,width:500,title:'<{$actinfo.label}>-短信发送模板预览'})">
