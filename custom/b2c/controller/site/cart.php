@@ -2026,6 +2026,12 @@ class b2c_ctl_site_cart extends b2c_frontpage{
      */
     public function ajax_webpos_getProducts(){
         $this->_get_products();
+        $this->pagedata['local_store'] = $_SESSION['local_store'];
+
+        $this->member = $this->get_current_member();
+        $this->pagedata['member'] = $this->member;
+
+        $this->pagedata['times_order'] = date("Y-m-d H:i:s");
 
         echo $this->fetch('site/cart/storecart_main.html');
         echo $this->fetch('site/cart/webpos/receipt.html');
