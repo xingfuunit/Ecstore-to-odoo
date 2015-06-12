@@ -2222,7 +2222,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     }
 
     function test(){
-        echo $this->gen_barcode('1','111112','00010');
+        echo $this->gen_barcode('1','380601','00010');
     }
 }
 

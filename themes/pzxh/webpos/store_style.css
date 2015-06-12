@@ -647,3 +647,5 @@ p#back-to-top a span{
 .cash_right{width:25%;text-align: right;padding: 5px;}
 .cash_left{padding-left: 20px;}
 .upper{width: 50%;display: block;float: left;}
+
+.dialog-tips-container{font-size: 18px;width:300px;}

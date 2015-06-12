@@ -1621,33 +1621,33 @@ function render_receipt(tpl,data){
     return tpl;
 }
 
-
-$('main').removeEvents('click:relay(.btn-delete)');
-$('main').addEvents({
-        //= 移除商品
-        'click:relay(.btn-delete)': function(e) {
-            var p = this.getParent('tr.p-adjunct') || this.getParent('.cart-item') || this.getParent('tr.item');
-            new Request({
-                url:'<{link app=b2c ctl=site_cart act=remove}>',
-                data: p.toQueryString()+"&response_json=true",
-                onRequest: function() {
-                    p.mask({html:'处理中...','class':'cover',injectTo:document.body,position:true,effect:false, resize: false});
-                },
-                onComplete:function(rs) {
-                    rs = JSON.decode(rs);
-                    if(rs.is_empty) return location.reload();
-                    p.unmask();
-                    if(rs.error) return Message.error(rs.error);
-                    if(p.hasClass('item') && $('cart_exchange').getChildren().length == 2) $('cart_exchange').destroy();
-                    else p.destroy();
-                    updateCart(rs, p);
-                    var _url = '<{link app=b2c ctl=site_cart act=index}>?type=x';
-                    window.location.href = _url;
-                }
-            }).post(p.get('data-product'));
-            document.body.store('dialog-tip_show', this);
-        },
-});
+// @author francis delete goods no confirm
+// $('main').removeEvents('click:relay(.btn-delete)');
+// $('main').addEvents({
+//         //= 移除商品
+//         'click:relay(.btn-delete)': function(e) {
+//             var p = this.getParent('tr.p-adjunct') || this.getParent('.cart-item') || this.getParent('tr.item');
+//             new Request({
+//                 url:'<{link app=b2c ctl=site_cart act=remove}>',
+//                 data: p.toQueryString()+"&response_json=true",
+//                 onRequest: function() {
+//                     p.mask({html:'处理中...','class':'cover',injectTo:document.body,position:true,effect:false, resize: false});
+//                 },
+//                 onComplete:function(rs) {
+//                     rs = JSON.decode(rs);
+//                     if(rs.is_empty) return location.reload();
+//                     p.unmask();
+//                     if(rs.error) return Message.error(rs.error);
+//                     if(p.hasClass('item') && $('cart_exchange').getChildren().length == 2) $('cart_exchange').destroy();
+//                     else p.destroy();
+//                     updateCart(rs, p);
+//                     var _url = '<{link app=b2c ctl=site_cart act=index}>?type=x';
+//                     window.location.href = _url;
+//                 }
+//             }).post(p.get('data-product'));
+//             document.body.store('dialog-tip_show', this);
+//         },
+// });
 </script>
 
 
