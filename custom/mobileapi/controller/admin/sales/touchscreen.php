@@ -37,16 +37,26 @@ class mobileapi_ctl_admin_sales_touchscreen extends desktop_controller{
 	
     function edit($ad_id){
     	header("Cache-Control:no-store");
+
 		
 		//记录当前登陆用户所在门店，这块后期处理
         $this->pagedata['users_branch_bn'] = $this->app->model('sales_touchscreen')->get_branch_bn();
-		
+
         $this->path[] = array('text'=>app::get('b2c')->_('电视触屏图片编辑'));
         $objAd = $this->app->model('sales_touchscreen');
 		
 		$this->pagedata['upload_key'] = $this->vod_uploadkey();
         $this->pagedata['adInfo'] = $objAd->dump($ad_id);
 		
+		//------------------------------------------------------
+		//检查权限
+		$bn = $this->app->model('sales_touchscreen')->get_branch_bn();
+		if(strlen($bn)>0){
+			if($bn != $this->pagedata['adInfo']['branch_bn']){
+				die('No authority!');
+			}
+		}
+		//------------------------------------------------------
         $this->pagedata['touchscreen_branch'] 	= kernel::database()->select("select branch_bn as id, name from sdb_ome_branch where is_show ='true' and  nostore_sell='false'  order by branch_bn asc");
         
         $this->pagedata['touchscreen_position'] = $this->app->model('sales_touchscreen')->get_sales_touchscreen_position_list();
@@ -69,11 +79,16 @@ class mobileapi_ctl_admin_sales_touchscreen extends desktop_controller{
 		$_POST['ordernum'] = intval($_POST['ordernum']);
 		
 		if(strlen($_POST['branch_bn'])>1){
-			$branch_bn = $this->app->model('sales_touchscreen')->get_branch_bn();
-			if(strlen($branch_bn)>0){
-				$_POST['branch_bn'] = $branch_bn;
+			//------------------------------------------------
+			//检查权限
+			$bn = $this->app->model('sales_touchscreen')->get_branch_bn();
+			if(strlen($bn)>0){
+				if($_POST['branch_bn'] != $bn){
+					die('No authority!');
+				}
 			}
-				
+			//------------------------------------------------
+			
 			$row = kernel::database()->selectrow("select name from sdb_ome_branch where branch_bn='". $_POST['branch_bn'] ."'");
 			if(isset($row) && is_array($row)){
 				$_POST['branch_name'] = $row['name'];	

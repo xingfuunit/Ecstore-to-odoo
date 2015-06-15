@@ -110,7 +110,6 @@ $db ['sales_touchscreen'] = array (
 						'width' => 100,
 						'comment' => app::get ( 'b2c' )->_ ( '门店编号' ),
 						'editable' => true,
-						'searchtype' => 'has',
 						'in_list' => false,
 						'default_in_list' => false 
 				),

@@ -77,11 +77,25 @@ class mobileapi_mdl_sales_touchscreen extends dbeav_model{
 	}
 	
     function delete($filter, $subSdf = 'delete'){
+
+		$bn = $this->app->model('sales_touchscreen')->get_branch_bn();
+		
 		//------------------------------------
 		//同步删除视频文件
         $obj = $this->app->model('sales_touchscreen');
         $rs  = $obj->dump($filter['ad_id']);
 		if(isset($rs) && is_array($rs)){
+				
+			//------------------------------------------------------
+			//检查权限
+			//如果当前登陆用户，是门店账号，但删除的资料不是该门店，
+			//即没有权限，退出。
+			if(strlen($bn)>0){
+				if($bn != $rs['branch_bn']){
+					return false;
+				}
+			}
+			//------------------------------------------------------
 			$vodfile = $rs['vodfile'];
 			if(strlen($vodfile)>5){
 				@unlink(ROOT_DIR .$vodfile);
@@ -98,7 +112,21 @@ class mobileapi_mdl_sales_touchscreen extends dbeav_model{
             return '否';
         }
     }
-	
+
+	//增加门店权限的过滤
+	//如果当前后台操作员账号是门店账号，并指定了相关门店，就只能查看它自己的门店的资料
+	//july by 2015-06-15
+    public function _filter($filter,$tableAlias=null,$baseWhere=null){
+        if(!$filter['branch_bn']){
+			$bn = $this->app->model('sales_touchscreen')->get_branch_bn();
+			if(strlen($bn)>0){
+				$filter['branch_bn'] = $bn;	
+			}
+        }
+
+        $filter = parent::_filter($filter);
+        return $filter;
+    }
 	
 	//根据 $_SESSION['account'] 查询账号是否为门店账号，如果是，就返回 branch_bn
 	//july
