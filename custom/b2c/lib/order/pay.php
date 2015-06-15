@@ -460,7 +460,7 @@ class b2c_order_pay extends b2c_api_rpc_request
             	if($mobile = $member[0]['login_account']){
             		$data = array(
             				'passport_id'=> substr($member[0]['login_account'], -4),
-            				'time'=>date('Y年m月d日h时m分',time()),
+            				'time'=>date('Y年m月d日H时i分',time()),
             				'cost'=>$sdf['money'],
             				'deposit'=>$deposit[0]['advance'],
             		);
@@ -482,7 +482,7 @@ class b2c_order_pay extends b2c_api_rpc_request
             		$deposit = app::get('b2c')->model('members')->getList('advance',array('member_id'=>$member_id));
             		$data = array(
             				'passport_id'=> substr($openid, -4),
-            				'time'=>date('Y年m月d日h时m分',time()),
+            				'time'=>date('Y年m月d日H时i分',time()),
             				'cost'=>$sdf['money'],
             				'deposit'=>$deposit[0]['advance'],
             		);
