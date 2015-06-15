@@ -1771,7 +1771,9 @@ public function ajax()
         if ( $aCart['object']['goods'] ) {
             $goods_model = app::get('b2c')->model('goods');
             foreach ( $aCart['object']['goods'] AS $k => $v ) {
-                $aCart['object']['goods'][$k]['unit'] = $goods_model->db_dump(array('goods_id'=>$v['params']['goods_id']),'unit');
+                //$aCart['object']['goods'][$k]['unit'] = $goods_model->db_dump(array('goods_id'=>$v['params']['goods_id']),'unit');
+            	$aUnit = $goods_model->parent_getList("unit",array('goods_id'=>$v['params']['goods_id']),0,1,'price asc,last_modify desc');
+            	$aCart['object']['goods'][$k]['unit'] = $aUnit[0];
                 // 商品单位换算
                 //$_val = number_format($v['quantity']/1000, 3, '.', '');
                 $_val = $v['quantity'];//hack by Jason
