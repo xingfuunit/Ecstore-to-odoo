@@ -10,39 +10,30 @@
   <th><{t}>广告名称：<{/t}></th>
   <td><{input type="text" name="ad_name" style="width:400px" vtype="required" value=$adInfo.ad_name}><em><font color='red'>*</font></em></td>
 </tr>
-<tr>
+
+<tr style="display:none;">
   <th><{t}>链接地址：<{/t}></th>
   <td><{input type="text" name="ad_url" style="width:400px" value=$adInfo.ad_url}></td>
 </tr>
+
 <tr>
   <th><{t}>广告位置：<{/t}></th>
   <td>
-    <select name="touchscreen_position">
+    <select name="pos_id" id="pos_id" onchange="position_select(this.value);">
       <{foreach from=$touchscreen_position item=item}>
-      <option value="<{$item.id}>" <{if $item.id eq $adInfo.touchscreen_position}>selected<{/if}>><{$item.name}></option>
+      <option value="<{$item.id}>" <{if $item.id == $adInfo.pos_id}>selected<{/if}>><{$item.name}></option>
       <{/foreach}>
     </select>
   </td>
 </tr>
-<tr>
-  <th><{t}>广告类型：<{/t}></th>
-  <td>
-    <select name="url_type" id="url_type" onchange="url_type_select(this.value);">
-		 <option value='pic' <{if $adInfo.url_type == 'pic'}>selected<{/if}> ><{t}>图片<{/t}></option>
-		 <option value='video' <{if $adInfo.url_type == 'video'}>selected<{/if}> ><{t}>视频<{/t}></option>
-    </select>
-  </td>
-</tr>
-
 <tr id="tr_pic">
   <th><{t}>广告图片：<{/t}></th>
   <td>
   <{input type="image" name="ad_img" id="ad_img" value=$adInfo.ad_img width=160 height=90}>请上传广告图片
-  1920 x 1080
   </td>
 </tr>
 
-<tr id="tr_video" style="display:none;">
+<tr id="tr_vod" style="display:none;">
   <th><{t}>广告视频：<{/t}></th>
   <td><{input type="text" name="vodfile" id="vodfile" style="width:400px" value=$adInfo.vodfile}><br /><br />
   <input type="hidden" name="vodfile_old" value="<{$adInfo.vodfile}>">
@@ -59,14 +50,25 @@
 </pre>
   </td>
 </tr>	
-	
-<tr style="display:none;">
-  <th><{t}>图片宽：<{/t}></th>
-  <td><{input type="text" name="ad_img_w" style="width:120px" vtype="required" value=$adInfo.ad_img_w}><em><font color='red'>*</font></em></td>
-</tr>
-<tr style="display:none;">
-  <th><{t}>图片高：<{/t}></th>
-  <td><{input type="text" name="ad_img_h" style="width:120px" vtype="required" value=$adInfo.ad_img_h}><em><font color='red'>*</font></em></td>
+<tr>
+  <th><{t}>所属门店：<{/t}></th>
+  <td>
+    <select name="branch_bn" id="branch_bn">
+<{if $users_branch_bn}>
+		<{foreach from=$touchscreen_branch item=item}>
+			<{if $users_branch_bn==$item.id}>
+			<option value="<{$item.id}>"><{$item.name}></option>
+			<{/if}>
+		<{/foreach}>
+<{else}>
+		<option value="">==选择所属门店==</option>
+		<{foreach from=$touchscreen_branch item=item}>
+		<option value="<{$item.id}>" <{if $item.id == $adInfo.branch_bn}>selected<{/if}>><{$item.name}></option>
+		<{/foreach}>
+
+<{/if}>
+    </select>
+  </td>
 </tr>
 <tr>
   <th><{t}>失效：<{/t}></th>
@@ -101,20 +103,22 @@ function jGet(el){
 	return document.getElementById(el);
 };
 
-function url_type_select(v){
-	if(v=='pic'){
-		$$('#tr_pic').setStyle('display','');
-		$$('#tr_video').setStyle('display','none');
-	}else{
+function position_select(v){
+//3是视频
+	if(v=='3'){
 		$$('#tr_pic').setStyle('display','none');
-		$$('#tr_video').setStyle('display','');
+		$$('#tr_vod').setStyle('display','');
 		
 		if(!plupload_uploader_isInit){
 			plupload_uploader_isInit = true;
 			uploader.init();
 		};
+	}else{
+		$$('#tr_pic').setStyle('display','');
+		$$('#tr_vod').setStyle('display','none');
 	};
 };
+
 var plupload_uploader_isInit = false;
 var uploader = new plupload.Uploader({
 	runtimes : 'html5,flash,silverlight,html4',
@@ -192,7 +196,7 @@ var uploader = new plupload.Uploader({
 	}
 });
 
-  <{if $adInfo.url_type == 'video'}>url_type_select('video');<{/if}>
+  <{if $adInfo.url_type == 'vod'}>position_select('vod');<{/if}>
 </script>
 <script>
 

@@ -25,18 +25,26 @@ $db ['sales_touchscreen'] = array (
 						'in_list' => true,
 						'default_in_list' => true 
 				),
-				'touchscreen_position' => array (
+				'pos_id' => array (
+					'type' => 'number',
+					'label' => app::get ( 'b2c' )->_ ( '广告位置id' ),
+					'default' => '1',
+					'is_title' => true,
+					'required' => true,
+					'comment' => app::get ( 'b2c' )->_ ( '广告位置id' ),
+					'editable' => true
+				),
+				'pos_name' => array (
 					'type' => 'varchar(50)',
 					'label' => app::get ( 'b2c' )->_ ( '广告位置' ),
 					'width' => 180,
-					'default' => '1',
+					'default' => '',
 					'is_title' => true,
 					'required' => true,
 					'comment' => app::get ( 'b2c' )->_ ( '广告位置' ),
 					'editable' => true,
-					'searchtype' => 'has',
-					'in_list' => false,
-					'default_in_list' => false
+					'in_list' => true,
+					'default_in_list' => true
 				),
 				'ad_img' => array (
 						'type' => 'varchar(255)',
@@ -46,10 +54,8 @@ $db ['sales_touchscreen'] = array (
 						'in_list' => false,
 						'default_in_list' => false 
 				),
-				
 				'ad_img_w' => array (
-						'type' => 'varchar(12)',
-						'default' =>1920,
+						'type' => 'number',
 						'comment' => app::get ( 'b2c' )->_ ( '图片宽' ),
 						'editable' => false,
 						'label' => app::get ( 'b2c' )->_ ( '图片宽' ),
@@ -58,15 +64,13 @@ $db ['sales_touchscreen'] = array (
 				),
 				
 				'ad_img_h' => array (
-						'type' => 'varchar(12)',
-						'default' =>1080,
+						'type' => 'number',
 						'comment' => app::get ( 'b2c' )->_ ( '图片高' ),
 						'editable' => false,
 						'label' => app::get ( 'b2c' )->_ ( '图片高' ),
 						'in_list' => false,
 						'default_in_list' => false 
 				),
-
 				'ad_url' => array (
 						'type' => 'varchar(255)',
 						'label' => app::get ( 'b2c' )->_ ( '链接地址' ),
@@ -74,8 +78,8 @@ $db ['sales_touchscreen'] = array (
 						'comment' => app::get ( 'b2c' )->_ ( '链接地址' ),
 						'editable' => false,
 						'searchtype' => 'has',
-						'in_list' => true,
-						'default_in_list' => true 
+						'in_list' => false,
+						'default_in_list' => false 
 				),
 				'vodfile' => array (
 						'type' => 'varchar(255)',
@@ -88,18 +92,39 @@ $db ['sales_touchscreen'] = array (
 				'url_type' => array (
 						'type' => array (
 								'pic' => app::get ( 'b2c' )->_ ( '图片' ),
-								'video'=> app::get ( 'b2c' )->_ ( '视频' ),
+								'vod'=> app::get ( 'b2c' )->_ ( '视频' ),
+								'bg' => app::get ( 'b2c' )->_ ( '背景' ),
 						),
 						'default' => 'pic',
 						'label' => app::get ( 'b2c' )->_ ( '广告类型' ),
 						'width' => 60,
 						'comment' => app::get ( 'b2c' )->_ ( '广告类型' ),
 						'editable' => true,
+						'in_list' => true,
+						'default_in_list' => true 
+				),
+				'branch_bn' => array (
+						'type' => 'varchar(32)',
+						'default' => '',
+						'label' => app::get ( 'b2c' )->_ ( '门店编号' ),
+						'width' => 100,
+						'comment' => app::get ( 'b2c' )->_ ( '门店编号' ),
+						'editable' => true,
+						'searchtype' => 'has',
+						'in_list' => false,
+						'default_in_list' => false 
+				),
+				'branch_name' => array (
+						'type' => 'varchar(200)',
+						'default' => '',
+						'label' => app::get ( 'b2c' )->_ ( '门店名称' ),
+						'width' => 200,
+						'comment' => app::get ( 'b2c' )->_ ( '门店名称' ),
+						'editable' => true,
 						'searchtype' => 'has',
 						'in_list' => true,
 						'default_in_list' => true 
 				),
-				
 				'disabled' => array (
 						'type' => 'bool',
 						'default' => 'false',
@@ -113,6 +138,7 @@ $db ['sales_touchscreen'] = array (
 				),
 				'ordernum' => array (
 						'type' => 'number',
+						'default' => '0',
 						'label' => app::get ( 'b2c' )->_ ( '排序' ),
 						'width' => 60,
 						'comment' => app::get ( 'b2c' )->_ ( '排序' ),
@@ -142,5 +168,5 @@ $db ['sales_touchscreen'] = array (
 				) 
 		),
 		'version' => '$Rev: 40656 $',
-		'comment' => app::get ( 'b2c' )->_ ( '移动触屏系统' ) 
+		'comment' => app::get ( 'b2c' )->_ ( '门店触屏系统' ) 
 );
