@@ -449,7 +449,7 @@ class b2c_order_pay extends b2c_api_rpc_request
 
             $obj_orders->fireEvent("payed", $aUpdate, $sdf_order['member_id']);
             
-            if ($sdf['pay_app_id'] == 'deposit' && $is_save)
+            if ($sdf['pay_app_id'] == 'deposit' && $is_save && $sdf['money'] !='0.00')
             {
             	$member_id = $sdf_order['member_id'];
             	// @author francis
