@@ -470,7 +470,7 @@ class b2c_order_pay extends b2c_api_rpc_request
             		$tmpl_name = 'messenger:b2c_messenger_sms/'.$tmpl;
             		 
             		$messengerModel = $this->app->model('member_messenger');
-            		$messengerModel->_send($sender,$tmpl_name,(string)$mobile,$data,$tmpl,$sendType);
+            		$messengerModel->addQueue($sender,$tmpl_name,(string)$mobile,$data,$tmpl,$sendType);
             		 
             		 
             	}
