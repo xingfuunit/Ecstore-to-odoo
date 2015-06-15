@@ -1765,7 +1765,10 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         if ( $aCart['object']['goods'] ) {
             $goods_model = app::get('b2c')->model('goods');
             foreach ( $aCart['object']['goods'] AS $k => $v ) {
-                $aCart['object']['goods'][$k]['unit'] = $goods_model->db_dump(array('goods_id'=>$v['params']['goods_id']),'unit');
+                // $aCart['object']['goods'][$k]['unit'] = $goods_model->db_dump(array('goods_id'=>$v['params']['goods_id']),'unit');
+                $aUnit = $goods_model->parent_getList("unit",array('goods_id'=>$v['params']['goods_id']),0,1,'price asc,last_modify desc');
+                $aCart['object']['goods'][$k]['unit'] = $aUnit[0];
+
                 // 商品单位换算
                 //$_val = number_format($v['quantity']/1000, 3, '.', '');
                 $_val = $v['quantity'];//hack by Jason
@@ -2222,7 +2225,16 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     }
 
     function test(){
-        echo $this->gen_barcode('1','380601','00010');
+        error_reporting(ALL);
+        $dec = '21474853508';
+        $hex = decbin($dec);
+
+        $hex = (string)$hex;
+        $len = (int)(strlen($hex) / 8);
+        for($i=0;$i<$len;++$i){
+            echo substr((string)$hex, $i*8, 8)  ;echo '<br />';
+            // echo chr( bindec( (substr((string)$hex, $i*8, 8) ) ) );
+        }
     }
 }
 
