@@ -136,7 +136,10 @@
 	  <{foreach from=$pz_xg key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>"  style=" position:relative" >
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}> >
+		    <{if !$goods_row.is_can_store }>
+			<span style="height:auto;filter:alpha(opacity=50); -moz-opacity:0.5; opacity:0.5; width:auto; white-space:nowrap; background:#333333; border-top-left-radius:20px;border-bottom-left-radius:20px; color:#FFFFFF; font-size:12px;padding:5px 10px; position:absolute; right:-4px;  margin-right:4px;">缺&nbsp;&nbsp;货</span>
+			<{/if}>
 	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
 	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
 			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
@@ -144,7 +147,7 @@
 			<h1 style="color:#FF0000;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
-		  <{if $goods_row.products.store >0 or $goods_row.nostore_sell == 1 }>
+		  <{if $goods_row.is_can_store }>
 		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#FF9900; height:30px; width:30px; background:none; border:1px solid #FF9900; line-height:30px; margin-top:5px;"></a>
 		  <form  style="display:none" class="formaddcart">
 			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
@@ -155,7 +158,7 @@
 			    <input type="text" name="response_json" value="1" />
 			</form>
 			<{else}>
-				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnEmptyCart" style="float:right; color:#666; height:30px; width:30px; background:none; border:1px solid #666; line-height:30px; margin-top:5px;"></a>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px; margin-top:50px;"></a>
 			<{/if}>
 	    </div>
 	  </li>
@@ -176,7 +179,11 @@
 	 <{foreach from=$pz_hs key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>"  <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}>>
+		  	<{if !$goods_row.is_can_store }>
+			<span style="height:auto;filter:alpha(opacity=50); -moz-opacity:0.5; opacity:0.5; width:auto; white-space:nowrap; background:#333333; border-top-left-radius:20px;border-bottom-left-radius:20px; color:#FFFFFF; font-size:12px;padding:5px 10px; position:absolute; right:-4px;  margin-right:4px;">缺&nbsp;&nbsp;货</span>
+			<{/if}>
+		  
 	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
 	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
 			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
@@ -195,7 +202,7 @@
 			    <input type="text" name="response_json" value="1" />
 			</form>
 			<{else}>
-				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnEmptyCart" style="float:right; color:#666; height:30px; width:30px; background:none; border:1px solid #666; line-height:30px; margin-top:5px;"></a>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px; margin-top:50px;"></a>
 			<{/if}>
 	    </div>
 	  </li>
@@ -217,7 +224,11 @@
 	 <{foreach from=$pz_xr key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>"  <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}>>
+		  	<{if !$goods_row.is_can_store }>
+			<span style="height:auto;filter:alpha(opacity=50); -moz-opacity:0.5; opacity:0.5; width:auto; white-space:nowrap; background:#333333; border-top-left-radius:20px;border-bottom-left-radius:20px; color:#FFFFFF; font-size:12px;padding:5px 10px; position:absolute; right:-4px;  margin-right:4px;">缺&nbsp;&nbsp;货</span>
+			<{/if}>
+		  	
 	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
 	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
 			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
@@ -236,7 +247,7 @@
 			    <input type="text" name="response_json" value="1" />
 			</form>
 			<{else}>
-				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnEmptyCart" style="float:right; color:#666; height:30px; width:30px; background:none; border:1px solid #666; line-height:30px; margin-top:5px;"></a>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px; margin-top:50px;"></a>
 			<{/if}>
 	    </div>
 	  </li>
@@ -257,12 +268,16 @@
 	 <{foreach from=$pz_jx key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>">
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>"  <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}>>
+		  	<{if !$goods_row.is_can_store }>
+			<span style="height:auto;filter:alpha(opacity=50); -moz-opacity:0.5; opacity:0.5; width:auto; white-space:nowrap; background:#333333; border-top-left-radius:20px;border-bottom-left-radius:20px; color:#FFFFFF; font-size:12px;padding:5px 10px; position:absolute; right:-4px;  margin-right:4px;">缺&nbsp;&nbsp;货</span>
+			<{/if}>
+			
 	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
 	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
 			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
 	        <div class="am-gallery-desc" >
-			<h1 style="color:#FF0000;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
+			<h1 style="color:#FF0000;float:left"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
 		  <{if $goods_row.products.store >0 or $goods_row.nostore_sell == 1 }>
@@ -276,7 +291,7 @@
 			    <input type="text" name="response_json" value="1" />
 			</form>
 			<{else}>
-				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnEmptyCart" style="float:right; color:#666; height:30px; width:30px; background:none; border:1px solid #666; line-height:30px; margin-top:5px;"></a>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px; margin-top:50px;"></a>
 			<{/if}>
 	    </div>
 	  </li>
