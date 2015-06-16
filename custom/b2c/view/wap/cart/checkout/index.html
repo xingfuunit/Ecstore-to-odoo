@@ -6,9 +6,9 @@
 <{/if}>
 
 <{if $is_empty}>
-<div style="margin-top:10%;"><img style="width:100%" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/big_cart.png"></div>
-<h4 style="width:100%; text-align:center">亲，您当前购物车没有商品哦~</h4>
-<p style="width:100%; text-align:center" ><a class="am-text-warning" href="./"><span style="margin-top:10%;"></span>马上购物 >></a></p>
+<div style="margin-top:5%;"><img style="width:100%" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/big_cart.png"></div>
+<h4 style="width:100%; text-align:center; margin-top:10px;">亲，您当前购物车没有商品哦~</h4>
+<p style="width:100%; text-align:center" ><a class="am-text-warning" href="./"><span style="margin-top:5%;"></span>马上购物 >></a></p>
 <{else}>
 <div class="full-screen" id="checkout_wrap">
 <{if $is_fastbuy}>
@@ -43,38 +43,38 @@
   <div class="am-list-news-bd" >
     <ul class="am-list" >
         <{if $def_addr}>
-      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" >
-      		 <a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=checkout_wrap arg0=$is_fastbuy}>?show=shipping_list" class="am-list-item-hd click_loading">
+      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#999999" >
+      		 <a style="color:#999999" href="<{link app=b2c ctl=wap_cart act=checkout_wrap arg0=$is_fastbuy}>?show=shipping_list" class="am-list-item-hd click_loading">
       		此产品将寄往：   <span class="am-list-news-more am-fr"> <i class="am-icon-pencil"></i></span>
-            <div class="am-list-item-text"  style="color:#CCCCCC" >收货人：<{$def_addr.name}></div>
-        	<div class="am-list-item-text"  style="color:#CCCCCC" ><{if $def_addr.tel}>电话号码：<{$def_addr.tel}><{else}>手机号码：<{$def_addr.mobile}><{/if}></div>
-        	<div class="am-list-item-text"  style="color:#CCCCCC" ><{$def_addr.area|ship_area}><{$def_addr.addr}></div>
+            <div class="am-list-item-text"  style="color:#999999" >收货人：<{$def_addr.name}></div>
+        	<div class="am-list-item-text"  style="color:#999999" ><{if $def_addr.tel}>电话号码：<{$def_addr.tel}><{else}>手机号码：<{$def_addr.mobile}><{/if}></div>
+        	<div class="am-list-item-text"  style="color:#999999" ><{$def_addr.area|ship_area}><{$def_addr.addr}></div>
       		</a>
       		</li>
       		<input type="hidden" name="address" id="ship_address" value='{"addr_id":<{$def_addr.addr_id}>,"area":<{$def_addr.area|ship_area_id}>}' />
       <{else}>
-      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#CCCCCC" > 
-      		<a style="color:#CCCCCC" href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>" class="am-list-item-hd click_loading">请先添加收货地址<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
+      		<li class="am-g am-list-item-desced"  style="border-top:0px;color:#999999" > 
+      		<a style="color:#999999" href="<{link app=b2c ctl=wap_cart act=shipping_edit arg0=$is_fastbuy}>" class="am-list-item-hd click_loading">请先添加收货地址<span class="am-list-news-more am-fr">    <i class="am-icon-pencil"></i></span></a>
       		</li>
       <{/if}>
 
 	  <{if $shipping_method.shipping_name}>	 
-      <li class="am-g am-list-item-desced" style="color:#CCCCCC" id="D_L">
-        <a style="color:#CCCCCC"  href="javascript:void(0);" class="am-list-item-hd change_shipping"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}>
+      <li class="am-g am-list-item-desced" style="color:#999999" id="D_L">
+        <a style="color:#999999"  href="javascript:void(0);" class="am-list-item-hd change_shipping"><{$shipping_method.shipping_name}><{if $shipping_method.shipping_name == '门店自提'}>【<{$shipping_branch_name_b}>】<input type="hidden" value='<{$shipping_branch_id}>' name="branch_id"><{/if}>
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
       <input name="shipping" value='{"id":<{$shipping_method.shipping_id}>,"has_cod":"<{$shipping_method.has_cod}>","dt_name":"<{$shipping_method.shipping_name}>","money":"<{$shipping_method.money}>"}' type="hidden">
       <{else}>
-      <li class="am-g am-list-item-desced" style="color:#CCCCCC" >
-        <a style="color:#CCCCCC"  href="javascript:void(0);" class="am-list-item-hd "><span style="color:red;">当前地区不支持配送</span>
+      <li class="am-g am-list-item-desced" style="color:#999999" >
+        <a style="color:#999999"  href="javascript:void(0);" class="am-list-item-hd "><span style="color:red;">当前地区不支持配送</span>
         <span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>
       </li>
       <{/if}>
       
       <{include file='wap/cart/checkout/payment_confirm.html' app='b2c'}>
 	        	  
-	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="javascript:void(0);" data-am-modal="{target: '#my-alert01',width: 320}" class="am-list-item-hd ">
+	  <li class="am-g am-list-item-desced"  style="color:#999999" >
+        <a style="color:#999999" href="javascript:void(0);" data-am-modal="{target: '#my-alert01',width: 320}" class="am-list-item-hd ">
         	<span class="J_coupon">
         	<{if $aCart.object.coupon}>
         	优惠券：<{foreach from=$aCart.object.coupon item=coupon key=key}>
@@ -91,17 +91,17 @@
 	  
 	  <{include file='wap/cart/checkout/coupon.html' app='b2c'}>
 	  
-	  <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="javascript:void(0);" data-am-modal="{target: '#my-alert02'}" class="am-list-item-hd">
+	  <li class="am-g am-list-item-desced"  style="color:#999999" >
+        <a style="color:#999999" href="javascript:void(0);" data-am-modal="{target: '#my-alert02'}" class="am-list-item-hd">
         	<span id="memo_span">留言</span>
         	<span class="am-list-news-more am-fr"><i class="am-icon-pencil"></i></span></a>  
         	<input type="hidden" id="memo_input" name="memo" placeholder="订单留言" class="text"/>    
 	  </li>	 
         
-	   <li class="am-g am-list-item-desced"  style="color:#CCCCCC" >
-        <a style="color:#CCCCCC" href="javascript:void(0);" class="am-list-item-hd">订单优惠
+	   <li class="am-g am-list-item-desced"  style="color:#999999" >
+        <a style="color:#999999" href="javascript:void(0);" class="am-list-item-hd">订单优惠
         <{foreach from=$aCart.promotion.order item=item}>
-        <span class="am-badge am-badge-warning am-radius am-fr" style="margin-right:10px;" data-am-popover="{content: '<{$item.desc}>', trigger: 'click focus'}" ><{$item.desc_tag}></span>
+        <span class="am-badge am-badge-warning am-radius am-fr" style="margin-right:10px;background:#eb767b;" data-am-popover="{content: '<{$item.desc}>', trigger: 'click focus'}" ><{$item.desc_tag}></span>
         <{/foreach}>
         </a>      
 	  </li>
