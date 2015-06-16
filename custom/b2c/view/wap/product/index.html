@@ -345,7 +345,7 @@ $('.magnifer').click(function(e){
     var options = {
         // optionName: 'option value'
         // for example:
-        index: $(this).attr('img-index')
+        index: parseInt($(this).attr('img-index'), 10)
     };
     var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
     gallery.init();
