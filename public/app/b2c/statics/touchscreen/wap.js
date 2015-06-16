@@ -196,7 +196,7 @@ var touchscreen = {
 		if( typeof touchscreen.conf.data[3] == 'undefined'){
 			return;
 		}
-		
+		vodbox
 		var o = json[0],
 			vod = touchscreen.conf.urls.base + o['vod'],
 			url = ''+o['url'],
@@ -204,7 +204,6 @@ var touchscreen = {
 
 		var html = [
 			'<div id="container">',
-				'<div id="videocover">&nbsp;</div>',
 				'<video id="video" class="video" preload="metadata" src="',vod,'" autoplay="true" loop="loop" controls="false" style="',css,'"></video>',
 			'</div>'
 		].join('');
