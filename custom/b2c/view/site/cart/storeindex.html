@@ -211,17 +211,20 @@
    <div class="bn_add_info"></div>
     </div>
     <{/if}>
+
 <div id="main" style="background: #FFF;">
 <div class="black10"></div>
+  <div id="cart_container" class="cart-container">
   <{if $is_empty}>
     <{include file="site/cart/storecart_empty.html" app=b2c}>
   <{else}>
   
   <!-- 购物车主体 -->
-  <div id="cart_container" class="cart-container">
+  
     <{include file="site/cart/storecart_main.html" app=b2c}>
-  </div>
+  
   <{/if}>
+  </div>
 
 </div>
 
@@ -1124,8 +1127,8 @@ window.addEvent('domready', function(){
 
     
 <script type="text/javascript">
-(function() {
-<{if !$is_empty}>
+// (function() { // delete closure by francis
+// delete php if here by francis
 <{if $money_format}>
     priceControl.spec = <{$money_format}>;
 <{/if}>
@@ -1366,7 +1369,7 @@ window.addEvent('domready', function(){
         };
         promoarea.innerHTML = html;
     }
-    <{/if}>
+    // delete php end if here by francis
 
     //== 为数量选择框绑定事件
     function bindQuantityEvent(elements, callback) {
@@ -1585,7 +1588,7 @@ window.addEvent('domready', function(){
             }).get({'gids': gid});
         }   
     });
-})();
+// })();  //delete closure by francis
 
 /**
  * 验证预付款金额
