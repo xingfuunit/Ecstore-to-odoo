@@ -2,6 +2,7 @@
  * touchscreen
  * date: 2015-06-01
  * */
+
 var touchscreen = {
 	conf:{
 		delay	: 1000 * 60 * 1,
@@ -12,6 +13,7 @@ var touchscreen = {
 			base:'',
 			//base:'http://release.ecstore.pinzhen365.com/',
 			apijson:'/wap/touchscreen.html?key=',
+			uuid:''
 		},
 		apiKey	: '',
 		data	: []
@@ -33,8 +35,8 @@ var touchscreen = {
 	},
 	getData:function(){
 		var key = touchscreen.getKey(''),
-			url = touchscreen.conf.urls.base + touchscreen.conf.urls.apijson + key;
-
+			url = touchscreen.conf.urls.base + touchscreen.conf.urls.apijson + key + '&uuid='+touchscreen.conf.urls.uuid;
+			
 		$.ajax({
 			type: 'get',
 			url : url,
@@ -94,7 +96,6 @@ var touchscreen = {
 			touchscreen.init_vod();
 		}
 		
-
 		touchscreen.conf.isInit = true;
 		touchscreen.conf.$loading.hide();
 	},
@@ -209,7 +210,7 @@ var touchscreen = {
 			
 		var html = [
 			'<div id="container">',
-				'<video id="video1" class="video" preload="none" autoplay="true" loop="loop" controls="false">',
+				'<video id="video1" class="video" preload="none" autoplay="true" src="',vod,'" loop="loop" controls="false">',
 				'<source src="',vod,'" type="video/mp4">',
 				'</video>',
 			'</div>'
@@ -230,6 +231,7 @@ var touchscreen = {
 				video1.currentTime = 0.1;
 				video1.play();
 			});
+			video1.play();
 /*
 			video1.addEventListener('ended', function () {
 				video1.currentTime = 0.1;
@@ -293,12 +295,16 @@ var touchscreen = {
 			showabs:function(msg){
 				touchscreen.conf.$msgbox.html(msg).fadeIn();
 			},
-			hide(){
+			hide:function(){
 				touchscreen.conf.$msgbox.hide();
 			}
 		}		
 	},
 	init:function(){
+		if(typeof uuid !== 'undefined'){
+			this.conf.urls.uuid = uuid;
+		};
+		
 		this.conf.$main = $('#main');
 		this.conf.$banner = $('#banner');
 		this.conf.$footer = $('#footer');
@@ -308,7 +314,7 @@ var touchscreen = {
 		this.conf.$loading = $('#loading');
 		this.conf.width = $('#banner').width();
 		this.conf.height = $('#banner').height();
-		
+
 		this.getData();
 		this.conf.oInter = setInterval(this.getData,this.conf.delay);
 		$(window).on('resize.touchscreen', touchscreen.resize);

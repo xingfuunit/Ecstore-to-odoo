@@ -97,6 +97,9 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 		$sid = '';
 		if(isset($row) && isset($row['branch_bn'])){
 			$sid = $row['branch_bn'];
+		}else{
+            $sql = "insert into sdb_mobileapi_sales_touchscreendevice (device_name,branch_bn,branch_name) values ('".$uuid."','','')";
+            kernel::database()->exec($sql);
 		}
 		return $sid;
 	}
