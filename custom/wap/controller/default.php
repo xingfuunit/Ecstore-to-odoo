@@ -126,6 +126,7 @@ class wap_ctl_default extends wap_controller{
         $this->_new_index_data();
         
         $this->pagedata['goodsData'] = $goodsData;
+        $this->pagedata['title'] = '品珍鲜活';
         $this->page('index.html');
     }
 
