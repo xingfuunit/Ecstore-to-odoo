@@ -34,7 +34,7 @@ var touchscreen = {
 	getData:function(){
 		var key = touchscreen.getKey(''),
 			url = touchscreen.conf.urls.base + touchscreen.conf.urls.apijson + key;
-		
+
 		$.ajax({
 			type: 'get',
 			url : url,
@@ -52,16 +52,19 @@ var touchscreen = {
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
 				//console.log('error='+errorThrown);
-				alert('网络不通，\r\nkey='+key+'\r\nurl='+url);
+				//alert('网络不通，\r\nkey='+key+'\r\nurl='+url);
+				
+				touchscreen.ui.msg.show('网络不通，\r\nkey='+key+'\r\nurl='+url);
 			}
 		});
 	},
 	run:function(json){
 		if(json.length<1){
-			alert('缺少数据！');
+			//alert('缺少数据！');
+			touchscreen.ui.msg.show('缺少数据');
 			return false;
 		};
-		
+
 		//--------------------------------------
 		touchscreen.resize();
 		touchscreen.conf.$loading.show();
@@ -82,8 +85,8 @@ var touchscreen = {
 
 		touchscreen.init_footer();
 		
-
 		if( touchscreen.conf.data[1].length>0 ){
+			touchscreen.conf.$vodbox.hide();
 			touchscreen.conf.isPic  = true;
 			touchscreen.init_pic();
 		}else{
@@ -276,6 +279,24 @@ var touchscreen = {
 				};
 			};
 		};
+	},
+	ui:{
+		msg:{
+			time:20000,
+			show:function(msg){
+				touchscreen.conf.$msgbox.html(msg).fadeIn();
+				
+				setTimeout(function(){
+					touchscreen.ui.msg.hide();
+				},touchscreen.ui.msg.time);
+			},
+			showabs:function(msg){
+				touchscreen.conf.$msgbox.html(msg).fadeIn();
+			},
+			hide(){
+				touchscreen.conf.$msgbox.hide();
+			}
+		}		
 	},
 	init:function(){
 		this.conf.$main = $('#main');
