@@ -1,6 +1,6 @@
 <div id="loading_page" style="text-align: center;">
       <div class="roll_loding" style="height:auto">
-        <i class="am-icon-spinner am-icon-spin am-icon-lg"></i>
+        <i id="loadingImg" class="am-icon-spinner am-icon-spin am-icon-lg"></i>
       </div>
 </div>
 <script type="text/javascript">
@@ -20,9 +20,16 @@ function getClientHeight()
 document.getElementById('loading_page').style.height='3000px';
 var ch = getClientHeight();
 document.getElementById('loading_page').style.height=ch+'px';
-
+document.getElementById('loadingImg').style.position = 'absolute';
+document.getElementById('loadingImg').style.top = (ch/2 - $('#loadingImg').height()/2) + 'px' ;
+$(window).load(function(){
+    // if(document.getElementById('loading_page').style.display!='none')
+        // document.getElementById('loading_page').style.display='none';
+});
 
 </script>
+
+
 <{include file='wap/product/popup.html'}>
 
 <!-- main -->
@@ -34,7 +41,9 @@ document.getElementById('loading_page').style.height=ch+'px';
         <{assign var="imgCount" value=0}>
         <{foreach from=$product_imgs key=key item=image}>
         <li class="showvaluebox">
-
+            <div class="magnifer" style="left:2%; top:1%; position:absolute;" img-index="<{$imgCount}>">
+              <img src="/public/imgs/wap/fdj.png" style="height:45px" />
+            </div>
             <!--
             <{if ++$imgCount==1}>
             <div style="width:100%; height:auto; text-align:center; margin-top:30%; position:absolute; color:#FFFFFF;  background:#000000;filter:alpha(opacity=50); /*IE滤镜*/-moz-opacity:0.5; /*Firefox私有*/opacity:0.5;/*其他*/">
@@ -45,7 +54,7 @@ document.getElementById('loading_page').style.height=ch+'px';
             <{/if}>
             -->
 
-            <img <{if($key==0)}>onload="javascript:document.getElementById('loading_page').style.display='none';"<{/if}> src="<{$image}>" alt="<{$page_product_basic.title}>">
+            <img class="productDetailPics" <{if($key==0)}>onload="javascript:document.getElementById('loading_page').style.display='none';"<{/if}> src="<{$image}>" alt="<{$page_product_basic.title}>">
         </li>
         <{/foreach}>
     <{else}>
@@ -66,6 +75,7 @@ document.getElementById('loading_page').style.height=ch+'px';
   <span id="btn_add2cart2" class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>"></span>
 </div>
 -->
+
 
 <!-- Footer -->
 <footer data-am-widget="footer" class="am-footer am-footer-default"></footer>
@@ -94,10 +104,6 @@ document.getElementById('loading_page').style.height=ch+'px';
 </div>
 
 <script type="text/javascript">
-$(window).load(function(){
-    if(document.getElementById('loading_page').style.display!='none')
-      document.getElementById('loading_page').style.display='none';
-});
 $(document).ready(function(){
   $('#productComments').css('height',document.documentElement.clientHeight);
 
@@ -242,5 +248,106 @@ $(document).ready(function(){
             }
         });
     });
+});
+</script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            -->
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script type="text/javascript">
+var pswpElement = document.querySelectorAll('.pswp')[0];
+
+// build items array
+
+var items = [];
+
+$('.productDetailPics').each(function(k,v){
+    items.push({
+        src:v.src,
+        w:v.width,
+        h:v.height
+    });
+})
+
+
+// Initializes and opens PhotoSwipe
+
+// pswp.goTo(index);
+$('.magnifer').click(function(e){
+    e.stopPropagation();
+    // define options (if needed)
+    var options = {
+        // optionName: 'option value'
+        // for example:
+        index: $(this).attr('img-index')
+    };
+    var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+    gallery.init();
 });
 </script>
