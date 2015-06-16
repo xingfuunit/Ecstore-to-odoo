@@ -12,7 +12,7 @@ ul,li{ list-style:none}
 .tt_bg{ background:url(../images/tt.jpg) repeat-x !important}
 .full_img{width:100%}
 .four_cut{width:25%; float:left}
-.am-slider .am-slides img{ width:auto !important}
+/*.am-slider .am-slides img{ width:auto !important}*/
 .am-comment-success.am-comment-flip .am-comment-main::after {
 border-left-color: #5eb95e !important;
 }

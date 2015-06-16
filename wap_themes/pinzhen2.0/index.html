@@ -23,11 +23,11 @@
 	
 	
 	<!-- Slider -->
-	<div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{&quot;directionNav&quot;:false}'>
+	<div data-am-widget="slider" id="index_slider" class="am-slider am-slider-a1" data-am-slider="{'directionNav':false;'smoothHeight':true}">
 	  <ul class="am-slides">
 	  	<{foreach from=$roll_ads item=r}>
 	    <li>
-	      <a href="<{$r.ad_url}>"><img src="<{$r.img_url}>" style="width:100%;"></a>
+	      <a href="<{$r.ad_url}>"><img src="<{$r.img_url}>"></a>
 	    </li>
 		<{/foreach}>
 	  </ul>
