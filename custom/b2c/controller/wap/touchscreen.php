@@ -41,15 +41,21 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 		$key = utils2::CheckSql(''.$_GET['key']);
 
 		$sid = utils2::CheckSql(''.$_GET['sid']);
-		if(strlen($req_sid)>0){
-			if(!utils2::IsRndKey($req_sid)){
-				$req_sid = '';
+		if(strlen($sid)>0){
+			if(!utils2::IsRndKey($sid)){
+				$sid = '';
 			}
 		}
 		
+		$uuid = utils2::CheckSql(''.$_GET['uuid']);
+
 		//------------------------------------------------
 		//如果存在key，即ajax 返回 json
 		if(strlen($key)>0){
+			if(strlen($uuid)>0 && strlen($sid)==0){
+				$sid = $this->get_sid_device($uuid);
+			}
+				
 			return $this->ajaxGetJson($key,$sid);
 		}
 
@@ -82,6 +88,17 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 		
 		//输出
 		return $this->ajaxWriteJson($key,$arr);
+	}
+	
+	//根据uuid，即设备id查找对应的门店设备
+	function get_sid_device($uuid){
+		$sql = "select branch_bn from sdb_mobileapi_sales_touchscreendevice where disabled='false' and device_name='".$uuid."'";
+		$row = kernel::database()->selectRow( $sql );
+		$sid = '';
+		if(isset($row) && isset($row['branch_bn'])){
+			$sid = $row['branch_bn'];
+		}
+		return $sid;
 	}
 	
 	//图片调用方式， 根据  门店编号 获得对应的 数据

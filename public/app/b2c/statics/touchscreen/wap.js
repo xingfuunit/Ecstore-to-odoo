@@ -167,7 +167,7 @@ var touchscreen = {
 		//---------------------------------------------
 		$sliderPager = $('#sliderPager');
 		var slider = document.getElementById('slider');
-		if(slider){
+		if(slider && arr.length>1){
 			window.mySwipe = new Swipe(slider, {
 				startSlide:0,
 				speed:1000,
@@ -189,6 +189,7 @@ var touchscreen = {
 		//---------------------------------------------
 		//bg
 		if( typeof touchscreen.conf.data[4] !== 'undefined'){
+			var o = touchscreen.conf.data[4];
 			if(o['img'].length > 5){
 				touchscreen.conf.$banner.html('<img src="' + o['img'] + '" />');	
 			};
@@ -199,23 +200,45 @@ var touchscreen = {
 			return;
 		};
 
-		var o = json[0],
-			vod = touchscreen.conf.urls.base + touchscreen.conf.data[3]['vod'],
-			url = ''+o['url'],
-			css = 'width:'+touchscreen.conf.width+'px;height:'+touchscreen.conf.height+'px';
-
+		var o = touchscreen.conf.data[3],
+			vod = touchscreen.conf.urls.base + o['vod'],
+			url = ''+o['url'];
+			
 		var html = [
 			'<div id="container">',
-				'<video id="video" class="video" preload="metadata" src="',vod,'" autoplay="true" loop="loop" controls="false" style="',css,'"></video>',
+				'<video id="video1" class="video" preload="none" autoplay="true" loop="loop" controls="false">',
+				'<source src="',vod,'" type="video/mp4">',
+				'</video>',
 			'</div>'
 		].join('');
 
-		touchscreen.conf.$main.html(html);
+		touchscreen.conf.$vodbox.html(html).show(function(){
+			var $video = $('#video1');
+			if($video.size()){
+				$video.css('top',parseInt(touchscreen.conf.height -  $video.height()/2));
+			};
+		});
+		
+		var video1 = document.getElementById("video1"); 
+		if(video1){
+			video1.loop = false;
+
+			$('#video1').on('ended.touchscreen.video',function(){
+				video1.currentTime = 0.1;
+				video1.play();
+			});
+/*
+			video1.addEventListener('ended', function () {
+				video1.currentTime = 0.1;
+				video1.play();
+			}, false);
+*/
+		};
 		
 		if(url.length>5){
 			$('#container').on('click.touchscreen.video',function(){
-				if($('#video').size()){
-					$('#video').get(0).pause();	
+				if($('#video1').size()){
+					$('#video1').get(0).pause();	
 				};
 				self.location = url;
 				return false;
@@ -247,12 +270,9 @@ var touchscreen = {
 				};
 			}else{
 				//vod
-				var $video = $('#video');
+				var $video = $('#video1');
 				if($video.size()){
-					$video.css({
-							width:touchscreen.conf.width,
-							height:touchscreen.conf.height
-					});
+					$video.css('top',parseInt(touchscreen.conf.height -  $video.height()/2));
 				};
 			};
 		};
@@ -261,6 +281,7 @@ var touchscreen = {
 		this.conf.$main = $('#main');
 		this.conf.$banner = $('#banner');
 		this.conf.$footer = $('#footer');
+		this.conf.$vodbox = $('#vodbox');
 		this.conf.$msgbox = $('#msgbox');
 		
 		this.conf.$loading = $('#loading');
