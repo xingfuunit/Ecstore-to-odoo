@@ -8,6 +8,7 @@ var touchscreen = {
 		isInit	: false,
 		isPic	: true,	//true = pic , false =  video
 		urls	: {
+			sid	:'',
 			base:'',
 			//base:'http://release.ecstore.pinzhen365.com/',
 			apijson:'/wap/touchscreen.html?key=',
@@ -190,15 +191,16 @@ var touchscreen = {
 		if( typeof touchscreen.conf.data[4] !== 'undefined'){
 			if(o['img'].length > 5){
 				touchscreen.conf.$banner.html('<img src="' + o['img'] + '" />');	
-			}
-		}
+			};
+		};
+
 		//---------------------------------------------
 		if( typeof touchscreen.conf.data[3] == 'undefined'){
 			return;
-		}
-		vodbox
+		};
+
 		var o = json[0],
-			vod = touchscreen.conf.urls.base + o['vod'],
+			vod = touchscreen.conf.urls.base + touchscreen.conf.data[3]['vod'],
 			url = ''+o['url'],
 			css = 'width:'+touchscreen.conf.width+'px;height:'+touchscreen.conf.height+'px';
 
@@ -259,6 +261,7 @@ var touchscreen = {
 		this.conf.$main = $('#main');
 		this.conf.$banner = $('#banner');
 		this.conf.$footer = $('#footer');
+		this.conf.$msgbox = $('#msgbox');
 		
 		this.conf.$loading = $('#loading');
 		this.conf.width = $('#banner').width();
