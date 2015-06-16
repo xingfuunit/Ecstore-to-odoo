@@ -1768,7 +1768,7 @@ class b2c_mdl_goods extends dbeav_model{
     	$arr = array_merge($pz_xg_cat_id,$goodsfilter);
 //     	print_r($arr);exit;
     	if($pz_xg_cat_id){
-    		$goodsData = $this->getList('*', $arr);
+    		$goodsData = $this->getList('*', $arr,0,4);
     		
     		//goods 数据处理
     		if($goodsData){
