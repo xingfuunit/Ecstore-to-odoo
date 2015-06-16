@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * july by 2015-06-15
+ */
 class mobileapi_ctl_admin_sales_touchscreen extends desktop_controller{
 
     var $workground = 'mobileapi.wrokground.mobileapi';
@@ -17,8 +19,8 @@ class mobileapi_ctl_admin_sales_touchscreen extends desktop_controller{
             ));
 
 		$html = file_get_contents(ROOT_DIR. '/custom/mobileapi/view/admin/sales/touchscreen_help.html');
-		
-        $this->pagedata['_PAGE_CONTENT'] = $html;
+		$this->pagedata['_PAGE_CONTENT'] = $html;	
+
         $this->page();
     }
 	

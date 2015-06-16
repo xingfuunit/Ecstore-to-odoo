@@ -2,41 +2,38 @@
  * touchscreen
  * date: 2015-06-01
  * */
-function Random(n) { return (Math.floor(Math.random() * n)); };
-function AjaxRnd() { return new Date().getTime() + '' + Random(10000); };
-
 var touchscreen = {
 	conf:{
 		delay	: 1000 * 60 * 1,
-		ckNameKey	: 'touchscreen_key',
 		isInit	: false,
 		isPic	: true,	//true = pic , false =  video
-		urls	:{
+		urls	: {
 			base:'',
 			//base:'http://release.ecstore.pinzhen365.com/',
 			apijson:'/wap/touchscreen.html?key=',
 		},
-		apiKey	: ''
+		apiKey	: '',
+		data	: []
 	},
 	getKey:function(val){
 		if(val == ''){
 			var key = '';
 			if(touchscreen.conf.isInit){
-				key = ''+$.cookie(touchscreen.conf.ckNameKey);
+				key = ''+touchscreen.conf.apiKey;
 			};
 			if(key.length != 32){
 				key = 'json';
 			};
 			return key;
 		}else{
-			//cookie expires 30 day
-			$.cookie(touchscreen.conf.ckNameKey, val, 30);	
+			touchscreen.conf.apiKey = val;
 			return true;
 		};
 	},
 	getData:function(){
-		var key = touchscreen.getKey('');
-		var url = touchscreen.conf.urls.base + touchscreen.conf.urls.apijson + key + '&a=' + AjaxRnd();
+		var key = touchscreen.getKey(''),
+			url = touchscreen.conf.urls.base + touchscreen.conf.urls.apijson + key;
+		
 		$.ajax({
 			type: 'get',
 			url : url,
@@ -44,7 +41,7 @@ var touchscreen = {
 			dataType:'json',
 			success: function (rs) {
 				if(rs.act != '1' ){
-					//write cookie key
+					//write apiKey
 					touchscreen.getKey(rs.key);
 					touchscreen.run(rs.data);
 				}else{
@@ -53,62 +50,152 @@ var touchscreen = {
 				
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
-				alert(errorThrown);
+				//console.log('error='+errorThrown);
+				alert('网络不通，\r\nkey='+key+'\r\nurl='+url);
 			}
 		});
 	},
 	run:function(json){
+		if(json.length<1){
+			alert('缺少数据！');
+			return false;
+		};
+		
+		//--------------------------------------
 		touchscreen.resize();
 		touchscreen.conf.$loading.show();
 		
-		var o = json[0];
+		//--------------------------------------
+		touchscreen.conf.data[1] = [];
 		
-		if(o['type']=='pic'){
-			touchscreen.init_pic(json);
+		for (var x in json){
+			var o = json[x];
+			//1=pic,2=footer,3=vod,4=bg
+			if(o['type']=='1'){
+				touchscreen.conf.data[1].push(o);
+			}else{
+				touchscreen.conf.data[parseInt(o['type'])] = o;
+			}
+		}
+		//--------------------------------------
+
+		touchscreen.init_footer();
+		
+
+		if( touchscreen.conf.data[1].length>0 ){
+			touchscreen.conf.isPic  = true;
+			touchscreen.init_pic();
 		}else{
-			touchscreen.init_vod(json);	
-		};
+			touchscreen.conf.isPic  = false;
+			touchscreen.init_vod();
+		}
+		
+
 		touchscreen.conf.isInit = true;
 		touchscreen.conf.$loading.hide();
 	},
-	init_pic:function(json){
-		var css = 'width:'+touchscreen.conf.width+'px;height:'+touchscreen.conf.height+'px';
+	init_footer:function(){
+		if( typeof touchscreen.conf.data[2] == 'undefined'){
+			return;
+		}
 		
-		var sb = [];
-		for (var x in json) {
-			var o = json[x];
-			sb.push('<div class="item" style="' + css + '">');
+		var sb = '',
+			o = touchscreen.conf.data[2];
+			
+		if(o['img'].length > 5){
 			if (o['url'].length > 5) {
-				sb.push('<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>');
+				sb = '<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>';
+			}else{
+				sb = '<img src="' + o['img'] + '" />';	
+			}
+		}
+		touchscreen.conf.$footer.html(sb);
+	},
+	init_pic:function(){
+		if( typeof touchscreen.conf.data[1] == 'undefined'){
+			return;
+		}
+
+		var css = 'width:'+touchscreen.conf.width+'px;height:'+touchscreen.conf.height+'px',
+			arr = touchscreen.conf.data[1];
+
+		var sb = [];
+		var sb2 = [];
+		for (var x in arr) {
+			var o = arr[x];
+			
+			if (o['url'].length > 5) {
+				if(appconf.conf.isTest){
+					sb.push('<div class="item" style="' + css + '">');
+					sb.push('<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>');
+				}else{
+					sb.push('<div class="item" style="' + css + '" onclick="touchscreen.openurl(\''+o['url']+'\')">');
+					sb.push('<img src="' + o['img'] + '" />');
+				};
 			} else {
+				sb.push('<div class="item" style="' + css + '">');
 				sb.push('<img src="' + o['img'] + '" />');
 			};
 			sb.push('</div>');
+			//---------------------------------------------
+			
+			if(x==0){
+				sb2.push('<a class="active"></a>');
+			}else{
+				sb2.push('<a></a>');	
+			};
 		};
+
 		var html = [
 			'<div class="sliderBox">',
 				'<div class="sliderPagerWrap">',
-					'<div class="sliderPager" id="sliderPager"></div>',
+					'<div class="sliderPager" id="sliderPager">',
+						sb2.join(''),
+					'</div>',
 				'</div>',
 				'<div class="slider" id="slider" style="'+css+'">',
 					'<div class="items">',
-					sb.join(''),
+						sb.join(''),
 					'</div>',
 					'<div class="fc"></div>',
 				'</div>',
 			'</div>'
 		].join('');
-
-		touchscreen.conf.$main.html(html);
-
-		$('#slider').scrollable({circular:true}).navigator({navi:'#sliderPager',indexed:false}).autoscroll({
-			interval: 2000,autoplay:true,autopause:false
-		});
-
-		//$('#slider').scrollable({circular:true}).navigator({navi:'#sliderPager',indexed:true});	
+		touchscreen.conf.$banner.html(html);
+		
+		//---------------------------------------------
+		$sliderPager = $('#sliderPager');
+		var slider = document.getElementById('slider');
+		if(slider){
+			window.mySwipe = new Swipe(slider, {
+				startSlide:0,
+				speed:1000,
+				auto:3000,
+				callback: function(index, elem){
+					$sliderPager.find('.active').removeClass('active');
+					$sliderPager.find('a').eq(index).addClass('active');
+				}
+			  // continuous: true,
+			  // disableScroll: true,
+			  // stopPropagation: true,
+			  // callback: function(index, element) {},
+			  // transitionEnd: function(index, element) {}
+			});
+		};
 	},
-	init_vod:function(json){
-		touchscreen.conf.isPic  = false;
+	init_vod:function(){
+
+		//---------------------------------------------
+		//bg
+		if( typeof touchscreen.conf.data[4] !== 'undefined'){
+			if(o['img'].length > 5){
+				touchscreen.conf.$banner.html('<img src="' + o['img'] + '" />');	
+			}
+		}
+		//---------------------------------------------
+		if( typeof touchscreen.conf.data[3] == 'undefined'){
+			return;
+		}
 		
 		var o = json[0],
 			vod = touchscreen.conf.urls.base + o['vod'],
@@ -135,17 +222,16 @@ var touchscreen = {
 		};
 	},
 	resize:function(){
-		touchscreen.conf.width = $('body').width();
-		touchscreen.conf.height = $('body').height();
-		
+		touchscreen.conf.width = $('#banner').width();
+		touchscreen.conf.height = $('#banner').height();
+
 		if(touchscreen.conf.isInit){
-			//Pictures
+			//pic
 			if(touchscreen.conf.isPic){
-				touchscreen.conf.$main.find('.item').css({
+				touchscreen.conf.$banner.find('.item').css({
 						width:touchscreen.conf.width,
 						height:touchscreen.conf.height
 				});
-				
 				
 				var $slider = $('#slider');
 				if($slider.size()){
@@ -153,10 +239,13 @@ var touchscreen = {
 							width:touchscreen.conf.width,
 							height:touchscreen.conf.height
 					});
-					$slider.data('scrollable').begin();
+					//$slider.data('scrollable').begin();
+					if(window.mySwipe){
+						window.mySwipe.setup();	
+					};
 				};
 			}else{
-				//video
+				//vod
 				var $video = $('#video');
 				if($video.size()){
 					$video.css({
@@ -165,14 +254,16 @@ var touchscreen = {
 					});
 				};
 			};
-
 		};
 	},
 	init:function(){
 		this.conf.$main = $('#main');
+		this.conf.$banner = $('#banner');
+		this.conf.$footer = $('#footer');
+		
 		this.conf.$loading = $('#loading');
-		this.conf.width = $('body').width();
-		this.conf.height = $('body').height();
+		this.conf.width = $('#banner').width();
+		this.conf.height = $('#banner').height();
 		
 		this.getData();
 		this.conf.oInter = setInterval(this.getData,this.conf.delay);

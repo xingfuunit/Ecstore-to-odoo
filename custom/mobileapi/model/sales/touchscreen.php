@@ -1,11 +1,7 @@
 <?php
 /**
- * ShopEx licence
- *
- * @copyright  Copyright (c) 2005-2010 ShopEx Technologies Inc. (http://www.shopex.cn)
- * @license  http://ecos.shopex.cn/ ShopEx License
+ * july by 2015-06-15
  */
-
 
 class mobileapi_mdl_sales_touchscreen extends dbeav_model{
 
@@ -55,30 +51,9 @@ class mobileapi_mdl_sales_touchscreen extends dbeav_model{
 	}
 	
 	
-	//图片调用方式， 根据  $ads_position key 获得对应的 图片数据
-	function get_sales_touchscreen($key){
-		$ads_id = '';
-		foreach($this->touchscreen_position as $k => $v){
-			if($v['key'] == $key){
-				$ads_id =$k;
-			}
-		}
-		
-		if($ads_id){
-			$re = $this->getList('*',array('touchscreen_position'=>$ads_id,'disabled'=>'false'),0,-1," ordernum desc");
-			if($re){
-				foreach($re as $k => $v){
-					$re[$k]['img_url'] = base_storager::image_path($v['ad_img']);
-				}
-			}
-			return $re;
-		}
-		return  false;
-	}
-	
     function delete($filter, $subSdf = 'delete'){
 
-		$bn = $this->app->model('sales_touchscreen')->get_branch_bn();
+		$bn = $this->get_branch_bn();
 		
 		//------------------------------------
 		//同步删除视频文件
@@ -118,7 +93,7 @@ class mobileapi_mdl_sales_touchscreen extends dbeav_model{
 	//july by 2015-06-15
     public function _filter($filter,$tableAlias=null,$baseWhere=null){
         if(!$filter['branch_bn']){
-			$bn = $this->app->model('sales_touchscreen')->get_branch_bn();
+			$bn = $this->get_branch_bn();
 			if(strlen($bn)>0){
 				$filter['branch_bn'] = $bn;	
 			}
