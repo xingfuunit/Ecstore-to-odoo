@@ -177,3 +177,18 @@ li.choosed-spec{ background:#FF6633;}
     vertical-align: baseline;
 }
 .icon-gray-color div span.i { color:#999999}
+
+.wap-cart-num{
+	z-index:99;
+margin-top:2px;
+  height: 14px;
+  line-height: 14px;
+position:absolute;
+  display: inline-block;
+width: 26px;
+  background: url('/themes/pzxh/images/i/comment-red.png') no-repeat center center;
+  font-family: arial;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+}
