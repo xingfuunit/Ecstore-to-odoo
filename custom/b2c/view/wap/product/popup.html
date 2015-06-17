@@ -57,7 +57,11 @@
     <!--<a href="javascript:void(0);"><img style="width:50%" src="/public/app/wap/statics/images/buy_btn.png"></a>-->
 
     <a id="btnAddToCart" href="javascript:void(0)" class="am-icon-btn am-icon-shopping-cart" style="float:right; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px; position:relative"> 
+        <{if $CART_NUMBER}>
+        <span style="position:absolute; right:-20px; border-radius:20px;" class="am-badge am-badge-danger"><{$CART_NUMBER}></span>
+        <{/if}>
     </a>
+    
     </div>
 
     <div style="font-size:14px; color:#FFFFFF; height:30px; line-height:14px; width:100%; clear:both">
