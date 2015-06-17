@@ -104,6 +104,7 @@ class wap_controller extends base_controller
         if(@constant('WITHOUT_STRIP_HTML')){
             $this->enable_strip_whitespace = false;
         }
+        $this->pagedata['CART_NUMBER'] = $_COOKIE['S']['CART_NUMBER'];
         $this->app = $app;
         $this->_request = kernel::single('base_component_request');
         $this->_response = kernel::single('base_component_response');
