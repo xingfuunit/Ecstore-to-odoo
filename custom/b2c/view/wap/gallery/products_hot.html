@@ -44,7 +44,7 @@
 						</div>
 					  	</a>
 						<{if $goods2.products.store >0 or $goods2.nostore_sell == 1 }>
-						 <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#48a4b9; font-size:18px; height:30px; width:30px; background:none; border:1px solid #48a4b9; line-height:30px; margin-top:5px;"></a>
+						 <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#48a4b9; font-size:18px; height:30px; width:30px; background:none; border:1px solid #48a4b9; line-height:30px; "></a>
 						 <form  style="display:none" class="formaddcart">
 							    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods2.goods_id}>" />
 							    <input id="productId" type="text" name="goods[product_id]" value="<{$goods2.products.product_id}>" />
@@ -54,7 +54,7 @@
 							    <input type="text" name="response_json" value="1" />
 						</form>
 				      	<{else}>
-						<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px; margin-top:5px;"></a>
+						<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px; "></a>
 						<{/if}>
 				    </div>
 				  </li>
