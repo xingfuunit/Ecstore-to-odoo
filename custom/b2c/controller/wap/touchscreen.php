@@ -8,6 +8,7 @@ include_once(ROOT_DIR.'/app/base/lib/static/utils2.php');
 class b2c_ctl_wap_touchscreen extends wap_frontpage{
 
 	var $shopId = '';				//门店编码
+	var $shopHome = '';				//口袋通url
 	
     public function __construct(&$app) {
         parent::__construct($app);
@@ -57,10 +58,10 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 		//如果存在key，即ajax 返回 json
 		if(strlen($key)>0){
 			if(strlen($uuid)>0 && strlen($sid)==0){
-				$sid = $this->get_sid_device($uuid);
+				$this->get_sid_device($uuid);
 			}
 				
-			return $this->ajaxGetJson($key,$sid);
+			return $this->ajaxGetJson($key);
 		}
 
 		//-----------------------------------------------
@@ -68,13 +69,11 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
     }
 	
 	//向页面输出 json 内容
-	function ajaxGetJson($key,$sid){
-		
-		$this->shopId = $sid;
+	function ajaxGetJson($key){
 		
 		//如果有指定门店，即返回门店数据，
 		//如果没有返回默认值
-		$rs = $this->get_sales_touchscreen($sid);
+		$rs = $this->get_sales_touchscreen($this->shopId);
 		if(!(isset($rs) && is_array($rs))){
 			return $this->ajaxWriteErr('没有任何数据！请联系总部！');
 		}
@@ -98,16 +97,20 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 	
 	//根据uuid，即设备id查找对应的门店设备
 	function get_sid_device($uuid){
-		$sql = "select branch_bn from sdb_mobileapi_sales_touchscreendevice where disabled='false' and device_name='".$uuid."'";
+		$sql = "select branch_bn,branch_url from sdb_mobileapi_sales_touchscreendevice where disabled='false' and device_name='".$uuid."'";
 		$row = kernel::database()->selectRow( $sql );
 		$sid = '';
+		$url = '';
 		if(isset($row) && isset($row['branch_bn'])){
 			$sid = $row['branch_bn'];
+			$url = $row['branch_url'];
 		}else{
             $sql = "insert into sdb_mobileapi_sales_touchscreendevice (device_name,branch_bn,branch_name) values ('".$uuid."','','')";
             kernel::database()->exec($sql);
 		}
-		return $sid;
+
+		$this->shopId 	= $sid;
+		$this->shopHome	= $url;
 	}
 	
 	//图片调用方式， 根据  门店编号 获得对应的 数据
@@ -238,6 +241,7 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 			'act' =>2,
 			'key' => '',
 			'sid' => $this->shopId,
+			'home' => $this->shopHome,
 			'data' => $msg
 		);
 		
@@ -249,6 +253,10 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 	//向页面输出 json 内容
 	function ajaxWriteJson($key,$arr){
 			
+		//下面这行是测试使用
+		//$this->shopHome = 'http://wap.koudaitong.com/v2/home/1gqo5u27f';
+		
+		
 		$newkey = md5(json_encode($arr));
 		//-----------------------------------------------
 		//如果ajax传过来的参数 key 和现在的  md5($json) 相同，即广告没有变化，不用 reload
@@ -256,17 +264,15 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 			'act' =>1,
 			'key' => '',
 			'sid' => $this->shopId,
+			'home' => $this->shopHome,
 			'data' => ''
 		);
 		
-		if($key != $newkey ){
-			$ret = array(
-				'act' =>0,
-				'key' => $newkey,
-				'sid' => $this->shopId,
-				'data' => $arr
-			);
-		}
+		if( $key != $newkey ){
+			$ret['act'] = 0;
+			$ret['key'] = $newkey;
+			$ret['data'] = $arr;
+		};
 		
 		$json = json_encode($ret);
 		$this->_response->set_body($json);

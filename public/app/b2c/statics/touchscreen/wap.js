@@ -9,7 +9,8 @@ var touchscreen = {
 		isInit	: false,
 		isPic	: true,	//true = pic , false =  video
 		urls	: {
-			sid	:'',
+			shopId	:'',
+			shopUrl : '',
 			base:'',
 			//base:'http://release.ecstore.pinzhen365.com/',
 			apijson:'/wap/touchscreen.html?key=',
@@ -51,9 +52,14 @@ var touchscreen = {
 			success: function (rs) {
 				/*
 				if((''+rs.sid).length>0){
-					touchscreen.conf.urls.sid = sid;	
+					touchscreen.conf.urls.shopId = sid;	
 				};
 				*/
+				if((''+rs.home).length>0){
+					touchscreen.conf.urls.shopUrl = rs.home;
+					touchscreen.conf.$home.show();
+					//touchscreen.conf.$home.html('<a href="'+rs.home+'"></a>').show();
+				};
 
 				if(rs.act != '1'){
 					//write apiKey
@@ -79,8 +85,10 @@ var touchscreen = {
 		};
 
 		//--------------------------------------
-		touchscreen.resize();
-		touchscreen.conf.$loading.show();
+		if(!touchscreen.conf.isInit){
+			touchscreen.conf.$loading.show();	
+		};
+		
 		
 		//--------------------------------------
 		touchscreen.conf.data[1] = [];
@@ -107,8 +115,10 @@ var touchscreen = {
 			touchscreen.init_vod();
 		}
 		
-		touchscreen.conf.isInit = true;
-		touchscreen.conf.$loading.hide();
+		if(!touchscreen.conf.isInit){
+			touchscreen.conf.isInit = true;
+			touchscreen.conf.$loading.hide();
+		};
 	},
 	init_footer:function(){
 		if( typeof touchscreen.conf.data[2] == 'undefined'){
@@ -120,7 +130,8 @@ var touchscreen = {
 			
 		if(o['img'].length > 5){
 			if (o['url'].length > 5) {
-				sb = '<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>';
+				//sb = '<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>';
+				sb.push('<img src="' + o['img'] + '" onclick="touchscreen.iframe.open(\''+o['url']+'\');" />');
 			}else{
 				sb = '<img src="' + o['img'] + '" />';	
 			}
@@ -141,7 +152,8 @@ var touchscreen = {
 			var o = arr[x];
 			sb.push('<div class="item" style="' + css + '">');
 			if (o['url'].length > 5) {
-				sb.push('<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>');
+				//sb.push('<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>');
+				sb.push('<img src="' + o['img'] + '" onclick="touchscreen.iframe.open(\''+o['url']+'\');" />');
 			} else {
 				
 				sb.push('<img src="' + o['img'] + '" />');
@@ -246,6 +258,7 @@ var touchscreen = {
 */
 		};
 		
+
 		if(url.length>5){
 			$('#container').on('click.touchscreen.video',function(){
 				if($('#video1').size()){
@@ -306,6 +319,16 @@ var touchscreen = {
 			}
 		}		
 	},
+	iframe:{
+		open:function(url){
+			touchscreen.conf.$mainIframe.attr('src',url);
+			touchscreen.conf.$mainWin.show();
+		},
+		close:function(){
+			touchscreen.conf.$mainWin.hide();
+			touchscreen.conf.$mainIframe.attr('src','about:blank');	
+		}
+	},
 	init:function(){
 		if(typeof uuid !== 'undefined'){
 			this.conf.urls.uuid = uuid;
@@ -316,6 +339,20 @@ var touchscreen = {
 		this.conf.$footer = $('#footer');
 		this.conf.$vodbox = $('#vodbox');
 		this.conf.$msgbox = $('#msgbox');
+		this.conf.$home = $('#home');
+		
+		//--------------------------------------------------
+		this.conf.$home.on('click.touchscreen.home',function(){
+			if(touchscreen.conf.urls.shopUrl.length>5){
+				touchscreen.iframe.open(touchscreen.conf.urls.shopUrl);	
+			};
+			return false;
+		});
+		//--------------------------------------------------
+		
+		this.conf.$mainWin = $('#mainWin');
+		this.conf.$mainWinBack = $('#mainWinBack');
+		this.conf.$mainIframe = $('#mainIframe');
 		
 		this.conf.$loading = $('#loading');
 		this.conf.width = $('#banner').width();
@@ -324,6 +361,12 @@ var touchscreen = {
 		this.getData();
 		this.conf.oInter = setInterval(this.getData,this.conf.delay);
 		$(window).on('resize.touchscreen', touchscreen.resize);
+		
+		//--------------------------------------------------
+		this.conf.$mainWinBack.on('click.touchscreen.mainWinBack',function(){
+			touchscreen.iframe.close();
+			return false;
+		});
 	}
 };
 
