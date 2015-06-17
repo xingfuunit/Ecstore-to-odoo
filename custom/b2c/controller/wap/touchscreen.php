@@ -7,9 +7,8 @@ include_once(ROOT_DIR.'/app/base/lib/static/utils2.php');
 
 class b2c_ctl_wap_touchscreen extends wap_frontpage{
 
-    var $noCache = true;
-    var $show_gotocart_button = true;
-
+	var $shopId = '';				//门店编码
+	
     public function __construct(&$app) {
         parent::__construct($app);
     }
@@ -38,6 +37,11 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 		 *		);
 		 *	);
 		 * */
+/*
+		 $url = 'http://wap.koudaitong.com/v2/home/1gqo5u27f';
+	header("Location: $url");
+	exit();*/
+
 		$key = utils2::CheckSql(''.$_GET['key']);
 
 		$sid = utils2::CheckSql(''.$_GET['sid']);
@@ -65,7 +69,9 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 	
 	//向页面输出 json 内容
 	function ajaxGetJson($key,$sid){
-
+		
+		$this->shopId = $sid;
+		
 		//如果有指定门店，即返回门店数据，
 		//如果没有返回默认值
 		$rs = $this->get_sales_touchscreen($sid);
@@ -231,6 +237,7 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 		$ret = array(
 			'act' =>2,
 			'key' => '',
+			'sid' => $this->shopId,
 			'data' => $msg
 		);
 		
@@ -248,6 +255,7 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 		$ret = array(
 			'act' =>1,
 			'key' => '',
+			'sid' => $this->shopId,
 			'data' => ''
 		);
 		
@@ -255,6 +263,7 @@ class b2c_ctl_wap_touchscreen extends wap_frontpage{
 			$ret = array(
 				'act' =>0,
 				'key' => $newkey,
+				'sid' => $this->shopId,
 				'data' => $arr
 			);
 		}

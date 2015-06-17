@@ -35,22 +35,33 @@ var touchscreen = {
 	},
 	getData:function(){
 		var key = touchscreen.getKey(''),
-			url = touchscreen.conf.urls.base + touchscreen.conf.urls.apijson + key + '&uuid='+touchscreen.conf.urls.uuid;
-			
+			url = touchscreen.conf.urls.base + touchscreen.conf.urls.apijson + key;
+		/*
+		if(touchscreen.conf.urls.sid.length>0){
+			url += '&sid='+touchscreen.conf.urls.sid;
+		};
+		*/
+		url += '&uuid='+touchscreen.conf.urls.uuid;
+
 		$.ajax({
 			type: 'get',
 			url : url,
 			cache:false,
 			dataType:'json',
 			success: function (rs) {
-				if(rs.act != '1' ){
+				/*
+				if((''+rs.sid).length>0){
+					touchscreen.conf.urls.sid = sid;	
+				};
+				*/
+
+				if(rs.act != '1'){
 					//write apiKey
 					touchscreen.getKey(rs.key);
 					touchscreen.run(rs.data);
 				}else{
 					//alert(rs.act);
 				};
-				
 			},
 			error:function(XMLHttpRequest, textStatus, errorThrown){
 				//console.log('error='+errorThrown);
@@ -128,17 +139,11 @@ var touchscreen = {
 		var sb2 = [];
 		for (var x in arr) {
 			var o = arr[x];
-			
+			sb.push('<div class="item" style="' + css + '">');
 			if (o['url'].length > 5) {
-				if(appconf.conf.isTest){
-					sb.push('<div class="item" style="' + css + '">');
-					sb.push('<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>');
-				}else{
-					sb.push('<div class="item" style="' + css + '" onclick="touchscreen.openurl(\''+o['url']+'\')">');
-					sb.push('<img src="' + o['img'] + '" />');
-				};
+				sb.push('<a href="' + o['url'] + '" target="_blank"><img src="' + o['img'] + '" /></a>');
 			} else {
-				sb.push('<div class="item" style="' + css + '">');
+				
 				sb.push('<img src="' + o['img'] + '" />');
 			};
 			sb.push('</div>');
@@ -175,13 +180,14 @@ var touchscreen = {
 			window.mySwipe = new Swipe(slider, {
 				startSlide:0,
 				speed:1000,
-				auto:3000,
+				auto:2000,
 				callback: function(index, elem){
 					$sliderPager.find('.active').removeClass('active');
 					$sliderPager.find('a').eq(index).addClass('active');
-				}
-			  // continuous: true,
-			  // disableScroll: true,
+				},
+				continuous: true,
+				transendplay:true
+				//disableScroll: false,
 			  // stopPropagation: true,
 			  // callback: function(index, element) {},
 			  // transitionEnd: function(index, element) {}

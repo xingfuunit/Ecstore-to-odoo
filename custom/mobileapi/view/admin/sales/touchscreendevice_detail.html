@@ -14,15 +14,23 @@
 <tr>
   <th><{t}>所属门店：<{/t}></th>
   <td>
-    <select name="branch_bn" id="branch_bn" vtype="required">
+    <select name="branch_bn" id="branch_bn">
 		<option value="">==选择所属门店==</option>
 		<{foreach from=$branchs item=item}>
 		<option value="<{$item.id}>" <{if $item.id == $deviceInfo.branch_bn}>selected<{/if}>><{$item.name}></option>
 		<{/foreach}>
     </select>
-	<em><font color='red'>*</font></em>
   </td>
 </tr>
+<tr>
+  <th><{t}>口袋通地址：<{/t}></th>
+  <td><{input type="text" name="branch_url" style="width:400px" value=$deviceInfo.branch_url}></td>
+</tr>
+<tr>
+  <th><{t}>备注：<{/t}></th>
+  <td><{input type="text" name="device_remark" style="width:400px" value=$deviceInfo.device_remark}></td>
+</tr>
+
 <tr>
   <th><{t}>失效：<{/t}></th>
   <td><input type="radio" name="disabled"  <{if $deviceInfo.disabled == 'true'}>checked="checked"<{/if}> value="true">是 &nbsp;&nbsp; <input type="radio" name="disabled"  <{if $deviceInfo.disabled == 'false'}>checked="checked"<{/if}> value="false">否</td>

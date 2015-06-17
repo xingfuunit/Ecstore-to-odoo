@@ -78,8 +78,8 @@ $db ['sales_touchscreen'] = array (
 						'comment' => app::get ( 'b2c' )->_ ( '链接地址' ),
 						'editable' => false,
 						'searchtype' => 'has',
-						'in_list' => false,
-						'default_in_list' => false 
+						'in_list' => true,
+						'default_in_list' => true 
 				),
 				'vodfile' => array (
 						'type' => 'varchar(255)',
