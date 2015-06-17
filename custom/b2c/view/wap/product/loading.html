@@ -1,0 +1,47 @@
+<div id="loading_page">
+      <div class="roll_loding">
+        <i id="loadingImg" class="am-icon-spinner am-icon-spin am-icon-lg"></i>
+      </div>
+</div>
+<script type="text/javascript">
+function getClientHeight()
+{
+  var clientHeight=0;
+  if(document.body.clientHeight&&document.documentElement.clientHeight)
+  {
+  var clientHeight = (document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;   
+  }
+  else
+  {
+  var clientHeight = (document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;   
+  }
+  return clientHeight;
+}
+
+function getClientWidth()
+{
+  var clientWidth=0;
+  if(document.body.clientWidth&&document.documentElement.clientWidth)
+  {
+  var clientWidth = (document.body.clientWidth<document.documentElement.clientWidth)?document.body.clientWidth:document.documentElement.clientWidth;   
+  }
+  else
+  {
+  var clientWidth = (document.body.clientWidth>document.documentElement.clientWidth)?document.body.clientWidth:document.documentElement.clientWidth;   
+  }
+  return clientWidth;
+}
+
+document.getElementById('loading_page').style.height='3000px';
+var ch = getClientHeight();
+var cw = getClientWidth();
+document.getElementById('loading_page').style.height=ch+'px';
+document.getElementById('loadingImg').style.position = 'absolute';
+document.getElementById('loadingImg').style.top = (ch/2 - document.getElementById('loadingImg').clientHeight/2) + 'px' ;
+document.getElementById('loadingImg').style.left = (cw/2 - document.getElementById('loadingImg').clientWidth/2) + 'px' ;
+$(window).load(function(){
+    // if(document.getElementById('loading_page').style.display!='none')
+    //     document.getElementById('loading_page').style.display='none';
+});
+
+</script>
