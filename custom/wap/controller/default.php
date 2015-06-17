@@ -50,7 +50,7 @@ class wap_ctl_default extends wap_controller{
         if($this->openid){
         	//判断微信是否第一次进入
         	if(!isset($_COOKIE['ck-cover'])){
-        		setcookie('ck-cover',1,time()+3600*24*30);		//30天
+        		setcookie('ck-cover',1,time()+3600*24);		//30天
         		$this->redirect(array('app'=>'wap','ctl'=>'default','act'=>'wepcover'),1);
         	}
         }
