@@ -41,7 +41,7 @@ $(window).load(function(){
         <{assign var="imgCount" value=0}>
         <{foreach from=$product_imgs key=key item=image}>
         <li class="showvaluebox">
-            <div class="magnifer" style="left:2%; top:1%; position:absolute;" img-index="<{$imgCount}>">
+            <div class="magnifer" style="right:1%; top:1%; position:absolute;" img-index="<{$imgCount}>">
               <img src="/public/imgs/wap/fdj.png" style="height:45px" />
             </div>
             <!--
@@ -345,7 +345,7 @@ $('.magnifer').click(function(e){
     var options = {
         // optionName: 'option value'
         // for example:
-        index: $(this).attr('img-index')
+        index: parseInt($(this).attr('img-index'), 10)
     };
     var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
     gallery.init();
