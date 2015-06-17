@@ -32,6 +32,7 @@ var cover = {
 						'<li class="pic2 item"></li>',
 						'<li class="pic3 item"></li>',
 					'</ul>',
+					'<div class="btnClose">跳过</div>',
 				'</div>'
 			].join('');
 			$('body').append(sb);
@@ -43,6 +44,7 @@ var cover = {
 		$cover.flexslider({
 				animationLoop:false,
 				slideshowSpeed:3000,
+				slideshow:false,
 				keyboard:false,
 				directionNav:false,
 				before: function(slider){
@@ -61,10 +63,22 @@ var cover = {
 				}
 			});
 		
+		//---------------------------------
 		//用户点击最后一页，关闭
 		$cover.find('.pic3').click(function(){
 			cover.hide();
 		});
+		
+		$cover.find('.btnClose').click(function(){
+			cover.hide();
+		});
+
+		//---------------------------------
+		//6秒后自动关闭
+		setTimeout(function(){
+			cover.hide();
+		},6000);
+
 	}
 };
 
