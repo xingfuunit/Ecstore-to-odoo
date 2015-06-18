@@ -207,8 +207,8 @@ $(document).ready(function(){
                     }});
 
                     var count = 0;
-                    if($('#btnAddToCart').find('span') )
-                        count = parseInt( $('#btnAddToCart').find('span') );
+                    if( $('#btnAddToCart').find('span')[0] )
+                        count = parseInt( $('#btnAddToCart').find('span').html() );
                     count += parseInt( document.getElementById('goodsNum').value );
 
                     $('#btnAddToCart').html('<span class="am-badge am-badge-danger" style="position:absolute; right:-20px; border-radius:20px;">'+count+'</span>');
