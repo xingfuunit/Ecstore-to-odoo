@@ -68,7 +68,8 @@
 
 </div>
 <script type="text/javascript">
-$(function(){
+$(window).load(function(){
+    $('.magnifer').show();
     var pswpElement = document.querySelectorAll('.pswp')[0];
 
     // build items array
@@ -78,8 +79,8 @@ $(function(){
     $('.productDetailPics').each(function(k,v){
         items.push({
             src:v.src,
-            w:v.width/4,
-            h:v.height/4
+            w:v.width,
+            h:v.height
         });
     })
 

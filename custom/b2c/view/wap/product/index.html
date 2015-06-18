@@ -10,7 +10,7 @@
         <{assign var="imgCount" value=0}>
         <{foreach from=$product_imgs key=key item=image}>
         <li class="showvaluebox">
-            <div class="magnifer" style="right:1%; top:1%; position:absolute;" img-index="<{$imgCount}>">
+            <div class="magnifer" style="display:none;right:1%; top:1%; position:absolute;" img-index="<{$imgCount}>">
               <img src="/public/imgs/wap/fdj.png" style="height:45px" />
             </div>
             
@@ -206,9 +206,16 @@ $(document).ready(function(){
                         window.location.href="/wap/cart.html";
                     }});
 
-                    $('#btn_add2cart2').html('<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:10px; right:10px; display:block"></span>');
+                    var count = 0;
+                    if($('#btnAddToCart').find('span') )
+                        count = parseInt( $('#btnAddToCart').find('span') );
+                    count += parseInt( document.getElementById('goodsNum').value );
 
-                    $('#btnAddToCart').html('<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:0px; right:0px; display:block"></span>');
+                    $('#btnAddToCart').html('<span class="am-badge am-badge-danger" style="position:absolute; right:-20px; border-radius:20px;">'+count+'</span>');
+
+                    // $('#btn_add2cart2').html('<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:10px; right:10px; display:block"></span>');
+
+                    // $('#btnAddToCart').html('<span style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:0px; right:0px; display:block"></span>');
                 }
                 else{
                     js_alert('js-alert',data.error);
@@ -217,5 +224,6 @@ $(document).ready(function(){
         });
     });
 });
+
 </script>
 
