@@ -138,7 +138,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
    					'is_buildexcerpts'=>"true",
     			);
     	
-    	$goodsData = $goodsModel->getList('*',$filter,0,10);
+    	$goodsData = $goodsModel->getList('*',$filter,0,12);
     	foreach($goodsData as $key=>$goods_row){
     		if(in_array($goods_row['goods_id'],$gfav)){
     			$goodsData[$key]['is_fav'] = 'true';
