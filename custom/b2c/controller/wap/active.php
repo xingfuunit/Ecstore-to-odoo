@@ -109,7 +109,7 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function alist(){
     	
     	//倒序 显示
-    	$alist_date = $this->alist_date;
+    	$alist_date = $this->active_date;
     	krsort($alist_date);
     	foreach($alist_date as $k => &$v){
     		$alist_date[$k]['is_start'] = 0;  
@@ -131,7 +131,7 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function hyday(){
     	 
     	//倒序 显示
-    	$alist_date = $this->alist_date;
+    	$alist_date = $this->member_date;
     	krsort($alist_date);
     	foreach($alist_date as $k => &$v){
     		$alist_date[$k]['is_start'] = 0;
@@ -147,7 +147,8 @@ class b2c_ctl_wap_active extends wap_frontpage{
     	$this->page('wap/active/hdday.html');
     }
     
-    var $alist_date = array(
+    //活动
+    var $active_date = array(
     		0=>array(
     				'start_time'=>'2015-04-27 00:00:00',
     				'end_time'=>'2015-05-5 23:59:59',
@@ -161,7 +162,11 @@ class b2c_ctl_wap_active extends wap_frontpage{
     				'alt'=>'母亲节—不赚钱·只为妈妈美丽健康',
     				'image_name'=>'mqj.jpg',
     				'active_url'=>'javascirpt:void(0);'
-    		),
+    		)
+    );
+    
+    //会员日
+    var $member_date = array(
     		2=>array(
     				'start_time'=>'2015-05-13 00:00:00',
     				'end_time'=>'2015-05-13 23:59:59',
@@ -181,8 +186,9 @@ class b2c_ctl_wap_active extends wap_frontpage{
     				'end_time'=>'2015-05-27 23:59:59',
     				'alt'=>'周三会员日-全场水果8.8折',
     				'image_name'=>'sg.jpg',
-    				'active_url'=>'http://www.pzfresh.com/wap/active.html?name=vipday'
+    				'active_url'=>'javascirpt:void(0);'
     		),
     
     );
+    
 }
