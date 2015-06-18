@@ -24,8 +24,8 @@ a{text-decoration:none;outline:none;}
 .home a{display:block;height:100%;width:100%;}
 
 .home,
-.mainWinHome{position:absolute;right:1.5rem;bottom:2rem;width:2rem;height:2rem;background:url('img/home.png') center center no-repeat;background-size:100% 100%;}
-.mainWinBack{position:absolute;right:10rem;bottom:2rem;width:2rem;height:2rem;background:url('img/back2.png') center center no-repeat;background-size:100% 100%;}
+.mainWinHome{position:absolute;right:1.5rem;bottom:2rem;width:2rem;height:2rem;background:url('img/home.png') center center no-repeat;background-size:100% 100%;outline:none;}
+.mainWinBack{position:absolute;right:10rem;bottom:2rem;width:2rem;height:2rem;background:url('img/back2.png') center center no-repeat;background-size:100% 100%;outline:none;display:none;}
 
 @media (min-width:320px) and (max-width:640px){
 	.home,
