@@ -62,7 +62,7 @@
           <{/if}>
       </td>
       <!--<td class="p-discount"><input type="text" value="" id="discount_ex_<{$goods.obj_ident}>" name="kg_might" style="border: 1px solid #ccc; text-align: center; width: 40px; height: 20px;"></td>-->
-      <td class="p-subtotal"><{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}>￥<{$goods.subtotal_prefilter_after}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}></td>
+      <td class="p-subtotal"><{$goods.subtotal_prefilter_after|cur_odr}></td>
      
       <td class="p-action">
       <{if $cart_type != "x"}>
