@@ -16,7 +16,7 @@
                 <option value="<{$list_coupon.memc_code}>" data-coupon="<{$list_coupon.cpns_id}>"><{$list_coupon.coupons_info.cpns_name}></option>
             <{/foreach}>
         <{else}>
-        <option value="empty" selected>没有优惠券</option>
+        <option value="" selected>没有优惠券</option>
         <{/if}>
       </select>
       <button  type="button" class="am-btn btn am-btn-default am-btn-warning am-fl" style="width:20%;float:right;">使用</button>
@@ -28,9 +28,9 @@
 	<h2 class="am-text-danger am-fl"  style="width:100%">站外获得优惠券</h2>
 	<hr data-am-widget="divider" class="am-divider am-divider-default"/>
     <div class="am-form-group  am-fl"  style="width:80%" >
-    <input type="text" name="coupon" value="" class="am-form-field"  style="width:98%" placeholder="输入优惠券号码">
+    <input type="text" name="coupon" id="input_coupon" value="" class="am-form-field"  style="width:98%" placeholder="输入优惠券号码">
     </div>
-  <button type="button" class="am-btn am-btn-default am-btn-danger am-fl" style="width:20%">使用</button>
+  <button type="button" class="am-btn am-btn-default am-btn-danger am-fl btn ipnut_ctn" style="width:20%">使用</button>
   <!--优惠券编号-->
   <div class="used am-scrollable-vertical" style="float:left;width:100%;height:65px;" >
   <{foreach from=$aCart.object.coupon item=coupon}>

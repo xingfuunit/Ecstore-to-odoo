@@ -385,13 +385,16 @@
         $('.coupon-use').on('click',function(event){
           var o = $(event.target);
           var coupon = '';
-          
           if( o.hasClass('btn') ){
-        	 var $checked = $('.coupon-use').find('.am-checked');
-        	 if( $checked.size() ){
-        		 coupon = $checked.attr('data-value');
-        	 }
-        	 
+        	  if(o.hasClass('ipnut_ctn')){
+        		  input_coupon = $('#input_coupon').val();
+         		  coupon = input_coupon;
+        	  }else{
+        		  var $checked = $('.coupon-use').find('.am-checked');
+             	 if( $checked.size() ){
+             		 coupon = $checked.attr('data-value');
+             	 }
+        	  }
         	if(coupon == ''){
         		js_alert('js-alert','请选择优惠券！');
         		return false;
