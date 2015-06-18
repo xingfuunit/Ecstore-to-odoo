@@ -28,6 +28,7 @@ class b2c_order_total
         }else{
          $str_html = $controller->fetch($view);
         }
+
         $obj_ajax_view_help = kernel::single('b2c_view_ajax');
         return $obj_ajax_view_help->get_html($str_html, 'b2c_order_total','order_total_method');
     }

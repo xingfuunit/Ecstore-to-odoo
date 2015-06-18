@@ -1,6 +1,6 @@
 <form action="index.php?ctl=users&act=addnew&finder_id=a9b819" id="user-edit-form" method="post">
-  <div style="text-align:right;padding:3px 18px"><{help docid="101" type="link"}><{t}>点击查看帮助<{/t}><{/help}></div>
-  <div class="tableform">
+  <div class="tableform" style="position:relative;">
+	<div style="position:absolute;top:0px;right:0px;"><{help docid="101" type="link"}><{t}>点击查看帮助<{/t}><{/help}></div>
     <div class="division">
       <table cellspacing="0" cellpadding="0" width="100%">
         <tbody>
@@ -11,6 +11,15 @@
           <tr><th><em class="red">*</em><label><{t}>启用：<{/t}></label></th><td><select id="dom_el_ea78c45" required="1" name="status" type="select" title="<{t}>启用：<{/t}>" class="x-input-select inputstyle"><option value="0"><{t}>否<{/t}></option><option value="1"><{t}>是<{/t}></option></select></td></tr>
           <tr><th><label><{t}>编号：<{/t}></label></th><td><input type="text" id="dom_el_ea78c46" required="" name="op_no" title="<{t}>编号：<{/t}>" class="x-input " autocomplete="off"/></td></tr>
           <tr><th><label><{t}>备注：<{/t}></label></th><td><input type="text" id="dom_el_ea78c47" required="" name="memo" title="<{t}>备注：<{/t}>" class="x-input " autocomplete="off"/></td></tr>
+          <tr><th><label><{t}>所属门店：<{/t}></label></th><td>
+			<select name="branch_bn" id="branch_bn">
+				<option value="">==选择所属门店==</option>
+				<{foreach from=$branchs item=item}>
+				<option value="<{$item.id}>"><{$item.name}></option>
+				<{/foreach}>
+			</select>
+			<span style="color:#999;">如果是非门店专用账号，请不要选择所属门店。</span>
+		  </td></tr>
 
           <tr><th></th><td><input id="dom_el_ea78c44" value=0 name="super" type="hidden" title="<{t}>超级管理员：<{/t}>" class="x-input-select inputstyle"></input></td></tr>
           <tr><th></th>

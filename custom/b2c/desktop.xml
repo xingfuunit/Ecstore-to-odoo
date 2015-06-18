@@ -67,6 +67,7 @@
         <permission id="member_license" display='true' parent='editmember' workground='b2c.wrokground.license"'>注册协议和隐私保护</permission>
         <permission id="disask" display='true' parent='0' workground='b2c.wrokground.member'>查看咨询评论</permission>
         <permission id="storetotal" display='true' parent='0' workground='b2c.wrokground.member'>门店日结</permission>
+        <permission id="storelog" display='true' parent='0' workground='b2c.wrokground.member'>门店操作日志</permission>
         <permission id="settingdisask" display='true' parent='0' workground='b2c.wrokground.member'>设置咨询评论</permission>
 
         <permission id="send_email" display='true' parent='member' workground='b2c.wrokground.member'>群发邮件</permission>
@@ -78,6 +79,7 @@
         <permission id="salescoupon" display='true' parent='0' workground='b2c.wrokground.sale'>优惠券</permission>
         <permission id="weixin" display='true' parent='0' workground='b2c.wrokground.sale'>微信促销</permission>
         <permission id="salesfororder" display='true' parent='0' workground='b2c.wrokground.sale'>优惠券</permission>
+        <permission id="vipday" display='true' parent='0' workground='b2c.wrokground.sale'>会员日设置</permission>
         <!--报表-->
         <permission id="analysis" display='true' parent='0' workground='b2c.wrokground.analysis'>经营概况</permission>
         <permission id="saleanalysis" display='true' parent='0' workground='b2c.wrokground.analysis'>销售收入统计</permission>
@@ -160,6 +162,7 @@
              <menu controller='admin_local_charge' action='index' permission='disask' display='true' order='90'>交接班结账单</menu>
             <menu controller='admin_local_dailycash' action='index' permission='disask' display='true' order='90'>现金日结记录</menu>
             <menu controller='admin_local_dailycash' action='total' permission='storetotal' display='true' order='90'>门店日结</menu>
+            <menu controller='admin_local_webpos' action='index' permission='storelog' display='true' order='90'>门店操作日志</menu>
         </menugroup>
         <!-- WEBPOS yinhui end-->
         <menugroup name="咨询评论">
@@ -181,6 +184,7 @@
     </workground>
 
     <workground name="营销" id="b2c.wrokground.sale" controller="admin_sales_order" action="index" order="40">
+    
         <menugroup name="促销">
             <menu controller='admin_sales_order' action='index' permission='sales' display='true' order='1'>订单促销</menu>
             <menu controller='admin_sales_order' action='add' permission='sales' display='false' order='20'>添加规则</menu>
@@ -203,6 +207,9 @@
 		
         <menugroup name="凑单">
             <menu controller='admin_sales_fororder' action='index' permission='salesfororder' display='true' order='80'>凑单功能配置</menu>
+        </menugroup>
+        <menugroup name="会员日">
+            <menu controller='admin_vipday' action='index' permission='vipday' display='true' order='81'>会员日设置</menu>
         </menugroup>
     </workground>
 

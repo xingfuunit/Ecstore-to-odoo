@@ -6,8 +6,19 @@
 		<tr><th><em class="red">*</em><label for="dom_el_3e40f70"><{t}>姓名：<{/t}></label></th><td><input type="text" vtype="required" id="dom_el_3e40f70" disable="true" value="<{$name}>" name="name" title="<{t}>姓名<{/t}>" class="x-input " autocomplete="off"/> <input type="button" onclick="new Dialog('index.php?ctl=users&act=chkpassword&id=<{$account_id}>',{width:400,height:300,title:'<{t}>密码修改<{/t}>'})" value="<{t}>修改密码<{/t}>" /></td></tr>
 		<{if $ismyself != 'true'}><tr><th><em class="red">*</em><label for="dom_el_3e40f72"><{t}>启用：<{/t}></label></th><td><select id="dom_el_3e40f72" required="1" name="status" type="select" title="<{t}>启用<{/t}>" class="x-input-select inputstyle"><option value="0" <{if !$status}>selected="selected"<{/if}>><{t}>否<{/t}></option><option value="1" <{if $status}>selected="selected"<{/if}>><{t}>是<{/t}></option></select></td></tr><{/if}>
 
-        <input type="hidden" value="<{$account_id}>" name="account_id" />
+		  <tr><th><label><{t}>所属门店：<{/t}></label></th><td>
+			<select name="branch_bn" id="branch_bn">
+				<option value="">==选择所属门店==</option>
+				<{foreach from=$branchs item=item}>
+				<option value="<{$item.id}>" <{if $item.id == $branch_bn}>selected<{/if}>><{$item.name}></option>
+				<{/foreach}>
+			</select>
+			<span style="color:#999;">如果是非门店专用账号，请不要选择所属门店。</span>
+		  </td></tr>
+		
+        
        <tr><th><td>
+		<input type="hidden" value="<{$account_id}>" name="account_id" />
  	<div id="role" <{if !$super}>style="display:block"<{else}>style="display:none"<{/if}>><{t}>角色:<{/t}>
      <ul><{if !$super}><input type='hidden'  vtype='requiredcheckbox'/> <{/if}><{foreach from=$workgroup item=item}>
          <li><input class="role" type="checkbox" value='<{$item.role_id}>' name=role[<{$item.role_id}>] <{if $item.checked=='true'}>checked='checked'<{/if}>/>

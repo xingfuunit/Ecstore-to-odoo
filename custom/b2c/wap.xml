@@ -100,4 +100,10 @@
         <title>促销</title>
         <disable>false</disable>
     </module>
+	
+    <module id='b2c' controller='wap_touchscreen'>
+        <name>touchscreen</name>
+        <title>门店触屏系统</title>
+        <disable>false</disable>
+    </module>
 </site>
