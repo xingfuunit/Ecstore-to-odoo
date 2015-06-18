@@ -105,22 +105,26 @@
 	<{/foreach}>
 	<!--保证和优惠券结束-->
 	
+	<div style="margin-left:10px; margin-right:10px; margin-bottom:10px;" >
+	
 	<!-- 点击领取 -->
 	
 	<{foreach from=$mianyou_ads item=p}>
 		<{if $p.url_type != "coupon"}>
 			<a href="<{$p.ad_url}>"><img class="full_img" src="<{$p.img_url}>"></a>
 		<{else}>
-			<a href="javascript:void(0);" onclick="getCoupon(<{$p.ad_url}>)"><img class="full_img" src="<{$p.img_url}>"></a>
+			<a href="javascript:void(0);" onclick="getCoupon(<{$p.ad_url}>)"><img class="full_img" style="margin-bottom:10px;" src="<{$p.img_url}>"></a>
 		<{/if}>
 	<{/foreach}>
 	
 	<!-- 点击领取 -->
 	
 	<!--广告-->
+	
 	<{foreach from=$pic_ads item=p}>
-	<a href="<{$p.ad_url}>"><img class="full_img" src="<{$p.img_url}>"></a>
+	<a href="<{$p.ad_url}>"><img class="full_img" style="margin-bottom:10px;"  src="<{$p.img_url}>"></a>
 	<{/foreach}>
+	</div>
 	<!--广告结束-->
 	
 	
