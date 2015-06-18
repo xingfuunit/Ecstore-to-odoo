@@ -7,13 +7,13 @@
 <{if count($advlogs)>0}>
         <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
             <tr>
-                <th>事件/时间</th>
+                <th style="width:35%">事件/时间</th>
                 <th style="width:35%">存入/支出</th>
-                <th>当前余额</th>
+                <th style="width:30%">当前余额</th>
             </tr>
             <{foreach from=$advlogs item=adv}>
             <tr>
-                <td>
+                <td style="padding:.7rem .3rem;">
                   <{if $adv.order_id}>
                     <a href="<{link app="b2c" ctl="wap_member" act="orderdetail" arg0=$adv.order_id}>"><{$adv.message}></a>
                   <{else}>
@@ -22,11 +22,11 @@
                   <br />
                   <{$adv.mtime|cdate:FDATE_STIME}>
                 </td>
-                <td <{if $adv.import_money > 0}> style="color:#c60808;" <{/if}> <{if $adv.explode_money > 0}> style="color: green;" <{/if}>>
+                <td <{if $adv.import_money > 0}> style="color:#c60808;padding:.7rem .3rem;" <{/if}> <{if $adv.explode_money > 0}> style="color: green;padding:.7rem .3rem;" <{/if}>>
                   <{if $adv.import_money > 0}>+<{$adv.import_money|cur_odr}><{/if}>
                   <{if $adv.explode_money > 0}>-<{$adv.explode_money|cur_odr}><{/if}>
                 </td>
-                <td><{$adv.member_advance|cur_odr}></td>
+                <td style="padding:.7rem .3rem;"><{$adv.member_advance|cur_odr}></td>
             </tr>
             <{/foreach}>
         </table>
