@@ -18,7 +18,7 @@
             <div style="width:100%; height:auto; text-align:center; margin-top:30%; position:absolute; color:#FFFFFF;  background:#000000;filter:alpha(opacity=50); /*IE滤镜*/-moz-opacity:0.5; /*Firefox私有*/opacity:0.5;/*其他*/">
              <h1><{$page_product_basic.title}></h1>
              <{if $page_product_basic.brief}><p><{$page_product_basic.brief}></p><{/if}>
-             <p>仅售：<{$page_product_basic.price}></p>
+             <p>仅售：<{math equation="x" format="%0.2f" assign="newkey" x=$page_product_basic.price}></p>
             </div>
             <{/if}>
 
