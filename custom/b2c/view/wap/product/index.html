@@ -94,8 +94,8 @@ $(document).ready(function(){
 	start: function(){
 		$('#productMain').find('.am-control-nav').css({'position':'fixed','bottom':'20px'});
 	},
-	after: function(slider){
-		if(slider.find('.am-active-slide').attr('id')=='productComments'){
+	before: function(slider){
+		if(slider.find('.am-active-slide').next('.showvaluebox').attr('id')=='productComments'){
 			$('#productMain').find('.am-control-nav').hide();
 		}else{
 			$('#productMain').find('.am-control-nav').show();
