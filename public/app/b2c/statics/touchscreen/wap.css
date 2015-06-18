@@ -24,24 +24,32 @@ a{text-decoration:none;outline:none;}
 .home a{display:block;height:100%;width:100%;}
 
 .home,
-.mainWinBack{position:absolute;right:1.5rem;bottom:1.5rem;width:2rem;height:2rem;background:url('img/home.png') center center no-repeat;background-size:100% 100%;}
+.mainWinHome{position:absolute;right:1.5rem;bottom:2rem;width:2rem;height:2rem;background:url('img/home.png') center center no-repeat;background-size:100% 100%;}
+.mainWinBack{position:absolute;right:10rem;bottom:2rem;width:2rem;height:2rem;background:url('img/back2.png') center center no-repeat;background-size:100% 100%;}
 
 @media (min-width:320px) and (max-width:640px){
 	.home,
+	.mainWinHome,
 	.mainWinBack{right:1.2rem;bottom:0.8rem;width:1.5rem;height:1.5rem;}
+	.mainWinBack{right:3rem;}
 }
 
 @media (min-width:640px) and (max-width:900px){
 	.home,
+	.mainWinHome,
 	.mainWinBack{right:1.2rem;bottom:1.2rem;width:2rem;height:2rem;}
+	.mainWinBack{right:5rem;}
 }
 
 
 @media (min-width:900px){
 	.home,
-	.mainWinBack{right:1.5rem;bottom:1.5rem;width:6.25rem;height:6.25rem;}
+	.mainWinHome,
+	.mainWinBack{right:1.5rem;bottom:2rem;width:6.25rem;height:6.25rem;}
+	.mainWinBack{right:10rem;}
 }
 
+.mainWinHome,
 .mainWinBack{z-index:5000;}
 .mainWin{display:none;position:fixed;top:0px;left:0px;z-index:1000;width:100%;height:100%;background:url('img/loading.gif') center center no-repeat #fff;z-index:10000;}
 .mainIframe{width:100%;height:100%;}

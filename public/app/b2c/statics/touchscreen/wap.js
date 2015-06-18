@@ -249,7 +249,7 @@ var touchscreen = {
 				video1.currentTime = 0.1;
 				video1.play();
 			});
-			video1.play();
+			//video1.play();
 /*
 			video1.addEventListener('ended', function () {
 				video1.currentTime = 0.1;
@@ -323,6 +323,11 @@ var touchscreen = {
 		open:function(url){
 			touchscreen.conf.$mainIframe.attr('src',url);
 			touchscreen.conf.$mainWin.show();
+			if(touchscreen.conf.urls.shopUrl.length>5){
+				touchscreen.conf.$mainWinBack.show();
+			}else{
+				touchscreen.conf.$mainWinBack.hide();
+			};
 		},
 		close:function(){
 			touchscreen.conf.$mainWin.hide();
@@ -352,6 +357,7 @@ var touchscreen = {
 		
 		this.conf.$mainWin = $('#mainWin');
 		this.conf.$mainWinBack = $('#mainWinBack');
+		this.conf.$mainWinHome = $('#mainWinHome');
 		this.conf.$mainIframe = $('#mainIframe');
 		
 		this.conf.$loading = $('#loading');
@@ -361,9 +367,15 @@ var touchscreen = {
 		this.getData();
 		this.conf.oInter = setInterval(this.getData,this.conf.delay);
 		$(window).on('resize.touchscreen', touchscreen.resize);
-		
+
 		//--------------------------------------------------
 		this.conf.$mainWinBack.on('click.touchscreen.mainWinBack',function(){
+			if(touchscreen.conf.urls.shopUrl.length>5){
+				touchscreen.iframe.open(touchscreen.conf.urls.shopUrl);	
+			};
+			return false;
+		});
+		this.conf.$mainWinHome.on('click.touchscreen.mainWinHome',function(){
 			touchscreen.iframe.close();
 			return false;
 		});
