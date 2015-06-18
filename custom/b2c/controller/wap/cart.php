@@ -217,11 +217,12 @@ class b2c_ctl_wap_cart extends wap_frontpage{
             }else{
                 if($_POST['mini_cart']){
                     $arr = $this->app->model("cart")->get_objects();
-                    // $temp = $arr['_cookie'];
+                    $temp = $arr['_cookie'];//加入购物车时ajax刷新购物车图标上的数量 bySam 20150618
                     // $this->pagedata['cartCount']      = $temp['CART_COUNT'];
                     // $this->pagedata['cartNumber']     = $temp['CART_NUMBER'];
                     // $this->pagedata['cartTotalPrice'] = $temp['CART_TOTAL_PRICE'];
                     // $this->page('wap/cart/mini_cart.html', true);
+					$msg = array('cart_num'=>$temp['CART_NUMBER']);
                     $this->splash('success',null,$msg,'','',true);
                     return;
                 }
