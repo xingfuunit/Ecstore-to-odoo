@@ -91,6 +91,9 @@ $(document).ready(function(){
     slideshow: false,
     // controlNav:false,
     touch:true,
+	start: function(){
+		$('#productMain').find('.am-control-nav').css({'position':'fixed','bottom':'20px'});
+	}
   });
 
     // specification click
