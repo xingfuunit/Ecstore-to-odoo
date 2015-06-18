@@ -451,6 +451,8 @@ class b2c_order_pay extends b2c_api_rpc_request
             
             if ($sdf['pay_app_id'] == 'deposit' && $is_save && $sdf['money'] !='0.00')
             {
+            	//计算精度
+            	bcscale(2);
             	$member_id = $sdf_order['member_id'];
             	// @author francis
             	$member = kernel::database()->select("SELECT login_account FROM sdb_pam_members WHERE member_id=$member_id AND login_type='mobile'");
@@ -461,8 +463,8 @@ class b2c_order_pay extends b2c_api_rpc_request
             		$data = array(
             				'passport_id'=> substr($member[0]['login_account'], -4),
             				'time'=>date('Y年m月d日H时i分',time()),
-            				'cost'=>$sdf['money'],
-            				'deposit'=>$deposit[0]['advance'],
+            				'cost'=>sprintf("%.2f", $sdf['money']),
+            				'deposit'=>sprintf("%.2f", $deposit[0]['advance']),
             		);
             		 
             		$sender = 'b2c_messenger_sms';
@@ -483,8 +485,8 @@ class b2c_order_pay extends b2c_api_rpc_request
             		$data = array(
             				'passport_id'=> substr($openid, -4),
             				'time'=>date('Y年m月d日H时i分',time()),
-            				'cost'=>$sdf['money'],
-            				'deposit'=>$deposit[0]['advance'],
+            				'cost'=>sprintf("%.2f", $sdf['money']),
+            				'deposit'=>sprintf("%.2f", $deposit[0]['advance']),
             		);
             
             
