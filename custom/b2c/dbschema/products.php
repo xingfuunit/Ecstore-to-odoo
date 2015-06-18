@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ShopEx licence
  *
@@ -60,7 +61,7 @@ $db['products']=array (
     ),
     'price' =>
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'sdfpath' => 'price/price/price',
       'default' => '0',
       'required' => true,
@@ -73,7 +74,7 @@ $db['products']=array (
     ),
     'cost' =>
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'sdfpath' => 'price/cost/price',
       'default' => '0',
       'label' => app::get('b2c')->_('成本价'),
@@ -85,7 +86,7 @@ $db['products']=array (
     ),
     'mktprice' =>
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'sdfpath' => 'price/mktprice/price',
       'label' => app::get('b2c')->_('市场价'),
       'width' => 75,

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ShopEx licence
  *
@@ -57,7 +58,7 @@ $db['goods']=array (
     ),
     'price' =>
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'sdfpath' => 'product[default]/price/price/price',
       'default' => '0',
       'required' => true,
@@ -206,7 +207,7 @@ $db['goods']=array (
     ),
     'cost' =>
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'sdfpath' => 'product[default]/price/cost/price',
       'default' => '0',
       'required' => true,
@@ -218,7 +219,7 @@ $db['goods']=array (
     ),
     'mktprice' =>
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'sdfpath' => 'product[default]/price/mktprice/price',
       'label' => app::get('b2c')->_('市场价'),
       'width' => 75,
@@ -516,6 +517,31 @@ $db['goods']=array (
       'label' => app::get('b2c')->_('是否为线上商品'),
       'width' => 30,
       'editable' => false,
+    ),
+    'wap_recommend' =>
+    array (
+    	'type' => 'intbool',
+    	'default' => '0',
+    	'label' => app::get('b2c')->_('wap推荐商品'),
+    	'width' => 30,
+    	'editable' => false,
+    ),
+    'wap_hot' =>
+    array (
+    		'type' => 'intbool',
+    		'default' => '0',
+    		'label' => app::get('b2c')->_('wap热门商品'),
+    		'width' => 30,
+    		'editable' => false,
+    ),
+    'wap_hot_num' =>
+    array (
+    		'type' => 'int unsigned',
+    		'default' => 0,
+    		'required' => true,
+    		'editable' => false,
+    		'label' => app::get('b2c')->_('wap热门商品购买数'),
+    
     ),
 
     'p_1' =>

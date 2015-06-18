@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ShopEx licence
  *
@@ -72,13 +73,13 @@ $db['order_items']=array (
     ),
     'cost' => 
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'editable' => false,
       'comment' => app::get('b2c')->_('明细商品的成本'),
     ),
     'price' => 
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'default' => '0',
       'required' => true,
       'editable' => false,
@@ -86,7 +87,7 @@ $db['order_items']=array (
     ),
 	'g_price' => 
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'default' => '0',
       'required' => true,
 	  'label' => app::get('b2c')->_('会员价原价'),
@@ -95,7 +96,7 @@ $db['order_items']=array (
     ),
     'amount' => 
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'editable' => false,
       'comment' => app::get('b2c')->_('明细商品总额'),
     ),

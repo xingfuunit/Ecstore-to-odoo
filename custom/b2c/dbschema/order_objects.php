@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ShopEx licence
  *
@@ -65,7 +66,7 @@ $db['order_objects']=array (
     ),
     'price' => 
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'default' => '0',
       'required' => true,
       'editable' => false,
@@ -73,7 +74,7 @@ $db['order_objects']=array (
     ),
     'amount' => 
     array (
-      'type' => 'decimal(20,3)',
+      'type' => 'decimal(20,5)',
       'default' => '0',
       'required' => true,
       'editable' => false,
