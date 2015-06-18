@@ -15,17 +15,16 @@
 
 <div id="addr_panel_<{$items.addr_id}>" class="am-panel am-panel-default">
     <div class="am-panel-hd" style=" position:relative">
-      <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#address_detail_<{$items.addr_id}>'}">
+        <h4 style="width:80%" class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#address_detail_<{$items.addr_id}>'}">
        <{$items.area|region}>&nbsp;<{$items.addr|escape:'html'}>
-      </h4>
+        </h4>
 
         <a class="<{if $items.def_addr}>btnUnsetDefaultAddr<{else}>btnSetDefaultAddr<{/if}>" 
-            style=" position:absolute; right:27px; top:5px;" href="javascript:void(0);">
-            <i class="am-icon-check-circle-o am-icon-md"></i>
+            <i class="am-icon-check-circle-o am-icon-sm"></i>
         </a>
       
 
-      <a class="btnDelAddr" style=" position:absolute; right:0px; top:5px; color:#FF3300" href="#"><i class="am-icon-times-circle-o am-icon-md"></i></a>
+      <a class="btnDelAddr" style=" position:absolute; right:0px; top:5px; color:#FF3300" href="#"><i class="am-icon-times-circle-o am-icon-sm"></i></a>
     </div>
 
 <div id="address_detail_<{$items.addr_id}>" class="am-panel-collapse am-collapse">
@@ -128,11 +127,14 @@ $(function(){
 
     $('#accordion').on('change','select',function(){
 
-        if( $(this).find('option:selected').val()==0 )
+        if( $(this).find('option:selected').val()==0 ){
             hideNextSelect(this);
-        else
+        }
+        else{
+            hideNextSelect(this);
             showNextSelect(this);
-
+        }
+            
         $container = $($(this).parent());
 
         setRegionData($container);

@@ -4,13 +4,21 @@
     <div style="width:100%; height:49px; font-size:12px; color:#cccccc;float:left;line-height:49px; padding-left:10px; padding-right:10px;">库存
         <span id="curStore"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.store}></span> 件
         <div style="float:right">
-            <a href="<{link app=b2c ctl=wap_search act=result}>" class="am-icon-btn am-icon-search" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>
+            <!--<a href="<{link app=b2c ctl=wap_search act=result}>" class="am-icon-btn am-icon-search" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>-->
 
-            <div id="btnAdd2Fav" class="am-icon-btn am-icon-star 
-            <{if $page_product_basic.is_fav}>am-text-success<{else}>not-faved-star<{/if}>" style="float:left; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></div>
+            <!--<div id="btnAdd2Fav" class="am-icon-btn am-icon-star 
+            <{if $page_product_basic.is_fav}>am-text-success<{else}>not-faved-star<{/if}>" style="float:left; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></div>-->
 
-            <a href="<{link ctl=wap_product act=goods_discuss arg0=$goods_id}>" class="am-icon-btn am-icon-comments-o" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" >
-            <span style="font-size:8px; color:#FF9900; float:left; line-height:8px; width:28px;text-align:center;"><{$comments.discussCount|default:'0'}></span>
+            
+            <span id="btnAdd2Fav" class="am-icon-btn am-icon-heart <{if $page_product_basic.is_fav}>am-text-danger faved-icon<{else}>not-faved-icon<{/if}>"></span>
+
+            <a href="<{link ctl=wap_product act=goods_discuss arg0=$goods_id}>" style="float:left; color: #999999; line-height:25px; font-size:18px;  height:30px; width:30px; background:none; line-height:30px; margin-top:10px; margin-left:10px;" class="am-icon-btn am-icon-rechat">
+                <img src="/public/imgs/wap/rechat-icon.png">
+            </a>
+            <{$comments.discussCount|default:'0'}>
+
+            <!--<a href="<{link ctl=wap_product act=goods_discuss arg0=$goods_id}>" class="am-icon-btn am-icon-comments-o" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" >
+            <span style="font-size:8px; color:#FF9900; float:left; line-height:8px; width:28px;text-align:center;"><{$comments.discussCount|default:'0'}></span>-->
             </a>
         </div>
     </div>
@@ -41,7 +49,7 @@
     <div style="color:#999999; line-height:18px; height:50px; float:left">
     
     <a id="amountMinus" href="#" class="am-icon-minus-circle am-icon-lg"  style="float:left;color:#999999;"></a>
-    <input id="amount" type="text" style="float:left; height:30px; width:12%; margin:5px; font-weight:bold" value="1">
+    <input id="amount" type="text" style="text-align:center;float:left; height:30px; width:12%; margin:5px; font-weight:bold" value="1">
     <a id="amountPlus" href="#" class="am-icon-plus-circle am-icon-lg" style="float:left;color:#999999;"></a>
 
     <button id="btnBuyNow" class="am-btn am-btn-danger am-square" type="button" style="margin-left:20px;">立即购买</button>
@@ -49,7 +57,11 @@
     <!--<a href="javascript:void(0);"><img style="width:50%" src="/public/app/wap/statics/images/buy_btn.png"></a>-->
 
     <a id="btnAddToCart" href="javascript:void(0)" class="am-icon-btn am-icon-shopping-cart" style="float:right; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px; position:relative"> 
+        <{if $CART_NUMBER}>
+        <span style="position:absolute; right:-20px; border-radius:20px;" class="am-badge am-badge-danger"><{$CART_NUMBER}></span>
+        <{/if}>
     </a>
+    
     </div>
 
     <div style="font-size:14px; color:#FFFFFF; height:30px; line-height:14px; width:100%; clear:both">
