@@ -385,11 +385,15 @@
         $('.coupon-use').on('click',function(event){
           var o = $(event.target);
           var coupon = '';
-          
           if( o.hasClass('btn') ){
+        	  
         	 var $checked = $('.coupon-use').find('.am-checked');
         	 if( $checked.size() ){
         		 coupon = $checked.attr('data-value');
+        	 }
+        	 if(coupon == ''){
+        		 input_coupon = $('#input_coupon').val();
+        		 coupon = input_coupon;
         	 }
         	 
         	if(coupon == ''){
