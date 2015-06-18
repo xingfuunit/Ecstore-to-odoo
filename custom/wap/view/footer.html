@@ -92,8 +92,8 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 			
 //			console.log(obj);
 	        $.ajax({
-	            url:'/wap/cart-add-goods.html',
-	            data:obj.serialize()+'&mini_cart=1',
+	            url:'/wap/cart-add-goods.html?rdm='+Math.random(),
+	            data:obj.serialize()+'&mini_cart=1'+'&random='+Math.random(),
 	            method:'POST',
 	            dataType:'json',
 	            success:function(data){
@@ -101,7 +101,10 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 					$('.am-modal-loading').modal('close');
 					
 	                if(data.success){
-						$('#show_cart_pot').show();
+	                	var cart_num ='';
+	                	cart_num = data.success.cart_num;
+	                	$('#wap-footer-bar-cart-num').show();
+				    	$('#wap-footer-bar-cart-num').html(cart_num);
 						$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
 	                    $('#modalAddToCart').modal({
 							relatedTarget: this,
