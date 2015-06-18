@@ -224,7 +224,7 @@ class b2c_ctl_wap_product extends wap_frontpage{
         $curDate = 0;
         // echo '<pre>';
         // $comments= kernel::single("b2c_goods_description_comments")->show($goods_id,'discuss',10);
-        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,0,15);
+        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,0,1);
         foreach($comments['list']['discuss'] as $k=>$v){
             $comments['list']['discuss'][$k]['face'] = '/public/app/b2c/statics/images/faces/pzmemeber_h_0'.rand(1,9).'.jpg';
         }
@@ -243,17 +243,16 @@ class b2c_ctl_wap_product extends wap_frontpage{
 
         $curDate = "20$curYear-$curMonth-$curDay";
 
-        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,$last_comment_id,15);
+        $comments = kernel::single("b2c_goods_description_comments")->getComments($goods_id,$last_comment_id,1);
         foreach($comments['list']['discuss'] as $k=>$v){
             $comments['list']['discuss'][$k]['face'] = '/public/app/b2c/statics/images/faces/pzmemeber_h_0'.rand(1,9).'.jpg';
         }
         $this->pagedata['comments'] = $comments;
         $this->pagedata['curDate'] = $curDate;
 
-        // $this->set_tmpl('default');
-        $this->set_tmpl_file('default-onlycontents.html');
+        // $this->set_tmpl_file('default-onlycontents.html');
 
-        $this->page('wap/product/base_goods_discuss.html');
+        echo $this->fetch('wap/product/base_goods_discuss.html');
     }
 
     /*设置详情页SEO --start*/
