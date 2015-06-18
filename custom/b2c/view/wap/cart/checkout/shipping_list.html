@@ -7,14 +7,16 @@
  
 <{foreach from=$member_addr_list item=addr key=key}>   
   <div class="am-panel am-panel-default">
-    <div class="am-panel-hd" style=" position:relative">
-      <h4 class="am-panel-title"  data-am-collapse="{parent: '#accordion', target: '#do-not-say-<{$key}>'}" style="width:290px;">
+    <div class="am-panel-hd" style="position:relative">
+      <h4 class="am-panel-title"  data-am-collapse="{parent: '#accordion', target: '#do-not-say-<{$key}>'}" style="width:85%;">
         <{$key+1}>.<{$addr.area|ship_area}><{$addr.addr}>
       </h4>
-	  <a  class="<{if $def_addr.addr_id eq $addr.addr_id}> selected<{/if}> addr_list click_loading" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}' style=" position:absolute; right:27px; top:5px; color:<{if $def_addr.addr_id eq $addr.addr_id}>#339900<{else}>#999999<{/if}>" href="javascript:void(0);">
-	  <i class="am-icon-check-circle-o am-icon-md"></i></a>
-	  <a class="del" style=" position:absolute; right:0px; top:5px; color:#FF3300" href="javascript:void(0);" id="<{link app=b2c ctl=wap_member act=del_rec arg0=$addr.addr_id}>">
-	  <i class="am-icon-times-circle-o am-icon-md"></i></a>
+      <div style="position:absolute;right:3px;top:50%;margin-top:-20px;">
+		  <a  class="<{if $def_addr.addr_id eq $addr.addr_id}> selected<{/if}> addr_list click_loading" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}' style=" position:absolute; right:27px; top:5px; color:<{if $def_addr.addr_id eq $addr.addr_id}>#48a4b9<{else}>#999999<{/if}>" href="javascript:void(0);">
+		  <i class="am-icon-check-circle-o am-icon-md"></i></a>
+		  <a class="del" style=" position:absolute; right:0px; top:5px; color:#999999;" href="javascript:void(0);" id="<{link app=b2c ctl=wap_member act=del_rec arg0=$addr.addr_id}>">
+		  <i class="am-icon-times-circle-o am-icon-md"></i></a>
+	  </div>
     </div>
     <div id="do-not-say-<{$key}>" class="am-panel-collapse am-collapse <{if $def_addr.addr_id eq $addr.addr_id}>am-in<{/if}>">
       <div class="am-panel-bd"  style="padding:0;">

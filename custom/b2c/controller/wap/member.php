@@ -858,6 +858,7 @@ class b2c_ctl_wap_member extends wap_frontpage{
         $order_items = array();
         $gift_items = array();
         $this->get_order_detail_item($sdf_order,'member_order_detail');
+        $sdf_order['cur_money'] = $objMath->number_minus(array($sdf_order['cur_amount'], $sdf_order['payed']));
         $this->pagedata['order'] = $sdf_order;
 // echo "<pre>";print_r($this->pagedata['order']);exit;
         /** 将商品促销单独剥离出来 **/

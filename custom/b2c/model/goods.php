@@ -1768,7 +1768,7 @@ class b2c_mdl_goods extends dbeav_model{
     	$arr = array_merge($pz_xg_cat_id,$goodsfilter);
 //     	print_r($arr);exit;
     	if($pz_xg_cat_id){
-    		$goodsData = $this->getList('*', $arr);
+    		$goodsData = $this->getList('*', $arr,0,4);
     		
     		//goods 数据处理
     		if($goodsData){
@@ -1804,8 +1804,17 @@ class b2c_mdl_goods extends dbeav_model{
 		                $store = $product_row['store'] - $product_row['freez'];
 		                $goodsData[$gk]['products']['store'] = $store > 0 ? $store : 0;
 		            }
+		            
+		            //库存判断
+		            if($goodsData[$gk]['products']['store'] > 0 || $goods_row['nostore_sell']){
+		            	$goodsData[$gk]['is_can_store'] = 1;
+		            }else{
+		            	$goodsData[$gk]['is_can_store'] = 0;
+		            }
 		        }
     		}
+    		
+    		
     		return $goodsData;
     		
     	}

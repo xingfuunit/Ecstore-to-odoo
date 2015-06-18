@@ -7,7 +7,7 @@
 <button style="width:99%;" onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='daishouhuo'}>'"  class="am-btn am-btn-default<{if $status=='daishouhuo'}> am-active<{/if}>" type="button">待收货</button>
 </div>
 <div style="width:25%;float:left;">
-<button style="width:99%;" onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='tuihuo'}>'" class="am-btn am-btn-default<{if $status=='tuihuo'}> am-active<{/if}>" type="button">我的退货</button>
+<button style="width:99%;padding:.625em 0em;" onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='tuihuo'}>'" class="am-btn am-btn-default<{if $status=='tuihuo'}> am-active<{/if}>" type="button" >我的退货</button>
 </div>
 <div style="width:25%;float:left;">
 <button style="width:99%;" onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='all'}>'" class="am-btn am-btn-default<{if $status=='all'}> am-active<{/if}>" type="button">全部</button>
@@ -24,13 +24,13 @@
       
       <li class="am-g am-list-item-desced  am-list-item-thumb-left" style=" width:96%;margin:2%; border:1px solid #ccc; border-radius:5px;">
         <div style="border-bottom:1px dotted #ddd; margin-bottom:5px;" >
-          <div class="am-list-news-hd am-cf am-padding"><span style="float:left;"> 订单编号：</span><a style="float:left;" href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id arg1=$archive}>"><span class="am-text-warning"><{$order.order_id}></span></a>
-              <span  <{if($order.status=='finish')}> class="am-btn am-round am-btn-xs am-text-success am-fr" <{elseif($order.status=='dead')}> class="am-btn am-round am-btn-xs am-list-item-text am-fr" <{else}> class="am-btn am-round am-btn-xs am-text-warning am-fr"  <{/if}> ><{switch from=$order.status}>
+          <div class="am-list-news-hd am-cf "  style="padding-left:0.8rem;padding-right:0.8rem;"><span style="float:left;"> 订单编号：</span><a style="float:left;" href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id arg1=$archive}>"><span class="am-text-warning"><{$order.order_id}></span></a>
+              <span  <{if($order.status=='finish')}> class="am-btn am-round am-btn-xs am-text-success am-fr" <{elseif($order.status=='dead')}> class="am-btn am-round am-btn-xs am-list-item-text am-fr" <{else}> class="am-btn am-round am-btn-xs am-text-warning am-fr"  <{/if}> style="padding:.25rem  0rem 0rem;" ><{switch from=$order.status}>
                 <{case value='finish'}><{t}>已完成<{/t}>
                 <{case value='dead'}><{t}>已作废<{/t}>
                 <{case}>
                 <{switch from=$order.pay_status}>
-                <{case value='1'}><{t}>已付款<{/t}>
+                <{case value='1'}><{t}>已付款<br /><{/t}>
                 <{switch from=$order.ship_status}>
                 <{case value='1'}><{t}>[已发货]<{/t}>
                 <{case value='2'}><{t}>[部分发货]<{/t}>
@@ -38,23 +38,15 @@
                 <{case value='4'}><{t}>[已退货]<{/t}>
                 <{case}><{t}>[正在备货]<{/t}>
                 <{/switch}>
-                <{case value='2'}><{t}>已付款至担保方<{/t}>
-                <{case value='3'}><{t}>等待补款<{/t}>
+                <{case value='2'}><{t}>已付款至<br />担保方<{/t}>
+                <{case value='3'}><{t}>等待补款<br /><{/t}>
                 <{switch from=$order.ship_status}>
                 <{case value='1'}><{t}>[已发货]<{/t}>
                 <{case value='2'}><{t}>[部分发货]<{/t}>
                 <{case value='3'}><{t}>[部分退货]<{/t}>
                 <{case value='4'}><{t}>[已退货]<{/t}>
                 <{/switch}>
-                <{case value='4'}><{t}>部分退款<{/t}>
-                <{switch from=$order.ship_status}>
-                <{case value='0'}><{t}>[未发货]<{/t}>
-                <{case value='1'}><{t}>[已发货]<{/t}>
-                <{case value='2'}><{t}>[部分发货]<{/t}>
-                <{case value='3'}><{t}>[部分退货]<{/t}>
-                <{case value='4'}><{t}>[已退货]<{/t}>
-                <{/switch}>
-                <{case value='5'}><{t}>已退款<{/t}>
+                <{case value='4'}><{t}>部分退款<br /><{/t}>
                 <{switch from=$order.ship_status}>
                 <{case value='0'}><{t}>[未发货]<{/t}>
                 <{case value='1'}><{t}>[已发货]<{/t}>
@@ -62,7 +54,15 @@
                 <{case value='3'}><{t}>[部分退货]<{/t}>
                 <{case value='4'}><{t}>[已退货]<{/t}>
                 <{/switch}>
-                <{case}><{t}>等待付款<{/t}>
+                <{case value='5'}><{t}>已退款<br /><{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='0'}><{t}>[未发货]<{/t}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{/switch}>
+                <{case}><{t}>等待付款<br /><{/t}>
                 <{switch from=$order.ship_status}>
                 <{case value='1'}><{t}>[已发货]<{/t}>
                 <{case value='2'}><{t}>[部分发货]<{/t}>

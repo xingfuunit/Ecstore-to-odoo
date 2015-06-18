@@ -50,7 +50,7 @@ class wap_ctl_default extends wap_controller{
         if($this->openid){
         	//判断微信是否第一次进入
         	if(!isset($_COOKIE['ck-cover'])){
-        		setcookie('ck-cover',1,time()+3600*24*30);		//30天
+        		setcookie('ck-cover',1,time()+3600*24);		//30天
         		$this->redirect(array('app'=>'wap','ctl'=>'default','act'=>'wepcover'),1);
         	}
         }
@@ -126,6 +126,7 @@ class wap_ctl_default extends wap_controller{
         $this->_new_index_data();
         
         $this->pagedata['goodsData'] = $goodsData;
+        $this->pagedata['title'] = '品珍鲜活';
         $this->page('index.html');
     }
 
@@ -152,19 +153,19 @@ class wap_ctl_default extends wap_controller{
     	
     	//品珍鲜果
     	$this->pagedata['pz_xg'] = $goodsModel->get_good_list_by_cat_catname('时令水果',$filter);
-    	$this->pagedata['pz_xg_cat']= $catModel->getRow('cat_id', array('cat_name' => "时令水果"));
+    	$this->pagedata['pz_xg_cat']= $catModel->getRow('cat_id,cat_name', array('cat_name' => "时令水果"));
     	
     	//品珍海鲜
     	$this->pagedata['pz_hs'] = $goodsModel->get_good_list_by_cat_catname('鲜活海鲜',$filter);
-    	$this->pagedata['pz_hs_cat']= $catModel->getRow('cat_id', array('cat_name' => "鲜活海鲜"));
+    	$this->pagedata['pz_hs_cat']= $catModel->getRow('cat_id,cat_name', array('cat_name' => "鲜活海鲜"));
     	
     	//品珍鲜肉
     	$this->pagedata['pz_xr'] = $goodsModel->get_good_list_by_cat_catname('精品肉类',$filter);
-    	$this->pagedata['pz_xr_cat']= $catModel->getRow('cat_id', array('cat_name' => "精品肉类"));
+    	$this->pagedata['pz_xr_cat']= $catModel->getRow('cat_id,cat_name', array('cat_name' => "精品肉类"));
     	
     	//品珍精选
     	$this->pagedata['pz_jx'] = $goodsModel->get_good_list_by_cat_catname('品珍精选',$filter);
-    	$this->pagedata['pz_jx_cat']= $catModel->getRow('cat_id', array('cat_name' => "品珍精选"));
+    	$this->pagedata['pz_jx_cat']= $catModel->getRow('cat_id,cat_name', array('cat_name' => "品珍精选"));
     	
 //     	print_r($this->pagedata['pz_hs']);exit;
 

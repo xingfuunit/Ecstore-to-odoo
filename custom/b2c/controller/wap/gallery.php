@@ -172,6 +172,13 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     			$goodsData[$gk]['products']['store'] = $store > 0 ? $store : 0;
     		}
     		
+    		//库存判断
+    		if($goodsData[$gk]['products']['store'] > 0 || $goods_row['nostore_sell']){
+    			$goodsData[$gk]['is_can_store'] = 1;
+    		}else{
+    			$goodsData[$gk]['is_can_store'] = 0;
+    		}
+    		
     	}
     	
     	//分组 2个商品为一页
@@ -823,6 +830,13 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             }else{
                 $store = $product_row['store'] - $product_row['freez'];
                 $goodsData[$gk]['products']['store'] = $store > 0 ? $store : 0;
+            }
+            
+            //库存判断
+            if($goodsData[$gk]['products']['store'] > 0 || $goods_row['nostore_sell']){
+            	$goodsData[$gk]['is_can_store'] = 1;
+            }else{
+            	$goodsData[$gk]['is_can_store'] = 0;
             }
         }
         return $goodsData;

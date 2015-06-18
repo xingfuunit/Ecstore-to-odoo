@@ -15,3 +15,8 @@ background-repeat:no-repeat;z-index:500;
 .cover-body .am-viewport{height:100%;}
 .cover-body .am-control-nav{bottom:24px;}
 .fc{clear:both;font-size:0;line-height:0px;height:0px;}
+
+
+.btnClose{position:absolute;top:5%;left:50%;margin-left:-30px;font-size:14px;text-align:center;color:#fff;width:60px;height:24px;line-height:24px;
+background-color:#000;opacity: 0.5;filter:alpha(opacity=50);border-radius:24px;z-index:20000;
+}
