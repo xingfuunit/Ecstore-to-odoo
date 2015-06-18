@@ -1,6 +1,6 @@
-<div id="loading_page">
+<div id="loading_page" style="display:none">
       <div class="roll_loding">
-        <i id="loadingImg" class="am-icon-spinner am-icon-spin am-icon-lg"></i>
+        <i id="loadingImg" style="display:block" class="am-icon-spinner am-icon-spin am-icon-lg"></i>
       </div>
 </div>
 <script type="text/javascript">
@@ -37,11 +37,15 @@ var ch = getClientHeight();
 var cw = getClientWidth();
 document.getElementById('loading_page').style.height=ch+'px';
 document.getElementById('loadingImg').style.position = 'absolute';
-document.getElementById('loadingImg').style.top = (ch/2 - document.getElementById('loadingImg').clientHeight/2) + 'px' ;
-document.getElementById('loadingImg').style.left = (cw/2 - document.getElementById('loadingImg').clientWidth/2) + 'px' ;
-$(window).load(function(){
-    if(document.getElementById('loading_page').style.display!='none')
-        document.getElementById('loading_page').style.display='none';
-});
+// document.getElementById('loadingImg').style.top = (ch/2 - document.getElementById('loadingImg').clientHeight/2) + 'px' ;
+// document.getElementById('loadingImg').style.left = (cw/2 - document.getElementById('loadingImg').clientWidth/2) + 'px' ;
+document.getElementById('loadingImg').style.top = (ch/2 - 20) + 'px' ;
+document.getElementById('loadingImg').style.left = (cw/2 - 20) + 'px' ;
+document.getElementById('loading_page').style.display = 'block';
+
+// $(window).load(function(){
+    // if(document.getElementById('loading_page').style.display!='none')
+    //     document.getElementById('loading_page').style.display='none';
+// });
 
 </script>
