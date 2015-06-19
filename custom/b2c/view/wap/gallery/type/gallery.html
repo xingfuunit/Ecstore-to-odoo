@@ -1,3 +1,4 @@
+<link href="/public/app/wap/statics/css_mini/themes2015.css" rel="stylesheet" media="screen, projection" />
 <{if $goodsData}>
 	<{foreach from=$goodsData key=key item=goods_row}>
 		<li>
@@ -5,29 +6,32 @@
 		  <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>"  <{if !$goods_row.is_can_store }> style=" position:relative;  display: block" <{/if}>>
 		  
 		  	<{if !$goods_row.is_can_store }>
-			<span style="height:auto;filter:alpha(opacity=50); -moz-opacity:0.5; opacity:0.5; width:auto; white-space:nowrap; background:#333333; border-top-left-radius:20px;border-bottom-left-radius:20px; color:#FFFFFF; font-size:12px;padding:5px 10px; position:absolute; right:-4px;  margin-right:4px;z-index:999">缺&nbsp;&nbsp;货</span>
+			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
 			<{/if}>
 			
 		    <img src="<{$goods_row.image_default_id|storager:'s'}>">
+			
+			<{if $goods_row.is_can_store }>
+			  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#48a4b9; font-size:18px; height:30px; width:30px; background:none; border:1px solid #48a4b9; line-height:30px; margin-top:30px; margin-right:5px;"></a>
+			
+			  <form  style="display:none" class="formBuyNow">
+				    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+				    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+				    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+				    <input id="stock" type="text" name="stock" value="" />
+				    <input id="limit_nums" type="text" name="limit_nums" value="" />
+				    <input type="text" name="response_json" value="1" />
+				</form>
+			<{else}>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px;margin-top:30px; margin-right:5px;"></a>
+			<{/if}>
+			
 		    <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
 		    <div class="am-gallery-desc" >
 			 <h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
 			 </div>
 		  </a>
-		  <{if $goods_row.is_can_store }>
-		  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#48a4b9; font-size:18px; height:30px; width:30px; background:none; border:1px solid #48a4b9; line-height:30px;"></a>
-		
-		  <form  style="display:none" class="formBuyNow">
-			    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
-			    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
-			    <input id="goodsNum" type="text" name="goods[num]" value="1" />
-			    <input id="stock" type="text" name="stock" value="" />
-			    <input id="limit_nums" type="text" name="limit_nums" value="" />
-			    <input type="text" name="response_json" value="1" />
-			</form>
-			<{else}>
-				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px;"></a>
-			<{/if}>
+		   <div class="fc"></div>
 		</div>
 		</li>
 	<{/foreach}>
