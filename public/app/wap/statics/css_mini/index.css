@@ -12,4 +12,11 @@
 
 #index_slider img{width:100%!important}
 
+
+.am-avg-sm-2 > li {width: 50% !important;}
+.am-gallery-default > li {padding:0px !important;  }
+.am-gallery-item{background:#fff;margin-left:5px;margin-right:5px;border: 1px solid #ddd;}
+.am-gallery-item h3{ margin-left:5px; }
+
+.am-gallery{padding-left:5px!important;padding-right:5px!important;}
 .index_cat_title{border-bottom:0px; margin-top:5px; border-top:1px solid #ccc; clear:both ;}

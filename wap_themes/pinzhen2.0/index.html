@@ -6,13 +6,6 @@
 <link href="/public/app/wap/statics/css_mini/index.css" rel="stylesheet" media="screen, projection" />
 <script type="text/javascript" src="/public/app/wap/statics/js_mini/scrollable.full.min.js"></script>
 <script type="text/javascript" src="/public/app/wap/statics/js/index.js"></script>
-<style>
-.am-gallery-default > li{ margin:4px !important; background:#FFFFFF; border:1px solid #ddd;}
-.am-avg-sm-2 > li {width: 47% !important;}
-.am-gallery-default > li {padding:0px !important;}
-.am-gallery-item h3{ margin-left:5px;}
-</style>
-
 </head>
 <body style="background:#eeeeee;">
     <{wap_require file="block/header.html"}>
@@ -139,7 +132,7 @@
 	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
 	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_hs_cat.cat_name}></h2>
 	  <nav class="am-titlebar-nav" >
-	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_hs_cat.cat_id}>"   style="color:#cccccc">更多</a>
+	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_hs_cat.cat_id}>"   style="color:#999">更多</a>
 	  </nav>
 	</div>
 	<!-- List -->
@@ -177,6 +170,7 @@
 			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
+		  <div class="fc"></div>
 	    </div>
 	  </li>
 	  <{/foreach}>
@@ -186,7 +180,7 @@
 	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
 	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_xg_cat.cat_name}></h2>
 	  <nav class="am-titlebar-nav" >
-	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xg_cat.cat_id}>"   style="color:#cccccc">更多</a>
+	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xg_cat.cat_id}>"   style="color:#999">更多</a>
 	  </nav>
 	</div>
 	<!-- List -->
@@ -223,6 +217,7 @@
 			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
+		  <div class="fc"></div>
 	    </div>
 	  </li>
 		<{/foreach}>
@@ -232,7 +227,7 @@
 	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
 	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_xr_cat.cat_name}></h2>
 	  <nav class="am-titlebar-nav" >
-	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xr_cat.cat_id}>"   style="color:#cccccc">更多</a>
+	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xr_cat.cat_id}>"   style="color:#999">更多</a>
 	  </nav>
 	</div>
 	<!-- List -->
@@ -270,6 +265,7 @@
 			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
+		  <div class="fc"></div>
 	    </div>
 	  </li>
 	  <{/foreach}>
@@ -279,7 +275,7 @@
 	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
 	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_jx_cat.cat_name}></h2>
 	  <nav class="am-titlebar-nav" >
-	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_jx_cat.cat_id}>"   style="color:#cccccc">更多</a>
+	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_jx_cat.cat_id}>"   style="color:#999">更多</a>
 	  </nav>
 	</div>
 	<!-- List -->
@@ -316,6 +312,7 @@
 			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
 			</div>
 	      </a>
+		  <div class="fc"></div>
 	    </div>
 	  </li>
 	  <{/foreach}>
