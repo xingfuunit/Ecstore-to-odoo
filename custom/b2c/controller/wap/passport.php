@@ -134,10 +134,11 @@ class b2c_ctl_wap_passport extends wap_frontpage{
         );
 
         //是否需要进行手机验证
-        if( !kernel::single('b2c_user_vcode')->mobile_login_verify($_POST['mobileVcode'],$_POST['uname'],'activation')){
+        //wap端跳过手机验证 bySam 20150619
+        /* if( !kernel::single('b2c_user_vcode')->mobile_login_verify($_POST['mobileVcode'],$_POST['uname'],'activation')){
             $msg = app::get('b2c')->_('手机短信验证码错误'); 
             $this->splash('failed',null,$msg,'','',true);exit;
-        }
+        } */
 
         /* if(kernel::single('b2c_service_vcode')->status() && empty($_POST['verifycode'])){
             $msg = app::get('b2c')->_('请输入验证码!');
