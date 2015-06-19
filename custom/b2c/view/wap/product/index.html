@@ -91,6 +91,16 @@ $(document).ready(function(){
     slideshow: false,
     // controlNav:false,
     touch:true,
+	start: function(){
+		$('#productMain').find('.am-control-nav').css({'position':'fixed','bottom':'20px'});
+	},
+	before: function(slider){
+		if(slider.find('.am-active-slide').next('.showvaluebox').attr('id')=='productComments'){
+			$('#productMain').find('.am-control-nav').hide();
+		}else{
+			$('#productMain').find('.am-control-nav').show();
+		}
+	}
   });
 
     // specification click

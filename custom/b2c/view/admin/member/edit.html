@@ -19,7 +19,10 @@
           </td>
         </tr>
         <tr>  <th><{t}>会员等级<{/t}></th>
-          <td> <{input type='select' name='member_lv[member_group_id]' options=$mem.lv.options required=true value=$mem.lv.value }>  <span onclick="new Dialog('index.php?app=b2c&ctl=admin_member&act=chkpassword&p[0]=<{$member_id}>',{width:400,height:300,title:'<{t}>修改密码<{/t}>'})" class="lnk">[<{t}>修改密码<{/t}>]</span> </td>
+          <td> <{input type='select' name='member_lv[member_group_id]' options=$mem.lv.options required=true value=$mem.lv.value }>  
+          <span onclick="new Dialog('index.php?app=b2c&ctl=admin_member&act=chkpassword&p[0]=<{$member_id}>',{width:400,height:300,title:'<{t}>修改密码<{/t}>'})" class="lnk">[<{t}>修改密码<{/t}>]</span>
+          <span onclick="new Dialog('index.php?app=b2c&ctl=admin_member&act=chk_pay_passwd&p[0]=<{$member_id}>',{width:420,height:300,title:'<{t}>修改支付密码<{/t}>'})" class="lnk">[<{t}>修改支付密码<{/t}>]</span>
+           </td>
         </tr>
         <tr>
             <th><{t}>会员类别<{/t}></th>

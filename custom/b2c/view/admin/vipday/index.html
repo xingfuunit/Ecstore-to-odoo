@@ -1,0 +1,51 @@
+<div class="tableform">
+  <div class="division">
+  <form action='index.php?app=b2c&ctl=admin_vipday&act=index' method='post' id='b'>
+    <table width="100%" cellspacing="0" cellpadding="0">
+    <tr></tr>
+    <tr>
+        
+        <th><label><{t}>添加会员日版本：<{/t}></label></th>
+        <td>
+        <input type='text' name='new_name' placeholder="请输入名称" /> 
+        </td>
+        
+      </tr>
+
+
+
+      <tr>
+        
+        <th><label><{t}>当前会员日使用版本名称：<{/t}></label></th>
+        <td>
+        <{foreach from=$data item=d}>
+        <{if($d.current=='true')}>
+        <{$d.vipday_name}>
+        <{/if}>
+        <{/foreach}>
+        </td>
+        <input type='hidden' name='act' value='update'>
+      </tr>
+      <tr>
+        <th><label><{t}>设定会员日使用版本名称：<{/t}></label></th>
+        <td><select name='vipday_name'>
+        <{foreach from=$data item=d}>
+        
+        <{if($d.current=='true')}>
+          <option value ="<{$d.id}>" selected><{$d.vipday_name}></option>
+        <{else}>
+        <option value ="<{$d.id}>" ><{$d.vipday_name}></option>
+        <{/if}>
+        <{/foreach}>
+
+<input style="margin-left:10px;" type="submit"  value="提交" />
+</select></td>
+        
+      </tr>
+      
+    </table>
+</form>
+
+
+  </div>
+</div>

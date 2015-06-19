@@ -86,6 +86,10 @@ class b2c_ctl_site_member extends b2c_frontpage{
         } else {
             $arr_microshop = array('label'=>app::get('b2c')->_('我的收入'),'app'=>'b2c','ctl'=>'site_member','link'=>'promotion_into_logs');
         }
+        //站内信条数 bySam 20150603
+        $oMsg = kernel::single('b2c_message_msg');
+        $row = $oMsg->getList('*',array('to_id' => $this->app->member_id,'has_sent' => 'true','for_comment_id' => 'all','inbox' => 'true','mem_read_status' => 'false'));
+        $inbox_num = count($row)?count($row):0;
 
         $arr_bases = array(
             array(
@@ -113,7 +117,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
                 'label'=>app::get('b2c')->_('个人信息管理'),
                 'mid'=>4,
                 'items'=>array(
-                    array('label'=>app::get('b2c')->_('站内信'),'app'=>'b2c','ctl'=>'site_member','link'=>'inbox'),
+                    array('label'=>app::get('b2c')->_('站内信'),'app'=>'b2c','ctl'=>'site_member','link'=>'inbox','num'=>$inbox_num),
                     array('label'=>app::get('b2c')->_('个人信息'),'app'=>'b2c','ctl'=>'site_member','link'=>'setting'),
                     array('label'=>app::get('b2c')->_('安全中心'),'app'=>'b2c','ctl'=>'site_member','link'=>'securitycenter'),
                     array('label'=>app::get('b2c')->_('收货地址'),'app'=>'b2c','ctl'=>'site_member','link'=>'receiver'),
@@ -2043,6 +2047,17 @@ class b2c_ctl_site_member extends b2c_frontpage{
           $this->splash('failed',null,$msg,true);exit;
         }
       }
+      if($verifyType == 'verifymobile'){
+		//PC端会员手机验证赠送积分 bySam 20150604
+		$reason_type = 'mobile_score';
+		$point = 300;
+		$data_rand = rand(0,10);
+		$error_msg = 'PC端绑定手机赠送积分';   				
+		$member_id = $this->app->member_id;    			
+		app::get('b2c')->model('member_point')->change_point($member_id,+$point,$error_msg,$reason_type,$data_rand,$member_id,$member_id);
+		}
+      
+      
       //增加会员同步 2012-05-15
       if( $member_rpc_object = kernel::service("b2c_member_rpc_sync") ) {
           $member_rpc_object->modifyActive($this->app->member_id);

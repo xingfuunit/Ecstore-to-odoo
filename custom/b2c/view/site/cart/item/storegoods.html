@@ -62,18 +62,18 @@
           <{/if}>
       </td>
       <!--<td class="p-discount"><input type="text" value="" id="discount_ex_<{$goods.obj_ident}>" name="kg_might" style="border: 1px solid #ccc; text-align: center; width: 40px; height: 20px;"></td>-->
-      <td class="p-subtotal"><{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}>￥<{$goods.subtotal_prefilter_after}><{else}><{$goods.subtotal_prefilter_after|cur_odr}><{/if}></td>
+      <td class="p-subtotal"><{$goods.subtotal_prefilter_after|cur_odr}></td>
      
       <td class="p-action">
       <{if $cart_type != "x"}>
         <{if $login=='nologin'}>
-        <a  href="<{link app=b2c ctl=site_passport act=login}>" class="btn-fav">收藏</a>
+        <!--<a  href="<{link app=b2c ctl=site_passport act=login}>" class="btn-fav">收藏</a>-->
         <{else}>
-        <a href="javascript:void(0);" class="btn-fav" rel="_addfav_" data-gid="<{$goods.obj_items.products.0.goods_id}>">收藏</a>
+        <!--<a href="javascript:void(0);" class="btn-fav" rel="_addfav_" data-gid="<{$goods.obj_items.products.0.goods_id}>">收藏</a>-->
         <{/if}>
-        <i>|</i>
+        <!--<i>|</i>-->
         <{/if}>
-        <a href="javascript:void(0);" class="btn-delete">移除</a>
+        <a href="javascript:void(0);" class="btn-delete" style="font-size:18px">移除</a>
       </td>
     </tr>
     <!-- 配件 -->  

@@ -1,0 +1,42 @@
+<form action="index.php?app=b2c&ctl=admin_member&act=chk_pay_passwd" id="member-form" method="POST">
+<div class="division">
+<table>
+<input type="hidden" value=<{$member_id}> name="member_id"/>
+<tr> <td colspan="2"><{t}>输入新支付密码：<{/t}><input type="password" vtype="required" name="newPayPassword" class="x-input " autocomplete="off"/><span style="font-weight: bold;color:red;">支付密码只能是6位数字</span></td> 
+</tr> 
+<tr> <td colspan="2"> <{t}>确认新支付密码：<{/t}><input type="password" vtype="required" name="confirmPayPassword" class="x-input " autocomplete="off"/> </td> 
+</tr> 
+ </table>
+</div>
+<div class="table-action">
+	<button class="btn" type="submit" id="member-form-submit"><span><span><{t}>保存<{/t}></span></span></button></div>
+</form>
+
+<script>
+(function(){
+	var _form = $('member-form');
+	var btn =$('member-form-submit');
+	//var finder = finderGroup['<{$env.get.finder_id}>'];
+	
+	_form.store('target',{
+		
+		onSuccess:function(response){
+			var hash_res_obj = JSON.decode(response);
+			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+			{
+				try{
+					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+				}catch(e){}
+				
+				if(_dialogIns)
+				{	
+					_dialogIns.close();
+					//finder.refresh.delay(400,finder);
+				}
+			}	
+		}
+	});
+	
+})();
+		
+</script>

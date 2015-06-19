@@ -388,7 +388,7 @@
           if( o.hasClass('btn') ){
         	  if(o.hasClass('ipnut_ctn')){
         		  input_coupon = $('#input_coupon').val();
-         		  coupon = input_coupon;
+         		  coupon = input_coupon.toUpperCase();
         	  }else{
         		  var $checked = $('.coupon-use').find('.am-checked');
              	 if( $checked.size() ){
