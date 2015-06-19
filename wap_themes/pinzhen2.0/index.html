@@ -134,51 +134,7 @@
 	</div>
 	<!--广告结束-->
 	
-	
-	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
-	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_xg_cat.cat_name}></h2>
-	  <nav class="am-titlebar-nav" >
-	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xg_cat.cat_id}>"   style="color:#cccccc">更多</a>
-	  </nav>
-	</div>
-	<!-- List -->
 
-	<!-- Gallery -->
-	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
-	  <{foreach from=$pz_xg key=key item=goods_row}>
-	 <li>
-	    <div class="am-gallery-item">
-	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}> >
-		    <{if !$goods_row.is_can_store }>
-			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
-			<{/if}>
-	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
-			<{if $goods_row.is_can_store }>
-				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart goods_list_cart btnAddToCart"></a>
-				<form  style="display:none" class="formaddcart">
-					    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
-					    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
-					    <input id="goodsNum" type="text" name="goods[num]" value="1" />
-					    <input id="stock" type="text" name="stock" value="" />
-					    <input id="limit_nums" type="text" name="limit_nums" value="" />
-					    <input type="text" name="response_json" value="1" />
-				</form>
-			<{else}>
-				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px; margin-top:50px; margin-right:5px"></a>
-			<{/if}>
-			
-	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}>
-			<br>
-			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
-			</h3>
-	        <div class="am-gallery-desc" >
-			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
-			</div>
-	      </a>
-	    </div>
-	  </li>
-		<{/foreach}>
-	</ul>
 	
 	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
 	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_hs_cat.cat_name}></h2>
@@ -224,6 +180,52 @@
 	    </div>
 	  </li>
 	  <{/foreach}>
+	</ul>
+	
+	
+	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
+	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_xg_cat.cat_name}></h2>
+	  <nav class="am-titlebar-nav" >
+	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xg_cat.cat_id}>"   style="color:#cccccc">更多</a>
+	  </nav>
+	</div>
+	<!-- List -->
+
+	<!-- Gallery -->
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
+	  <{foreach from=$pz_xg key=key item=goods_row}>
+	 <li>
+	    <div class="am-gallery-item">
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}> >
+		    <{if !$goods_row.is_can_store }>
+			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
+			<{/if}>
+	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
+			<{if $goods_row.is_can_store }>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart goods_list_cart btnAddToCart"></a>
+				<form  style="display:none" class="formaddcart">
+					    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+					    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+					    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+					    <input id="stock" type="text" name="stock" value="" />
+					    <input id="limit_nums" type="text" name="limit_nums" value="" />
+					    <input type="text" name="response_json" value="1" />
+				</form>
+			<{else}>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart" style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px; margin-top:50px; margin-right:5px"></a>
+			<{/if}>
+			
+	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}>
+			<br>
+			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
+			</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
+			</div>
+	      </a>
+	    </div>
+	  </li>
+		<{/foreach}>
 	</ul>
 	
 	
