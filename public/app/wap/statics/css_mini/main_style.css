@@ -181,3 +181,8 @@ border-left-color: #5eb95e !important;
 .btnSetDefaultAddr {color:#999999;}
 
 .choosed-spec{border-left-color:#FF9900; border-left-style:solid; border-left-width:10%;}
+
+/* 商品列表样式 */
+.goods_list_qh{height:auto;filter:alpha(opacity=50); -moz-opacity:0.5; opacity:0.5; width:auto; white-space:nowrap; background:#333333; border-top-left-radius:20px;border-bottom-left-radius:20px; color:#FFFFFF; font-size:12px;padding:5px 10px; position:absolute; right:-4px;  margin-right:4px;}
+.goods_list_cart{float:right; color:#48a4b9; font-size:18px; height:30px; width:30px; background:none; border:1px solid #48a4b9; line-height:30px;margin-top:50px;margin-right:5px}
+

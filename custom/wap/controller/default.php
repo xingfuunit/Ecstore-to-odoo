@@ -212,5 +212,12 @@ class wap_ctl_default extends wap_controller{
     	$this->page('wap/company.html');
     }
     
+    /**
+     * 微信入口页面
+     */
+    public function enterpage(){
+    	echo $this->fetch('wap/enterpage.html');
+//     	$this->page('wap/enterpage.html');
+    }
 
 }
