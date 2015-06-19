@@ -143,7 +143,7 @@
 	 <{foreach from=$pz_hs key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}> >
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>"  >
 		    <{if !$goods_row.is_can_store }>
 			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
 			<{/if}>
@@ -190,7 +190,7 @@
 	  <{foreach from=$pz_xg key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}> >
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" >
 		    <{if !$goods_row.is_can_store }>
 			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
 			<{/if}>
@@ -238,7 +238,7 @@
 	 <{foreach from=$pz_xr key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}> >
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" >
 		    <{if !$goods_row.is_can_store }>
 			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
 			<{/if}>
@@ -285,7 +285,7 @@
 	 <{foreach from=$pz_jx key=key item=goods_row}>
 	 <li>
 	    <div class="am-gallery-item">
-	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" <{if !$goods_row.is_can_store }> style=" position:relative" <{/if}> >
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" >
 		    <{if !$goods_row.is_can_store }>
 			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
 			<{/if}>

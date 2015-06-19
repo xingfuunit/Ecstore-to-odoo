@@ -15,7 +15,7 @@
 
 .am-avg-sm-2 > li {width: 50% !important;}
 .am-gallery-default > li {padding:0px !important;margin-bottom:10px !important;clear: none!important; }
-.am-gallery-item{background:#fff;margin-left:5px;margin-right:5px;border: 1px solid #ddd;}
+.am-gallery-item{background:#fff;margin-left:5px;margin-right:5px;border: 1px solid #ddd;position:relative;}
 .am-gallery-item h3{ margin-left:5px; }
 
 .am-gallery{padding-left:5px!important;padding-right:5px!important;}
