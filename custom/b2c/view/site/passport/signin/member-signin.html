@@ -38,3 +38,29 @@
     </li>
   </ul>
 </form>
+
+<script>
+
+window.addEvent("domready", function() {//修复浏览器自动填充使得短信验证框不能正常显示bug，bySam 20150619
+	$(window).addEvents( {
+	"load" : loadListener
+	});
+	function loadListener() {
+		var myRequest=new Request({//建立Request对象
+	        url:'<{link app=b2c ctl=site_passport act=login_ajax_account}>',//要请求的地址
+	        method:'post',
+	        data:'uname='+$$('input[name=uname]').get('value'),
+	        onSuccess:function(data){//结束后重设内容
+	        	var rs=eval("("+data+")");
+	        	if(rs.needVerify === 'true') {
+                    Module.element(modname, '.action-need-verify').style.display = '';
+                    if(showVcode) {
+                        Module.element(modname, '.action-verifycode').style.display = 'none';
+                    }
+                }
+	        },
+	    }).send();
+	}
+});
+
+</script>
