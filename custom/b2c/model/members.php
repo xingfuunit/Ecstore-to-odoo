@@ -541,7 +541,7 @@ class b2c_mdl_members extends dbeav_model{
 			$search_member_type2 = $filter['search_member_type2'];
 			unset($filter['search_member_type2']);
 			
-			$aData = $this->db->select('select member_id from sdb_openid_openid');
+			$aData = $this->db->select('select member_id from sdb_pam_bind_tag');
 			if($aData){
 				//2=微信用户
 				if($search_member_type2==2){
