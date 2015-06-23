@@ -531,8 +531,42 @@ class b2c_mdl_members extends dbeav_model{
                 $obj_filter->extend_filter($filter);
             }
         }
+		
+		//--------------------------------------------------
+		//july by 2015-6-11
+		//原理：先搜索 sdb_openid_openid.member_id
+		//		如果搜索微信用户，把 $filter in member_id
+		//		如果搜索pc用户，把 $filter notin member_id
+		if($filter['search_member_type2']){
+			$search_member_type2 = $filter['search_member_type2'];
+			unset($filter['search_member_type2']);
+			
+			$aData = $this->db->select('select member_id from sdb_openid_openid');
+			if($aData){
+				//2=微信用户
+				if($search_member_type2==2){
+						
+					foreach($aData as $key=>$val){
+						$member[$key] = $val['member_id'];
+					}
+					$filter['member_id'] = $member;
 
-        if($filter['login_account_local'] || $filter['login_account_email'] || $filter['login_account_mobile']){
+				}else{//1=pc用户
+					foreach($aData as $key=>$val){
+						$member[$key] = $val['member_id'];
+					}
+					$filter['member_id|notin'] = $member;
+					print_r($filter);
+				}
+
+			}else{
+				return 0;
+			}
+		}
+		//july by 2015-6-11
+        //--------------------------------------------------
+		
+		if($filter['login_account_local'] || $filter['login_account_email'] || $filter['login_account_mobile']){
             if($filter['login_account_local']){
                 $aData = app::get('pam')->model('members')->getList('member_id',array('login_type'=>'local','login_account' => $filter['login_account_local']));
                 unset($filter['login_account_local']);
@@ -545,6 +579,7 @@ class b2c_mdl_members extends dbeav_model{
                 $aData = app::get('pam')->model('members')->getList('member_id',array('login_type'=>'mobile','login_account' => $filter['login_account_mobile']));
                 unset($filter['login_account_mobile']);
             }
+
             if($aData){
                 foreach($aData as $key=>$val){
                     $member[$key] = $val['member_id'];
@@ -555,6 +590,7 @@ class b2c_mdl_members extends dbeav_model{
             }
         }
 
+		//exit();
         $info_object = kernel::service('sensitive_information');
         if(is_object($info_object)) $info_object->opinfo($filter,'b2c_mdl_members',__FUNCTION__);
         $filter = parent::_filter($filter);
