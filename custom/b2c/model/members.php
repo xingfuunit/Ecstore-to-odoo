@@ -556,7 +556,7 @@ class b2c_mdl_members extends dbeav_model{
 						$member[$key] = $val['member_id'];
 					}
 					$filter['member_id|notin'] = $member;
-					print_r($filter);
+					//print_r($filter);
 				}
 
 			}else{
