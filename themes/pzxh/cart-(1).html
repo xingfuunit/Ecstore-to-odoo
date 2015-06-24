@@ -1021,8 +1021,8 @@ window.addEvent('domready', function(){
                                     try {
                                         window.CallCSharpMethod("softprint",storeprint);
                                     } catch(e) {}
-                                    winReload();
-                                    // alert(storeprint);
+                                    // winReload();
+                                    alert(storeprint);
                                  },
                                 onFailure: function(){
                                     pay_status = false;
@@ -1509,10 +1509,29 @@ function refreshProductList(){
             //----------------------
 
             // var totalPrice = document.getElementById('totalPrice').innerHTML.replace('￥','');
-            var totalPriceHTML = document.getElementById('totalPrice').innerHTML
+            var totalPriceHTML = document.getElementById('totalPrice').innerHTML;
+
+            var totalPrice = fetchMoneyInText(totalPriceHTML);
+
+
+            // deposite
+            var deposite = fetchMoneyInText(document.getElementById('deposit').innerHTML);
+
             document.getElement('.kkss').innerHTML = totalPriceHTML;
+            document.getElement('.zhye_other_val').innerHTML = '￥'+(totalPrice-deposite);
+
+            // jQuery('input[name=other_pay][value=2]').attr('checked','checked');
+            document.getElementById('defaultPaymentInDeposite').checked='checked';
+
+            document.getElement('.zhye_other_val').innerHTML = '￥'+(totalPrice-deposite);
+
+            var cashPaidInDeposite=fetchMoneyInText(document.getElementById('txtYuPrice').value);
+            document.getElementById('txtYuTotal').value='￥0';
+            document.getElementById('txtYuPrice').value=0;
+            
             checkPreMoney();
 
+            // cash
             document.getElementById('txtAmount').value = totalPriceHTML;
 
             document.getElement('.kkff').innerHTML = '<b>'+totalPriceHTML+'</b>';
@@ -1520,6 +1539,7 @@ function refreshProductList(){
             bindQuantityEvent('.p-quantity', setQuantity);
             bindQuantityExchangeEvent('.p-goodskg', setQuantity);
 
+            // cash
             // recalculate the change in cach pay
             document.getElementById('txtTotal').value=0;
             document.getElementById('txtPrice').value=0;
@@ -1670,6 +1690,13 @@ function checkPaid(paid,total){
     if(paid - total < 0)
         return false;
     return true;
+}
+
+function fetchMoneyInText(text){
+    var money = text.match(/\d+(?:\.\d+)?$/)[0] + '';
+    money=isNaN(parseFloat(money))?0:parseFloat(money);
+    money=parseInt(money*100)/100;
+    return money;
 }
 </script>
 
