@@ -210,6 +210,7 @@
         </menugroup>
         <menugroup name="会员日">
             <menu controller='admin_vipday' action='index' permission='vipday' display='true' order='81'>会员日设置</menu>
+	        <menu controller='admin_vipday' action='ctrl' permission='vipday' display='true' order='81'>微信会员日页面配置</menu>
         </menugroup>
     </workground>
 

@@ -42,6 +42,9 @@
     <service id="desktop_finder.b2c_mdl_orders">
         <class>b2c_finder_orders</class>
     </service>
+    <service id="desktop_finder.b2c_mdl_vipday">
+        <class>b2c_finder_vipday</class>
+    </service>
 
     <service id="desktop_finder.b2c_mdl_shop">
         <class>b2c_finder_shop</class>

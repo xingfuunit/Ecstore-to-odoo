@@ -131,16 +131,20 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function hyday(){
     	 
     	//倒序 显示
-    	$alist_date = $this->member_date;
-    	krsort($alist_date);
+    	$alist_date = $this->app->model('vipday')->getlist('*',array(),0,-1,' start_time DESC ');
     	foreach($alist_date as $k => &$v){
-    		$alist_date[$k]['is_start'] = 0;
     		if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
-    			$alist_date[$k]['is_start'] = 1;
+    			$alist_date[$k]['is_start'] = '1';
+    		}elseif(time() <= strtotime($v['start_time'])){
+    			$alist_date[$k]['is_start'] = '2';
+    		}else{
+    			$alist_date[$k]['is_start'] = 0;
     		}
     		//格式转换
     		$v['start_time'] = date('Y.m.d H:i',strtotime($v['start_time']));
     		$v['end_time'] = date('Y.m.d H:i',strtotime($v['end_time']));
+    		
+    		$v['img_url'] = base_storager::image_path($v['img_url']);
     	}
     	$this->pagedata['alist_date'] = $alist_date;
     	$this->pagedata['title'] = "会员日";
@@ -164,31 +168,4 @@ class b2c_ctl_wap_active extends wap_frontpage{
     				'active_url'=>'javascirpt:void(0);'
     		)
     );
-    
-    //会员日
-    var $member_date = array(
-    		2=>array(
-    				'start_time'=>'2015-05-13 00:00:00',
-    				'end_time'=>'2015-05-13 23:59:59',
-    				'alt'=>'周三会员日-全场海鲜8.8折',
-    				'image_name'=>'hx.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		),
-    		3=>array(
-    				'start_time'=>'2015-05-20 00:00:00',
-    				'end_time'=>'2015-05-20 23:59:59',
-    				'alt'=>'周三会员日-全场肉品8.8折',
-    				'image_name'=>'rl.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		),
-    		4=>array(
-    				'start_time'=>'2015-05-27 00:00:00',
-    				'end_time'=>'2015-05-27 23:59:59',
-    				'alt'=>'周三会员日-全场水果8.8折',
-    				'image_name'=>'sg.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		),
-    
-    );
-    
 }

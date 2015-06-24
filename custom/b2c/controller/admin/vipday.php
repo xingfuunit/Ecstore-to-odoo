@@ -24,4 +24,42 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 		
 		$this->display ( 'admin/vipday/index.html' );
 	}
+	function ctrl(){
+		//会员日
+		$this->finder('b2c_mdl_vipday',array(
+            'title'=>app::get('b2c')->_('首页广告'),
+            'actions'=>array(
+                array('label'=>app::get('b2c')->_('添加首页广告'),'icon'=>'add.gif','href'=>'index.php?app=mobileapi&ctl=admin_sales_ads&act=create','target'=>'_blank'),
+
+            )
+            ));
+		
+	}
+	function create(){
+		$this->singlepage('admin/vipday/detail.html');
+	}
+	
+	function save(){
+		$this->begin('');
+		$objAd = $this->app->model('vipday');
+		if ($objAd->save($_POST)) {
+			$vipday_name = $_POST ['id'];
+			$aData = kernel::database ()->select ( "update  sdb_b2c_vipday set current='false'" );
+			$aData = kernel::database ()->select ( "update  sdb_b2c_vipday set current='true' where id='{$vipday_name}'" );
+			$this->end(true,app::get('b2c')->_('保存成功'));
+		} else {
+			$this->end(true,app::get('b2c')->_('保存失败'));
+		}
+		 
+	}
+	
+	function edit($ad_id){
+		header("Cache-Control:no-store");
+		 
+		$this->path[] = array('text'=>app::get('b2c')->_('广告编辑'));
+		$objAd = $this->app->model('vipday');
+		$this->pagedata['adInfo'] = $objAd->dump($ad_id);
+		$this->singlepage('admin/vipday/detail.html');
+	}
+	
 }
