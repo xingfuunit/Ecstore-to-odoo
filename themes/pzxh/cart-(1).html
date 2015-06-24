@@ -1093,12 +1093,20 @@ window.addEvent('domready', function(){
         var x = $$('#txtPrice').get('value');
         var _sex=document.getElementById("txtPrice").value;
         var _tol=document.getElementById("txtTotal").value;
+
+        var total = document.getElementById("txtAmount").value.match(/\d+(?:\.\d+)?$/)[0] + '';
+        var paid = document.getElementById("txtPrice").value;
+        if(!checkPaid(paid, total)){
+            alert('实收金额必须大于或等于应收金额！');
+            return false;
+        }
+
         var other_cz    = '<{$iscz_date_md}>';
         //判断是否为充值卡商品，如果是将不允许使用该支付方式    
-         if(other_cz == 1){
-             alert('您好，购物车有充值卡商品，不允许支付！');
+        if(other_cz == 1){
+            alert('您好，购物车有充值卡商品，不允许支付！');
             return false;
-         }
+        }
         if(x == 0){
             window.confirm("请输入实收金额");
             return false;
@@ -1652,6 +1660,17 @@ function render_receipt(tpl,data){
 //             document.body.store('dialog-tip_show', this);
 //         },
 // });
+function checkPaid(paid,total){
+    paid=isNaN(parseFloat(paid))?0:parseFloat(paid);
+    paid=parseInt(paid*100)/100;
+
+    total=isNaN(parseFloat(total))?0:parseFloat(total);
+    total=parseInt(total*100)/100;
+
+    if(paid - total < 0)
+        return false;
+    return true;
+}
 </script>
 
 
