@@ -1021,8 +1021,7 @@ window.addEvent('domready', function(){
                                     try {
                                         window.CallCSharpMethod("softprint",storeprint);
                                     } catch(e) {}
-                                    // winReload();
-                                    alert(storeprint);
+                                    winReload();
                                  },
                                 onFailure: function(){
                                     pay_status = false;
@@ -1521,7 +1520,7 @@ function refreshProductList(){
             document.getElement('.zhye_other_val').innerHTML = '￥'+(totalPrice-deposite);
 
             // jQuery('input[name=other_pay][value=2]').attr('checked','checked');
-            document.getElementById('defaultPaymentInDeposite').checked='checked';
+            document.getElementById('defaultPaymentInDeposite').checked=true;
 
             document.getElement('.zhye_other_val').innerHTML = '￥'+(totalPrice-deposite);
 
