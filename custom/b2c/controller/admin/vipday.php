@@ -6,7 +6,7 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 		$this->app = $app;
 		header ( "cache-control: no-store, no-cache, must-revalidate" );
 	}
-	function index() {
+/* 	function index() {
 		
 		if ($_POST) {
 			if (! empty ( $_POST ['new_name'] )) {
@@ -23,13 +23,13 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 		$this->pagedata ['data'] = $aData;
 		
 		$this->display ( 'admin/vipday/index.html' );
-	}
-	function ctrl(){
+	} */
+	function index(){
 		//会员日
 		$this->finder('b2c_mdl_vipday',array(
-            'title'=>app::get('b2c')->_('首页广告'),
+            'title'=>app::get('b2c')->_('会员日管理后台'),
             'actions'=>array(
-                array('label'=>app::get('b2c')->_('添加首页广告'),'icon'=>'add.gif','href'=>'index.php?app=mobileapi&ctl=admin_sales_ads&act=create','target'=>'_blank'),
+                array('label'=>app::get('b2c')->_('添加会员日'),'icon'=>'add.gif','href'=>'index.php?app=mobileapi&ctl=admin_sales_ads&act=create','target'=>'_blank'),
 
             )
             ));
@@ -56,7 +56,7 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 	function edit($ad_id){
 		header("Cache-Control:no-store");
 		 
-		$this->path[] = array('text'=>app::get('b2c')->_('广告编辑'));
+		$this->path[] = array('text'=>app::get('b2c')->_('会员日管理编辑'));
 		$objAd = $this->app->model('vipday');
 		$this->pagedata['adInfo'] = $objAd->dump($ad_id);
 		$this->singlepage('admin/vipday/detail.html');
