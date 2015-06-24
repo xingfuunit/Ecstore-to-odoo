@@ -1513,7 +1513,8 @@ function refreshProductList(){
             bindQuantityExchangeEvent('.p-goodskg', setQuantity);
 
             // recalculate the change in cach pay
-            checkP(document.getElementById('txtPrice'));
+            document.getElementById('txtTotal').value=0;
+            document.getElementById('txtPrice').value=0;
 
             refreshProductListTaks.resetIsRun();
         },
