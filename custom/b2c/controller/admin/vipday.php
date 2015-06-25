@@ -29,7 +29,7 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 		$this->finder('b2c_mdl_vipday',array(
             'title'=>app::get('b2c')->_('会员日管理后台'),
             'actions'=>array(
-                array('label'=>app::get('b2c')->_('添加会员日'),'icon'=>'add.gif','href'=>'index.php?app=mobileapi&ctl=admin_sales_ads&act=create','target'=>'_blank'),
+                array('label'=>app::get('b2c')->_('添加会员日'),'icon'=>'add.gif','href'=>'index.php?app=b2c&ctl=admin_vipday&act=create','target'=>'_blank'),
 
             )
             ));
@@ -42,6 +42,11 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 	function save(){
 		$this->begin('');
 		$objAd = $this->app->model('vipday');
+		$_time = $_POST['start_time'];
+		$_time = strtotime("$_time");
+		$_time = date('Y-m-d',$_time);
+		$_POST['start_time'] = $_time . ' 00:00:00';
+		$_POST['end_time'] = $_time . ' 23:59:59';
 		if ($objAd->save($_POST)) {
 			$vipday_name = $_POST ['id'];
 			$aData = kernel::database ()->select ( "update  sdb_b2c_vipday set current='false'" );
@@ -58,7 +63,11 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 		 
 		$this->path[] = array('text'=>app::get('b2c')->_('会员日管理编辑'));
 		$objAd = $this->app->model('vipday');
-		$this->pagedata['adInfo'] = $objAd->dump($ad_id);
+		$adInfo = $objAd->dump($ad_id);
+		$_time = strtotime("{$adInfo['start_time']}");
+		$adInfo['_time'] = date('Y-m-d',$_time);
+		$this->pagedata['adInfo'] = $adInfo;
+		
 		$this->singlepage('admin/vipday/detail.html');
 	}
 	

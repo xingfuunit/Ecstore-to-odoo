@@ -19,12 +19,19 @@
 </tr>
 <tr>
   <th><{t}>开始时间：<{/t}></th>
-  <td><{input type="text" name="start_time" style="width:120px" vtype="required" value=$adInfo.start_time}><em><font color='red'>*</font></em></td>
+  <td>
+  <input type="hidden" name="start_time" value="start_time" />
+                <input class="logintext1"  size="10" maxlength="10" autocomplete="off" type="text" name="start_time" value="<{$adInfo._time}>" id="start_time" vtype="date"  />
+  00:00-23:59
+<em><font color='red'>*</font></em></td>
 </tr>
-<tr>
+<!-- <tr>
   <th><{t}>结束时间：<{/t}></th>
-  <td><{input type="text" name="end_time" style="width:120px" vtype="required" value=$adInfo.end_time}><em><font color='red'>*</font></em></td>
-</tr>
+  <td>
+  <input type="hidden" name="end_time" value="end_time" />
+                <input class="logintext1"  size="10" maxlength="10" autocomplete="off" type="text" name="end_time" value="<{$end_time}>" id="end_time" vtype="date"  />
+<em><font color='red'>*</font></em></td>
+</tr> -->
 <tr>
   <th><{t}>活动标题：<{/t}></th>
   <td><{input type="text" name="alt_name" style="width:120px" vtype="required" value=$adInfo.alt_name}><em><font color='red'>*</font></em></td>
@@ -119,3 +126,15 @@
          
     };
 </script>
+
+<script>
+	try {
+		Ex_Loader("picker", function() {
+			$('start_time').makeCalable();
+
+		});
+		} catch (e) {
+		$('start_time').makeCalable();
+
+	}
+</script>	
