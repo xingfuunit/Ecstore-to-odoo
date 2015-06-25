@@ -24,9 +24,8 @@
         </div>
         <div class="am-u-sm-4 am-list-thumb" style="width:100%" ><a <{if($v.is_start)}> href="<{$v.ad_url}>" <{/if}>><img style="width:100%" src="<{$v.img_url}>"  alt="<{$v.alt_name}>"/></a></div>
         <div style="border-top:1px dotted #ddd; margin-top:5px; clear:both " >
-          <div class="am-list-news-hd am-cf am-padding am-fl"  >活动日期：
-		  		<br />
-		  		<span class="am-text-warning"><{$v.start_time}>--<{$v.end_time}></span></div>
+          <div class="am-list-news-hd am-cf am-padding am-fl"  ><i class="am-icon-clock-o am-text-warning"></i>
+		  		<span class="am-text-default"><{$v.start_time}>--<{$v.end_time}></span></div>
         </div>
       </li>
 	  <{/foreach}>
