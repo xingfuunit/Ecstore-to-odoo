@@ -10,9 +10,9 @@
 	  <{foreach from=$alist_date key=k item=v}>
       <li class="am-g am-list-item-desced  am-list-item-thumb-left" style=" width:96%;margin:2%; border:1px solid #ccc; border-radius:5px;">
         <div style="border-bottom:1px dotted #ddd; margin-bottom:5px;" >
-          <div class="am-list-news-hd am-cf am-padding"> 活动日期：
-		  		<br>
-		  		<span class="am-text-warning"><{$v.start_time}>--<{$v.end_time}></span>
+          <div class="am-list-news-hd am-cf am-padding">
+          <div class="am-fl"  > <a href="<{$v.ad_url}>"><{$v.alt_name}></a></div>
+           
 		  	  <{if $v.is_start=='1'}>
               <button type="button" class="am-btn am-btn-warning am-round am-btn-xs am-fr">进行中</button>
 			  <{elseif $v.is_start=='2'}>
@@ -24,7 +24,9 @@
         </div>
         <div class="am-u-sm-4 am-list-thumb" style="width:100%" ><a href="<{$v.ad_url}>"><img style="width:100%" src="<{$v.img_url}>"  alt="<{$v.alt_name}>"/></a></div>
         <div style="border-top:1px dotted #ddd; margin-top:5px; clear:both " >
-          <div class="am-list-news-hd am-cf am-padding am-fl"  style="width:100%"> <a href="#"><{$v.alt}></a>          </div>
+          <div class="am-list-news-hd am-cf am-padding am-fl"  >活动日期：
+		  		
+		  		<span class="am-text-warning"><{$v.start_time}>--<{$v.end_time}></span></div>
         </div>
       </li>
 	  <{/foreach}>
