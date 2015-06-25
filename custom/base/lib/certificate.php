@@ -208,10 +208,8 @@ class base_certificate{
     	if($params['method'] == 'ectools.branch.sync'){//这里是仓库同步,需要用回原来的sign
     		return strtoupper(md5(strtoupper(md5(self::assemble($params))) . self::token()));
     	}else{
-    		return md5(MATRIX_CERTI.MATRIX_KEY.$params['matrix_timestamp']);
+    		return strtoupper(md5(strtoupper(md5(self::pz_assemble($params)))));;
     	}
-    	 
-    	
     }
     
     static function assemble($params) 
@@ -225,6 +223,25 @@ class base_certificate{
             $sign .= $key . (is_array($val) ? self::assemble($val) : $val);
         }
         return $sign;
+    }//End Function
+    
+    //品珍认证方式
+    static function pz_assemble($params)
+    {
+    	if(!is_array($params))  return null;
+    	ksort($params, SORT_STRING);
+    
+    	$sign = '';
+    	foreach ($params as $key => $val ) {
+    		if (is_null($val) || empty($val) || !isset($val) || !$val || $val=='Array') {
+    			continue;
+    		}
+    		if (is_bool($val)) {
+    			$val = ($val ? 1 : 0);
+    		}
+    		$sign .= $key . (is_array($val) ? self::pz_assemble($val) : $val);
+    	}
+    	return $sign;
     }//End Function
 
     static function certi_id(){ return self::get('certificate_id'); }
