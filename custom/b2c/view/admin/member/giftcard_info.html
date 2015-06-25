@@ -1,0 +1,37 @@
+<style>
+  .finder-list td {overflow:visible;}
+  .finder-detail-content {overflow:visible !important;}
+</style>
+<div class="tableform subtableform">
+  <{if count($gclogList.data) > 0}>
+  <div class="division">
+    <div class="table-grid">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridlist">
+      
+        <thead>
+          <th><{t}>操作人<{/t}></th>
+          <th><{t}>数量<{/t}></th>
+          <th><{t}>操作时间<{/t}></th>
+          <th><{t}>有效截止日期<{/t}></th>
+          <th><{t}>备注<{/t}></th>
+          <th><{t}>操作<{/t}></th>
+        </tr>
+      </thead>
+      <tbody>
+      	<{foreach from=$gclogList.data item=gclog key=key name="item" }>
+        <tr>
+          <td><{$gclog.op_name}></td>
+          <td ><{$gclog.nums}></td>
+          <td ><{$gclog.alttime|cdate:FDATE}></td>
+          <td><{$gclog.d_valid|cdate:FDATE}></td>
+          <td><{$gclog.log_text}></td>
+          <th><a href="index?app=b2c&ctl=admin_member_giftcardrule&act=export_giftcardlog&log_id=<{$gclog.log_id}>" target='_self'><{t}>导出<{/t}></a></th>
+        </tr>
+        <{/foreach}>
+      </tbody>
+      </table>
+    </div>
+     <{$pager}>
+  </div>
+  <{/if}>
+</div>

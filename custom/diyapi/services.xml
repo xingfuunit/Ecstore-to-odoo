@@ -1,0 +1,12 @@
+<services>
+
+	<!--
+	<service id="service_id">
+		<class>service_class</class>
+	</service> -->
+	
+	<service id="api.diyapi.hello">
+        <class>diyapi_rpc_hello</class>
+    </service>
+
+</services>

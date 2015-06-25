@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'/>
+<link rel="stylesheet" href="/public/app/wap/statics/css/lobster.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js" ></script>
+
+<title><{$title}></title>
+</head>
+
+<body>
+	<div class="container">
+		<form action="<{$post_url}>" method="POST" name="SearchForm">
+		<div style="margin:20px 0; color:red; font-weight:700; font-size:22px;"  >删除龙虾活动多余会员数据操作，非技术人员请勿操作</div>
+		<ul>
+			<li> 
+				<span>请输入校验密码：</span>
+				<input type="text" name="pwd" id="pwd" />
+			</li>
+		</ul>
+		
+		<div style="margin:30px 0; text-align:center;"><input type="button" onclick="sub()" value="提交" ></div>
+		</form>
+		
+		<div class="">
+			<div style="margin:20px 0; color:red; font-weight:700; font-size:22px;">处理结果 (处理总数：<{$count}>  删除总数：<span id="exc_count">0</span>)</div>
+			
+			<ul id="show_exc">
+				<li></li>
+			</ul>
+		
+		</div>
+		
+	</div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+	function sub(){
+		if(pwd==''){
+			alert('请输入校验密码');
+			return false;
+		}
+		var start = 1;//由mysql第一条数据开始
+		var limit = '<{$limit}>';
+		var pwd = $('#pwd').val();
+		var exc_count = 0;
+		var post_url = '<{$post_url}>';
+		
+		ajax_sub(start,limit,pwd,exc_count,post_url);
+
+	}
+	
+	
+	function ajax_sub(start,limit,pwd,exc_count,post_url){
+		
+		var sub = parseInt(start) + parseInt(limit);
+		var html = "<li>正在处理"+ start +" 到 "+ sub +"...</li>";
+		$('#show_exc').append(html);
+		
+		$.ajax({
+		    type: 'POST',
+		    url:  post_url,
+		    data: {start:start,limit:limit,pwd:pwd,exc_count:exc_count},
+			async: true,
+		    success: function(data){
+				if(data.status == 1){
+					console.log(data);
+					$text = '处理完成 ..处理数：'+data.limit+'  删除数:'+data.exc_num;
+					$("#show_exc li:last").text($text);
+					$("#exc_count").text(data.exc_count);
+					ajax_sub(data.start,data.limit,data.pwd,data.exc_count,data.post_url);
+				}
+				if(data.status == 2){
+					alert(data.msg);
+					$("#show_exc li:last").text(data.msg);
+					return false;
+				}
+				if(data.status == 0){
+					alert(data.msg);
+					$("#show_exc li:last").remove();
+					return false;
+				}
+				
+			} ,
+		    dataType: 'json'
+		});
+	}
+</script>

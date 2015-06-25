@@ -1,0 +1,61 @@
+<div class="loging-list" id="page_login" style="margin-top: 80px">
+    <div class="top-title">
+        <div class="login-center" >
+            <span>ShopEx  WEBPOS收银系统V3.0</span>
+        </div>
+    </div>
+    <div>
+        <div style="float: right; width:80px; hight:38px; padding: 5px; font-size: 14px;   border:1px solid #8faace; background: #FFF; text-align: center; margin-right: 10px; margin-top: -20px;">
+                 <a   href="<{link app=b2c ctl=site_cart}>?type=x" style="color:#000000;">返回收银</a>
+            </div>
+        <div class="pay-count-title" style="margin: 0 auto; text-align: center; font-size: 24px;"><{t}>提交门店现金日结<{/t}></div>
+        <div class="oder-printbox" style="padding-bottom: 35px;">
+           <form action="<{link app=b2c ctl='site_storepassport' act='create_dailucash'}>" method="post" data-type="ajax">
+            <table width="90%" border="1" cellpadding="0" cellspacing="0"  style="margin: 0 auto;">
+              <tr>
+                <td  class="cash_right"><{t}>门店名称：<{/t}></td>
+                <td class="cash_left"><{$local_store.name}></td>
+                <input type="hidden" name="branch_name" value="<{$local_store.name}>" />
+                <input type="hidden" name="branch_id" value="<{$local_store.branch_id}>" />
+                <input type="hidden" name="staff_name" value="<{$staff_name}>" />
+                <input type="hidden" name="staff_id" value="<{$account.staff}>" />
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>存入银行名称：<{/t}></td>
+                <td  class="cash_left"><input type="text" name="bank_name" vtype="required"/></td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>存入银行账号：<{/t}></td>
+                <td  class="cash_left"><input type="text" name="bank_num" vtype="required"/></td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>存入金额：<{/t}></td>
+                <td  class="cash_left"><span class="upper">大写：<input type="text" name="import_money_upper" vtype="required"/></span><span class="upper">小写：<input type="text" name="import_money" vtype="required"/>元</span></td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>现金期初余额：<{/t}></td>
+                <td  class="cash_left"><span class="upper">大写：<input type="text" name="cash_amount_upper" vtype="required"/></span><span class="upper">小写：<input type="text" name="cash_amount" vtype="required"/>元</span></td>
+              </tr>
+              <tr>
+                <td  class="cash_right"><{t}>门店现金结余：<{/t}></td>
+                <td  class="cash_left"><span class="upper">大写：<input type="text" name="cash_balance_upper" vtype="required"/></span><span class="upper">小写：<input type="text" name="cash_balance" vtype="required"/>元</span></td>
+              </tr>
+              <tr>
+                <td valign="top" colspan="2" style="padding: 5px 5px 5px 20px;"><{t}>备注：<{/t}><textarea name="memo" class="action-remark-textarea" cols="60" rows="3" placeholder="请在此填写您对该日结的特殊要求或说明，最多300字。"></textarea></td>
+
+              </tr>
+              <tr>
+                <td  style="padding: 5px 5px 5px 20px;border-right: none;">出纳收款人签名：</td>
+                <td  style="padding: 5px 50px 5px 20px;border-left: none;text-align: right;"><{t}>录入人：<{/t}><{$staff_name}></td>
+              </tr>
+              <tr>
+                <td colspan="2" style="padding: 5px 5px 5px 20px; text-align: center;">
+                    <{assign var='label' value='提 交'}>
+                    <{button type="submit" class="login-reg" style="margin:0 aotu;" label=$__b2c=$label|t:'b2c' rel="_request"}>
+                </td>
+              </tr>
+            </table>
+           </form>
+          </div>                     
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<{include file='wap/member/header.html' title='新增收货地址'}>
+<div   style=" text-align:left" >
+  <div  style="font-size:14px;">
+    <div class="am-modal-bd"  style=" text-align:left" >
+      <div class="am-panel-group" id="accordion">
+  <div class="am-panel am-panel-default">
+    <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
+      <div class="am-panel-bd"  style="padding:0;">
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <div class="am-list-news-bd">
+    <form class="am-form am-form-horizontal form" id="address_form" action="<{link app=b2c ctl=wap_cart act=shipping_save arg0=$is_fastbuy}>" method="post" data-type="ajax">
+    <div>
+    <label for="doc-ipt-3" class="col-sm-2 am-form-label">地区</label>
+    <div class="col-sm-10">
+      <{input type="region_new" name="area" required="true" value=$area app="ectools" callback=""}>
+      <div id="regiondata"></div>
+    </div>    
+  </div>
+  <div>
+    <label for="doc-ipt-3" class="col-sm-2 am-form-label">收货地址</label>
+    <div class="col-sm-10">
+      <input type="hidden" class="text" name="addr_area" />
+      <input type="text" id="doc-ipt-3" class="text am-input-sm" name="addr" value="<{$edit_addr.addr}>" placeholder="收货地址" required="required" data-caution="请填写收货地址"/>
+    </div>
+  </div>
+
+  <div>
+    <label for="doc-ipt-pwd-2" class="col-sm-2 am-form-label">邮编</label>
+    <div class="col-sm-10">
+      <input type="text" id="doc-ipt-pwd-2" class="text am-input-sm" name="zip" value="<{$edit_addr.zip}>" placeholder="邮编" <{if $site_checkout_zipcode_required_open == 'true'}> required="required" data-caution="邮编不能为空"<{/if}>/>
+    </div>
+  </div>
+  
+   <div>
+    <label for="doc-ipt-pwd-2" class="col-sm-2 am-form-label">收货人姓名</label>
+    <div class="col-sm-10">
+      <input type="text" class="text am-input-sm" id="doc-ipt-pwd-2" name="name" value="<{$edit_addr.name}>" required="required" data-caution="请填写收货人姓名" placeholder="收货人姓名"/>
+    </div>
+  </div>
+  
+   <div>
+    <label for="doc-ipt-pwd-2" class="col-sm-2 am-form-label">手机</label>
+    <div class="col-sm-10">
+      <input type="text" class="text am-input-sm" id="doc-ipt-pwd-2" name="mobile" value="<{$edit_addr.mobile}>" vtype="mobile" data-caution="请填写手机号码" placeholder="手机"/>
+    </div>
+  </div>
+  
+     <div>
+    <label for="doc-ipt-pwd-2" class="col-sm-2 am-form-label">固定电话</label>
+    <div class="col-sm-10">
+      <input type="text" class="text am-input-sm" name="tel" value="<{$edit_addr.tel}>" vtype="tel" id="doc-ipt-pwd-2" placeholder="固定电话"/>
+    </div>
+  </div>
+  
+   <div>
+   <div class="col-sm-10">
+    <label class="am-checkbox checkout_box" style="line-height: 23px;">
+      <input type="checkbox" value="1" name="def_addr" id="def_addr_check">
+     	 设为默认收货地址
+    </label>
+    </div>
+  </div>
+  
+  <input type="hidden" name="nextPage" value="<{$nextPage}>" />
+  
+</form>
+
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+    </div>
+<button type="submit" class="am-btn am-btn-primary btn  am-btn-danger am-margin">保存</button>
+  </div>
+</div>
+<script src="<{$env.base_url}>/data/misc/region_data.js" type="text/javascript"></script>
+<script src="<{$env.statics_host_url}>/ectools/statics/js/region_new.js" type="text/javascript"></script>
+<script>
+    (function(){
+        $('.btn').bind('click',function(e){
+        	var select_list = $('#address_form').find('span.region select');
+            if( !checkRegionSelect(select_list) ){
+                js_alert('js-alert','请选择完整的地区！');
+                return false;
+            }
+        	$('#address_form').submit();
+        });
+    })();
+</script>

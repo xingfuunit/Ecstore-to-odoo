@@ -1,0 +1,72 @@
+<form action="index.php?app=b2c&ctl=admin_local_staff&act=toadd" method="post" class="form-handling" id="member-form">
+<div class="division">
+  <input type="hidden" value="<{$staff.staff_id}>" name="staff_id">
+  <ul>
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>登录名<{/t}>：</label>
+      <span class="form-act"><{input type="text" name="login_name" size="20" vtype="required" value=$staff.login_name}></span>
+    </li>
+
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> <{t}>员工姓名<{/t}>：</label>
+      <span class="form-act"><{input type="text" name="staff_name"  vtype="required" value=$staff.staff_name }></span>
+    </li>
+
+    <li class="form-item">
+      <label for="" class="form-label"> &nbsp;&nbsp;门店：</label>
+      <span class="form-act">
+          <select name="local_id" class="x-input" style="width:120px;">
+              <{foreach from=$local item=i}>
+              <option value="<{$i.local_id}>" <{if $staff.local_id==$i.local_id}>selected<{/if}>><{$i.local_name}></option>
+              <{/foreach}>
+          </select>
+      </span>
+    </li>
+    <li class="form-item">
+      <label for="" class="form-label"><em class="text-warn">*</em> 是否失效：</label>
+      <span class="form-act">
+          <input type="radio" name="disabled"  value="false" class="x-input" <{if !$staff.disable}>checked<{/if}>>否
+          <input type="radio" name="disabled"  value="true" class="x-input" <{if $staff.disable}>checked<{/if}>>是
+      </span>
+    </li>
+
+    
+  </ul>
+  <div class="table-action">
+    <button class="btn" type="submit" id="member-form-submit"><span><span><{t}>保存<{/t}></span></span></button></div>
+</div>
+</form>
+
+<style>
+.form-label{width:80px; display:block; float:left; line-height:24px;}
+.form-act{float:left;}
+</style>
+
+<script>
+(function(){
+    var _form = $('member-form');
+    var btn =$('member-form-submit');
+    var finder = finderGroup['<{$env.get.finder_id}>'];
+    
+    _form.store('target',{
+        
+        onSuccess:function(response){
+            var hash_res_obj = JSON.decode(response);
+            if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+            {
+                try{
+                    var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                }catch(e){}
+                
+                if(_dialogIns)
+                {   
+                    _dialogIns.close();
+                    finder.refresh.delay(400,finder);
+                }
+            }   
+        }
+    });
+    
+})();
+        
+</script>

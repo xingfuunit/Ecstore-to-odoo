@@ -1,0 +1,110 @@
+<{include file='wap/product/popup.html'}>
+
+
+
+
+<!-- Header -->
+
+<{include file='wap/member/header.html' title='收藏夹' goback='/wap/member.html'}>
+
+<{if !$favorite}>
+<div class="am-list-news-bd">
+<div style="margin:20px auto;color:red;text-align: center;font-size: 16px;">暂无收藏</div>
+</div>
+<{else}>
+<div class="am-list-news-bd">
+    <ul class="am-list">
+      <!--缩略图在标题左边-->
+      <{foreach from=$favorite item="good"}>
+      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+        <div class="am-u-sm-4 am-list-thumb" style="position:relative">
+		<a href="javascript:"  arg0="<{$good.goods_id}>" id="del_fav" style="color:#FF0000; position:absolute; left:0px; top:-10px;"><i class="am-icon-times-circle-o am-icon-sm"></i></a>
+		<a href="<{link app=b2c ctl=wap_product act=index arg=$good.spec_desc_info.0.product_id}>">
+        <{if $good.udfimg == 'true'}>
+        {assign var="gimage" value=$good.thumbnail_pic|default:$defaultImage}>
+        <{else}>
+        <{assign var="gimage" value=$good.image_default_id|default:$defaultImage}>
+        <{/if}>
+		<img  src="<{$gimage|storager:'s'}>"  alt="<{$good.name|escape:html}>"/>
+		</a></div>
+
+        <div class="am-u-sm-8 am-list-main" style="width:40%; float:right; color:#999999">
+          <h3 class="am-list-item-hd">
+            <a style=" color:#999999" href="<{link app=b2c ctl=wap_product act=index arg=$good.spec_desc_info.0.product_id}>"><{$good.name}> <{$good.brief}></a>
+          </h3>
+          <div class="am-list-item-text">
+		  </div>
+		  <div style="clear:both; color:#FF0000;"><h1 style="float:left"><{$good.price|cur_odr}></h1></div>
+        </div>
+      </li>
+      <{/foreach}>
+    </ul>
+
+</div>
+<a href="javascript:" class="am-fr am-text-danger am-margin" id="del_all_fav">删除全部</a>
+<{/if}>
+
+<input type="hidden" id="b2c-fav-current-page" value="<{$current_page}>" />
+<div style="text-align: center;">  <{wap_pagers data=$pager}></div>
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+  <div class="am-modal-dialog">
+    <div class="am-modal-bd" id="my-alert-msg">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+</div>
+
+<script>
+$('#del_fav').click(function(){
+
+	arg0 = $(this).attr("arg0");
+        $.ajax({
+            url:'<{link app=b2c ctl=wap_member act=ajax_del_fav}>',
+            data:'gid='+arg0,
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success) {
+                	show_msg(data.success,true);
+                //	location.reload();
+                } else {
+                	show_msg(data.error,false);
+                }
+            }
+        });
+        
+    });
+    
+$('#del_all_fav').click(function(){
+        $.ajax({
+            url:'<{link app=b2c ctl=wap_member act=ajax_del_all_fav}>',
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success) {
+                	show_msg(data.success,true);
+                } else {
+                	show_msg(data.error,false);
+                }
+            }
+        });
+
+    });
+function show_msg(msg,reload) {
+	$("#my-alert-msg").text(msg);
+	$('#my-alert').modal({
+       onConfirm: function(options) {
+       		if (reload) {
+       			location.reload();
+       		}
+        },
+	
+	});
+}
+</script>
+
+
+

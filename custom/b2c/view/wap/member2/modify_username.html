@@ -1,0 +1,33 @@
+<div class="full-screen">
+  <header>
+    <div class="a-bar">
+      <a href="javascript:history.back()" class="a-back"><i class="arr left"></i>返回</a>
+      <div class="a-name">会员绑定</div>
+    </div>
+  </header>
+  <div class="full-padding">
+    <form action="<{link app=b2c ctl='wap_member' full='1' act='save_weixin'}>" method="post" class="form" data-type="ajax">
+      <div class="c-g">
+        <label for="" class="c-l" style="width: 100px;">
+          <em class="f-red">*</em>手机号/邮箱：
+        </label>
+        <div class="c">
+          <input type="text" name="login_account" class="text a-account" style="width: 90%;" required="required" placeholder="手机号/邮箱" autofocus data-caution="手机号/邮箱不能为空">
+        </div>
+      </div>
+      <div class="notice"></div>
+      <div class="c-g">
+        <label for="" class="c-l" style="width: 100px;">
+          <em class="f-red">*</em>密码：
+        </label>
+        <div class="c">
+          <input type="password" name="login_password" maxlength="20" placeholder="6-20位数字/字母组合" required="required" pattern=".{6,20}" class="text" style="width: 90%;" data-caution="密码不能为空">
+        </div>
+      </div>
+      <div class="notice"></div>
+      <div class="btn-bar">
+        <button type="submit" class="btn orange" rel="_request">提交</button>
+      </div>
+    </form>
+  </div>
+</div>

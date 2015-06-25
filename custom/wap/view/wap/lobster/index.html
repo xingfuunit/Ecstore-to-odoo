@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'/>
+<link rel="stylesheet" href="/public/app/wap/statics/css/lobster.css">
+
+<title><{$title}></title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="lobster_banner"><img src="<{if $is_show_share}>/public/app/wap/statics/images/lobster/lobster_back1_share.jpg<{else}>/public/app/wap/statics/images/lobster/lobster_back1.png<{/if}>"></div>
+		<div class="lobster_body">
+				<div class="bnt1"><a href="<{$zan_url}>"><img src="/public/app/wap/statics/images/lobster/bnt1.png"></a></div>
+				<div class="song_txt"><{$m_info['m_nick_name']}>已成功获得<span class=""><{$m_info['z_count']}></span>个好友的支持</div>
+				<div class="song_tips">30个好友支持即可获得品珍鲜活送出的熟冻波士顿龙虾一只</div>
+				<div class="bnt2"><a href="<{$join_url}>"><img src="/public/app/wap/statics/images/lobster/bnt2.png"></a></div>
+				<div class="bnt3"><a href="<{$lobster_rule}>"><img src="/public/app/wap/statics/images/lobster/bnt3.png"></a></div>
+				<div style="clear:both"></div>
+			<div class="lobster_comment">
+				<div class="c_header">看看谁支持了<{$m_info['m_nick_name']}></div>
+					<div class="comment_area">
+						<{foreach from=$zan_list item=i}>
+						<div class="lobster_com_list">
+							<div class="u_head">
+								<{if $i.z_headimgurl }>
+									<img src="<{$i.z_headimgurl}>">
+								<{else}>
+									<img src="/public/app/wap/statics/images/lobster/test_header.jpg">
+								<{/if}>
+							</div>
+							<div class="com_u_det">
+								<div class="u_name"><{$i.z_nick_name}><span class="c_time"><{$i.z_time}></span></div>
+								<div class="u_comment">送你一只龙虾，我只能帮你到这了~</div>
+							</div>
+							<div style="clear:both"></div>
+							<div class="com_line"></div>
+						</div>
+						<{/foreach}>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<!-- 数据统计 -->
+	<div style="display:none">
+		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253646661'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1253646661' type='text/javascript'%3E%3C/script%3E"));</script><span id="cnzz_stat_icon_1253646661"><a href="http://www.cnzz.com/stat/website.php?web_id=1253646661" target="_blank" title="站长统计">站长统计</a></span><script src=" http://s11.cnzz.com/z_stat.php?id=1253646661" type="text/javascript"></script><script src="http://c.cnzz.com/core.php?web_id=1253646661&amp;t=z" charset="utf-8" type="text/javascript"></script>
+	</div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+		window.onload=function(){
+			var is_show = <{$is_show_share}>;
+			if(is_show){
+				alert('请点击右上角分享');
+			}
+		}
+</script>

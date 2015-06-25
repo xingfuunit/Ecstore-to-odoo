@@ -1,0 +1,91 @@
+<services>
+
+	<!--
+	<service id="service_id">
+		<class>service_class</class>
+	</service> -->
+	
+	<service id="api.mobileapi.indexad">
+        <class>mobileapi_rpc_indexad</class>
+    </service>
+
+    <service id="api.mobileapi.member">
+        <class>mobileapi_rpc_member</class>
+    </service>
+    
+    <service id="api.mobileapi.comment">
+        <class>mobileapi_rpc_comment</class>
+    </service>
+    
+    <service id="api.mobileapi.goods">
+        <class>mobileapi_rpc_goods</class>
+    </service>
+    
+    <service id="api.mobileapi.cart">
+        <class>mobileapi_rpc_cart</class>
+    </service>
+    
+    <service id="api.mobileapi.order">
+        <class>mobileapi_rpc_order</class>
+    </service>
+    
+    <service id="api.mobileapi.paycenter">
+        <class>mobileapi_rpc_paycenter</class>
+    </service>
+    
+    <service id="api.mobileapi.passport">
+        <class>mobileapi_rpc_passport</class>
+    </service>
+    
+    <service id="api.mobileapi.article">
+        <class>mobileapi_rpc_article</class>
+    </service>
+
+    <service id="api.mobileapi.keywords">
+        <class>mobileapi_rpc_keywords</class>
+    </service>
+
+    <service id="api.mobileapi.aftersales">
+        <class>mobileapi_rpc_aftersales</class>
+    </service>
+
+    <service id="api.mobileapi.point">
+        <class>mobileapi_rpc_point</class>
+    </service>
+
+    <service id="api.mobileapi.salesgoods">
+        <class>mobileapi_rpc_salesgoods</class>
+    </service>
+    <service id="api.mobileapi.staff">
+        <class>mobileapi_rpc_staff</class>
+    </service>
+
+
+    <service id="desktop_finder.mobileapi_mdl_indexad">
+        <class>mobileapi_finder_indexad</class>
+    </service>
+    <service id="desktop_finder.mobileapi_mdl_indexad_group">
+        <class>mobileapi_finder_indexad_group</class>
+    </service>
+
+    <service id="desktop_finder.mobileapi_mdl_keywords">
+        <class>mobileapi_finder_keywords</class>
+    </service>
+
+    <service id="desktop_finder.mobileapi_mdl_sales_goods">
+        <class>mobileapi_finder_sales_goods</class>
+    </service>
+
+    <service id="desktop_finder.mobileapi_mdl_sales_ads">
+        <class>mobileapi_finder_sales_ads</class>
+    </service>
+	
+    <service id="desktop_finder.mobileapi_mdl_sales_touchscreen">
+        <class>mobileapi_finder_sales_touchscreen</class>
+    </service>
+	
+    <service id="desktop_finder.mobileapi_mdl_sales_touchscreendevice">
+        <class>mobileapi_finder_sales_touchscreendevice</class>
+    </service>
+	
+</services>

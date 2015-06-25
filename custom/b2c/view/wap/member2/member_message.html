@@ -1,0 +1,24 @@
+
+<div class="post-message">
+  <form action="<{link app=b2c ctl=wap_member full=1 act=send_msg}>" method="post">
+    <ul>
+      <li class="form-item" style="margin-left: 7%; margin-right: 7%; height: 40px; line-height: 40px;">
+        <label for="" class="form-label"><{t}>收件人<{/t}>：</label>
+        <span class="form-act"><{t}>管理员<{/t}></span></li>
+      <li class="form-item" style="margin-left: 5%; margin-right: 5%; padding-left: 2%; padding-right: 2%; background: none repeat scroll 0% 0% rgb(245, 245, 245); border-radius: 4px; height: 40px; line-height: 40px;">
+        <label for="" class="form-label">标题：</label>
+        <span class="form-act" >
+        <input type="text" name="subject" id="" class="x-input" vtype="required" style="width: 80%; background: none repeat scroll 0% 0% rgb(245, 245, 245);">
+        </span> </li>
+      <li class="form-item" style="height: 60px; margin-top: 1.5%;margin-right: 36px; padding:1.5px 0 0 2%; margin-left: 5%;"><a style=" float:left;display: block;">
+        <label for="" class="form-label">内容：</label>
+        </a> <span class="form-act" style="height: 60px; width: 100%;">
+        <textarea name="comment" id="" class="x-input"  vtype="required"  style="width:80%;height:60px;resize:none;float:left"></textarea>
+        </span> </li>
+      <li class="form-item" style="height: 72px; line-height: 72px; margin-left: 7%; margin-right: 7%; padding-top: 6%;"> <span class="form-act">
+        <button type="submit" class="btn btn-caution action-sendmsg" rel="_request" style="background-image: linear-gradient(#fc6b00, #fc6b00);border: 0px solid #9aa1a9;border-radius: 4px; margin-bottom: 2%;margin-top: 2%;"><span><span><{t}>发送<{/t}></span></span></button>
+        <button type="submit" class="btn btn-simple action-savetodrafts" name="has_sent" value="false" rel="_request" style="background-image: linear-gradient(#fc6b00, #fc6b00);border-radius: 4px;border: 0px solid #9aa1a9;"><span><span><{t}>保存到草稿箱<{/t}></span></span></button>
+        </span> </li>
+    </ul> 
+  </form>
+</div>

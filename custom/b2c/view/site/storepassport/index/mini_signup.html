@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" style="*height:100%;*overflow:hidden;">
+<head>
+<meta charset="UTF-8">
+<title><{t}>用户注册<{/t}></title>
+
+<{if defined("DEBUG_CSS") && DEBUG_CSS}>
+<{css src="base.css" app="b2c"}>
+<{css src="theme.css" app="b2c"}>
+<{else}>
+<{css src="basic.min.css" app="b2c" pdir="css_mini"}>
+<{/if}>
+<{lang_script src="lang.js" app="site"}>
+<{lang_script src="lang.js" app="b2c"}>
+<script>
+var Shop = <{$shopDefine|default:'null'}>;
+</script>
+<{if defined("DEBUG_JS") && DEBUG_JS}>
+<{script src="lab.js" app="site"}>
+<{script src="mootools.js" app="site"}>
+<{script src="jstools.js" app="site"}>
+<{script src="formplus.js" app="site"}>
+<{script src="shoptools.js" app="b2c"}>
+<{script src="goodscupcake.js" app="b2c"}>
+<{else}>
+<{script src="moo.min.js" app="site" pdir="js_mini"}>
+<{script src="ui.min.js" app="site" pdir="js_mini"}>
+<{script src="shop.min.js" app="b2c" pdir="js_mini"}>
+<{/if}>
+</head>
+<body style="*height:100%;*overflow:hidden;">
+  <div id="signupin_tags" class="signupin-tags clearfix">
+    <ul>
+      <li><a href="<{link app=b2c ctl=site_passport act=login}>?mini_passport=1">登录</a></li>
+      <li class="active"><a href="<{link app=b2c ctl=site_passport act=signup}>?mini_passport=1">注册</a></li>
+    </ul>
+  </div>
+  <div id="mini_signup" class="signupin-content mini-signup">
+    <!-- 注册表单 -->
+    <{include file="site/storepassport/member-signup.html"}>
+    <!-- / 注册表单 -->
+  </div>
+<script>
+var signup = $('mini_signup');
+
+var Query = {
+    check: function(url, element, fn){
+        new Request({
+            url: url,
+            link: 'cancel',
+            onSuccess: function(rs) {
+                var tips = element.retrieve('tips_instance', new formTips({
+                    target: element,
+                    where: 'after',
+                    single: true,
+                    store: true,
+                    autohide: false,
+                    destroy: true
+                })).hide();
+                if(rs) {
+                    rs = JSON.decode(rs);
+                    if(rs.error) {
+                        tips.show(rs.error, {type: 'error'});
+                    }
+                    else if(rs.success) {
+                        tips.show(rs.success, {type: 'success',autohide:3});
+                    }
+                }
+                fn&&fn.call(this, rs);
+            }
+        }).post(element.name + '=' + element.value);
+    }
+};
+
+signup.getElement('.action-user-check').addEvent('blur', function(e) {
+    var self = this;
+    var value = this.value;
+    Query.check('<{link app=b2c ctl=site_passport act=namecheck}>', this, function(rs){
+        if(validatorMap.email[1](self, value)) {
+            signup.getElement('.action-email-check').fireEvent('focusin').value = value;
+            self.retrieve('tips:instance', {hide:function(){}}).hide();
+        }
+    });
+});
+signup.getElement('.action-email-check').addEvent('blur', function(e) {
+    Query.check('<{link app=b2c ctl=site_passport act=emailcheck}>', this);
+});
+
+signup.getElement('[type=submit]').store('_ajax_config', {
+    progress:function(rs){
+        if(rs.error) {
+            <{if $valideCode == 'true'}>
+            changeCode(signup.getElement('img.auto-change-verify-handle'));
+            <{/if}>
+            return top.Message.error(rs.error,function(){
+                if(rs.redirect) location.href = rs.redirect;
+            });
+        }
+        if(rs.success) return top.Message.success(rs.success + '<br><b>系统即将跳转到注册前页面</b>', function(){
+            if(rs.redirect) top.location.href=rs.redirect;
+        });
+        if(rs.redirect) top.location.href=rs.redirect;
+    }
+});
+
+</script>
+</body>
+</html>

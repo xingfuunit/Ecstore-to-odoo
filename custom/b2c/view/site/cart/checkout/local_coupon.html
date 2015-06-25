@@ -1,0 +1,106 @@
+<!-- 使用优惠券 -->
+<div id="order_coupon" class="order-coupon" style="font-size: 20px; line-height:40px;">
+  <h3>
+   使用优惠券
+  </h3>
+  <div class="content" >
+    <p class="item">
+    <label for="for_select_coupon"><{t}>选择已有优惠券<{/t}>：</label>
+    <select name="coupon" id="for_select_coupon" <{if !$coupon_lists}>disabled="disabled"<{/if}>>
+      <option value=""><{t}>-- 选择优惠券 --<{/t}></option>
+      <{if $coupon_lists}>
+      <{foreach from=$coupon_lists item=list_coupon}>
+      <option value="<{$list_coupon.memc_code}>" data-coupon="<{$list_coupon.cpns_id}>"><{$list_coupon.coupons_info.cpns_name}></option>
+      <{/foreach}>
+      <{/if}>
+    </select>
+    <{button type="button" class="btn-simple action-confirm-coupon" label=$___b2c="确定"|t:"b2c"}>
+    </p>
+    <p class="item">
+      <label for="for_input_coupon"><{t}>如您有通过站外方式获得的优惠券<{/t}></label><br/>
+      请在此输入号码 : <input type="text" style="height: 35px;" name="coupon" id="for_input_coupon" size="30">
+      <span id="add_val" style="color: red;"></span>
+      <{button type="button" class="btn-simple action-confirm-coupon" label=$___b2c="确定"|t:"b2c"}>
+    </p>
+    <div class="used<{if !$aCart.object.coupon}> fold<{/if}> clearfix">
+     
+      <ul class="usedlist" id="dsssd">
+        <{foreach from=$aCart.object.coupon key=key item=coupon}>
+        <{if $coupon.used}>
+        <li>
+          <i title="<{$coupon.name}>"><{$coupon.name}></i>
+          <a href="javascript:void(0);" rel="<{$coupon.obj_ident}>" data-coupon="<{$coupon.cpns_id}>" data-code="<{$coupon.coupon}>" class="lnklike action-cancel-coupon">[取消使用]</a>
+        </li>
+        <{/if}>
+        <{/foreach}>
+      </ul>
+    </div>
+    <div class="list_zhekou">
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="免单" />
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="一折" />
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="二折" />
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="三折" />
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="四折" />
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="五折" />
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="六折" />
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="七折" />
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="八折" />
+        <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="九折" />
+
+    </div>
+  </div>
+</div>
+<script>
+  function add_coupon_val(e){
+      var _dom  = document.getElementById("for_input_coupon");
+      var _val  = document.getElementById("add_val");
+      var _vals  = document.getElementById("dsssd").getElementsByTagName("li")[0];
+         if(_vals != undefined){
+           alert("请先取消折扣！");
+           return false;
+         }
+          
+          _dom.value = '';
+          if(e=='一折'){
+            _dom.style.display="none";
+            _val.innerHTML="一折";
+            _dom.value="A01";
+          }else if(e == '二折'){
+            _dom.style.display="none";
+            _val.innerHTML="二折";
+            _dom.value="A02";
+          }else if(e == '三折'){
+            _dom.style.display="none";
+            _val.innerHTML="三折";
+            _dom.value="A03";
+          }else if(e == '四折'){
+            _dom.style.display="none";
+            _val.innerHTML="四折";
+            _dom.value="A04";
+          }else if(e == '五折'){
+            _dom.style.display="none";
+            _val.innerHTML="五折";
+            _dom.value="A05";
+          }else if(e == '六折'){
+             _dom.style.display="none";
+            _val.innerHTML="六折";
+            _dom.value="A06";
+          }else if(e == '七折'){
+            _dom.style.display="none";
+            _val.innerHTML="七折";
+            _dom.value="A07";
+          }else if(e == '八折'){
+            _dom.style.display="none";
+            _val.innerHTML="八折";
+            _dom.value="A08";
+          }else if(e == '九折'){
+            _dom.style.display="none";
+            _val.innerHTML="九折";
+            _dom.value="A09";
+          }else if(e == '免单'){
+            _dom.style.display="none";
+            _val.innerHTML="免单";
+            _dom.value="A00";
+          }
+  }    
+</script>

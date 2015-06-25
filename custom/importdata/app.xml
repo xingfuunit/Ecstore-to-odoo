@@ -1,0 +1,18 @@
+<app>
+    <name>DIYAPI</name>
+    <description>xml数据导入</description>
+
+    <author>
+        <name>jason</name>
+        <email>tly945@qq.com</email>
+        <url>http://www.iegss.com</url>
+    </author>
+
+    <version>1.0</version>
+    <license>Mit license</license>
+
+	<depends>
+		<app>base</app>
+	</depends>
+
+</app>

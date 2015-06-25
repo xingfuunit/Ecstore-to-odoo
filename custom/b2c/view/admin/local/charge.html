@@ -1,0 +1,37 @@
+<div class="tableform">
+  <div class="division">
+    <table width="100%" cellspacing="0" cellpadding="0">
+      <tr>
+        <th><label><{t}>时间：<{/t}></label></th>
+        <td><{$charge.end_time|cdate:FDATE_FTIME}></td>
+        <th><label><{t}>交班员：<{/t}></label></th>
+        <td><{$charge.jiaoban_name}></td>
+        <th><label><{t}>接班员：<{/t}></label></th>
+        <td><{$charge.jieban_name}></td>
+        <th><label><{t}>班次：<{/t}></label></th>
+        <td><{$charge.charge_num}></td>
+      </tr>
+      <tr>
+        <th><label><{t}>起始时间：<{/t}></label></th>
+        <td><{$charge.start_time|cdate:FDATE_FTIME}></td>
+        <th><label>截止时间：</label></th>
+        <td><{$charge.end_time|cdate:FDATE_FTIME}></td>
+         <th><label>合计订单数：</label></th>
+        <td><{$charge.order_nums}></td>
+         <th><label>合计金额：</label></th>
+        <td class="price0"><{$charge.amount|cur}></td>
+      </tr>
+      <tr>
+        <th><label><{t}>现金：<{/t}></label></th>
+        <td class="price0"><{$charge.cash|cur}></td>
+        <th><label><{t}>POS机：<{/t}></label></th>
+        <td class="price0"><{$charge.webpos|cur}></td>
+        <th><label><{t}>预存款：<{/t}></label></th>
+        <td class="price0"><{$charge.deposit|cur}></td>
+        <th><label><{t}>优惠券：<{/t}></label></th>
+        <td class="price0"><{$charge.coupon|cur}></td>
+      </tr>
+    </table>
+
+  </div>
+</div>

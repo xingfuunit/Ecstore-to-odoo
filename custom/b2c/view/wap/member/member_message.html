@@ -1,0 +1,105 @@
+
+<!-- Header -->
+<{include file='wap/member/header.html' title='意见反馈' goback='/wap/member.html'}>
+
+<div  id="my-alert02"  style=" text-align:left" >
+  <div  style="font-size:14px;">
+    <div style="padding:10px;">
+	
+	<!--留言开始-->
+	 <div class="am-form-group" style="width:100%">
+	  <input type="hidden" name="subject" id="subject" value="意见反馈" class="x-input" vtype="required" >
+      <textarea name="comment" id="comment" style="width:100%" rows="5" id="doc-ta-1"></textarea>
+    </div>
+   <!--留言结束-->
+    <div class="am-modal-footer" style="width:100%">
+	<button class="am-btn  am-btn-warning am-fr" id="sub_comment"  style="width:100%" type="button">提交</button>
+    </div>
+	
+   </div>	
+
+  </div>
+</div>
+
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+  <div class="am-modal-dialog">
+    <div class="am-modal-bd" id="my-alert-msg">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+</div>
+
+<script>
+$('#sub_comment').click(function(){
+
+	subject = $("#subject").val();
+	comment = $("#comment").val();
+        $.ajax({
+            url:'<{link app=b2c ctl=wap_member full=1 act=send_msg}>',
+            data:'subject='+subject+"&comment="+comment,
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+                if(data.success == '发送成功') {
+                	show_msg(data.success,true);
+                } else {
+                	show_msg(data.error,false);
+                }
+            }
+        });
+        
+    });
+    
+function show_msg(msg,reload) {
+	$("#my-alert-msg").text(msg);
+	$('#my-alert').modal({
+       onConfirm: function(options) {
+       		if (reload) {
+       			$("#comment").val("");
+       		}
+        },
+	
+	});
+}
+
+</script>
+
+
+<!--
+<header>
+    <div class="a-bar">
+        <a href="<{link app=b2c ctl=wap_member}>" class="a-back">
+            <i class="arr left"></i>
+            返回
+        </a>
+        <div class="a-name"><{$title}></div>
+        <div style="width: 10%;"></div>
+    </div>
+</header>
+<div class="post-message">
+  <form action="<{link app=b2c ctl=wap_member full=1 act=send_msg}>" method="post">
+    <ul>
+      <li class="form-item" style="margin-left: 7%; margin-right: 7%; height: 40px; line-height: 40px;">
+        <label for="" class="form-label"><{t}>收件人<{/t}>：</label>
+        <span class="form-act"><{t}>管理员<{/t}></span></li>
+      <li class="form-item" style="margin-left: 5%; margin-right: 5%; padding-left: 2%; padding-right: 2%; background: none repeat scroll 0% 0% rgb(245, 245, 245); border-radius: 4px; height: 40px; line-height: 40px;">
+        <label for="" class="form-label">标题：</label>
+        <span class="form-act" >
+        <input type="text" name="subject" id="" class="x-input" vtype="required" style="width: 80%; background: none repeat scroll 0% 0% rgb(245, 245, 245);">
+        </span> </li>
+      <li class="form-item" style="height: 60px; margin-top: 1.5%;margin-right: 36px; padding:1.5px 0 0 2%; margin-left: 5%;"><a style=" float:left;display: block;">
+        <label for="" class="form-label">内容：</label>
+        </a> <span class="form-act" style="height: 60px; width: 100%;">
+        <textarea name="comment" id="" class="x-input"  vtype="required"  style="width:80%;height:60px;resize:none;float:left"></textarea>
+        </span> </li>
+      <li class="form-item" style="height: 72px; line-height: 72px; margin-left: 7%; margin-right: 7%; padding-top: 6%;"> <span class="form-act">
+        <button type="submit" class="btn btn-caution action-sendmsg" rel="_request" style="background-image: linear-gradient(#fc6b00, #fc6b00);border: 0px solid #9aa1a9;border-radius: 4px; margin-bottom: 2%;margin-top: 2%;"><span><span><{t}>发送<{/t}></span></span></button>
+        <button type="submit" class="btn btn-simple action-savetodrafts" name="has_sent" value="false" rel="_request" style="background-image: linear-gradient(#fc6b00, #fc6b00);border-radius: 4px;border: 0px solid #9aa1a9;"><span><span><{t}>保存到草稿箱<{/t}></span></span></button>
+        </span> </li>
+    </ul> 
+  </form>
+</div>
+-->

@@ -1,0 +1,45 @@
+<{include file='wap/member/header.html' title='历史积分' goback='/wap/member.html'}>
+<div style="width:100%; text-align:center; padding:20px 0 0 0px; font-size:18px"><h4>当前有效积分：<span class="am-text-danger" ><{$total}></span></h4></div>
+
+<div style="width:100%; text-align:center; padding:0px 0 0 0px; font-size:18px"><h4>消费冻结：<span class="am-text-danger" ><{if $expense_point}><{$expense_point}><{else}>0<{/if}></span></h4></div>
+<div style="width:100%; text-align:center; padding:0px 0 20px 0px; font-size:18px"><h4>获取冻结：<span class="am-text-danger" ><{if $obtained_point}><{$obtained_point}><{else}>0<{/if}></span></h4></div>
+
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+
+
+<div id="widget-list" >
+<{if count($historys)>0}>
+        <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+            <tr>
+                <th>事件/时间</th>
+                <th>积分变动</th>
+                <th>积分有效期</th>
+            </tr>
+            <{foreach from=$historys item="logs"}>
+            <tr>
+                <td><{$logs.reason|escape:'html'}><br /><{$logs.addtime|cdate:FDATE_STIME}></td>
+                <td <{if $logs.change_point>0}> style="color: green;" <{else}>  style="color:#c60808;"  <{/if}>>
+                    <{if ($logs.change_point) > 0}>+<{/if}><{$logs.change_point}>
+                </td>
+                <td>
+                    <{if ($logs.change_point) > 0}>
+                        <{if $logs.expiretime==0}>
+                        <{t}>永久有效<{/t}>
+                        <{else}>
+                        <{if $logs.expiretime - $smarty.now >= 0}>
+                        <{$logs.expiretime|cdate:FDATE_STIME}>
+                        <{else}><{t}>已过期<{/t}><{/if}>
+                        <{/if}>
+                    <{else}>
+                        -
+                    <{/if}>
+                </td>
+            </tr>
+            <{/foreach}>
+        </table>
+        <{else}>
+        <div>尚无积分历史</div>
+        <{/if}>
+
+<div style="text-align:center;"><{wap_pagers data=$pager}></div>
+</div>  

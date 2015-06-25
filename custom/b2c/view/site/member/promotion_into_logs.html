@@ -1,0 +1,40 @@
+<!-- 会员中心主内容区 -->
+<div class="page-article">
+  <!-- 我的预存款 -->
+  <div id="member_deposit" class="member-coupon">
+    <div class="member-title">
+      <h2><{t}>我的收入<{/t}></h2>
+      <div class="member-more"><{t}>累计收入<{/t}>：<b class="price"><{$total_money|cur_odr}></b></div>
+    </div>
+
+    <div class="member-mod">
+      <table class="member-grid">
+        <thead>
+          <th><{t}>订单号<{/t}></th>
+          <th><{t}>收入<{/t}></th>
+          <th><{t}>来源<{/t}></th>
+          <th><{t}>日期<{/t}></th>
+        </thead>
+        <tbody<{if !($browser.name=="IE" && ($brower.ver == 6 || $browser.ver == 7))}> class="first"<{/if}>>
+          <{if count($list)>0}>
+          <{foreach from=$list item=adv name=name}>
+          <tr<{if $smarty.foreach.name.iteration == 1}> class="first"<{/if}>>
+            <td><{$adv.order_id|cdate:FDATE_STIME}></td>
+            <td>
+              <{$adv.money|cur_odr}>
+            </td>
+            <td><{$adv.special_name}></td>
+            <td><{$adv.mtime|cdate:FDATE_STIME}></td>
+          </tr>
+          <{/foreach}>
+          <{else}>
+          <tr class="no-information first">
+            <td colspan="5">暂无交易记录</td>
+          </tr>
+          <{/if}>
+        </tbody>
+      </table>
+    </div>
+    <{pagers data=$pager}>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="oder-printbox">
+  <div class="oder-print_title" style="border-bottom: none;"><{t}>门店现金日结记录<{/t}></div>
+
+  <table width="100%" border="1" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="cash_right"><{t}>门店名称：<{/t}></td>
+      <td class="cash_left"><{$cash.branch_name}></td>
+    </tr>
+    <tr>
+      <td  class="cash_right"><{t}>存入银行名称：<{/t}></td>
+      <td  class="cash_left"><{$cash.bank_name}></td>
+    </tr>
+    <tr>
+      <td  class="cash_right"><{t}>存入银行账号：<{/t}></td>
+      <td  class="cash_left"><{$cash.bank_num}></td>
+    </tr>
+    <tr>
+      <td  class="cash_right"><{t}>存入金额：<{/t}></td>
+      <td  class="cash_left"><span class="upper">大写：<{$cash.import_money_upper}></span><span class="upper">小写：<{$cash.import_money}>元</span></td>
+    </tr>
+    <tr>
+      <td  class="cash_right"><{t}>现金期初余额：<{/t}></td>
+      <td  class="cash_left"><span class="upper">大写：<{$cash.cash_amount_upper}></span><span class="upper">小写：<{$cash.cash_amount}>元</span></td>
+    </tr>
+    <tr>
+      <td  class="cash_right"><{t}>门店现金结余：<{/t}></td>
+      <td  class="cash_left"><span class="upper">大写：<{$cash.cash_balance_upper}></span><span class="upper">小写：<{$cash.cash_balance}>元</span></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="padding: 5px 5px 5px 20px;"><{t}>备注：<{/t}><{$cash.memo}></td>
+
+    </tr>
+    <tr>
+      <td  style="padding: 5px 5px 5px 20px;border-right: none;"><{t}>出纳收款人签名：<{/t}></td>
+      <td  style="padding: 5px 50px 5px 20px;border-left: none;text-align: right;"><{t}>录入人：<{/t}><{$cash.staff_name}></td>
+    </tr>
+ 
+  </table>
+</div>

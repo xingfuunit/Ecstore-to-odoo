@@ -1,0 +1,11 @@
+.popup-content .product-notify form .send_add {width: 333px;
+margin-left: -20px;
+float: left;}
+.popup-content .product-notify form  .send_add  .form-label{text-align: right;
+float: left;
+width: 113px;margin-left: -20px;}
+.popup-content .product-notify form  .send_add  .form-act{margin-left:0px;}
+
+
+.nav-column .category-list .cat-children-box {width:198px;}
+.nav-column .category-list .cat-children{width:158px;background: #F08200;}

@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><root ><cate_name>1 首页接口</cate_name><api_title>1.1 得到首页广告列表</api_title><api_explain>1.1 得到首页广告列表</api_explain><api_request_url>mobileapi.indexad.get_all_list</api_request_url><api_return></api_return><is_required>0</is_required><cate_id>54758da190a2f</cate_id><api_id>54758da190aca</api_id></root>

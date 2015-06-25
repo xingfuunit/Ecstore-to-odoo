@@ -1,0 +1,32 @@
+<div class="product">
+<{foreach from=$setting.ad item=aditem key=key name=aditem}>
+              <div class="ct ct<{$smarty.foreach.aditem.iteration}>">
+                             <a href="<{$aditem.tolink}>" <{if $aditem.text}> title="<{$aditem.text}>" <{/if}>>
+                             <div class="pictr"><img src="<{$aditem.link}>" <{if $aditem.showwidth}>width="<{$aditem.showwidth}>"<{/if}><{if $aditem.showheight}> height="<{$aditem.showheight}>"<{/if}> <{if $aditem.text}>alt="<{$aditem.text}>"<{/if}> >
+                                   <div class="pr_tt">
+                                   <{if $aditem.text1}><p class="tt"><{$aditem.text}></p><{/if}>
+                                   <{if $aditem.text2}><p class="price"><{$aditem.text2}></p><{/if}>
+                                   </div>
+                                   <{if $aditem.text2}><span class="price2"><{$aditem.text2}></span><{/if}>
+                             </div>
+                             </a>
+              <{if $aditem.text1}><p class="t1"><a href="<{$aditem.tolink}>" <{if $aditem.text}> title="<{$aditem.text}>" <{/if}>><{$aditem.text1}></a></p><{/if}>
+              </div>
+<{/foreach}>
+</div>
+ <script>
+                 window.addEvent('domready',function(){
+	             $$(".pr_tt").addEvents({
+				  "mouseenter":function(){
+				  $(this).getParent(".pictr").addClass("active")
+				  $(this).get('tween').start('opacity', 0, 0.7);
+				  $(this).getParent(".pictr").getElement(".price2").get('tween').start('opacity', 1, 0);
+				  },
+				  "mouseleave":function(){
+					$(this).getParent(".pictr").removeClass("active")
+					$(this).removeClass("active").get('tween').start('opacity', 0.7, 0)  
+					$(this).getParent(".pictr").getElement(".price2").get('tween').start('opacity',0, 1);
+					}
+				  })
+})
+</script>

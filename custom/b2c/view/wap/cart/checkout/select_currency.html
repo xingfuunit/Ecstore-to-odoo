@@ -1,0 +1,88 @@
+<{include file='wap/member/header.html' title='修改支付方式'}>
+
+<{if count($currencys) > 1}>
+    <caption class="select-currency">选择货币类型：
+    <{input type="select" id="payment-cur" name="payment[currency]" rows=$currencys valueColumn="cur_code" labelColumn="cur_name" value=$current_currency class="action-select-currency" required="true"}>
+<{else}>
+    <{foreach from=$currencys item="currency_item" key="key" name="currency_item"}>
+        <input type="hidden" name="payment[currency]" value='<{$currency_item.cur_code}>' />
+    </caption>
+    <{/foreach}>
+<{/if}>
+
+<div class="am-list-news-bd paiing" id="zxzf">
+    <ul class="am-list">
+     <div style="clear:both; width:100%; margin-top:10px; margin-left:10px;" class="am-btn-group doc-js-btn-1" data-am-button>
+     <{foreach from=$payments item="payment" key="key" name="payments"}>
+     <{if $payment.app_id eq 'deposit'}>
+     <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
+    	<input type="radio" ><{$payment.app_display_name}>
+  	 </label>
+	 <{elseif $payment.app_id neq 'deposit'}>
+	 <label style="margin-left:10px;" class="am-btn am-btn-default am-btn-lg paiing-span" payment_app_id="<{$payment.app_id}>" payment_app_name='<{$payment.app_display_name}>' value='{"pay_app_id":"<{$payment.app_id}>","payment_name":"<{$payment.app_display_name}>"}' id="pay_app_id_<{$payment.app_id}>">
+    	<input type="radio" ><{$payment.app_display_name}>
+  	 </label>
+	 <{/if}>
+	 <{/foreach}>		 
+	  </div>
+    </ul>
+</div>
+  
+<div style="float:left; width:100%;" >
+  <div class="am-panel-hd" style="background:#999999; border-top:1px solid #aaaaaa">
+  <a id="P_L_bt<{$_page}>" href="javascript:;" class="invoice_submit">
+  <img src="/public/app/b2c/statics/images/buy_sure.png" width="531" height="107" style="width:50%;margin-left:25%">
+  </a></div>
+</div>
+
+
+<!-- <{*<div id="pay_way">*}>
+    <{*<div class="paiing_title">支持以下银行</div>*}>
+    <{*<div id="yh-zf" class="paiing">*}>
+        <{*<div>*}>
+            <{*<{img src="images/nh.jpg"}>*}>
+            <{*<{img src="images/nh.jpg"}>*}>
+            <{*<{img src="images/nh.jpg"}>*}>
+            <{*<img class="selected" src="../" />*}>
+            <{*<img src="../images/gh.jpg" />*}>
+            <{*<img src="../images/jh.jpg" />*}>
+        <{*</div>*}>
+        <{*<div>*}>
+            <{*<img src="../images/zh.jpg" />*}>
+            <{*<img src="../images/gh.jpg" />*}>
+            <{*<img src="../images/jh.jpg" />*}>
+        <{*</div>*}>
+    <{*</div>*}>
+
+    <{*<div class="paiing_title">支持以下支付平台</div>*}>
+    <{*<div class="paiing">*}>
+        <{*<img src="../images/zfb.jpg" />*}>
+        <{*<img src="../images/cft.jpg" />*}>
+        <{*<img src="../images/kq.jpg" />*}>
+    <{*</div>*}>
+<{*</div>*}>
+
+
+<{*<{if $has_cod == 'true'}>*}>
+    <{*<li class="pay-item gb t-c" payment_app_id="-1" payment_app_name="货到付款" value='{"pay_app_id":"-1","payment_name":"货到付款"}' id="pay_app_id_0">*}>
+        <{*货到付款*}>
+    <{*</li>*}>
+<{*<{/if}>*}> -->
+<script>
+    $('#zxzf .paiing-span').click(function(){
+        $('#zxzf .paiing-span').removeClass('selected');
+        $(this).addClass('selected');
+    });
+    $('#P_L_bt').click(function(){
+    	$('.am-modal-loading').modal();
+        var data = 'payment[pay_app_id]='+$('#zxzf .selected').attr('value');
+        if($('#zxzf .selected').length == false){
+            js_alert('js-alert','请选择支付方式');
+            return;
+        }
+        var url = '<{link app=b2c ctl=wap_cart act=payment_confirm}>';
+        $.post(url,data,function(re){
+        	location.href = '<{link app=b2c ctl=wap_cart act=checkout arg0=$is_fastbuy}>';
+        });
+    });
+</script>

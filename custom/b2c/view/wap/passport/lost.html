@@ -1,0 +1,193 @@
+<form
+	action="<{link app=b2c ctl=wap_passport act=create args01=$next_url}>"
+	method="post" class="form" data-type="ajax">
+	<input name="forward" type="hidden" value="<{$options.url}>"> <input
+		name="mini" type="hidden" value="<{$mini_passport}>">
+
+
+	<div class="header">
+		<div>
+			<img style="width: 100%;"
+				src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/loginbg.jpg">
+		</div>
+	</div>
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+			<br>
+
+			<form method="post" class="am-form">
+				<label for="mobile" style="clear: both; width: 100%;">手机号:</label> <div class="am-input-group" style="width: 70%; float: left">
+  <input type="text" name="mobile" id="mobile"  value="" class="am-form-field a-account" placeholder="请输入手机号">
+</div> <a
+					href="<{link app=b2c ctl=wap_passport act=send_vcode_sms}>"
+					style="line-height:1.6;height:41px;width: 30%; float: right; text-align: center"
+					class=" am-btn am-btn-warning am-btn-sm am-fl btn-send1 ">获取验证码</a>
+				<br> <label for="" style="clear: both; width: 100%;">
+					短信验证： </label> <div class="am-input-group"  style="width:100%;">
+  
+  <input type="text" class="am-form-field"  id="vcode" name="vcode" maxlength="6"
+					placeholder="短信验证码"  pattern=".{6,20}">
+</div> <label
+					for="password" style="clear: both; width: 100%;">新密码:</label> <div class="am-input-group"  style="width:100%;">
+ 
+  <input type="password" id="password" class="am-form-field" placeholder="请输入密码">
+</div>
+					<label
+					for="psw_confirm" style="clear: both; width: 100%;">确认密码:</label>
+					<div class="am-input-group"  style="width:100%;">
+ 
+  <input type="password" id="psw_confirm" class="am-form-field" placeholder="请确认密码">
+</div>
+					 
+					
+				<br />
+				
+				<div class="am-cf">
+				
+					<input type="button" id="ajax-reset" name="" value="重置密码"
+						class="am-btn am-btn-warning am-btn-sm am-fl"
+						style="margin-left: 10px;">
+				</div>
+			</form>
+			<hr>
+			<p>© 2015 pzfresh.com, Inc. 品珍鲜活版权所有</p>
+		</div>
+	</div>
+
+
+
+
+</form>
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert-signup">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">错误</div>
+    <div class="am-modal-bd">
+      
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
+  </div>
+</div>
+<script>
+	$(document)
+			.ready(
+					function() {
+						$('.form .btn-send1').click(
+								function(e) {
+									e.preventDefault();
+									var el = $('.form .a-account');
+									if ($(this).hasClass('disabled'))
+										return false;
+									sendVerify(this, 'uname=' + el.val()
+											+ '&type=forgot','mobile');
+								});
+
+						function sendVerify(el, data) {
+							var url = el.href;
+							$(el).addClass('disabled');
+							var cd = new countdown(el,
+									{
+										start : 120,
+										secondOnly : true,
+										callback : function(e) {
+											$(el).removeClass('disabled').html(
+													'重发验证码');
+										}
+									});
+							$.post(url, data, function(rs) {
+								if (rs) {
+									try {
+										rs = $.parseJSON(rs);
+									} catch (e) {
+									}
+									if (rs.error) {
+										$(el).removeClass('disabled').html(
+												'重发验证码');
+										clearTimeout(cd.timer);
+										if (typeof rs.error === 'string'){
+											$('#my-alert-signup')
+											.children(
+													'.am-modal-dialog')
+											.children(
+													".am-modal-bd")
+											.html(
+													rs.error);
+									$('#my-alert-signup')
+											.modal();
+										}
+											//alert(rs.error);
+									}
+								}
+							});
+						}
+
+						$("#ajax-reset")
+								.bind(
+										"click",
+										function() {
+											$('#cart-modal-loading').modal();
+											$
+													.ajax({
+														url : "<{link app=b2c ctl=wap_passport act=resetpassword }>",
+
+														type : 'POST',
+
+														data : {
+															"mobile" : $(
+																	'#mobile')
+																	.val(),
+															"mobilevcode":$('#vcode').val(),
+															"send_type":"mobile",
+															"psw_confirm": $(
+															'#psw_confirm')
+															.val(),
+															"login_password" : $(
+																	'#password')
+																	.val()
+														},
+
+														dataType : 'html',
+
+														timeout : 3000,
+
+														error : function() {
+															//隐藏等待框
+															$('.am-modal-loading').modal('close');
+															$('#my-alert-signup')
+															.children(
+																	'.am-modal-dialog')
+															.children(
+																	".am-modal-bd")
+															.html('请求失败');
+													$('#my-alert-signup')
+															.modal();
+															//alert('请求失败');
+														},
+
+														success : function(
+																result) {
+															//隐藏等待框
+															$('.am-modal-loading').modal('close');
+															jsonobj = eval('('
+																	+ result
+																	+ ')');
+															if (jsonobj.success) {
+																location.href = jsonobj.redirect;
+															} else {
+																$('#my-alert-signup')
+																		.children(
+																				'.am-modal-dialog')
+																		.children(
+																				".am-modal-bd")
+																		.html(
+																				jsonobj.error);
+																$('#my-alert-signup')
+																		.modal();
+															}
+														}
+
+													});
+										});
+					});
+</script>

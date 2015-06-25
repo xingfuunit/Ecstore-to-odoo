@@ -1,0 +1,18 @@
+<app>
+    <name>api调试工具</name>
+    <description>api调试工具</description>
+
+    <author>
+        <name>凌云</name>
+        <email>758238751@qq.com</email>
+        <url>758238751@qq.com</url>
+    </author>
+
+    <version>0.1</version>
+    <license>jason</license>
+    <parent_model_class>dbeav_model</parent_model_class>
+
+    <depends>
+        <app>site</app>
+    </depends>
+</app>

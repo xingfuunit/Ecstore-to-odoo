@@ -1,0 +1,10 @@
+(function(){
+	$ES(".Category-con").each(function(e){
+		e.getElements(".qf-cate-1").addEvent('mouseenter',function(e){
+			this.getParent().getElements("li.hover").removeClass("hover");
+			this.getParent().getElements(".subcategory").setStyle('display','none');
+			this.addClass("hover");
+			this.getElements(".subcategory").setStyle('display','block');
+		});							 
+	});
+})()

@@ -1,0 +1,44 @@
+
+<{if $comments.list.discuss}>
+<{assign var="currentDate" value=$curDate }>
+<{foreach from=$comments.list.discuss item=comlist name=discusslist}>
+  <{assign var="commentDate" value=date('Y-m-d',$comlist['time'])}>
+  <{if $currentDate != $commentDate}>
+    <{assign var="currentDate" value=$commentDate}>
+    <ul class="am-pagination am-pagination-centered">
+      <li class="am-disabled">
+        <a href="#" class="am-panel-hd date-span"><{$comlist.time|cdate:'SDATE'}></a>
+      </li> 
+    </ul>
+  <{/if}>
+
+<li class="am-comment">
+<input type="hidden" name="comment_id" value="<{$comlist.comment_id}>" />
+<a href="#link-to-user-home">
+  <img width="48" height="48" class="am-comment-avatar" alt="" src="<{if $comlist.member_lv_logo!=''}><{$comlist.member_lv_logo|storager:'s'}>"<{else}><{$comlist.face}><{/if}>">
+</a>
+<div class="am-comment-main">
+<div class="am-comment-bd am-alert-default">
+  <p><a href="#lurenyi"><{if $comlist.addon.hidden_name =='YES' && ($comlist.author_id !=0 || $comlist.author_id !=1)}><{t}>匿名<{/t}><{else}><{$comlist.author}><{/if}> : </a>
+    <{$comlist.comment|nl2br}></p></div></div>
+</li>
+
+<{if $comlist.items}>
+<{foreach from=$comlist.items item=item}>
+  <li class="am-comment am-comment-flip am-comment-success">
+    <a href="#link-to-user-home">
+      <img width="48" height="48" class="am-comment-avatar" alt="" src="<{$IMG_PZFRESH}>/public/app/wap/statics/images/admin-face.jpg"></a>
+    <div class="am-comment-main">
+      <div class="am-comment-bd  am-alert-success">
+        <p><a href="#lurenyi"><{if $item.author==='管理员'}>品珍客服<{else}><{$item.author}><{/if}> : </a>
+          <{$item.comment|nl2br}></p>
+      </div>
+    </div>
+  </li>
+<{/foreach}>
+<{/if}>
+
+
+
+<{/foreach}>
+<{/if}>

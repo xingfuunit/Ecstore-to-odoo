@@ -1,0 +1,12 @@
+html, body {
+	height: 100%;
+}
+body {
+	font-family: Helvetica, 'STHeiti STXihei', 'Microsoft JhengHei', 'Microsoft YaHei', Tohoma, Arial;
+	margin:0 auto;
+}
+.ltt_head{ width:1279px; height:368px; margin:0 auto; background:url("../images/ltt_01.jpg") center no-repeat;}
+.ltt_main{ width:1279px; height:747px; margin:0 auto; background:url("../images/ltt_02.jpg") center no-repeat}
+.ltt_main-detail{ width:1000px; height:745px; margin:0 auto;}
+.ltt_main-detail a{ float:left; width:auto; border:0px; border:none}
+.ltt_foot{ width:1279px; height:385px; margin:0 auto; background:url("../images/ltt_03.jpg") center no-repeat}

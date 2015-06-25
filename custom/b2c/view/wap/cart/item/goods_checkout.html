@@ -1,0 +1,55 @@
+<{if $aCart.object.goods}>
+    <ul class="am-list">
+      <!--缩略图在标题左边-->
+      <{foreach from=$aCart.object.goods item=goods key=_obj_key}>
+      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left pt-h-item">
+      <input type="hidden" name="obj_type" value="goods" />
+    <input type="hidden" name="goods_ident" value="<{$goods.obj_ident}>" />
+    <input type="hidden" name="goods_id" value="<{$goods.obj_items.products.0.goods_id}>" />
+    <input type="hidden" name="min" value="1" class="min-num" />
+    <input type="hidden" name="max" value="<{$goods.store.real}>" class="max-num" />
+    <input type="hidden" name="stock" value="<{$goods.store.store}>" />
+        <div class="am-u-sm-4 am-list-thumb" style="position:relative">
+		<a href="<{link app=b2c ctl=wap_product arg0=$goods.obj_items.products.0.product_id}>"><img src="<{$goods.obj_items.products.0.thumbnail|storager:'s'}>" /></a></div>
+        <div class="am-u-sm-8 am-list-main" style="width:60%; float:right; color:#999999">
+		  <h3 class="am-list-item-hd" style="margin-bottom:0px; line-height:18px;">
+              <a style=" color:#999999;" href="<{link app=b2c ctl=wap_product arg0=$goods.obj_items.products.0.product_id}>" class="pt-h-name"><{$goods.obj_items.products.0.name}></a> 				
+		  </h3>
+		   <h3 class="am-list-item-hd" style="margin-bottom:0px; line-height:18px;">
+           <{$goods.obj_items.products.0.spec_info}>			
+		  </h3>
+          <{if $goods.gift}>
+          <{foreach from=$goods.gift item=gift key=_gift_key}>
+          <div class="am-list-item-text am-text-warning">
+          	<span class="am-badge am-badge-warning am-radius" style="margin-right:10px;margin-bottom:10px;" data-am-popover="{content: '<{$gift.name}>[<{$gift.spec_info}>] * <{$gift.quantity}>', trigger: 'click focus'}" >赠品<{_gift_key+1}></span>
+          </div>
+          <{/foreach}>
+          <{/if}>
+
+          <div class="am-list-item-text pt-num J-pt-num">
+          	 <a href="javascript:void(0);" class="am-icon-btn am-icon-minus minus btn" style="float:left; color: #999999; line-height:25px; font-size:18px;  height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></a>
+		     <div class="num">
+		     <input type="text" style="float:left; height:30px; width:30%; margin:5px;text-align: center;font-weight: bold;font-size:15px;" name="modify_quantity[<{$goods.obj_ident}>][quantity]" value="<{$goods.quantity}>" class="num-ipt">
+             </div>
+             <a href="javascript:void(0);" class="am-icon-btn am-icon-plus plus btn"  style="float:left; color: #999999; line-height:25px; font-size:18px;  height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>
+		  </div>
+		  <{if !$is_fastbuy}>
+		<a id="<{link app=b2c ctl=wap_cart act=remove}>" style="width:20%;" href="javascript:void(0);" class="J-remove"><i class="am-icon-trash am-fr am-icon-sm" style="color:#999999"></i></a>
+		<{/if}>
+		  <{if $goods.store.store <= 5}><div class="am-fl" style="width:100%"><span class="am-badge am-badge-danger am-radius am-fl" >剩余不多</span></div><{/if}>
+		  <div style="clear:both;color:#eb767b;font-size:12px;"><h1 style="float:left"><{$goods.obj_items.products.0.price.buy_price|cur_odr}></h1></div>
+		 
+        </div>
+      </li>   
+      <{/foreach}>   
+    </ul>   
+<{/if}>
+
+
+
+<script type="text/javascript">
+$('.J-pre').on('click',function(){
+  $(this).toggleClass('act');
+  $(this).next().toggleClass('hide');
+});
+</script>

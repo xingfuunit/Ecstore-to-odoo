@@ -1,0 +1,45 @@
+<div class="header" id="header">
+    <div style="text-align:center">通知：因快递蜀黍回家过年，2月14日-2月24日将停止发货。春节期间可正常下单，2月25日起优先发货。品珍鲜活祝各位新年快乐！</div>
+	<!--顶部横条START--> 
+    <div class="topbar" id="topbar">
+    	<div class="wrap clearfix">   
+            <div class="login fl"><{widgets id="i01"}></div><div class="login fl" ><{widgets id="re01"}></div> 
+            
+            <div class="quick-menu fr">
+            <{widgets id="w01"}>
+            </div>
+            <div class="fr tel"><{widgets id="i02"}></div>
+        </div>
+    </div>
+    <div class="menu">
+    	<div class="wrap clearfix">
+            <div class="logo fl"><{widgets id="h01"}></div>
+            <div class="phone fr"><{widgets id="h04"}></div> 
+            <div class="cart fr"><{widgets id="i04"}></div> 
+            <div class="search fr">
+                <{widgets id="h02"}>
+            </div>
+        </div>
+    </div>
+    <div class="nav-column">
+        <div class="wrap clearfix">
+        <div class="handle_cat fl"><{widgets id="s01"}></div>
+    	<div class="nav fl"><{widgets id="h09"}></div>
+        </div>
+    </div>   
+</div>
+<script type="text/javascript">
+function addToFavorite(title, url) {
+	try {
+		window.external.addFavorite(url, title);
+	}
+	catch (e) {
+		try {
+			window.sidebar.addPanel(title, url, "");
+		}
+		catch (e) {
+			alert("抱歉，您所使用的浏览器无法完成此操作。\n\n加入收藏失败，请使用Ctrl+D进行添加");
+		}
+	}
+}
+</script>

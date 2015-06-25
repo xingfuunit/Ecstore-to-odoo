@@ -1,0 +1,884 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="text/css" http-equiv="Content-Style-Type">
+<title>网站与DIY系统接口调用说明v4</title>
+<style type="text/css">span.s1 {font-family: Microsoft YaHei}span.s2 {font-family: Heiti SC Light}span.s3 {font-family: Monaco}span.s4 {color: #303942; font-family: Menlo}span.s5 {color: #303942; font-family: Heiti SC Light}span.s6 {font-family: Heiti SC}span.s7 {color: #000000; font-family: Monaco}</style>
+</head>
+<body>
+<h1 align="center" class="root">
+<a name="7bl3qlc4cr7b91b0v7ku180fpq">网站与DIY系统接口调用说明v4</a>
+</h1>
+<div align="center" class="globalOverview">
+<img src="diyapi_doc_files/images/%E7%BD%91%E7%AB%99%E4%B8%8EDIY%E7%B3%BB%E7%BB%9F%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8%E8%AF%B4%E6%98%8Ev4.jpg"></div>
+<div class="notesContainer">
+<p>接口请求说明</p>
+<p>请求方式:&nbsp;POST</p>
+<p>返回XML通用格式：</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&lt;data&gt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;ok&lt;/code&gt;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</p>
+<p>&nbsp;&nbsp;		&lt;contents&gt;&hellip;&hellip;&lt;/contents&gt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/data&gt;</p>
+<p>code值返回类型：</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;ok，表示执行成功</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;fail，表示动作执行失败，同时失败原因在info中说明</p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</div>
+<h2 class="topic">
+<a name="4bqbdoq0b0fncsrus0qhf8jvnv">1.产品绑定模板</a>
+</h2>
+<h3 class="topic">
+<a name="2rhqe71t1hnk8us0k7te8ce7gt">&nbsp;1.1.登录接口</a>
+</h3>
+<h3 class="topic">
+<a name="3bvmj8mmrl1r6uu6tc6i73r0ub">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/admin_login</span>
+</p>
+<p>
+<span class="s2">参数：</span>username<span class="s1">=</span><span class="s2">张三</span>&amp;password=12312</p>
+</div>
+<h3 class="topic">
+<a name="6naqg7obk35nuu5404836rf4eu">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;contents&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;username&gt; 张三 &lt;/username&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;role&gt;designer&lt;/role&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp; &nbsp;</span><span class="s1">&lt;/contents&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;用户名及密码输入不正确&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="705r2g39ak5u1p483lfq8gn14a">&nbsp;1.2.分类接口</a>
+</h3>
+<h3 class="topic">
+<a name="5680sut9c3e3eumpue1lustsuc">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/goods_cat （得到所有分类数据）</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="1ni3hsgtquhtipjvfa1dmn7ccg">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+</p>
+<p>
+<span class="s1">&nbsp;</span><span class="s1">&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;</span><span class="s1">&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;</span><span class="s1">&lt;contents&gt;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;item cat_id="1" cat_name="" parent_id="0"&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp; &nbsp;</span><span class="s1">&lt;item cat_id="2" cat_name="" parent_id="1"&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp; &nbsp; &nbsp;</span><span class="s1">&lt;item cat_id="" cat_name="" parent_id="2"&gt;&lt;/item&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp; &nbsp; &nbsp;</span><span class="s1">&lt;item cat_id="" cat_name="" parent_id="2"&gt;&lt;/item&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp; &nbsp;</span><span class="s1">&lt;/item&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp; &nbsp;</span><span class="s1">&lt;item cat_id="2" cat_name="" parent_id="1"&gt;&lt;/item&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;/item&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;item cat_id="5" cat_name="" parent_id="0"&gt;&lt;/item&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;</span><span class="s1">&lt;/contents&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="6851ebteg28t5es8p18i1u0br3">&nbsp;1.3.商品接口</a>
+</h3>
+<h3 class="topic">
+<a name="21vc03n6tjti1ggd83ei0d5ik4">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/get_goods（得到分类下的商品列表）</span>
+</p>
+<p>
+<span class="s2">参数：</span><span class="s1">cat_id=1&amp;page=2&amp;page_limit=2</span><span class="s1">&nbsp;</span>
+</p>
+<p>
+<span class="s1">参数说明：1、page:当前页</span><span class="s1">&nbsp; &nbsp; &nbsp;</span><span class="s1">2、page_limit:条数，可选默认20</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="7uk2dnugmvlu834bboipaa3fpq">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;contents&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;items&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="s1">&lt;item goods_id="1" name="商品名称" cat_id="分类ID" open_spec="值=1有规格产品，值=0无规格产品" /&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/items&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pageinfo page="1" total="总条数" page_limit="10" /&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/contents&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="6j0pd9j3s7q298ltv783rji597">&nbsp;1.4.规格产品接口</a>
+</h3>
+<h3 class="topic">
+<a name="2h8hs621820sne8o6dldsm2adh">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/</span><span class="s3">get_products</span><span class="s1">（得到分类下的商品列表）</span>
+</p>
+<p>
+<span class="s2">参数：</span><span class="s1">goods_id=1</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="274cd1k1i3iciutl5p51c9aphm">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;contents&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;items&gt;</span><span class="s1">&nbsp;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;item product_id="1" goods_id="1" name="产品名称" bn="产品编号" spec_info="颜色：黄色、尺码：XXS" /&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/items&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/contents&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="4b3erjgg1836gp8iflj48hq1qv">&nbsp;1.5.绑定回转接口</a>
+</h3>
+<h3 class="topic">
+<a name="7qophkmprmq8radv56lnsi1vvj">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/set_</span>product_temp</p>
+<p>
+<span class="s1">参数：</span>product_id=1&amp;temp_id=4,79,8</p>
+</div>
+<h3 class="topic">
+<a name="5s25o4293uupmbdpopnp6dks3a">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+</div>
+<h3 class="topic">
+<a name="6cla0tij4soa6kc3jq0i331auj">&nbsp;1.6.模版风格更新接口</a>
+</h3>
+<h3 class="topic">
+<a name="5nf3376l89hoc262kmc7olfp2v">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/update_temp_style</span>
+</p>
+<p>
+<span class="s2">参数：</span><span class="s1">temp_style_id=1&amp;temp_style_name=风格名&amp;</span><span class="s1">parent_id=0</span>
+</p>
+<p>
+<span class="s1">说明：</span><span class="s1">temp_style_name 为空删除操作</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="532p9us1dc0op0mug24dvkbpqq">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+</div>
+<h3 class="topic">
+<a name="4ijlur0qv3be6padljg3cgm166">&nbsp;1.7.模版更新接口</a>
+</h3>
+<h3 class="topic">
+<a name="787l2l04rsuvl54sfos6rna00f">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/update_</span>temp</p>
+<p>
+<span class="s2">参数：</span>temp_id=1&amp;icon=<span class="s2">模版首图</span>URL&amp;name=<span class="s2">模版名称</span>&amp;temp_style_id=2&amp;img_url[]=http://url/img1.png&amp;img_url[]=http://url/img2.png</p>
+</div>
+<h3 class="topic">
+<a name="1adndrst24mhr2s8gceton3hoh">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+</div>
+<h2 class="topic">
+<a name="08lhlhvbfkgit1oppu63b22qsn">2.DIY 制作</a>
+</h2>
+<h3 class="topic">
+<a name="4s525h2s2teklf5ecl9cuahtnp">&nbsp;2.1.启动</a>
+</h3>
+<div class="notesContainer">
+<p>DIY<span class="s2">制作</span>-<span class="s2">启动</span>
+</p>
+<p>
+<span class="s4">diytools://product_id=2&amp;temp_id=1&amp;product_name=</span><span class="s5">收藏级大正方形画册</span><span class="s4">&amp;spec_info=</span><span class="s5">画册页数：</span><span class="s4">20P</span><span class="s5">、封面材质：金属</span><span class="s4">&amp;username=iegss&amp;session_id=9418b4e3d3585d11f91a957a3cc950af&amp;work_number=10000009&amp;task_id=5791_10000009_2_2_1_1393410698&amp;add_cat_url=http://vip.hcyy.cn/index.php/diyapi/services/add_cart/app/diyapi</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="7ko24oufgi3dfp0852dvcfnif6">&nbsp;2.2.制作成功提交数据</a>
+</h3>
+<h3 class="topic">
+<a name="6d55p8pl0258pkhesgqh7m42ra">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口：</span><span class="s4">add_cat_url (</span><span class="s5">启动时的参数</span><span class="s4">)</span>
+</p>
+<p>
+<span class="s1">方式：GET/POST</span>
+</p>
+<p>
+<span class="s1">参数：</span><span class="s4">product_id=2&amp;temp_id=1&amp;session_id=9418b4e3d3585d11f91a957a3cc950af&amp;work_number=10000009&amp;task_id=5791_10000009_2_2_1_1393410698</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="517kfkdp5n6glnilbv6m65qnqi">&nbsp;&nbsp;返回</a>
+</h3>
+<h2 class="topic">
+<a name="186ggb2lm35nu7prpq94dj7s0d">3.生产接口</a>
+</h2>
+<h3 class="topic">
+<a name="2m6suoclmciq7qnkc54sk4061f">&nbsp;3.1.更新上传PDF状态</a>
+</h3>
+<h3 class="topic">
+<a name="2sk77l5dfj8f61g0k2vqv75kld">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/</span><span class="s3">update_task_pdf</span>
+</p>
+<p>
+<span class="s2">参数</span>:&nbsp;task=1_1232132132&amp;pdf_url=http://www.dsf/sss.pdf&amp;upload_status=2&amp;sign=54156e664b788fb3364b0a490415a5f4&amp;timestamp=20140112000000</p>
+<p></p>
+<p></p>
+<p>
+<span class="s2">参数说明</span>:&nbsp;</p>
+<p>task:<span class="s2">会话</span>ID</p>
+<p>pdf_url: pdf<span class="s2">路径</span>
+</p>
+<p>upload_status:<span class="s2">上传状态，</span>0<span class="s2">没传</span>&nbsp;1<span class="s2">正在上传</span>&nbsp;2<span class="s2">已经上传完</span>
+</p>
+<p>timestamp:<span class="s2">请求时间</span><span class="s2">年月日时分秒</span><span class="s2">，注：与服务器时差超过</span>5<span class="s2">分钟失效</span>
+</p>
+<p>sign:<span class="s2">签名</span>= md5(&rdquo;GzHc1Sap-" + timestamp)</p>
+<p></p>
+<p></p>
+</div>
+<h3 class="topic">
+<a name="3va6dkms69kirmja3uoj6n9g29">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="5hi0mpeoffej6jpa895reqt3dl">&nbsp;3.2.更新PDF下载完成次数</a>
+</h3>
+<h3 class="topic">
+<a name="09so2a8k8esvgp3k58l0bbld35">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/</span><span class="s3">update_pdf_download_times</span>
+</p>
+<p>
+<span class="s6">参数</span>:&nbsp;task=1_1232132132&amp;download_times=2&amp;sign=54156e664b788fb3364b0a490415a5f4&amp;timestamp=20140112000000</p>
+<p></p>
+<p></p>
+<p>
+<span class="s6">参数说明</span>:&nbsp;</p>
+<p>task:<span class="s6">会话</span>ID</p>
+<p>download_times:<span class="s6">总下载次数</span>
+</p>
+<p>timestamp:<span class="s6">请求时间年月日时分秒，注：与服务器时差超过</span>5<span class="s6">分钟失效</span>
+</p>
+<p>sign:<span class="s6">签名</span>= md5(&rdquo;GzHc1Sap-" + timestamp)</p>
+<p></p>
+<p></p>
+</div>
+<h3 class="topic">
+<a name="66dinnbb8dgvu6gg977kbk3td0">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="4i0plaku4irc9afeqnns39k1k7">&nbsp;3.3.得到订单付款状态</a>
+</h3>
+<h3 class="topic">
+<a name="0ato4it0vp5eck3n0q27jmq4ch">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/</span>get_order_pay_status</p>
+<p>
+<span class="s2">参数</span>:&nbsp;task=1_1232132132&amp;sign=54156e664b788fb3364b0a490415a5f4&amp;timestamp=20140112000000</p>
+<p></p>
+<p></p>
+<p>
+<span class="s2">参数说明</span>:&nbsp;</p>
+<p>task:<span class="s2">会话</span>ID</p>
+<p>timestamp:<span class="s2">请求时间</span><span class="s2">年月日时分秒</span><span class="s2">，注：与服务器时差超过</span>5<span class="s2">分钟失效</span>
+</p>
+<p>sign:<span class="s2">签名</span>= md5(&rdquo;GzHc1Sap-" + timestamp)</p>
+<p></p>
+<p></p>
+<p>
+<span class="s2">返回参数说明：</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">pay_status</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; 0 =&gt;<span class="s2">未支付</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; 1 =&gt;<span class="s2">已支付</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; 2 =&gt;<span class="s2">已付款至到担保方</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; 3 =&gt;<span class="s2">部分付款</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; 4 =&gt;<span class="s2">部分退款</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; 5 =&gt;<span class="s2">全额退款</span>
+</p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</div>
+<h3 class="topic">
+<a name="3tdm757n20dv29beu6l4og2j0d">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;code&gt;ok&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;执行成功&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp; &nbsp;</span><span class="s1">&lt;contents&gt;&lt;pay_status&gt;3&lt;/pay_status&gt;&lt;/contents&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;数据调用失败&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+</div>
+<h3 class="topic">
+<a name="7jnl8210sknefh73nvniff3eco">&nbsp;3.4.得到作业号列表</a>
+</h3>
+<h3 class="topic">
+<a name="3haai3soriqms2aav71917ric8">&nbsp;&nbsp;请求</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">请求接口： URL/</span>get_works</p>
+<p>
+<span class="s2">得到数据：</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">正式订单：已经提交生产和生产完成的作业号</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s2">参数</span>:&nbsp;stime=20140301060908&amp;etime=20140331123224&amp;sign=54156e664b788fb3364b0a490415a5f4&amp;timestamp=20140112000000</p>
+<p></p>
+<p></p>
+<p>
+<span class="s2">请求参数说明</span>:&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; stime:<span class="s2">作业号提交生产开始时间</span><span class="s2">年月日时分秒</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; etime:<span class="s2">作业号提交生产结束时间</span><span class="s2">年月日时分秒</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; timestamp:<span class="s2">请求时间</span><span class="s2">年月日时分秒</span><span class="s2">，注：与服务器时差超过</span>5<span class="s2">分钟失效</span>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; sign:<span class="s2">签名</span>= md5(&rdquo;GzHc1Sap-" + timestamp)</p>
+<p></p>
+<p></p>
+<p>
+<span class="s2">返回</span>XML<span class="s2">说明</span>:</p>
+<p></p>
+<p></p>
+<p>&lt;WORKS WORK_ID="7461"&gt; --<span class="s2">任务号</span>
+</p>
+<p>&lt;JOBID&gt;7461&lt;/JOBID&gt;&nbsp;--<span class="s2">任务号</span>
+</p>
+<p>&lt;COPIES&gt;1&lt;/COPIES&gt;&nbsp; &nbsp;-<span class="s2">数量</span>
+</p>
+<p>&lt;TOTAL&gt;11.66&lt;/TOTAL&gt;&nbsp;--<span class="s2">金额</span>
+</p>
+<p>&lt;USERID&gt;<span class="s2">广州虎彩</span>&lt;/USERID&gt;&nbsp;--<span class="s2">虎彩文用</span>
+</p>
+<p>&lt;USERNAME&gt;<span class="s2">梁敏芳</span>&lt;/USERNAME&gt; --<span class="s2">收货人</span>
+</p>
+<p>&lt;ORDERNAME&gt;4030596148&lt;/ORDERNAME&gt; --<span class="s2">订单号</span>
+</p>
+<p>&lt;ORDERDATE&gt;20140305100315&lt;/ORDERDATE&gt;&nbsp;--<span class="s2">订单下达日期</span>
+</p>
+<p>&lt;APPROVEDT&gt;20140305&lt;/APPROVEDT&gt;&nbsp;--<span class="s2">订单提交生产日期</span>
+</p>
+<p>&lt;APPROVETIME&gt;104744&lt;/APPROVETIME&gt; --<span class="s2">订单提交生产时间</span>
+</p>
+<p>&lt;TEMPLATENAME&gt;<span class="s2">个性杂志</span>12<span class="s2">寸竖款</span>&lt;/TEMPLATENAME&gt;&nbsp;--<span class="s2">产品名称</span>
+</p>
+<p>&lt;KEYWORDS&gt;39010000327&lt;/KEYWORDS&gt;&nbsp; &nbsp;--<span class="s2">产品</span>39<span class="s2">码</span>
+</p>
+<p>&lt;ITEMNO&gt;4030596148-1-1&lt;/ITEMNO&gt;&nbsp; &nbsp;--<span class="s2">订单号</span>+&lsquo;-&rsquo;+<span class="s2">订单总行项目总是</span>+&nbsp;</p>
+<p>&lt;DISTRIBUTION&gt;<span class="s2">圆通速递</span>&lt;/DISTRIBUTION&gt; --<span class="s2">配送方式名称</span>
+</p>
+<p>&lt;FILENAME&gt;<span class="s2">文件名</span>&lt;/FILENAME&gt; &mdash;-<span class="s2">文件名</span>
+</p>
+<p>
+<span class="s7">&lt;TASK&gt;task id&lt;/TASK&gt; -- task id</span>
+</p>
+<p>&lt;DOWNLOADTIMES&gt;0&lt;/DOWNLOADTIMES&gt; &mdash;-<span class="s2">下载次数</span>
+</p>
+<p>&lt;FILEURL&gt;http://www.url.com/sss.zip&lt;/FILEURL&gt; &mdash;-<span class="s2">下载地址</span>
+</p>
+<p>&lt;FILEDIR&gt;8<span class="s2">开</span>/16P&lt;/FILEDIR&gt; &mdash;-<span class="s2">解压路径</span>
+</p>
+<p>&lt;/WORKS&gt;</p>
+</div>
+<h3 class="topic">
+<a name="3r2cd2504pv16kn7k3g7fqd5ef">&nbsp;&nbsp;返回</a>
+</h3>
+<div class="notesContainer">
+<p>
+<span class="s1">成功返回：</span>
+</p>
+<p>
+<span class="s1">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;CONDITION&gt;&lt;WORKS WORK_ID="10001360"&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;JOBID&gt;10001360&lt;/JOBID&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;COPIES&gt;2&lt;/COPIES&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;TOTAL&gt;549.200&lt;/TOTAL&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;USERID&gt;虎彩文用&lt;/USERID&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;USERNAME&gt;收货人&lt;/USERNAME&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;ORDERNAME&gt;20140328148870&lt;/ORDERNAME&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;ORDERDATE&gt;20140328&lt;/ORDERDATE&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;APPROVEDT&gt;20140328&lt;/APPROVEDT&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;APPROVETIME&gt;141627&lt;/APPROVETIME&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;TEMPLATENAME&gt;专业级A4画册横款&lt;/TEMPLATENAME&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;KEYWORDS&gt;39SAdaSD&lt;/KEYWORDS&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;ITEMNO&gt;20140328148870-3-&lt;/ITEMNO&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;DISTRIBUTION&gt;快递&lt;/DISTRIBUTION&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;FILENAME&gt;30P&lt;/FILENAME&gt;</span>
+</p>
+<p>
+<span class="s3">&lt;TASK&gt;12312_345_12332114&lt;/TASK&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;DOWNLOADTIMES&gt;0&lt;/DOWNLOADTIMES&gt;</span>
+</p>
+<p>&lt;FILEURL&gt;http://www.url.com/sss.zip&lt;/FILEURL&gt;&nbsp;</p>
+<p>
+<span class="s1">&lt;FILEDIR&gt;&lt;/FILEDIR&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/WORKS&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/CONDITION&gt;</span>
+</p>
+<p></p>
+<p></p>
+<p>
+<span class="s1">失败返回：</span>
+</p>
+<p>
+<span class="s1">&lt;data&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp; &lt;code&gt;fail&lt;/code&gt;</span>
+</p>
+<p>
+<span class="s1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;info&gt;失败原因&lt;/info&gt;</span>
+</p>
+<p>
+<span class="s1">&lt;/data&gt;</span>
+</p>
+</div>
+</body>
+</html>

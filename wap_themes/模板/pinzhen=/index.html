@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <{wapheader}>
+    <link rel="stylesheet" href="images/styles.css" />
+</head>
+<body>
+<div class="main">
+    <{*wap_require file="block/header.html"*}>
+        <div id="search">
+            <span class="index-search-icon"></span>
+            <div id="search_list" style="display: none;">
+        <div>
+            <div class="input_txt">
+                <form class="a-search" action="<{link app=b2c ctl=wap_search act=result}>" method="post" id="J_search_pt">
+                    <input class="a-search-ipt" placeholder="请输入查询条件" type="text" name="search_keywords" value="" />
+                    <input class="a-search-btn" type="submit" name="" value="" id="J_search" />
+                </form>
+            </div>
+        </div>
+    </div>
+        </div>
+    <!-- 活动图 -->
+    <{wap_widgets id="main_slide"}>
+    <div>
+        <div class="img_list"></div>
+        <{if $smarty.get.ctl neq 'admin_theme_widget'}>
+        <div id="loading2" class="popup"><div class="load-pic">正在加载....</div></div>
+        <div id="b-bg"></div>
+        <{/if}>
+    </div>
+
+    <{wap_require file="block/footer.html"}>
+</div>
+</body>
+<script>
+//    $(".search-btn").mouseover(function(){
+//        $(this).find("img").attr("src",$(this).find("img").attr("mover"));
+//        $(this).css("background","#000");
+//    });
+//    $(".search-btn").mouseout(function(){
+//        $(this).find("img").attr("src",$(this).find("img").attr("mout"));
+//        $(this).css("background","none");
+//    });
+$('.index-search-icon').click(function(){
+        $(this).toggleClass("search-icon-click");
+        if($(this).hasClass('search-icon-click')){
+            //$(this).parent().css('background','rgba(0, 0, 0, 0.80)');
+            $('#search_list').show();
+        }else{
+            hide_search();
+        }
+    });
+
+</script>
+</html>

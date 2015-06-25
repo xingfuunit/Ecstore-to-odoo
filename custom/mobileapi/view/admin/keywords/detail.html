@@ -1,0 +1,50 @@
+<form action="index.php?app=mobileapi&ctl=admin_keywords&act=save"  method="POST" name="gEditor" id="gEditor" >
+<input type="hidden" name="kw_id" value="<{$info.kw_id}>">
+<div class="tableform">
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+  <th><{t}>广告名称：<{/t}></th>
+  <td><{input type="text" name="kw_name" style="width:120px" vtype="required" value=$info.kw_name}><em><font color='red'>*</font></em></td>
+</tr>
+<tr>
+  <th><{t}>排序：<{/t}></th>
+  <td><{input style="width:50px;" type="unsigned" name="ordernum"  value=$info.ordernum}></td>
+</tr>
+</table>
+</div>
+</div>
+<div class="table-action">
+<button class="btn" type="submit" id="type_submit"><span><span><{t}>保存<{/t}></span></span></button></div>
+</div>
+</form>
+
+
+<script>
+(function(){
+  var _form = $('gEditor');
+  var btn =$('type_submit');
+  var finder = finderGroup['<{$env.get.finder_id}>'];
+  
+  _form.store('target',{
+    
+    onSuccess:function(response){
+      var hash_res_obj = JSON.decode(response);
+      if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+      {
+        try{
+          var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+        }catch(e){}
+        
+        if(_dialogIns)
+        { 
+          _dialogIns.close();
+          finder.refresh.delay(400,finder);
+        }
+      } 
+    }
+  });
+  
+})();
+    
+</script>

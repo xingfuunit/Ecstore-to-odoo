@@ -1,0 +1,25 @@
+<div class="hd"><img src='<{$setting.ad_pic|storager}>' alt="<{$setting.ad_pic_txt}>" width="299" height="149" /></div>
+<div class="bd">
+  <ul class="clearfix">
+    <{assign var="do" value='1'}>
+    <{foreach from=$data.goodsRows item=row key=gid name=goodsrow}>
+    <{if $smarty.foreach.goodsrow.iteration == 2}>
+    <li class="wide-column"></li>
+    <{/if}>
+    <li class="l<{$smarty.foreach.goodsrow.iteration}><{if $smarty.foreach.goodsrow.iteration > 3 && $smarty.foreach.goodsrow.iteration % 3 == 1}> wide-column<{/if}>">
+      <{assign var=pickey  value=$setting.gpic_size|default:'goodsPicS' }>
+      <div class="goodpic" style="<{if $setting.picWidth=='3'}>width:140px;height:140px;<{elseif $setting.picWidth=='2'}>width:150px;height:150px;<{else}>width:120px;height:120px;<{/if}>overflow:hidden;background-color:#FFF;margin:0 auto;"><a target="_blank" href="<{$row.goodsLink}>"><img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>"<{if $setting.picWidth=='3'}> width="140" height="140"<{elseif $setting.picWidth=='2'}> width="150" height="150"<{else}> width="120" height="120"<{/if}> /></a>
+      </div>
+      <div class="info">
+      	 <h6><a target="_blank" href="<{$row.goodsLink}>"><{$row.goodsName|cut:$setting.maxlength}></a></h6>
+          <{if $setting.showgoodsMarketPrice == 'on' || $setting.showgoodsSalePrice == 'on'}>
+          <p>
+          	<{if $setting.showgoodsSalePrice =='on'}><span class="price1"><{$row.goodsSalePrice|cur}></span><{/if}>
+          	<{if $setting.showgoodsMarketPrice == 'on'}><span class="mktprice1"><{$row.goodsMarketPrice|cur}></span><{/if}>
+          </p>
+          <{/if}>
+      </div>
+     </li>
+    <{/foreach}>
+  </ul>
+</div>

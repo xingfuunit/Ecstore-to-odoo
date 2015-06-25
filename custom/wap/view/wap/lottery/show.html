@@ -1,0 +1,44 @@
+   <link rel="stylesheet" href="/public/app/wap/statics/css/lottery_base.css">        
+    <link rel="stylesheet" href="/public/app/wap/statics/css/lottery_wheel.css">    
+    <link rel="stylesheet" href="/public/app/wap/statics/css_mini/styles.css">    
+<!-- container -->
+<div class="container ">
+  <div class="apps-game">
+    <div class="apps-wheel">
+      <div class="logo"></div>
+      <div class="info-area">
+      <{if $lottery_rs}>
+        <div class="view-prize2">恭喜您中奖了！</div>
+        <ul class="activity-info">
+          <li>1. 奖品名称：<b class="view-prize3"><{$lottery_rs.gift_name}></b>
+
+          </li><br>
+          <li>2.奖品说明：
+            <div class="activity-info-content">实物奖品：在商城购买对应商品，下单时使用该奖品券即可免单，邮费自付。</div>
+            <div class="activity-info-content">现金券：在商城购买任意商品满一定价格，下单时使用，即可抵扣相应金额。</div>
+          </li><br>
+          <li>3.兑奖须知：
+            <div class="activity-info-content">奖品券已自动发送，点击右下角“个人中心”查看。</div>
+            <div class="activity-info-content">所有奖品券仅限使用一次，其中现金券不能与商城其他优惠同时使用。</div>
+            <div class="activity-info-content">兑奖时间：即日起至2015年2月17日。</div>
+          </li><br>
+          
+          <li>4.发行方：
+            <div class="activity-info-content">广东品珍电子商务有限公司</div>
+          </li><br>
+          
+          <li>5.活动最终解释权归本公司所有。
+          </li><br>
+          
+        </ul>
+       <{else}>
+       	<script>
+       		alert('你还没有抽奖，请返回抽奖!');
+       		history.back();
+       	</script>
+       <{/if}>
+      </div>
+    </div>
+    <div id="wxcover"></div>
+  </div>
+</div>

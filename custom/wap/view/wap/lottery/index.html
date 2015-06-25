@@ -1,0 +1,177 @@
+
+
+   <link rel="stylesheet" href="/public/app/wap/statics/css/lottery_base.css">        
+    <link rel="stylesheet" href="/public/app/wap/statics/css/lottery_wheel.css">    
+    <link rel="stylesheet" href="/public/app/wap/statics/css_mini/styles.css">    
+
+    <div class="container ">
+                <div class="apps-game">
+        <div class="apps-wheel">
+    <div class="logo"></div>
+    <div class="wheel-wrap">
+        <ul class="wheel">
+            <li class="wheel-row-wrap">
+                <ul class="wheel-row">
+                    <li class="wheel-block prize4 animated " data-index="0">
+                        <div class="wheel-icon"></div>
+                    </li>
+                    <li class="wheel-block even prize0 animated" data-index="1">
+                        <div class="wheel-icon"></div>
+                    </li>
+                    <li class="wheel-block prize2 animated" data-index="2">
+                        <div class="wheel-icon"></div>
+                    </li>
+                    <li class="wheel-block even prize1 animated" data-index="3">
+                        <div class="wheel-icon"></div>
+                    </li>
+                </ul>
+            </li>
+            <li class="wheel-row-wrap">
+                <ul class="wheel-row wheel-sep-row">
+                    <li class="wheel-block even prize5 animated" data-index="11">
+                        <div class="wheel-icon"></div>
+                    </li>
+                    <li class="wheel-block prize-no animated" data-index="4">
+                        <div class="wheel-icon"></div>
+                    </li>
+                </ul>
+            </li>
+            <li class="wheel-row-wrap">
+                <ul class="wheel-row wheel-sep-row">
+                    <li class="wheel-block prize-again animated" data-index="10">
+                        <div class="wheel-icon"></div>
+                    </li>
+                    <li class="wheel-block even prize1 animated" data-index="5">
+                        <div class="wheel-icon"></div>
+                    </li>
+                </ul>
+            </li>
+            <li class="wheel-row-wrap">
+                <ul class="wheel-row">
+                    <li class="wheel-block even prize1 animated" data-index="9">
+                        <div class="wheel-icon"></div>
+                    </li>
+                    <li class="wheel-block prize3 animated" data-index="8">
+                        <div class="wheel-icon"></div>
+                    </li>
+                    <li class="wheel-block even prize6 animated" data-index="7">
+                        <div class="wheel-icon"></div>
+                    </li>
+                    <li class="wheel-block prize-again animated" data-index="6">
+                        <div class="wheel-icon"></div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="middle-button-area">
+            <div class="middle-button js-start-btn"></div>
+        </div>
+    </div>
+
+    <div class="info-area">
+        <div class="view-prize"><a href="/wap/lottery-show.html#" class="js-view-prize">查看奖品</a></div>
+        <ul class="activity-info">
+            <li> 1、每个微信ID只可抽奖1次，仅品珍鲜活关注
+            <div class="activity-info-content">&nbsp;&nbsp;用户有效，转发链接无效。</div><br />
+            </li>
+          <li>2、转盘停下后，点击“查看奖品”即可查看。<br /><br /></li>
+          <li>3、实物奖品：系统自动发送礼券至中奖者账户，购<div class="activity-info-content">&nbsp;&nbsp;买对应产品，下单时选择使用该礼券，即可免单（邮费自付）</div><br /></li>
+          <li>4、现金券：直接送到中奖者账户，购买商品可进行<div class="activity-info-content">&nbsp;&nbsp;相应抵扣。</div><br /></li>
+          <li>5、抽奖时间：
+                2014年12月15日—2015年2月17日<br /><br />
+          </li>
+           <li>6、咨询电话：400-930-9303</li>
+                    
+        </ul>
+    </div>
+</div>
+
+<div id="wxcover"></div>    </div>
+
+
+
+           </div>
+
+
+<script>
+	var is_click = 0;
+	$(".js-start-btn").click(function () {
+		<{if $msg}>
+		alert('<{$msg}>');
+		return ;
+		<{/if}>
+		if (is_click == 0) {
+			start_this();
+		} 
+		if (is_click == 2) {
+			alert('你已经抽过奖了，不能重复抽');
+		}
+		is_click = 1;
+	});
+	
+	var t;
+	var index = 0;
+	var count_num = 0;
+	var json_msg = '';
+	var json_position = '-1';
+	function start_this() {
+	
+		$(".wheel-block").each(function(){
+		    if ($(this).attr('data-index') == index) {
+		    	$(this).addClass("active");
+		    } else {
+		    	$(this).removeClass("active");
+		    }
+		  });
+		
+		if (json_position == '-2') {
+			$(".wheel-block").each(function(){
+			    	$(this).removeClass("active");
+			  });
+			show_msg();
+			return ;
+		}
+		
+		if (json_position == index) {
+			
+			setTimeout("show_msg()",1500);
+			
+			return ;
+		}
+		
+		index++;
+		if (index == 12) {
+			index = 0;
+		}
+		t=setTimeout("start_this()",300);
+		
+		count_num++;
+		if (count_num == 10) {
+			get_data();
+		}
+	}
+	
+	function show_msg() {
+		alert(json_msg);
+		is_click = 2;
+	}
+	
+	function get_data() {
+			$.getJSON("/wap/lottery-start.html", function(json){
+			  if (json.error) {
+			  	json_msg =  json.error;
+			  	json_position = -2;
+			  	return ;
+			  //	alert(json_msg);
+			  }
+			  if (json.success) {
+			  	json_msg =  json.success;
+			  	json_position = json.redirect;
+			  	return ;
+			  }
+			});
+	}
+	
+	
+</script>
+

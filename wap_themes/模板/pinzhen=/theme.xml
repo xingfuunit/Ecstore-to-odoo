@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?><theme>
+    <name>品珍专属模板</name>
+    <id>pinzhen</id>
+    <version>0.1</version>
+    <info>品珍专属模板</info>
+    <author>by</author>
+    <site></site>
+    <update_url></update_url>
+
+    <borders>
+            </borders>
+    <views>
+            </views>
+    <config>      
+            </config>
+
+    <widgets>
+                <widget app="" theme="pinzhen" file="default.html" slot="3" type="brand_list" order="12" title="" domid="1346304537697" border="__none__" classname="" tpl="default.html" coreid="hot_brand">
+        <![CDATA[a:0:{}]]>
+        </widget>
+                <widget app="" theme="pinzhen" file="index.html" slot="1" type="main_slide" order="0" title="" domid="1372139582395" border="__none__" classname="" tpl="default.html" coreid="main_slide">
+        <![CDATA[a:1:{s:3:&quot;pic&quot;;a:3:{i:1415816993487;a:4:{s:2:&quot;id&quot;;s:13:&quot;1415816993487&quot;;s:4:&quot;link&quot;;s:81:&quot;/public/images/9b/7e/f0/4f0b81d5f519063d955ab6704268184b698db001.jpg?1415868800#w&quot;;s:10:&quot;linktarget&quot;;s:0:&quot;&quot;;s:8:&quot;linkinfo&quot;;s:0:&quot;&quot;;}i:1415817236782;a:4:{s:2:&quot;id&quot;;s:13:&quot;1415817236782&quot;;s:4:&quot;link&quot;;s:107:&quot;http://test.pinzhen365.com/public/images/14/ee/9b/98f5beef3682f0368c07f8ab421afeb6c8637e3b.jpg?1415868817#w&quot;;s:10:&quot;linktarget&quot;;s:0:&quot;&quot;;s:8:&quot;linkinfo&quot;;s:0:&quot;&quot;;}i:1415868823119;a:4:{s:2:&quot;id&quot;;s:13:&quot;1415868823119&quot;;s:4:&quot;link&quot;;s:107:&quot;http://test.pinzhen365.com/public/images/6b/c4/1c/07ff88e4cced3b2d29af07ecde52a8dad631ed4d.jpg?1415868829#w&quot;;s:10:&quot;linktarget&quot;;s:0:&quot;&quot;;s:8:&quot;linkinfo&quot;;s:0:&quot;&quot;;}}}]]>
+        </widget>
+            </widgets>
+
+</theme>

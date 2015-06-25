@@ -1,0 +1,15 @@
+<form action="<{link app=b2c ctl=site_search act=result }>" method="post" class="SearchBar searchBar_<{$widget_id}>">
+  <table cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="search_label">
+	  	<{if $setting.showkeywords}><span>关键字：</span><{/if}>
+		<input name="search_keywords" size="12" type="text" value="<{$data.search_key|default:$setting.keywords}>" onfocus="this.value=(this.value=='<{$data.search_key|default:$setting.keywords}>')?'':this.value;" onblur="this.value=(this.value=='')?'<{$data.search_key|default:$setting.keywords}>':this.value;" class="inputstyle keywords" autocompleter="associate_autocomplete_goods:name,goods_id" ac_options="{}" />
+      </td>
+      <{if $setting.searchopen}>
+      <td class="search_price1">价格从 <{input name="price[0]" type="number" size="4" class="inputstyle gprice_from" }></td>
+      <td class="search_price2">到<{input name="price[1]" type="number" size="4" class="inputstyle gprice_to"}></td>
+      <{/if}>
+      <td><input type="submit" value="<{t app='b2c'}>搜索<{/t}>" class="btn_search" onfocus='this.blur();'/></td>
+    </tr>
+  </table>
+</form>

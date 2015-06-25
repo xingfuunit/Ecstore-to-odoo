@@ -1,0 +1,57 @@
+<div class="signin-page-wrap clearfix" style="width: 1000px; margin: 0 auto;margin-bottom: 0px; padding-left: 0%; margin-top: 100px;">
+    <div id="page_signin" class="signupin-content signin" style="margin-left: 0px;width: 1000px;border: 0px;overflow: hidden;border: 1px solid #fff;border-radius: 10px;">
+        <div class="loading_r left" style="border-right: 1px solid #eee;width: 460px;">
+            <div class="sign-title" style="">
+                <h2>登录</h2>
+            </div>
+            <div style="width: 400px; margin: 0 auto;">
+                <{foreach from=$passports item=item}>
+                <{$item.html}>
+                <{/foreach}>
+            </div>
+<!--
+            <{if $login_image_url.0}>
+            <div id="trust_signin" class="trust-signin">
+                <{foreach from=$login_image_url item=login_image_url}>
+                <{$login_image_url}>
+                <{/foreach}>
+            </div>
+            <{/if}>
+
+            <div class="need-signup clearfix">
+                <h3>还不是会员？</h3>
+                <a href="<{link app=b2c ctl=site_passport act=signup}>" class="btn btn-simple"><span><span>免费注册</span></span></a>
+            </div>-->
+        </div>
+        <div class="loading_r right" style="width: 538px; margin: 0 auto;"><img style="display: block; padding-top:41px; margin: 0 auto;"src="<{$res_url}>/themes/xiaobadu/images/111.jpg" width="461" height="314"></div>
+    </div>
+
+</div>
+
+<style type="text/css">
+</style>
+
+
+<script>
+    var signin = $('page_signin');
+    signin.getElement('button[type=submit]').store('_ajax_config', {
+        progress: function(rs) {
+            if (rs.error) {
+            < {if $valideCode == 'true'} >
+                    changeCode(signin.getElement('img.auto-change-verify-handle'));
+                    < {/if}>
+                            return top.Message.error(rs.error, function() {
+                                if (rs.redirect)
+                                    location.href = rs.redirect;
+                            });
+                    }
+            if (rs.success)
+                    return top.Message.success(rs.success + '<br><b>系统即将跳转到登录前页面</b>', function() {
+                        if (rs.redirect) top.location.href = rs.redirect;
+                    });
+            if (rs.redirect)
+                top.location.href = rs.redirect;
+        }
+    });
+</script>
+

@@ -1,0 +1,46 @@
+<form action="<{link app=b2c ctl=site_storepassport act=post_login}>" method="post">
+  <input type="hidden" name="forward" value="<{$forward}>">
+
+        <div class="login-div">
+          员&nbsp;&nbsp;&nbsp;工：<{input type="text" name="uname" id="" value="{$loginName}" placeholder="用户名/邮箱地址" vtype="required" data-caution="请填写登录帐号" class="login-input" autofocus="autofocus"}>
+        </div>
+        <div class="login-div">
+            <div style="float: left;">密&nbsp;&nbsp;&nbsp;码：<{input type="password" name="password" id=""  class="login-input" }></div><!--<div class="pass_cominf"><a style="display: block; width:140px; height: 49px; padding: 5px;" href="<{link app=b2c ctl=site_storepassport act=lost}>">重设密码</a></div>-->
+        </div>
+  <{if $show_varycode}>
+        <div class="login-div">
+          验证码：<{input type="vcode" name="verifycode" class="verify-input" placeholder="填写验证码" style="width: 160px;" class="login-input"  key='b2c'}>
+        </div>
+    <{/if}>
+    
+    
+        <div class="login-div">
+          店&nbsp;&nbsp;&nbsp;铺：
+          <select name="FreshPac_ShopID"  id="FreshPac_ShopID" class="login-select" onchange="FreshPac_SetShop2()">
+              <{foreach from=$local_store item=itemt key=keyt name=namet}>
+                 <option id="store_<{$itemt.branch_id}>" <{if $smarty.foreach.namet.first}>selected="selected"<{/if}> value="<{$itemt.branch_id}>"><{$itemt.name}></option>
+              <{/foreach}>
+               </select>
+          
+         </div>
+         <div class="login-div">
+             
+             <{assign var='label'  value=''}>
+        <{button type="submit" style="display: block; float:left; margin-right:30px; margin-left:80px;" class="login-tj" label=$__b2c=$label|t:'b2c' rel="_request"}>
+           <!--<a href="<{link app=b2c ctl=site_storepassport act=signup}>" class="login-reg" style="display: block; float:left;"></a>-->
+          </div>
+        <input id="store" name="store" value="<{foreach from=$local_store item=itemt key=keyt name=namet}>
+                 <{if $smarty.foreach.namet.first}><{$itemt.branch_id}><{/if}>
+              <{/foreach}>" style="display: none"/>
+</form>
+<script>
+function FreshPac_SetShop()
+{
+	document.getElementById("FreshPac_ShopID").value = document.getElementById("store").value;
+	document.getElementById("FreshPac_ShopID").disabled = true;
+}
+function FreshPac_SetShop2()
+{
+	document.getElementById("store").value = document.getElementById("FreshPac_ShopID").value;
+}
+</script>

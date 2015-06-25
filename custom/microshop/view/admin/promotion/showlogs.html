@@ -1,0 +1,119 @@
+<div class="division">
+<form method="POST" action="index.php?app=microshop&ctl=admin_promotioninto&act=show_logs" class="tableform" id="form_member_withdrawal">
+<{input type='hidden' name='pri_id' value=$proi.pri_id}>
+<{input type='hidden' name='save' value='save_logs'}>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" >
+	<tr>
+	  <th><{t}>订单：<{/t}></th>
+	  <td><{$proi.order_id}> (外部单号:<{$proi.ext_order_id}>) </td>
+	</tr>
+	<tr>
+	  <th><{t}>商品名称：<{/t}></th>
+	  <td><{$proi.name}></td>
+	</tr>
+	<tr>
+	  <th><{t}>成本：<{/t}></th>
+	  <td><span class="price1"><{$proi.cost|cur}></span></td>
+	</tr>
+	<tr>
+	  <th><{t}>售出价：<{/t}></th>
+	  <td><span class="price1"><{$proi.price|cur}></span></td>
+	</tr>
+	<tr>
+	  <th><{t}>购买数量：<{/t}></th>
+	  <td><{$proi.nums}></td>
+	</tr>
+	<tr>
+	  <th><{t}>商品毛利：<{/t}></th>
+	  <td><{$prom_data.goods_gross_profit_str}></td>
+	</tr>
+	
+	<tr>
+	  <th><{t}>推广总费：<{/t}></th>
+	  <td><{$prom_data.prom_total_price_str}></td>
+	</tr>
+	
+	<tr>
+	  <th><{t}>推广分成：<{/t}></th>
+	  <td>微店用户：<{if $proi.microshop_member.contact.name}><{$proi.microshop_member.contact.name}><{else}>ID:<{$proi.microshop_member.member_id}><{/if}>
+	     &nbsp;&nbsp;&nbsp;&nbsp;推广费: <{$prom_data.microshop_member_price_str}>
+	  <br />
+	  经销商：<{if $proi.agency_member.contact.name}><{$proi.agency_member.contact.name}><{else}>编号:<{$proi.agency_member.agency_no}><{/if}>
+		&nbsp;&nbsp;&nbsp;&nbsp;推广费: <{$prom_data.agency_member_price_str}>
+	  </td>
+	</tr>
+	
+	<tr>
+	  <th><{t}>发货总费：<{/t}></th>
+	  <td><{$prom_data.ship_total_price_str}></td>
+	</tr>
+	
+	<tr>
+	  <th><{t}>发货分成情况：<{/t}></th>
+	  <td>
+		
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" >
+			<tr>
+	 		 <td><{t}>经销商编号<{/t}></td>
+	 		 <td><{t}>发货数量<{/t}></td>
+	 		 <td><{t}>分成金额<{/t}></td>
+	 		</tr>
+	 		<{foreach from=$proi.ship_members item=ship_member}>
+	 		<tr>
+	 		 <td><{$ship_member.agency_no}></td>
+	 		 <td><{$ship_member.number}></td>
+	 		 <td><{$ship_member.ship_price_str}></td>
+	 		</tr>
+	 		<{/foreach}>
+	 	</table>
+		
+	 </td>
+	</tr>
+</table>
+</form>
+</div>
+
+<{area inject='.mainFoot'}>
+     <div class="table-action">
+	<{button type="button" label=$___b2c="确定处理"|t:'b2c' id="member_withdrawal-form-submit"}>
+</div>
+<{/area}>
+
+
+
+
+
+<script>
+(function(){
+	var _form = $('form_member_withdrawal');
+	var btn =$('member_withdrawal-form-submit');
+	var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+
+	_form.store('target',{
+		onSuccess:function(response){
+			var hash_res_obj = JSON.decode(response);
+
+			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+			{
+				try{
+					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+				}catch(e){}
+
+				if(_dialogIns)
+				{
+					_dialogIns.close();
+					window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+				}
+			}
+
+		}
+	});
+
+	    btn.addEvent('click',function(){
+		    _form.fireEvent('submit',{stop:$empty});
+		});
+
+})();
+
+
+</script>

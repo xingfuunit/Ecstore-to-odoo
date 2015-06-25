@@ -1,0 +1,174 @@
+<{include file='wap/member/header.html' title=$title goback='/wap/member.html'}>
+<div style="position:relative;margin:5px 0;height:auto;display:block;" class="" >
+<div style="width:25%;float:left;">
+<button style="width:99%;" onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='nopayed'}>'"  class="am-btn am-btn-default<{if $status=='nopayed'}> am-active<{/if}>" type="button">待支付</button>
+</div>
+<div style="width:25%;float:left;">
+<button style="width:99%;" onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='daishouhuo'}>'"  class="am-btn am-btn-default<{if $status=='daishouhuo'}> am-active<{/if}>" type="button">待收货</button>
+</div>
+<div style="width:25%;float:left;">
+<button style="width:99%;padding:.625em 0em;" onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='tuihuo'}>'" class="am-btn am-btn-default<{if $status=='tuihuo'}> am-active<{/if}>" type="button" >我的退货</button>
+</div>
+<div style="width:25%;float:left;">
+<button style="width:99%;" onClick="location.href='<{link app=b2c ctl='wap_member' act='orders' arg0='all'}>'" class="am-btn am-btn-default<{if $status=='all'}> am-active<{/if}>" type="button">全部</button>
+</div>
+<div style="clear:both;"></div>
+</div>
+
+<div class="am-list-news-bd">
+<{if $orders}>
+    <ul class="am-list">
+      <!--缩略图在标题左边-->
+      
+      <{foreach from=$orders item="order" name=orders key="key"}>
+      
+      <li class="am-g am-list-item-desced  am-list-item-thumb-left" style=" width:96%;margin:2%; border:1px solid #ccc; border-radius:5px;">
+        <div style="border-bottom:1px dotted #ddd; margin-bottom:5px;" >
+          <div class="am-list-news-hd am-cf "  style="padding-left:0.8rem;padding-right:0.8rem;"><span style="float:left;"> 订单编号：</span><a style="float:left;" href="<{link app=b2c ctl=wap_member act=orderdetail arg0=$order.order_id arg1=$archive}>"><span class="am-text-warning"><{$order.order_id}></span></a>
+              <span  <{if($order.status=='finish')}> class="am-btn am-round am-btn-xs am-text-success am-fr" <{elseif($order.status=='dead')}> class="am-btn am-round am-btn-xs am-list-item-text am-fr" <{else}> class="am-btn am-round am-btn-xs am-text-warning am-fr"  <{/if}> style="padding:.25rem  0rem 0rem;" ><{switch from=$order.status}>
+                <{case value='finish'}><{t}>已完成<{/t}>
+                <{case value='dead'}><{t}>已作废<{/t}>
+                <{case}>
+                <{switch from=$order.pay_status}>
+                <{case value='1'}><{t}>已付款<br /><{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{case}><{t}>[正在备货]<{/t}>
+                <{/switch}>
+                <{case value='2'}><{t}>已付款至<br />担保方<{/t}>
+                <{case value='3'}><{t}>等待补款<br /><{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{/switch}>
+                <{case value='4'}><{t}>部分退款<br /><{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='0'}><{t}>[未发货]<{/t}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{/switch}>
+                <{case value='5'}><{t}>已退款<br /><{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='0'}><{t}>[未发货]<{/t}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{/switch}>
+                <{case}><{t}>等待付款<br /><{/t}>
+                <{switch from=$order.ship_status}>
+                <{case value='1'}><{t}>[已发货]<{/t}>
+                <{case value='2'}><{t}>[部分发货]<{/t}>
+                <{case value='3'}><{t}>[部分退货]<{/t}>
+                <{case value='4'}><{t}>[已退货]<{/t}>
+                <{/switch}>
+                <{/switch}>
+                <{/switch}></span>
+          </div>
+        </div>
+       <!--  <div class="am-u-sm-4 am-list-thumb" ><a href="#"><img  src="assets/i/examples/bw-2014-06-19.jpg" width="100" height="100"  alt="新西兰活绿青口800g"/></a></div>
+        <div class="am-u-sm-8 am-list-main" style="width:40%; float:right; color:#999999">
+          <h3 class="am-list-item-hd"> <a href="#">新西兰活绿青口800g</a> </h3>
+          <div class="am-list-item-text"> 规格：500g/袋 </div>
+          <div class="am-list-item-text"> 数量：2 </div>
+        </div> -->
+        <!-- goods -->
+                <{if $order.goods_items}>
+                    <{foreach from=$order.goods_items item=item_goods name=goods_item}>
+                        <!-- goods -->
+                        <{if $item_goods.product}>
+                        <div class="am-margin am-cf">
+                            <div class="am-u-sm-4 am-list-thumb" ><a href='<{$item_goods.product.link_url}>' title="<{$item_goods.product.quantity}>--<{$item_goods.product.name}>">
+                            <img src='<{$item_goods.product.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>' />
+                            </a></div>
+                            <div class="am-u-sm-8 am-list-main" style="width:40%; float:right; color:#999999">
+          <h3 class="am-list-item-hd"> <a href="<{$item_goods.product.link_url}>"><{$item_goods.product.name}></a> </h3>
+          <div class="am-list-item-text"> <{foreach from=$item_goods.product.minfo item=minfo key=name}>
+                    <{$minfo.label}>：<{$minfo.value}>
+                <{/foreach}>
+                <{if $item_goods.product.attr}>
+                    <{$item_goods.product.attr}>
+                <{/if}> </div>
+          <div class="am-list-item-text"> 数量：<{$item_goods.product.quantity}> </div>
+        </div></div>
+                        <{/if}>
+                        <!-- adjunct -->
+                        <{if $item_goods.adjunct_items}>
+                            <{foreach from=$item_goods.adjunct_items item=item_adjunct name=adjunct_item}>
+                            <div class="am-margin am-cf">
+                                <div class="am-u-sm-4 am-list-thumb" ><a href='<{$item_adjunct.link_url}>' title="<{$item_adjunct.quantity}>--<{$item_adjunct.name}>--配件">
+                                <img src="<{$item_adjunct.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>"/>
+                                </a></div>
+                                <i class="num"><{$item_adjunct.quantity}></i>
+                                <i class="icon red">配件</i>
+                            </div>
+                            <{/foreach}>
+                        <{/if}>
+                        <!-- gift -->
+                        <{if $item_goods.gift_items}>
+                            <{foreach from=$item_goods.gift_items item=item_gift name=gift_item}>
+                            <div class="am-margin am-cf">
+                                <div class="am-u-sm-4 am-list-thumb" ><a href='#' title="<{$item_gift.quantity}>-- <{$item_gift.name}>--赠品">
+                                <img src="<{$item_gift.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>"/>
+                                </a></div>
+                                <i class="num"><{$item_gift.quantity}></i>
+                                <i class="icon red">赠品</i>
+                            </div>
+                            <{/foreach}>
+                        <{/if}>
+                    <{/foreach}>
+                <{/if}>
+
+                <!-- gift -->
+                <{if $order.gift_items}>
+                    <{foreach from=$order.gift_items item=item_gift name=gift_item}>
+                    <div class="am-margin am-cf">
+                        <div class="am-u-sm-4 am-list-thumb" ><a href='#' title="<{$item_gift.quantity}>--<{$item_gift.name}>--赠">
+                        <img src="<{$item_gift.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>"/>
+                        </a></div>
+                        <i class="num"><{$item_gift.quantity}></i>
+                        <i class="icon red">赠品</i>
+                     </div>
+                    <{/foreach}>
+                <{/if}>
+
+                <!-- extends -->
+                <{if $order.extends_items}>
+                    <{foreach from=$order.extends_items item=item_extends name=item_extends}>
+                        <{$item_extends}>
+                    <{/foreach}>
+                <{/if}>
+        
+        
+        
+        
+        <div style="border-top:1px dotted #ddd; margin-top:5px; clear:both " >
+          <div class="am-list-news-hd am-cf am-padding am-fl"  style="width:100%"> 共<span class="am-text-warning"><{$order.itemnum}></span>件商品，实付<span class="am-text-warning"><{$order.cur_amount|cur_odr:$order.currency:false:true}></span>元
+          
+          <{if $order.status == 'active' && ($order.pay_status=='0' || $order.pay_status=='3')}>
+                            <{if $order.payinfo.pay_app_id != '-1'}>
+                            <a href="<{link app=b2c ctl=wap_paycenter act=index arg0=$order.order_id}>" >
+                                <button type="button" class="am-btn am-btn-danger am-round am-btn-xs am-fr">立即付款</button>
+                                <i class="arr right"></i>
+                            </a>
+                            <{/if}>
+                            <{/if}>
+          
+          </div>
+        </div>
+      </li>
+       <{/foreach}>
+    </ul>
+    <{else}>
+        <div style='margin:20px auto;color:red;text-align: center;font-size: 16px;'>暂无订单</div>
+        <{/if}>
+</div>
+<div style="text-align:center">
+<{wap_pagers data=$pager}></div>

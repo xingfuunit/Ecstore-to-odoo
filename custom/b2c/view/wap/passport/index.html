@@ -1,0 +1,106 @@
+<form action="<{link app=b2c ctl=wap_passport act=post_login}>"
+	class="form" method="post" data-type="ajax">
+	<input type="hidden" name="forward" value="<{$forward}>">
+	<div class="header">
+		<div>
+			<img style="width: 100%;"
+				src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/loginbg.jpg">
+		</div>
+	</div>
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+			<br>
+
+			<form method="post" class="am-form am-form-horizontal">
+				<label for="email">账户:</label> 
+				
+				<div class="am-input-group" style="width:100%;">
+
+  <input type="text" id="uname" name="uname" value="<{$loginName}>"  class="am-form-field" placeholder="请输入用户名/手机号">
+</div>
+				 <label for="password">密码:</label>
+				<div class="am-input-group" style="width:100%;">
+  
+  <input class="am-form-field"  type="password" id="password" name="password"
+					value=""  placeholder="请输入密码">
+</div>
+				<label for="remember-me"> <input id="remember-me"
+					type="checkbox" name="is_remember"<{if $site_b2c_remember
+					!= '0'}> checked="checked"<{/if}>> 记住密码
+				</label> <br />
+				<div class="am-cf">
+					<input type="button" id="ajax_login" name="" value="登 录"
+						class="am-btn am-btn-primary am-btn-sm am-fl"> <input
+						type="button" name="" value="立即注册"
+						onclick="javascript:window.location.href='passport-signup.html'"
+						class="am-btn am-btn-warning am-btn-sm am-fl"
+						style="margin-left: 10px;"> <input type="button" name="" onclick="javascript:window.location.href='passport-lost.html'"
+						value="忘记密码 ^_^? " class="am-btn am-btn-default am-btn-sm am-fr">
+				</div>
+			</form>
+			<hr>
+			<p>© 2015 pzfresh.com, Inc. 品珍鲜活版权所有</p>
+		</div>
+	</div>
+</form>
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert-login">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">错误</div>
+    <div class="am-modal-bd">
+      
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
+  </div>
+</div>
+<script>
+	$(document).ready(function() {
+
+		$("#ajax_login").bind("click", function() {
+			$('#cart-modal-loading').modal();
+			$.ajax({
+				url : "<{link app=b2c ctl=wap_passport act=post_login}>",
+
+				type : 'POST',
+
+				data : {
+					"uname" : $('#uname').val(),
+					"password" : $('#password').val()
+				},
+
+				dataType : 'html',
+
+				timeout : 3000,
+
+				error : function() {
+					//隐藏等待框
+					$('.am-modal-loading').modal('close');
+					$('#my-alert-login')
+					.children(
+							'.am-modal-dialog')
+					.children(
+							".am-modal-bd")
+					.html('请求失败');
+			$('#my-alert-login')
+					.modal();
+					//alert('请求失败');
+				},
+
+				success : function(result) {
+					//隐藏等待框
+					$('.am-modal-loading').modal('close');
+					jsonobj = eval('(' + result + ')');
+					if (jsonobj.success){
+					 	location.href=jsonobj.redirect;
+					}
+					else{
+						$('#my-alert-login').children('.am-modal-dialog').children(".am-modal-bd").html(jsonobj.error);
+						$('#my-alert-login').modal();
+					}
+				}
+
+			});
+		});
+	});
+</script>

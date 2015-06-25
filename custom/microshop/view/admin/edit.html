@@ -1,0 +1,247 @@
+<form action="index.php?app=microshop&ctl=admin_list&act=toAdd" method="post" name="gEditor" id="gEditor">
+  <input type="hidden" name="shop_id" value="<{$info.shop_id}>" id="gEditor-GId-input"/>
+  <div id="gEditor-Body">
+<{capture name="header"}>
+<{lang_script src="lang.js" app='b2c'}>
+<{/capture}>
+<div class="spage-main-box" id="goods_basic">
+    <h3><{t}>微店信息<{/t}></h3>
+    <div class="goods-detail">
+        <div class="tableform">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th><{t}>微店名称<{/t}></th>
+                    <td>
+                        <input class="x-input" type="text" required="true" vtype='required' name="shop_name" style="width:35%" value="<{$info.shop_name}>"><em><font color="red">*</font></em>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>浏览次数<{/t}></th>
+                    <td>
+                        <input class="x-input" type="text" name="see_num" style="width:10%" value="<{$info.see_num}>">
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>所属用户<{/t}></th>
+                    <td>
+                        <div><{$info.member_login_name}></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>所属经销商<{/t}></th>
+                    <td>
+                        <div><{$info.agency_login_name}></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>微店开启状态<{/t}></th>
+                    <td>
+                        <input type="radio" value="1" name="is_open" <{if $info.is_open == 1}>checked="checked"<{/if}>/>开启&nbsp;&nbsp;
+                        <input type="radio" value="0" name="is_open" <{if $info.is_open == 0}>checked="checked"<{/if}>/>关闭
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<{capture name='footbar'}>
+<table cellspacing="0" cellpadding="0" class="table-action">
+      <tbody>
+		<tr valign="middle">
+        <td>
+            <{button label=$___b2c="保存并关闭窗口"|t:'b2c' class="btn-primary" onclick="subGoodsForm(event,2)"}>
+            <{button label=$___b2c="保存当前"|t:'b2c' class="btn-primary" onclick="subGoodsForm(event,3)"}>
+            <{assign var=bcclose value=$___b2c='确定退出?'|t:'b2c'}>
+            <{assign var=bclose value="关  闭"}>
+            <{button label=$___b2c=$bclose|t:'b2c' class="btn-secondary" onclick="if(confirm('{$bcclose}'))window.close()"}>
+        </td>
+        </tr>
+        </tbody>
+</table>
+<{/capture}>
+</div>
+</form>
+<script>
+
+/**
+ * 删除
+ */
+function del(a) {
+    if (confirm(LANG_goodseditor.comfirmDelPic)) {
+        var a = $(a), b = a.getParent(".gpic-box"), c = b.getNext(".gpic-box"), img_id = $$('.pic-area input[name=image_default]')[0].value, p_dom = $$('.all-pics')[0];
+        if ( img_id == a.get('ident') ) {
+            p_dom.removeChild(b);
+            if ( !c ) {
+                c = p_dom.getChildren('.gpic-box')[0];
+            }
+            if (c) {
+                c.getElement(".gpic").onclick();
+            }
+        } else {
+            b.destroy();
+        }
+    }
+}
+
+/**
+ * 设置默认
+ */
+function setDefault(a, b) {
+    var c = $(b).getParent(".pic-main").getElement(".pic-area"), e = $E(".gpic[image_id=" + a + "]", c);
+    if (!e.hasClass("current")) {
+        var d, f;
+        (d = $E(".current", c)) && d.removeClass("current");
+        (f = $E("input[name=image_default]", c)) && f.set("value", a);
+        e.addClass("current")
+    }
+}
+
+/**
+ * 查看源图片
+ */
+function viewSource(a) {
+    return new Dialog(a, {title: LANG_goodseditor.viewSource,singlon: !1,width: 650,height: 300})
+}
+
+function setPos(){
+
+  $$('.pic-uploader').each(function(el){
+      $$('.std-upload-txt')[0].setStyle('top',el.getPosition().y+$('main').getScroll().y);
+  });
+}
+window.addEvent('domready',function(){
+//  setPos.periodical(200);
+});
+
+ // setPos();
+  Ex_Loader('uploader',function(){
+
+      $$('.pic-uploader').each(function(el,j){
+        if (document.getElements('.swiff-uploader-box')) {
+            document.getElements('.swiff-uploader-box').destroy();
+        }
+        var pic_main = el.getParent('.pic-main');
+        var area = pic_main.getElement('.pic-area');
+        var pics = pic_main.getElement('.all-pics');
+        new Swiff.Uploader( {
+            allowDuplicates: true,
+            verbose: true,
+            url:'index.php?app=image&ctl=admin_manage&act=wimage_swf_remote&sess_id='+sess_id,
+            path: '<{$image_dir}>/uploader.swf',
+            typeFilter: {
+                'Images (*.jpg, *.jpeg, *.gif, *.png)': '*.jpg; *.jpeg; *.gif; *.png'
+            },
+            fileSizeMax:'<{$IMAGE_MAX_SIZE}>',
+            target:el,
+            onSelect:function(rs){
+                if(rs)
+                rs.each(function(v){
+                    if(v.size>this.fileSizeMax){
+                        alert(v.name+'<{t}>\n\n文件超出大小<{/t}>');
+                    };
+                },this);
+            },
+            onSelectFail:function(rs){
+                rs.each(function(v){
+                    if(v.validationError=='sizeLimitMax'){
+                        alert(v.name+'<{t}>\n\n文件超出大小<{/t}>');
+                    };
+                });
+            },
+            onSelectSuccess:function(rs){
+                var PID='up_';
+                var _this=this;
+                rs.each(function(v,i){
+                     new Element('div',{'class':'gpic-box','id':PID+j+v.id}).inject(pics);
+                });
+                this.start();
+            },
+            onFileOpen:function(e){
+                $('up_'+j+e.id).setHTML('<em style="font-size:13px;font-family:Georgia;">0%</em>');
+            },
+            onFileProgress:function(e){
+                $('up_'+j+e.id).getElement('em').set('text',e.progress.percentLoaded+'%');
+            },
+            onFileComplete: function(res){
+                if(res.response.error){
+                    return  new MessageBox.error('<{t}>文件<{/t}>'+res.name+'<{t}>上传失败<{/t}>');
+                }
+                $('up_'+j+res.id).setHTML(res.response.text);
+                if(!$E('.current',area)&&$E('.gpic',area)){
+                  $E('.gpic',area).onclick();
+                }
+            }
+        });
+
+      });
+
+    });
+        /*
+         *  sign:{
+               1:保存并增加相似商品,
+               2:保存并返回,
+               3:保存当前不返回，
+         *    }
+         */
+   var _form=$('gEditor'),_formActionURL=_form.get('action');
+
+
+   subGoodsForm = function (event,sign){
+       var specOBJ='';
+       var _target=$(new Event(event).target);
+
+       //var target={extraData:$('finder-tag').toQueryString()+'&'+specOBJ,onRequest:function(){_target.disabled = true;}};
+       var target={onRequest:function(){_target.disabled = true;}};
+
+       switch (sign){
+            case 1:                    //添加相似
+                $extend(target,{
+                    onComplete:function(){
+                        if(window.opener.finderGroup&&window.opener.finderGroup['<{$env.get.finder_id}>'])
+                        window.opener.finderGroup['<{$env.get.finder_id}>'].refresh();
+                        clearOldValue();
+                        _target.disabled = false;
+                }});
+            break;
+            case 2:                   //保存关闭
+                $extend(target,{
+                    onComplete:function(rs){
+                        if(rs&&!!JSON.decode(rs).success){
+                            if(window.opener.finderGroup&&window.opener.finderGroup['<{$env.get.finder_id}>']){
+                                window.opener.finderGroup['<{$env.get.finder_id}>'].refresh();
+                            }
+                            window.close();
+                        }
+                        _target.disabled = false;
+                    }}
+                );
+            break;
+            case 3:
+                $extend(target,{            //保存当前
+                    onComplete:function(rs){
+                        var id = JSON.decode(rs).goods_id;
+                        if(id > 0){
+                            $('gEditor-GId-input').value =id;
+                        }
+                        if(window.opener.finderGroup&&window.opener.finderGroup['<{$env.get.finder_id}>'])
+                        window.opener.finderGroup['<{$env.get.finder_id}>'].refresh();
+
+                        _target.disabled = false;
+                    }}
+                );
+            break;
+       }
+
+        _form.store('target',target);
+        _form.set('action',_formActionURL+'&but='+sign).fireEvent('submit',new Event(event));
+    };
+
+    var clearOldValue=function(){
+         $('id_gname').set('value','');
+         $('gEditor-GId-input').set('value','');
+         if($$('.product_id').length)
+         $$('.product_id').each(function(el){
+            el.value='';
+         });
+    };
+</script>

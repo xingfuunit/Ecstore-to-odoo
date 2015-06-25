@@ -1,0 +1,684 @@
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to open /usr/local/var/data/b2c_goods_delta.spl: No such file or directory
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+read 0.0 of 0.0 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.0 of 0.0 MB, 100.0% done
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+read 0.1 of 0.1 MB, 100.0% done
+FATAL: failed to merge index 'b2c_goods_delta' into index 'b2c_goods_merge': attribute count mismatch (me=/alidata/www/phpwind/ecstore/public/data/b2c_goods, in=/alidata/www/phpwind/ecstore/public/data/b2c_goods_delta, myattrs=40, inattrs=39)
+Sphinx 2.0.8-release (r3831)
+Copyright (c) 2001-2012, Andrew Aksyonoff
+Copyright (c) 2008-2012, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/alidata/www/phpwind/ecstore/app/search/config/sphinx.conf'...
+merging index 'b2c_goods_delta' into index 'b2c_goods_merge'...
+ERROR: index 'b2c_goods_delta' is already locked; lock: failed to lock /alidata/www/phpwind/ecstore/public/data/b2c_goods_delta.spl: Resource temporarily unavailable
+total 0 reads, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg
+total 0 writes, 0.000 sec, 0.0 kb/call avg, 0.0 msec/call avg

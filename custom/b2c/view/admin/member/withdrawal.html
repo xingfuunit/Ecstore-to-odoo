@@ -1,0 +1,77 @@
+<form method="POST" action="index.php?app=b2c&ctl=admin_member_withdrawal&act=save" class="tableform" id="form_member_withdrawal">
+<div class="division">
+<{input type='hidden' name='id' value=$data.id}>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" >
+	<tr>
+	  <th><{t}>用户名：<{/t}></th>
+	  <td><{$data.uname}></td>
+	</tr>
+	<tr>
+	  <th><{t}>申请提现金额：<{/t}></th>
+	  <td><span class="price0"><{$data.amount|cur}></span></td>
+	</tr>
+	<tr>
+	  <th><{t}>申请时间：<{/t}></th>
+	  <td><{$data.create_time|cdate:SDATE_STIME}></td>
+	</tr>
+	<tr>
+	  <th><{t}>状态：<{/t}></th>
+	  <td>
+	  	<{if $data.has_op eq 'true'}>
+	  	<em class="c-black">已处理</em>
+	  	<{else}>
+	  	<em class="c-red">未处理</em>
+	  	<{/if}>
+	  </td>
+	</tr>
+	<tr>
+		<th><{t}>备注：<{/t}></th>
+		<td><{input type=textarea name='remark' style=" width:90%" rows="6" value=$data.remark}></td>
+	</tr>
+</table>
+</div>
+</form>
+<{area inject='.mainFoot'}>
+     <div class="table-action">
+	<{button type="button" label=$___b2c="处理"|t:'b2c' id="member_withdrawal-form-submit"}>
+</div>
+<{/area}>
+
+
+
+
+
+<script>
+(function(){
+	var _form = $('form_member_withdrawal');
+	var btn =$('member_withdrawal-form-submit');
+	var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+
+	_form.store('target',{
+		onSuccess:function(response){
+			var hash_res_obj = JSON.decode(response);
+
+			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+			{
+				try{
+					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+				}catch(e){}
+
+				if(_dialogIns)
+				{
+					_dialogIns.close();
+					window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+				}
+			}
+
+		}
+	});
+
+	    btn.addEvent('click',function(){
+		    _form.fireEvent('submit',{stop:$empty});
+		});
+
+})();
+
+
+</script>

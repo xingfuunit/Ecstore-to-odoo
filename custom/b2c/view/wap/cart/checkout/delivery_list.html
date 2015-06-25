@@ -1,0 +1,82 @@
+
+<{*<{foreach from=$shippings item="shipping" key="key" name="shippings"}>*}>
+<{*<li class="shipping-item gb" value='{"id":<{$shipping.dt_id}>,"has_cod":"<{$shipping.has_cod}>","dt_name":"<{$shipping.dt_name}>","money":"<{$shipping.money}>"}'>*}>
+    <{*<div class="col2">*}>
+        <{*<div class="col"><{$shipping.dt_name}></div>*}>
+        <{*<div class="col t-r">运费：<span class="f-red"><{$shipping.money|cur_odr}></span>元</div>*}>
+    <{*</div>*}>
+<{*</li>*}>
+<{*<{/foreach}>*}>
+
+<!-- Header -->
+<{include file='wap/member/header.html' title='配送方式'}>
+
+
+  
+<div class="am-list-news-bd paiing" id="zxps">
+    <ul class="am-list">
+     <div style="clear:both; width:100%; margin-top:10px; margin-left:10px;" class="am-btn-group doc-js-btn-1" data-am-button>
+     <{foreach from=$shippings item="shipping" key="key" name="shippings"}>
+     <label style="margin-left:10px;" class="am-btn am-btn-default paiing-span<{if $smarty.get.id eq $shipping.dt_id}> selected<{/if}>" value='{"id":<{$shipping.dt_id}>,"has_cod":"<{$shipping.has_cod}>","dt_name":"<{$shipping.dt_name}>","money":"<{$shipping.money}>"}'>
+    	<input type="radio" name="options" class=""  id="option<{$key}>"> <{$shipping.dt_name}>
+  	 </label>
+	 <{/foreach}>		 
+	  </div>
+    </ul>
+</div>
+  
+  <div data-am-widget="list_news" style="<{if $smarty.get.id neq 2}>display:none;<{/if}>" class="am-list-news am-list-news-default ps-div" id="select_zt">
+  <!--列表标题-->
+  <div class="am-list-news-bd" >
+    <h1 class="am-list-item-text ps-div-title">自提地点</h1>
+    <ul class="am-nav" >
+    <{foreach from=$branchlist item="branchs"}>
+      <li class="am-g am-list-item-desced ps-div-address" value='<{$branchs.branch_id}>'  style="border-top:0px;"> <a href="javascript:void(0);"  class="am-list-item-hd"><{$branchs.name_b}><span class="am-list-news-more am-fr" style=" color: #FF9900"> <i class="am-icon-map-marker am-icon-md"></i></span></a> </li>
+    <{/foreach}>
+    </ul>
+    </div>
+  </div>
+<div style="float:left; width:100%;" >
+  <div class="am-panel-hd" style="background:#999999; border-top:1px solid #aaaaaa">
+  <a id="submit_del" href="javascript:void(0);" class="invoice_submit">
+  <img src="/public/app/b2c/statics/images/buy_sure.png" width="531" height="107" style="width:50%;margin-left:25%">
+  </a></div>
+</div>
+
+<script>
+    $('#zxps .paiing-span').click(function () {    	
+        $('#zxps .paiing-span').removeClass('selected');
+        $(this).addClass('selected');
+        var data = $.parseJSON($(this).attr('value'));
+        if(data.dt_name == '门店自提'){
+            $('#select_zt').show();
+        }else{
+            $('#select_zt').hide();
+        }
+    });
+    
+    $('#select_zt .ps-div-address').click(function () {
+    	$('#select_zt .ps-div-address').removeClass('am-active');
+    	$('#select_zt .ps-div-address').removeClass('selected');
+    	$(this).addClass('am-active');    	
+    	$(this).addClass('selected');
+    });
+
+    $('#submit_del').click(function(){
+    	$('.am-modal-loading').modal();
+        var data = 'shipping='+$('#zxps .selected').attr('value');
+        
+        var selectedData = $.parseJSON($('#zxps .selected').attr('value'));
+        
+        if (selectedData.dt_name == '门店自提') {
+        	if ($('#select_zt .selected').attr('value') == undefined) {
+        		js_alert('js-alert','请选择自提门店');return ;
+        	}
+        	data = data + "&branch_id="+ $('#select_zt .selected').attr('value');
+        }
+        var url = '<{link app=b2c ctl=wap_cart act=delivery_confirm}>';
+        $.post(url,data,function(re){
+        	location.href = '<{link app=b2c ctl=wap_cart act=checkout arg0=$is_fastbuy}>';
+        });
+    });
+</script>

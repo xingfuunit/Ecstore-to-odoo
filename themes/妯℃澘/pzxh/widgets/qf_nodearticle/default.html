@@ -1,0 +1,19 @@
+<div class="article-list">
+	<h3><span class="pngFix"></span><{if !$data.__stripparenturl}>
+  <a class="link" href="<{$data.node_url}>"><{if $setting.title != ''}><{$setting.title}><{else}><{$data.node_name}><{/if}></a>
+  <{else}>
+  <{if $setting.title != ''}><{$setting.title}><{else}><{$data.node_name}><{/if}>
+  <{/if}></h3>
+    <div class="body">
+	<ul>
+    	 <{foreach from=$data.indexs item=item}>
+    <li>
+    <a href="<{link app=content ctl=site_article act=index arg0=$item.article_id}>" title=<{$item.title}>><{$item.title}></a>
+    </li>
+  <{/foreach}>
+	</ul>
+    </div>
+    <{if $data.__showmore}>
+    <div class="more"><a href="<{$data.node_url}>" target="_blank">了解更多</a></div>
+    <{/if}>
+</div>

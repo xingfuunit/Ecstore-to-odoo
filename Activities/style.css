@@ -1,0 +1,33 @@
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td { margin: 0; padding: 0; }
+body {
+    background: url("file:///C|/Users/Administrator/Desktop/body_bg.png") repeat-y scroll 0 0;
+    font-family: 12px Tahoma,Helvetica,Arial,STXihei,SimSun,sans-serif;
+    font-size: 16px;
+    min-width: 280px;
+	margin:0 auto;
+}
+img{vertical-align:middle}
+h1,h2,h3,h4,h5,h6{margin:0;}
+h6{font-size:12px;font-weight:normal;}
+p{margin:0;}
+img { border: 0 none; vertical-align: center; }
+ul, li { list-style-type: none; margin:0px; padding:0px;}
+h1, h2, h3, h4, h5, h6 { font-size: 14px; }
+body, input, select, button, textarea { font-size: 12px; }
+button { cursor: pointer; }
+i, em, cite { font-style: normal; }
+aside section,.body{display:block; width:1000px; margin:0 auto;}
+.clear {
+	clear:both;
+}
+.bg{margin:0 auto; width:973px;height:590px;padding-top: 630px; padding-left: 305px; background:url(bg.jpg)}
+.goods{width:900px;height:245px;}
+.goods_one, .goods_two{width:372px;height:245px;float:left;}
+.goods_one{margin-right: 75px;}
+.goods_one a, .goods_two a{ display:block;width:372px;height:245px;}
+.name{width:835px;height:48px;margin-top: 30px;padding-top: 10px;padding-left: 65px;}
+.name_one, .name_two{width:223px;height:35px;float:left;}
+.name_one{margin-right:245px;}
+.name_one a, .name_two a{ display:block;width:223px;height:35px;}
+.botton{width:273px;height:68px;margin-top: 60px; margin-left: 267px;}
+.botton a{ display:block;width:273px;height:68px;}

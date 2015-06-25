@@ -1,0 +1,18 @@
+<div class="slide" id="J_ad_slider">
+    <ul class="am-slides">
+        <{foreach from=$data.pic item=parent key=parentId}>
+        <li>
+            <a href="<{$parent.linktarget}>">
+                <img width="100%" src="<{$parent.link}>" title="<{$data.linkinfo}>"/>
+            </a>
+        </li>
+        <{/foreach}>
+    </ul>
+</div>
+<script type="text/javascript">
+    Zepto(function($) {
+        $('.slide').flexslider({
+            directionNav:false
+        });
+    });
+</script>

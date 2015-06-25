@@ -1,0 +1,58 @@
+
+<div class="sidecat">
+	<{if $data.cats}>
+    <div class="all_items"><{$setting.title}></div>
+    <ul class="all-sidecat-wrap">
+    <{foreach from=$data.cats item=goodscat key=key name=parentlist}>
+    <li class="e-cat-depth-0">
+     <h4><a class="depth-0<{if in_array($goodscat.catId,$data.cat_ids)}> curr-1<{/if}>" href="<{$goodscat.catLink}>"><{$goodscat.catName}></a><span class="symbols <{if $goodscat.items}><{if !in_array($goodscat.catId,$data.cat_ids)}>hide_this<{else}>show_this<{/if}><{else}>show_this<{/if}>" title="隐藏">-</span></h4>
+     <{if $goodscat.items}>
+     <ul id="goodscat_<{$widgets_id}>_tree" class="clearfix cat-down" <{if !in_array($goodscat.catId,$data.cat_ids)}>style="display: none;"<{/if}>>
+        <{if $setting.showCatDepth_default==2}>
+           <{foreach from=$goodscat.items item=goodscat1 name=subcat2}>
+           <li class="e-cat-depth-1">
+               <p nuid="<{$goodscat1.catId}>"><a href="<{$goodscat1.catLink}>" class="depth-1<{if in_array($goodscat1.catId,$data.cat_ids)}> curr-2<{/if}>"><{$goodscat1.catName}></a></p>
+          </li>   
+          <{/foreach}>
+        <{/if}>
+        <{if $setting.showCatDepth_default==3}>
+            <{foreach from=$goodscat.items item=goodscat1 name=subcat2}>
+                <{if $goodscat1.items}>
+                    <li class="e-cat-depth-1">
+                        <p nuid="<{$goodscat1.catId}>"><a href="<{$goodscat1.catLink}>" class="depth-1<{if in_array($goodscat1.catId,$data.cat_ids)}> curr-2<{/if}>"><{$goodscat1.catName}></a></p>
+                        <{foreach from=$goodscat1.items item=goodscat2 name=subcat3}>
+                            <a href="<{$goodcat2.catLink}>" class="depth-2<{if in_array(goodscat2.catId,$data.cat_ids)}> curr-3<{/if}>"><{$goodscat2.catName}></a> <{if !$smarty.foreach.subcat3.last}><{$setting.page_devide}><{/if}>
+                        <{/foreach}>
+                    </li>
+                    <{else}>
+                    <li class="e-cat-depth-1">
+                        <p nuid="<{$goodscat1.catId}>"><a href="<{$goodscat1.catLink}>" class="depth-1<{if in_array($goodscat1.catId,$data.cat_ids)}> curr-2<{/if}>"><{$goodscat1.catName}></a></p>
+                   </li>
+                <{/if}>
+            <{/foreach}>
+        <{/if}>
+        </ul>
+        <{/if}>
+    </li>
+    <{/foreach}>
+    </ul>
+   <{/if}>
+</div>
+<script>
+window.addEvent('domready',function(e){
+	$$('.e-cat-depth-0').each(function(el){
+        el.getElement('h4').addEvent('click',function(){
+			var boxbody = el.getElement('.cat-down');
+			var dynamic = el.getElement('.symbols');
+			if (!boxbody) return;
+			if(dynamic.hasClass('show_this')){
+			   dynamic.removeClass('show_this').addClass('hide_this').set({'title':'显示','html':'+'});
+			   boxbody.setStyle('display','none');
+			}else{
+			    dynamic.removeClass('hide_this').addClass('show_this').set({'title':'隐藏','html':'-'});
+				boxbody.setStyle('display','block');
+			}
+    	})
+	})
+})
+</script>

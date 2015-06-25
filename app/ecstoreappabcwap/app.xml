@@ -1,0 +1,19 @@
+<app version="0.1">
+    <name>中国农业银行B2C在线支付-手机版</name>
+
+    <description>中国农业银行B2C在线支付-手机版</description>
+
+    <author>
+        <name>ecstoreapp</name>
+        <email>ecstoreapp@qq.com</email>
+        <url>http://www.ecstoreapp.com</url>
+    </author>
+
+    <version>0.1</version>
+    <license>shopex license</license>
+    <parent_model_class>dbeav_model</parent_model_class>
+
+	<depends>
+		<app>ectools</app>
+	</depends>
+</app>

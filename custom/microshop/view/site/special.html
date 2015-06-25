@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+        <title><{$title}></title>
+        <{css src="detail.css" app="microshop"}>
+        <{if $headers}>
+        <{foreach from=$headers item=arr}>
+        <{$arr}>
+        <{/foreach}>
+        <{/if}>
+    </head>
+    <body>
+        <div class="top-nav-box">
+            <div class="microshop-name"><{$info['shop_name']}></div>
+        </div>
+        <{if $info['shop_open'] == 1}>
+        <div class="member-info-box" style="background:url(<{$info['cover']}>) no-repeat;background-size:100%;">
+            <div class="member-avatar-fans-follow-box">
+                <div class="member-avatar-box"><img src="<{$info['avatar']}>" width="80px" height="80px" /></div>
+                <div class="member-fans-box">
+                    <div class="fans-follow-number-box">
+                        <div class="fans-follow-number"><{$info['follow_num']}></div>
+                        <div class="fans-follow-txt"><{t}>关注<{/t}></div>
+                    </div>
+                    <div class="fans-follow-number-box">
+                        <div class="fans-follow-number"><{$info['fans_num']}></div>
+                        <div class="fans-follow-txt"><{t}>粉丝<{/t}></div>
+                    </div>
+                </div>
+                <div class="member-follow-action-box">
+                    <a href="javascript:;" class="member-follow-action-btn" onclick="microshop.follow()">+ 关注TA</a>
+                </div>
+            </div>
+            <div class="member-shop-intro"><{$info['info']}></div>
+            <div class="member-shop-addr"><{link app=microshop full=1 ctl=site_index act=detail arg=$info['shop_id']}></div>
+        </div>
+        <div class="shop-special-title"><{$info['special_name']}>(<{$info['products_count']}>)</div>
+        <div class="special-goods-box">
+            <{foreach from=$info['products'] item=arr}>
+            <a class="special-goods-item" href="<{$arr['buy_url']}>" style="width:<{$img_size['big_w']}>px;height:<{$img_size['big_h'] + 60}>px">
+                <div class="goods-large-img" style="width:<{$img_size['big_w']}>px;height:<{$img_size['big_h']}>px"><img src="<{$arr['detail']['images']['thisuasm_url']}>" width="<{$img_size['big_w']}>px" height="<{$img_size['big_h']}>px" title="<{$arr['detail']['name']}>"/></div>
+                <div class="goods-title"><{$arr['detail']['name']}></div>
+                <div class="price-fav-box">
+                    <div class="price-box"><{$arr['detail']['price']|cur_odr}></div>
+                    <div class="fav-box"><{$arr['detail']['fav_num']}></div>
+                </div>
+            </a>
+            <{/foreach}>
+        </div>
+        <{script src="microshop.js" app="microshop"}>
+        <{/if}>
+    </body>
+</html>

@@ -1,0 +1,10 @@
+<site>
+    
+    <module id="microshop" controller='site_index' >
+        <name>microshop</name>
+        <allow_menu act='index'>微店列表</allow_menu>
+        <title>微店</title>
+        <disable>false</disable>
+    </module>
+    
+</site>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>API调试工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="API调试工具">
+
+    <{css src="bootstrap.css" app="webtool"}>
+    <{css src="kindeditor/themes/default/default.css" app="webtool"}>
+    <{script src="mootools.js" app="site"}>
+    <{script src="jsl.format.js" app="webtool"}>
+    <{script src="kindeditor/kindeditor-min.js" app="webtool"}>
+    <{script src="kindeditor/lang/zh_CN.js" app="webtool"}>
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper" id="main">
+    <div class="member-aside">
+        <{foreach from=$cate_list item=item}>
+        <div class="member-menu-module">
+            <h2 class="menu-title lv1_icon_1 lv1_first"><{$item.cate_name}><span></span></h2>
+            <ul class="menu-list">
+                <{if $item.child.items}>
+                <{foreach from=$item.child.items item=child_item}>
+                <li class="lv2_first">
+                    <a href="<{link app=webtool ctl=site_index act=index arg0=$child_item.api_id}>" <{if $api_id eq $child_item.api_id}>class="active"<{/if}>><{$child_item.api_title}></a>
+                </li>
+                <{/foreach}>
+                <{/if}>
+            </ul>
+        </div>
+        <{/foreach}>
+    </div>
+
+    <div class="wrapper_right" id="add-api" style="display:block">
+        <form action="<{link app=webtool ctl="site_index" act="save"}>" method="post" id="addForm">
+        <input type="hidden" value="<{$cate_detail.api_id}>" name="api_id">
+        <{if $cate_detail.cate_name}><h4>编辑接口</h4><{else}><h4>添加接口</h4><{/if}>
+        <p>
+            请选择分类：
+            <select name="cate_id">
+                <option>请选择</option>
+                <{foreach from=$cate_list item=item}>
+                    <option value="<{$item.cate_id}>" <{if $cate_detail.cate_id eq $item.cate_id}>selected="selected"<{/if}>><{$item.cate_name}></option>
+                <{/foreach}>
+            </select>
+            <a href="javascript:;" class="add-apicate">添加分类</a>
+        </p>
+        <p style="display:none"> 
+            分类名称：
+            <input type="text" name="cate_name" class="title input_text" value="">
+        </p>
+        <p>
+            添加密码：
+            <input type="text" name="api_password" class="input_text title" placeholder="输入密码" style="width:300px;">
+        </p>
+        <p>
+            接口标题：
+            <input type="text" name="api_title" class="input_text title" placeholder="接口标题" style="width:300px;" value="<{$cate_detail.api_title}>">
+        </p>
+        <p>
+            接口描述：
+            <input type="text" name="api_explain" class="input_text title" placeholder="接口描述：" style="width:300px;" value="<{$cate_detail.api_explain}>">
+        </p>
+        <p>
+            METHOD：
+            <input type="text" name="api_request_url" class="input_text request_url" placeholder="默认地址：http::/www.baidu.com" value="<{$cate_detail.api_request_url}>">
+        </p>
+        <p>请填写请求参数：<a href="javascript:;" class="add-param">添加参数</a></p>
+        <div>
+            <ul class="para_list">
+                <{if $cate_detail.api_para}>
+                <{foreach from=$cate_detail.api_para key=key item=item}>
+                <li>
+                    <input type="text" name="api_para[<{$key}>][name]" class="input_text para_name" value='<{$item.name}>' placeholder="参数名"> = 
+                    <input type="text" name="api_para[<{$key}>][value]" class="input_text para_value" value='<{$item.value}>' placeholder="参数值(可填写)" style="width:150px;">
+                    <input type="text" name="api_para[<{$key}>][type]" class="input_text para_value" value='<{$item.type}>' placeholder="参数类型" style="width:100px;">
+                    <input type="text" name="api_para[<{$key}>][directions]" class="input_text para_required" placeholder="参数说明" value='<{$item.directions}>'>
+                    <input type="checkbox" name="api_para[<{$key}>][is_required]" <{if $item.is_required eq '1'}>checked<{/if}> value="1">必填
+                </li>
+                <{/foreach}>
+                <{else}>
+                <li>
+                    <input type="text" name="api_para[0][name]" class="input_text para_name" placeholder="参数名"> = 
+                    <input type="text" name="api_para[0][value]" class="input_text para_value" placeholder="参数值(可选)" style="width:150px;">
+                     <input type="text" name="api_para[0][type]" class="input_text para_value" placeholder="参数类型" style="width:100px;">
+                    <input type="text" name="api_para[0][directions]" class="input_text para_required" placeholder="参数说明">
+                    <input type="checkbox" name="api_para[0][is_required]" value="1">必填
+                </li>
+                <{/if}>
+            </ul>
+        </div>
+        <p>数据说明：</br><textarea class="description" placeholder="说明" name="api_return"><{$cate_detail.api_return}></textarea>
+        </p>
+        <div style="padding-left:330px;"><input type="submit" value="<{if $api_id}>保存<{else}>添加<{/if}>接口" class="btn2"></div>
+        </form>
+    </div>
+ </div>
+<div class="footer_bar">
+    <a>API 调试工具</a>
+    <!-- <a href="<{link app=webtool ctl="site_index" act="index"}>">首页</a>
+    <{if $cate_detail.api_id}>
+    <a href="<{link app=webtool ctl=site_index act=index arg0=$cate_detail.api_id}>">返回接口</a>
+    <a href="<{link app=webtool ctl=site_index act=delete arg0=$cate_detail.api_id}>">删除接口</a>
+    <{/if}>
+    <a href="<{link app=webtool ctl="site_index" act="add"}>">添加接口</a> -->
+</div>
+<script type="text/javascript">
+var editor;
+KindEditor.ready(function(K) {
+    editor = K.create('textarea[name="api_return"]', {
+        resizeType : 1,
+        allowPreviewEmoticons : false,
+        allowImageUpload : false,
+        items : [
+            'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+            'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+            'insertunorderedlist', '|', 'emoticons','link']
+    });
+});
+window.addEvent('domready',function(e){
+    $$('.menu-list li .active').getParents('.menu-list')[0].setStyle("height","auto");
+})
+$('main').addEvents({
+    'click:relay(.menu-title)': function(e) {
+        var lv2 = this.getNext();
+        if (lv2.getStyle('height') == '0px') {
+            var anim = {'height': lv2.getElements('li').length * 48 - 1,}
+        } else {
+            var anim = {'height': 0,}
+        }
+        lv2.set('morph', {duration: 500, transition: 'bounce:out'}).morph(anim);
+    },
+    'click:relay(.add-apicate)': function(e) {
+        this.getParent().getNext().setStyle('display', 'block');
+    },
+    'click:relay(.add-param)': function(e) {
+        var box = this.getParent().getNext('form div .para_list');
+        if(!box) var box = this.getParent().getNext('div .para_list');
+        var row = box.getFirst().clone();
+        var arrkey = new Date().getTime();
+        row.getChildren('input').each(function (item, index){
+            if (e.target.id != 'add-sparam') {
+                var name = item.get('name');
+                if (name) {
+                    var _name = String(name.replace('api_para[0]', 'api_para['+arrkey+']'));
+                    item.set('name', _name);
+                }
+            }
+            
+        })
+
+        row.inject(box,'bottom');
+    },
+    'submit:relay(#addForm)': function(e) {
+        e.stop();
+        var action = this.action;
+        new Request({
+            url: action,
+            method: 'post',
+            data:this,
+            onRequest: function(){
+
+            },
+            onSuccess: function(responseText){
+                re = JSON.decode(responseText);
+                if (re.error) 
+                    alert(re.error)
+                else
+                    alert(re.msg);
+            },
+            onFailure: function(){
+                
+            }
+        }).send();
+    }
+})
+</script>
+</body>
+</html>

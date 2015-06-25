@@ -1,0 +1,35 @@
+<style>
+.btn{
+  height:28px;
+}
+td, th{
+  text-align: left!important;
+}
+</style>
+<div class="tableform">
+  <h4>日志详情</h4>
+ 
+  <div id='return_info' class="division">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0"  class="gridlist">
+        <thead>
+          <tr>
+            <th>bn</th>
+            <th>操作</th>
+            <th>说明</th>
+        </tr>
+        </thead>
+                <tbody>
+        <{foreach from=$log_info item=items key=key}>
+          <tr>
+            <td><{$items.bn}></td>
+            <td><{if $items.result_type eq 'succ'}>成功<{else}>失败<{/if}></td>
+            <td><{$items.msg}></td>
+          </tr>
+        <{/foreach}>
+        </tbody>
+      </table>
+  </div>
+  
+  
+<div>
+

@@ -1,0 +1,103 @@
+    @charset "utf-8";
+/* CSS Document */
+html,body {
+font-size: 12px;
+font-family: "微软雅黑";
+color: #666;
+margin: 0px;
+padding: 0px;
+background: #d6e2f2;
+}
+ul, ol, menu {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+.loging-list{width:868px; height:auto; margin:0 auto; background:#FFF; margin-top:10px; border: 1px solid #8ba7cc; overflow:hidden; vertical-align:middle;}
+.loging-list .top-title{width:100%; height:106px; text-align:center; line-height:106px;  background:#f0f6ff; border-bottom: 1px solid #8ba7cc; margin-bottom:30px;}
+.loging-list .login-center .logo-login{ display:block; float:left; padding-top:15px;}
+.loging-list .top-title span{font-size:24px; display:block; line-height:106px; padding-left:15px; color:#333331; float:left;}
+.loging-list .top-title .login-center{margin:0 auto;  width:450px;}
+.login-div .login-tj{width:191px; height:56px; background:url(login-sbm.png) no-repeat; border:none;} 
+.login-div .login-reg{width:191px; height:56px; background:url(login-reg.png) no-repeat; border:none;}
+.login-div{font-size:20px; line-height:105px; height:105px; padding-left:150px; color:#000000;}
+.login-div .login-input{ width:364px; height:49px; padding:5px; font-size:24px;}
+.pass_cominf{width:140px;  height: 49px; padding:5px; line-height: 49px;  margin-left:15px; float:left; font-size:18px; text-align: center; border:1px solid #8ba7cc; background: #f0f6ff; display: block; margin-top: 23px;}
+.login-div .login-select{width:223px; height:53px; font-size:20px; }
+.login-div .btn span{
+    border: 0;
+background-color: 0;
+display: none;
+padding-left: 10px;
+height: 100%;
+line-height: 1.91667;
+font-size: inherit;}
+
+.login-div .notice-inline {
+    margin-left: 90px;
+    vertical-align: middle;
+    margin-top: -55px;
+    display: block;
+}
+
+.cart-topuser{width:100%; float:left; padding-bottom:10px; background:#f0f6ff;}
+.herder-cart{ padding: 20px; width:500px;}
+.user-maere{ color:#686779; font-size:18px; padding-bottom:15px;}
+.user-maere font{color:#ff0004; font-family:"宋体"}
+.user-regis{color:#646567; float:left;}
+.lfet{float:left; width:100%;}
+.user-regis font{color:#000200;}
+.user-jyz{color:#646567; float:right;}
+.user-jyz font{color:#fe0201;}
+.user-yuer{ float:left; width:100%; padding-top:10px; line-height:30px;}
+.user-yuer font{color:#fe0201; font-size:26px; font-family:"宋体"}
+.cart-tj{width:100%; float:left; border-bottom:1px solid #8ba7cc; padding-bottom: 10px; padding-top: 10px; height:35px; background:#FFF; line-height:35px; padding-left:30px;}
+.cart-tj span{padding-right:30px; color:#989a99; display:block; float:left; font-size:12px;}
+.cart-tj span a{display:block; width:15px; height:15px; line-height:15px; float:left; text-align:center; background:#ababa9; color:#fff; margin-top:10px; border-top-left-radius:2px;border-top-right-radius:2px;border-bottom-left-radius:2px;border-bottom-right-radius:2px;overflow:hidden;}
+.cart-tj font{color:#989a99; display:block; float:left; font-size:12px;}
+.cart-tj b{color:#696564; display:block; float:left;}
+.login-title{width: 100%; text-align: center; padding-top: 10px;}
+.login-title span{width: 100%; text-align: center; font-size: 22px; }
+.sbmit_list{border-bottom: 1px solid #8ba7cc; width:100%; float:left; background:#f0f6ff;}
+.list_money{ background: #4c74a9; float: left; padding: 0px 0px 0px 0px; color: #FFF; margin-left:24px; font-size: 18px;}
+.list_picesd{float:right; padding-right: 50px; font-size: 20px; color: red; padding-bottom: 10px; line-height: 50px;}
+.list_picesd ul li{float:left; margin-left: 20px;}
+
+
+.box-163css{margin:20px auto; WIDTH: 1200px;}
+.menu {Z-INDEX: 9999;  float:left; WIDTH: 1200px; POSITION: relative}
+.menu UL {FLOAT: left; WIDTH: 1200px; LIST-STYLE-TYPE: none}
+.menu LI {DISPLAY: inline; FLOAT: left; HEIGHT: 40px; TEXT-ALIGN: center}
+.menu LI A {PADDING-RIGHT: 20px; PADDING-LEFT: 20px; border:1px solid #4c74a9; border-bottom:none;  FONT-SIZE: 18px; FLOAT: left; PADDING-BOTTOM: 0px; COLOR: #fff; LINE-HEIGHT: 40px; PADDING-TOP: 0px;  HEIGHT: 40px; TEXT-DECORATION: none}
+.menu LI A:hover { BACKGROUND: #FFF; COLOR: #000; TEXT-DECORATION: none}
+.menu LI A.on {PADDING-RIGHT: 20px; PADDING-LEFT: 20px; FONT-SIZE: 18px; BACKGROUND: #FFF; FLOAT: left; PADDING-BOTTOM: 0px; COLOR: #000;  PADDING-TOP: 0px;  HEIGHT: 40px; TEXT-DECORATION: none}
+.menu LI A.on:hover{BACKGROUND: #FFF; COLOR: #000; TEXT-DECORATION: none}
+.menu LI A.onh {PADDING-RIGHT: 20px; PADDING-LEFT: 20px; BACKGROUND: #FFF; FLOAT: left; PADDING-BOTTOM: 0px; COLOR: #000; PADDING-TOP: 0px; HEIGHT: 40px}
+.menu LI A.hs {PADDING-RIGHT: 33px; PADDING-LEFT: 10px; BACKGROUND: #FFF; FLOAT: left; PADDING-BOTTOM: 0px; COLOR: #000; PADDING-TOP: 0px; HEIGHT: 40px}
+.topnav LI {Z-INDEX: 999; POSITION: relative}
+DIV.subnav {BORDER-RIGHT: #8ba7cc 1px solid;  DISPLAY: none; color: #000;  BACKGROUND: #fff; LEFT: 0px; FLOAT: left;  BORDER-LEFT: #8ba7cc 1px solid; WIDTH: 400px;  BORDER-BOTTOM: #8ba7cc 1px solid; LIST-STYLE-TYPE: none; POSITION: absolute; TOP: 41px; padding: 20px;}
+DIV.fsdff{margin-left: -180px;}
+
+#menu12 {list-style:none;width:1200px; margin:30px auto 0px 0px;  height:40px;}
+#menu12 ul li {line-height:40px; font-size:18px; text-align:left; border:none; background: #fff;}
+#menu12 li {float:left; display:block; text-align:center;position:relative; top:1px;  height:40px;  padding: 4px 20px 4px 20px; line-height:40px;  background: #4c74a9; margin-left:30px; border:1px solid #4c74a9;}
+#menu12 li:hover {border: 1px solid #8ba7cc; border-bottom:none; padding: 4px 20px 5px 20px; background: #FFF;}
+#menu12 li a {font-family:Arial, Helvetica, sans-serif;font-size:18px; color: #FFF;display:block;outline:0;text-decoration:none;}
+#menu12 li:hover a {color:#161616; text-shadow: 1px 1px 1px #ffffff;}
+#menu12 li .drop {}
+#menu12 li:hover .drop {background:#fff;}
+#menu12 li:hover .dropdown_1column {left:-1px; top:auto; margin-top: 5px; font-size: 14px;}
+.dropdown_1column{margin:6px auto; float:left; position:absolute; left:-999em; /* Hides the drop down */text-align:left; padding:20px 0px 20px 50px; border:1px solid #8ba7cc; border-top:none; background:#FFF;  min-width: 376px;}
+#menu12 li:hover div a {font-size:12px;color:#003366;}
+#menu12 li:hover div a:hover {color:#e47911;}
+#menu12 li ul {list-style:none; padding:0; margin:0 0 12px 0;}
+#menu12 li ul li {font-size:12px; line-height:24px; position:relative; text-shadow: 1px 1px 1px #ffffff; padding:0; margin:0; float:none; text-align:left; min-width:130px;}
+#menu12 li ul li a{background:#fff; padding-left:24px;}
+#menu12 li ul li:hover {background:none; border:none; padding:0; margin:0;}
+.kllsldk{margin-left: -167px;}
+.sdffsd{margin-left:-314px;}
+.submdeoe{width: 120px; height:40px; line-height: 40px; font-size: 18px; background: #4c74a9; color: #FFF; cursor:pointer;}
+.pageview .flip{background: #fff;}
+.submdeoe span{ background:#4c74a9; font-size: 18px; line-height: 40px; width: 120px; height:40px; margin-left:-15px;}
+.submdeoe span:hover{background:#4c74a9;}
+.list_zhekou input{margin-bottom: 15px; margin-right:20px; width:90px; }

@@ -1,0 +1,22 @@
+<div class="favgoods Auto_Widget" id="fav-goods-<{$widgets_id}>" data-widget-type="Switchable" data-widget-config ="{autoplay:true,effect:'fade',
+			duration:0,interval:<{$setting.interval}>000,hasTriggers:false,haslrbtn:true}">
+    <{if $setting.title}><div class="hd clearfix"><h3 class="flt"><{$setting.title}></h3><a class="next flt" href="javascript:void(0);">换一批</a></div><{/if}>
+    <div class="bd switchable-content">
+    <{assign var="do" value='1'}>
+    <{foreach from=$data.goodsRows item=row key=gid name=goodsrow}>
+    <{if $smarty.foreach.goodsrow.iteration == 1 || $smarty.foreach.goodsrow.iteration % 12 == 1}><ul class="clearfix"><{/if}>
+    <li <{if $smarty.foreach.goodsrow.iteration % 6 == 0}>class="last"<{/if}>>
+      <{assign var=pickey  value=$setting.gpic_size|default:'goodsPicS' }>
+      <div class="goodpic" style="width:80px;height:80px;overflow:hidden;background-color:#FFF;margin:0 auto;"><a target="_blank" href="<{$row.goodsLink}>"><img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" width="80" height="80" /></a>
+      </div>
+      <div class="info">
+      	 <h6><a target="_blank" href="<{$row.goodsLink}>"><{$row.goodsName|cut:$setting.maxlength}></a></h6>
+         <{if $setting.showgoodsSalePrice =='on'}><p class="price1"><{$row.goodsSalePrice|cur}></p><{/if}>
+         <{if $setting.showgoodsMarketPrice == 'on'}><p class="mktprice1"><{$row.goodsMarketPrice|cur}></p><{/if}>
+      </div>
+     </li>
+     <{if $smarty.foreach.goodsrow.iteration % 12 == 0}></ul><{/if}>
+    <{/foreach}>
+    </div>
+    
+</div>

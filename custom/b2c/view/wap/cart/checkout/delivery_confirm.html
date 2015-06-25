@@ -1,0 +1,15 @@
+    <{if $shipping_method}>
+      <{assign var="shippings" value=array($shipping_method)}>
+        <{foreach from=$shippings item=val name=this}>
+          <div class="ps_function">
+              <a href="<{if $val.shipping_id > 0}><{link app=b2c ctl=wap_cart act=checkout_wrap}>?show=delivery_change&id=<{$val.shipping_id}><{else}>javascript:alert('暂时未开通您所在区域的配送');<{/if}>">
+                  <span class="left">配送方式</span>
+                    <span class="right">
+                        <span class="font_margin2"><{$val.shipping_name|default:'暂时未开通您所在区域的配送'}></span>
+                    </span>
+              </a>
+              <input name="shipping" value='{"id":<{$val.shipping_id}>,"has_cod":"<{$val.has_cod}>","dt_name":"<{$val.shipping_name}>","money":"<{$val.money}>"}' type="hidden"/>
+          </div>
+      <{/foreach}>
+
+  <{/if}>

@@ -1,0 +1,85 @@
+<!-- Top -->
+<div class="valuedetail" style="width:100%; height:49px; background:#000000;display:none; position:fixed; z-index:9998">
+
+    <div style="width:100%; height:49px; font-size:12px; color:#cccccc;float:left;line-height:49px; padding-left:10px; padding-right:10px;">库存
+        <span id="curStore"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.store}></span> 件
+        <div style="float:right">
+            <!--<a href="<{link app=b2c ctl=wap_search act=result}>" class="am-icon-btn am-icon-search" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;"></a>-->
+
+            <!--<div id="btnAdd2Fav" class="am-icon-btn am-icon-star 
+            <{if $page_product_basic.is_fav}>am-text-success<{else}>not-faved-star<{/if}>" style="float:left; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" ></div>-->
+
+            
+            <span id="btnAdd2Fav" class="am-icon-btn am-icon-heart <{if $page_product_basic.is_fav}>am-text-danger faved-icon<{else}>not-faved-icon<{/if}>"></span>
+
+            <a href="<{link ctl=wap_product act=goods_discuss arg0=$goods_id}>" style="float:left; color: #999999; line-height:25px; font-size:18px;  height:30px; width:30px; background:none; line-height:30px; margin-top:10px; margin-left:10px;" class="am-icon-btn am-icon-rechat">
+                <img src="/public/imgs/wap/rechat-icon.png">
+            </a>
+            <{$comments.discussCount|default:'0'}>
+
+            <!--<a href="<{link ctl=wap_product act=goods_discuss arg0=$goods_id}>" class="am-icon-btn am-icon-comments-o" style="float:left; color: #999999; height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;" >
+            <span style="font-size:8px; color:#FF9900; float:left; line-height:8px; width:28px;text-align:center;"><{$comments.discussCount|default:'0'}></span>-->
+            </a>
+        </div>
+    </div>
+
+    <!-- specification List -->
+    <ul id="specList" style="width:100%; height:auto; position:absolute; left:0; top:49px; line-height:49px; background:#333333; font-size:21px; color:#FFFFFF; list-style:none; margin:0; padding:0;">
+        <{foreach from=$page_product_basic.spec.goods key=key item=spec}>
+            <{foreach from=$spec key=item_key item=item}>
+                <{if $item.marketable != 'false'}>
+                <li id="<{$item.product_id}>" specData='<{json from=$item}>' <{if $curPrivateSpecValueId==$item_key}>class="choosed-spec"<{/if}> >
+                    <span style="font-size:14px">￥</span>
+                    <span class="specPrice"><{math equation="x" format="%.2f" assign="newkey" x=$item.price}></span> / <span class="specValue" style="font-size:14px"><{$item.spec_value}></span></li>
+                <{/if}>
+            <{/foreach}>
+        <{/foreach}>
+    </ul>
+
+</div>
+
+<!-- current specification -->
+    <div id="curSpec" style="display:none;width:100%; height:49px; font-size:12px; color:#cccccc;float:left;line-height:49px; padding-left:10px; padding-right:10px; ">
+        <span style="font-size:14px"> ￥</span ><span class="specPrice"><{math equation="x" format="%.2f" assign="newkey" x=$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.price}></span> / <span class="specValue" style="font-size:14px"><{$page_product_basic.spec.goods.$curSpecTypeId.$curPrivateSpecValueId.spec_value}></span>
+    </div>
+
+
+<!-- bottom -->
+<div class="valuepay" style="width:100%; height:100px; background:#000000;display:none; position:fixed; bottom:0; z-index:9998; padding:10px;">
+    <div style="color:#999999; line-height:18px; height:50px; float:left">
+
+    
+    <span id="amountMinus" class="am-icon-btn am-icon-minus" style="float:left; color: #999999; line-height:25px; font-size:18px;  height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px; "></span>
+    <!--<a id="amountMinus" href="#" class="am-icon-minus-circle am-icon-lg"  style="float:left;color:#999999;"></a>-->
+    <input id="amount" type="text" style="text-align:center;float:left; height:30px; width:12%; margin:5px; font-weight:bold" value="1">
+    <!--<a href="#" class="am-icon-plus-circle am-icon-lg" style="float:left;color:#999999;"></a>-->
+    <span id="amountPlus" class="am-icon-btn am-icon-plus" style="float:left; color: #999999; line-height:25px; font-size:18px;  height:30px; width:30px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px; "></span>
+
+    <button id="btnBuyNow" class="am-btn am-btn-danger am-square" type="button" style="margin-left:20px;">立即购买</button>
+    <button id="btnBuyNowDisabled" style="display:none;margin-left:20px;" class="am-btn am-btn-default am-square">售罄</button>
+    <!--<a href="javascript:void(0);"><img style="width:50%" src="/public/app/wap/statics/images/buy_btn.png"></a>-->
+
+    <span id="btnAddToCart" class="am-icon-btn am-icon-shopping-cart" style="float:right; color: #999999; height:30px; width:30px;font-size:18px; background:none; border:1px solid #999999; line-height:30px; margin-top:5px;margin-right:20px; position:relative">
+        <{if $CART_NUMBER}>
+        <span class="am-badge am-badge-danger" style="position:absolute; right:-16px; border-radius:20px;"><{$CART_NUMBER}></span>
+        <{/if}>
+    </span>
+    
+    </div>
+
+    <div style="font-size:14px; color:#FFFFFF; height:30px; line-height:14px; width:100%; clear:both">
+        <{$goodsPromotion.order[0].name}><br />
+        <{$goodsPromotion.order[1].name}>
+        <!--
+        <{foreach from=$goodsPromotion.order item=prom}>
+        <{$prom.name}>
+        <{/foreach}>
+        -->
+    </div>
+</div>
+
+
+<div class="valuehide" style="height:1136px; width:100%; background:#fff;
+    filter:alpha(opacity=0); /*IE*/-moz-opacity:0; /*Firefox0%*/
+    opacity:0;/*其他*/display:none;  position:fixed; z-index:99">
+</div>

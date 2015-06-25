@@ -1,0 +1,71 @@
+<div style="width: 100%; height: 80px;"></div>
+<div style=" width:960px; background:#FFF;border-top-left-radius:5px;border-top-right-radius:5px; border-bottom-left-radius:5px;border-bottom-right-radius:5px; margin-top:20px; margin:0 auto;">
+<div class="sign-title"><h2>找回密码</h2></div>
+<!-- 步骤图 -->
+<div id="forgot_steps" class="steps">
+  <table width="100%">
+    <tbody>
+      <tr>
+        <td class="step-item step-1 active"><span><q class="icon">&#x50;</q><i>1</i>输入注册时使用的手机</span></td>
+        <td class="icon step-arrow">&#x28;</td>
+        <td class="step-item step-2"><span><q class="icon">&#x50;</q><i>2</i>获取验证码</span></td>
+        <td class="icon step-arrow">&#x28;</td>
+        <td class="step-item step-3"><span><q class="icon">&#x50;</q><i>3</i>设置新密码</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 找回密码 -->
+<div id="forgot_content" class="forgot-content signupin-content">
+  <form action="<{link app=b2c ctl=site_storepassport act=sendPSW}>" method="post">
+    <input name="forward" type="hidden" value="<{$options.url}>">
+    <ul>
+      <li class="form-item">
+      <label for="" class="form-label">注册时使用的手机：</label>
+      <span class="form-act"><{input type="text" name="mobile" id=""  autofocus vtype="required&&mobile" data-caution="请输入正确的手机号，例如：13888888888"}></span>
+      <span class="caution-content"><{$msg}></span>
+      </li>
+      <li class="form-item-normal"><span class="form-act"><{button type="submit" label=$___b2c="下一步"|t:'b2c' class="btn-simple btn-big" rel="_request" data-ajax-config="{onSuccess:function(rs){changeStep(rs, 2);}}"}> <span class="forgot-remember">记起密码？ <a href="<{link app=b2c ctl=site_storepassport act=login}>" class="goto-signin">登录</a></span></span></li>
+    </ul>
+  </form>
+</div>
+</div>
+<script>
+  var Query = {
+      resend: function(url, data){
+          new Request({
+              url: url,
+              link: 'cancel',
+              onSuccess: function(rs) {
+                  try{
+                      rs = JSON.decode(rs);
+                      if(rs.error) return Message.error(rs.error);
+                  }catch(e){}
+                  changeStep(rs);
+              }
+          }).post(data);
+      }
+  };
+
+  function changeStep(rs, x, fn) {
+      if(rs && rs[0]) {
+          if(typeOf(rs[0]) === 'string') {
+              $('forgot_content').innerHTML = rs[0];
+              if(x) $('forgot_steps').getElement('.active').removeClass('active').getSiblings('.step-' + x).addClass('active');
+          }
+          else if(typeOf(rs[0]) === 'object') {
+              if(rs[0].error) return Message.error(rs[0].error);
+          }
+          fn && fn.call(this);
+      }
+  }
+  $('forgot_content').addEvents({
+      'click:relay(.action-resend-email)':function(e) {
+          e.stop();
+          var url = this.href;
+          var data = JSON.decode(this.get('data-params'));
+          Query.resend(url, data);
+      }
+  });
+</script>

@@ -1,0 +1,561 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title><{$project_name}></title>
+		<link rel="stylesheet" type="text/css" href="<{$env.app.res_url}>/style.css" media="screen" />
+		<script type="text/javascript" src="<{$env.app.res_url}>/jquery.min.js"></script>
+		
+		<meta http-equiv="refresh" content="0; url=<{$new_api_url}>">
+	</head>
+	
+	<body>
+        <h1><{$project_name}></h1>
+        <span class="api_doc"><a href="<{$base_url_full}>/doc/API主要接口返回说明_v1.0.16.xmind">主要接口返回说明v1.0.16</a></span>
+
+        <form id="writer" method="post" action="retrun false">
+            <select name="act_url" id="act_url">
+			    <!-- <option value="">请选择要测试的API</option> -->
+			    <option value="">====1 首页接口====</option>
+			    <option value="method=mobileapi.indexad.get_all_list" 
+			    	data-doc_info="">
+			    1.1 得到首页广告列表</option>
+			    <option value="method=mobileapi.keywords.get_all_list" 
+			    	data-doc_info="">
+			    1.2 得到热门关键字</option>
+			    <option value="method=mobileapi.keywords.associate&words=生" 
+			    	data-doc_info="words#String#Y#关键字">
+			    1.3 关键字联想搜索</option>
+			    <option value="">====2 分类接口====</option>
+			    <option value="method=mobileapi.goods.get_cat&page_no=1&page_size=20" data-doc_info="page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)">2.1 得到分类信息</option>
+			    
+			    <option value="">====3 商品接口====</option>
+			    <option value="method=mobileapi.goods.get_all_list&cat_id=2&orderby=price asc&son_object=json" 
+			    	data-doc_info="cat_id#Number#N#商品分类id&&virtual_cat_id#Number#N#虚拟分类id(传本参数时，除分页及排序外别的条件参数失效)&&cid#Number#N#商品类型id&&brand_id#Number#N#商品品牌id&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)&&orderby#String#N#排序方法<br />综合排序不传值<br />price asc：价格升序<br />price desc：价格降序<br />buy_count asc：销量升序<br />buy_count desc：销量降序&&search_keyword#String#N#搜索关键字">
+			    3.1 获取商品列表信息</option>
+			    <option value="method=mobileapi.goods.get_item&iid=1&son_object=json" 
+			    	data-doc_info="iid#Number#Y#商品id&&son_object#String#N#字对像格式,默认空,为兼容ecstore原接口新加参数。值为json时,item为json对象，不是json格式的字符串">
+			    3.2 获取单个商品信息</option>
+			    <option value="method=mobileapi.goods.comment&iid=1" 
+			    	data-doc_info="iid#Number#Y#商品id&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:10)">
+			    3.3 得到商品评论</option>
+			    <option value="method=mobileapi.goods.goodslink&iid=1" 
+			    	data-doc_info="iid#Number#Y#商品id">
+			    3.4 得到相关(推荐)商品</option>
+			    <option value="method=mobileapi.goods.get_screen&cat_id=2" 
+			    	data-doc_info="cat_id#Number#N#商品分类id">
+			    3.5 获取分类筛选</option>
+			    <option value="method=mobileapi.goods.filter_get_goods" 
+			    	data-doc_info="cat_id#Number#Y#商品分类id">
+			    3.6 提交筛选参数获得商品</option>
+
+			    
+			    
+			    
+			    <option value="">====4 后台订单接口====</option>
+			    <option value="method=b2c.order.search&start_time=2014-01-01&end_time=2014-06-04" 
+			    	data-doc_info="start_time#date#Y#订单开始时间(此时间是订单的最后更新时间) 如：2014-02-01&&end_time#date#Y#订单结束时间(此时间是订单的最后更新时间) 如：2014-02-20&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)">
+			    4.1 订单区间查询</option>
+			    <option value="method=b2c.order.detail&tid=20140602196737" 
+			    	data-doc_info="tid#string(16)#Y#订单号 (20140218196737)">
+			    4.2 订单明细</option>
+			    <option value="method=b2c.delivery.create" 
+			    	data-doc_info='order_bn#string(100)#Y#订单号 (140219114630707)&&delivery_bn#string(32)#Y#发货单号(1201402192020150867)&&delivery#string(50)#N#配送方式名称 (快递 或者 货到付款)&&ship_distinct#string(50)#Y#收货人的所在地区(通州区)&&money#decimal(20,3)#N#配送费用(如果不传默认为0)&&is_protect#bool##N#是否保价（true或false,默认false）&&logi_no#string(50)#N#物流单号 (12345)&&logi_name#string(200)#Y#物流公司 (顺丰)&&ship_name#string(50)#Y#收货人 (张三)&&ship_states#string##Y#收货人的所在省份（江苏）&&ship_city#string##Y#收货人的所在城市（南通市)&&ship_addr#string(text)##Y#收货地址 （桂林路396号2号楼）&&ship_zip#string(20)#Y#邮政编码 （200233）&&ship_tel#string(50)#Y#收货人电话（此处和手机号码任选一必填 如：021-66666666）&&ship_mobile#string(50)#Y#收货人电话 （此处和电话号码任选一必填 如：13812344321）&&ship_email#string(200)#N#收货人邮箱 (uuu@163.com)&&memo#string(longtext)##Y#订单备注 (周末收货)&&member_id#string(8)#N#用户ID(如果不传默认为0)&&t_begin#string(10)#Y#发货单生成时间(时间戳) 如：1234567890&&buyer_uname#string(50)#N#购买人(如果不传默认为空)&&shippers_no#string(16)#Y#发货商编号&&status#string(20)#Y#发货状态 (SUCC:发货成功, FAILED:发货失败, CANCEL:取消发货, LOST:丢失, PROGRESS:配货中, TIMEOUT:超时, READY:准备中) 如：succ&&items#json##Y#订单发货明细 [{"product_bn":"货号","product_name":"商品名称","number":"1"},...]'>
+			    4.3 创建发货单</option>
+			    
+                <option value="">====5 微店接口====</option>
+			    <option value="method=microshop.special.add" data-doc_info='member_id#Number#Y#会员ID&&shop_id#Number#Y#商店ID(获得方式：5.8 获得微店信息)&&special_name#string(40)#Y#专辑名称'>5.1 创建专辑</option>
+                <option value="method=microshop.special.add_product" data-doc_info='special_id#Number#Y#专辑ID&&product_id#Number#Y#产品ID&&member_id#Number#Y#会员ID'>5.2 往专辑中添加产品</option>
+                <option value="method=microshop.special.del_product" data-doc_info='special_products_id#string#Y#专辑产品ID(多个用,分割)&&member_id#Number#Y#会员ID'>5.3 删除专辑中的产品</option>
+                <option value="method=microshop.special.del" data-doc_info='special_id#string#Y#专辑ID(多个用,分割)&&member_id#Number#Y#会员ID'>5.4 删除专辑</option>
+                <option value="method=microshop.special.edit" data-doc_info='special_id#Number#Y#专辑ID&&member_id#Number#Y#会员ID&&special_name#string(40)#Y#专辑名称'>5.5 修改专辑</option>
+                <option value="method=microshop.special.index" data-doc_info='shop_id#Number#Y#商店ID(获得方式：如果来源非热门微店列表，则可用：5.8 获得微店信息)&&platform#string#Y#来源平台(iOS/android)&&order#string#N#排序方式(addtime:添加时间-默认,see_num:浏览量)&&order_type#string#N#排序方式(DESC-默认,ASC)&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)'>5.6 获得专辑列表</option>
+                <option value="method=microshop.special.get_products" data-doc_info='special_id#Number#Y#专辑ID&&platform#string#Y#来源平台(iOS/android)&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)'>5.7 获得专辑中的商品</option>
+                <option value="method=microshop.shop.detail" data-doc_info='shop_id#Number#N#商店ID&&member_id#Number#N#会员ID(会员ID/商品ID,两个必备一个)'>5.8 获得微店信息</option>
+                <option value="method=microshop.shop.index" data-doc_info='shop_name#String#N#店铺名称(搜索功能)&&order#string#N#排序方式(addtime:添加时间-默认,see_num:浏览量)&&order_type#string#N#排序方式(DESC-默认,ASC)&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)'>5.9 获得微店列表</option>
+                <option value="method=mobileapi.member.follow" data-doc_info='member_id#Number#Y#会员ID&&follow_id#Number#Y#关注的用户ID'>5.10 关注微店</option>
+                <option value="method=mobileapi.member.unfollow" data-doc_info='member_id#Number#Y#会员ID&&follow_id#Number#Y#关注的用户ID'>5.11 取消关注微店</option>
+			    
+			    <option value="" class="title">====6 用户中心接口====</option>
+			    <option value="method=mobileapi.member.setting" data-doc_info="">
+			    	6.1&nbsp;&nbsp;&nbsp;&nbsp;编辑个人资料
+			    </option>
+			    <option value="method=mobileapi.member.save_setting" data-doc_info="字段name#attr_type#attr_required=true#提交表单对应的name跟value值">
+			    	6.1.1&nbsp;更新个人资料
+			    </option>
+			    <option value="method=mobileapi.member.save_security" data-doc_info="old_passwd#String(6-20)#Y#旧密码#&&passwd#String(6-20)#Y#新密码&&passwd_re#String(6-20)#Y#确认新密码">
+			    	6.2&nbsp;&nbsp;&nbsp;&nbsp;重设密码
+			    </option>
+			    <option value="method=mobileapi.member.orders" data-doc_info="pay_status#Int#N#付款状态 0:未支付;1:已支付;2:已付款至到担保方;3:部分付款;4:部分退款;5:全额退款;&&ship_status#Int#N#发货状态 0:未发货;1:已发货;2:部分发货;3:部分退货;4:已退货;&&status#String#N#订单状态（finish=已完成)&&createtime_status#String#N#订单时间(prior_to:一个月前的订单;recent:近一个月的订单)&&n_page#Number#N#页码">
+			    	6.3&nbsp;&nbsp;&nbsp;&nbsp;我的订单
+			    </option>
+			    <option value="method=mobileapi.member.orderdetail" data-doc_info="order_id#Number#Y#订单id">
+			    	6.3.1 订单详情
+			    </option>
+                            <option value="method=mobileapi.member.cancel" data-doc_info="order_id#Number#Y#订单id">
+			    	6.3.2 取消订单
+			    </option>
+			    <option value="method=mobileapi.member.receiver" data-doc_info="">
+			    	6.4&nbsp;&nbsp;&nbsp;&nbsp;我的收货地址
+			    </option>
+			    <option value="method=mobileapi.member.set_default" data-doc_info="addr_id#Number#Y#地址ID#disabled#Number#Y#2为设置默认1为取消默认">
+			    	6.4.1&nbsp;设置和取消默认地址
+			    </option>
+			    <option value="method=mobileapi.member.modify_receiver&addr_id=6" data-doc_info="addr_id#Number#Y#地址ID">
+			    	6.4.2 修改收货地址（得到收货地址）
+			    </option>
+			    <option value="method=mobileapi.member.add_receiver" data-doc_info="">
+			    	6.4.3&nbsp;判断是否能添加收货地址
+			    </option>
+			    <option value="method=mobileapi.member.save_rec&addr=大东路16号&area=mainland:天津/天津市/河西区:46&tel=18675599443&mobile=18675599443&name=刘先生&zip=518000" data-doc_info="addr_id#Number#N#地址ID(传值是修改，不传是新加)&&area#String#Y#地区组合数据 如：mainland:1级地区名/2级地区名/3级地区名:最后一级ID&&addr#String#Y#地址&&name#String#Y#收货人姓名&&zip#Number#N#邮编&&tel#Number#Y#电话号码&&mobile#Number#Y#手机号码(手机号码跟电话号码必须填写一个)&&def_addr#Number#N#是否默认（值等于1默认）">
+			    	6.4.4&nbsp;保存收货地址
+			    </option>
+			    <option value="method=mobileapi.member.del_rec&addr_id=10" data-doc_info="addr_id#Number#Y#地址ID">
+			    	6.4.5&nbsp;删除收货地址
+			    </option>
+			    <option value="method=mobileapi.member.get_regions&p_region_id=0" data-doc_info="p_region_id#Number#Y#父ID(0为顶级)">
+			    	6.5 获取地区数据
+			    </option>
+			    <option value="method=mobileapi.member.coupon" data-doc_info="n_page#Number#N#页码">
+			    	6.6 我的优惠券
+			    </option>
+                <option value="method=microshop.shop.recommend" data-doc_info='agency_id#Number#Y#推荐人的ID&&order#string#N#排序方式(addtime:添加时间-默认,see_num:浏览量)&&order_type#string#N#排序方式(DESC-默认,ASC)&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)'>
+			    	6.7 我推荐的微店
+			    </option>
+			    <option value="method=mobileapi.member.open_shop" data-doc_info="member_id#Number#Y#会员ID&&agency_id#Number#Y#经销商ID(编号)&&shop_name#String#Y#微店名称">
+			    	6.8 我要开店
+			    </option>
+			    <option value="method=mobileapi.member.get_agency" data-doc_info="">
+			    	6.8.1 获得经销商
+			    </option>
+			    <option value="method=mobileapi.member.promotion_into_logs" data-doc_info="page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:10)">
+			    	6.9 我的收入
+			    </option>
+			    <option value="method=mobileapi.member.withdrawal" data-doc_info="page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:10)">
+			    	6.10 点击我要提现（获取账户余额跟提现历史记录）
+			    </option>
+			    <option value="method=mobileapi.member.submit_withdrawal&money=100&alipay_user=iegss@126.com" data-doc_info="money#Number#Y#申请提现金额&&alipay_user#String#Y#支付宝帐号">
+			    	6.10.1 申请提现
+			    </option>
+			    <option value="method=mobileapi.member.send_msg" data-doc_info="subject#String#Y#标题#comment#Text#Y#内容">
+			    	6.11 意见反馈
+			    </option>
+			    <option value="method=mobileapi.member.upload_image" data-doc_info="type#String#Y#类型(avatar||cover)#file#_FILES#Y#图片">
+			    	6.12 上传头像、封面
+			    </option>
+			    <option value="method=mobileapi.member.add_fav" data-doc_info="gid#Number#Y#商品ID">
+			    	6.13 添加商品收藏
+			    </option>
+			    <option value="method=mobileapi.member.del_fav" data-doc_info="gid#Number#Y#商品ID">
+			    	6.14 删除商品收藏
+			    </option>
+			    <option value="method=mobileapi.member.favorite" data-doc_info="n_page#Number#N#页码">
+			    	6.15 我的商品收藏列表
+			    </option>
+                <option value="method=microshop.shop.edit" data-doc_info='shop_id#Number#Y#微店ID&&shop_name#String#Y#微店名称'>6.16 修改微店名称</option>
+                <option value="method=mobileapi.member.get_follow" data-doc_info='member_id#Number#Y#会员ID&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)'>6.17 获得关注的微店</option>
+                <option value="method=mobileapi.member.nodiscuss" data-doc_info="n_page#Number#N#页码">
+			    	6.18 未评价商品
+			    </option>
+			    <option value="method=mobileapi.comment.toComment" data-doc_info="goods_id#Number#Y#商品ID&&product_id#Number#Y#产品ID&&order_id#Number#Y#订单ID&&comment#Text#Y#评价内容&&point_json#String#Y#商品评价分(json格式)&&discussverifyCode#String#N#验证码">
+			    	6.19 提交评价商品
+			    </option>
+			    <option value="method=mobileapi.member.levels_info" data-doc_info="">
+			    	6.20 会员等级
+			    </option>
+			    <option value="method=mobileapi.member.verify&password=qq1234" data-doc_info="password#String#Y#密码">
+			    	6.22 验证密码(修改手机、邮件需要验证用户密码)
+			    </option>
+			    <option value="method=mobileapi.passport.send_vcode_email&type=reset" data-doc_info="uname#String#Y#邮箱地址&&type#String#Y#reset">
+			    	6.23 发送邮件验证码
+			    </option>
+			    <option value="method=mobileapi.passport.send_vcode_sms&type=reset&uname=13800138000" data-doc_info="uname#String#Y#手机号码&&type#String#Y#reset">
+			    	6.24 发送手机验证码
+			    </option>
+			    <option value="method=mobileapi.member.verify_vcode&uname=13800138000&vcode=281053" data-doc_info="uname#String#Y#手机号码、邮箱地址&&vcode#String#Y#验证码">
+			    	6.25 提交修改手机号码、邮箱地址
+			    </option>
+			    <option value="method=mobileapi.aftersales.afterlist" data-doc_info="">
+			    	6.26 可退换货订单列表
+			    </option>
+			    <option value="method=mobileapi.aftersales.add" data-doc_info="order_id#Number#Y#订单号">
+			    	6.27 申请订单退换
+			    </option>
+			    <option value="method=mobileapi.aftersales.return_save&order_id=141010130335482&product_bn[548]=P4CB2BB85A40AD&product_nums[548]=1&product_name[548]=芳草集&product_price[548]&=59.000&type=1&title=ddddd&content=cccccc&agree=on" data-doc_info="order_id#Number#Y#订单号&&product_bn#Array#Y#货品号&&product_nums#Array#Y#发货数量&&product_name#Array#Y#货品名称&&product_price#Aarry#Y#货品价格&&type#Number#Y#售后服务类型 1:退货;2:换货;&&title#Text#Y#退换理由&&content#Text#Y#详细描述&&agree#Bool#Y#(是否同意售后服务 agree=on)">
+			    	6.28 提交订单退换
+			    </option>
+			    <option value="method=mobileapi.point.point_detail" data-doc_info="n_page#Number#N#页码">
+			    	6.29 我的积分
+			    </option>
+			    <option value="method=mobileapi.point.offline_point" data-doc_info="">
+			    	6.30 我的线下积分
+			    </option>
+			    <option value="method=mobileapi.member.mtkinfo" data-doc_info="n_page#Number#N#页码">
+			    	6.31 我的美通卡
+			    </option>
+			    <option value="method=mobileapi.member.inbox" data-doc_info="page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)">
+			    	6.32.1 站内信-我的收信列表
+			    </option>
+			    <option value="method=mobileapi.member.view_msg&comment_id=1" data-doc_info="comment_id#Number#Y#信息ID">
+			    	6.32.2 站内信-更新已读
+			    </option>
+
+
+
+			    <option value="" class="title">====7 登录接口====</option>
+			    <option value="method=mobileapi.passport.post_login&uname=iegss&password=waqqwaqq" 
+			    	data-doc_info="uname#String#Y#用户名&&password#String#Y#密码&&verifycode#String#N#验证码">
+			    	7.1 用户登录
+			    </option>
+			    
+			    <option value="method=mobileapi.passport.trust_login&provider_code=qzone&openid=1707357339&nickname=是非亦航&realname=是非亦航" 
+			    	data-doc_info="provider_code#String#Y#平台代码，如：qzone&&openid#String#Y#唯一标识用户身份&&nickname#String#N#呢称，注:nickname与realname不能同时为空&&realname#String#N#姓名&&email#String#N#email&&gender#Int#N#姓别, 1男，0女">
+			    	7.1.1 第三方APP登录
+			    </option>
+			    
+			    <option value="method=mobileapi.passport.logout" data-doc_info="">
+			    	7.2 用户退出
+			    </option>
+			    
+			    <option value="method=mobileapi.passport.send_vcode_sms&uname=18218340871" data-doc_info="uname#String#Y#用户名-手机号&&type#String#N#类型：<br /> 1. signup 注册（默认）<br /> 2. forgot 忘记密码 ">
+			    	7.3.0 发送手机验证码
+			    </option>
+			    
+			    <option value="method=mobileapi.passport.send_vcode_email&uname=iegss.cn@qq.com&type=forgot" data-doc_info="uname#String#Y#用户名-email&&type#String#N#类型：<br /> 1. signup 注册（默认）<br /> 2. forgot 忘记密码 ">
+			    	7.3.1 发送邮件验证码
+			    </option>
+			    
+			    <option value="method=mobileapi.passport.member_create&uname=18218340871&password=&vcode="
+			    	 data-doc_info="uname#String#Y#用户名_手机号&&password#String#Y#密码&&vcode#String#Y#手机验证码">
+			    	7.4 注册
+			    </option>
+			    
+			    <option value="method=mobileapi.passport.sendPSW&username=18218340871"
+			    	 data-doc_info="username#String#Y#账户名(用户名/手机号码/邮箱地址)">
+			    	7.5.0 找回密码-验证要找回的用户名
+			    </option>
+			    
+			    <option value="method=mobileapi.passport.resetpwd_code&send_type=mobile&username=18218340871&vcode="
+			    	 data-doc_info="send_type#String#Y#验证方式：mobile/email&&username#String#Y#验证账户(手机号码/邮箱地址)&&vcode#String#Y#验证码">
+			    	7.5.1 找回密码-身份验证
+			    </option>
+			    
+			    <option value="method=mobileapi.passport.resetpassword&key=&account=18218340871&login_password=qq123456&psw_confirm=qq123456"
+			    	 data-doc_info="account#String#Y#账户名&&key#String#Y#本次修改的key&&login_password#String#Y#新密码&&psw_confirm#String#Y#确认新密码">
+			    	7.5.2 找回密码-设置新密码
+			    </option>
+			    
+			    <option value="" class="title">====8 购物车类接口====</option>
+			    <option value="method=mobileapi.cart.add&product_id=1&num=1&buy_code=1_wap" 
+			    	data-doc_info="product_id#Int#Y#产品(货品)ID&&num#Int#N#数量,默认为1&&buy_code#String#N#推广代码&&btype#String#N#购买方式，值：<br />1、空，添加购物车流程<br />2、is_fastbuy 快速购买，直接到提交购物车">
+			    	8.1 添加购物车
+			    </option>
+			    <option value='method=mobileapi.cart.batch_add_cart&goods=[{"product_id":1,"num":1},{"product_id":2,"num":1}]'
+			    	data-doc_info='goods#Json#Y#数组([{"product_id":1,"num":1},{"product_id":2,"num":1}])'>
+			    	8.1.1 批量添加购物车
+			    </option>
+			    <option value="method=mobileapi.cart.get_list" data-doc_info="">
+			    	8.2 得到购物车列表
+			    </option>
+			    <option value="method=mobileapi.cart.update&obj_type=goods&obj_ident=goods_1_1&quantity=2" 
+			    	data-doc_info="obj_type#String#Y#对象类型,goods/coupon/gift&&obj_ident#String#Y#购物车对象ident&&quantity#Int#Y#数量">
+			    	8.3 更新购物车
+			    </option>
+			    <option value="method=mobileapi.cart.remove&obj_type=goods&obj_ident=goods_1_1" 
+			    	data-doc_info="obj_type#String#Y#对象类型,goods/coupon/gift/all, all购物车删除&&obj_ident#String#Y#购物车对象ident">
+			    	8.4 删除购物车
+			    </option>
+			    <option value='method=mobileapi.cart.batch_remove&items=[{"obj_type":"goods","obj_ident":"goods_0_1"},{"obj_type":"goods","obj_ident":"goods_0_2"}]' 
+			    	data-doc_info="items#Json#Y# obj_type(对象类型)：goods/coupon/gift/all, all购物车删除 obj_ident(购物车对象ident)">
+			    	8.4.1 批量删除购物车
+			    </option>
+			    
+			    <option value="method=mobileapi.cart.checkout" 
+			    	data-doc_info="isfastbuy#String#N#1.false:默认购物车购买<br /> 2.true:直接购买<br /> 3.group:团购购买">
+			    	8.5 提交购物车(得到配送地址等购物配置对象)
+			    </option>
+
+			    <option value="method=mobileapi.cart.delivery_change&area=426&isfastbuy=false" 
+			    	data-doc_info="isfastbuy#String#N#1.false:默认购物车购买<br /> 2.true:直接购买<br /> 3.group:团购购买">
+			    	8.6 得到配送方式(以区域ID)
+			    </option>
+			    
+			    <option value='method=mobileapi.cart.payment_change&shipping={"id":1,"has_cod":"false","dt_name":"快递","money":"10"}'
+			    	data-doc_info="shipping#String#Y#配送方式json字符串">
+			    	8.7 得到支付方式
+			    </option>
+			    
+			    <option value='method=mobileapi.cart.total&isfastbuy=false&address={"addr_id":7,"area":426}&shipping={"id":1,"has_cod":"false","dt_name":"快递","money":"10"}&payment[pay_app_id]={"pay_app_id":"deposit","payment_name":"预存款"}&payment[tax_type]=personal&payment[tax_company]=发票抬头&payment[tax_content]=办公用品&payment[is_tax]=true'
+			    	data-doc_info="isfastbuy#String#N#1.false:默认购物车购买<br /> 2.true:直接购买<br /> 3.group:团购购买&&address#String#Y#地址json字符数据&&shipping#String#Y#配送方式json字符数据&&payment[pay_app_id]#String#Y#支付方式json字符数据&&payment[is_tax]#String#Y#是否需要发票(如果选择了发票值为true，不需要发票值为false)&&payment[tax_type]#String#Y#发票类型&&payment[tax_company]#String#Y#发票抬头&&payment[tax_content]#String#Y#发票内容">
+			    	8.8 得到购物车总价
+			    </option>
+			    
+			    <option value='method=mobileapi.cart.add_coupon&coupon=Bqcm300j50DC96A00033'
+			    	data-doc_info="isfastbuy#String#N#1.false:默认购物车购买<br /> 2.true:直接购买<br /> 3.group:团购购买&&coupon#String#Y#优惠券号">
+			    	8.9 添加使用优惠券
+			    </option>
+			    
+			    <option value='method=mobileapi.cart.get_invoice'
+			    	data-doc_info="trigger_tax#String#N#1.false:默认购物车购买<br /> 2.true:直接购买<br /> 3.group:团购购买&&coupon#String#Y#优惠券号">
+			    	8.10 发票信息
+			    </option>
+
+			    <option value='method=mobileapi.cart.get_stores_list'
+			    	data-doc_info="addr_id#Int#Y#收货地址ID">
+			    	8.11 获取门店列表
+			    </option>
+
+			    
+			    
+			    <option value="" class="title">====9 订单支付类接口====</option>
+			    <option value='method=mobileapi.order.create&isfastbuy=false&md5_cart_info=&address={"addr_id":7,"area":426}&shipping={"id":1,"has_cod":"false","dt_name":"快递","money":"10"}&payment[pay_app_id]={"pay_app_id":"deposit","payment_name":"预存款"}&branch_id=&r_time=&coupon=&memo=&payment[tax_company]=发票抬头&payment[tax_content]=办公用品&payment[is_tax]=true' 
+			    	data-doc_info="isfastbuy#String#N#1.false:默认购物车购买<br /> 2.true:直接购买<br /> 3.group:团购购买&&md5_cart_info#String#Y#购物车MD5&&address#String#Y#地址json字符数据&&shipping#String#Y#配送方式json字符数据&&payment[pay_app_id]#String#Y#支付方式json字符数据&&branch_id#Int#N#自提仓库门店ID&&r_time#String#N#送货\自提时间&&memo#String#N#订单备注&&payment[is_tax]#String#Y#是否需要发票(如果选择了发票值为true，不需要发票值为false)&&payment[tax_type]#String#Y#发票类型&&payment[tax_company]#String#Y#发票抬头&&payment[tax_content]#String#Y#发票内容">
+			    	9.1 提交并生成订单
+			    </option>
+			    <option value="method=mobileapi.paycenter.dopayment&payment_order_id=asdf&payment_cur_money=asdf&payment_pay_app_id=deposit" 
+			    	data-doc_info="payment_order_id#String#Y#订单号&&payment_cur_money#money#Y#支付金额&&payment_pay_app_id#String#Y#支付方式ID编码">
+			    	9.2 提交支付
+			    </option>
+			    
+			    <option value='method=mobileapi.order.select_payment&shipping[shipping_id]=1'
+			    	data-doc_info="hipping[shipping_id]#String#Y#配送方式ID">
+			    	9.3 支付方式列表
+			    </option>
+			    
+			    <option value='method=mobileapi.order.payment_change&order_id=140629003905562&payment[pay_app_id]={"pay_app_id":"deposit","payment_name":"预存款"}'
+			    	data-doc_info="order_id#String#Y#订单号&&payment[pay_app_id]#String#Y#支付方式json字符串">
+			    	9.4 更改订单支付方式
+			    </option>
+			    
+			    <option value="" class="title">====10 文章类接口====</option>
+			    <option value='method=mobileapi.article.get_detail&article_id=51' 
+			    	data-doc_info="article_id#String#Y#文章ID">
+			    	10.1 得到文章内容细节
+			    </option>
+			    <option value='method=mobileapi.article.help_item' 
+			    	data-doc_info="">
+			    	10.2 帮助中心
+			    </option>
+			    <option value='method=mobileapi.article.get_article_list' 
+			    	data-doc_info="ids#String#Y#分类ID">
+			    	10.3 获取文章表
+			    </option>
+			    <option value="" class="title">====11 团购接口 版本2.1.4====</option>
+			    <option value='method=groupactivity.index.get_list&state=2' data-doc_info="state#String#Y#团购状态(1 => 未开始, 2 => 进行中(默认), 3 => 已结束(成功), 4 => 已结束，待处理, 5 => 已结束(失败))&&order#String#N#排序方式(start_time => 开始时间, end_time => 结束时间(默认), price => 价格, last_modified => 最后更新)&&order_type#String#N#排序方式(DESC, ASC-默认)&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)">
+                    11.1 获得团购列表
+                </option>
+			    <option value='method=groupactivity.index.get_detail&act_id=1' data-doc_info="act_id#Number#Y#团购活动ID">
+                    11.2 获得团购详情
+                </option>
+                <option value='method=groupactivity.index.buy&product_id=13' data-doc_info="product_id#Number#Y#产品ID&&num#Int#N#数量,默认为1">
+                    11.3 购买团购产品
+                </option>
+                
+                <option value="" class="title">====12 组合促销接口(团购，限时优惠-秒杀 版本2.3.7)====</option>
+                
+                <option value="method=starbuy.index.getGroup&type_id=2" data-doc_info='type_id#number#Y#促销类型(1 => 团购, 2 => 限时促销-秒杀)&&platform#string#N#来源平台(web：默认)#&&order#string#N#排序方式(begin_time:开始时间-默认)&&order_type#string#N#排序方式(DESC-默认,ASC)'>12.1 获得组合促销场次列表</option>
+                <option value="method=starbuy.index.getList&special_id=1" data-doc_info='special_id#number#N#场次ID&&platform#string#N#来源平台(web：默认)#&&order#string#N#排序方式(begin_time:开始时间-默认)&&order_type#string#N#排序方式(DESC-默认,ASC)&&page_no#Number#N#分页页码(默认:1)&&page_size#Number#N#分页大小(默认:20)'>12.2 获得组合促销场次商品列表</option>
+                <option value="method=starbuy.index.getDetail" data-doc_info='product_id#number#Y#促销商品ID&&platform#string#N#来源平台(web:默认)'>12.3 获得组合促销产品详情</option>
+			    
+			    <option value="" class="title">====13 促销接口====</option>
+			    <option value='method=mobileapi.salesgoods.sales_list' data-doc_info="">
+                    13.1 获取促销列表
+                </option>
+                <option value='method=mobileapi.salesgoods.get_sales_goods' data-doc_info="ids#String#Y#商品ids">
+                    13.2 获取促销商品
+                </option>
+                <option value='method=mobileapi.salesgoods.get_sales_ads' data-doc_info="ad_position#String#N#商品位置(1:促销页面 2:商品列表页面)">
+                    13.3 获取促销广告
+                </option>
+			  </select>
+            <p>POST URL: <{$api_url}></p>
+            <p>Token: 请联系站点管理人员 </p>
+           
+            <textarea name="api_data" id="api_data" placeholder="POST数据"></textarea>
+            <span style="float:right;"><input type="submit" value="再次签名数据" id="sign_submit"></span>
+            <input type="submit" value="提交测试" id="api_submit" />
+            <br /><br />
+            <textarea name="return_xml" id="return_xml" placeholder="返回数据" style="height:150px;"></textarea>
+        </form>
+        
+        <div class="doc_desc">
+        	<ul class="doc_head">
+	        	<li>应用级参数</li>
+	        	<li>类型</li>
+	        	<li>是否必须</li>
+	        	<li>说明</li>
+        	</ul>
+        	<div id="doc_info">
+        		
+        	</div>
+        	
+        </div>
+<script type="text/javascript">
+<!--
+
+function decode(s) {
+    return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'));
+}
+
+
+
+$(function() {
+	var is_cate = true;
+	var cate_name = '';
+	$('#act_url option').each(function(index) {
+		return false;
+		if (!$(this).val()){
+			cate_name = $(this).text().replace(/=/g, '');
+		} else {
+			var json = '';
+			var s_json = '';
+			var params = $(this).val().split('&');
+			var method = params[0].split('=');
+			var api_name = $(this).text();
+			var mycars=new Array()
+			for (var i = params.length - 1; i >= 1; i--) {
+				var nv = params[i].split('=');
+				mycars[i] = new Array();;
+				mycars[i][0] = nv[0];
+				mycars[i][1] = nv[1];
+				//s_json += '{"name":"'+nv[0]+'","value":"'+nv[1]+'","required":""}';
+				s_json += '&api_para['+i+'][name]='+nv[0]+'&api_para['+i+'][value]='+nv[1]+'&api_para['+i+'][directions]=';
+
+			};
+			var api_return = $(this).attr('data-doc_info').replace(/&&/g, '<br>');
+			var zd = $(this).attr('data-doc_info').split('&&');
+
+			for (var x=0,l=zd.length -1; x<=l; x++) {
+				var row = zd[x].split('#');
+				if (row[0]){
+					var c = 1;
+					var value = '';
+					while(c <= mycars.length-1) {
+						if (row[0] == mycars[c][0]) {
+							value = mycars[c][1];
+						};
+						c++;
+					}
+					var is_r = '0';
+					if (row[2].toUpperCase() == 'Y') {
+						is_r = '1';
+					};
+					json +='&api_para['+x+'][name]='+row[0]+'&api_para['+x+'][value]='+value+'&api_para['+x+'][directions]='+row[3]+'&api_para['+x+'][is_required]=	'+is_r+'&api_para['+x+'][type]='+row[1];	
+				}			
+			};
+			$.ajax({
+			   type: "POST",
+			   url: 'http://x.cn/wumart/ecstore/index.php/webtool-save.html',
+			   cache: false,
+			   async:false,
+			   data: 'cate_name='+cate_name+'&api_title='+api_name.replace(/(^\s*)|(\s*$)/g, "")+'&api_explain='+api_name.replace(/(^\s*)|(\s*$)/g, "")+'&api_request_url='+method[1]+json,
+			   success: function(res){   
+				  //$("#return_xml").val(decode(res));
+			   }
+			});
+ 		}
+		
+	});
+	$("#act_url").change(function(e) {
+		
+		var act_data = $("#act_url").val();
+		$("#doc_info").html("");
+		
+		if(act_data == ''){
+			alert("请选择要测试的接口");
+			$("#api_data").val("")
+			return false;
+		}
+		
+		
+		
+		$.ajax({
+			   type: "POST",
+			   url: "<{link app='diyapi' ctl='services' act='sign_data'}>",
+			   cache: false,
+			   data: act_data,
+			   success: function(res){			   
+				  console.log(res);
+				  //$("#return_xml").val(decode(res));
+				  $("#api_data").val(res);
+			   }
+			});
+		
+		var docinfo = $(this).find(':selected').data('doc_info');
+		
+		docinfo = docinfo.replace(/&&/g,'</li></ul><ul><li>');
+		docinfo = docinfo.replace(/#/g,'</li><li>');
+		
+		$("#doc_info").html("<ul><li>" + docinfo + "</li></ul>");
+		
+		
+    });
+	
+	$("#sign_submit").click(function(e) {
+		$("#sign_submit").attr("disabled","disabled");
+		var api_url = "<{link app='diyapi' ctl='services' act='sign_data'}>";
+		var act_data = $("#api_data").val()
+		$("#api_data").val('');
+		$.ajax({
+			   type: "POST",
+			   url: api_url,
+			   //dataType: "string",
+			   cache: false,
+			   data: act_data,
+			   success: function(res){			   
+				  console.log(res);
+				 
+				   $("#api_data").val(res);
+				  $("#sign_submit").removeAttr("disabled");	
+				  
+			   }
+			});
+	});
+	
+	
+	$("#api_submit").click(function(e) {
+
+		if($("#act_url").val() == ''){
+			alert("请选择要测试的接口");
+			return false;
+		}
+		
+		if($("#api_data").val() == ''){
+			alert("请输入要提交的data参数！");
+			return false;
+		}
+
+		$("#return_xml").val("");
+
+		if($("#api_url").val() != ''){
+			$("#api_submit").attr("disabled","disabled");
+			$("#api_submit").text("提交中…");
+			$.ajax({
+				   type: "POST",
+				   url: "<{$api_url}>",
+				   //dataType: "string",
+				   cache: false,
+				   data: $("#api_data").val(),
+				   success: function(res){			   
+					  console.log(res);
+					  //$("#return_xml").val(decode(res));
+					  $("#return_xml").val(res);
+					  $("#api_submit").removeAttr("disabled");	
+					  //alert();
+					  $("#api_submit").text("提交测试");
+				   }
+				});
+		}
+		
+		return false;
+        
+    });
+
+});
+//-->
+</script>
+<style type="text/css">select{background: white;}</style>
+<div style="width: 100%; height: 26px; position: fixed; opacity: 0.5; background: black; top: 0; text-align: center;line-height: 26px;font-size: 14px; left:0;"><a href="<{$new_api_url}>" style=" color:white">点击访问新版本</a></div> 
+    </body>
+</html>

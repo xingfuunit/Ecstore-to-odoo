@@ -1,0 +1,183 @@
+<?php
+$db ['charge'] = array (
+		'columns' => array ( 
+				'charge_id' => array (
+						'type' => 'number',
+						'required' => true,
+						'extra' => 'auto_increment',
+                                                'label' => '结账单ID' ,
+                                                'comment'=>'结账单ID',
+                                                'in_list' => true,
+						'default_in_list' => false,
+                                                'width'=>10,
+                                                'pkey' => true,
+				),
+                                'charge_num' => array (
+						'type' => 'int(13)',
+						'required' => true,						
+                                                'label' => '结账单班次' ,
+                                                'comment'=>'结账单班次',
+                                                'in_list' => true,
+						'default_in_list' => true,
+                                                 'width'=>110,
+				),
+				'jiaoban_id' => array (
+						'type' => 'number',
+                                                'required' => true,
+                                                'label' => '交班员工ID' ,
+                                                'comment'=>'交班员工ID',
+                                                'in_list' => true,
+						'default_in_list' => true,
+						'editable' => false 
+				),
+                                'jiaoban_name' => array (
+						'type' => 'varchar(32)',
+                                                'label' => '交班员工名称' ,
+                                                'comment'=>'交班员工名称',
+                                                'in_list' => true,
+						'default_in_list' => true,
+						'editable' => true,
+                                                 'width'=>110,
+				),
+                                'jieban_id' => array (
+						'type' => 'number',
+                                                'required' => true,
+                                                'label' => '接班员工ID' ,
+                                                'comment'=>'接班员工ID',
+                                                'in_list' => true,
+						'default_in_list' => true,
+						'editable' => false 
+				),
+                                'jieban_name' => array (
+						'type' => 'varchar(32)',
+                                                'label' => '接班员工名称' ,
+                                                'comment'=>'接班员工名称',
+                                                'in_list' => true,
+						'default_in_list' => true,
+						'editable' => true ,
+                                                 'width'=>110,
+				),
+				'start_time' => array (
+						'type' => 'time',
+						'required' => true,
+						'in_list' => true,
+						'default_in_list' => true,
+                                                 'width'=>110,
+						'label' => '起始时间' ,
+                                                'comment'=>'起始时间',
+				),
+				'end_time' => array (
+						'type' => 'time',
+						'required' => true,
+						'in_list' => true,
+						'default_in_list' => true,
+                                                 'width'=>110,
+						'label' => '截止时间' ,
+                                                'comment'=>'截止时间',
+				),
+				'cash' => array (
+						'type' => 'money',
+						'required' => true,
+						'searchtype' => 'tequal',
+						'filtertype' => 'normal',
+						'filterdefault' => true,
+						'in_list' => true,
+						'default_in_list' => true,
+						'width' => 80,
+                                                'default' => 0 ,
+						'label' => '现金' ,
+                                                'comment'=>'现金',
+				),
+                                'webpos' => array (
+						'type' => 'money',
+						'required' => true,
+						'searchtype' => 'tequal',
+						'filtertype' => 'normal',
+						'filterdefault' => true,
+						'in_list' => true,
+						'default_in_list' => true,
+						'width' => 80,
+                                                'default' => 0 ,
+						'label' => 'POS机' ,
+                                                'comment'=>'POS机',
+				),
+                                'deposit' => array (
+						'type' => 'money',
+						'required' => true,
+						'searchtype' => 'tequal',
+						'filtertype' => 'normal',
+						'filterdefault' => true,
+						'in_list' => true,
+						'default_in_list' => true,
+						'width' => 80,
+                                                'default' => 0 ,
+						'label' => '预存款' ,
+                                                'comment'=>'预存款',
+				),
+                                'coupon' => array (
+						'type' => 'money',
+						'required' => true,
+						'searchtype' => 'tequal',
+						'filtertype' => 'normal',
+						'filterdefault' => true,
+						'in_list' => true,
+						'default_in_list' => true,
+						'width' => 80,
+                                                'default' => 0 ,
+						'label' => '优惠券' ,
+                                                'comment'=>'优惠券',
+				),
+                                'amount' => array (
+						'type' => 'money',
+						'required' => true,
+						'searchtype' => 'tequal',
+						'filtertype' => 'normal',
+						'filterdefault' => true,
+						'in_list' => true,
+						'default_in_list' => true,
+						'width' => 80,
+                                                'default' => 0 ,
+						'label' => '总金额' ,
+                                                'comment'=>'总金额',
+				),
+				'order_nums' => array (
+						'type' => 'number',
+                                                'in_list' => true,
+						'default_in_list' => true,
+						'default' => 0 ,
+                                                 'width'=>80,
+                                                'label' => '订单数' ,
+                                                'comment'=>'订单数',
+				),
+
+				'memo' => array (
+						'type' => 'text',
+						'editable' => false,
+						'in_list' => true,
+						'label' => '备注' ,
+                                                'comment'=>'备注',
+				),
+
+		),
+		
+		'index' => array (
+				'charge_num' => array (
+						'columns' => array (
+								0 => 'charge_num' 
+						),
+				) ,
+                                'jiaoban_id' => array (
+						'columns' => array (
+								0 => 'jiaoban_id' 
+						),
+				) ,
+                                'jieban_id' => array (
+						'columns' => array (
+								0 => 'jieban_id' 
+						),
+				) ,
+		),
+		'engine' => 'innodb',
+		'version' => '$Rev: 451321',
+                'comment' => app::get ( 'ome' )->_ ( '门店交接班结账单' ) 
+);

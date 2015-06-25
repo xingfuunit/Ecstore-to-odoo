@@ -1,0 +1,117 @@
+﻿<style>
+.widgetconfig table {margin-top:5px;}
+.widgetconfig th,.widgetconfig td{padding:5px;border:1px solid #ddd; vertical-align:middle;line-height:1.8}
+.widgetconfig th {background-color:#E2E8EB}
+.widgetconfig input {padding:2px;line-height:18px;}
+.widgetconfig i {color:#FF0000;}
+.widgetconfig h4 {text-align:center;font-weight:bold;background:#DDE5FC;color:#669;height:35px;line-height:35px;}
+i{color:#FF0000;font-style:normal}
+</style>
+<div class="widgetconfig tableform">
+    <div class="division ">
+    <h4>基本参数设定</h4>
+    <p><font color="#FF0000">添加本挂件前，请先在模板中放置一个通栏的空板块区域。为适应大部分显示器分辨率，建议大图宽度为1920像素或以上。</font></p>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th width="20%">效果过渡时间:</th>
+        <td width="30%"><input name="duration" type="text" value="<{$setting.duration|default:500}>" style="width:60px" />(1秒=1000)</td>
+        <th width="20%">图片切换周期:</th>
+        <td width="30%"><input name="periodical" type="text" value="<{$setting.periodical|default:5000}>"style="width:60px" />(1秒=1000)</td>
+      </tr>
+      <tr>
+        <th width="20%">设置轮播区宽度:</th>
+        <td width="30%"><input name="width" type="text" value="<{$setting.width|default:1200}>" style="width:60px" />(px)</td>
+        <th width="20%">设置轮播区高度:</th>
+        <td width="30%"><input name="height" type="text" value="<{$setting.height|default:395}>"style="width:60px" />(px)</td>
+      </tr>
+      <tr>
+      	<th width="20%">图片适应最大宽度</th>
+        <td width="30%"><input name="hwidth" type="text" value="<{$setting.hwidth|default:1920}>" style="width:60px" />(px)</td>
+        <th width="20%">滚动方向:</th>
+        <td width="30%">
+        	<select name="direction">
+            	<option value="0" <{if $setting.direction=='0'}>selected="selected"<{/if}>>--左右--</option>
+                <option value="1" <{if $setting.direction=='1'}>selected="selected"<{/if}>>--上下--</option>
+            </select>
+         </td>         
+      </tr>
+      <tr>
+      	<th width="20%">是否显示左右滚动箭头</th>
+        <td width="30%"><select name="showbutton">
+            	<option value="0" <{if $setting.showbutton=='0'}>selected="selected"<{/if}>>--显示--</option>
+                <option value="1" <{if $setting.showbutton=='1'}>selected="selected"<{/if}>>--不显示--</option>
+            </select></td>
+        <th width="20%">是否显示按钮区</th>
+        <td width="30%"><select name="shownumber">
+            	<option value="0" <{if $setting.shownumber=='0'}>selected="selected"<{/if}>>--显示--</option>
+                <option value="1" <{if $setting.shownumber=='1'}>selected="selected"<{/if}>>--不显示--</option>
+            </select></td>         
+      </tr>
+    </table>
+    </div>
+    <div class="division">    
+    <h4>轮播广告图片设定</h4>
+    <div class="clearfix">
+    	<{button label="添加轮播广告图片" app="desktop" icon="btn_add.gif" id="addFocus"}>
+    </div>   
+    <div style="margin-top:5px;" id="focus">
+          <{foreach from=$setting.focus item=data key=key}>
+            <div id="focus_<{$data.i}>" class="configad">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <input type="hidden" name="focus[<{$data.i}>][i]" value="<{$data.i}>" />
+                <tr>
+                  <td>
+                     <table>
+                     <tr>
+                          <th width="10%">图片地址:</th>
+                          <td width="90%" colspan="3"><input type="text" style="width:80%" name="focus[<{$data.i}>][imgurl]" id="focus[<{$data.i}>][imgurl]" value="<{$data.imgurl}>"><input type="button" value="上传图片" onClick="addPic($('focus[<{$data.i}>][imgurl]'))"></td>
+                     </tr>
+                     <tr>
+                          <th width="10%">链接地址:</th>
+                          <td width="40%"><input type="text" style="width:200px" name="focus[<{$data.i}>][tolink]" value="<{$data.tolink}>"></td>
+                          <th width="10%">广告标题:</th>
+                          <td width="40%"><input type="text" style="width:200px" name="focus[<{$data.i}>][title]" value="<{$data.title}>"></td>
+                     </tr>
+                    </table>
+                   </td>
+                   <td style="width:30px;"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td>
+                 </tr>
+              </table>
+            </div>
+          <{/foreach}> 
+        </div>    
+    </div>
+</div>
+
+<script>
+/*大图*/
+$('addFocus').addEvent('click',function(){
+  var d=new Date();
+  var i=d.getTime();
+  $('focus').adopt(new Element('div').set('html','\
+    <div class="configad" style="margin-top:5px;">\
+       <table cellpadding="0" cellspacing="0" width="100%">\
+         <tr><td>\
+		 <table><tr>\
+		 <th width="10%">图片地址:</th><td width="90%" colspan="3"><input type="text" style="width:80%" name="focus['+i+'][imgurl]" id="focus['+i+'][imgurl]"><input type="button" value="上传图片" onClick=addPic($(\'focus['+i+'][imgurl]\'))></td></tr>\
+          <tr><th width="10%">链接地址:</th><td width="40%"><input type="text" style="width:200px" name="focus['+i+'][tolink]"></td><th width="10%">广告标题：</th><td width="40%"><input type="text" style="width:200px" name="focus['+i+'][title]"></td>\
+		  </tr>\
+       </table></td>\
+	   <td style="width:30px"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td>\
+	   </tr></table>\
+      <input type="hidden" name="focus['+i+'][i]" value="'+i+'">\
+    </div>\
+  ').getFirst());
+});
+
+function addPic(target){
+	var url='index.php?app=desktop&act=alertpages&goto='+encodeURIComponent("index.php?app=image&ctl=admin_manage&act=image_broswer&type=big");
+	Ex_Loader('modedialog',function(){
+		return new imgDialog(url,{onCallback:function(image_id,image_src){
+				$(target).value=image_src;
+		}})	;
+	});
+}
+
+delLink=function(o){$(o).getParent('.configad').remove();}
+</script>

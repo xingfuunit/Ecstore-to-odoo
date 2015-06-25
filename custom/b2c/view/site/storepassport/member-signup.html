@@ -1,0 +1,66 @@
+
+<form action="<{link app=b2c ctl='site_storepassport' act='create'}>" method="post">
+    <input name="forward" type="hidden" value="<{$options.url}>">
+    <input name="mini" type="hidden" value="<{$mini_passport}>">
+
+  <div class="login-div">
+          &nbsp;登录帐号：<{input type="text" name="pam_account[login_name]" id="" class="action-user-check login-input" placeholder="最少4个字符" vtype="required" data-caution="最少4个字符" autofocus}>
+        </div>
+        <div class="login-div">
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码：
+          <{input type="password" name="pam_account[login_password]" maxlength="20" id="password" class="action-password-check login-input" placeholder="8-20个数字" vtype="required&&minLength:8&&maxLength:20" data-caution="请填写密码，8-20个数字&&输入不正确，最少8个数字&&输入不正确，最多20个字符" check='true'}><span class="validation-messagebox"></span></span>
+        </div>
+    <div class="login-div">
+         确认密码：
+         <{input type="password" name="pam_account[psw_confirm]" id="rePassword" class="login-input" maxlength="20"   onblur="changsword()"  }><p style="margin-top: -50px; margin-left: 100px;" id="repwd-tip" ></p>
+    </div>
+    <{if $valideCode == 'true'}>
+        <div class="login-div">
+            验证码：
+                <{input type="vcode" name="signupverifycode" style="width: 160px;" class="login-input"  data-caution="" key='LOGINVCODE' a_class="lnklike"}>
+        </div>
+        <{/if}>
+        <div class="login-div" style="display: none;">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱：
+    <{input type="text" name="contact[email]" id="" class="login-input"}>
+    </div>
+        <{foreach from=$attr item=item name="item" key='row'}>
+        <div class="login-div">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<{$item.attr_name}>：
+          <{if $item.attr_type == 'text' || $item.attr_type == 'number' || $item.attr_type == 'alpha'}>
+                <input type="text" class="login-input <{if $item.attr_name == "手机"}>action-mobile-check<{/if}>" <{if $item.attr_name == "手机"}>placeholder="11位数的手机号码" vtype="required" data-caution="请填写手机号码"<{/if}> name="<{$item.attr_column}>" value="<{$item.attr_value}>" vtype="<{if $item.attr_required eq 'true'}>required<{/if}><{if $item.attr_valtype}><{if $item.attr_required eq 'true'}>&&<{/if}><{$item.attr_valtype}><{/if}>" />
+                <{/if}>
+                <{if $item.attr_name == "手机"}><span class="validation-messagebox"></span><{/if}>
+        </div>
+        <{/foreach}>
+        <div class="login-div">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机：
+                <input type="text" class="login-input action-mobile-check" placeholder="11位数的手机号码" vtype="required" data-caution="请填写手机号码" name="mobile"  />
+        </div>
+        <input type="checkbox" style="display:none;"  name="license" id="" checked="'true" class="x-check" vtype="onerequired" data-caution="<{t}>请选择同意<{/t}>">
+        
+         <div class="login-div" style="margin-top: 23px;">
+              <{assign var='label' value='注　册'}>
+                <{button type="submit" class="login-reg" style="margin-left:80px; float:left;" label=$__b2c=$label|t:'b2c' rel="_request"}>
+                 <a href="<{link app=b2c ctl=site_storepassport act=login}>" class="login-tj" style="display: block; float:left; margin-left:30px;"></a>
+          </div>
+ 
+</form>
+<script>
+   
+   function changsword(){
+        
+        var password1 = document.getElementById('password');
+        var password2 = document.getElementById('rePassword');
+        var repwd = document.getElementById('repwd-tip');
+        alert
+        if(password1.value!=password2.value){
+             repwd.innerHTML = '抱歉，两次输入的密码不一致！';
+             repwd.style.color='red';
+        }else{
+             repwd.innerHTML = '密码输入正确！';
+             repwd.style.color='green';
+        }
+        
+    }
+</script>

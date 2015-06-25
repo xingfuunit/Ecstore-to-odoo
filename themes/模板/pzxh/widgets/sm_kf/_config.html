@@ -1,0 +1,79 @@
+<style>
+.division table th,.division table td {padding:5px;}
+.division {line-height:21px;}
+.division input {padding:2px}
+</style>
+<div class="tableform">
+<div class="widgetconfig">
+	<div class="division">
+	<table width="100%" cellpadding="0" cellspacing="0">
+         <tr>
+			<th>客服板块是否显示：</th>
+			<td><input type="radio" name="showgotop" value="on"<{if $setting.showgotop!="off"}> checked="checked"<{/if}>> 显示&nbsp;<input type="radio" name="showgotop" value="off"<{if $setting.showgotop=="off"}> checked="checked"<{/if}>> 不显示  (方便不需要的时候临时隐藏而不是删除)</td>
+		 </tr>
+     </table>
+    </div>
+    
+  
+    <div class="clearfix"><span class="sysiconBtn addorder" id="sysiconBtn">添加楼层链接</span></div>    
+    <div class="division" id="kffloor">
+      <{foreach from=$setting.floor item=item key=key}>
+		 <div class="configad" style="margin-top:5px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #666;">
+            <tr>					
+				  <th style="width:40px;">标题:</th>
+				  <td><input type="text" style="width:80px" name="floor[<{$item.i}>][title]" value="<{$item.title}>" /></td>
+				  <th style="width:40px;">链接:</th>
+				  <td><input type="text" style="width:200px" name="floor[<{$item.i}>][links]" value="<{$item.links}>" /></td>
+				  <th style="width:20px;vertical-align:middle;text-align:center;"><span onclick="delLink(this);"><{img src="images/bundle/delecate_1.gif" style="cursor:pointer;" alt="删除" title="删除"}></span></th>
+             </tr>
+          </table>
+		  <input type="hidden" name="floor[<{$item.i}>][i]" value="<{$item.i}>" />
+        </div>
+	<{/foreach}>
+	</div>
+	<div class="division">
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<th>意见反馈链接：</th>
+			<td><input type='text' name='message' value="<{$setting.message|default:'./message.html'}>" style="width:400px;"></td>
+		</tr>
+		<tr>
+			<th>在线客服QQ号码：</th>
+			<td><input type='text' name='qqnumber' value="<{$setting.qqnumber|default:'9516097'}>" style="width:200px;" />提示：可以是普通QQ也可以是企业QQ号，程序将智能判断客服在线状态.</td>            
+		</tr>
+        <tr>
+			<th>企业QQ服代码：</th>
+			<td><input type='text' name='qyqq_link' value="<{$setting.qyqq_link}>" style="width:400px;" /><br /> 提示：如果你使用企业QQ作为在线客服，请填写客服代码。企业QQ客服代码可在企业QQ的“在线图标”获得。普通QQ本处请留空</td>            
+		</tr>
+	</table>
+	</div>
+</div>
+</div>
+
+<script>
+$('sysiconBtn').addEvent('click',function(){
+  var d=new Date();
+  var i=d.getTime();
+  $('kffloor').adopt(new Element('div').set('html','\
+	<div class="configad" style="margin-top:5px;">\
+       <table cellpadding="0" cellspacing="0" width="100%" style="border:1px solid #666;">\
+         <tr><th style="width:40px;">标题：</th><td><input type="text" style="width:80px" name="floor['+i+'][title]"></td>\
+		 <th style="width:40px;">链接:</th><td><input type="text" style="width:200px" name="floor['+i+'][links]"></td>\
+		 <td style="width:20px;vertical-align:middle;text-align:center;"><span onclick="delLink(this);"><{img src="images/bundle/delecate_1.gif" style="cursor:pointer;" alt="删除" title="删除"}></span></td></tr>\
+	 </table>\
+      <input type="hidden" name="floor['+i+'][i]" value="'+i+'">\
+    </div>\
+  ').getFirst());
+});
+delLink=function(o){$(o).getParent('.configad').remove();}
+
+    function addPic(){
+        var url='index.php?app=desktop&act=alertpages&goto='+encodeURIComponent("index.php?app=image&ctl=admin_manage&act=image_broswer&type=big");
+        Ex_Loader('modedialog',function(){
+            return new imgDialog(url,{onCallback:function(image_id,image_src){
+                    $('ad_pic').value=image_src;
+            }})	;
+        });
+    }
+</script>

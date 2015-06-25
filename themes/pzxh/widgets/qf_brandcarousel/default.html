@@ -1,0 +1,46 @@
+<div class="brandwrap">
+    <div class="wrap qbrandlist" id="focus_<{$widgets_id}>">
+     <{if $setting.title}><h3><{$setting.title}></h3><{/if}>
+     <div class="brand-srcoll">
+       <div class="switchable-viewbox">
+            <{foreach from=$data.slideData item=slidedata name=slideloop}> 
+                <ul class="slideitem">
+                <{foreach from=$slidedata item=item key=key}>
+                <li><a target="_blank" href="<{link app=b2c ctl=site_brand act=index arg0=$item.brand_id}>"><img src="<{$item.brand_logo|default:$defaultImage|storager}>"  alt="<{$item.brand_name}>" width="<{$setting.brandwidth|default:160}>" height="<{$setting.brandheight|default:68}>" /></a></li>
+                <{/foreach}>
+                </ul>
+            <{/foreach}>
+      </div>
+      <{if $setting.showfous =='on'}>
+	  <div class="shopex-switchable-triggerBox clearfix">
+        <{foreach from=$data.slideData item=nums name=count}>
+        <a href="javascript:void(0);" hidefocus="true" rel="nofollow"<{if $do==0}> class="active"<{/if}>><{assign var="do" value=$do+1}></a>
+        <{/foreach}>
+      </div>
+      <{/if}>
+    </div>
+    <a href="javascript:void(0);" class="prev">上一个</a>
+    <a href="javascript:void(0);" class="next">下一个</a>
+   </div>
+</div>
+<{if $data.slidenum > 1}>
+<script type="text/javascript">
+(function(){
+		var count = '<{$data.slidenum}>';
+        new Switchable('focus_<{$widgets_id}>', {
+            triggersBox:'.shopex-switchable-triggerBox',
+            content:'.switchable-viewbox',
+			haslrbtn:true,
+            circular:true,
+			duration:'<{$setting.duration|default:500}>',
+			interval:'<{$setting.periodical|default:5000}>',
+			lazyDataType:'li',
+            onInit:function(){
+                var i = Math.floor(Math.random() * count);
+                //this.triggers[i].fireEvent('click',{});
+            },
+            effect:'<{$setting.direction|default:"scrollx"}>'
+        });
+    })();
+ </script>
+<{/if}>

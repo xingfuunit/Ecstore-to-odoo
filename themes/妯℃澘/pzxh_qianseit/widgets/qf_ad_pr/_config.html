@@ -1,0 +1,97 @@
+<style>
+<!--
+.widgetconfig table {margin-top:5px;}
+.widgetconfig th,.widgetconfig td{padding:5px;border:1px solid #ddd; vertical-align:middle;line-height:1.8}
+.widgetconfig th {background-color:#E2E8EB}
+.widgetconfig input {padding:2px;line-height:18px;}
+.widgetconfig i {color:#FF0000;}
+.widgetconfig em {color:#999;font-style:normal;}
+-->
+</style>
+<div class="tableform widgetconfig">
+<div class="clearfix">
+    <{button label=$___b2c="添加广告图片"|t:'b2c' app="desktop" icon="btn_add.gif" id="add_ad_pic" onclick=""}>
+ </div>
+ <div class="division" style="margin-top:8px;" id="ad">
+  <{foreach from=$setting.ad item=data key=key}>
+    <div id="ad_<{$data.i}>" class="configad">
+     <input type=hidden name=ad[<{$data.i}>][type] value="<{$data.type}>">
+     <input type=hidden name=ad[<{$data.i}>][i] value="<{$data.i}>">
+     <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+          <th width="20%">图片地址:</th>
+          <td><input type="text" style="width:78%" class="imgsrc" name=ad[<{$data.i}>][link] id="ad[<{$data.i}>][link]" value="<{$data.link}>" />
+			<input type="button" value="上传图片" onclick="addPic($('ad[<{$data.i}>][link]'))" />
+		</td>
+          <td style="width:30px;"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td>
+        </tr>
+        <tr>
+          <th width="20%">图片尺寸:</th>
+          <td>宽
+            <input type="text" style="width:100px" name=ad[<{$data.i}>][showwidth] value="<{$data.showwidth}>">px&nbsp;&nbsp;高
+            <input type="text" style="width:100px" name=ad[<{$data.i}>][showheight] value="<{$data.showheight}>">px </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th width="20%">链接地址:</th>
+          <td><input type="text" style="width:90%" name=ad[<{$data.i}>][tolink] value="<{$data.tolink}>"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th width="20%">图片alt属性:</th>
+          <td><input type="text" style="width:90%" name=ad[<{$data.i}>][text] value="<{$data.text}>"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th width="20%">产品标题:</th>
+          <td><input type="text" style="width:90%" name=ad[<{$data.i}>][text1] value="<{$data.text1}>"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th width="20%">产品价格:</th>
+          <td><input type="text" style="width:90%" name=ad[<{$data.i}>][text2] value="<{$data.text2}>"></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+    <{/foreach}>
+    </div>
+    
+    
+</div>
+
+
+<script>
+/*大图*/
+$('add_ad_pic').addEvent('click',function(){
+  var d=new Date();
+  var i=d.getTime();
+  $('ad').adopt(new Element('div').set('html','\
+    <div class="configad" style="margin-top:6px;">\
+       <table cellpadding="0" cellspacing="0">\
+         <tr><th width=20%>图片地址:</th><td><input type="text" style="width:78%" class="imgsrc" name=ad['+i+'][link] id="ad['+i+'][link]" value="%THEME%/images/" size=15><input type="button" value="上传图片" onClick="addPic($(\'ad['+i+'][link]\'))"></td>\
+		 <td style="width:30px"><span onclick="delLink(this);"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt="删除" title="删除" app="desktop"}></span></td></tr>\
+		  <tr><th width=20%>图片尺寸:</th><td>宽<input type="text" style="width:100px" name="ad['+i+'][showwidth]" value="">px&nbsp;&nbsp;高<input type="text" style="width:100px" name="ad['+i+'][showheight]" value="">px</td><td></td></tr>\
+          <tr><th>链接地址:</th><td><input type="text" style="width:90%" name=ad['+i+'][tolink] size=15></td><td></td></tr>\
+		  <tr><th>图片alt属性：</th><td><input type="text" style="width:90%" name=ad['+i+'][text]></td><td></td></tr>\
+		  <tr><th>产品标题：</th><td><input type="text" style="width:90%" name=ad['+i+'][text1]></td><td></td></tr>\
+		  <tr><th>产品价格：</th><td><input type="text" style="width:90%" name=ad['+i+'][text2]></td><td></td></tr>\
+		</table>\
+      <input type=hidden name=ad['+i+'][i] value="'+i+'">\
+      <input type=hidden name=ad['+i+'][type] value="image">\
+    </div>\
+  ').getFirst());
+	$('pic['+i+']').addEvent('click',function(e){bindevent(this)});
+});
+
+function addPic(target){
+	var url='index.php?app=desktop&act=alertpages&goto='+encodeURIComponent("index.php?app=image&ctl=admin_manage&act=image_broswer&type=big");
+	Ex_Loader('modedialog',function(){
+		return new imgDialog(url,{onCallback:function(image_id,image_src){
+				$(target).value=image_src;
+		}})	;
+	});
+}	
+delLink=function(o){$(o).getParent('.configad').remove();}
+</script>
+

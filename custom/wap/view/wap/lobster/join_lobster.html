@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'/>
+
+<script src="http://www.pzfresh.com/public/app/site/lang/zh_CN/js/lang.js"></script>
+<link rel="stylesheet" href="/public/app/wap/statics/css/lobster.css">
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+
+<title><{$title}></title>
+</head>
+
+<body>
+	<div class="container">
+
+		<form action="<{$post_url}>" method="POST" name="SearchForm">
+
+			<div class="join_head1">
+				<span class="j_title">我在：</span>
+				<{foreach from=$area_list item=a key=k}>
+					  &nbsp;<{$a}><input type="radio" name="area_id" value="<{$k}>">	
+				<{/foreach}>
+			</div>
+
+			<div class="join_head2">
+				<span class="j_title2">手机号：</span><input type="text" id="phone" name="phone" />
+			</div>
+
+			<div class="join_body">
+
+				<div class="join_tips">温馨提示：成功获奖后我们将有短信通知！</div>
+
+				<div class="join_sel_tips">请选择礼品：</div>
+				
+				<div class="join_gift">
+						<ul>
+							<li><div class="join_gift_img">
+									<img src="/public/app/wap/statics/images/lobster/con1.png">
+									<div class="join_gift_img_sel" g_id="1"><img src="/public/app/wap/statics/images/lobster/mark_sel.png"></div>
+								</div>
+							</li>
+							<li><div class="join_gift_img">
+									<img src="/public/app/wap/statics/images/lobster/con2.png">
+									<div class="join_gift_img_sel" g_id="2"><img src="/public/app/wap/statics/images/lobster/mark_sel.png"></div>
+								</div>
+							</li>
+							<li><div class="join_gift_img">
+									<img src="/public/app/wap/statics/images/lobster/con3.png">
+									<div class="join_gift_img_sel" g_id="3"><img src="/public/app/wap/statics/images/lobster/mark_sel.png"></div>
+								</div>
+							</li>
+							<li><div class="join_gift_img">
+									<img src="/public/app/wap/statics/images/lobster/con4.png">
+									<div class="join_gift_img_sel" g_id="4"><img src="/public/app/wap/statics/images/lobster/mark_sel.png"></div>
+								</div>
+							</li>
+						</ul>
+				</div>
+				<div style="clear:both;"></div>
+
+				<div class="join_tips2">温馨提示：</div>
+				<div class="join_tips_detail">
+					<img src="/public/app/wap/statics/images/lobster/title1.png">
+					因龙虾为冷冻产品，仅支持配送广东省内地区。
+					其他地区用户请在满200减80优惠券、奇异果券、
+					20元话费三选一。
+				</div>
+				<div class="join_tips_detail"><img src="/public/app/wap/statics/images/lobster/title2.png">
+					集齐30个好友支持即可召唤奖品；
+				</div>
+				<div class="join_tips_detail"><img src="/public/app/wap/statics/images/lobster/title3.png">
+					系统自动发送领用券至品珍账户；
+				</div>
+				<div class="join_tips_detail"><img src="/public/app/wap/statics/images/lobster/title4.png">
+					自助在商城下单即可；
+				</div>
+
+				<input type="hidden" name="gift_id" id="gift_id" value="">
+				<input type="hidden" name="m_openid" id="openid" value="<{$wx_info['openid']}>" />
+				<input type="hidden" name="m_nick_name" id="nickname" value="<{$wx_info['nickname']}>" />
+				<div class="join_button"><a href="javascript:void(0);"  id="sub_btn" onclick="sub_form()"><img src="/public/app/wap/statics/images/lobster/join.png"></a></div>
+			</div>
+
+		</form>
+
+	</div>
+	
+			<!-- 数据统计 -->
+		<div style="display:none">
+			<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253646661'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1253646661' type='text/javascript'%3E%3C/script%3E"));</script><span id="cnzz_stat_icon_1253646661"><a href="http://www.cnzz.com/stat/website.php?web_id=1253646661" target="_blank" title="站长统计">站长统计</a></span><script src=" http://s11.cnzz.com/z_stat.php?id=1253646661" type="text/javascript"></script><script src="http://c.cnzz.com/core.php?web_id=1253646661&amp;t=z" charset="utf-8" type="text/javascript"></script>
+		</div>
+</body>
+
+</html>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.join_gift_img').bind('click',function(){
+			$('.join_gift_img_sel').hide();
+			$(this).children('.join_gift_img_sel').show();
+			var g_id = $(this).children('.join_gift_img_sel').attr('g_id');
+			//console.log(g_id);
+			$('#gift_id').attr('value',g_id);
+
+		})
+	});
+
+
+	function sub_form(){
+		//验证手机
+		var phone = $('#phone').val();
+		validatemobile(phone);
+
+		var gift_id = $('#gift_id').val();
+		if(gift_id == ''){
+			alert('请选择礼品');
+			return false;
+		}
+
+		var area_id = $("input[name='area_id']:checked").val();
+		if(area_id == 'undefined'){
+			alert('请选择地区');
+			return false;
+		}
+
+		if(area_id == 2 && gift_id == 1){
+			alert('其他地区不能选择龙虾卷');
+			return false;
+		}
+
+		document.SearchForm.submit();
+	}
+
+
+	 function validatemobile(mobile)
+    {
+        if(mobile.length==0)
+        {
+           alert('请输入手机号码！');
+           document.form1.mobile.focus();
+           return false;
+        }    
+        if(mobile.length!=11)
+        {
+            alert('请输入有效的手机号码！');
+            document.form1.mobile.focus();
+            return false;
+        }
+        
+        var myreg = /^[1][358]\d{9}$/;
+        if(!myreg.test(mobile))
+        {
+            alert('请输入有效的手机号码！');
+            document.form1.mobile.focus();
+            return false;
+        }
+    }
+</script>

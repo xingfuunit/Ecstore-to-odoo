@@ -1,0 +1,20 @@
+#content {background:#f2eee5; padding:0; margin:0;}
+#meat_main{font-size:0px;background:#f2eee5;width:100%;min-width: 1278px;
+  margin-left: auto;
+  margin-right: auto;}
+#meat_main a.51meat_alink{border:0px; border:none; padding:0; margin:0;}
+#meat_main a.51meat_alink img{ border:0px;}
+#meat_main ul.51meat_paylist{ color:#FFFFFF; list-style:none}
+#meat_main ul.51meat_paylist li{ line-height:40px;}
+#meat_main li{ list-style:none; line-height:35px; font-size:14px; text-indent:10px;}
+
+
+#meat_main_wechat{margin:0; padding:0;font-size: 0px;}
+#meat_main_wechat{font-family:"微软雅黑";}
+#meat_main_wechat a{border:0;}
+#meat_main_wechat img{border:0;}
+#meat_main_wechat div{width:100%; height:auto; overflow:hidden;}
+#meat_main_wechat div img{width:100%;height:auto; overflow:hidden;}
+#meat_main_wechat .left{ width:50%; float:left;}
+#meat_main_wechat .right{width:33.3%; float:left;}
+#meat_main_wechat .conent{width:20%; height:124px; position:fixed; top:50%; left:50%; margin:-62px 0 0 -10%; display:none; }

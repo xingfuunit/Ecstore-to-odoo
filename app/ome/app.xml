@@ -1,0 +1,18 @@
+<app>
+    <name>门店铺列表</name>
+    <description>门店铺列表</description>
+
+    <author>
+        <name>jason</name>
+        <email>758238751@qq.com</email>
+        <url>http://weibo.com/u/1684668553</url>
+    </author>
+
+    <version>0.1</version>
+    <license>jason</license>
+    <parent_model_class>dbeav_model</parent_model_class>
+
+    <depends>
+        <app>site</app>
+    </depends>
+</app>

@@ -1,0 +1,401 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+   
+    <{wapheader}>
+<link href="/public/app/wap/statics/css_mini/index.css?v=20150620b" rel="stylesheet" media="screen, projection" />
+<script type="text/javascript" src="/public/app/wap/statics/js_mini/scrollable.full.min.js"></script>
+<script type="text/javascript" src="/public/app/wap/statics/js/index.js"></script>
+</head>
+<body style="background:#eeeeee;">
+    <{wap_require file="block/header.html"}>
+	<!-- Header -->	
+	<header data-am-widget="header" class="am-header am-header-default tt_bg">
+	  <h1 class="am-header-title" style="margin:0px;">
+	    <a href="#title-link">关于品珍鲜活的故事</a>
+	  </h1>
+	  <div class="am-header-right am-header-nav">
+    <a href="/wap/index-company.html" class="">
+     <i class="am-header-icon am-icon-exclamation-circle"></i>    
+    </a> 
+  </div>
+	</header>
+	
+	
+	<!-- Slider -->
+	<div data-am-widget="slider" id="index_slider" class="am-slider am-slider-a1" data-am-slider="{'directionNav':false;'smoothHeight':true}">
+	  <ul class="am-slides">
+	  	<{foreach from=$roll_ads item=r}>
+	    <li>
+	      <a href="<{$r.ad_url}>"><img src="<{$r.img_url}>" style="width:100%;"></a>
+	    </li>
+		<{/foreach}>
+	  </ul>
+	</div>
+	
+	<!--搜索开始-->
+	<{wap_require file="block/search.html"}>
+	<!--搜索结束-->
+	
+	<!--图片导航-->
+	
+	<div>
+	<nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
+	  <div class="am-offcanvas" id="index_sidebar" >
+	    <div class="am-offcanvas-bar">
+	      <ul class="am-menu-nav am-avg-sm-1">
+	      	<{foreach from=$catmap item=cat key=k}>
+	        <li class="am-parent">
+	          <a href="javascript:void(0);" class=""><{$cat.title}></a>
+			  <{if $cat.items}>
+	          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
+	          	<{foreach from=$cat.items item=cat2 key=k2}>
+	            <li class="">
+	              <a href="<{link app=b2c ctl=wap_gallery arg0=$cat2.cat_id}>" class=""><{$cat2.title}></a>
+	            </li>
+				<{/foreach}>
+				<div style="clear:both;"></div>
+	            <li class="am-menu-nav-channel">
+	              <a href="<{link app=b2c ctl=wap_gallery arg0=$cat.cat_id}>" class="" title="<{$cat.title}>">全部商品 &raquo;</a>
+	            </li>
+	          </ul>
+			  <{/if}>
+	        </li>
+	        <{/foreach}>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+		<div class="four_cut" onclick="$('#index_sidebar').offCanvas('open');"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k1.jpg"></div>
+		<a href="<{link app=b2c ctl=wap_active act=alist }>" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k2.jpg"></a>
+		<a href="<{link app=b2c ctl=wap_gallery act=productsHot }>" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k3.jpg"></a>
+		<a href="<{link app=b2c ctl=wap_active act=hyday }>" class="four_cut"><img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/k4.jpg"></a>
+		<div class="fc"></div>
+	</div>
+	<!--图片导航结束-->
+	
+	<!--公告开始-->
+	<div class="index-marquee" id="index-marquee" style="background:#eeeeee;">
+	<div class="itemsBg">
+		<div class="dot">
+			<i class="am-icon-volume-down" style="display:none;"></i>
+			<i class="am-icon-volume-up" style="display:none;"></i>
+		</div>
+		<div class="itemsWrap">
+			<div class="items">
+				<{foreach from=$roll_text item=r}>
+					<div class="item">
+						<a href="<{$r.ad_url}>"><{$r.ad_name}></a>
+					</div>
+				<{/foreach}>
+			</div>
+		</div>
+		<div class="fc"></div>
+	</div></div>
+	<!--公告结束-->
+	
+	<!--保证和优惠券开始-->
+	<{foreach from=$coup_ads item=c}>
+		<{if $c.url_type != "coupon"}>
+			<a href="<{$c.ad_url}>" class="four_cut"><img class="full_img" src="<{$c.img_url}>"></a>
+		<{else}>
+			<a href="javascript:void(0);"  class="four_cut" onclick="getCoupon(<{$c.ad_url}>)"><img class="full_img" src="<{$c.img_url}>"></a>
+		<{/if}>
+	<{/foreach}>
+	<!--保证和优惠券结束-->
+	
+	<div style="margin-left:10px; margin-right:10px; margin-bottom:10px;" >
+	
+	<!-- 点击领取 -->
+	
+	<{foreach from=$mianyou_ads item=p}>
+		<{if $p.url_type != "coupon"}>
+			<a href="<{$p.ad_url}>"><img class="full_img" src="<{$p.img_url}>"></a>
+		<{else}>
+			<a href="javascript:void(0);" onclick="getCoupon(<{$p.ad_url}>)"><img class="full_img" style="margin-bottom:10px;" src="<{$p.img_url}>"></a>
+		<{/if}>
+	<{/foreach}>
+	
+	<!-- 点击领取 -->
+	
+	<!--广告-->
+	
+	<{foreach from=$pic_ads item=p}>
+	<a href="<{$p.ad_url}>"><img class="full_img" style="margin-bottom:10px;"  src="<{$p.img_url}>"></a>
+	<{/foreach}>
+	</div>
+	<!--广告结束-->
+	
+
+	
+	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
+	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_hs_cat.cat_name}></h2>
+	  <nav class="am-titlebar-nav" >
+	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_hs_cat.cat_id}>"   style="color:#999">更多</a>
+	  </nav>
+	</div>
+	<!-- List -->
+	
+	
+	<!-- Gallery -->
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	 <{foreach from=$pz_hs key=key item=goods_row}>
+	 <li>
+	    <div class="am-gallery-item">
+		    <{if !$goods_row.is_can_store }>
+			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
+			<{/if}>
+			<{if $goods_row.is_can_store}>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart goods_list_cart btnAddToCart am-icon-shopping-cart-index"></a>
+				<form  style="display:none" class="formaddcart">
+					    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+					    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+					    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+					    <input id="stock" type="text" name="stock" value="" />
+					    <input id="limit_nums" type="text" name="limit_nums" value="" />
+					    <input type="text" name="response_json" value="1" />
+				</form>
+			<{else}>
+				<div class="am-icon-btn am-icon-shopping-cart am-icon-shopping-cart-num" ></div>
+			<{/if}>
+			
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>"  >
+	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
+	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}>
+			<br>
+			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
+			</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
+			</div>
+	      </a>
+		  <div class="fc"></div>
+	    </div>
+	  </li>
+	  <{/foreach}>
+	</ul>
+	
+	
+	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
+	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_xg_cat.cat_name}></h2>
+	  <nav class="am-titlebar-nav" >
+	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xg_cat.cat_id}>"   style="color:#999">更多</a>
+	  </nav>
+	</div>
+	<!-- List -->
+
+	<!-- Gallery -->
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
+	  <{foreach from=$pz_xg key=key item=goods_row}>
+	 <li>
+	    <div class="am-gallery-item">
+		    <{if !$goods_row.is_can_store }>
+			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
+			<{/if}>
+			<{if $goods_row.is_can_store }>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart goods_list_cart btnAddToCart am-icon-shopping-cart-index"></a>
+				<form  style="display:none" class="formaddcart">
+					    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+					    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+					    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+					    <input id="stock" type="text" name="stock" value="" />
+					    <input id="limit_nums" type="text" name="limit_nums" value="" />
+					    <input type="text" name="response_json" value="1" />
+				</form>
+			<{else}>
+				<div class="am-icon-btn am-icon-shopping-cart am-icon-shopping-cart-num"></div>
+			<{/if}>
+			
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" >
+	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
+
+			
+	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}>
+			<br>
+			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
+			</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
+			</div>
+	      </a>
+		  <div class="fc"></div>
+	    </div>
+	  </li>
+		<{/foreach}>
+	</ul>
+	
+	
+	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
+	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_xr_cat.cat_name}></h2>
+	  <nav class="am-titlebar-nav" >
+	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_xr_cat.cat_id}>"   style="color:#999">更多</a>
+	  </nav>
+	</div>
+	<!-- List -->
+	
+
+	<!-- Gallery -->
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	 <{foreach from=$pz_xr key=key item=goods_row}>
+	 <li>
+	    <div class="am-gallery-item">
+		    <{if !$goods_row.is_can_store }>
+			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
+			<{/if}>
+			<{if $goods_row.is_can_store }>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart goods_list_cart btnAddToCart am-icon-shopping-cart-index"></a>
+				<form  style="display:none" class="formaddcart">
+					    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+					    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+					    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+					    <input id="stock" type="text" name="stock" value="" />
+					    <input id="limit_nums" type="text" name="limit_nums" value="" />
+					    <input type="text" name="response_json" value="1" />
+				</form>
+			<{else}>
+				<div class="am-icon-btn am-icon-shopping-cart am-icon-shopping-cart-num"></div>
+			<{/if}>
+			
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" >
+	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
+	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}>
+			<br>
+			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
+			</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
+			</div>
+	      </a>
+		  <div class="fc"></div>
+	    </div>
+	  </li>
+	  <{/foreach}>
+	</ul>
+	
+	
+	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
+	  <h2 class="am-titlebar-title" style="color:#48a4b9;"><{$pz_jx_cat.cat_name}></h2>
+	  <nav class="am-titlebar-nav" >
+	    <a href="<{link app=b2c ctl=wap_gallery arg0=$pz_jx_cat.cat_id}>"   style="color:#999">更多</a>
+	  </nav>
+	</div>
+	<!-- List -->
+	
+	<!-- Gallery -->
+	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: false }">
+	 <{foreach from=$pz_jx key=key item=goods_row}>
+	 <li>
+	    <div class="am-gallery-item">
+		    <{if !$goods_row.is_can_store }>
+			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
+			<{/if}>
+			<{if $goods_row.is_can_store }>
+				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart goods_list_cart btnAddToCart am-icon-shopping-cart-index"></a>
+				<form  style="display:none" class="formaddcart">
+					    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
+					    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
+					    <input id="goodsNum" type="text" name="goods[num]" value="1" />
+					    <input id="stock" type="text" name="stock" value="" />
+					    <input id="limit_nums" type="text" name="limit_nums" value="" />
+					    <input type="text" name="response_json" value="1" />
+				</form>
+			<{else}>
+				<div class="am-icon-btn am-icon-shopping-cart am-icon-shopping-cart-num"></div>
+			<{/if}>
+	      <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>" >
+	        <img src="<{$goods_row.image_default_id|storager:'s'}>">
+	        <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}>
+			<br>
+			<span style="color:#48a4b9">已售：<{$goods_row.wap_hot_num}>份</span>
+			</h3>
+	        <div class="am-gallery-desc" >
+			<h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
+			</div>
+	      </a>
+		  <div class="fc"></div>
+	    </div>
+	  </li>
+	  <{/foreach}>
+	</ul>
+	
+	<!-- List -->
+	
+	<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default index_cat_title" >
+	  <h2 class="am-titlebar-title" style="color:#48a4b9;">品珍视频</h2>
+	  <nav class="am-titlebar-nav" >
+<!--	    <a href="javascript:void(0);"   style="color:#cccccc">更多</a>-->
+	  </nav>
+	</div>
+
+	<p style="text-align: center;"><iframe width="300" height="225" allowfullscreen="true" src="http://v.qq.com/iframe/player.html?vid=s0141ozwbxp&amp;tiny=0&amp;auto=0" class="edui-faked-video"></iframe></p>
+	<img class="full_img" src="<{$IMG_PZFRESH}>/public/app/b2c/statics/images/qming.jpg">
+	<!-- Footer -->
+	<footer data-am-widget="footer" class="am-footer am-footer-default"></footer>
+	<div id="am-footer-mode" class="am-modal am-modal-no-btn am-switch-mode-m am-switch-mode-m-default">
+	  <div class="am-modal-dialog">
+	    <div class="am-modal-hd am-modal-footer-hd">
+	      <a href="javascript:void(0)" data-dismiss="modal" class="am-close am-close-spin"
+	         data-am-modal-close>&times;</a>
+	    </div>
+	    <div class="am-modal-bd">您正在浏览的是
+	      <span class="am-switch-mode-owner">云适配</span>
+	      <span class="am-switch-mode-slogan">为您当前手机订制的移动网站。</span>
+	    </div>
+	  </div>
+	</div>
+	
+	<div id="modalAddToCart" class="am-modal am-modal-alert" tabindex="-1">
+	  <div class="am-modal-dialog">
+	    <div class="am-modal-bd">
+	    </div>
+	    <div class="am-modal-footer">
+	    	<span class="am-modal-btn" data-am-modal-confirm >进入购物车</span>
+	      	<span class="am-modal-btn" data-am-modal-cancel >继续购物</span>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- Navbar -->
+	<{wap_require file="block/footer_bar.html"}>
+	
+	<!--
+	<div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
+	<a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>">
+		<span id="show_cart_pot" style=" height:10px; width:10px; border-radius:10px; background:#FF9900; color:#FFFFFF; text-align:center; line-height:10px; position:absolute; top:10px; right:5px; <{if !$cartCount}> display:none; <{/if}>"></span>
+	</a>
+	</div>
+	-->
+	
+    <{wap_require file="block/footer.html"}>
+</body>
+</html>
+
+<script type="application/javascript">
+	
+function getCoupon(coupons_id){
+	
+	//弹出等待框
+	$('#cart-modal-loading').modal();
+	$.ajax({
+            url:'/wap/getcoupon-wap_index_coupon_ajax.html',
+            data:{coupons_id:coupons_id},
+            method:'POST',
+            dataType:'json',
+            success:function(data){
+				//隐藏等待框
+				$('.am-modal-loading').modal('close');
+                if(data.success){
+					
+					js_alert('js-alert',data.success);
+                }
+                else{
+					js_alert('js-alert',data.error);
+                }
+
+            }
+        });
+	
+}
+
+</script>

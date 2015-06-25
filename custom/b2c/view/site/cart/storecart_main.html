@@ -1,0 +1,71 @@
+<div class="title"><h2 style="float:left; line-height: 60px;"><{t}>已选择<span style="font-weight: bold;color:red;"><{$aCart.items_count}></span>种商品<{/t}></h2></div>
+
+    
+  <!-- 购物车内容 -->
+  <table id="cart_main" class="cart-main" style="border-bottom: none; border-left: none; border-right: none;"  width="100%">
+      <div  class="list_picesd" id="order_prices">
+        <ul>
+           <!--<li class="goodst">
+            <span class="label"><em>产品总数量:</em></span>
+            <span class="ddd"><b><{$aCart['_cookie']['CART_NUMBER']}></b></span>
+          </li>-->
+          <li class="goods">
+            <span class="label"><em>商品金额：</em></span>
+            <span class="price"><b><{$aCart.subtotal_prefilter_after|cur_odr}></b></span>
+          </li>
+          <li class="discount">
+            <span class="label"><em><{t}>优惠金额<{/t}>：</em></span>
+            <span class="price"><b><{$aCart.discount_amount_order|cur_odr}></b></span>
+          </li>
+          <li class="total">
+            <span class="label"><{if $aCart.subtotal_gain_score>0}><i>(订单可得积分<span class="subtotal-integral"><{$aCart.subtotal_gain_score|cur_odr}></span>)</i> <{/if}><em><{t}>总金额：<{/t}></em></span>
+            <span class="price"><b id="totalPrice"><{$aCart.promotion_subtotal|cur_odr}></b></span>
+          </li>
+        </ul>
+      </div>
+
+    <colgroup>
+      <col class="col-1">
+      <col class="col-2">
+      <col class="col-3">
+      <col class="col-4">
+      <col class="col-5">
+      <col class="col-6">
+      <col class="col-7">
+      <col class="col-8">
+      <col class="col-9">
+    </colgroup>
+    <thead>
+      <tr>
+        <th colspan="2"><{t}>商品<{/t}></th>
+        <th><{t}>销售价<{/t}></th>
+        <th><{t}>数量/单位<{/t}></th>
+        <th><{t}>重量(克)<{/t}></th>
+        <th><{t}>优惠金额<{/t}></th>
+        <th><{t}>积分<{/t}></th>
+        <th><{t}>小计<{/t}></th>
+        <th><{t}>操作<{/t}></th>
+      </tr>
+    </thead>
+    <{include file="site/cart/storecart_items.html" app=b2c}>
+    <tfoot>
+      <tr>
+        <{include file="site/cart/storecart_solution.html" app=b2c}>
+        
+        <{include file="site/cart/storecart_total.html" app=b2c}>
+      </tr>
+      <tr>
+        <!-- 按钮 -->
+        <td colspan="5" class="cart-left" style="background: #f0f6ff;">
+          <{button type="button" class="btn-flat action-clean" label=$___b2c="清空购物车"|t:'b2c'}>
+          
+        </td>
+        <td colspan="4" class="cart-right" style="background: #f0f6ff;">
+         
+          <{button type="submit" style="display:none" icon_r="►" class="btn-import btn-huge action-settle" rel="_request" label=$___b2c="下单结算"|t:'b2c'}>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <{if $cart_type eq 'x'}><input type="hidden"  name="type" value="x" /><{/if}>
+

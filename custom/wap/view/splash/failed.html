@@ -1,0 +1,21 @@
+<div class="am-modal am-modal-alert" tabindex="-1" id="alert_failed">
+  <div class="am-modal-dialog">
+  <div class="am-modal-hd"><{$msg}></div>
+    <div class="am-modal-bd">
+      	<{$wait}><{t app='site'}>秒后系统会自动跳转，也可点击确定直接跳转<{/t}>
+    </div>
+    <div class="am-modal-footer jumpurl">
+      <a class="am-modal-btn" onclick="javascript:clearTimeout(SiteSplash);" href="<{if $jumpto=='back'}>javascript:history.back()<{elseif $jumpto=='close'}>javascript:window.close();<{else}><{$jumpto}><{/if}>">确定</a>
+    </div>
+  </div>
+</div>
+
+<{if $wait>0}>
+<script>
+$('#alert_failed').modal();
+function jumpurl(){
+  <{if $jumpto=='back'}>history.back()<{elseif $jumpto=='close'}>window.close();<{else}>location='<{$jumpto}>'<{/if}>;
+}
+var SiteSplash = setTimeout('jumpurl()',<{$wait*1000}>);
+</script>
+<{/if}>

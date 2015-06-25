@@ -1,0 +1,22 @@
+<div class="qfgoods-tab" id="qf_goodstab_<{$widgets_id}>">
+ <{if $setting.title}><div class="hd"><{$setting.title}></div><{/if}>
+  <ul class="clearfix">
+    <{assign var="do" value='1'}>
+    <{foreach from=$data.goodsRows item=row key=gid name=goodsrow}>
+    <li class="top<{$smarty.foreach.goodsrow.iteration}>">
+      <{assign var=pickey  value=$setting.gpic_size|default:'goodsPicS' }>
+      <div class="goodpic" style="width:80px;height:80px;overflow:hidden;background-color:#FFF;margin:0 auto;"><a target="_blank" href="<{$row.goodsLink}>"><img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" width="80" height="80" /></a>
+      </div>
+      <div class="info">
+      	 <h6><a target="_blank" href="<{$row.goodsLink}>"><{$row.goodsName|cut:$setting.maxlength}></a></h6>
+          <{if $setting.showgoodsMarketPrice == 'on' || $setting.showgoodsSalePrice == 'on'}>
+          <p>
+          	<{if $setting.showgoodsSalePrice =='on'}><span class="price1"><{$row.goodsSalePrice|cur}></span><{/if}>
+          	<{if $setting.showgoodsMarketPrice == 'on'}><span class="mktprice1"><{$row.goodsMarketPrice|cur}></span><{/if}>
+          </p>
+          <{/if}>
+      </div>
+     </li>
+    <{/foreach}>
+  </ul>
+</div>
