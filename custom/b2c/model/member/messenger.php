@@ -63,7 +63,6 @@ class b2c_mdl_member_messenger {
         if(!$this->_systmpl){
             $this->_systmpl = $this->app->model('member_systmpl');
         }
-		
 		$content = $this->_systmpl->fetch($tmpl_name,$data);
 		$tile = $this->loadTitle($type,$sendMethod,'',$data);
 
@@ -241,12 +240,16 @@ class b2c_mdl_member_messenger {
             'account-member'=>array('label'=>app::get('b2c')->_('身份验证'),'level'=>11,'sendType'=>'notice','b2c_messenger_msgbox'=>'false','varmap'=>app::get('b2c')->_('验证码').'&nbsp;<{$vcode}>&nbsp;&nbsp;&nbsp;&nbsp;'),
             'account-signup'=>array('label'=>app::get('b2c')->_('手机注册验证短信'),'level'=>11,'sendType'=>'notice','b2c_messenger_msgbox'=>'false','b2c_messenger_email'=>'false','varmap'=>app::get('b2c')->_('验证码').'&nbsp;<{$vcode}>&nbsp;&nbsp;&nbsp;&nbsp;'),
             'account-lostPw'=>array('label'=>app::get('b2c')->_('会员找回密码'),'level'=>11,'sendType'=>'notice','varmap'=>app::get('b2c')->_('用户名').'&nbsp;<{$uname}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('验证码').'&nbsp;<{$vcode}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('姓名').'&nbsp;<{$name}>'),
+
             'orders-shipping'=>array('label'=>app::get('b2c')->_('订单发货时'),'level'=>9,'sendType'=>'fan-out','varmap'=>app::get('b2c')->_('订单号').'&nbsp;<{$order_id}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('实际费用').'&nbsp;<{$delivery.money}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('配送方式').'&nbsp;<{$delivery.delivery}><br>'.app::get('b2c')->_('物流公司').'&nbsp;<{$ship_corp}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('物流单号').'&nbsp;<{$ship_billno}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('收货人姓名').'&nbsp;<{$delivery.ship_name}><br>'.app::get('b2c')->_('收货人地址').'&nbsp;<{$delivery.ship_addr}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('收货人邮编').'&nbsp;<{$delivery.ship_zip}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('收货人电话').'&nbsp;<{$delivery.ship_tel}><br>'.app::get('b2c')->_('收货人手机').'&nbsp;<{$delivery.ship_mobile}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('收货人').'Email&nbsp;<{$delivery.ship_email}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('操作者').'&nbsp;<{$delivery.op_name}><br>'.app::get('b2c')->_('备注').'&nbsp;<{$delivery.memo}>'),
+
             'orders-create'=>array('label'=>app::get('b2c')->_('订单创建时'),'level'=>9,'b2c_messenger_sms'=>'false','varmap'=>app::get('b2c')->_('订单号').'&nbsp;<{$order_id}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('总价').'&nbsp;<{$total_amount}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('配送方式').'&nbsp;<{$shipping_id}><br>'.app::get('b2c')->_('收货人手机').'&nbsp;<{$ship_mobile}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('收货人电话').'&nbsp;<{$ship_tel}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('收货人地址').'&nbsp;<{$ship_addr}><Br>'.app::get('b2c')->_('收货人').'Email&nbsp;<{$ship_email}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('收货人邮编').'&nbsp;<{$ship_zip}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('收货人姓名').'&nbsp;<{$ship_name}>'),
             'orders-payed'=>array('label'=>app::get('b2c')->_('订单付款时'),'level'=>9,'b2c_messenger_sms'=>'false','varmap'=>app::get('b2c')->_('订单号').'&nbsp;<{$order_id}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('付款人').'&nbsp;<{$pay_account}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('付款时间').'&nbsp;<{$pay_time}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('付款金额').'&nbsp;<{$money}>'),
             'orders-returned'=>array('label'=>app::get('b2c')->_('订单退货时'),'level'=>9,'sendType'=>'notice','varmap'=>app::get('b2c')->_('订单号').'&nbsp;<{$order_id}>'),
             'orders-refund'=>array('label'=>app::get('b2c')->_('订单退款时'),'level'=>9,'sendType'=>'notice','varmap'=>app::get('b2c')->_('订单号').'&nbsp;<{$order_id}>'),
+
             'goods-notify'=>array('label'=>app::get('b2c')->_('商品到货通知'),'level'=>6,'sendType'=>'fan-out','varmap'=>app::get('b2c')->_('商品名称').'&nbsp;<{$goods_name}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('会员名称').'&nbsp;<{$username}>'),
+
             'goods-recommend'=>array('label'=>app::get('b2c')->_('商品推荐'),'level'=>9,'sendType'=>'notice','b2c_messenger_sms'=>'false','b2c_messenger_msgbox'=>'false','varmap'=>app::get('b2c')->_('商品名称').'&nbsp;<{$goods_name}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('商品简介').'&nbsp;<{$goods_brief}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('商品链接').'&nbsp;<{$goods_url}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('用户名').'&nbsp;<{$uname}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('内容').'&nbsp;<{$content}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('网店名称').'&nbsp;<{$shopname}>'),
             /*             'goods-replay'=>array('label'=>'商品评论回复','level'=>9), todo */
             'account-register'=>array('label'=>app::get('b2c')->_('会员注册时'),'b2c_messenger_sms'=>'false','level'=>9,'varmap'=>app::get('b2c')->_('用户名').'&nbsp;<{$uname}>&nbsp;&nbsp;&nbsp;&nbsp;email&nbsp;<{$email}>&nbsp;&nbsp;&nbsp;&nbsp;'.app::get('b2c')->_('密码').'&nbsp;<{$passwd}>'),
@@ -257,6 +260,16 @@ class b2c_mdl_member_messenger {
             /*             'comment-new'=>array('label'=>'订单生成通知商家','level'=>9), */
             'orders-cancel'=>array('label'=>app::get('b2c')->_('订单作废'),'level'=>9,'sendType'=>'notice','varmap'=>app::get('b2c')->_('订单号').'&nbsp;<{$order_id}>'),
             'coupon-send'=>array('label'=>app::get('b2c')->_('发送优惠卷'),'level'=>9,'sendType'=>'fan-out','varmap'=>app::get('b2c')->_('优惠卷名').'&nbsp;<{$cpns_name}>'),
+
+
+            'deposit-change'=>array('label'=>app::get('b2c')->_('预存款变化'),'level'=>9,'sendType'=>'notice','varmap'=>
+                app::get('b2c')->_('账户尾号后四位').'&nbsp;<{$passport_id}>'.
+                app::get('b2c')->_('交易时间（到分）').'&nbsp;<{$time}>'.
+                app::get('b2c')->_('支出').'&nbsp;<{$cost}>'.
+                app::get('b2c')->_('预存款余额').'&nbsp;<{$deposit}>'
+            ),
+
+
         );
         foreach(kernel::servicelist('firevent_type') as $service){
             if(is_object($service)){
@@ -346,5 +359,3 @@ class b2c_mdl_member_messenger {
         return $aData[$msg];
     }
 }
-
-?>
