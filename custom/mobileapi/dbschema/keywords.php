@@ -25,13 +25,34 @@ $db ['keywords'] = array (
 						'in_list' => true,
 						'default_in_list' => true 
 				),
+				'kw_url' => array (
+						'type' => 'varchar(250)',
+						'label' => app::get ( 'b2c' )->_ ( '链接' ),
+						'width' => 300,
+						'is_title' => true,
+						'editable' => true,
+						'in_list' => true,
+						'default_in_list' => true 
+				),
+				'disabled' => array (
+						'type' => 'bool',
+						'default' => 'false',
+						'comment' => app::get ( 'b2c' )->_ ( '失效' ),
+						'editable' => false,
+						'label' => app::get ( 'b2c' )->_ ( '失效' ),
+						'width' => 60,
+						'in_list' => true,
+						'deny_export' => true,
+						'default_in_list' => true 
+				),
 				'ordernum' => array (
 						'type' => 'number',
 						'label' => app::get ( 'b2c' )->_ ( '排序' ),
 						'width' => 150,
 						'comment' => app::get ( 'b2c' )->_ ( '排序' ),
 						'editable' => true,
-						'in_list' => true 
+						'in_list' => true,
+						'default_in_list' => true 
 				),
 		),
 		'index' => array (

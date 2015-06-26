@@ -74,7 +74,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         $this->pagedata['goodsData'] = $goodsData;
         $this->pagedata['cat_id'] = $cat_id;
         $this->pagedata['scontent'] = $_GET['scontent'];
-        
+
         $objCat = app::get('b2c')->model('goods_cat');
         $this->pagedata['cur_cat'] = empty($cat_id) ? (empty($_GET['scontent']) ? array('cat_name'=>'全部商品') : array('cat_name'=>  str_replace('n,', '',$_GET['scontent']))) :$objCat->getRow('*',array('cat_id'=>$cat_id));
 
@@ -206,6 +206,8 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     	
 //     	print_r($goodsData);exit;
     	$this->title = app::get('b2c')->_('热门商品');
+		
+    	$this->pagedata['keywords'] = kernel::single('mobileapi_rpc_keywords')->get_itmes();
     	$this->pagedata['goodsData'] = $goodsData_new;
     	
     	$this->page('wap/gallery/products_hot.html');
@@ -531,12 +533,44 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     }
     
     /*
-     * 商品详情页 滑动分页
+     * 商品列表页 滑动分页
     * */
     public function gallery_scroll_goods(){
     	$tmp_params = $this->filter_decode($_GET);
+		
+	
     	$params = $tmp_params['filter'];
-    	$orderby = empty($tmp_params['orderby']) ? 'd_order desc' : $tmp_params['orderby'];
+		
+		//----------------------------------------------------------
+		//sortid:	1=销量,2=价格,3=评价,4=上架
+		//sortby:	1=asc,2=desc
+		
+    	$sortid 	= empty($params['sortid'])? '4':$params['sortid'];
+    	$sortby 	= empty($params['sortby'])? '2':$params['sortby'];
+		$orderby 	= '';
+		if($sortid=='1'){
+			$orderby = 'buy_count';
+			
+		}else if($sortid=='2'){ 
+			$orderby = 'price';
+			
+		}else if($sortid=='3'){ 
+			$orderby = 'comments_count';
+			
+		}else{ 
+			$sortid = '4';
+			//$orderby = 'uptime';
+			$orderby = 'd_order';
+			
+		}
+		
+		if($sortby != '1'){
+			$sortby = '2';
+			$orderby .= ' desc';
+		}
+
+		//----------------------------------------------------------
+		
 //     	$showtype = $tmp_params['showtype'];
     	$showtype = 'gallery';
     	if($tmp_params['limit']){
