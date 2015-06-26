@@ -57,7 +57,7 @@ position:absolute;right:5px;top:5px;
 .simplesearch-msg{color:#999;text-align:center;margin:10px 0px 10px 0px;font-size:1.25rem;}
 .simplesearch-title{color:#359fb7;}
 .simplesearch-list{margin-top:10px;}
-.simplesearch-list a{float:left;font-size:1rem;height:2rem;line-height:2rem;display:inline-block;border:1px solid #aaa;border-radius:0.5rem;color:#999;
+.simplesearch-list a{float:left;font-size:1rem;line-height:2rem;display:inline-block;border:1px solid #aaa;border-radius:0.5rem;color:#999;
 background-color:#fff;margin-right:10px;margin-bottom:10px;padding-left:10px;padding-right:10px;
 }
 
