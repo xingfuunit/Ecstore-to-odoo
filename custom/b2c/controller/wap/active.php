@@ -114,7 +114,9 @@ class b2c_ctl_wap_active extends wap_frontpage{
     	foreach($alist_date as $k => &$v){
     		$alist_date[$k]['is_start'] = 0;  
     		if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
-    			$alist_date[$k]['is_start'] = 1;
+    			$alist_date[$k]['is_start'] = '1';
+    		}elseif(time() < strtotime($v['start_time'])){
+    			$alist_date[$k]['is_start'] = '2';
     		}
     		//格式转换
     		$v['start_time'] = date('Y.m.d H:i',strtotime($v['start_time']));
@@ -136,7 +138,9 @@ class b2c_ctl_wap_active extends wap_frontpage{
     	foreach($alist_date as $k => &$v){
     		$alist_date[$k]['is_start'] = 0;
     		if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
-    			$alist_date[$k]['is_start'] = 1;
+    			$alist_date[$k]['is_start'] = '1';
+    		}elseif(time() < strtotime($v['start_time'])){
+    			$alist_date[$k]['is_start'] = '2';
     		}
     		//格式转换
     		$v['start_time'] = date('Y.m.d H:i',strtotime($v['start_time']));
@@ -162,11 +166,19 @@ class b2c_ctl_wap_active extends wap_frontpage{
     				'alt'=>'母亲节—不赚钱·只为妈妈美丽健康',
     				'image_name'=>'mqj.jpg',
     				'active_url'=>'javascirpt:void(0);'
-    		)
+    		),
+    		2=>array(
+    				'start_time'=>'2015-07-01 00:00:00',
+    				'end_time'=>'2015-07-01 23:59:59',
+    				'alt'=>'周三会员日-全场快消品8.8折',
+    				'image_name'=>'jx.jpg',
+    				'active_url'=>'/wap/active.html?name=vipday'
+    		),
     );
     
     //会员日
     var $member_date = array(
+    		
     		2=>array(
     				'start_time'=>'2015-05-13 00:00:00',
     				'end_time'=>'2015-05-13 23:59:59',
@@ -187,6 +199,13 @@ class b2c_ctl_wap_active extends wap_frontpage{
     				'alt'=>'周三会员日-全场水果8.8折',
     				'image_name'=>'sg.jpg',
     				'active_url'=>'javascirpt:void(0);'
+    		),
+    		5=>array(
+    				'start_time'=>'2015-07-01 00:00:00',
+    				'end_time'=>'2015-07-01 23:59:59',
+    				'alt'=>'周三会员日-全场快消品8.8折',
+    				'image_name'=>'jx.jpg',
+    				'active_url'=>'/wap/active.html?name=vipday'
     		),
     
     );
