@@ -1,10 +1,11 @@
 <{if $goodsData}>
 	<{foreach from=$goodsData key=key item=row}>
 		<div class="am-gallery-item item <{if !$row.is_can_store }>itemEnd<{/if}>">
+		<{if($row.wap_hot)}>
 			<div class="itemHot">
 				热销<div class="itemHotBr"></div>
 			</div>
-
+		<{/if}>
 			<div class="pic">
 				<a href="<{link app=b2c ctl=wap_product arg0=$row.products.product_id}>">
 					<img src="<{$row.wx_image_id|storager:'s'}>">
@@ -16,15 +17,12 @@
 			</div>
 			<div class="desc">
 				<div class="tit"><{$row.name|cut:'90'}></div>
+				<div class="tit"><{$row.brief}></div>
+				
 				<div class="lbl">
-					<div class="lblCoupon">满100减10</div>
+					<div class="lblGive"><{$row.products._discount}>折</div>
 				</div>
-				<div class="lbl">
-					<div class="lblGive">赠</div>
-				</div>
-				<div class="lbl">
-					<div class="lblPromotion">会员促销</div>
-				</div>
+				
 				
 				
 				

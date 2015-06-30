@@ -821,7 +821,6 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             }
         }
         $goodsData = $this->get_goods_point($gids,$goodsData);
-
         $this->_pagetotal = $pagetotal > $max_pagetotal ? $max_pagetotal : $pagetotal;
         $this->_total = $total;
         return $goodsData;
@@ -856,6 +855,8 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             if($show_mark_price =='true'){
                 if($product_row['mktprice'] == '' || $product_row['mktprice'] == null)
                     $goodsData[$gk]['products']['mktprice'] = $productModel->getRealMkt($product_row['price']);
+               		$_discount = ($goodsData[$gk]['products']['price']/$goodsData[$gk]['products']['mktprice'])*10;
+               		$goodsData[$gk]['products']['_discount'] = number_format($_discount,1);
             }
 
             //库存
