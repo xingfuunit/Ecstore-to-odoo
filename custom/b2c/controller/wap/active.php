@@ -109,16 +109,21 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function alist(){
     	
     	//倒序 显示
-    	$alist_date = $this->active_date;
-    	krsort($alist_date);
+    	$alist_date = $this->app->model('tehui')->getlist('*',array(),0,-1,' start_time DESC ');
     	foreach($alist_date as $k => &$v){
     		$alist_date[$k]['is_start'] = 0;  
-    		if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
-    			$alist_date[$k]['is_start'] = 1;
+    	if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
+    			$alist_date[$k]['is_start'] = '1';
+    		}elseif(time() <= strtotime($v['start_time'])){
+    			$alist_date[$k]['is_start'] = '2';
+    		}else{
+    			$alist_date[$k]['is_start'] = 0;
     		}
     		//格式转换
     		$v['start_time'] = date('Y.m.d H:i',strtotime($v['start_time']));
     		$v['end_time'] = date('Y.m.d H:i',strtotime($v['end_time']));
+    		
+    		$v['img_url'] = base_storager::image_path($v['img_url']);
     	}
     	$this->pagedata['alist_date'] = $alist_date; 
     	$this->pagedata['title'] = "品珍活动";
@@ -151,21 +156,4 @@ class b2c_ctl_wap_active extends wap_frontpage{
     	$this->page('wap/active/hdday.html');
     }
     
-    //活动
-    var $active_date = array(
-    		0=>array(
-    				'start_time'=>'2015-04-27 00:00:00',
-    				'end_time'=>'2015-05-5 23:59:59',
-    				'alt'=>'品珍私享奢华零距离·和牛',
-    				'image_name'=>'99.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		),
-    		1=>array(
-    				'start_time'=>'2015-05-10 00:00:00',
-    				'end_time'=>'2015-05-10 23:59:59',
-    				'alt'=>'母亲节—不赚钱·只为妈妈美丽健康',
-    				'image_name'=>'mqj.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		)
-    );
 }

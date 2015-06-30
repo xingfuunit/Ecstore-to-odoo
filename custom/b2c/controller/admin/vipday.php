@@ -35,6 +35,17 @@ class b2c_ctl_admin_vipday extends desktop_controller {
             ));
 		
 	}
+	function tehui(){
+		//活动特惠
+		$this->finder('b2c_mdl_tehui',array(
+				'title'=>app::get('b2c')->_('活动特惠管理后台'),
+				'actions'=>array(
+						array('label'=>app::get('b2c')->_('添加活动'),'icon'=>'add.gif','href'=>'index.php?app=b2c&ctl=admin_vipday&act=tcreate','target'=>'_blank'),
+	
+				)
+		));
+	
+	}
 	function create(){
 		$this->singlepage('admin/vipday/detail.html');
 	}
@@ -71,4 +82,37 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 		$this->singlepage('admin/vipday/detail.html');
 	}
 	
+	function tcreate(){
+		$this->singlepage('admin/tehui/detail.html');
+	}
+	function tsave(){
+		$this->begin('');
+		$objAd = $this->app->model('tehui');
+		$_time = $_POST['start_time'];
+		$_time = strtotime("$_time");
+		$_time = date('Y-m-d',$_time);
+		$_POST['start_time'] = $_time . ' 00:00:00';
+		$_POST['end_time'] = $_time . ' 23:59:59';
+		if ($objAd->save($_POST)) {
+			//$vipday_name = $_POST ['id'];
+			//$aData = kernel::database ()->select ( "update  sdb_b2c_tehui set current='false'" );
+			//$aData = kernel::database ()->select ( "update  sdb_b2c_tehui set current='true' where id='{$vipday_name}'" );
+			$this->end(true,app::get('b2c')->_('保存成功'));
+		} else {
+			$this->end(true,app::get('b2c')->_('保存失败'));
+		}
+			
+	}
+	function tedit($ad_id){
+		header("Cache-Control:no-store");
+			
+		$this->path[] = array('text'=>app::get('b2c')->_('活动特惠管理编辑'));
+		$objAd = $this->app->model('tehui');
+		$adInfo = $objAd->dump($ad_id);
+		$_time = strtotime("{$adInfo['start_time']}");
+		$adInfo['_time'] = date('Y-m-d',$_time);
+		$this->pagedata['adInfo'] = $adInfo;
+	
+		$this->singlepage('admin/tehui/detail.html');
+	}
 }
