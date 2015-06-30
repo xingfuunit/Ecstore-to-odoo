@@ -50,10 +50,8 @@
 	
 <div class="gallery" id="gallery">
 	<!-- List -->
-	<div class="glist goodslist" id="goodslist">
-		<div class="roll_loding" style="text-align:center"><i class="am-icon-spinner am-icon-spin am-icon-lg"></i></div>
-	</div>
-	
+	<div class="glist goodslist" id="goodslist"></div>
+	<div class="goods_loading" id="goods_loading"><i class="am-icon-spinner am-icon-spin am-icon-lg"></i></div>
 	<div class="return_div"><label><i class="show_cur_page" id="show_cur_page">1</i>/<i id="page_total"><{$pagetotal}></i></label></div>
 	
 	<div class="page-rscount">
@@ -109,11 +107,12 @@ $("#js_play").click(function () {
 <!-- Navbar -->
 <script type="text/javascript">
 var par_pagetotal	= <{$pagetotal}>;
-var par_page		= 1;
+var par_page		= 0;
 var par_cat_id 		= '<{$cat_id}>';
 var par_scontent 	= '<{$scontent}>';
 var par_sortid		= '4';		//1=销量,2=价格,3=评价,4=上架
 var par_sortby		= '2';		//1=asc,2=desc
+var par_loading		= false;
 /*
 	item selected
 	item selected sort-desc
@@ -121,7 +120,23 @@ var par_sortby		= '2';		//1=asc,2=desc
 
 $(function (){
 	var $gallery = $('#gallery'),
-		$gallerysort = $('#gallery-sort');
+		$gallerysort = $('#gallery-sort'),
+		$goodslist = $('#goodslist'),
+		$loading = $('#goods_loading');
+		
+	//初始化数据
+	get_next_page();
+	
+	if(par_pagetotal>1){
+		$(window).on('scroll.goodslist', function(){
+				var tt = $(window).scrollTop()+$(window).height();
+				var hh = $(document).height()-200;
+				if (tt>hh) {
+					get_next_page();
+				};
+		});
+	};
+
 	
 	//排序初始化
 	var $itemsort  = $gallerysort.find('.item'+par_sortid);
@@ -151,35 +166,20 @@ $(function (){
 			$item.addClass('sort-desc');
 		};
 		
-		$gallery.find('.glist').attr('loaded', '0').html('<div class="roll_loding" style="text-align:center"><i class="am-icon-spinner am-icon-spin am-icon-lg"></i></div>');
 		get_next_page();
 	});
 
-	$('#my-slider').flexslider({
-		slideshow : false,
-		touch : true,
-		controlNav : false,
-		directionNav : true,
 
-		start : function (slider) {
-			//console.log('before');
-			par_page = slider.currentSlide + 1;
-			get_next_page();
-
-		},
-		after : function (slider) {
-			//console.log('after');
-			par_page = slider.currentSlide + 1;
-			get_next_page();
-		}
-	});
-  
 
 	function get_next_page() {
-		var roll_list = $(".am-slides").children("li");
-
-		$("#show_cur_page").html(par_page);
+		if(par_loading || par_page>=par_pagetotal){
+			return;
+		};
+		par_loading = true;
 		
+		$loading.show();
+		
+
 		var url = '<{link app=b2c ctl=wap_gallery act=gallery_scroll_goods}>';
 		
 		//商品分类搜索
@@ -194,18 +194,34 @@ $(function (){
 		
 		var params = ['showtype=all', 'page=' + par_page, cat_id, scontent, sortid, sortby].join('&');
 
-		$.get(url, params, function (rs) {
-			if (rs) {
-				var $obj = $gallery.find('.glist').eq(rs.page);
-
-				//没有加载过的才加载
-				if ($obj.attr('loaded') != '1') {
-					$obj.attr('loaded', '1');
-					$obj.html(rs.html);
+		$.ajax({
+			type: 'get',
+			url : url,
+			data: params,
+			cache:false,
+			dataType:'json',
+			success: function (rs) {
+				if (rs) {
+					par_page++;
+					$("#show_cur_page").html(par_page);
+					
+					if(par_page>=par_pagetotal){
+						$(window).off('scroll.goodslist');
+					};
+					
+					$goodslist.append(rs.html);
 				};
-			};
-
-		}, 'json');
+				$loading.hide();
+				par_loading = false;
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				//console.log('error='+errorThrown);
+				//alert('网络不通');
+				
+				$loading.hide();
+				par_loading = false;
+			}
+		});
 	};
 });
 

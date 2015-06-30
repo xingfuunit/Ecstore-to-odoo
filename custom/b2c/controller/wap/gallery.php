@@ -579,7 +579,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     		$pagelimit=$tmp_params['limit'];
     	}
     	$page = $tmp_params['page'] ? $tmp_params['page'] : 1;
-    	$params['limit'] = '6';
+    	$params['limit'] = '5';
     	
     	$goodsData = $this->get_goods($params,$page,$orderby);
     	$this->pagedata['goodsData'] = $goodsData;
@@ -743,7 +743,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
 
         $page = $page ? $page : 1;
        // $pageLimit = $this->app->getConf('gallery.display.listnum');
-        $pageLimit = ($filter['limit'] ? $filter['limit'] : 6);
+        $pageLimit = ($filter['limit'] ? $filter['limit'] : 5);
        // $pageLimit=1;
         $this->pagedata['pageLimit'] = $pageLimit;
         $orderby = empty($orderby) ? 'd_order desc,goods_id desc' : $orderby;

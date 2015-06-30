@@ -62,6 +62,10 @@ background-color:#fff;margin-right:10px;margin-bottom:10px;padding-left:10px;pad
 }
 
 /*
+ * goods_loading
+ * */
+.goods_loading{position:fixed;left:50%;top:50%;margin-left:-20px;margin-left:-20px;z-index:200;}
+/*
  * gallery
  * */
 .gallery-sort{border-bottom:1px solid #cdcdcd;border-left:1px solid #cdcdcd;overflow:hidden;}
