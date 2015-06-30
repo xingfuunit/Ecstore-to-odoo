@@ -16,7 +16,11 @@
 				</a>
 			</div>
 			<div class="desc">
-				<div class="tit"><{$row.name|cut:'90'}></div>
+				<div class="tit">
+					<a href="<{link app=b2c ctl=wap_product arg0=$row.products.product_id}>">
+					<{$row.name|cut:'90'}>
+					</a>
+				</div>
 				<div class="tit"><{$row.brief}></div>
 				
 				<div class="lbl">

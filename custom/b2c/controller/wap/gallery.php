@@ -119,7 +119,6 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     	for ($x=0; $x<$pageNum; $x++) {
     		$arr[$x] = array();
     	}
-    	
     	$this->pagedata['pagetotal_arr'] = $arr;
     }
     
@@ -137,8 +136,9 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
    					'marketable'=>"true",
    					'is_buildexcerpts'=>"true",
     			);
-    	
-    	$goodsData = $goodsModel->getList('*',$filter,0,12);
+	
+    	//$goodsData = $goodsModel->getList('*',$filter,0,12);
+    	$goodsData = $goodsModel->getList('*',$filter,0,10);
     	foreach($goodsData as $key=>$goods_row){
     		if(in_array($goods_row['goods_id'],$gfav)){
     			$goodsData[$key]['is_fav'] = 'true';
@@ -181,6 +181,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     		
     	}
     	
+		/*
     	//分组 2个商品为一页
     	$page = 0;
     	$goodsData_new = array();
@@ -197,6 +198,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     			
     		}
     	}
+		*/
     	
     	//购物车 是否有商品
     	$oCart = $this->app->model("cart_objects");
@@ -208,8 +210,8 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     	$this->title = app::get('b2c')->_('热门商品');
 		
     	$this->pagedata['keywords'] = kernel::single('mobileapi_rpc_keywords')->get_itmes();
-    	$this->pagedata['goodsData'] = $goodsData_new;
-    	
+    	//$this->pagedata['goodsData'] = $goodsData_new;
+		$this->pagedata['goodsData'] = $goodsData;
     	$this->page('wap/gallery/products_hot.html');
     }
     

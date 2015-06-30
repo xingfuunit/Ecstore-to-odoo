@@ -27,16 +27,11 @@
 	<{if $goodsData}>
    <ul class="am-slides hotlist">
 	
-	<{foreach from=$goodsData key=k item=goods name="goods"}>
-    	<li>
-	    	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
-	    		<{foreach from=$goods key=k2 item=goods2 name="goods2"}>
-				<{if $goods2}>
-				 <li style="width:100%;">
+	<{foreach from=$goodsData key=k item=goods2 name="goods2"}>
 				    <div class="am-gallery-item item <{if !$goods2.is_can_store }>itemEnd<{/if}>">
 						<div class="itemHot">
 							<div class="itemHotBg"></div>
-							<div class="itemRank"> <{(($smarty.foreach.goods.iteration-1) * 4) + $smarty.foreach.goods2.iteration}></div>
+							<div class="itemRank"> <{$smarty.foreach.goods2.iteration}></div>
 							<div class="itemSales">销量：<{$goods2.wap_hot_num}>份</div>
 						</div>
 
@@ -71,16 +66,10 @@
 							</form>
 						</div>
 				    </div>
-					
-				  </li>
-				  <{/if}>
-				  <{/foreach}>
-			</ul>
-		</li>
 	<{/foreach}>
 	</ul>
 	<{else}>
-	<div style="text-align:center">没有相应商品..</div>
+	<div style="text-align:center">亲，没有更多喔！</div>
 	<{/if}>
 </div>
 

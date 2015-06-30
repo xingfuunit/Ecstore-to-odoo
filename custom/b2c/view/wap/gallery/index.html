@@ -50,18 +50,10 @@
 	
 <div class="gallery" id="gallery">
 	<!-- List -->
-	<div data-am-widget="slider" class="am-slider am-slider-default" data-am-slider='{}' id="my-slider">
-		  <ul class="am-slides">
-			<{foreach from=$pagetotal_arr item=pa key=key}>
-			<li>
-				<div class="glist goodslist">
-					<div class="roll_loding" style="text-align:center"><i class="am-icon-spinner am-icon-spin am-icon-lg"></i></div>
-				</div>
-			</li>
-			<{/foreach}>
-		  </ul>
+	<div class="glist goodslist" id="goodslist">
+		<div class="roll_loding" style="text-align:center"><i class="am-icon-spinner am-icon-spin am-icon-lg"></i></div>
 	</div>
-
+	
 	<div class="return_div"><label><i class="show_cur_page" id="show_cur_page">1</i>/<i id="page_total"><{$pagetotal}></i></label></div>
 	
 	<div class="page-rscount">
@@ -116,6 +108,7 @@ $("#js_play").click(function () {
 
 <!-- Navbar -->
 <script type="text/javascript">
+var par_pagetotal	= <{$pagetotal}>;
 var par_page		= 1;
 var par_cat_id 		= '<{$cat_id}>';
 var par_scontent 	= '<{$scontent}>';
