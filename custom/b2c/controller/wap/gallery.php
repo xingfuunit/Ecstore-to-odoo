@@ -107,8 +107,13 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         $arr = array();
         $aData = $oCart->setCartNum( $arr );
         $this->pagedata['cartCount'] = $aData['CART_COUNT'];
-        
-        $this->page('wap/gallery/index.html');
+        if(!$goodsData && $_GET['scontent']){
+        	$url = '/wap/simplesearch.html?find=no';
+        	$this->_response->set_redirect($url)->send_headers();
+        }
+        else{
+        	$this->page('wap/gallery/index.html');
+        }
     }
     
     /*
