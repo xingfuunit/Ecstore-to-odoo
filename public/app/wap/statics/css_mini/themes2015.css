@@ -16,7 +16,7 @@ padding-left:10px;padding-right:10px;margin-top:10px;margin-bottom:10px;}
 .tags-top a{color:#359fb7;}
 
 .hotlist{}
-.hotlist .item{position:relative;text-align:left;}
+.hotlist .item{position:relative;text-align:left;margin:10px;}
 .hotlist .itemHot{height:2rem;position:absolute;top:0px;left:0px;color:#fff;font-size:1rem;z-index:1;}
 .hotlist .itemHotBg{display:none;height:2rem;background-color:#000;opacity:0.6;}
 .hotlist .itemRank{background-color:#e75365;width:3rem;height:2rem;text-align:center;font-size:1.5rem;
@@ -85,7 +85,7 @@ border-bottom:3px solid #fff;}
 .gallery .am-slider-default{margin:0;}
 
 
-.goodslist .item{position:relative;text-align:left;margin:10px;border:1px solid #ddd;height:150px;}
+.goodslist .item{position:relative;text-align:left;margin:10px;border:1px solid #ddd;height:152px;}
 .goodslist .itemHot{background-color:#e75365;color:#fff;font-size:1.5rem;line-height:2rem;width:3.4rem;text-align:center;position:absolute;top:0px;left:0px;z-index:3;}
 .goodslist .itemHotBr{width:0;height:0px;position:absolute;top:2rem;left:0px;
 border:1.7rem solid transparent;
@@ -96,7 +96,7 @@ border-top:1rem solid #e75365;
 .goodslist .itemSales{padding-left:3.2rem;padding-right:5px;height:2rem;line-height:2rem;display:block;background:RGBA(0,0,0,0.6);}
 
 .goodslist .desc{position:relative;margin-left:160px;height:100%;}
-.goodslist .tit{color:#999;font-size:1.3rem;line-height:1.5rem;padding-top:10px;}
+.goodslist .tit{color:#999;font-size:1.3rem;line-height:1.5rem;padding-top:10px;padding-right:5px;}
 .goodslist .txt{position:absolute;bottom:0px;left:0px;width:100%;}
 .goodslist .newPrice{color:#e75365;font-size:1.5rem;}
 .goodslist .oldPrice{color:#aaa;font-size:1rem;text-decoration:line-through;}

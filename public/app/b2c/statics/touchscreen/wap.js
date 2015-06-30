@@ -192,7 +192,7 @@ var touchscreen = {
 			window.mySwipe = new Swipe(slider, {
 				startSlide:0,
 				speed:1000,
-				auto:2000,
+				auto:10000,
 				callback: function(index, elem){
 					$sliderPager.find('.active').removeClass('active');
 					$sliderPager.find('a').eq(index).addClass('active');
