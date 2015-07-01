@@ -166,11 +166,15 @@ $(function (){
 			$item.addClass('sort-desc');
 		};
 		
-		get_next_page();
+		clear_data();
 	});
 
-
-
+	function clear_data() {
+		par_page = 0;
+		$goodslist.html('');
+		get_next_page();
+	};
+	
 	function get_next_page() {
 		if(par_loading || par_page>=par_pagetotal){
 			return;
@@ -204,10 +208,7 @@ $(function (){
 				if (rs) {
 					par_page++;
 					$("#show_cur_page").html(par_page);
-					
-					if(par_page>=par_pagetotal){
-						$(window).off('scroll.goodslist');
-					};
+	
 					
 					$goodslist.append(rs.html);
 				};

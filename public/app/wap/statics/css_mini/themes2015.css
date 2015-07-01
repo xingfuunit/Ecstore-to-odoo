@@ -101,6 +101,7 @@ border-top:1rem solid #e75365;
 
 .goodslist .desc{position:relative;margin-left:160px;height:100%;}
 .goodslist .tit{color:#999;font-size:1.3rem;line-height:1.5rem;padding-top:10px;padding-right:5px;}
+.goodslist .tit a{color:#999;}
 .goodslist .txt{position:absolute;bottom:0px;left:0px;width:100%;}
 .goodslist .newPrice{color:#e75365;font-size:1.5rem;}
 .goodslist .oldPrice{color:#aaa;font-size:1rem;text-decoration:line-through;}
