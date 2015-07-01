@@ -46,7 +46,7 @@ $db['tehui']=array (
   				'in_list' => true,
   				'default_in_list' => true,
   		),
-  		'current' =>
+  	/* 	'current' =>
   		array (
       'type' => 'bool',
       'required' => true,
@@ -57,7 +57,7 @@ $db['tehui']=array (
       'filterdefault' => true,
       'in_list' => true,
       'default_in_list' => true,
-    ),
+    ), */
     'start_time'=>
     array(
     'type' => 'varchar(100)',
