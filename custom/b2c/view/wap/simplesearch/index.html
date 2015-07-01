@@ -30,7 +30,7 @@
 		</div>
 		<div class="simplesearch-list">
 			<{foreach from=$keywords item=k}>
-				<a href="<{$k.url}>"><{$k.name}></a>
+				<{if($k.name)}><a href="<{$k.url}>"><{$k.name}></a><{/if}>
 			<{/foreach}>
 			<div class="fc"></div>
 		</div>

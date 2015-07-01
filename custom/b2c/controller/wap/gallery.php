@@ -74,7 +74,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         $this->pagedata['goodsData'] = $goodsData;
         $this->pagedata['cat_id'] = $cat_id;
         $this->pagedata['scontent'] = $_GET['scontent'];
-error_log(print_r($goodsData,1),3,'/tmp/sam_log.log');
+
         $objCat = app::get('b2c')->model('goods_cat');
         $this->pagedata['cur_cat'] = empty($cat_id) ? (empty($_GET['scontent']) ? array('cat_name'=>'全部商品') : array('cat_name'=>  str_replace('n,', '',$_GET['scontent']))) :$objCat->getRow('*',array('cat_id'=>$cat_id));
 
