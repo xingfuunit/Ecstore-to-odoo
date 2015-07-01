@@ -16,8 +16,26 @@ class b2c_ctl_wap_simplesearch extends wap_frontpage{
 			$find = 'no';
 		}
 		
+		$_keywords = kernel::single('mobileapi_rpc_keywords')->get_itmes();
+		
 		$this->pagedata['find'] = $find;
-		$this->pagedata['keywords'] = kernel::single('mobileapi_rpc_keywords')->get_itmes();
+		
+		$_s = $_COOKIE['pz_search_history'];
+		$_s = $_s?json_decode($_COOKIE['pz_search_history']):'';
+
+		$i = count($_keywords);
+		
+		foreach($_s as $k => $v){
+			$_keywords[++$i]['name'] = $v;
+			$_keywords[$i]['url'] = '/wap/gallery.html?scontent=n,' . urlencode($v);
+		}
+		
+		$keywords = array();
+		foreach($_keywords as $v){
+			$keywords[$v['name']] = $v;
+		}
+		
+		$this->pagedata['keywords'] = $keywords;
 		$this->page('wap/simplesearch/index.html');
     }
 
