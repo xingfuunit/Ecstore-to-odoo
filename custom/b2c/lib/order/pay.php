@@ -493,8 +493,8 @@ class b2c_order_pay extends b2c_api_rpc_request
             
             		$weixin_message ="尊敬的客户，您的品珍钱包(预存款) 于{$data['time']}发生支付交易，支出人民币{$data['cost']}元，当前账户余额{$data['deposit']}元。【品珍鲜活】";
             		$bind = app::get('weixin')->model('bind')->getRow('id',array(
-            				//'eid'=>'573174',//线上公众号eid
-            				'eid'=>'247644',//release公众号eid
+            				'eid'=>'573174',//线上公众号eid
+            				//'eid'=>'247644',//release公众号eid
             				'status'=>'active'
             		)
             		);
@@ -502,8 +502,8 @@ class b2c_order_pay extends b2c_api_rpc_request
             		$weixin_push_post_url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accesstoken";
             		$weixin_push_post_data = array(
             				"touser"=>$openid,
-            				//"template_id"=>"rbz5kC4fZ2hJluVZXl7TJmDe8Cm_JodGaDdPBNjN9s0",//线上模版ID
-            				"template_id"=>"5C1fzNzlIqH4yjinmta-6S4nM19ujGN9EoWMPVh-lm4",//测试环境release消息模版ID，从微信消息模版库获得
+            				"template_id"=>"rbz5kC4fZ2hJluVZXl7TJmDe8Cm_JodGaDdPBNjN9s0",//线上模版ID
+            				//"template_id"=>"5C1fzNzlIqH4yjinmta-6S4nM19ujGN9EoWMPVh-lm4",//测试环境release消息模版ID，从微信消息模版库获得
             				"data"=>array("first"=>array("value"=>$weixin_message,"color"=>"#173177"),"tradeType"=>array("value"=>"预存款消费","color"=>"#173177"),"tradeDateTime"=>array("value"=>$data['time']),"curAmount"=>array("value"=>'￥'.$data['cost'].'元'))
             		);
             		$weixin_push_post_data = json_encode($weixin_push_post_data);
