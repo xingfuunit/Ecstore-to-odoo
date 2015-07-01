@@ -15,10 +15,9 @@
 	
 <!-- sort -->
 <div class="gallery-sort" id="gallery-sort">
-	<div class="item item1" sortid="1">
+	<div class="item item1 sort-ico-one" sortid="1">
 		销量
 		<div class="sort-ico">
-			<i class="am-header-icon am-icon-chevron-up"></i>
 			<i class="am-header-icon am-icon-chevron-down"></i>
 		</div>
 	</div>
@@ -29,18 +28,16 @@
 			<i class="am-header-icon am-icon-chevron-down"></i>
 		</div>
 	</div>
-	<div class="item item3" sortid="3">
+	<div class="item item3 sort-ico-one" sortid="3">
 		评价
 		<div class="sort-ico">
-			<i class="am-header-icon am-icon-chevron-up"></i>
 			<i class="am-header-icon am-icon-chevron-down"></i>
 		</div>
 	</div>
 	
-	<div class="item item4" sortid="4">
+	<div class="item item4 sort-ico-one" sortid="4">
 		上架
 		<div class="sort-ico">
-			<i class="am-header-icon am-icon-chevron-up"></i>
 			<i class="am-header-icon am-icon-chevron-down"></i>
 		</div>
 	</div>
@@ -110,7 +107,7 @@ var par_pagetotal	= <{$pagetotal}>;
 var par_page		= 0;
 var par_cat_id 		= '<{$cat_id}>';
 var par_scontent 	= '<{$scontent}>';
-var par_sortid		= '4';		//1=销量,2=价格,3=评价,4=上架
+var par_sortid		= '1';		//1=销量,2=价格,3=评价,4=上架
 var par_sortby		= '2';		//1=asc,2=desc
 var par_loading		= false;
 /*
@@ -151,10 +148,14 @@ $(function (){
 	//排序按钮
 	$gallerysort.find('.item').on('click', function(){
 		var $item 	= $(this);
-		par_sortid 	= $item.attr('sortid');
+		par_sortid 	= ''+$item.attr('sortid');
 
 		if($item.find('.selected')){
-			par_sortby = (par_sortby=='2')?'1':'2';
+			if(par_sortid=='2'){//价格
+				par_sortby = (par_sortby=='2')?'1':'2';
+			}else{
+				par_sortby = '2';
+			}
 		}else{
 			par_sortby = '2';
 		};
@@ -258,8 +259,8 @@ function btnAddToCart_onclick(the){
 					  onCancel: function(e) {
 						return false;
 					  }
-					
 				});
+				modalAddToCart_Timeout($('#modalAddToCart'));
 			}
 			else{
 				$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
@@ -275,12 +276,41 @@ function btnAddToCart_onclick(the){
 					  }
 					
 				});
+				modalAddToCart_Timeout($('#modalAddToCart'));
 			}
 
 		}
 	});
 };
 
+//倒计时关闭购物车弹窗
+function modalAddToCart_Timeout($the){
+	if(!$the.size()){
+		return;
+	};
+	
+	var $btn = $the.find('.am-modal-btn:last');
+	var n = 3,m=3;
+	
+	if($btn.size()){
+		$btn.html('继续购物('+n+')');
+		
+		var o = setInterval(function(){
+			if($the.is(':visible')){
+				n--;
+				$btn.html('继续购物('+n+')');
+				if(n==0){
+					n=m;
+					$the.modal('close');
+					$btn.html('继续购物');
+					clearInterval(o);
+				};
+			}else{
+				clearInterval(o)
+			};
+		},1000);
+	};
+};
 
 </script>
 

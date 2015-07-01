@@ -78,7 +78,7 @@ border-bottom:3px solid #fff;}
 .gallery-sort .am-header-icon{height:0.9rem;line-height:0.9rem;display:block;overflow:hidden;}
 .gallery-sort .am-icon-chevron-up{color:#999;}
 .gallery-sort .am-icon-chevron-down{color:#ddd;}
-
+.gallery-sort .sort-ico-one  .sort-ico{top:50%;margin-top:-0.5rem;}
 .gallery-sort .sort-desc .am-icon-chevron-up{color:#ddd;}
 .gallery-sort .sort-desc .am-icon-chevron-down{color:#999;}
 
