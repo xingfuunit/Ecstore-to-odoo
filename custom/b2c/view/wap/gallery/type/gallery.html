@@ -1,12 +1,9 @@
 <{if $goodsData}>
 	<{foreach from=$goodsData key=key item=row}>
 		<div class="am-gallery-item item <{if !$row.is_can_store }>itemEnd<{/if}>">
-		<{if($row.wap_hot)}>
+		<{if($row.tags)}>
 			<div class="itemHot">
-				热销<div class="itemHotBr"></div>
-			</div>
-			<div class="itemHot">
-				热销<div class="itemHotBr"></div>
+				<{$row.tags.0.tag_name}><div class="itemHotBr"></div>
 			</div>
 		<{/if}>
 			<div class="pic">
