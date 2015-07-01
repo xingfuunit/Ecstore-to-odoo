@@ -91,8 +91,15 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 		$_time = $_POST['start_time'];
 		$_time = strtotime("$_time");
 		$_time = date('Y-m-d',$_time);
-		$_POST['start_time'] = $_time . ' 00:00:00';
-		$_POST['end_time'] = $_time . ' 23:59:59';
+		
+		$e_time = $_POST['end_time'];
+		$e_time = strtotime("$e_time");
+		$e_time = date('Y-m-d',$e_time);
+		
+		
+		
+		$_POST['start_time'] = $_time . ' '.$_POST['start_time_hour'].':'.$_POST['start_time_minute'];
+		$_POST['end_time'] = $e_time . ' '.$_POST['end_time_hour'].':'.$_POST['end_time_minute'];
 		if ($objAd->save($_POST)) {
 			//$vipday_name = $_POST ['id'];
 			//$aData = kernel::database ()->select ( "update  sdb_b2c_tehui set current='false'" );
@@ -109,8 +116,17 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 		$this->path[] = array('text'=>app::get('b2c')->_('活动特惠管理编辑'));
 		$objAd = $this->app->model('tehui');
 		$adInfo = $objAd->dump($ad_id);
-		$_time = strtotime("{$adInfo['start_time']}");
-		$adInfo['_time'] = date('Y-m-d',$_time);
+		
+		$s_time = strtotime("{$adInfo['start_time']}");
+		$adInfo['s_time'] = date('Y-m-d',$s_time);
+		$adInfo['s_H'] = date('H',$s_time);
+		$adInfo['s_i'] = date('i',$s_time);
+		
+		$e_time = strtotime("{$adInfo['end_time']}");
+		$adInfo['e_time'] = date('Y-m-d',$e_time);
+		$adInfo['e_H'] = date('H',$e_time);
+		$adInfo['e_i'] = date('i',$e_time);
+		error_log(print_r($adInfo,1),3,'/tmp/sam_log.log');
 		$this->pagedata['adInfo'] = $adInfo;
 	
 		$this->singlepage('admin/tehui/detail.html');

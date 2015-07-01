@@ -4,7 +4,7 @@
 <div class="division">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
-  <th><{t}>会员日名称：<{/t}></th>
+  <th><{t}>活动名称：<{/t}></th>
   <td><{input type="text" name="tehui_name" style="width:120px" vtype="required" value=$adInfo.tehui_name}><em><font color='red'>*</font></em></td>
 </tr>
 <tr>
@@ -21,17 +21,22 @@
   <th><{t}>开始时间：<{/t}></th>
   <td>
   <input type="hidden" name="start_time" value="start_time" />
-                <input class="logintext1"  size="10" maxlength="10" autocomplete="off" type="text" name="start_time" value="<{$adInfo._time}>" id="start_time" vtype="date"  />
-  00:00-23:59
-<em><font color='red'>*</font></em></td>
+                <input style="float:left;" class="logintext1"  size="10" maxlength="10" autocomplete="off" type="text" name="start_time" value="<{$adInfo.s_time}>" id="start_time" vtype="date"  />
+<input style="float:left;" size="1" type="text" name="start_time_hour" value="<{$adInfo.s_H}>" /><span style="float:left;">：</span>
+ <input style="float:left;" size="1" type="text" name="start_time_minute" value="<{$adInfo.s_i}>" />
+  
+<em><font color='red'>*</font></em><div style="clear:both;"></div></td>
 </tr>
-<!-- <tr>
+ <tr>
   <th><{t}>结束时间：<{/t}></th>
   <td>
-  <input type="hidden" name="end_time" value="end_time" />
-                <input class="logintext1"  size="10" maxlength="10" autocomplete="off" type="text" name="end_time" value="<{$end_time}>" id="end_time" vtype="date"  />
-<em><font color='red'>*</font></em></td>
-</tr> -->
+<input type="hidden" name="end_time" value="end_time" />
+                <input style="float:left;" class="logintext1"  size="10" maxlength="10" autocomplete="off" type="text" name="end_time" value="<{$adInfo.e_time}>" id="end_time" vtype="date"  />
+  <input style="float:left;" size="1"  type="text" name="end_time_hour" value="<{$adInfo.e_H}>" /><span style="float:left;">：</span>
+ <input style="float:left;" size="1"  type="text" name="end_time_minute" value="<{$adInfo.e_i}>" /> 
+   
+<em><font color='red'>*</font></em><div style="clear:both;"></div></td>
+</tr> 
 <tr>
   <th><{t}>活动标题：<{/t}></th>
   <td><{input type="text" name="alt_name" style="width:120px" vtype="required" value=$adInfo.alt_name}><em><font color='red'>*</font></em></td>
@@ -131,10 +136,12 @@
 	try {
 		Ex_Loader("picker", function() {
 			$('start_time').makeCalable();
+			$('end_time').makeCalable();
 
 		});
 		} catch (e) {
 		$('start_time').makeCalable();
+		$('end_time').makeCalable();
 
 	}
 </script>	
