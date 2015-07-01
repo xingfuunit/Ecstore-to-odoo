@@ -107,6 +107,15 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         $arr = array();
         $aData = $oCart->setCartNum( $arr );
         $this->pagedata['cartCount'] = $aData['CART_COUNT'];
+        
+        $cookie = str_replace('n,','',$_REQUEST['scontent']);
+        $search_arr = $_COOKIE['pz_search_history'];
+        $search_arr = json_decode($search_arr);
+        $search_arr[] = $cookie;
+        $search_arr = array_unique($search_arr);
+        $_search_history = json_encode($search_arr);
+        setcookie('pz_search_history',$_search_history , 0, kernel::base_url() . '/');
+        
         if(!$goodsData && $_GET['scontent']){
         	$url = '/wap/simplesearch.html?find=no';
         	$this->_response->set_redirect($url)->send_headers();
