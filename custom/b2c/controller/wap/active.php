@@ -109,15 +109,15 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function alist(){
     	
     	//倒序 显示
-    	$alist_date = $this->app->model('tehui')->getlist('*',array(),0,-1,' start_time DESC ');
+    	$alist_date = $this->app->model('tehui')->getlist('*',array(),0,-1,' end_time DESC ');
     	foreach($alist_date as $k => &$v){
     		$alist_date[$k]['is_start'] = 0;  
     	if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
-    			$alist_date[$k]['is_start'] = '1';
-    		}elseif(time() <= strtotime($v['start_time'])){
     			$alist_date[$k]['is_start'] = '2';
+    		}elseif(time() <= strtotime($v['start_time'])){
+    			$alist_date[$k]['is_start'] = '1';
     		}else{
-    			$alist_date[$k]['is_start'] = 0;
+    			$alist_date[$k]['is_start'] = '0';
     		}
     		//格式转换
     		$v['start_time'] = date('Y.m.d H:i',strtotime($v['start_time']));
@@ -125,6 +125,15 @@ class b2c_ctl_wap_active extends wap_frontpage{
     		
     		$v['img_url'] = base_storager::image_path($v['img_url']);
     	}
+    	
+    	usort($alist_date, function($a, $b) {
+    		$al = $a['is_start'];
+    		$bl = $b['is_start'];
+    		if ($al == $bl)
+    			return 0;
+    		return ($al > $bl) ? -1 : 1;
+    	});
+    	
     	$this->pagedata['alist_date'] = $alist_date; 
     	$this->pagedata['title'] = "品珍活动";
     	$this->page('wap/active/list.html');
@@ -136,14 +145,14 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function hyday(){
     	 
     	//倒序 显示
-    	$alist_date = $this->app->model('vipday')->getlist('*',array(),0,-1,' start_time DESC ');
+    	$alist_date = $this->app->model('vipday')->getlist('*',array(),0,-1,' end_time DESC ');
     	foreach($alist_date as $k => &$v){
     		if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
-    			$alist_date[$k]['is_start'] = '1';
-    		}elseif(time() <= strtotime($v['start_time'])){
     			$alist_date[$k]['is_start'] = '2';
+    		}elseif(time() <= strtotime($v['start_time'])){
+    			$alist_date[$k]['is_start'] = '1';
     		}else{
-    			$alist_date[$k]['is_start'] = 0;
+    			$alist_date[$k]['is_start'] = '0';
     		}
     		//格式转换
     		$v['start_time'] = date('Y.m.d H:i',strtotime($v['start_time']));
@@ -151,6 +160,15 @@ class b2c_ctl_wap_active extends wap_frontpage{
     		
     		$v['img_url'] = base_storager::image_path($v['img_url']);
     	}
+    	
+    	usort($alist_date, function($a, $b) {
+    		$al = $a['is_start'];
+    		$bl = $b['is_start'];
+    		if ($al == $bl)
+    			return 0;
+    		return ($al > $bl) ? -1 : 1;
+    	});
+    	
     	$this->pagedata['alist_date'] = $alist_date;
     	$this->pagedata['title'] = "会员日";
     	$this->page('wap/active/hdday.html');

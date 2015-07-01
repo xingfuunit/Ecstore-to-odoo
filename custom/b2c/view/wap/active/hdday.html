@@ -13,9 +13,9 @@
           <div class="am-list-news-hd am-cf am-padding">
           <div class="am-fl"  > <a <{if($v.is_start)}> href="<{$v.ad_url}>" <{/if}>><{$v.alt_name}></a></div>
            
-		  	  <{if $v.is_start=='1'}>
+		  	  <{if $v.is_start=='2'}>
               <button type="button" class="am-btn am-btn-warning am-round am-btn-xs am-fr">进行中</button>
-			  <{elseif $v.is_start=='2'}>
+			  <{elseif $v.is_start=='1'}>
 			  <button type="button" class="am-btn am-btn-warning am-round am-btn-xs am-fr">即将开始</button>
 			  <{else}>
 			  <button type="button" class="am-btn am-btn-default am-round am-btn-xs am-fr">已结束</button>
