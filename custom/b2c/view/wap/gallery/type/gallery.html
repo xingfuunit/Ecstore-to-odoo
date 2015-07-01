@@ -30,8 +30,8 @@
 				
 				
 				<div class="txt">
-					<span class="newPrice"><{$row.products.price|cur_odr}></span>
-					<span class="oldPrice"><{$row.products.mktprice|cur_odr}></span>
+					<div class="newPrice"><{$row.products.price|cur_odr}></div>
+					<div class="oldPrice"><{$row.products.mktprice|cur_odr}></div>
 					<{if $row.products.store >0 or $row.nostore_sell == 1 }>
 						<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" onclick="btnAddToCart_onclick(this);return false;"></a>
 					<{else}>
