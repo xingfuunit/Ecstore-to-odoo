@@ -118,6 +118,7 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 						      }
 							
 						});
+						modalAddToCart_Timeout($('#modalAddToCart'));
 	                }
 	                else{
 						$('#modalAddToCart').find('.am-modal-bd').html(data.error);
@@ -133,12 +134,43 @@ function js_alert(id,msg,bnt1,bnt2,funYes,funNo){
 						      }
 							
 						});
+						modalAddToCart_Timeout($('#modalAddToCart'));
 	                }
 	
 	            }
 	        });
+			
+			
 	    });
 		
+//倒计时关闭购物车弹窗
+function modalAddToCart_Timeout($the){
+	if(!$the.size()){
+		return;
+	};
+	
+	var $btn = $the.find('.am-modal-btn:last');
+	var n = 3,m=3;
+	
+	if($btn.size()){
+		$btn.html('继续购物('+n+')');
+		
+		var o = setInterval(function(){
+			if($the.is(':visible')){
+				n--;
+				$btn.html('继续购物('+n+')');
+				if(n==0){
+					n=m;
+					$the.modal('close');
+					$btn.html('继续购物');
+					clearInterval(o);
+				};
+			}else{
+				clearInterval(o)
+			};
+		},1000);
+	};
+};
 		//空购物车
 		
 		

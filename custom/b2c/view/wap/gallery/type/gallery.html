@@ -1,96 +1,53 @@
-<link href="/public/app/wap/statics/css_mini/themes2015.css" rel="stylesheet" media="screen, projection" />
 <{if $goodsData}>
-	<{foreach from=$goodsData key=key item=goods_row}>
-		<li>
-		<div class="am-gallery-item">
-		  <a href="<{link app=b2c ctl=wap_product arg0=$goods_row.products.product_id}>"  <{if !$goods_row.is_can_store }> style=" position:relative;  display: block" <{/if}>>
-		  
-		  	<{if !$goods_row.is_can_store }>
-			<span class="goods_list_qh">售&nbsp;&nbsp;罄</span>
-			<{/if}>
-			
-		    <img src="<{$goods_row.image_default_id|storager:'s'}>">
-			
-			<{if $goods_row.is_can_store }>
-			  <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#48a4b9; font-size:18px; height:30px; width:30px; background:none; border:1px solid #48a4b9; line-height:30px; margin-top:30px; margin-right:5px;"></a>
-			
-			  <form  style="display:none" class="formBuyNow">
-				    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods_row.goods_id}>" />
-				    <input id="productId" type="text" name="goods[product_id]" value="<{$goods_row.products.product_id}>" />
-				    <input id="goodsNum" type="text" name="goods[num]" value="1" />
-				    <input id="stock" type="text" name="stock" value="" />
-				    <input id="limit_nums" type="text" name="limit_nums" value="" />
-				    <input type="text" name="response_json" value="1" />
+	<{foreach from=$goodsData key=key item=row}>
+		<div class="am-gallery-item item <{if !$row.is_can_store }>itemEnd<{/if}>">
+		<{if($row.tags)}>
+			<div class="itemHot">
+				<{$row.tags.0.tag_name}><div class="itemHotBr"></div>
+			</div>
+		<{/if}>
+			<div class="pic">
+				<a href="<{link app=b2c ctl=wap_product arg0=$row.products.product_id}>">
+					<img src="<{$row.image_default_id|storager:'s'}>">
+					<div class="itemEndBox">
+						<div class="itemEndBg"></div>
+						<div class="itemEndTxt">售罄</div>
+					</div>
+				</a>
+			</div>
+			<div class="desc">
+				<div class="tit">
+					<a href="<{link app=b2c ctl=wap_product arg0=$row.products.product_id}>">
+					<{$row.name|cut:'90'}>
+					</a>
+				</div>
+				<!--
+				<div class="tit"><{$row.brief}></div>
+				-->
+				<div class="lbl">
+					<div class="lblGive"><{$row.products._discount}>折</div>
+				</div>
+				
+				
+				<div class="txt">
+					<div class="newPrice"><{$row.products.price|cur_odr}></div>
+					<div class="oldPrice"><{$row.products.mktprice|cur_odr}></div>
+					<{if $row.products.store >0 or $row.nostore_sell == 1 }>
+						<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" onclick="btnAddToCart_onclick(this);return false;"></a>
+					<{else}>
+						<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="display:block"></a>
+					<{/if}>
+				</div>
+				<form style="display:none" class="formBuyNow">
+					<input id="goodsId" type="text" name="goods[goods_id]" value="<{$row.goods_id}>" />
+					<input id="productId" type="text" name="goods[product_id]" value="<{$row.products.product_id}>" />
+					<input id="goodsNum" type="text" name="goods[num]" value="1" />
+					<input id="stock" type="text" name="stock" value="" />
+					<input id="limit_nums" type="text" name="limit_nums" value="" />
+					<input type="text" name="response_json" value="1" />
 				</form>
-			<{else}>
-				<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px;margin-top:30px; margin-right:5px;"></a>
-			<{/if}>
-			
-		    <h3 class="am-gallery-title"><{$goods_row.name|cut:'90'}></h3>
-		    <div class="am-gallery-desc" >
-			 <h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods_row.products.price|cur_odr}></h1>
-			 </div>
-		  </a>
-		   <div class="fc"></div>
+			</div>
+			<div class="fc"></div>
 		</div>
-		</li>
 	<{/foreach}>
 <{/if}>
-
-			  
-<script>
-	//加入购物车 操作
-	$('.btnAddToCart').click(function(){
-		//弹出等待框
-		$('#cart-modal-loading').modal();
-		
-		var obj = $(this).siblings(".formBuyNow");
-        $.ajax({
-            url:'/wap/cart-add-goods.html',
-            data:obj.serialize()+'&mini_cart=1',
-            method:'POST',
-            dataType:'json',
-            success:function(data){
-				
-				//隐藏等待框
-				$('.am-modal-loading').modal('close');
-				
-                if(data.success){
-                	var cart_num ='';
-                	cart_num = data.success.cart_num;
-                	$('#wap-footer-bar-cart-num').show();
-			    	$('#wap-footer-bar-cart-num').html(cart_num);
-                	$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
-                    $('#modalAddToCart').modal({
-						relatedTarget: this,
-							//进入购物车
-					      onConfirm: function(e) {
-					         window.location.href='/wap/cart.html';
-					      },
-						  	//继续购物
-					      onCancel: function(e) {
-					        return false;
-					      }
-						
-					});
-                }
-                else{
-					$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
-                    $('#modalAddToCart').modal({
-						relatedTarget: this,
-							//进入购物车
-					      onConfirm: function(e) {
-					         window.location.href='/wap/cart.html';
-					      },
-						  	//继续购物
-					      onCancel: function(e) {
-					        return false;
-					      }
-						
-					});
-                }
-
-            }
-        });
-    });
-</script>

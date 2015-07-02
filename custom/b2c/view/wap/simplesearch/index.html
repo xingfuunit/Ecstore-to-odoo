@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="/public/app/wap/statics/css_mini/themes2015.css" />
+<header data-am-widget="header" class="am-header am-header-default tt_bg">
+	<div class="am-header-left am-header-nav">
+		<a class="" href="javascript:history.go(-1);"><i class="am-header-icon am-icon-reply"></i></a>
+	</div>
+	  <h1 class="am-header-title">
+		<a href="#title-link">搜索商品</a>
+	  </h1>
+</header>
+<!-- Menu -->
+	
+<div class="simplesearch" id="simplesearch">
+
+	<!--搜索开始-->
+	<{wap_require file="block/search.html"}>
+	<!--搜索结束-->
+	<div class="warp-padding10">
+		<div class="simplesearch-msg">
+			<{if $find=='no' }>
+				抱歉！亲，系统没找到你要找的商品，<br />
+				输入其他关键词再试试吧。
+			<{elseif(!$keywords)}>
+				亲，你还没进行任何搜索(⊙o⊙)哦。
+			<{/if}>
+		</div>
+		<{if($keywords)}>
+		<div class="simplesearch-title">
+			<i class="am-header-icon am-icon-paper-plane"></i>
+			最近搜索
+		</div>
+		<div class="simplesearch-list">
+			<{foreach from=$keywords item=k}>
+				<{if($k.name)}><a href="<{$k.url}>"><{$k.name}></a><{/if}>
+			<{/foreach}>
+			<div class="fc"></div>
+		</div>
+		<{/if}>
+	</div>
+</div>
+<{wap_require file="block/footer_bar.html"}>
+

@@ -8,6 +8,14 @@
   <td><{input type="text" name="kw_name" style="width:120px" vtype="required" value=$info.kw_name}><em><font color='red'>*</font></em></td>
 </tr>
 <tr>
+  <th><{t}>链接地址：<{/t}></th>
+  <td><{input type="text" name="kw_url" style="width:400px" value=$info.kw_url}></td>
+</tr>
+<tr>
+  <th><{t}>失效：<{/t}></th>
+  <td><input type="radio" name="disabled" <{if $info.disabled == 'true'}>checked="checked"<{/if}> value="true">是 &nbsp;&nbsp; <input type="radio" name="disabled"  <{if $adInfo.disabled == 'false'}>checked="checked"<{/if}> value="false">否</td>
+</tr>
+<tr>
   <th><{t}>排序：<{/t}></th>
   <td><{input style="width:50px;" type="unsigned" name="ordernum"  value=$info.ordernum}></td>
 </tr>

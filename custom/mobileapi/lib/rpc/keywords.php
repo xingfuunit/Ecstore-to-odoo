@@ -24,6 +24,27 @@ class mobileapi_rpc_keywords {
 		return $ret;		
 	}
 	
+	function get_itmes($count=10) {
+		$ww = '';
+		if(isset($count) && $count>0){
+			$ww = ' limit '.$count;
+		}
+
+		$db = kernel::database();
+		$sql = "select kw_name as name,kw_url as url FROM `sdb_mobileapi_keywords` order by ordernum desc ".$ww;
+		$rs = $db->select($sql);
+		
+		if(isset($rs) && is_array($rs)){
+			foreach($rs as $k => $v){
+				if(strlen($v['url'])<5){
+					$rs[$k]['url'] = '/wap/gallery.html?scontent=n,' . urlencode($v['name']);
+				}
+			}
+		}
+		
+		return $rs;
+	}
+	
 	
 	public function associate(){
 		$words = $_POST['words'];

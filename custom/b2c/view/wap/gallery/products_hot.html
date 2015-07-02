@@ -1,72 +1,75 @@
 <link rel="stylesheet" href="/public/app/wap/statics/css_mini/themes2015.css" />
 <header data-am-widget="header" class="am-header am-header-default tt_bg">
-<div class="am-header-left am-header-nav">
-	<a class="" href="javascript:history.go(-1);"><i class="am-header-icon am-icon-reply"></i></a>
-</div>
-  <h1 class="am-header-title">
-    <a href="#title-link">品珍鲜活</a>
-  </h1>
-<div class="am-header-right am-header-nav">
-	<a class="" href="<{link app=b2c ctl=wap}>"><i class="am-header-icon am-icon-home"></i></a>
-</div>
+	<div class="am-header-left am-header-nav">
+		<a class="" href="javascript:history.go(-1);"><i class="am-header-icon am-icon-reply"></i></a>
+	</div>
+	  <h1 class="am-header-title">
+		<a href="#title-link">品珍鲜活</a>
+	  </h1>
+	<div class="am-header-right am-header-nav">
+		<a class="" href="simplesearch.html"><i class="am-header-icon am-icon-search"></i></a>
+	</div>
 </header>
 
 <!-- Menu -->
 
 <!--搜索开始-->
-	<{wap_require file="block/search.html"}>
-	<{wap_require file="block/hot_word.html"}>
+<div class="tags-top">
+	HOT:
+	<{foreach from=$keywords item=k}>
+		<a href="<{$k.url}>"><{$k.name}></a>
+	<{/foreach}>
+</div>
 <!--搜索结束-->
 
-<br>
 <!-- List -->
 <div data-am-widget="slider" class="am-slider am-slider-a4" data-am-slider='{}'>
 	<{if $goodsData}>
-   <ul class="am-slides">
+   <ul class="am-slides hotlist">
 	
-	<{foreach from=$goodsData key=k item=goods}>
-    	<li>
-	    	<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview:flase }">
-	    		<{foreach from=$goods key=k2 item=goods2}>
-				<{if $goods2}>
-				 <li style="width:100%;">
-				    <div class="am-gallery-item">
-				      <a href="<{link app=b2c ctl=wap_product arg0=$goods2.products.product_id}>" <{if !$goods2.is_can_store }> style=" position:relative;  display: block" <{/if}>>
-					  	<{if !$goods2.is_can_store }>
-						<span style="height:auto;filter:alpha(opacity=50); -moz-opacity:0.5; opacity:0.5; width:auto; white-space:nowrap; background:#333333; border-top-left-radius:20px;border-bottom-left-radius:20px; color:#FFFFFF; font-size:12px;padding:5px 10px; position:absolute; right:-4px;  margin-right:4px;">缺&nbsp;&nbsp;货</span>
-						<{/if}>
-				      	<span style="position:absolute;  background:#FF3300; float:right; width:auto; white-space:nowrap; line-height:30px; padding:0 5px; font-size:10px; z-index:999;text-align:center; color:#FFFFFF; display:block">已销：<{$goods2.wap_hot_num}></>份</span>
-				        <img src="<{$goods2.wx_image_id|storager:'l'}>">
-				        <h3 class="am-gallery-title"><{$goods2.name|cut:'90'}></h3>
-				        <div class="am-gallery-desc" >
-						 <h1 style="color:#dd514c;float:left;font-weight: 600;"><{$goods2.products.price|cur_odr}></h1>
+	<{foreach from=$goodsData key=k item=goods2 name="goods2"}>
+				    <div class="am-gallery-item item <{if !$goods2.is_can_store }>itemEnd<{/if}>">
+						<div class="itemHot">
+							<div class="itemHotBg"></div>
+							<div class="itemRank"> <{$smarty.foreach.goods2.iteration}></div>
+							<div class="itemSales">销量：<{$goods2.wap_hot_num}>份</div>
 						</div>
-					  	</a>
-						<{if $goods2.products.store >0 or $goods2.nostore_sell == 1 }>
-						 <a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="float:right; color:#48a4b9; font-size:18px; height:30px; width:30px; background:none; border:1px solid #48a4b9; line-height:30px; "></a>
-						 <form  style="display:none" class="formaddcart">
-							    <input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods2.goods_id}>" />
-							    <input id="productId" type="text" name="goods[product_id]" value="<{$goods2.products.product_id}>" />
-							    <input id="goodsNum" type="text" name="goods[num]" value="1" />
-							    <input id="stock" type="text" name="stock" value="" />
-							    <input id="limit_nums" type="text" name="limit_nums" value="" />
-							    <input type="text" name="response_json" value="1" />
-						</form>
-				      	<{else}>
-						<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart " style="float:right; color:#eeeeee; font-size:18px; height:30px; width:30px; background:none; border:1px solid #eeeeee; line-height:30px; "></a>
-						<{/if}>
-						<div class="fc"></div>
+
+						<div class="pic">
+							<a href="<{link app=b2c ctl=wap_product arg0=$goods2.products.product_id}>">
+								<img src="<{$goods2.wx_image_id|storager:'l'}>">
+								<div class="itemEndBox">
+									<div class="itemEndBg"></div>
+									<div class="itemEndTxt">售罄</div>
+								</div>
+							</a>
+						</div>
+						<div class="desc">
+							<div class="tit"><{$goods2.name|cut:'90'}></div>
+							<div class="txt">
+								<span class="newPrice"><{$goods2.products.price|cur_odr}></span>
+								<span class="oldPrice"><{$goods2.products.mktprice|cur_odr}></span>
+							</div>
+							<{if $goods2.products.store >0 or $goods2.nostore_sell == 1 }>
+								<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart"></a>
+							<{else}>
+								<a href="javascript:void(0);" class="am-icon-btn am-icon-shopping-cart btnAddToCart" style="display:block"></a>
+							<{/if}>
+							
+							<form style="display:none" class="formaddcart">
+								<input id="goodsId" type="text" name="goods[goods_id]" value="<{$goods2.goods_id}>" />
+								<input id="productId" type="text" name="goods[product_id]" value="<{$goods2.products.product_id}>" />
+								<input id="goodsNum" type="text" name="goods[num]" value="1" />
+								<input id="stock" type="text" name="stock" value="" />
+								<input id="limit_nums" type="text" name="limit_nums" value="" />
+								<input type="text" name="response_json" value="1" />
+							</form>
+						</div>
 				    </div>
-					
-				  </li>
-				  <{/if}>
-				  <{/foreach}>
-			</ul>
-		</li>
 	<{/foreach}>
 	</ul>
 	<{else}>
-	<div style="text-align:center">没有相应商品..</div>
+	<div style="text-align:center">亲，没有更多喔！</div>
 	<{/if}>
 </div>
 

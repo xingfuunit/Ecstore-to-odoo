@@ -1,47 +1,61 @@
 <link href="/public/app/wap/statics/css_mini/themes2015.css" rel="stylesheet" media="screen, projection" />
 
 <header data-am-widget="header" class="am-header am-header-default tt_bg">
-<div class="am-header-left am-header-nav">
-	<a class="" href="javascript:history.go(-1);"><i class="am-header-icon am-icon-reply"></i></a>
-</div>
-  <h1 class="am-header-title">
-    <a href="#title-link">品珍鲜活</a>
-  </h1>
-<div class="am-header-right am-header-nav">
-	<a class="" href="<{link app=b2c ctl=wap}>"><i class="am-header-icon am-icon-home"></i></a>
-</div>
+	<div class="am-header-left am-header-nav">
+		<a class="" href="javascript:history.go(-1);"><i class="am-header-icon am-icon-reply"></i></a>
+	</div>
+	<h1 class="am-header-title">
+		<a href="#title-link">品珍鲜活</a>
+	</h1>
+	<div class="am-header-right am-header-nav">
+		<a class="" href="simplesearch.html"><i class="am-header-icon am-icon-search"></i></a>
+	</div>
 </header>
-
 <!-- Menu -->
-
-<!--搜索开始-->
-<{wap_require file="block/search.html"}>
-<{wap_require file="block/hot_word.html"}>
-<!--搜索结束-->
-<div style=" color:#aaa; font-size:12px; text-indent:10px; background:#efefef;  padding:5px 10px;text-align:right">共<span class="am-text-danger"><{ $total ? $total : 0}></span>个商品</div>
-
-<br>
-<!-- List -->
-<div data-am-widget="slider" class="am-slider am-slider-default" data-am-slider='{}' id="my-slider">
 	
-	  <ul class="am-slides">
-	  	<{foreach from=$pagetotal_arr item=pa key=key}>
-	    <li>
-		    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default  glist" data-am-gallery="{ pureview:flase }">
-				<div class="roll_loding" style="text-align:center"><i class="am-icon-spinner am-icon-spin am-icon-lg"></i></div>
-			</ul>
-	    </li>
-		<{/foreach}>
-	  </ul>
-
+<!-- sort -->
+<div class="gallery-sort" id="gallery-sort">
+	<div class="item item1 sort-ico-one" sortid="1">
+		销量
+		<div class="sort-ico">
+			<i class="am-header-icon am-icon-chevron-down"></i>
+		</div>
+	</div>
+	<div class="item item2" sortid="2">
+		价格
+		<div class="sort-ico">
+			<i class="am-header-icon am-icon-chevron-up"></i>
+			<i class="am-header-icon am-icon-chevron-down"></i>
+		</div>
+	</div>
+	<div class="item item3 sort-ico-one" sortid="3">
+		评价
+		<div class="sort-ico">
+			<i class="am-header-icon am-icon-chevron-down"></i>
+		</div>
+	</div>
+	
+	<div class="item item4 sort-ico-one" sortid="4">
+		上架
+		<div class="sort-ico">
+			<i class="am-header-icon am-icon-chevron-down"></i>
+		</div>
+	</div>
+	<div class="fc"></div>
+</div>           
+<!-- sort -->
+	
+<div class="gallery" id="gallery">
+	<!-- List -->
+	<div class="glist goodslist" id="goodslist"></div>
+	<div class="goods_loading" id="goods_loading"><i class="am-icon-spinner am-icon-spin am-icon-lg"></i></div>
+	<div class="return_div"><label><i class="show_cur_page" id="show_cur_page">1</i>/<i id="page_total"><{$pagetotal}></i></label></div>
+	
+	<div class="page-rscount">
+		共<span class="am-text-danger"><{ $total ? $total : 0}></span>个商品
+	</div>
 </div>
-<div class="return_div"><label><i class="show_cur_page">1</i>/<i id="page_total"><{$pagetotal}></i></label></div>
-<!--<div><span class="show_cur_page">1</span>/<{$pagetotal}></div>-->
-<div id="cur_cat" style="display:none;"><{$cat_id}></div>
-<div id="scontent" style="display:none;"><{$scontent}></div>
-<!-- Gallery -->
-
-
+<!-- /gallery -->
 <div id="modalAddToCart" class="am-modal am-modal-alert" tabindex="-1">
 	  <div class="am-modal-dialog">
 	    <div class="am-modal-bd">
@@ -57,9 +71,9 @@
  <iframe id="js_ifr" scrolling="no" marginwidth="0" allowtransparency="allowtransparency" src="" marginheight="0" style="width: 270px; height: 150px; display:none" frameborder="0"></iframe></div>
 </div>
 <script>
-$("#js_play").click(function(){
-$(this).hide();
-$("#js_ifr").fadeIn('fast').attr("src","http://player.youku.com/player.php/sid/XOTEzNzU3MjE2/v.swf");
+$("#js_play").click(function () {
+	$(this).hide();
+	$("#js_ifr").fadeIn('fast').attr("src", "http://player.youku.com/player.php/sid/XOTEzNzU3MjE2/v.swf");
 });
 </script>
 <!-- Footer -->
@@ -78,6 +92,7 @@ $("#js_ifr").fadeIn('fast').attr("src","http://player.youku.com/player.php/sid/X
 
 
 <{wap_require file="block/footer_bar.html"}>
+
 <!--
 <div class="amz-toolbar " style="right:2%; bottom:10%; position:fixed">
 <a class="am-icon-shopping-cart am-icon-btn am-icon-question-circle" title="购物车" href="<{link app=b2c ctl=wap_cart}>">
@@ -87,81 +102,216 @@ $("#js_ifr").fadeIn('fast').attr("src","http://player.youku.com/player.php/sid/X
 -->
 
 <!-- Navbar -->
-<script>
+<script type="text/javascript">
+var par_pagetotal	= <{$pagetotal}>;
+var par_page		= 0;
+var par_cat_id 		= '<{$cat_id}>';
+var par_scontent 	= '<{$scontent}>';
+var par_sortid		= '1';		//1=销量,2=价格,3=评价,4=上架
+var par_sortby		= '2';		//1=asc,2=desc
+var par_loading		= false;
+/*
+	item selected
+	item selected sort-desc
+*/
+
 $(function (){
-	$('#my-slider').flexslider({
-		slideshow: false,  
-		touch: true,
-		controlNav: false,
-		directionNav: true, 
+	var $gallery = $('#gallery'),
+		$gallerysort = $('#gallery-sort'),
+		$goodslist = $('#goodslist'),
+		$loading = $('#goods_loading');
 		
-		start: function(slider){
-			//console.log('before');
-			var page = slider.currentSlide +1 ;
-			get_next_page(page);
-			
-		},
-		after: function(slider){
-			//console.log('after');
-			var page = slider.currentSlide +1 ;
-			get_next_page(page);
-		},
-  });
-  
-  
-  function get_next_page(page){
-  	var roll_list = $(".am-slides").children("li");
+	//初始化数据
+	get_next_page();
 	
-	show_page(page);
-		
-  	var url = '<{link app=b2c ctl=wap_gallery act=gallery_scroll_goods}>';
-	//商品分类搜索
-	var cur_cat = $('#cur_cat').html() ? $('#cur_cat').html() : 0;
-	var cat = 'cat_id='+cur_cat;
+	if(par_pagetotal>1){
+		$(window).on('scroll.goodslist', function(){
+				var tt = $(window).scrollTop()+$(window).height();
+				var hh = $(document).height()-200;
+				if (tt>hh) {
+					get_next_page();
+				};
+		});
+	};
+
 	
-	//商品关键字搜索
-	var scontent = $("#scontent").html();
-	var scontent = 'scontent='+scontent;
+	//排序初始化
+	var $itemsort  = $gallerysort.find('.item'+par_sortid);
+	if($itemsort.size()){
+		$itemsort.addClass('selected');
+		if(par_sortby == '2'){
+			$itemsort.addClass('sort-desc');
+		};
+	};
 	
-  	var params = ['showtype=all', 'page=' + page, cat, scontent].filter(function(d){
-  		return d;
-  	}).join('&');
 	
-	$.get(url, params, function(data){
-		
-			var obj = $('.glist');
-			
-			var is_show = $('.glist').eq(data.page).find('.roll_loding');
-			//没有加载过的才加载
-			if(is_show.data('is_show') !=0 ){
-				hid_load(obj.eq(data.page));
-				obj.eq(data.page).append(data.html);
+	//排序按钮
+	$gallerysort.find('.item').on('click', function(){
+		var $item 	= $(this);
+		par_sortid 	= ''+$item.attr('sortid');
+
+		if($item.find('.selected')){
+			if(par_sortid=='2'){//价格
+				par_sortby = (par_sortby=='2')?'1':'2';
+			}else{
+				par_sortby = '2';
 			}
-			
-			
-	}, 'json');
-	
-  }	
-	
-	function show_load(obj){
-        obj.children('.roll_loding').show();
+		}else{
+			par_sortby = '2';
+		};
 		
-       }
+		$gallerysort.find('.selected').removeClass('selected').removeClass('sort-desc');
+		
+		$item.addClass('selected');
+		if(par_sortby == '2'){
+			$item.addClass('sort-desc');
+		};
+		
+		clear_data();
+	});
 
-    function hid_load(obj){
-        obj.children('.roll_loding').hide();
-		obj.children('.roll_loding').data('is_show',0);
-    }
+	function clear_data() {
+		par_page = 0;
+		$goodslist.html('');
+		get_next_page();
+	};
 	
-	function show_page(page){
-		$(".show_cur_page").html(page);
-	}
-	
+	function get_next_page() {
+		if(par_loading || par_page>=par_pagetotal){
+			return;
+		};
+		par_loading = true;
+		
+		$loading.show();
+		
 
+		var url = '<{link app=b2c ctl=wap_gallery act=gallery_scroll_goods}>';
+		
+		//商品分类搜索
+		var cat_id = 'cat_id=' + (par_cat_id == '' ? 0 : par_cat_id);
+		
+		//商品关键字搜索
+		var scontent = 'scontent=' + par_scontent;
+		
+		//商品排序
+		var sortid = 'sortid=' + par_sortid,
+		sortby = 'sortby=' + par_sortby;
+		
+		var params = ['showtype=all', 'page=' + par_page, cat_id, scontent, sortid, sortby].join('&');
+
+		$.ajax({
+			type: 'get',
+			url : url,
+			data: params,
+			cache:false,
+			dataType:'json',
+			success: function (rs) {
+				if (rs) {
+					par_page++;
+					$("#show_cur_page").html(par_page);
+	
+					
+					$goodslist.append(rs.html);
+				};
+				$loading.hide();
+				par_loading = false;
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				//console.log('error='+errorThrown);
+				//alert('网络不通');
+				
+				$loading.hide();
+				par_loading = false;
+			}
+		});
+	};
 });
 
+function btnAddToCart_onclick(the){
+	//弹出等待框
+	$('#cart-modal-loading').modal();
 	
+	var obj = $(the).closest('.item').find('.formBuyNow');
+
+	$.ajax({
+		url:'/wap/cart-add-goods.html',
+		data:obj.serialize()+'&mini_cart=1',
+		method:'POST',
+		dataType:'json',
+		success:function(data){
+			
+			//隐藏等待框
+			$('.am-modal-loading').modal('close');
+			
+			if(data.success){
+				var cart_num ='';
+				cart_num = data.success.cart_num;
+				$('#wap-footer-bar-cart-num').show();
+				$('#wap-footer-bar-cart-num').html(cart_num);
+				$('#modalAddToCart').find('.am-modal-bd').html('加入购物车成功');
+				$('#modalAddToCart').modal({
+					relatedTarget: this,
+						//进入购物车
+					  onConfirm: function(e) {
+						 window.location.href='/wap/cart.html';
+					  },
+						//继续购物
+					  onCancel: function(e) {
+						return false;
+					  }
+				});
+				modalAddToCart_Timeout($('#modalAddToCart'));
+			}
+			else{
+				$('#modalAddToCart').find('.am-modal-bd').html('加入购物车失败');
+				$('#modalAddToCart').modal({
+					relatedTarget: this,
+						//进入购物车
+					  onConfirm: function(e) {
+						 window.location.href='/wap/cart.html';
+					  },
+						//继续购物
+					  onCancel: function(e) {
+						return false;
+					  }
+					
+				});
+				modalAddToCart_Timeout($('#modalAddToCart'));
+			}
+
+		}
+	});
+};
+
+//倒计时关闭购物车弹窗
+function modalAddToCart_Timeout($the){
+	if(!$the.size()){
+		return;
+	};
 	
+	var $btn = $the.find('.am-modal-btn:last');
+	var n = 3,m=3;
+	
+	if($btn.size()){
+		$btn.html('继续购物('+n+')');
+		
+		var o = setInterval(function(){
+			if($the.is(':visible')){
+				n--;
+				$btn.html('继续购物('+n+')');
+				if(n==0){
+					n=m;
+					$the.modal('close');
+					$btn.html('继续购物');
+					clearInterval(o);
+				};
+			}else{
+				clearInterval(o)
+			};
+		},1000);
+	};
+};
+
 </script>
 
 

@@ -106,4 +106,10 @@
         <title>门店触屏系统</title>
         <disable>false</disable>
     </module>
+	
+    <module id='b2c' controller='wap_simplesearch' >
+        <name>simplesearch</name>
+        <title>搜索商品</title>
+        <disable>false</disable>
+    </module>
 </site>
