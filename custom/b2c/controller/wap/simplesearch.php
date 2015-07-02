@@ -16,7 +16,8 @@ class b2c_ctl_wap_simplesearch extends wap_frontpage{
 			$find = 'no';
 		}
 		
-		$_keywords = kernel::single('mobileapi_rpc_keywords')->get_itmes();
+		//后台设定的热门搜索词，暂时不用 bySam 20150701
+		//$_keywords = kernel::single('mobileapi_rpc_keywords')->get_itmes();
 		
 		$this->pagedata['find'] = $find;
 		
@@ -31,8 +32,10 @@ class b2c_ctl_wap_simplesearch extends wap_frontpage{
 		}
 		
 		$keywords = array();
-		foreach($_keywords as $v){
-			$keywords[$v['name']] = $v;
+		if($_keywords){
+			foreach($_keywords as $v){
+				$keywords[$v['name']] = $v;
+			}
 		}
 		
 		$this->pagedata['keywords'] = $keywords;

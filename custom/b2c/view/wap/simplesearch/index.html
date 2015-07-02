@@ -19,20 +19,22 @@
 			<{if $find=='no' }>
 				抱歉！亲，系统没找到你要找的商品，
 				输入其他关键词再试试吧。
-			<{else}>
+			<{elseif(!$keywords)}>
 				亲，你还没进行任何搜索(⊙o⊙)哦。
 			<{/if}>
 		</div>
+		<{if($keywords)}>
 		<div class="simplesearch-title">
 			<i class="am-header-icon am-icon-paper-plane"></i>
 			最近搜索
 		</div>
 		<div class="simplesearch-list">
 			<{foreach from=$keywords item=k}>
-				<a href="<{$k.url}>"><{$k.name}></a>
+				<{if($k.name)}><a href="<{$k.url}>"><{$k.name}></a><{/if}>
 			<{/foreach}>
 			<div class="fc"></div>
 		</div>
+		<{/if}>
 	</div>
 </div>
 <{wap_require file="block/footer_bar.html"}>
