@@ -109,7 +109,7 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function alist(){
     	
     	//倒序 显示
-    	$alist_date = $this->app->model('tehui')->getlist('*',array(),0,-1,' end_time DESC ');
+    	$alist_date = $this->app->model('tehui')->getlist('*',array(),0,-1,' end_time ASC ');
     	foreach($alist_date as $k => &$v){
     		$alist_date[$k]['is_start'] = 0;  
     	if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
@@ -145,7 +145,7 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function hyday(){
     	 
     	//倒序 显示
-    	$alist_date = $this->app->model('vipday')->getlist('*',array(),0,-1,' end_time DESC ');
+    	$alist_date = $this->app->model('vipday')->getlist('*',array(),0,-1,' end_time ASC ');
     	foreach($alist_date as $k => &$v){
     		if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
     			$alist_date[$k]['is_start'] = '2';
