@@ -57,6 +57,7 @@
     <!-- 会员相关接口CRM start-->
     <module id='b2c.member' type='member' class='b2c_apiv_apis_response_member'>
         <api function='init' > 初始化会员信息 </api>
+		<api function='get_member' > 获取会员详细信息 </api>
         <api function='get_member_filter'> 获取会员列表 </api>
         <api function='get_member_lv_list' > 获取到会员等级列表 </api>
     </module>
