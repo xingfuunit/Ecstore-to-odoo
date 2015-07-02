@@ -117,7 +117,7 @@
                 <li><a href="#" class="drop">刷卡付款</a>    
                     <div class="dropdown_1column" id="fffff">        
                         <font style="font-size: 18px;">刷卡金额：</font><span style="color: red; font-size: 24px; font-weight: bold;" class="kkff"><b><{$aCart.promotion_subtotal|cur_odr}></b></span><br/><br/>  
-                          <input type="submit" onClick="delete_confirm" style="cursor:pointer" id="add_skamount" name="amount_submit" class="submdeoe"  value="确认付款" />
+                          <input type="submit" style="cursor:pointer" id="add_skamount" name="amount_submit" class="submdeoe"  value="确认付款" />
                         </div>        
                 </li>
 
@@ -213,7 +213,7 @@
     <{/if}>
 
 <div id="main" style="background: #FFF;">
-<div class="black10"></div>
+<div class="black2"></div>
   <div id="cart_container" class="cart-container">
   <{if $is_empty}>
     <{include file="site/cart/storecart_empty.html" app=b2c}>
@@ -1399,6 +1399,9 @@ window.addEvent('domready', function(){
                 } catch(e) {}
                 callback && callback(this, value);
                 
+            },
+            'input:relay(input)': function(e) {
+                num_change = 1;                
             }
             
         });

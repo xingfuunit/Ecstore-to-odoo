@@ -491,7 +491,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
         {
             $db->rollback();
         }
-
+		
         if ($result)
         {
             $order_num = $order->count(array('member_id' => $order_data['member_id']));
@@ -610,16 +610,20 @@ class b2c_ctl_site_order extends b2c_frontpage{
             */
           }
           $cart_type = $this->_request->get_post('type');
-          if($cart_type == 'x'){
-            echo json_encode(array('error'=>app::get('b2c')->_($order_data['order_id'])));
-    	    
+          if($cart_type == 'x'){  	    
             $this->end(true, $this->app->_("订单生成成功！"), $this->gen_url(array('app'=>'b2c','ctl'=>'site_paycenter','act'=>'index','arg0'=>$order_id,'arg1'=>'true')).'?type=x','',true);
           }else{
             $this->end(true, $this->app->_("订单生成成功！"), $this->gen_url(array('app'=>'b2c','ctl'=>'site_paycenter','act'=>'index','arg0'=>$order_id,'arg1'=>'true')),'',true);  
           }
+        }else{
+        	$cart_type = $this->_request->get_post('type');
+        	if($cart_type == 'x'){
+        		$this->end(false, $this->app->_("订单生成失败！"), $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')).'?type=x','',true);
+        	}else{
+        		$this->end(false, $msg, $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'checkout')),true,true);
+        	}        	
         }
-        else
-            $this->end(false, $msg, $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'checkout')),true,true);
+            
     }
     
     /*

@@ -179,12 +179,20 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $this->pagedata['area_exp'] = $this->mbstringtoarray($ardr_print, 17, 'utf-8','\n');
         $this->pagedata['unmae'] = $this->cutstr($this->member['uname'],4);
         $this->pagedata['staff_name'] = $_SESSION['account']['staff_name'];
+        $this->pagedata['staff_memberid'] = $_SESSION['account']['staff_memberid'];
         $this->pagedata['staff'] = $_SESSION['account']['staff'];
         //print_r($this->pagedata['area_exp']);exit;
         
         $this->pagedata['cart_area'] = $area[2];
+
         if ($cart_type == 'x'){
             $this->pagedata['local_store']  = $_SESSION['local_store'];
+            $this->pagedata['local_store']['area_clean'] = str_replace("/","",$ardr_print);
+            $area = explode(':',$this->pagedata['local_store']['area']);
+            // print_r($area);exit;
+            $clean_area = "地址：".$area[1];
+            $clean_area = str_replace("/", "", $clean_area);
+            $this->pagedata['local_store']['area_clean'] = $clean_area.$this->pagedata['local_store']['address'];
             $this->pagedata['store_cart']   = 'yes';
             if( $_SESSION['account']['staff']>0) {
                 $_SESSION['account']['access_token'] = md5((string)(time()).'pzfresh');
@@ -2029,6 +2037,12 @@ class b2c_ctl_site_cart extends b2c_frontpage{
     public function ajax_webpos_getProducts(){
         $this->_get_products();
         $this->pagedata['local_store'] = $_SESSION['local_store'];
+        $this->pagedata['local_store']['area_clean'] = str_replace("/","",$ardr_print);
+        $area = explode(':',$this->pagedata['local_store']['area']);
+        // print_r($area);exit;
+        $clean_area = "地址：".$area[1];
+        $clean_area = str_replace("/", "", $clean_area);
+        $this->pagedata['local_store']['area_clean'] = $clean_area.$this->pagedata['local_store']['address'];
 
         $this->member = $this->get_current_member();
         $this->pagedata['member'] = $this->member;
@@ -2185,7 +2199,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             }
         }else{
            if($product[0]['store'] <= 10){ //hack by Jason 如果是门店的操作,则不用检查库存
-                return  json_encode(array('error'=>app::get('b2c')->_('库存有限')));
+                return  json_encode(array('error'=>app::get('b2c')->_('库存有限3')));
             }
         }
       
@@ -2234,6 +2248,13 @@ class b2c_ctl_site_cart extends b2c_frontpage{
             echo substr((string)$hex, $i*8, 8)  ;echo '<br />';
             // echo chr( bindec( (substr((string)$hex, $i*8, 8) ) ) );
         }
+    }
+    
+    public function ajax_get_branch_orderid(){
+    	$member_id = intval($_POST['member_id']);
+    	$branch_id = intval($_POST['branch_id']);
+    	$orderid = kernel::database()->select("select order_id from sdb_b2c_orders where member_id=$member_id and branch_id=$branch_id order by order_id desc limit 1");
+        echo $orderid[0]['order_id'];exit;
     }
 }
 

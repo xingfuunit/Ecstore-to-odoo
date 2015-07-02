@@ -38,7 +38,7 @@
       </td>
       <td class="p-price"><{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}><{$goods.obj_items.products.0.price.price*1000|cur_odr}>/KG<{else}><{$goods.obj_items.products.0.price.price|cur_odr}><{/if}></td>
       <td>
-          <div class="p-quantity" style="width:100px">
+          <div class="p-quantity">
             <!--  <a  href="javascript:void(0);" class="btn-decrease">-</a>-->
             <input type="text" <{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}>style="display: none;"<{/if}> name="modify_quantity[<{$goods.obj_ident}>][quantity]" id="modify_quantity_<{$goods.obj_ident}>" style="border: 1px solid #ccc; width: 70px; height: 20px; " value="<{$goods.quantity}>">
             <{if $goods.unit.unit == '克' || $goods.unit.unit == 'g'}>-<{/if}>

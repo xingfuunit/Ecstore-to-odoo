@@ -1183,6 +1183,25 @@ class b2c_ctl_site_storepassport extends b2c_frontpage{
         	$this->unset_member();
         	$this->app->model('cart_objects')->setCartNum($arr);
         }        
+
+        $member_id = $_SESSION['account']['staff_memberid'];
+        $b2c_members_model = $this->app->model('members');
+        $member_point_model = $this->app->model('member_point');        
+        $member_data = $b2c_members_model->getList( 'member_lv_id,experience,point', array('member_id'=>$member_id) );                 
+        $member_data = $member_data[0];
+        $member_data['order_num'] = $this->app->model('orders')->count( array('member_id'=>$member_id) );         
+        if($this->app->getConf('site.level_switch')==1)
+        {
+        	$member_data['member_lv_id'] = $b2c_members_model->member_lv_chk($member_data['member_lv_id'],$member_data['experience']);
+        }
+        if($this->app->getConf('site.level_switch')==0)
+        {
+        	$member_data['member_lv_id'] = $member_point_model->member_lv_chk($member_id,$member_data['member_lv_id'],$member_data['point']);
+        }         
+        $b2c_members_model->update($member_data,array('member_id'=>$member_id));
+        $this->userObject->set_member_session($member_id);
+        $this->bind_member($member_id);
+        $this->set_cookie('loginType','store',$this->cookie_expires);
         $this->redirect($url);
     }
     

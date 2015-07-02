@@ -55,6 +55,7 @@ class b2c_user_object{
     public function set_member_session_webpos($staff){
         unset($_SESSION['error_count']['b2c']);
         $_SESSION['account']['staff'] = $staff['staff_id'];
+        $_SESSION['account']['staff_memberid'] = $staff['member_id'];
         $_SESSION['account']['staff_name'] = $staff['login_name'];
     }
     
