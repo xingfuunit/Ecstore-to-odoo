@@ -59,9 +59,11 @@ class b2c_ctl_admin_vipday extends desktop_controller {
 		$_POST['start_time'] = $_time . ' 00:00:00';
 		$_POST['end_time'] = $_time . ' 23:59:59';
 		if ($objAd->save($_POST)) {
-			$vipday_name = $_POST ['id'];
-			$aData = kernel::database ()->select ( "update  sdb_b2c_vipday set current='false'" );
-			$aData = kernel::database ()->select ( "update  sdb_b2c_vipday set current='true' where id='{$vipday_name}'" );
+			if($_POST['current']=='true'){
+				$vipday_name = $_POST ['id'];
+				$aData = kernel::database ()->select ( "update  sdb_b2c_vipday set current='false'" );
+				$aData = kernel::database ()->select ( "update  sdb_b2c_vipday set current='true' where id='{$vipday_name}'" );
+			}
 			$this->end(true,app::get('b2c')->_('保存成功'));
 		} else {
 			$this->end(true,app::get('b2c')->_('保存失败'));
