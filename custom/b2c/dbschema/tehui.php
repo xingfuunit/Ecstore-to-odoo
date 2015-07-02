@@ -6,7 +6,7 @@
  * @license  http://ecos.shopex.cn/ ShopEx License
  */
 
-$db['vipday']=array (
+$db['tehui']=array (
   'columns' =>
   array (
     'id' =>
@@ -15,20 +15,20 @@ $db['vipday']=array (
       'required' => true,
       'pkey' => true,
       'extra' => 'auto_increment',
-      'label' => app::get('b2c')->_('会员日版本ID'),
+      'label' => app::get('b2c')->_('活动特惠ID'),
       'width' => 110,
       'editable' => false,
       'in_list' => false,
       'default_in_list' => false,
     ),
 
-    'vipday_name' =>
+    'tehui_name' =>
     array (
       'type' => 'varchar(100)',
       'required' => true,
       'is_title' => true,
       'default' => '',
-      'label' => app::get('b2c')->_('会员日活动名称'),
+      'label' => app::get('b2c')->_('活动特惠名称'),
       'width' => 110,
       'editable' => false,
       'in_list' => true,
@@ -46,7 +46,7 @@ $db['vipday']=array (
   				'in_list' => true,
   				'default_in_list' => true,
   		),
-  		'current' =>
+  	/* 	'current' =>
   		array (
       'type' => 'bool',
       'required' => true,
@@ -57,7 +57,7 @@ $db['vipday']=array (
       'filterdefault' => true,
       'in_list' => true,
       'default_in_list' => true,
-    ),
+    ), */
     'start_time'=>
     array(
     'type' => 'varchar(100)',
