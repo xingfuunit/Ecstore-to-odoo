@@ -875,7 +875,7 @@ window.addEvent('domready', function(){
     var pay_status = false;
     num_change = 0;
     $('bn_add_cart').focus();
-    $('bn_add_cart').addEvent("keyup",function(E){
+    $('bn_add_cart').addEvent("keydown",function(E){
         if(E.key == 'enter') {
             var bn = this.value;
             var bn_add_info = $$("div .bn_add_info");
@@ -1711,14 +1711,16 @@ var refreshProductListTaks = new simpleTask();
 
 function refreshProductList(){
     var url = '<{link app=b2c ctl=site_cart act=ajax_webpos_getProducts}>';
+    var bn_add_info = $$("div .bn_add_info");
     var myRequest = new Request.HTML({
         url: url,
+        timeout: '3000',
         onRequest: function(){
         },
         onSuccess: function(responseTree, responseElements, responseHTML, responseJavaScript){
             // console.log(responseHTML);
             
-
+			bn_add_info.set('html',new_text);
             document.getElementById('cart_container').innerHTML=responseHTML;
             var oDiv = document.getElementById('cart_container');
             oDiv.scrollTop = oDiv.scrollHeight;
@@ -1785,7 +1787,11 @@ function refreshProductList(){
         onFailure: function(){
             refreshProductListTaks.resetIsRun();
             refreshProductListTaks.active();
-        }
+        },
+        onTimout: function(){
+            refreshProductListTaks.resetIsRun();
+            refreshProductListTaks.active();
+        },
     });
     myRequest.get();
 }
@@ -1797,14 +1803,15 @@ function add_to_cart(bn){
     var myRequest = new Request.JSON({
         url: url,
         method: 'post',
-        timeout: '2000',
+        timeout: '3000',
         onRequest: function(){
             bn_add_info.set('html','正在加载……');
         },
         onSuccess: function(responseText){
             var text;
             if(responseText.response != undefined && responseText.response=='success'){
-                text = bn+'加入成功'; 
+                text = bn+'加入成功';
+                new_text = bn+'加入成功';
                 addGoodsTask.taskDone();
             }else{
                 // bn_add_info.set('html',responseText.error);
@@ -1815,9 +1822,8 @@ function add_to_cart(bn){
                     msg = responseText.msg;
                 text = bn+'加入失败，'+msg;
                 addGoodsTask.resetIsRun();
-
+                bn_add_info.set('html',text);
             }
-            bn_add_info.set('html',text);
             
         },
         onError: function(){
