@@ -31,7 +31,9 @@ class base_httpclient{
     		}
     		$data['matrix_certi'] = MATRIX_CERTI;
     		$data['matrix_timestamp'] = time();
-    		$data['sign'] = md5(MATRIX_CERTI.MATRIX_KEY.$data['matrix_timestamp']);
+    		//去掉原有的sign
+    		unset($data['sign']);
+    		$data['sign'] = base_certificate::gen_sign($data);
     		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     	}else{
     		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
@@ -55,7 +57,10 @@ class base_httpclient{
     		}    			
     		$data['matrix_certi'] = MATRIX_CERTI;
     		$data['matrix_timestamp'] = time();
-    		$data['sign'] = md5(MATRIX_CERTI.MATRIX_KEY.$data['matrix_timestamp']);
+    		//去掉原有的sign
+    		unset($data['sign']);
+    		$data['sign'] = base_certificate::gen_sign($data);
+
     		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     	}else{
         	return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
