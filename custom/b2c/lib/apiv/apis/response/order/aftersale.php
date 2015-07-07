@@ -154,7 +154,7 @@ class b2c_apiv_apis_response_order_aftersale
     }
     
     /**
-     * 获取售后申请单
+     * 获取售后申请单列表
      * @param unknown_type $sdf
      * @param unknown_type $thisObj
      */
@@ -192,17 +192,19 @@ class b2c_apiv_apis_response_order_aftersale
 
         $where = '';
         if( $start_time != '' )
-            $where .= "AND last_modified > '" . $start_time . "' ";
+            $where .= "AND last_modify > '" . $start_time . "' ";
+        
         if( $end_time != '' )
-            $where .= "AND last_modified <= '" . $end_time . "' ";
+            $where .= "AND last_modify < '" . $end_time . "' ";
+        
         if( $where != '' )
-            $where = 'WHERE ' . substr($where, 4);
+           $where = 'WHERE ' . substr($where, 4);
 
         $sql	=	"SELECT ### FROM " .
             $obj_return_product->table_name(1) . ' ' .
             $where .
-            "ORDER BY last_modified ASC";
-
+            "ORDER BY last_modify ASC";
+        
         //获取总数
         $total_results = $obj_return_product->db->select( str_replace('###', 'count(*) cc', $sql) );
         if( $total_results )
@@ -218,26 +220,19 @@ class b2c_apiv_apis_response_order_aftersale
         $limit = $page_size;
 
         $has_next = $total_results > ($offset+$limit) ? 'true' : 'false';
-
-        $sdf = $obj_orders->db->selectLimit( str_replace('###', ' * ', $sql), $limit, $offset );
+        
+        $sdf = $obj_return_product->db->selectLimit( str_replace('###', ' * ', $sql), $limit, $offset );
 
         if(!$sdf){		
             return $this->search_response(array());
         }
 
-        $trades = array();
-        $index = 0;
-        foreach( $sdf as  $row )
+        foreach( $sdf as $k=>&$row )
         {
-            $trades[$index]['tid'] = $row['order_id'];
-            $trades[$index]['status'] = ($row['status'] == 'active') ? 'TRADE_ACTIVE' : 'TRADE_CLOSED';
-            $trades[$index]['pay_status'] =  ($row['pay_status'] == '0' || !$row['pay_status']) ? 'PAY_NO' : $arr_pay_status[$row['pay_status']];
-            $trades[$index]['ship_status'] = ($row['ship_status'] == '0' || !$row['ship_status']) ? 'SHIP_NO' : 'SHIP_FINISH';
-            $trades[$index]['modified'] = date('Y-m-d H:i:s', $row['last_modified']);
-            $index++;
+        	$sdf[$k]['product_data']=unserialize($row['product_data']);
         }
 
-        return $this->search_response($trades, $total_results, $has_next);
+        return $this->search_response($sdf, $total_results, $has_next);
     }
 
     private function search_response($trades, $total_results=0, $has_next='false'){
