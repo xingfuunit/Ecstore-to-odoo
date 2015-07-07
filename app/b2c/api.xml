@@ -108,6 +108,7 @@
         <api function='get_goods_intro'> 根据商品ID,获取单个商品详情 </api>
         <api function='search_properties_goods'> 根据筛选条件查询商品 </api>
         <api function='get_goods_detail'> 根据商品id获取商品详细信息 </api>
+		<api function='get_goods_detail_by_bn'> 根据商品bn获取商品详细信息 </api>
     </module>
 
     <module id='b2c.goods' type='goods' class='b2c_apiv_apis_response_goods_cat'>
