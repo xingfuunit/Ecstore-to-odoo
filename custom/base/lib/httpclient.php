@@ -39,6 +39,7 @@ class base_httpclient{
     }
 
     function post($url,$data,$headers=null,$callback=null,$ping_only=false){
+
     	if(ODOO_ERP == '1' && strstr(strtolower($url),'shopex.cn')){    		   	    			
     		$url_array = unserialize(PZ_PASS_URL);
     		foreach($url_array as $ua){
@@ -52,8 +53,11 @@ class base_httpclient{
     		$data['sign'] = base_certificate::gen_sign($data);
     		
     		//ripcrocd 发送到 odoo
-    		$ripc = kernel::single('ripcord_builder');
-    		return $ripc->calling_methods($data);
+    		
+    		$ripc = kernel::single('base_ripcordbuilder');
+    		$re = $ripc->calling_methods($data);
+    		
+    		return $re;
     	}else{
         	return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     	}

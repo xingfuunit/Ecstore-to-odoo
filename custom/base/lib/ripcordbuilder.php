@@ -5,7 +5,7 @@
  *
  */
 
-class ripcord_builder{
+class base_ripcordbuilder{
 	
 	
 	var $url;
@@ -16,14 +16,14 @@ class ripcord_builder{
 	
 	var $password;
 	
-	function __construct(
+	public function __construct(){
 			require('ripcord/ripcord.php');
 			
 			$this->url = ODOO_URL;
 			$this->db = ODOO_DB;
 			$this->username = ODOO_USERNAME;
 			$this->password = ODOO_PASSWORD;
-		)
+	}
 	
 	/**
 	 *  登录
@@ -37,15 +37,10 @@ class ripcord_builder{
 	/**
 	 *调用方法
 	 */
-	function calling_methods($post_param,$methods="ecstore_notice"){
-		$post_data['Obj'] = 'ecstore_obj';
-		$post_data['Method'] = 'ecstore_notice';
-		$post_data['Args'] = $post_param;
-		
+	function calling_methods($post_param,$model="eshop.to.odoo"){
 		$uid = $this->logging_in();
 		$models = ripcord::client("$this->url/xmlrpc/2/object");
-		$re = $models->execute_kw($this->db, $uid, $this->password,'res.partner', $methods,$post_data, array('raise_exception' => false));
-		
+		$re = $models->execute_kw($this->db, $uid, $this->password,$model, 'synchronous_method',array(array(json_encode($post_param)),array()));
 		return $re;
 	}
 }
