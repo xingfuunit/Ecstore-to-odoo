@@ -9,32 +9,29 @@
  
 class base_httpclient{
 	function __construct(){
-		if(ECAE_MODE==true){
-			$this->netcore = kernel::single('base_curl');
-		}else{
-			$this->netcore = kernel::single('base_http');
-		}
+			if(ECAE_MODE==true){
+				$this->netcore = kernel::single('base_curl');
+			}else{
+				$this->netcore = kernel::single('base_http');
+			}	
 	}
-    function get($url,$headers=null,$callback=null,$ping_only=false){    	
-    	if(PZ_MATRIX == '1' && strstr(strtolower($url),'shopex.cn')){  
+	
+    function get($url,$headers=null,$callback=null,$ping_only=false){
+    	if(ODOO_ERP == '1' && strstr(strtolower($url),'shopex.cn')){  
     		$url_array = unserialize(PZ_PASS_URL);
     		foreach($url_array as $ua){
     			if(strstr(strtolower($url),$ua)){
     				return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     			}
     		}		    		
-    			//发送端区分同步异步
-    		if(strstr(strtolower($url),'/sync')){
-    			$url = MATRIX_URL.'/sync';
-    		}else{
-    			$url = MATRIX_URL;
-    		}
-    		$data['matrix_certi'] = MATRIX_CERTI;
-    		$data['matrix_timestamp'] = time();
+
     		//去掉原有的sign
     		unset($data['sign']);
     		$data['sign'] = base_certificate::gen_sign($data);
-    		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
+    		
+    		//ripcrocd 发送到 odoo
+    		$ripc = kernel::single('ripcord_builder');
+    		return $ripc->calling_methods($data);
     	}else{
     		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
     	}
@@ -42,26 +39,25 @@ class base_httpclient{
     }
 
     function post($url,$data,$headers=null,$callback=null,$ping_only=false){
-    	if(PZ_MATRIX == '1' && strstr(strtolower($url),'shopex.cn')){    		   	    			
+
+    	if(ODOO_ERP == '1' && strstr(strtolower($url),'shopex.cn')){    		   	    			
     		$url_array = unserialize(PZ_PASS_URL);
     		foreach($url_array as $ua){
     			if(strstr(strtolower($url),$ua)){
     				return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     			}
     		}	    			
-    		//发送端区分同步异步
-    		if(strstr(strtolower($url),'/sync')){
-    			$url = MATRIX_URL.'/sync';
-    		}else{
-    			$url = MATRIX_URL;
-    		}    			
-    		$data['matrix_certi'] = MATRIX_CERTI;
-    		$data['matrix_timestamp'] = time();
+    		
     		//去掉原有的sign
     		unset($data['sign']);
     		$data['sign'] = base_certificate::gen_sign($data);
-
-    		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
+    		
+    		//ripcrocd 发送到 odoo
+    		
+    		$ripc = kernel::single('base_ripcordbuilder');
+    		$re = $ripc->calling_methods($data);
+    		
+    		return $re;
     	}else{
         	return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,$data,$ping_only);
     	}
@@ -122,6 +118,9 @@ class base_httpclient{
             }
         }
     }
+    
+    
+    
 
 }
 ?>
