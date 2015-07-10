@@ -392,5 +392,137 @@ class b2c_apiv_apis_response_goods_goods
         } 
         return $fmt_image;
     }
+    
+    
+    /**
+     * 根据商品bn获得 商品详细信息
+     * @param unknown_type $params
+     * @param unknown_type $services
+     * @return multitype:NULL string |multitype:string |unknown
+     */
+    public function get_goods_detail_by_bn($params, $services)
+    {
+    	if (isset($params['product_bn']) && $params['product_bn'] != null)
+    	{
+    		$product_bn = $params['product_bn'];
+    	} else {
+    		return array('status'=>null,'message'=>'请输入商品货品bn');
+    	}
+    
+    	//拉取货品
+    	$obj_product = $this->app->model('products');
+    	$product = $obj_product->getRow('*', array('product_bn'=>$product_bn));
+    	if($product == null) return array('status'=>'','message'=>'该货品不存在');
+    
+    	//拉取商品
+    	$obj_goods = $this->app->model('goods');
+    	$goods = $obj_goods->dump($product['goods_id']);
+    	if($goods == null) return array('status'=>'','message'=>'未找到该货品对应的商品');
+    
+    	//拉取库存
+    	if($goods['nostore_sell'] == '1' || $product['store'] == null)
+    	{
+    		$store = 999999;
+    	}else{
+    		$store = $product['store'] - $product['freez'];
+    	}
+    
+    	//拉取类型type
+    	$obj_type = $this->app->model('goods_type');
+    	$type = $obj_type->getRow('type_id,name',$goods['type']);
+    
+    	//拉取分类
+    	$obj_category = $this->app->model('goods_cat');
+    	$category = $obj_category->getRow('cat_id,cat_name',$goods['category']);
+    
+    	//拉取品牌
+    	$obj_brand = $this->app->model('brand');
+    	$brand = $obj_brand->getRow('brand_id,brand_name',$goods['brand']);
+    
+    	//拉取促销
+    	$promotion = @$this->get_promotion_by_goods_id($goods['goods_id']);
+    
+    	//处理规格(并拉取图片)
+    	$spec = $goods['spec'];
+    	foreach($spec as $spec_key=>$spec_value)
+    	{
+    		foreach($spec_value['option'] as $spec_option_key=>$spec_option_value)
+    		{
+    			$image_ids[$spec_option_value['spec_image']] = $spec_option_value['spec_image'];
+    			$spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] = explode(',',$spec_option_value['spec_goods_images']);
+    			foreach($spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] as $image_id)
+    			{
+    				$image_ids[$image_id] = $image_id;
+    			}
+    		}
+    	}
+    	$obj_image_attach = app::get("image")->model("image_attach");
+    	$image_data_ids = $obj_image_attach->getList("attach_id,image_id",array("target_id"=>intval($goods['goods_id']),'target_type'=>'goods'));
+    	foreach($image_data_ids as $images)
+    	{
+    		$image_ids[$images['image_id']] = $images['image_id'];
+    	}
+    	$fmt_images = $this->get_images_by_ids($image_ids);
+    
+    	foreach($spec as $spec_key=>$spec_value)
+    	{
+    		foreach($spec_value['option'] as $spec_option_key=>$spec_option_value)
+    		{
+    			$spec[$spec_key]['option'][$spec_option_key]['spec_image'] = $fmt_images[$spec_option_value['spec_image']];
+    			foreach($spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] as $image_key=>$image_id)
+    			{
+    				$spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'][$image_key] = $fmt_images[$image_id];
+    			}
+    		}
+    	}
+    	foreach($image_data_ids as $goods_image)
+    	{
+    		$image[$goods_image['image_id']] = $fmt_images[$goods_image['image_id']];
+    	}
+    
+    	//获取商品属性
+    	$props = $goods['props'];
+    	foreach($props as $p_id=>$value_id)
+    	{
+    		$props_value_ids[$p_id] = $value_id['value'];
+    	}
+    	$obj_props_value = $this->app->model('goods_type_props_value');
+    	$props_value = $obj_props_value->getList('props_value_id,props_id,name,alias',array('props_value_id'=>$props_value_ids));
+    	foreach($props_value as $value)
+    	{
+    		$fmt_props_value[$value['props_value_id']] = $value;
+    		$props_ids[$value['props_id']] = $value['props_id'];
+    	}
+    	$obj_props = $this->app->model('goods_type_props');
+    	$props_sdf = $obj_props->getList('props_id,name,goods_p',array('props_id'=>$props_ids));
+    	foreach($props_sdf as $pp)
+    	{
+    		$fmt_props['p_'.$pp['goods_p']] = $pp;
+    	}
+    	foreach($fmt_props as $key=>$value)
+    	{
+    		$use_props[$key]['props'] = $fmt_props[$key];
+    		$use_props[$key]['props_value'] = $fmt_props_value[$props[$key]['value']];
+    	}
+    	//组织数据
+    	$return['goods_id'] = $product['goods_id'];
+    	$return['product_bn'] = $product['bn'];
+    	$return['unit'] = $product['unit'];
+    	$return['price'] = $product['price'];
+    	$return['mktprice'] = $product['mktprice'] ? $product['mktprice'] : $obj_product->getRealMkt($product['price']);
+    	$return['product_marketable'] = $product['marketable'];
+    	$return['goods_marketable'] = $goods['maketable'];
+    	$return['title'] = $goods['name'];
+    	$return['brief'] = $goods['brief'];
+    	$return['type_name'] = $type['name'];
+    	$return['store'] = $store;
+    	$return['cat_name'] = $category['cat_name'];
+    	$return['brand'] = $brand;
+    	$return['spec'] = $spec;
+    	$return['promotion'] = $promotion;
+    	$return['props'] = $use_props;
+    	$return['image'] = $image;
+    	return $return;
+    }
 
 }
