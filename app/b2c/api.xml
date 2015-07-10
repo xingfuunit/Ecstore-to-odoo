@@ -124,6 +124,16 @@
     <module id='b2c.goods' type='goods' class='b2c_apiv_apis_response_goods'>
         <api function='get_item' > 根据传入的id获取对应的单个商品的数据 </api>
         <api function='get_all_list' > 获取店铺内出售中的商品列表 </api>
+		<api function='add' > 添加商品 </api>
+		<api function='update' > 修改商品 </api>
+		<api function='delete' > 删除单个商品信息  </api>
+		
+		<api function='get_sku' >取得单个货品信息 </api>
+		<api function='add_sku' >取得单个货品信息 </api>
+		<api function='update_sku' > 更新单个货品信息 </api>
+		<api function='del_sku' >删除单个货品信息 </api>
+		
+		<api function='getAllProductsStore' >获取所有货品的货号和库存 </api>
     </module>
 
     <module id='b2c.goods.basic' type='goods' class='b2c_apiv_apis_response_goods'>
@@ -137,5 +147,24 @@
 
     <module id='b2c.brand' type='goods' class='b2c_apiv_apis_response_goods_brand'>
         <api function='get_brand_detail' > 获取品牌详情 </api>
+    </module>
+	
+	<!-- 新增商品规格相关接口 -->
+    <module id='b2c.goods' type='goods' class='b2c_apiv_apis_response_goods_specs'>
+        <api function='get_spec_list' >取得规格列表 </api>
+        <api function='get_spec_item' >取得一个规格的信息</api>
+		<api function='get_spec_item_value' >取得一个规格对应的全部规格值 </api>
+        <api function='get_spec_info' >取得一个规格的信息，包括所属的全部规格值</api>
+		
+        <api function='add_spec' >新增一个规格 </api>
+        <api function='update_spec' >修改一个规格 </api>
+        <api function='del_spec' >删除一个规格（会把相关规格值也一起删除） </api>
+		
+        <api function='get_specvalue_list' >取得规格值列表 </api>
+		<api function='get_specvalue_item' >取得一个规格值 </api>
+		
+        <api function='add_specvalue' >新增一个规格值 </api>
+        <api function='update_specvalue' >修改一个规格值 </api>
+        <api function='del_specvalue' >删除一个规格值 </api>
     </module>
 </apilist>

@@ -165,10 +165,37 @@ class b2c_apiv_apis_response_orders
                 $page_size = intval($params['page_size']);
         }
 
+		//支付状态，非必填写(int) 0=未支付,		1=已支付,	2=已付款至到担保方,		3=部分付款,		4=部分退款,		5=全额退款;
+        $pay_status = -1;
+        if( $params['pay_status'] != '' ){
+            if( !is_numeric($params['pay_status'])  )
+                $service->send_user_error('7007', 'pay_status不合法！');
+            else
+                $pay_status = intval($params['pay_status']);
+        }
+
+		//发货状态，非必填写(int) 0=未发货,		1=已发货,	2=部分发货,				3=部分退货,		4=已退货;
+        $ship_status = -1;
+        if( $params['ship_status'] != '' ){
+            if( !is_numeric($params['ship_status'])  )
+                $service->send_user_error('7008', 'ship_status不合法！');
+            else
+                $ship_status = intval($params['ship_status']);
+        }
+		
+		//订单状态，非必填写(int) 0=活动订单,	1=已作废,	2=已完成;
+        $status = -1;
+        if( $params['status'] != '' ){
+            if( !is_numeric($params['status'])  )
+                $service->send_user_error('7009', 'status不合法！');
+            else
+                $status = intval($params['status']);
+        }
+		
+		//------------------------------------------------------------------------------
         /**
          * 支付状态数组
          */
-
         $arr_pay_status = array(
             '0'=>'PAY_NO',
             '1'=>'PAY_FINISH',
@@ -185,6 +212,26 @@ class b2c_apiv_apis_response_orders
             $where .= "AND last_modified > '" . $start_time . "' ";
         if( $end_time != '' )
             $where .= "AND last_modified <= '" . $end_time . "' ";
+		
+        if( $pay_status >-1 )
+            $where .= "AND pay_status='" . $pay_status . "' ";
+		
+        if( $ship_status >-1 )
+            $where .= "AND ship_status='" . $ship_status . "' ";
+		
+        if( $status >-1 ){
+			if($status==1){
+				$where .= "AND status = 'dead' ";
+
+			}else if($status==2){
+				$where .= "AND status = 'finish' ";
+
+			}else{
+				$where .= "AND status = 'active' ";
+ 
+			}
+		}
+  
         if( $where != '' )
             $where = 'WHERE ' . substr($where, 4);
 
@@ -192,6 +239,8 @@ class b2c_apiv_apis_response_orders
             $obj_orders->table_name(1) . ' ' .
             $where .
             "ORDER BY last_modified ASC";
+
+		//$service->send_user_error('7009', $sql);
 
         //获取总数
         $total_results = $obj_orders->db->select( str_replace('###', 'count(*) cc', $sql) );
