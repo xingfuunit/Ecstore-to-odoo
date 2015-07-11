@@ -276,7 +276,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
             }
             // 与中心交互
             $is_need_rpc = false;
-            $obj_rpc_obj_rpc_request_service = kernel::servicelist('b2c.rpc_notify_request');
+            /* $obj_rpc_obj_rpc_request_service = kernel::servicelist('b2c.rpc_notify_request');
             foreach ($obj_rpc_obj_rpc_request_service as $obj)
             {
                 if ($obj && method_exists($obj, 'rpc_judge_send'))
@@ -286,7 +286,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
                 }
 
                 if ($is_need_rpc) break;
-            }
+            } */
 
             if ($is_need_rpc)
             {
@@ -598,16 +598,19 @@ class b2c_ctl_site_order extends b2c_frontpage{
           			'addon'=>serialize($arr_args),
           	);
           	$log_id = $webposLog->save($sdf_webpos_log);
-            /*
-            $objOrders = $this->app->model('orders');
-              // 更新订单支付信息
-            $arr_updates = array(
-                'order_id' => $order_id,
-                'ship_status' => '1',
-                'pay_status' => '1',
-            );
-           $objOrders->save($arr_updates);
-            */
+            
+          }
+          if( $_POST['is_store'] == 1){
+          	//webpos来源的订单自动完成 bySam 20150708
+          	$objOrders = $this->app->model('orders');
+          	// 更新订单支付信息
+          	$arr_updates1 = array(
+          			'order_id' => $order_id,
+          			'ship_status' => '1',
+          			'status'=>'finish',
+          
+          	);
+          	$objOrders->save($arr_updates1);
           }
           $cart_type = $this->_request->get_post('type');
           if($cart_type == 'x'){

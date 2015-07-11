@@ -299,6 +299,9 @@ class b2c_order_full{
         //$arr_data['payment_list'] = json_encode($arr_data['payment_list']);
         $arr_data['payment_lists'] = json_encode( array( 'payment_list' => $arr_data['payment_list'] ) );
 
+        //订单来源
+        $arr_data['source'] = $sdf['source'];
+        $arr_data['is_auto_complete'] = $sdf['is_auto_complete'];
         //订单卖家备注信息
         $arr_data['trade_memo'] = "";
         $mark_text = unserialize($sdf['mark_text']);
