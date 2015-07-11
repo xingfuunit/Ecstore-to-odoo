@@ -35,9 +35,9 @@ class b2c_apiv_apis_response_goods_specs{
 		//-------------------------------------------------
 		
 		$db = kernel::database();
-        $rows = $db->select($sql);
-        if ($rows && is_array($rows)){
-			$rs_count = intval($rows[0]['c']);
+        $rs = $db->selectrow($sql);
+        if ($rs && is_array($rs)){
+			$rs_count = intval($rs['c']);
 		}
 		$str_limit 	= '';
 		$offset 	= 0;

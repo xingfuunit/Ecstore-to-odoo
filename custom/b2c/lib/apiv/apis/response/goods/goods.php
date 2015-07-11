@@ -107,7 +107,62 @@ class b2c_apiv_apis_response_goods_goods
 		return array('total_results'=>$rs[0]['count'], 'items'=>$sdf_goods);
     }
 	
+	/**
+	 * 根据表名，查询条件，页码，返回总记录数，总分页数
+	 * 
+     * @param page_no 		当前页码
+     * @param page_size		每页的记录数
+     * @param sTableName 	表名
+     * @param sWhere 		查询条件
+	 * @return array
+	 */
+	private function get_pager($page_no, $page_size, $sTableName, $sWhere='')
+	{
+        $page_no 	= intval($page_no);
+        $page_size 	= intval($page_size);
+		$limit		= '';
+		
+		$rs_count = 0;
+		
+		$sql = 'select count(*) as c from `'.$sTableName.'` '.$sWhere;
 
+		//-------------------------------------------------
+		
+		$db = kernel::database();
+        $rs = $db->selectrow($sql);
+        if ($rs && is_array($rs)){
+			$rs_count = intval($rs['c']);
+		}
+		$str_limit 	= '';
+		$offset 	= 0;
+		$limit 		= -1;
+		$page_count = 0;
+		
+		if($rs_count>0){
+			$page_count	= ceil($rs_count / $page_size);
+			if( $page_no < 1 ){
+				$page_no = 1;
+			}else if( $page_no > $page_count ){
+				$page_no = $page_count;
+			}
+			$offset		= (($page_no-1)* $page_size);
+			$limit		= $page_size;
+			$str_limit = ' LIMIT '.$offset.','.$limit;
+		}else{
+			$page_no = 1;
+		}
+		
+		return array(
+			'rs_count' 		=> $rs_count,
+			'page_count' 	=> $page_count,
+			'page_no' 		=> $page_no,
+			'page_size' 	=> $page_size,
+			'offset' 		=> $offset,
+			'limit' 		=> $limit,
+			'str_limit' 	=> $str_limit
+		);
+	}
+	
     /**
      * 根据筛选条件查询商品
      * @param int page_num 页码
@@ -123,6 +178,10 @@ class b2c_apiv_apis_response_goods_goods
      */
     public function get_goods_base_list($params, &$service)
     {
+        $params['page_no'] 		= $params['page_no'] ? $params['page_no'] : '1';
+        $params['page_size'] 	= $params['page_size'] ? $params['page_size'] : '10';
+		
+			
         //json转array
         $params['brand_id'] = $params['brand_id'] ? json_decode($params['brand_id'],true) : null;
         $params['specs'] = $params['specs'] ? json_decode($params['specs'],true) : null;
@@ -136,8 +195,6 @@ class b2c_apiv_apis_response_goods_goods
         }
 		*/
         $_goods = $this->app->model('goods');
-        $limit = $params['page_size'] ? $params['page_size'] : 10;
-        $offset = $params['page_num'] ? (($params['page_num']-1) * $limit) : 0;
 
         //根据分类查询
         if(isset($params['cat_id']) && $params['cat_id']!=null)
@@ -153,9 +210,9 @@ class b2c_apiv_apis_response_goods_goods
         }
 
         //根据关键字查询
-        if(isset($params['search_keywords']) && $params['search_keywords']!=null)
+        if(isset($params['keywords']) && $params['keywords']!=null)
         {
-            $filter['search_keywords'] = array($params['search_keywords']);
+            $filter['search_keywords'] = array($params['keywords']);
         }
 
         //根据品牌查询
