@@ -13,17 +13,19 @@ class b2c_apiv_apis_response_goods_goods
      */
     public function get_goods_intro($params, &$service)
     {
-        $goods_id = $params['goods_id'];
-        if(empty($goods_id)){
-            return $service->send_user_error('商品ID必填');  
-        } 
-        $obj_goods = $this->app->model('goods');
+		$goods_id = intval(''.$params['goods_id']);
+        if ($goods_id<1)
+        {
+            $service->send_user_error(app::get('b2c')->_('商品ID必填'), null);
+        }
+		
+        $_goods = $this->app->model('goods');
         $filter = array('goods_id'=>intval($goods_id));
         $wap_status = app::get('wap')->getConf('wap.status');
         if( $wap_status == 'true' ){
-            $intro = $obj_goods->getList('wapintro,intro',$filter);
+            $intro = $_goods->getList('wapintro,intro',$filter);
         }else{
-            $intro = $obj_goods->getList('intro',$filter);
+            $intro = $_goods->getList('intro',$filter);
         }
         $intro = $intro[0];
         $return['goods_id'] = $goods_id;
@@ -36,30 +38,104 @@ class b2c_apiv_apis_response_goods_goods
     }
 
     /**
+     * 获取商品列表
+     * @param mixed sdf结构
+     * @param object handle object
+     * @return mixed 返回增加的结果
+     */
+    public function get_goods_detail_list(&$sdf, &$thisObj)
+    {
+
+        $sdf['page_no'] = $sdf['page_no'] ? max(1,(int)$sdf['page_no']) : '1';
+        $sdf['page_size'] = $sdf['page_size'] ? (int)$sdf['page_size'] : '20';
+
+        /** 生成过滤条件 **/
+        $db = kernel::database();
+        $condition = "";
+        if ($sdf['cat_id'])
+            $condition .= " AND cat_id=".intval($sdf['cat_id']);
+        if ($sdf['cid'])
+            $condition .= " AND type_id=".intval($sdf['cid']);
+        if ($sdf['brand_id'])
+            $condition .= " AND brand_id=".$sdf['brand_id'];
+
+        $page_size = $sdf['page_size'];
+        $page_no = ($sdf['page_no'] - 1) * $page_size;
+
+        $start_time = $sdf['start_time'];
+        $end_time = $sdf['end_time'];
+        if($start_time)
+        {
+            if(($start_time = strtotime($start_time)) === false || $start_time == -1)
+            {
+                $thisObj->send_user_error('5001', '开始时间格式不能正确解析!');
+            }
+
+            $condition .= " AND last_modify>=".$start_time;
+        }
+
+        if($end_time)
+        {
+            if(($end_time = strtotime($end_time)) === false || $end_time == -1)
+            {
+                $thisObj->send_user_error('5002', '结束时间格式不能正确解析!');
+            }
+            $condition .= " AND last_modify<".$end_time;
+        }
+
+
+        $rs = $db->select("SELECT count(*) as count FROM `sdb_b2c_goods` WHERE 1".$condition);
+        if(!$rs[0]['count']){
+            return array('total_results'=>0, 'items'=>'[]');            
+        }
+        if (!$rows = $db->select("SELECT * FROM `sdb_b2c_goods` WHERE 1".$condition." LIMIT ".$page_no.",".$page_size))
+        {
+            return array('total_results'=>0, 'items'=>'[]');
+        }
+
+        /**
+         * 得到返回的商品信息
+         */
+        $sdf_goods = array();
+        //$obj_ctl_goods = kernel::single('b2c_ctl_site_product');
+        foreach($rows as $arr_row)
+        {
+            $sdf_goods['item'][] = $this->get_item_detail($arr_row, $obj_ctl_goods);
+        }
+
+        //return array('total_results'=>$rs[0]['count'], 'items'=>json_encode($sdf_goods));
+		return array('total_results'=>$rs[0]['count'], 'items'=>$sdf_goods);
+    }
+	
+
+    /**
      * 根据筛选条件查询商品
      * @param int page_num 页码
      * @param int page_size 每页的容量
      * @param int cat_id 商品分类 
-     * @param string search_keywords 关键词（根据名字搜索）
      * @param string brand_id array(int)数组的json(品牌id)
+     * @param string search_keywords 关键词（根据名字搜索）
      * @param string specs array(int=>array(int))格式的json 商品规格array(规格id=>array(规格值id))
      * @param string props array(int=>array(int))格式的json props 商品属性id
+     * @param string orderBy 排序方式，默认为按时间排序
      * @return goods 商品
      * @return count 商品条目数
      */
-    public function search_properties_goods($params, &$service)
+    public function get_goods_base_list($params, &$service)
     {
         //json转array
         $params['brand_id'] = $params['brand_id'] ? json_decode($params['brand_id'],true) : null;
         $params['specs'] = $params['specs'] ? json_decode($params['specs'],true) : null;
         $params['props'] = $params['props'] ? json_decode($params['props'],true) : null;
+		
         //分类、品牌、关键词必须要有一个才可以查询
+		/*
         if( $params['cat_id'] == null && $params['search_keywords'] == null && $params['brand_id'] == null)
         {
             return array('status'=>'error','message'=>'分类、品牌、关键词至少有一项需要填写');
         }
-
-        $obj_goods = $this->app->model('goods');
+		*/
+        $_goods = $this->app->model('goods');
         $limit = $params['page_size'] ? $params['page_size'] : 10;
         $offset = $params['page_num'] ? (($params['page_num']-1) * $limit) : 0;
 
@@ -116,11 +192,11 @@ class b2c_apiv_apis_response_goods_goods
         //排序
         if(isset($params['orderBy_id']) && $params['orderBy_id']>0 && $params['orderBy_id'] <11)
         {
-            $order = $obj_goods->orderBy($params['orderBy_id']);
+            $order = $_goods->orderBy($params['orderBy_id']);
             $orderBy = $order['sql'];
         }
         $filter['marketable'] = 'true';
-        $data = $obj_goods->getList('marketable,goods_id,bn,name,brief,image_default_id,comments_count,nostore_sell',$filter,$offset,$limit,$orderBy);
+        $data = $_goods->getList('marketable,goods_id,bn,name,brief,image_default_id,comments_count,nostore_sell',$filter,$offset,$limit,$orderBy);
 
         foreach($data as $key=>$goods)
         {
@@ -156,55 +232,48 @@ class b2c_apiv_apis_response_goods_goods
         }
         $return['goods']=$data;
         //获取总条数
-        $count = $obj_goods->countGoods($filter);
+        $count = $_goods->countGoods($filter);
         $return['count']=$count;
         return $return;
     }
-
-    public function get_goods_detail($params, $services)
+	
+	/**
+	 * 根据 product，返回 get_sku_detail
+	 * 
+     * @param rs_product 	product
+     * @param rs_goods 		goods
+	 * @return array
+	 */
+	private function get_response_goods_detail($rs_product,$rs_goods)
     {
-        if (isset($params['product_id']) && $params['product_id'] != null)
-        {
-            $product_id = $params['product_id'];
-        } else {
-            return array('status'=>null,'message'=>'请输入商品货品id');
-        }
-
-        //拉取货品
-        $obj_product = $this->app->model('products');
-        $product = $obj_product->getRow('*', array('product_id'=>$product_id));
-        if($product == null) return array('status'=>'','message'=>'该货品不存在');
-
-        //拉取商品
-        $obj_goods = $this->app->model('goods');
-        $goods = $obj_goods->dump($product['goods_id']);
-        if($goods == null) return array('status'=>'','message'=>'未找到该货品对应的商品');
-
         //拉取库存
-        if($goods['nostore_sell'] == '1' || $product['store'] == null)
+        if($rs_goods['nostore_sell'] == '1' || $rs_product['store'] == null)
         {
-            $store = 999999;
+            $store = '999999';
         }else{
-            $store = $product['store'] - $product['freez'];
+            $store = ''.($rs_product['store'] - $rs_product['freez']);
         }
 
+		//-----------------------------------------------
         //拉取类型type
-        $obj_type = $this->app->model('goods_type');
-        $type = $obj_type->getRow('type_id,name',$goods['type']);
+        $_type = $this->app->model('goods_type');
+        $rs_type = $_type->getRow('type_id,name',$rs_goods['type']);
 
         //拉取分类
-        $obj_category = $this->app->model('goods_cat');
-        $category = $obj_category->getRow('cat_id,cat_name',$goods['category']);
+        $_cat = $this->app->model('goods_cat');
+        $rs_cat = $_cat->getRow('cat_id,cat_name',$rs_goods['category']);
 
         //拉取品牌
-        $obj_brand = $this->app->model('brand');
-        $brand = $obj_brand->getRow('brand_id,brand_name',$goods['brand']);
+        $_brand = $this->app->model('brand');
+        $rs_brand = $_brand->getRow('brand_id,brand_name',$rs_goods['brand']);
 
         //拉取促销
-        $promotion = @$this->get_promotion_by_goods_id($goods['goods_id']);
+        $promotion = @$this->get_promotion_by_goods_id($rs_goods['goods_id']);
+		
 
         //处理规格(并拉取图片)
-        $spec = $goods['spec'];
+        $spec = $rs_goods['spec'];
+
         foreach($spec as $spec_key=>$spec_value)
         {
             foreach($spec_value['option'] as $spec_option_key=>$spec_option_value)
@@ -217,8 +286,9 @@ class b2c_apiv_apis_response_goods_goods
                 }
             }
         }
-        $obj_image_attach = app::get("image")->model("image_attach");
-        $image_data_ids = $obj_image_attach->getList("attach_id,image_id",array("target_id"=>intval($goods['goods_id']),'target_type'=>'goods'));
+        $_image_attach = app::get("image")->model("image_attach");
+        $image_data_ids = $_image_attach->getList("attach_id,image_id",array("target_id"=>intval($rs_goods['goods_id']),'target_type'=>'goods'));
+
         foreach($image_data_ids as $images)
         {
             $image_ids[$images['image_id']] = $images['image_id'];
@@ -242,51 +312,131 @@ class b2c_apiv_apis_response_goods_goods
         }
 
         //获取商品属性
-        $props = $goods['props'];
+        $props = $rs_goods['props'];
         foreach($props as $p_id=>$value_id)
         {
             $props_value_ids[$p_id] = $value_id['value'];
         }
-        $obj_props_value = $this->app->model('goods_type_props_value');
-        $props_value = $obj_props_value->getList('props_value_id,props_id,name,alias',array('props_value_id'=>$props_value_ids));
+        $_props_value = $this->app->model('goods_type_props_value');
+        $props_value = $_props_value->getList('props_value_id,props_id,name,alias',array('props_value_id'=>$props_value_ids));
         foreach($props_value as $value)
         {
             $fmt_props_value[$value['props_value_id']] = $value;
             $props_ids[$value['props_id']] = $value['props_id'];
         }
-        $obj_props = $this->app->model('goods_type_props');
-        $props_sdf = $obj_props->getList('props_id,name,goods_p',array('props_id'=>$props_ids));
-        foreach($props_sdf as $pp)
-        {
-            $fmt_props['p_'.$pp['goods_p']] = $pp;
-        }
-        foreach($fmt_props as $key=>$value)
-        {
-            $use_props[$key]['props'] = $fmt_props[$key];
-            $use_props[$key]['props_value'] = $fmt_props_value[$props[$key]['value']];
-        }
-        //组织数据
-        $return['goods_id'] = $product['goods_id'];
-        $return['product_id'] = $product_id;
-        $return['product_bn'] = $product['bn'];
-        $return['unit'] = $product['unit'];
-        $return['price'] = $product['price'];
-        $return['mktprice'] = $product['mktprice'] ? $product['mktprice'] : $obj_product->getRealMkt($product['price']);
-        $return['product_marketable'] = $product['marketable'];
-        $return['goods_marketable'] = $goods['maketable'];
-        $return['title'] = $goods['name'];
-        $return['brief'] = $goods['brief'];
-        $return['type_name'] = $type['name'];
-        $return['store'] = $store;
-        $return['cat_name'] = $category['cat_name'];
-        $return['brand'] = $brand;
-        $return['spec'] = $spec;
-        $return['promotion'] = $promotion;
-        $return['props'] = $use_props;
-        $return['image'] = $image;
-        return $return;
-    }
+        $_props = $this->app->model('goods_type_props');
+        $props_sdf = $_props->getList('props_id,name,goods_p',array('props_id'=>$props_ids));
+		if(is_array($props_sdf) && count($props_sdf)>0){
 
+			foreach($props_sdf as $pp)
+			{
+				$fmt_props['p_'.$pp['goods_p']] = $pp;
+			}
+			foreach($fmt_props as $key=>$value)
+			{
+				$use_props[$key]['props'] = $fmt_props[$key];
+				$use_props[$key]['props_value'] = $fmt_props_value[$props[$key]['value']];
+			}	
+		}
+
+        //组织数据
+        $return['goods_id'] 	= $rs_product['goods_id'];
+        $return['product_id'] 	= $rs_product['product_id'];
+        $return['product_bn'] 	= $rs_product['bn'];
+        $return['unit'] 		= $rs_product['unit'];
+        $return['price'] 		= $rs_product['price'];
+        $return['mktprice'] 	= $rs_product['mktprice'] ? $rs_product['mktprice'] : $_product->getRealMkt($rs_product['price']);
+		
+        $return['product_marketable'] 	= $rs_product['marketable'];
+        //$return['goods_marketable'] 	= $rs_goods['maketable'];
+		 $return['goods_marketable'] 	= $rs_goods['status'];
+
+        $return['title'] = $rs_goods['name'];
+        $return['brief'] = $rs_goods['brief'];
+		
+        $return['type_name'] 	= $rs_type['name'];
+        $return['store'] 		= $store;
+        $return['cat_name']		= $rs_cat['cat_name'];
+        $return['brand'] 		= $rs_brand;
+        $return['spec'] 		= $spec;
+        $return['promotion'] 	= $promotion;
+        $return['props'] 		= $use_props;
+        $return['image'] 		= $image;
+		
+		return $return;
+	}
+	
+    /**
+     * 根据货号取得一个货品的详细信息
+     * @param String bn
+     * @return  array();
+     */
+    public function get_goods_detail($params, &$service)
+    {
+        if (!isset($params['bn']) || strlen($params['bn'])==0)
+        {
+            $service->send_user_error(app::get('b2c')->_('bn参数为空'), null);
+        }
+		
+		//-----------------------------------------------
+        $obj_products = $this->app->model('products');
+
+        $rs_product = $obj_products->getRow('*',array('bn'=>$params['bn']));
+        if(count($rs_product) == 0)
+		{
+			$service->send_user_error(app::get('b2c')->_('该货品不存在'), null);
+		}
+		
+		//-----------------------------------------------
+		$goods_id = intval($rs_product['goods_id']);
+		
+		//-----------------------------------------------
+        $_goods = $this->app->model('goods');
+		$rs_goods = $_goods->dump($goods_id);
+        if($rs_goods == null)
+		{
+			$service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'));
+		}
+
+        return $this->get_response_goods_detail($rs_product,$rs_goods);
+    }
+	
+    /**
+     * 根据货品ID取得一个货品的详细信息
+     * @param String product_id 货品ID
+     * @return  array()
+     */
+    public function get_goods_detail_id($params, &$service)
+    {
+		$params['product_id'] = intval(''.$params['product_id']);
+        if ($params['product_id']<1)
+        {
+            $service->send_user_error(app::get('b2c')->_('product_id参数为空'), null);
+        }
+
+		//-----------------------------------------------
+        $obj_products = $this->app->model('products');
+
+        $rs_product = $obj_products->getRow('*',array('product_id'=>$params['product_id']));
+        if(count($rs_product) == 0)
+		{
+			$service->send_user_error(app::get('b2c')->_('没有查询到任何货品的内容'), null);
+		}
+		//-----------------------------------------------
+		$goods_id = $rs_product['goods_id'];
+		
+		//-----------------------------------------------
+        $_goods = $this->app->model('goods');
+		$rs_goods = $_goods->dump($goods_id);
+        if($rs_goods == null)
+		{
+			$service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'));
+		}
+
+        return $this->get_response_goods_detail($rs_product,$rs_goods);
+    }
+	
+	
     private function get_promotion_by_goods_id($goods_id)
     {
         $goodsPromotion = kernel::single('b2c_goods_object')->get_goods_promotion($goods_id);
@@ -392,137 +542,7 @@ class b2c_apiv_apis_response_goods_goods
         } 
         return $fmt_image;
     }
-    
-    
-    /**
-     * 根据商品bn获得 商品详细信息
-     * @param unknown_type $params
-     * @param unknown_type $services
-     * @return multitype:NULL string |multitype:string |unknown
-     */
-    public function get_goods_detail_by_bn($params, $services)
-    {
-    	if (isset($params['product_bn']) && $params['product_bn'] != null)
-    	{
-    		$product_bn = $params['product_bn'];
-    	} else {
-    		return array('status'=>null,'message'=>'请输入商品货品bn');
-    	}
-    
-    	//拉取货品
-    	$obj_product = $this->app->model('products');
-    	$product = $obj_product->getRow('*', array('product_bn'=>$product_bn));
-    	if($product == null) return array('status'=>'','message'=>'该货品不存在');
-    
-    	//拉取商品
-    	$obj_goods = $this->app->model('goods');
-    	$goods = $obj_goods->dump($product['goods_id']);
-    	if($goods == null) return array('status'=>'','message'=>'未找到该货品对应的商品');
-    
-    	//拉取库存
-    	if($goods['nostore_sell'] == '1' || $product['store'] == null)
-    	{
-    		$store = 999999;
-    	}else{
-    		$store = $product['store'] - $product['freez'];
-    	}
-    
-    	//拉取类型type
-    	$obj_type = $this->app->model('goods_type');
-    	$type = $obj_type->getRow('type_id,name',$goods['type']);
-    
-    	//拉取分类
-    	$obj_category = $this->app->model('goods_cat');
-    	$category = $obj_category->getRow('cat_id,cat_name',$goods['category']);
-    
-    	//拉取品牌
-    	$obj_brand = $this->app->model('brand');
-    	$brand = $obj_brand->getRow('brand_id,brand_name',$goods['brand']);
-    
-    	//拉取促销
-    	$promotion = @$this->get_promotion_by_goods_id($goods['goods_id']);
-    
-    	//处理规格(并拉取图片)
-    	$spec = $goods['spec'];
-    	foreach($spec as $spec_key=>$spec_value)
-    	{
-    		foreach($spec_value['option'] as $spec_option_key=>$spec_option_value)
-    		{
-    			$image_ids[$spec_option_value['spec_image']] = $spec_option_value['spec_image'];
-    			$spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] = explode(',',$spec_option_value['spec_goods_images']);
-    			foreach($spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] as $image_id)
-    			{
-    				$image_ids[$image_id] = $image_id;
-    			}
-    		}
-    	}
-    	$obj_image_attach = app::get("image")->model("image_attach");
-    	$image_data_ids = $obj_image_attach->getList("attach_id,image_id",array("target_id"=>intval($goods['goods_id']),'target_type'=>'goods'));
-    	foreach($image_data_ids as $images)
-    	{
-    		$image_ids[$images['image_id']] = $images['image_id'];
-    	}
-    	$fmt_images = $this->get_images_by_ids($image_ids);
-    
-    	foreach($spec as $spec_key=>$spec_value)
-    	{
-    		foreach($spec_value['option'] as $spec_option_key=>$spec_option_value)
-    		{
-    			$spec[$spec_key]['option'][$spec_option_key]['spec_image'] = $fmt_images[$spec_option_value['spec_image']];
-    			foreach($spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] as $image_key=>$image_id)
-    			{
-    				$spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'][$image_key] = $fmt_images[$image_id];
-    			}
-    		}
-    	}
-    	foreach($image_data_ids as $goods_image)
-    	{
-    		$image[$goods_image['image_id']] = $fmt_images[$goods_image['image_id']];
-    	}
-    
-    	//获取商品属性
-    	$props = $goods['props'];
-    	foreach($props as $p_id=>$value_id)
-    	{
-    		$props_value_ids[$p_id] = $value_id['value'];
-    	}
-    	$obj_props_value = $this->app->model('goods_type_props_value');
-    	$props_value = $obj_props_value->getList('props_value_id,props_id,name,alias',array('props_value_id'=>$props_value_ids));
-    	foreach($props_value as $value)
-    	{
-    		$fmt_props_value[$value['props_value_id']] = $value;
-    		$props_ids[$value['props_id']] = $value['props_id'];
-    	}
-    	$obj_props = $this->app->model('goods_type_props');
-    	$props_sdf = $obj_props->getList('props_id,name,goods_p',array('props_id'=>$props_ids));
-    	foreach($props_sdf as $pp)
-    	{
-    		$fmt_props['p_'.$pp['goods_p']] = $pp;
-    	}
-    	foreach($fmt_props as $key=>$value)
-    	{
-    		$use_props[$key]['props'] = $fmt_props[$key];
-    		$use_props[$key]['props_value'] = $fmt_props_value[$props[$key]['value']];
-    	}
-    	//组织数据
-    	$return['goods_id'] = $product['goods_id'];
-    	$return['product_bn'] = $product['bn'];
-    	$return['unit'] = $product['unit'];
-    	$return['price'] = $product['price'];
-    	$return['mktprice'] = $product['mktprice'] ? $product['mktprice'] : $obj_product->getRealMkt($product['price']);
-    	$return['product_marketable'] = $product['marketable'];
-    	$return['goods_marketable'] = $goods['maketable'];
-    	$return['title'] = $goods['name'];
-    	$return['brief'] = $goods['brief'];
-    	$return['type_name'] = $type['name'];
-    	$return['store'] = $store;
-    	$return['cat_name'] = $category['cat_name'];
-    	$return['brand'] = $brand;
-    	$return['spec'] = $spec;
-    	$return['promotion'] = $promotion;
-    	$return['props'] = $use_props;
-    	$return['image'] = $image;
-    	return $return;
-    }
+	
+	
 
 }

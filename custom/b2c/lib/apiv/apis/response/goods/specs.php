@@ -31,6 +31,8 @@ class b2c_apiv_apis_response_goods_specs{
 		$rs_count = 0;
 		
 		$sql = 'select count(*) as c from `'.$sTableName.'` '.$sWhere;
+
+		//-------------------------------------------------
 		
 		$db = kernel::database();
         $rows = $db->select($sql);
@@ -40,6 +42,7 @@ class b2c_apiv_apis_response_goods_specs{
 		$str_limit 	= '';
 		$offset 	= 0;
 		$limit 		= -1;
+		$page_count = 0;
 		
 		if($rs_count>0){
 			$page_count	= ceil($rs_count / $page_size);
@@ -77,11 +80,13 @@ class b2c_apiv_apis_response_goods_specs{
         $sdf['page_no'] 	= $sdf['page_no'] ? $sdf['page_no'] : '1';
         $sdf['page_size'] 	= $sdf['page_size'] ? $sdf['page_size'] : '20';
 		
-		$pager	= $this->get_pager($sdf['page_no'], $sdf['page_size'], 'sdb_b2c_specification');
+		$_model = app::get('b2c')->model('specification');
+		
+		$pager	= $this->get_pager($sdf['page_no'], $sdf['page_size'], $_model->table_name(1));
 		
 		$items 	= array();
 		if( $pager['rs_count']>0 ){
-			$_model = app::get('b2c')->model('specification');
+			
 			$rows = $_model->getList('spec_id,spec_name,spec_memo,p_order,disabled',array(),$pager['offset'],$pager['limit']);
 				
 			/*
@@ -123,7 +128,7 @@ class b2c_apiv_apis_response_goods_specs{
 		$sdf['spec_id'] = intval(''.$sdf['spec_id']);
         if ($sdf['spec_id']<1)
         {
-            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), null);
         }
 		
 		$item 	= array();
@@ -154,7 +159,7 @@ class b2c_apiv_apis_response_goods_specs{
 		$sdf['spec_id'] = intval(''.$sdf['spec_id']);
         if ($sdf['spec_id']<1)
         {
-            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), null);
         }
 		
 		return $this->get_spec_item_value2($sdf['spec_id']);
@@ -202,7 +207,7 @@ class b2c_apiv_apis_response_goods_specs{
 		$sdf['spec_id'] = intval(''.$sdf['spec_id']);
         if ($sdf['spec_id']<1)
         {
-            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), null);
         }
 		
 		$item 	= array();
@@ -295,7 +300,7 @@ class b2c_apiv_apis_response_goods_specs{
 		$sdf['spec_id'] = intval(''.$sdf['spec_id']);
         if ($sdf['spec_id']<1)
         {
-            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), null);
         }
 		
         if (!isset($sdf['spec_name']) || strlen($sdf['spec_name'])==0)
@@ -373,13 +378,13 @@ class b2c_apiv_apis_response_goods_specs{
 		
         if ($sdf['spec_id']<1)
         {
-            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格编码为空！'), null);
         }
 
 		//-------------------------------------------
 		if (app::get('b2c')->model('goods_spec_index')->dump(array('spec_id'=>$sdf['spec_id'])))
 		{
-            $thisObj->send_user_error(app::get('b2c')->_('规格值已被商品使用'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格值已被商品使用'), null);
 		}
 
 		//-------------------------------------------
@@ -397,10 +402,10 @@ class b2c_apiv_apis_response_goods_specs{
 					'time' => date('Y-m-d H:i:s',time()),
 				);
 			}else{
-				$thisObj->send_user_error(app::get('b2c')->_('sql执行出错'), array());
+				$thisObj->send_user_error(app::get('b2c')->_('sql执行出错'), null);
 			}
 		}else{
-			$thisObj->send_user_error(app::get('b2c')->_('没有相关数据'), array());
+			$thisObj->send_user_error(app::get('b2c')->_('没有相关数据'), null);
 		}
 
 	}
@@ -416,13 +421,11 @@ class b2c_apiv_apis_response_goods_specs{
         $sdf['page_no'] 	= $sdf['page_no'] ? $sdf['page_no'] : '1';
         $sdf['page_size'] 	= $sdf['page_size'] ? $sdf['page_size'] : '20';
 		
-		$pager	= $this->get_pager($sdf['page_no'], $sdf['page_size'], 'sdb_b2c_spec_values');
+		$_model = app::get('b2c')->model('spec_values');
+		$pager	= $this->get_pager($sdf['page_no'], $sdf['page_size'], $_model->table_name(1));
 		
 		$items 	= array();
 		if( $pager['rs_count']>0 ){
-				
-			$_model = app::get('b2c')->model('spec_values');
-			
 			$rows = $_model->getList('spec_value_id,spec_id,spec_value,p_order',array(),$pager['offset'],$pager['limit']);
 			
 			/*
@@ -465,7 +468,7 @@ class b2c_apiv_apis_response_goods_specs{
 		$sdf['spec_value_id'] = intval(''.$sdf['spec_value_id']);
         if ($sdf['spec_value_id']<1)
         {
-            $thisObj->send_user_error(app::get('b2c')->_('规格值编码为空！'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格值编码为空！'), null);
         }
 		
 		$item 	= array();
@@ -564,7 +567,7 @@ class b2c_apiv_apis_response_goods_specs{
 		$sdf['spec_value_id'] = intval(''.$sdf['spec_value_id']);
         if ($sdf['spec_value_id']<1)
         {
-            $thisObj->send_user_error(app::get('b2c')->_('规格值编码为空！'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格值编码为空！'), null);
         }
 
         if (!isset($sdf['spec_value']) || strlen($sdf['spec_value'])==0)
@@ -629,13 +632,13 @@ class b2c_apiv_apis_response_goods_specs{
 		$sdf['spec_value_id'] = intval(''.$sdf['spec_value_id']);
         if ($sdf['spec_value_id']<1)
         {
-            $thisObj->send_user_error(app::get('b2c')->_('规格值编码为空！'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格值编码为空！'), null);
         }
 		
 		//-------------------------------------------
 		if (app::get('b2c')->model('goods_spec_index')->dump(array('spec_value_id'=>$sdf['spec_value_id'])))
 		{
-            $thisObj->send_user_error(app::get('b2c')->_('规格值已被商品使用'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('规格值已被商品使用'), null);
 		}
 
 		//-------------------------------------------
@@ -650,10 +653,10 @@ class b2c_apiv_apis_response_goods_specs{
 					'time' => date('Y-m-d H:i:s',time()),
 				);
 			}else{
-				$thisObj->send_user_error(app::get('b2c')->_('sql执行出错'), array());
+				$thisObj->send_user_error(app::get('b2c')->_('sql执行出错'), null);
 			}
 		}else{
-			$thisObj->send_user_error(app::get('b2c')->_('没有相关数据'), array());
+			$thisObj->send_user_error(app::get('b2c')->_('没有相关数据'), null);
 		}
 		
 	}

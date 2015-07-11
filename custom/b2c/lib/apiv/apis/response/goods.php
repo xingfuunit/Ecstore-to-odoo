@@ -19,18 +19,7 @@ class b2c_apiv_apis_response_goods
         $this->app = $app;
     }
 
-    /**
-     * 取到所有货品的bn和store
-     * @param null
-     * @return string json
-     */
-    public function getAllProductsStore()
-    {
-        $obj_products = $this->app->model('products');
-        $arr_products = $obj_products->getList('bn,store');
 
-        return $arr_products;
-    }
 
     /**
      * 添加一个商品
@@ -883,76 +872,7 @@ class b2c_apiv_apis_response_goods
         return array('iid'=>$sdf['iid'], 'modified'=>date('Y-m-d H:i:s',time()));
     }
 
-    /**
-     * 获取商品列表
-     * @param mixed sdf结构
-     * @param object handle object
-     * @return mixed 返回增加的结果
-     */
-    public function get_all_list(&$sdf, &$thisObj)
-    {
-
-        $sdf['page_no'] = $sdf['page_no'] ? max(1,(int)$sdf['page_no']) : '1';
-        $sdf['page_size'] = $sdf['page_size'] ? (int)$sdf['page_size'] : '20';
-
-        /** 生成过滤条件 **/
-        $db = kernel::database();
-        $condition = "";
-        if ($sdf['cat_id'])
-            $condition .= " AND cat_id=".intval($sdf['cat_id']);
-        if ($sdf['cid'])
-            $condition .= " AND type_id=".intval($sdf['cid']);
-        if ($sdf['brand_id'])
-            $condition .= " AND brand_id=".$sdf['brand_id'];
-
-        $page_size = $sdf['page_size'];
-        $page_no = ($sdf['page_no'] - 1) * $page_size;
-
-        $start_time = $sdf['start_time'];
-        $end_time = $sdf['end_time'];
-        if($start_time)
-        {
-            if(($start_time = strtotime($start_time)) === false || $start_time == -1)
-            {
-                $thisObj->send_user_error('5001', '开始时间格式不能正确解析!');
-            }
-
-            $condition .= " AND last_modify>=".$start_time;
-        }
-
-        if($end_time)
-        {
-            if(($end_time = strtotime($end_time)) === false || $end_time == -1)
-            {
-                $thisObj->send_user_error('5002', '结束时间格式不能正确解析!');
-            }
-            $condition .= " AND last_modify<".$end_time;
-        }
-
-
-        $rs = $db->select("SELECT count(*) as count FROM `sdb_b2c_goods` WHERE 1".$condition);
-        if(!$rs[0]['count']){
-            return array('total_results'=>0, 'items'=>'[]');            
-        }
-        if (!$rows = $db->select("SELECT * FROM `sdb_b2c_goods` WHERE 1".$condition." LIMIT ".$page_no.",".$page_size))
-        {
-            return array('total_results'=>0, 'items'=>'[]');
-        }
-
-        /**
-         * 得到返回的商品信息
-         */
-        $sdf_goods = array();
-        //$obj_ctl_goods = kernel::single('b2c_ctl_site_product');
-        foreach($rows as $arr_row)
-        {
-            $sdf_goods['item'][] = $this->get_item_detail($arr_row, $obj_ctl_goods);
-        }
-
-        //return array('total_results'=>$rs[0]['count'], 'items'=>json_encode($sdf_goods));
-		return array('total_results'=>$rs[0]['count'], 'items'=>$sdf_goods);
-    }
-
+	
     /**
      * 获取商品信息
      * @param mixed sdf结构
@@ -1230,8 +1150,7 @@ class b2c_apiv_apis_response_goods
 			$msg = app::get('b2c')->_('没有查找到商品编号的资料！'.$sdf['bn']);
 			$thisObj->send_user_error($msg, array('item'=>''));
 		}
-		print_r($sdf);
-		exit();
+
 		//--------------------------------------------------
         $obj_products = $this->app->model('products');
         $sdf_products = array();

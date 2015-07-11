@@ -140,36 +140,20 @@ class b2c_apiv_apis_response_orders
     {
         //校验参数
         if( !( $start_time = $params['start_time'] ) )
-            $service->send_user_error('7001', '开始时间不能为空！');
+            $service->send_user_error('开始时间不能为空！', null);
         if( ($start_time = strtotime(trim($start_time))) === false || $start_time == -1 )
-            $service->send_user_error('7002', '开始时间不合法！');
+            $service->send_user_error('开始时间不合法！', null);
 
         if( !( $end_time = $params['end_time'] ) )
-            $service->send_user_error('7003', '结束时间不能为空！');
+            $service->send_user_error('结束时间不能为空！');
         if( ($end_time = strtotime(trim($end_time))) === false || $end_time == -1 )
-            $service->send_user_error('7004', '结束时间不合法！');
-
-        $page_no = 1;
-        if( $params['page_no'] != '' ){
-            if( !is_numeric($params['page_no']) || $params['page_no'] < 1 )
-                $service->send_user_error('7005', 'page_no不合法！');
-            else
-                $page_no = intval($params['page_no']);
-        }
-
-        $page_size = 40;
-        if( $params['page_size'] != '' ){
-            if( !is_numeric($params['page_size']) || $params['page_size'] < 1 || $params['page_size'] > 100 )
-                $service->send_user_error('7006', 'page_size不合法！');
-            else
-                $page_size = intval($params['page_size']);
-        }
+            $service->send_user_error('结束时间不合法！', null);
 
 		//支付状态，非必填写(int) 0=未支付,		1=已支付,	2=已付款至到担保方,		3=部分付款,		4=部分退款,		5=全额退款;
         $pay_status = -1;
         if( $params['pay_status'] != '' ){
             if( !is_numeric($params['pay_status'])  )
-                $service->send_user_error('7007', 'pay_status不合法！');
+                $service->send_user_error('pay_status不合法！', null);
             else
                 $pay_status = intval($params['pay_status']);
         }
@@ -178,7 +162,7 @@ class b2c_apiv_apis_response_orders
         $ship_status = -1;
         if( $params['ship_status'] != '' ){
             if( !is_numeric($params['ship_status'])  )
-                $service->send_user_error('7008', 'ship_status不合法！');
+                $service->send_user_error('ship_status不合法！', null);
             else
                 $ship_status = intval($params['ship_status']);
         }
@@ -187,12 +171,17 @@ class b2c_apiv_apis_response_orders
         $status = -1;
         if( $params['status'] != '' ){
             if( !is_numeric($params['status'])  )
-                $service->send_user_error('7009', 'status不合法！');
+                $service->send_user_error('status不合法！', null);
             else
                 $status = intval($params['status']);
         }
 		
-		//------------------------------------------------------------------------------
+		//-------------------------------------------------------------
+        $params['page_no'] 		= $params['page_no'] ? $params['page_no'] : '1';
+        $params['page_size'] 	= $params['page_size'] ? $params['page_size'] : '20';
+		
+
+		//-------------------------------------------------------------
         /**
          * 支付状态数组
          */
@@ -204,12 +193,11 @@ class b2c_apiv_apis_response_orders
             '4'=>'REFUND_PART',
             '5'=>'REFUND_ALL',
         );
-
-        $obj_orders = app::get('b2c')->model('orders');
-
+		//-------------------------------------------------------------
         $where = '';
         if( $start_time != '' )
             $where .= "AND last_modified > '" . $start_time . "' ";
+		
         if( $end_time != '' )
             $where .= "AND last_modified <= '" . $end_time . "' ";
 		
@@ -231,64 +219,102 @@ class b2c_apiv_apis_response_orders
  
 			}
 		}
-  
+
         if( $where != '' )
-            $where = 'WHERE ' . substr($where, 4);
+            $where = ' WHERE ' . substr($where, 4);
 
-        $sql	=	"SELECT ### FROM " .
-            $obj_orders->table_name(1) . ' ' .
-            $where .
-            "ORDER BY last_modified ASC";
+		//-------------------------------------------------------------
+        $_model = app::get('b2c')->model('orders');
 
-		//$service->send_user_error('7009', $sql);
-
-        //获取总数
-        $total_results = $obj_orders->db->select( str_replace('###', 'count(*) cc', $sql) );
-        if( $total_results )
-            $total_results = $total_results[0]['cc'];
-        else
-            $total_results = 0;
-        if($total_results == 0) {
-            return $this->search_response(array());
-        }
-
-        //计算分页
-        $offset = ($page_no-1) * $page_size;
-        $limit = $page_size;
-
-        $has_next = $total_results > ($offset+$limit) ? 'true' : 'false';
-
-        $sdf = $obj_orders->db->selectLimit( str_replace('###', 'order_id, status, pay_status, ship_status, last_modified', $sql), $limit, $offset );
-
-        if(!$sdf){		
-            return $this->search_response(array());
-        }
-
-        $trades = array();
-        $index = 0;
-        foreach( $sdf as $row )
-        {
-            $trades[$index]['tid'] = $row['order_id'];
-            $trades[$index]['status'] = ($row['status'] == 'active') ? 'TRADE_ACTIVE' : 'TRADE_CLOSED';
-            $trades[$index]['pay_status'] =  ($row['pay_status'] == '0' || !$row['pay_status']) ? 'PAY_NO' : $arr_pay_status[$row['pay_status']];
-            $trades[$index]['ship_status'] = ($row['ship_status'] == '0' || !$row['ship_status']) ? 'SHIP_NO' : 'SHIP_FINISH';
-            $trades[$index]['modified'] = date('Y-m-d H:i:s', $row['last_modified']);
-            $index++;
-        }
-
-        return $this->search_response($trades, $total_results, $has_next);
-    }
-
-    private function search_response($trades, $total_results=0, $has_next='false'){
-
+		$pager	= $this->get_pager($params['page_no'], $params['page_size'], $_model->table_name(1),$where);
+		
+		//-------------------------------------------------------------
+		$items 	= array();
+		if( $pager['rs_count']>0 ){
+			$sql = 'select order_id, status, pay_status, ship_status, last_modified from ' 
+				.$_model->table_name(1)
+				.$where
+				.' ORDER BY last_modified ASC';
+				
+			$rows = $_model->db->selectLimit( $sql, $pager['limit'], $pager['offset'] );
+			if ($rows && is_array($rows)){
+				foreach ($rows as $index=>$rs){
+					$items[$index] = array(
+						'tid'			=> $rs['order_id'],
+						'status'		=> ($rs['status'] == 'active') ? 'TRADE_ACTIVE' : 'TRADE_CLOSED',
+						'pay_status'	=> ($rs['pay_status'] == '0' || !$rs['pay_status']) ? 'PAY_NO' : $arr_pay_status[$rs['pay_status']],
+						'ship_status'	=> ($rs['ship_status'] == '0' || !$rs['ship_status']) ? 'SHIP_NO' : 'SHIP_FINISH',
+						'modified'		=> date('Y-m-d H:i:s', $rs['last_modified']),
+					);
+				}
+			}
+		}
+		
         return array(
-            'trades' => $trades,
-            'total_results' => $total_results,
-            'has_next' => $has_next,
-        );
-
+			'rscount'	=> $pager['rs_count'],
+			'pageno'	=> $pager['page_no'],
+			'pageszie'	=> $pager['page_size'],
+			'pagecount'	=> $pager['page_count'],
+			'items'		=> $items,
+		);
     }
 
+	
+	/**
+	 * 根据表名，查询条件，页码，返回总记录数，总分页数
+	 * 
+     * @param page_no 		当前页码
+     * @param page_size		每页的记录数
+     * @param sTableName 	表名
+     * @param sWhere 		查询条件
+	 * @return array
+	 */
+	private function get_pager($page_no, $page_size, $sTableName, $sWhere='')
+	{
+        $page_no 	= intval($page_no);
+        $page_size 	= intval($page_size);
+		$limit		= '';
+		
+		$rs_count = 0;
+		
+		$sql = 'select count(*) as c from `'.$sTableName.'` '.$sWhere;
+
+		//-------------------------------------------------
+		$db = kernel::database();
+        $rows = $db->select($sql);
+        if ($rows && is_array($rows)){
+			$rs_count = intval($rows[0]['c']);
+		}
+		$str_limit 	= '';
+		$offset 	= 0;
+		$limit 		= -1;
+		$page_count = 0;
+		
+		if($rs_count>0){
+			$page_count	= ceil($rs_count / $page_size);
+			if( $page_no < 1 ){
+				$page_no = 1;
+			}else if( $page_no > $page_count ){
+				$page_no = $page_count;
+			}
+			$offset		= (($page_no-1)* $page_size);
+			$limit		= $page_size;
+			$str_limit = ' LIMIT '.$offset.','.$limit;
+		}else{
+			$page_no = 1;
+		}
+		
+		return array(
+			'rs_count' 		=> $rs_count,
+			'page_count' 	=> $page_count,
+			'page_no' 		=> $page_no,
+			'page_size' 	=> $page_size,
+			'offset' 		=> $offset,
+			'limit' 		=> $limit,
+			'str_limit' 	=> $str_limit
+		);
+	}
+	
     /**
      * 订单留言
      * @param array sdf
