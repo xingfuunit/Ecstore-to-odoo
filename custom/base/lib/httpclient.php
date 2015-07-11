@@ -28,9 +28,8 @@ class base_httpclient{
     		//去掉原有的sign
     		unset($data['sign']);
     		$data['sign'] = base_certificate::gen_sign($data);
-    		
     		//ripcrocd 发送到 odoo
-    		$ripc = kernel::single('ripcord_builder');
+    		$ripc = kernel::single('base_ripcordbuilder');
     		return $ripc->calling_methods($data);
     	}else{
     		return $this->netcore->action(__FUNCTION__,$url,$headers,$callback,null,$ping_only);
@@ -53,7 +52,6 @@ class base_httpclient{
     		$data['sign'] = base_certificate::gen_sign($data);
     		
     		//ripcrocd 发送到 odoo
-    		
     		$ripc = kernel::single('base_ripcordbuilder');
     		$re = $ripc->calling_methods($data);
     		
