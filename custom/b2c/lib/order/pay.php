@@ -436,7 +436,9 @@ class b2c_order_pay extends b2c_api_rpc_request
 
             //if (app::get('b2c')->getConf('site.order.send_type') == 'false'&&$is_need_rpc){
             if ($is_need_rpc){
-                system_queue::instance()->publish('b2c_tasks_matrix_sendpayments', 'b2c_tasks_matrix_sendpayments', $sdf);
+//                 system_queue::instance()->publish('b2c_tasks_matrix_sendpayments', 'b2c_tasks_matrix_sendpayments', $sdf);
+            	$obj_apiv = kernel::single('b2c_apiv_exchanges_request');
+            	$obj_apiv->rpc_caller_request($sdf, 'orderpay');
             }
 
             $aUpdate['order_id'] = $rel_id;
