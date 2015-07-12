@@ -27,7 +27,7 @@ class b2c_apiv_apis_response_goods
      * @param object handle object
      * @return mixed 返回增加的结果
      */
-    public function add(&$sdf, &$thisObj)
+    public function add_goods(&$sdf, &$thisObj)
     {
         //请求数据验证合法有效性
         if(!$this->_checkInsertData($sdf,$msg)){
@@ -86,7 +86,59 @@ class b2c_apiv_apis_response_goods
 
         return array('iid'=>$goods_id, 'sku_id'=>$str_sku_ids, 'sku_bn'=>$str_bns, 'created'=>date('Y-m-d H:i:s',$tmp_goods[0]['last_modify']));
     }
-
+	
+    /**
+     * 编辑一个商品
+     * @param mixed sdf结构
+     * @param object handle object
+     * @return mixed 返回增加的结果
+     */
+    public function update_goods($params, &$service)
+    {
+        if (!isset($params['bn']) || strlen($params['bn'])==0)
+        {
+            $service->send_user_error(app::get('b2c')->_('bn参数为空'), null);
+        }
+		
+        if (!isset($params['name']) || strlen($params['name'])==0)
+        {
+            $service->send_user_error(app::get('b2c')->_('name参数为空'), null);
+        }
+		//--------------------------------------------------
+		//update 接口根据 bn 查询 iid
+		$params['bn'] = '' . $params['bn'];
+		$goods_id = $this->get_goods_id($params['bn']);
+		if($goods_id<1){
+			$msg = app::get('b2c')->_('没有查找到商品！'.$params['bn']);
+			$service->send_user_error($msg, null);
+		}
+		
+		//--------------------------------------------------
+		$save_data['name'] = $params['name'];
+		if(isset($params['barcode']) && strlen($params['barcode'])>0){
+			$save_data['barcode'] = $params['barcode'];
+		}
+		
+		$_goods = $this->app->model('goods');
+		$isSave = $_goods->update($save_data, array('goods_id' => $goods_id));
+		
+		if($isSave){
+			//--------------------------------------------------
+			//同步更新products.name
+			$_products	= $this->app->model('products');
+			$_products->update(array('name'=>$params['name']), array('goods_id' => $goods_id));
+			
+			//--------------------------------------------------
+			return array(
+				'goods_id'	=> ''.$goods_id, 
+				'time'		=> date('Y-m-d H:i:s',time())
+			);
+		}else{
+			$msg = app::get('b2c')->_('保存出错');
+			$service->send_user_error($msg, null);
+		}
+	}
+	
     /**
      * 编辑一个商品
      * @param mixed sdf结构
@@ -113,7 +165,7 @@ class b2c_apiv_apis_response_goods
 		//update 接口根据 bn 查询 iid
 		$sdf['bn'] = '' . $sdf['bn'];
 		
-		$sdf['iid'] = $this->getiid($sdf['bn']);
+		$sdf['iid'] = $this->get_goods_id($sdf['bn']);
 		if($sdf['iid']<1){
 			$msg = app::get('b2c')->_('没有查找到商品编号的资料！'.$sdf['bn']);
 			$thisObj->send_user_error($msg, array('iid'=>''));
@@ -841,16 +893,16 @@ class b2c_apiv_apis_response_goods
      * @param object handle object
      * @return mixed 返回增加的结果
      */
-    public function delete(&$sdf, &$thisObj)
+    public function del_goods(&$sdf, &$thisObj)
     {
 		//--------------------------------------------------
 		//根据 bn 查询 iid
 		$sdf['bn'] = '' . $sdf['bn'];
 		
-		$sdf['iid'] = $this->getiid($sdf['bn']);
-		if($sdf['iid']<1){
+		$goods_id = $this->get_goods_id($sdf['bn']);
+		if($goods_id<1){
 			$msg = app::get('b2c')->_('没有查找到商品编号的资料！'.$sdf['bn']);
-			$thisObj->send_user_error($msg, array('item'=>''));
+			$thisObj->send_user_error($msg, null);
 		}
 
 		//-----------------------------------------------------
@@ -859,17 +911,21 @@ class b2c_apiv_apis_response_goods
         /**
          * 删除商品对应的货品
          */
-        $obj_products = $this->app->model('goods');
-        $is_delete = $obj_products->delete(array('goods_id'=>$sdf['iid']));
+        $_goods = $this->app->model('goods');
+        $is_delete = $_goods->delete(array('goods_id'=>$goods_id));
 
         if (!$is_delete)
         {
             $db->rollback();
-            $thisObj->send_user_error(app::get('b2c')->_('删除商品的货品失败！'), array('iid'=>$sdf['goods_id'],'modified'=>time()));
+            $thisObj->send_user_error(app::get('b2c')->_('删除商品的货品失败！'),null);
         }
 
         $db->commit($transaction_status);
-        return array('iid'=>$sdf['iid'], 'modified'=>date('Y-m-d H:i:s',time()));
+
+        return array(
+			'goods_id'	=> ''.$goods_id, 
+			'time'		=> date('Y-m-d H:i:s',time())
+		);
     }
 
 	
@@ -889,7 +945,7 @@ class b2c_apiv_apis_response_goods
 		//根据 bn 查询 iid
 		$sdf['bn'] = '' . $sdf['bn'];
 		
-		$sdf['iid'] = $this->getiid($sdf['bn']);
+		$sdf['iid'] = $this->get_goods_id($sdf['bn']);
 		if($sdf['iid']<1){
 			$msg = app::get('b2c')->_('没有查找到商品编号的资料！'.$sdf['bn']);
 			$thisObj->send_user_error($msg, array('item'=>''));
@@ -1050,217 +1106,7 @@ class b2c_apiv_apis_response_goods
         );
     }
 
-    /**
-     * 编辑货品
-     * @param mixed sdf结构
-     * @param object handle object
-     * @return mixed 返回增加的结果
-     */
-    public function update_sku(&$sdf, &$thisObj)
-    {
-        if (!isset($sdf['gbn']) || strlen($sdf['gbn'])==0)
-        {
-            $thisObj->send_user_error(app::get('b2c')->_('商品bn为空！'), array('item'=>''));
-        }
-		
-        if (!isset($sdf['bn']) || strlen($sdf['bn'])==0)
-        {
-            $thisObj->send_user_error(app::get('b2c')->_('货品bn为空！'), array('item'=>''));
-        }
-		
-		//--------------------------------------------------
-		//根据 bn 查询 iid
-		$sdf['gbn'] = '' . $sdf['gbn'];
-		
-		$sdf['iid'] = $this->getiid($sdf['gbn']);
-		if($sdf['iid']<1){
-			$msg = app::get('b2c')->_('没有查找到商品编号的资料！'.$sdf['gbn']);
-			$thisObj->send_user_error($msg, array('item'=>''));
-		}
-		//--------------------------------------------------
-        $obj_products = $this->app->model('products');
-        $sdf_products = array();
 
-        if ($sdf['store'])
-            $sdf_products['store'] = $sdf['store'];
-        if ($sdf['weight'])
-            $sdf_products['weight'] = $sdf['weight'];
-        if ($sdf['mktprice'])
-            $sdf_products['mktprice'] = $sdf['mktprice'];
-        if ($sdf['price'])
-            $sdf_products['price'] = $sdf['price'];
-        if ($sdf['cost'])
-            $sdf_products['cost'] = $sdf['cost'];
-
-        $sdf_products['last_modify'] = time();
-
-        if ($sdf_products)
-        {
-            if (!$obj_products->update($sdf_products, array('goods_id'=>$sdf['iid'],'bn'=>$sdf['bn'])))
-            {
-                $thisObj->send_user_error(app::get('b2c')->_('货品信息更新失败！'), array('item'=>''));
-            }else{
-                //如果更新数据有库存信息，则最终重新合计商品库存总数
-                if ($sdf['store']){
-                     $db = kernel::database();
-                     $store_sum = $db->select("SELECT sum(store) as store_sum FROM `sdb_b2c_products` WHERE `goods_id`=".$sdf['iid']);
-                     $tmp_goods['store'] = $store_sum[0]['store_sum'];
-
-                     $obj_goods = $this->app->model('goods');
-                     $obj_goods->update($tmp_goods, array('goods_id'=>$sdf['iid']));
-                }
-            }
-        }
-
-        $tmp = $obj_products->getList('product_id', array('goods_id'=>$sdf['iid'],'bn'=>$sdf['bn']));
-        return array('iid'=>$sdf['iid'],'sku_id'=>$tmp[0]['product_id'],'sku_bn'=>$sdf['bn'],'modified'=>date('Y-m-d H:i:s',$sdf_products['last_modify']));
-    }
-	
-    /**
-     * 新增货品信息
-     * @param mixed sdf结构
-     * @param object handle object
-     * @return mixed 返回增加的结果
-     */
-    public function add_sku(&$sdf, &$thisObj)
-    {
-        if (!isset($sdf['gbn']) || strlen($sdf['gbn'])==0)
-        {
-            $thisObj->send_user_error(app::get('b2c')->_('商品bn为空！'), array('item'=>''));
-        }
-		
-        if (!isset($sdf['bn']) || strlen($sdf['bn'])==0)
-        {
-            $thisObj->send_user_error(app::get('b2c')->_('货品bn为空！'), array('item'=>''));
-        }
-		
-		//--------------------------------------------------
-		//接口根据 bn 查询 iid
-        $obj_goods = $this->app->model('goods');
-		$tmp_goods_info  = $obj_goods->getList('goods_id', array('bn'=>$sdf['gbn']));
-
-		if(!$tmp_goods_info){
-			$msg = app::get('b2c')->_('没有查找到商品编号的资料！'.$sdf['bn']);
-			$thisObj->send_user_error($msg, array('item'=>''));
-		}
-		
-		$sdf['iid'] = $tmp_goods_info[0]['goods_id'];
-		//--------------------------------------------------
-		if(intval($sdf['iid'])<1){
-			$msg = app::get('b2c')->_('没有查找到商品编号的资料！'.$sdf['bn']);
-			$thisObj->send_user_error($msg, array('item'=>''));
-		}
-
-		//--------------------------------------------------
-        $obj_products = $this->app->model('products');
-        $sdf_products = array();
-
-        if ($sdf['store'])
-            $sdf_products['store'] = $sdf['store'];
-        if ($sdf['weight'])
-            $sdf_products['weight'] = $sdf['weight'];
-        if ($sdf['mktprice'])
-            $sdf_products['mktprice'] = $sdf['mktprice'];
-        if ($sdf['price'])
-            $sdf_products['price'] = $sdf['price'];
-        if ($sdf['cost'])
-            $sdf_products['cost'] = $sdf['cost'];
-
-        $sdf_products['last_modify'] = time();
-
-        if ($sdf_products)
-        {
-            if (!$obj_products->update($sdf_products, array('goods_id'=>$sdf['iid'],'bn'=>$sdf['bn'])))
-            {
-                $thisObj->send_user_error(app::get('b2c')->_('货品信息更新失败！'), array('item'=>''));
-            }else{
-                //如果更新数据有库存信息，则最终重新合计商品库存总数
-                if ($sdf['store']){
-                     $db = kernel::database();
-                     $store_sum = $db->select("SELECT sum(store) as store_sum FROM `sdb_b2c_products` WHERE `goods_id`=".$sdf['iid']);
-                     $tmp_goods['store'] = $store_sum[0]['store_sum'];
-
-                     $obj_goods = $this->app->model('goods');
-                     $obj_goods->update($tmp_goods, array('goods_id'=>$sdf['iid']));
-                }
-            }
-        }
-
-        $tmp = $obj_products->getList('product_id', array('goods_id'=>$sdf['iid'],'bn'=>$sdf['bn']));
-        return array('iid'=>$sdf['iid'],'sku_id'=>$tmp[0]['product_id'],'sku_bn'=>$sdf['bn'],'modified'=>date('Y-m-d H:i:s',$sdf_products['last_modify']));
-    }
-	
-    /**
-     * 删除货品信息
-     * @param mixed sdf结构
-     * @param object handle object
-     * @return mixed 返回结果
-     */
-    public function del_sku(&$sdf, &$thisObj)
-    {
-        if (!isset($sdf['bn']) || strlen($sdf['bn'])==0)
-        {
-            $thisObj->send_user_error(app::get('b2c')->_('货品bn为空！'), array('item'=>''));
-        }
-		
-	}
-	
-    /**
-     * 获取货品信息
-     * @param mixed sdf结构
-     * @param object handle object
-     * @return mixed 返回结果
-     */
-    public function get_sku(&$sdf, &$thisObj)
-    {
-        if (!isset($sdf['bn']) || strlen($sdf['bn'])==0)
-        {
-            $thisObj->send_user_error(app::get('b2c')->_('货品bn为空！'), array('item'=>''));
-        }
-		
-        $obj_product = $this->app->model('products');
-        $arr_product = $obj_product->getList('*', array('bn'=>$sdf['bn']));
-        if (!$arr_product)
-            return array();
-        $arr = $arr_product[0];
-
-        /** 组成返回数组 **/
-        $str_skus_properties = '';
-		
-		$arr_specs = array();
-        $arr_spec_desc = $arr['spec_desc'];
-		//a:3:{s:10:"spec_value";a:1:{i:122;s:11:"test规格3";}s:21:"spec_private_value_id";a:1:{i:122;s:13:"1436251683843";}s:13:"spec_value_id";a:1:{i:122;s:3:"843";}}
-
-        if($arr_spec_desc['spec_value_id'])
-        {
-            foreach ($arr_spec_desc['spec_value_id'] as $spec_id_key => $arr_value){
-				$arr_specs[] = array(
-					'spec_id' 		=> ''.$spec_id_key,
-					'spec_value_id' => ''.$arr_value,
-					'spec_value' 	=> $arr_spec_desc['spec_value'] [$spec_id_key],
-				);
-			}
-			//foreach ($arr_spec_desc['spec_value_id'] as $spec_id_key => $arr_value){
-            //		$str_skus_properties .= $spec_id_key.":".$arr_value . '_' . $arr_spec_desc['spec_value'] [$spec_id_key]. ",";
-        }
-        if ($str_skus_properties)
-            $str_skus_properties = substr($str_skus_properties, 0, strlen($str_skus_properties)-1);
-
-        return array(
-            'sku_id'=>$arr['product_id'],
-            'iid'=>$arr['goods_id'],
-            'bn'=>$arr['bn'],
-            'specs'=>$arr_specs,
-            //'properties'=>$str_skus_properties,
-            'quantity'=>$arr['store'],
-            'weight'=>$arr['weight'],
-            'price'=>$arr['price'],
-            'market_price'=>$arr['mktprice'],
-            'modified'=>$arr['last_modify'],
-            'cost'=>$arr['cost'],
-        );
-    }
-	
     /**
      * 获取商品类型
      * @param mixed sdf结构
@@ -1503,7 +1349,7 @@ class b2c_apiv_apis_response_goods
 	 * @param string bn
 	 * @return int 0 =未找到,>0找到iid
 	 */
-	private function getiid($bn)
+	private function get_goods_id($bn)
 	{
 		if (strlen($bn)==0) {
 			return 0;

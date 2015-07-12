@@ -181,20 +181,64 @@ class b2c_apiv_apis_response_goods_goods
         $params['page_no'] 		= $params['page_no'] ? $params['page_no'] : '1';
         $params['page_size'] 	= $params['page_size'] ? $params['page_size'] : '10';
 		
+        $_goods = $this->app->model('goods');
+
+        //排序
+        if(isset($params['orderBy_id']) && $params['orderBy_id']>0 && $params['orderBy_id'] <11)
+        {
+            $order = $_goods->orderBy($params['orderBy_id']);
+            $orderBy = $order['sql'];
+        }
+		
+		$pager	= $this->get_pager($params['page_no'], $params['page_size'], $_goods->table_name(1));
+
+		//----------------------------------------------------
+		//组织数据
+		$items 	= array();
+		if( $pager['rs_count']>0 ){
+			$field = 'goods_id,bn,name,price,type_id,cat_id,brand_id,marketable,store,uptime,downtime,'
+			.'last_modify,p_order,score,cost,mktprice,weight,unit,brief,goods_type,nostore_sell,goods_setting,spec_desc,params,disabled';
 			
+			$filter = array();
+			$items = $_goods->getList($field,$filter,$pager['offset'],$pager['limit'],$orderBy);
+		}
+		
+        return array(
+			'rscount'	=> $pager['rs_count'],
+			'pageno'	=> $pager['page_no'],
+			'pageszie'	=> $pager['page_size'],
+			'pagecount'	=> $pager['page_count'],
+			'items'		=> $items
+		);
+    }
+	
+    /**
+     * 根据筛选条件查询商品
+     * @param int page_num 页码
+     * @param int page_size 每页的容量
+     * @param int cat_id 商品分类 
+     * @param string search_keywords 关键词（根据名字搜索）
+     * @param string brand_id array(int)数组的json(品牌id)
+     * @param string specs array(int=>array(int))格式的json 商品规格array(规格id=>array(规格值id))
+     * @param string props array(int=>array(int))格式的json props 商品属性id
+     * @return goods 商品
+     * @return count 商品条目数
+     */
+    public function search_properties_goods($params, &$service)
+    {
         //json转array
         $params['brand_id'] = $params['brand_id'] ? json_decode($params['brand_id'],true) : null;
         $params['specs'] = $params['specs'] ? json_decode($params['specs'],true) : null;
         $params['props'] = $params['props'] ? json_decode($params['props'],true) : null;
-		
         //分类、品牌、关键词必须要有一个才可以查询
-		/*
         if( $params['cat_id'] == null && $params['search_keywords'] == null && $params['brand_id'] == null)
         {
             return array('status'=>'error','message'=>'分类、品牌、关键词至少有一项需要填写');
         }
-		*/
-        $_goods = $this->app->model('goods');
+
+        $obj_goods = $this->app->model('goods');
+        $limit = $params['page_size'] ? $params['page_size'] : 10;
+        $offset = $params['page_num'] ? (($params['page_num']-1) * $limit) : 0;
 
         //根据分类查询
         if(isset($params['cat_id']) && $params['cat_id']!=null)
@@ -210,9 +254,9 @@ class b2c_apiv_apis_response_goods_goods
         }
 
         //根据关键字查询
-        if(isset($params['keywords']) && $params['keywords']!=null)
+        if(isset($params['search_keywords']) && $params['search_keywords']!=null)
         {
-            $filter['search_keywords'] = array($params['keywords']);
+            $filter['search_keywords'] = array($params['search_keywords']);
         }
 
         //根据品牌查询
@@ -249,11 +293,11 @@ class b2c_apiv_apis_response_goods_goods
         //排序
         if(isset($params['orderBy_id']) && $params['orderBy_id']>0 && $params['orderBy_id'] <11)
         {
-            $order = $_goods->orderBy($params['orderBy_id']);
+            $order = $obj_goods->orderBy($params['orderBy_id']);
             $orderBy = $order['sql'];
         }
         $filter['marketable'] = 'true';
-        $data = $_goods->getList('marketable,goods_id,bn,name,brief,image_default_id,comments_count,nostore_sell',$filter,$offset,$limit,$orderBy);
+        $data = $obj_goods->getList('marketable,goods_id,bn,name,brief,image_default_id,comments_count,nostore_sell',$filter,$offset,$limit,$orderBy);
 
         foreach($data as $key=>$goods)
         {
@@ -289,7 +333,7 @@ class b2c_apiv_apis_response_goods_goods
         }
         $return['goods']=$data;
         //获取总条数
-        $count = $_goods->countGoods($filter);
+        $count = $obj_goods->countGoods($filter);
         $return['count']=$count;
         return $return;
     }
