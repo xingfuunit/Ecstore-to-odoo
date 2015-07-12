@@ -7,7 +7,7 @@
 
 class base_ripcordbuilder{
 	
-	
+
 	var $url;
 
 	var $db;
@@ -40,7 +40,7 @@ class base_ripcordbuilder{
 	function calling_methods($post_param,$model="eshop.to.odoo"){
 		$uid = $this->logging_in();
 		$models = ripcord::client("$this->url/xmlrpc/2/object");
-		$re = $models->execute_kw($this->db, $uid, $this->password,$model, 'synchronous_method',array(array(json_encode($post_param)),array()));
+		$re = $models->execute_kw($this->db, $uid, $this->password,$model, $post_param['method'],array(array(json_encode($post_param)),array()));
 		return $re;
 	}
 }
