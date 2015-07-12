@@ -405,6 +405,7 @@ class b2c_mdl_goods extends dbeav_model{
 
     function delete($filter, $subSdf = 'delete'){
         $rs = parent::delete($filter);
+
         if( $rs ){
             $oSpecIndex = $this->app->model('goods_spec_index');
             $oSpecIndex->delete( $filter );

@@ -35,9 +35,9 @@ class b2c_apiv_apis_response_goods_specs{
 		//-------------------------------------------------
 		
 		$db = kernel::database();
-        $rows = $db->select($sql);
-        if ($rows && is_array($rows)){
-			$rs_count = intval($rows[0]['c']);
+        $rs = $db->selectrow($sql);
+        if ($rs && is_array($rs)){
+			$rs_count = intval($rs['c']);
 		}
 		$str_limit 	= '';
 		$offset 	= 0;
@@ -515,6 +515,7 @@ class b2c_apiv_apis_response_goods_specs{
             $thisObj->send_user_error(app::get('b2c')->_('规格值为空！'), null);
         }
 		
+
 		//-------------------------------------------
         $_model = app::get('b2c')->model('spec_values');
 
@@ -527,13 +528,15 @@ class b2c_apiv_apis_response_goods_specs{
 		}
 
 		//-------------------------------------------
-		
-        $sdf['p_order'] 	= $sdf['p_order'] ? $sdf['p_order'] : '1';
-        $sdf['p_order'] 	= intval($sdf['p_order']);
-		if($sdf['p_order']<1){
-			$sdf['p_order']=1;
+		//注意：规格值，必须 p_order 字段有值，并检查不能重复，所以不能通过接口传，只能程序自增
+		$sql  = 'SELECT max(`p_order`) as c FROM `sdb_b2c_spec_values` where `spec_id`='.$sdf['spec_id'];
+		$max = kernel::database()->selectrow($sql);
+		if($max){
+			$sdf['p_order'] = intval(''.$max['c'])+1;
+		}else{
+			$sdf['p_order'] = 1;
 		}
-		
+
 		//-------------------------------------------
         $save_data = array(
             'spec_id' 		=> $sdf['spec_id'],
@@ -542,7 +545,7 @@ class b2c_apiv_apis_response_goods_specs{
             'spec_image' 	=> '',
             'p_order' 		=> $sdf['p_order']
         );
-		
+
         $rs = $_model->insert($save_data);
         if( $rs ){
             return array(
@@ -592,18 +595,13 @@ class b2c_apiv_apis_response_goods_specs{
 		if($tmp){
             $thisObj->send_user_error(app::get('b2c')->_('规格值已经存在，请检查！'), null);
 		}
-		//-------------------------------------------
-		if(isset($sdf['p_order']) && intval($sdf['p_order'])>0){
-			$old['p_order'] = intval($sdf['p_order']);
-		}
 
 		//-------------------------------------------
         $save_data = array(
             'spec_id' 		=> $old['spec_id'],
             'spec_value' 	=> $sdf['spec_value'],
             'alias' 		=> $old['alias'],
-            'spec_image' 	=> $old['alias'],
-            'p_order' 		=> $old['p_order']
+            'spec_image' 	=> $old['spec_image']
         );
 		
         $rs = $_model->update($save_data,array(
