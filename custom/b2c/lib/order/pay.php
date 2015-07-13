@@ -322,6 +322,7 @@ class b2c_order_pay extends b2c_api_rpc_request
             // 冻结库存
             if ($arrOrder['payed'] == $sdf_order['cur_amount'])
             {
+            	$this->app->setConf('system.goods.freez.time','2');
                 $store_mark = $this->app->getConf('system.goods.freez.time');
 
                 // 所有的goods type 处理的服务的初始化.
