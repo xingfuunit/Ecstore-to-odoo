@@ -241,9 +241,8 @@ class b2c_apiv_apis_response_goods_sku
      */
     public function add_sku($params, &$service)
     {
-		$params['goods_id'] = intval(''.$params['goods_id']);
-        if ($params['goods_id']<1){
-            $service->send_user_error(app::get('b2c')->_('商品id为空！'), null);
+        if (!isset($params['goods_bn']) || strlen($params['goods_bn'])==0){
+            $service->send_user_error(app::get('b2c')->_('商品编号为空！'), null);
         }
 		
         if (!isset($params['bn']) || strlen($params['bn'])==0){
@@ -263,7 +262,7 @@ class b2c_apiv_apis_response_goods_sku
 		//--------------------------------------------------
 		//检查 goods 是否存在
         $_goods 	= $this->app->model('goods');
-		$rs_goods  	= $_goods->getRow('goods_id,name,type_id', array('goods_id'=>$params['goods_id']));
+		$rs_goods  	= $_goods->getRow('goods_id,name,type_id', array('bn'=>$params['goods_bn']));
 
 		if(!is_array($rs_goods) || count($rs_goods)==0){
 			$msg = app::get('b2c')->_('没有查找到商品id的资料！'.$params['goods_id']);

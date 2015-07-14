@@ -927,6 +927,19 @@ class b2c_apiv_apis_response_goods
 			'time'		=> date('Y-m-d H:i:s',time())
 		);
     }
+	
+
+    /**
+     * 检查商品编号是否存在
+     * @param mixed sdf结构
+     * @param object handle object
+     * @return 如果返回'true',如果不存在返回'false'
+     */
+    public function get_goods_check_bn(&$sdf, &$thisObj)
+    {
+		$goods_id = $this->get_goods_id('' . $sdf['bn']);
+		return ($goods_id>0)?'true':'false';
+    }
 
 	
     /**
@@ -935,7 +948,7 @@ class b2c_apiv_apis_response_goods
      * @param object handle object
      * @return mixed 返回增加的结果
      */
-    public function get_item(&$sdf, &$thisObj)
+    public function get_goods_detail(&$sdf, &$thisObj)
     {
         if (!isset($sdf['bn']) || strlen($sdf['bn'])==0)
         {
@@ -945,26 +958,48 @@ class b2c_apiv_apis_response_goods
 		//根据 bn 查询 iid
 		$sdf['bn'] = '' . $sdf['bn'];
 		
-		$sdf['iid'] = $this->get_goods_id($sdf['bn']);
-		if($sdf['iid']<1){
+		$goods_id = $this->get_goods_id($sdf['bn']);
+		if($goods_id<1){
 			$msg = app::get('b2c')->_('没有查找到商品编号的资料！'.$sdf['bn']);
 			$thisObj->send_user_error($msg, array('item'=>''));
 		}
 		//--------------------------------------------------
+        $_goods = $this->app->model('goods');
+
+        $rs = $_goods->getRow('*',array('goods_id'=>$sdf['goods_id']));
+        if(count($rs) == 0)
+		{
+			$service->send_user_error(app::get('b2c')->_('该商品不存在'.$sdf['goods_id']), null);
+		}
 		
-        $db = kernel::database();
-        if (!$rows = $db->select("SELECT * FROM `sdb_b2c_goods` WHERE `goods_id`=".$sdf['iid']))
+
+		return $this->get_item_detail($rs);
+    }
+	
+    /**
+     * 获取商品信息
+     * @param mixed sdf结构
+     * @param object handle object
+     * @return mixed 返回增加的结果
+     */
+    public function get_goods_detail_id(&$sdf, &$thisObj)
+    {
+		$goods_id = intval(''.$sdf['goods_id']);
+        if ($goods_id<1)
         {
-            return array('item'=>'');
+            $thisObj->send_user_error(app::get('b2c')->_('goods_id参数为空'), null);
         }
-        /**
-         * 得到返回的商品信息
-         */
-        $sdf_goods = array();
-        //$obj_ctl_goods = kernel::single('b2c_ctl_site_product');
-        //$sdf_goods['item'] = json_encode($this->get_item_detail($rows[0], $obj_ctl_goods));
-		$sdf_goods['item'] = $this->get_item_detail($rows[0], $obj_ctl_goods);
-        return array('item'=>$sdf_goods['item']);
+
+		//--------------------------------------------------
+        $_goods = $this->app->model('goods');
+
+        $rs = $_goods->getRow('*',array('goods_id'=>$goods_id));
+        if(count($rs) == 0)
+		{
+			$thisObj->send_user_error(app::get('b2c')->_('该商品不存在'.$goods_id), null);
+		}
+		
+		return $this->get_item_detail($rs);
     }
 
     /**
@@ -973,7 +1008,7 @@ class b2c_apiv_apis_response_goods
      * @param object goods controller
      * @return mixed
      */
-    private function get_item_detail($arr_row, $obj_clt_goods)
+    private function get_item_detail($arr_row)
     {
         if (!$arr_row)
             return array();
@@ -1010,7 +1045,9 @@ class b2c_apiv_apis_response_goods
             $input_str = substr($input_str, 0, strlen($input_str)-1);
         /** end **/
         $db = kernel::database();
+		
         $arr_skus = $db->select("SELECT * FROM `sdb_b2c_products` WHERE `goods_id`=".$arr_row['goods_id']);
+		
         $arr_sdf_skus = array();
         $str_skus = "";
         if ($arr_skus)
@@ -1040,17 +1077,16 @@ class b2c_apiv_apis_response_goods
                     $str_skus_properties = substr($str_skus_properties, 0, strlen($str_skus_properties)-1);
 				*/
                 $arr_sdf_skus[] = array(
-                    'sku_id'=>$arr['product_id'],
-                    'iid'=>$arr['goods_id'],
+                    'product_id'=>$arr['product_id'],
+                    'goods_id'=>$arr['goods_id'],
                     'bn'=>$arr['bn'],
 					'specs'=>$arr_specs,
                     //'properties'=>$str_skus_properties,
-                    'quantity'=>$arr['store'],
+                    'store'=>$arr['store'],
                     'weight'=>$arr['weight'],
                     'price'=>$arr['price'],
-                    'market_price'=>$arr['mktprice'],
-                    'modified'=>$arr['last_modify'],
-                    'cost'=>$arr['cost'],
+                    'mktprice'=>$arr['mktprice'],
+                    'cost'=>$arr['cost']
                 );
             }
             $str_skus = json_encode($arr_sdf_skus);
@@ -1074,33 +1110,32 @@ class b2c_apiv_apis_response_goods
                     );
             }
         }
-        $goods_images = json_encode($goods_images);
+        //$goods_images = json_encode($goods_images);
 
         return array(
-            'iid'=>$arr_row['goods_id'],
-            'title'=>$arr_row['name'],
-            'bn'=>$arr_row['bn'],
-            'shop_cids'=>$arr_row['cat_id'],
-            'cid'=>$arr_row['type_id'],
+            'goods_id'=>$arr_row['goods_id'],
+            'name'=>$arr_row['name'],
+            'goods_bn'=>$arr_row['bn'],
+            'cat_id'=>$arr_row['cat_id'],
+            'type_id'=>$arr_row['type_id'],
             'brand_id'=>$arr_row['brand_id'],
-            'props'=>$props,
-            'input_pids'=>$input_pids,
-            'input_str'=>$input_str,
+            //'props'=>$props,
+            //'input_pids'=>$input_pids,
+            //'input_str'=>$input_str,
             //'description'=>$arr_row['intro'],			//商品详细介绍不要
-            'default_img_url'=>$default_img_url,
-            'num'=>$arr_row['store'],
+            //'default_img_url'=>$default_img_url,
+            'store'=>$arr_row['store'],
             'weight'=>$arr_row['weight'] ? $arr_row['weight'] : '',
             'score'=>$arr_row['score'] ? $arr_row['score'] : '',
             'price'=>$arr_row['price'],
-            'market_price'=>$arr_row['mktprice'],
+            'mktprice'=>$arr_row['mktprice'],
+	        'cost'=>$arr_row['cost'],
             'unit'=>$arr_row['unit'],
-            'cost_price'=>$arr_row['cost'],
             'marketable'=>$arr_row['marketable'],
-            'item_imgs'=>$goods_images,
-            'modified'=>date('Y-m-d H:i:s',$arr_row['last_modify']),
-            'list_time'=>date('Y-m-d H:i:s',$arr_row['uptime']),
-            'delist_time'=>date('Y-m-d H:i:s',$arr_row['downtime']),
-            'created'=>date('Y-m-d H:i:s',$arr_row['last_modify']),
+            //'item_imgs'=>$goods_images,
+            'last_modify'=>date('Y-m-d H:i:s',$arr_row['last_modify']),
+            'uptime'=>date('Y-m-d H:i:s',$arr_row['uptime']),			//上架时间
+            'downtime'=>date('Y-m-d H:i:s',$arr_row['downtime']),		//下架时间
             //'skus'=>$str_skus,
 			'skus'=>$arr_sdf_skus
         );

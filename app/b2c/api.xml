@@ -126,21 +126,27 @@
 
 
     <module id='b2c.goods' type='goods' class='b2c_apiv_apis_response_goods_goods'>
-		<api function='get_goods_detail_list' > 根据筛选条件查询商品列表（包括对应的sku）  </api>
+		<api function='get_goods_detail_list'>根据筛选条件查询商品列表（包括对应的sku）</api>
 		
-        <api function='get_goods_detail'> 根据货号取得一个商品的详细信息</api>
-		<api function='get_goods_detail_id'> 根据货品ID取得一个商品的详细信息</api>
-        <api function='get_goods_intro'> 根据商品ID,获取单个商品详情 </api>
+        <api function='get_goods_detail_sku_bn'> 根据货号取得一个商品的详细信息</api>
+		<api function='get_goods_detail_sku_id'> 根据货品ID取得一个商品的详细信息</api>
 		
-        <api function='get_goods_base_list'> 根据筛选条件查询商品列表（基础信息） </api>
+        <api function='get_goods_intro'>根据商品ID,获取单个商品详情 </api>
 		
-        <api function='search_properties_goods'> 根据筛选条件查询商品（只查上架的商品） </api>
+        <api function='get_goods_base_list'>根据筛选条件查询商品列表（基础信息） </api>
+		
+        <api function='search_properties_goods'>根据筛选条件查询商品（只查上架的商品） </api>
     </module>
 	
     <module id='b2c.goods' type='goods' class='b2c_apiv_apis_response_goods'>
         <api function='get_goods_base' > 根据商品编号单个商品的数据 </api>
         <api function='get_goods_base_id' > 根据商品id单个商品的数据 </api>
-
+		
+        <api function='get_goods_check_bn'>检查商品编号是否存在</api>
+		
+        <api function='get_goods_detail'> 根据商品编号取得一个商品的详细信息</api>
+		<api function='get_goods_detail_id'> 根据商品ID取得一个商品的详细信息</api>
+		
 		<api function='add_goods' > 添加商品 </api>
 		<api function='update_goods' > 修改商品 </api>
 		<api function='del_goods' > 删除单个商品信息  </api>

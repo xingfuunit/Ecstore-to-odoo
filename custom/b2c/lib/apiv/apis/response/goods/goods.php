@@ -100,11 +100,150 @@ class b2c_apiv_apis_response_goods_goods
         //$obj_ctl_goods = kernel::single('b2c_ctl_site_product');
         foreach($rows as $arr_row)
         {
-            $sdf_goods['item'][] = $this->get_item_detail($arr_row, $obj_ctl_goods);
+            $sdf_goods['item'][] = $this->get_item_detail($arr_row);
         }
 
         //return array('total_results'=>$rs[0]['count'], 'items'=>json_encode($sdf_goods));
 		return array('total_results'=>$rs[0]['count'], 'items'=>$sdf_goods);
+    }
+	
+    /**
+     * 生成商品明细的数组
+     * @param mixed 每行商品的数组-数据
+     * @param object goods controller
+     * @return mixed
+     */
+    private function get_item_detail($arr_row)
+    {
+        if (!$arr_row)
+            return array();
+
+        $cnt_props = 20;
+        $cn_input_props = 50;
+
+        $detal_url = app::get('site')->router()->gen_url(array('app'=>'b2c','ctl'=>'site_product','act'=>'index','arg0'=>$arr_row['goods_id']));
+        /** props 目前是1-20 **/
+        $props = "";
+        for ($i=1;$i<=$cnt_props;$i++)
+        {
+            if ($arr_row['p_'.$i])
+                $props .= $i.":".$arr_row['p_'.$i].";";
+        }
+        if ($props)
+            $props = substr($props, 0, strlen($props)-1);
+        /** end **/
+
+        /** input props 21-50 **/
+        $input_pids = "";
+        $input_str = "";
+        for ($i=$cnt_props+1;$i<=$cn_input_props;$i++)
+        {
+            if ($arr_row['p_'.$i])
+            {
+                $input_pids .= $i.",";
+                $input_str .= $arr_row['p_'.$i].";";
+            }
+        }
+        if ($input_pids)
+            $input_pids = substr($input_pids, 0, strlen($input_pids)-1);
+        if ($input_str)
+            $input_str = substr($input_str, 0, strlen($input_str)-1);
+        /** end **/
+        $db = kernel::database();
+		
+        $arr_skus = $db->select("SELECT * FROM `sdb_b2c_products` WHERE `goods_id`=".$arr_row['goods_id']);
+		
+        $arr_sdf_skus = array();
+        $str_skus = "";
+        if ($arr_skus)
+        {
+            foreach ($arr_skus as $arr)
+            {
+                //$str_skus_properties = '';
+				$arr_specs = array();
+                $arr_spec_desc = unserialize($arr['spec_desc']);
+                if($arr_spec_desc['spec_value_id'])
+                {
+					foreach ($arr_spec_desc['spec_value_id'] as $spec_id_key => $arr_value){
+						$arr_specs[] = array(
+							'spec_id' 		=> ''.$spec_id_key,
+							'spec_value_id' => ''.$arr_value,
+							'spec_value' 	=> $arr_spec_desc['spec_value'] [$spec_id_key],
+						);
+					}
+					
+					/*
+                    foreach ($arr_spec_desc['spec_value_id'] as $spec_id_key =>$arr_value)
+                        $str_skus_properties .= $spec_id_key.":".$arr_value . '_' . $arr_spec_desc['spec_value'] [$spec_id_key]. ";";
+					*/
+                }
+				/*
+                if ($str_skus_properties)
+                    $str_skus_properties = substr($str_skus_properties, 0, strlen($str_skus_properties)-1);
+				*/
+                $arr_sdf_skus[] = array(
+                    'product_id'=>$arr['product_id'],
+                    'goods_id'=>$arr['goods_id'],
+                    'bn'=>$arr['bn'],
+					'specs'=>$arr_specs,
+                    //'properties'=>$str_skus_properties,
+                    'store'=>$arr['store'],
+                    'weight'=>$arr['weight'],
+                    'price'=>$arr['price'],
+                    'mktprice'=>$arr['mktprice'],
+                    'cost'=>$arr['cost']
+                );
+            }
+            $str_skus = json_encode($arr_sdf_skus);
+        }
+        $default_img_url = kernel::single('base_storager')->image_path($arr_row['image_default_id']);
+
+
+        $goods_images  = array();
+        //$arr_goods_images = $db->select("SELECT b.`image_id`, b.`l_url`, b.`m_url`, b.`s_url`  FROM `sdb_image_image_attach` a LEFT JOIN `sdb_image_image` b ON a.image_id=b.image_id WHERE `target_type`='goods' and `target_id`=".$arr_row['goods_id']);
+        $arr_goods_images = $db->select("SELECT `image_id` FROM `sdb_image_image_attach` WHERE `target_type`='goods' and `target_id`=".$arr_row['goods_id']);
+        if($arr_goods_images)
+        {
+            foreach($arr_goods_images as $single_row)
+            {
+                $goods_images[] = array(
+                    'image_id'=>$single_row['image_id'],
+                    'big_url'=>kernel::single('base_storager')->image_path($single_row['image_id'], 'l'),
+                    'thisuasm_url'=>kernel::single('base_storager')->image_path($single_row['image_id'], 'm'),
+                    'small_url'=>kernel::single('base_storager')->image_path($single_row['image_id'], 's'),
+                    'is_default'=>'false',
+                    );
+            }
+        }
+        //$goods_images = json_encode($goods_images);
+
+        return array(
+            'goods_id'=>$arr_row['goods_id'],
+            'name'=>$arr_row['name'],
+            'goods_bn'=>$arr_row['bn'],
+            'cat_id'=>$arr_row['cat_id'],
+            'type_id'=>$arr_row['type_id'],
+            'brand_id'=>$arr_row['brand_id'],
+            //'props'=>$props,
+            //'input_pids'=>$input_pids,
+            //'input_str'=>$input_str,
+            //'description'=>$arr_row['intro'],			//商品详细介绍不要
+            //'default_img_url'=>$default_img_url,
+            'store'=>$arr_row['store'],
+            'weight'=>$arr_row['weight'] ? $arr_row['weight'] : '',
+            'score'=>$arr_row['score'] ? $arr_row['score'] : '',
+            'price'=>$arr_row['price'],
+            'mktprice'=>$arr_row['mktprice'],
+	        'cost'=>$arr_row['cost'],
+            'unit'=>$arr_row['unit'],
+            'marketable'=>$arr_row['marketable'],
+            //'item_imgs'=>$goods_images,
+            'last_modify'=>date('Y-m-d H:i:s',$arr_row['last_modify']),
+            'uptime'=>date('Y-m-d H:i:s',$arr_row['uptime']),			//上架时间
+            'downtime'=>date('Y-m-d H:i:s',$arr_row['downtime']),		//下架时间
+            //'skus'=>$str_skus,
+			'skus'=>$arr_sdf_skus
+        );
     }
 	
 	/**
@@ -347,6 +486,7 @@ class b2c_apiv_apis_response_goods_goods
 	 */
 	private function get_response_goods_detail($rs_product,$rs_goods)
     {
+
         //拉取库存
         if($rs_goods['nostore_sell'] == '1' || $rs_product['store'] == null)
         {
@@ -375,18 +515,21 @@ class b2c_apiv_apis_response_goods_goods
         //处理规格(并拉取图片)
         $spec = $rs_goods['spec'];
 
-        foreach($spec as $spec_key=>$spec_value)
-        {
-            foreach($spec_value['option'] as $spec_option_key=>$spec_option_value)
-            {
-                $image_ids[$spec_option_value['spec_image']] = $spec_option_value['spec_image'];
-                $spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] = explode(',',$spec_option_value['spec_goods_images']);
-                foreach($spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] as $image_id)
-                {
-                    $image_ids[$image_id] = $image_id;
-                }
-            }
-        }
+		if($spec){
+			foreach($spec as $spec_key=>$spec_value)
+			{
+				foreach($spec_value['option'] as $spec_option_key=>$spec_option_value)
+				{
+					$image_ids[$spec_option_value['spec_image']] = $spec_option_value['spec_image'];
+					$spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] = explode(',',$spec_option_value['spec_goods_images']);
+					foreach($spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] as $image_id)
+					{
+						$image_ids[$image_id] = $image_id;
+					}
+				}
+			}
+		}
+
         $_image_attach = app::get("image")->model("image_attach");
         $image_data_ids = $_image_attach->getList("attach_id,image_id",array("target_id"=>intval($rs_goods['goods_id']),'target_type'=>'goods'));
 
@@ -395,18 +538,19 @@ class b2c_apiv_apis_response_goods_goods
             $image_ids[$images['image_id']] = $images['image_id'];
         }
         $fmt_images = $this->get_images_by_ids($image_ids);
-
-        foreach($spec as $spec_key=>$spec_value)
-        {
-            foreach($spec_value['option'] as $spec_option_key=>$spec_option_value)
-            {
-                $spec[$spec_key]['option'][$spec_option_key]['spec_image'] = $fmt_images[$spec_option_value['spec_image']];
-                foreach($spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] as $image_key=>$image_id)
-                {
-                    $spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'][$image_key] = $fmt_images[$image_id];
-                }
-            }
-        }
+		if($spec){
+			foreach($spec as $spec_key=>$spec_value)
+			{
+				foreach($spec_value['option'] as $spec_option_key=>$spec_option_value)
+				{
+					$spec[$spec_key]['option'][$spec_option_key]['spec_image'] = $fmt_images[$spec_option_value['spec_image']];
+					foreach($spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'] as $image_key=>$image_id)
+					{
+						$spec[$spec_key]['option'][$spec_option_key]['spec_goods_images'][$image_key] = $fmt_images[$image_id];
+					}
+				}
+			}
+		}
         foreach($image_data_ids as $goods_image)
         {
             $image[$goods_image['image_id']] = $fmt_images[$goods_image['image_id']];
@@ -466,13 +610,15 @@ class b2c_apiv_apis_response_goods_goods
 		
 		return $return;
 	}
-	
+
+
+		
     /**
      * 根据货号取得一个货品的详细信息
      * @param String bn
      * @return  array();
      */
-    public function get_goods_detail($params, &$service)
+    public function get_goods_detail_sku_bn($params, &$service)
     {
         if (!isset($params['bn']) || strlen($params['bn'])==0)
         {
@@ -507,7 +653,7 @@ class b2c_apiv_apis_response_goods_goods
      * @param String product_id 货品ID
      * @return  array()
      */
-    public function get_goods_detail_id($params, &$service)
+    public function get_goods_detail_sku_id($params, &$service)
     {
 		$params['product_id'] = intval(''.$params['product_id']);
         if ($params['product_id']<1)
