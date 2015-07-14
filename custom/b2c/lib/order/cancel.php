@@ -72,7 +72,7 @@ class b2c_order_cancel extends b2c_api_rpc_request
         $obj_checkorder = kernel::service('b2c_order_apps', array('content_path'=>'b2c_order_checkorder'));
         $arrStatus = $obj_checkorder->checkOrderFreez('cancel', $sdf['order_id']);
 
-        if ($arrStatus['unfreez'] && $sdf['pay_status'])
+        if ($arrStatus['unfreez'] && $sdf_order['pay_status'] && !in_array($sdf_order['shipping']['shipping_name'],NOFREEZ_SHIPPING_TYPE))
         {
             $is_unfreeze = $this->unfreezeGoods($sdf['order_id']);
         }

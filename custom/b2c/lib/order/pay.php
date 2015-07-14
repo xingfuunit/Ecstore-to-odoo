@@ -335,7 +335,7 @@ class b2c_order_pay extends b2c_api_rpc_request
                 }
                 $arr_common_type = array('goods', 'gift');
 
-                if ($store_mark == '2')
+                if ($store_mark == '2' && !in_array($sdf_order['shipping']['shipping_name'],NOFREEZ_SHIPPING_TYPE))
                 {
                     $objGoods = $this->app->model('goods');
                     if ($sdf_order['order_objects'])
