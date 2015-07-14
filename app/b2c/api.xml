@@ -22,6 +22,7 @@
         <api function='update_items' > 修改订单明细 </api>
         <api function='search' > 获取订单列表接口 </api>
         <api function='iframe_url' > 获取订单编辑iframe_url</api>
+		<api function='update_sync' > 修改sync状态</api>
     </module>
 
     <module id='b2c.order' type='order' class='b2c_apiv_apis_response_order_order'>
