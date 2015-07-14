@@ -265,9 +265,11 @@ class b2c_apiv_apis_response_goods_sku
 		$rs_goods  	= $_goods->getRow('goods_id,name,type_id', array('bn'=>$params['goods_bn']));
 
 		if(!is_array($rs_goods) || count($rs_goods)==0){
-			$msg = app::get('b2c')->_('没有查找到商品id的资料！'.$params['goods_id']);
+			$msg = app::get('b2c')->_('没有查找到商品id的资料！'.$goods_id);
 			$service->send_user_error($msg, null);
 		}
+		$goods_id = intval($rs_goods['goods_id']);
+		
 		
 		//--------------------------------------------------
 		//检查 bn 是否存在
@@ -279,7 +281,7 @@ class b2c_apiv_apis_response_goods_sku
 		}
 		//--------------------------------------------------
 		//检查 规格
-		$specs = $this->get_spec_desc($params['spec_id'],$params['spec_value_id'],$params['goods_id']);
+		$specs = $this->get_spec_desc($params['spec_id'],$params['spec_value_id'],$goods_id);
 
 		if(strlen($specs['msg'])>0){
             $service->send_user_error(app::get('b2c')->_($specs['msg']), null);
@@ -326,7 +328,7 @@ class b2c_apiv_apis_response_goods_sku
 		$time = time();
 		//-------------------------------------------
         $save_data = array(
-            'goods_id' 		=> $params['goods_id'],
+            'goods_id' 		=> $goods_id,
             'barcode' 		=> $params['barcode'],
             'title' 		=> $params['title'],
             'bn' 			=> $params['bn'],
@@ -370,7 +372,7 @@ class b2c_apiv_apis_response_goods_sku
 				'type_id' 		=> $rs_goods['type_id'],
 				'spec_id' 		=> $params['spec_id'],
 				'spec_value_id' => $params['spec_value_id'],
-				'goods_id' 		=> $params['goods_id'],
+				'goods_id' 		=> $goods_id,
 				'product_id' 	=> $product_id,
 				'last_modify' 	=> $time
 			);
@@ -379,18 +381,18 @@ class b2c_apiv_apis_response_goods_sku
 
 			//-----------------------------------------
 			//同步更新 goods.spec_desc
-			$this->update_goods_spec_desc($params['goods_id']);
+			$this->update_goods_spec_desc($goods_id);
 			
 			//同步更新 goods.store
-			$this->update_goods_store($params['goods_id']);
+			$this->update_goods_store($goods_id);
 			
 			//-----------------------------------------
 			//同步更新商品二维码
-			kernel::single('weixin_qrcode')->update_goods_qrcode($params['goods_id']);
+			kernel::single('weixin_qrcode')->update_goods_qrcode($goods_id);
 			
 			//-----------------------------------------
             return array(
-				'goods_id' 		=> ''.$params['goods_id'],
+				'goods_id' 		=> ''.$goods_id,
 				'product_id' 	=> ''.($product_id),
 				'bn'			=> $params['bn'],
 				'time' 			=> date('Y-m-d H:i:s',$time),
