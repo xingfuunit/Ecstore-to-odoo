@@ -568,19 +568,20 @@ Array
 					
 					if(is_array($spec_products['spec_value'])){
 						foreach ($spec_products['spec_value'] as $k=>$v){
-							$spec_goods[$k] = array($spec_products['spec_private_value_id'][$k]=>array(
+	
+							$spec_goods[$k][$spec_products['spec_private_value_id'][$k]] = array(
 								'private_spec_value_id' => $spec_products['spec_private_value_id'][$k],
 								'spec_value' 			=> $spec_products['spec_value'][$k],
 								'spec_value_id' 		=> $spec_products['spec_value_id'][$k],
 								'spec_image'			=> '',
 								'spec_goods_images'		=> '',
-							));
+							);
 						}
 					}
 				}
 			}
 		}
-		
+
 		$_goods = $this->app->model('goods');
 		$_goods->update(array('spec_desc' => $spec_goods), array('goods_id'=>$goods_id));
 		
