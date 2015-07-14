@@ -258,6 +258,7 @@ class b2c_order_create extends b2c_api_rpc_request
                 $goods_types = $obj_service_goods_type->get_goods_type();
                 $arr_service_goods_type_obj[$goods_types] = $obj_service_goods_type;
             }
+            $this->app->setConf('system.goods.freez.time','2');
             $store_mark = $this->app->getConf('system.goods.freez.time');
             $is_freez = true;
 
@@ -464,16 +465,16 @@ class b2c_order_create extends b2c_api_rpc_request
                                             );
                                             if ($store_mark == '1')
                                             {
-                                                $is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
+                                                //$is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
 
                                             }elseif($store_mark == '2' && $order_data['payinfo']['pay_app_id'] == '-1' ){
 
-                                                $is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
+                                                //$is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
                                             }
                                             if (!$is_freez)
                                             {
-                                                $msg = app::get('b2c')->_('配件库存不足！');
-                                                return false;
+                                                //$msg = app::get('b2c')->_('配件库存不足！');
+                                                //return false;
                                             }
                                         }
 
@@ -537,16 +538,16 @@ class b2c_order_create extends b2c_api_rpc_request
                                         );
                                         if ($store_mark == '1')
                                         {
-                                            $is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
+                                            //$is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
 
                                         }elseif($store_mark == '2' && $order_data['payinfo']['pay_app_id'] == '-1' ){
 
-                                            $is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
+                                            //$is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
                                         }
                                         if (!$is_freez && $_COOKIE['loginType'] != 'store')//hack by Jason 如果是门店的订单,则不需要判断库存
                                         {
-                                            $msg = app::get('b2c')->_('配件库存不足！');
-                                            return false;
+                                            //$msg = app::get('b2c')->_('配件库存不足！');
+                                            //return false;
                                         }
 
                                     }
@@ -565,15 +566,15 @@ class b2c_order_create extends b2c_api_rpc_request
                                 );
                                 if ($store_mark == '1')
                                 {
-                                    $is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
+                                    //$is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
 
                                 }elseif($store_mark == '2' && $order_data['payinfo']['pay_app_id'] == '-1' ){
-                                    $is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
+                                    //$is_freez = $str_service_goods_type_obj->freezeGoods($arr_params);
                                 }
                                 if (!$is_freez && $_COOKIE['loginType'] != 'store') //hack by Jason 如果是门店的订单,则不需要判断库存
                                 {
-                                    $msg = app::get('b2c')->_('配件库存不足！');
-                                    return false;
+                                    //$msg = app::get('b2c')->_('配件库存不足！');
+                                    //return false;
                                 }
 
                             }

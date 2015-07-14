@@ -31,7 +31,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
         /**
          * 取到扩展参数,用来判断是否是团购立即购买，团购则不判断登录（无注册购买情况下）
          */
-        
+    	$this->app->setConf('system.goods.freez.time','2');
         $arr_args = func_get_args();
         $arr_args = array(
             'get' => $arr_args,
