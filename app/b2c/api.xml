@@ -196,4 +196,9 @@
         <api function='update_specvalue' >修改一个规格值 </api>
         <api function='del_specvalue' >删除一个规格值 </api>
     </module>
+	<!-- 会员预存款 使用记录 -->
+	<module id='b2c.member' type='member' class='b2c_apiv_apis_response_member_advance'>
+        <api function='get_advance_list' >获取预存款收支记录</api>
+    </module>
+	
 </apilist>
