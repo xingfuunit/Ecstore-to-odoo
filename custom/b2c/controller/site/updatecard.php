@@ -42,5 +42,38 @@ class b2c_ctl_site_updatecard extends b2c_frontpage{
     }
     
     
+    public function add() {
+    	$card_content = file_get_contents(ROOT_DIR."/card/jin_number1.txt");
+    	$card_number = explode("\r\n", $card_content);
+    	
+    	$passwd_content = file_get_contents(ROOT_DIR."/card/jin_password1.txt");
+    	$card_passwd = explode("\r\n", $passwd_content);
+
+    	foreach($card_number as $k => $v){
+    		$card_data=array(
+    				'card_number'=>$v,
+    				'card_password'=>$card_passwd[$k],
+    				'card_lv_id'=>3,
+    				'card_advance'=>'0',
+    				'card_point'=>'0',
+    				'create_time'=>time(),
+    				'expired_time'=>'0',
+    				'active_time'=>'0',
+    				'card_etc'=>date('Ymd').'1110',
+    				'card_state'=>'0',
+    		);
+    		$card_info = $this->app->model('member_card')->getList('*',array('card_number'=>$v));
+    		$card_number = $card_info[0]['card_number'];
+    		if($card_number){
+    			exit('card exist '.$card_number);
+    		}
+    		if($this->app->model('member_card')->insert($card_data)){
+    			echo "card insert succ " .$v. "<br />";
+    		}else{
+    			echo "card insert failed " .$v. "<br />";
+    		}
+    	}
+    }
+    
 
 }
