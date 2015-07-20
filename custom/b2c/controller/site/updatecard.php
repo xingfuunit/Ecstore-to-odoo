@@ -42,18 +42,18 @@ class b2c_ctl_site_updatecard extends b2c_frontpage{
     }
     
     
-    public function add() {
-    	$card_content = file_get_contents(ROOT_DIR."/card/jin_number1.txt");
+    public function add($card_file,$passwd_file,$lv_id) {
+    	$card_content = file_get_contents(ROOT_DIR."/card/".$card_file.".txt");
     	$card_number = explode("\r\n", $card_content);
     	
-    	$passwd_content = file_get_contents(ROOT_DIR."/card/jin_password1.txt");
+    	$passwd_content = file_get_contents(ROOT_DIR."/card/".$passwd_file.".txt");
     	$card_passwd = explode("\r\n", $passwd_content);
 
     	foreach($card_number as $k => $v){
     		$card_data=array(
     				'card_number'=>$v,
     				'card_password'=>$card_passwd[$k],
-    				'card_lv_id'=>3,
+    				'card_lv_id'=>$lv_id,
     				'card_advance'=>'0',
     				'card_point'=>'0',
     				'create_time'=>time(),
