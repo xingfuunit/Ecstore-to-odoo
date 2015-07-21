@@ -430,7 +430,7 @@ class b2c_apiv_apis_response_goods_store
      * @param array sdf
      * @return boolean success of failure
      */
-    private function updateStore(&$sdf, $thisObj)
+    public function updateStore(&$sdf, $thisObj)
     {
 
         if (!isset($sdf['list_quantity']) || !$sdf['list_quantity'])
