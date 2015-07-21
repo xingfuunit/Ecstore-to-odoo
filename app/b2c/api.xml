@@ -176,6 +176,8 @@
 		<api function='update_store_id' > 根据货品ID更新一个货品的库存 </api>
         <api function='update_freezstore' > 根据货号更新一个货品的冻结库存 </api>
 		<api function='update_freezstore_id' > 根据货品ID更新一个货品的冻结库存 </api>
+		
+		<api function='updateStore' > 批量更新商品库存接口</api>
     </module>
 	
 	<!-- 新增商品规格相关接口 -->
