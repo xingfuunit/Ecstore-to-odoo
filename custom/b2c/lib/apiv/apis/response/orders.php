@@ -157,7 +157,6 @@ class b2c_apiv_apis_response_orders
             else
                 $pay_status = intval($params['pay_status']);
         }
-
 		//发货状态，非必填写(int) 0=未发货,		1=已发货,	2=部分发货,				3=部分退货,		4=已退货;
         $ship_status = -1;
         if( $params['ship_status'] != '' ){
@@ -176,6 +175,11 @@ class b2c_apiv_apis_response_orders
                 $status = intval($params['status']);
         }
 		
+        $odoo_is_sync = false;
+        if($params['odoo_is_sync'] == 'false'){
+			$odoo_is_sync = true;
+        }
+        
 		//-------------------------------------------------------------
         $params['page_no'] 		= $params['page_no'] ? $params['page_no'] : '1';
         $params['page_size'] 	= $params['page_size'] ? $params['page_size'] : '20';
@@ -218,6 +222,10 @@ class b2c_apiv_apis_response_orders
 				$where .= "AND status = 'active' ";
  
 			}
+		}
+		
+		if($odoo_is_sync){
+			$where .= " AND odoo_is_sync = 'false'";
 		}
 
         if( $where != '' )
@@ -1496,6 +1504,22 @@ class b2c_apiv_apis_response_orders
        
         $this->pagedata['order']['goodsinfo']=$goods;
         return  $this->pagedata['order'];
+    }
+    
+    /**
+     *  同步是否同步状态
+     */
+    function update_sync($params,&$service){
+    	if(!isset($params['tid'])){
+    		$thisObj->send_user_error(app::get('b2c')->_('订单tid不存在'));
+    	}
+    	
+    	$order_model = app::get('b2c')->model('orders');
+    	$re = $order_model->update(array('odoo_is_sync'=>'true'),array('order_id'=>$params['tid']));
+    	if($re){
+    		return array('tid'=>$params['tid']);
+    	}
+    	$thisObj->send_user_error(app::get('b2c')->_('ecstore处理失败'),array('tid'=>$params['tid']));
     }
 
 }

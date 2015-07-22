@@ -22,6 +22,7 @@
         <api function='update_items' > 修改订单明细 </api>
         <api function='search' > 获取订单列表接口 </api>
         <api function='iframe_url' > 获取订单编辑iframe_url</api>
+		<api function='update_sync' > 修改sync状态</api>
     </module>
 
     <module id='b2c.order' type='order' class='b2c_apiv_apis_response_order_order'>
@@ -175,6 +176,8 @@
 		<api function='update_store_id' > 根据货品ID更新一个货品的库存 </api>
         <api function='update_freezstore' > 根据货号更新一个货品的冻结库存 </api>
 		<api function='update_freezstore_id' > 根据货品ID更新一个货品的冻结库存 </api>
+		
+		<api function='updateStore' > 批量更新商品库存接口</api>
     </module>
 	
 	<!-- 新增商品规格相关接口 -->
@@ -195,4 +198,9 @@
         <api function='update_specvalue' >修改一个规格值 </api>
         <api function='del_specvalue' >删除一个规格值 </api>
     </module>
+	<!-- 会员预存款 使用记录 -->
+	<module id='b2c.member' type='member' class='b2c_apiv_apis_response_member_advance'>
+        <api function='get_advance_list' >获取预存款收支记录</api>
+    </module>
+	
 </apilist>

@@ -322,6 +322,7 @@ class b2c_order_pay extends b2c_api_rpc_request
             // 冻结库存
             if ($arrOrder['payed'] == $sdf_order['cur_amount'])
             {
+            	$this->app->setConf('system.goods.freez.time','2');
                 $store_mark = $this->app->getConf('system.goods.freez.time');
 
                 // 所有的goods type 处理的服务的初始化.
@@ -334,7 +335,7 @@ class b2c_order_pay extends b2c_api_rpc_request
                 }
                 $arr_common_type = array('goods', 'gift');
 
-                if ($store_mark == '2')
+                if ($store_mark == '2' && !in_array($sdf_order['shipping']['shipping_name'],NOFREEZ_SHIPPING_TYPE))
                 {
                     $objGoods = $this->app->model('goods');
                     if ($sdf_order['order_objects'])
@@ -436,9 +437,9 @@ class b2c_order_pay extends b2c_api_rpc_request
 
             //if (app::get('b2c')->getConf('site.order.send_type') == 'false'&&$is_need_rpc){
             if ($is_need_rpc){
-//                 system_queue::instance()->publish('b2c_tasks_matrix_sendpayments', 'b2c_tasks_matrix_sendpayments', $sdf);
-            	$obj_apiv = kernel::single('b2c_apiv_exchanges_request');
-            	$obj_apiv->rpc_caller_request($sdf, 'orderpay');
+                system_queue::instance()->publish('b2c_tasks_matrix_sendpayments', 'b2c_tasks_matrix_sendpayments', $sdf);
+//             	$obj_apiv = kernel::single('b2c_apiv_exchanges_request');
+//             	$obj_apiv->rpc_caller_request($sdf, 'orderpay');
             }
 
             $aUpdate['order_id'] = $rel_id;

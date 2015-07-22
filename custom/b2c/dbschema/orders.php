@@ -590,6 +590,16 @@ $db['orders']=array (
     		'in_list' => true,
     		'default_in_list' => true,
     ),
+    'odoo_is_sync' => array(
+	    'type' => 'bool',
+	    'default' => 'false',
+	    'editable' => false,
+	    'required' => false,
+	    'label' => app::get('b2c')->_('odoo是否已同步'),
+	    'width' => 80,
+	    'in_list' => true,
+	    'default_in_list' => false,
+    ),
   ),
   'index' =>
   array (
