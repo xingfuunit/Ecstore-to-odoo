@@ -187,7 +187,6 @@ class b2c_apiv_apis_response_order_aftersale
                 $page_size = intval($params['page_size']);
         }
 
-
         $obj_return_product = $this->app->model('return_product');
 
         $where = '';
@@ -196,6 +195,10 @@ class b2c_apiv_apis_response_order_aftersale
         
         if( $end_time != '' )
             $where .= "AND last_modify < '" . $end_time . "' ";
+        
+        if( $params['status']){
+        	$where .= "AND status IN (".$params['status'].")";
+        }
         
         if( $where != '' )
            $where = 'WHERE ' . substr($where, 4);
