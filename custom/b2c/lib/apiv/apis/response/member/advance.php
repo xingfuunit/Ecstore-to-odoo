@@ -41,6 +41,14 @@ class b2c_apiv_apis_response_member_advance
 	
 		//-------------------------------------------------------------
 		$where = '';
+		
+		//此参数不传时，默认为 true,  false时获取全部记录
+		$params['is_import']  = $params['is_import'] ? $params['is_import'] : 'true';
+		
+		if($params['is_import'] ==  'true'){
+			$where .= "AND import_money > '0' ";
+		}
+				
 		if( $start_time != '' )
 			$where .= "AND mtime > '" . $start_time . "' ";
 		if( $end_time != '' )
@@ -89,7 +97,7 @@ class b2c_apiv_apis_response_member_advance
 		$rs_count = 0;
 	
 		$sql = 'select count(*) as c from `'.$sTableName.'` '.$sWhere;
-	
+		
 		//-------------------------------------------------
 	
 		$db = kernel::database();
