@@ -474,6 +474,7 @@ class b2c_ctl_admin_goods_editor extends desktop_controller{
         }
 
         // 处理微店商品下架
+		/*
         if ( $goods['status'] == 'false' ) {
             $p_mdl  = $this->app->model('products');
             $list   = $p_mdl->getList('product_id', array('goods_id' => $goods['goods_id']));
@@ -489,7 +490,7 @@ class b2c_ctl_admin_goods_editor extends desktop_controller{
                 }
             }
         }
-
+		*/
         $this->end(true,app::get('b2c')->_('操作成功'),null,array('goods_id'=>$goods['goods_id'] ) );
 
 
