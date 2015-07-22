@@ -71,7 +71,7 @@ class b2c_apiv_apis_response_goods_store
         $rs_goods = $_goods->getRow('nostore_sell,store',array('goods_id'=>$goods_id));
         if(count($rs_goods) == 0)
 		{
-            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'));
+            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'), null);
 		}
 
         return $this->response_product_store($rs_goods, $rs_product);
@@ -255,7 +255,7 @@ class b2c_apiv_apis_response_goods_store
         $rs_goods = $_goods->getRow('nostore_sell,store',array('goods_id'=>$goods_id));
         if(count($rs_goods) == 0)
 		{
-            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'));
+            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'), null);
 		}
 		//-----------------------------------------------
 		//更新库存
@@ -309,7 +309,7 @@ class b2c_apiv_apis_response_goods_store
         $rs_goods = $_goods->getRow('nostore_sell,store',array('goods_id'=>$goods_id));
         if(count($rs_goods) == 0)
 		{
-            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'));
+            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'), null);
 		}
 		//-----------------------------------------------
 		//更新库存
@@ -362,7 +362,7 @@ class b2c_apiv_apis_response_goods_store
         $rs_goods = $_goods->getRow('nostore_sell,store',array('goods_id'=>$goods_id));
         if(count($rs_goods) == 0)
 		{
-            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'));
+            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'), null);
 		}
 		//-----------------------------------------------
 		//更新库存
@@ -413,7 +413,7 @@ class b2c_apiv_apis_response_goods_store
         $rs_goods = $_goods->getRow('nostore_sell,store',array('goods_id'=>$goods_id));
         if(count($rs_goods) == 0)
 		{
-            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'));
+            $service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'), null);
 		}
 		//-----------------------------------------------
 		//更新库存
@@ -424,18 +424,94 @@ class b2c_apiv_apis_response_goods_store
 
         return $this->response_product_store($rs_goods, $rs_product);
     }
+	
+    /**
+     * 批量修改库存量
+     * @param json
+     * @return  array()
+     */
+    public function updateStore($params, &$service)
+    {
+        if (!isset($params['list_quantity']) || !$params['list_quantity'])
+        {
+            $service->send_user_error(app::get('b2c')->_('缺少参数 list_quantity'), null);
+        }
+		$arr_store = json_decode($params['list_quantity'], true);
+		
+		//---------------------------------------------------
+		
+		$_products = $this->app->model('products');
 
+		//---------------------------------------------------
+		
+		if (isset($arr_store) && is_array($arr_store))
+		{
+			foreach ($arr_store as $info)
+			{
+				if ($info['bn'] && is_numeric($info['quantity']))
+				{
+					if (!$_products->dump(array('bn' => $info['bn'])))
+					{
+						$service->send_user_error(app::get('b2c')->_('该货品不存在'.$info['bn']), null);
+						return;	
+					}
+				}else{
+					$service->send_user_error(app::get('b2c')->_('参数json转换出错！请检查 bn 和 quantity！'), null);
+					return;	
+				}
+			}
+		}else{
+            $service->send_user_error(app::get('b2c')->_('参数json转换出错！请检查！'), null);
+		}
+		
+		//---------------------------------------------------
+		$_goods = $this->app->model('goods');
+		//---------------------------------------------------
+		foreach ($arr_store as $info)
+		{
+			if ($info['bn'] && is_numeric($info['quantity']))
+			{
+				$rs_product = $_products->getRow('product_id,goods_id,bn,store,freez',array('bn' => $info['bn']));
+				if(count($rs_product) == 0)
+				{
+					$service->send_user_error(app::get('b2c')->_('该货品不存在'.$info['bn']), null);
+				}
+				//-----------------------------------------------
+				$goods_id = $rs_product['goods_id'];
+
+				$rs_goods = $_goods->getRow('nostore_sell,store',array('goods_id'=>$goods_id));
+				if(count($rs_goods) == 0)
+				{
+					$service->send_user_error(app::get('b2c')->_('未找到该货品对应的商品'), null);
+				}
+				
+				//-----------------------------------------------
+				//更新库存
+				$rs_product['store'] = ''.$info['quantity'];
+				
+				$data['store'] = $info['quantity'];
+				$isSave = $_products->update($data, array('product_id' => $rs_product['product_id']));
+				//-----------------------------------------------
+				//同步更新 goods 表
+				$this->update_goods_store($goods_id);
+			}
+		}
+		
+		return 'true';
+	}
+	
+	
     /**
      * 库存修改
      * @param array sdf
      * @return boolean success of failure
      */
-    public function updateStore(&$sdf, $thisObj)
+    public function updateStore2(&$sdf, $thisObj)
     {
 
         if (!isset($sdf['list_quantity']) || !$sdf['list_quantity'])
         {
-            $thisObj->send_user_error(app::get('b2c')->_('需要更新的货品的库存不存在！'), array());
+            $thisObj->send_user_error(app::get('b2c')->_('需要更新的货品的库存不存在！'), null);
         }
         else
         {
@@ -514,7 +590,7 @@ class b2c_apiv_apis_response_goods_store
             }
             else
             {
-                $thisObj->send_user_error(app::get('b2c')->_('更新的商品的库存信息不存在！'), array());
+                $thisObj->send_user_error(app::get('b2c')->_('更新的商品的库存信息不存在！'), null);
             }
         }
     }
