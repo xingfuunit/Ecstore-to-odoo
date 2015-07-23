@@ -118,6 +118,8 @@ class b2c_apiv_apis_response_goods
 		if(isset($params['barcode']) && strlen($params['barcode'])>0){
 			$save_data['barcode'] = $params['barcode'];
 		}
+
+		$save_data['last_modify']  	= time();
 		
 		$_goods = $this->app->model('goods');
 		$isSave = $_goods->update($save_data, array('goods_id' => $goods_id));
