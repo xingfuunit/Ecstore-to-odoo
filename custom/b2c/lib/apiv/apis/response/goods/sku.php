@@ -509,10 +509,13 @@ Array
 		//-----------------------------------------------
 		$db = kernel::database();
 		$rs = $db->selectrow($sql);
-		$data['store'] = intval($rs[0]);
+		$store = intval($rs[0]);
 
+		$save_data['store']  		= $store;
+		$save_data['last_modify']  	= time();
+		
 		$_goods = $this->app->model('goods');
-		$_goods->update($data, array('goods_id' => $goods_id));
+		$_goods->update($save_data, array('goods_id' => $goods_id));
 
 		return $store;
 	}
@@ -581,9 +584,14 @@ Array
 				}
 			}
 		}
-
+		
+		//--------------------------------------------
+		$save_data['spec_desc']  	= $spec_goods;
+		$save_data['last_modify']  	= time();
+		
+		
 		$_goods = $this->app->model('goods');
-		$_goods->update(array('spec_desc' => $spec_goods), array('goods_id'=>$goods_id));
+		$_goods->update($save_data, array('goods_id'=>$goods_id));
 		
 	}
 	
