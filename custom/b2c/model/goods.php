@@ -705,7 +705,23 @@ class b2c_mdl_goods extends dbeav_model{
         return $rs;
 
     }
-
+	function checkProductBarcode($bn, $gid=0){
+		if(empty($bn)){
+			return false;
+		}
+		$gid = intval($gid);
+		$bn = $this->db->quote($bn);
+		if($gid){
+            $sql = 'SELECT count(*) AS num FROM sdb_b2c_products WHERE barcode = '.$bn.' AND goods_id != '.$gid;
+            $Gsql = 'SELECT count(*) AS num FROM sdb_b2c_goods WHERE barcode = '.$bn.' AND goods_id != '.$gid;
+        }else{
+            $sql = 'SELECT count(*) AS num FROM sdb_b2c_products WHERE barcode = '.$bn;
+            $Gsql = 'SELECT count(*) AS num FROM sdb_b2c_goods WHERE barcode = '.$bn;
+        }
+		$aTmp = $this->db->select($sql);
+		$GaTmp = $this->db->select($Gsql);
+		return $aTmp[0]['num']+$GaTmp[0]['num'];
+	}
     function checkProductBn($bn, $gid=0){
         if(empty($bn)){
             return false;
