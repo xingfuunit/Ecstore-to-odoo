@@ -1,0 +1,58 @@
+<{lang_script src="lang.js" app="site"}>
+<{if defined("DONOTUSE_CSSFRAMEWORK")&&DONOTUSE_CSSFRAMEWORK}>
+<{else}>
+<{css src="typical.css" app="site" pdir="css_mini"}>
+<{/if}>
+<{if defined("DONOTUSE_JSFRAMEWORK")&&DONOTUSE_JSFRAMEWORK}>
+<{else}>
+	<{if defined("DEBUG_JS") && DEBUG_JS}>
+	    <{script src="lab.js" app="site"}>
+	    <{script src="mootools.js" app="site"}>
+	    <{script src="moomore.js" app="site"}>
+	    <{script src="jstools.js" app="site"}>
+	    <{script src="formplus.js" app="site"}>
+	    <{script src="popup.js" app="site"}>
+	    <{script src="switchable.js" app="site"}>
+	<{else}>
+	    <{script src="moo.min.js" app="site" pdir="js_mini"}>
+	    <{script src="ui.min.js" app="site" pdir="js_mini"}>
+	<{/if}>
+<{/if}>
+<div id='vipday_main'>
+<link rel="stylesheet" href="/public/app/b2c/statics/active/vipday/css/base.css">
+
+<div style="width:100%; height:321px;min-width:1279px;background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_01.jpg) center no-repeat"></div>
+<div style="width:100%; height:315px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_02.jpg) center no-repeat"></div>
+<div style="width:100%; height:275px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_03.jpg) center no-repeat"></div>
+<div style="width:100%; height:400px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_04.jpg) center no-repeat"></div>
+<div style="width:100%; height:428px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_05.jpg) center no-repeat"></div>
+<div style="width:100%; height:177px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_06.jpg) center no-repeat"></div>
+<div style="width:100%; height:505px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_07.jpg) center no-repeat">
+    <div  style=" width:1279px; height:505px; display:block; margin:0 auto">
+    <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_13.jpg" border="0" usemap="#Map" style=" width:1279px; height:505px; display:block; margin:0 auto" />
+<map name="Map" id="Map"><area shape="rect" coords="27,17,514,504" href="http://www.pzfresh.com/product-2303.html" /><area shape="rect" coords="746,17,1206,585" href="http://www.pzfresh.com/product-2296.html" /></map>
+  </div>
+</div>
+<div style="width:100%; height:545px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_08.jpg) center no-repeat"></div>
+<div style="width:100%; height:517px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_09.jpg) center no-repeat">
+    <div  style=" width:1279px; height:505px; display:block; margin:0 auto">
+    <img src="<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_14.jpg" border="0" usemap="#Map2" style=" width:1279px; height:505px; display:block; margin:0 auto" />
+<map name="Map2" id="Map2"><area shape="rect" coords="45,4,535,595" href="http://www.pzfresh.com/product-2300.html" /><area shape="rect" coords="675,7,1217,501" href="http://www.pzfresh.com/product-2298.html" /></map>
+  </div>
+</div>
+<div style="width:100%; height:269px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_10.jpg) center no-repeat"></div>
+<div style="width:100%; height:337px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_11.jpg) center no-repeat"></div>
+<div style="width:100%; height:312px;min-width:1279px; background: url(<{$IMG_PZFRESH}>/public/app/b2c/statics/active/hgt/images/index_12.jpg) center no-repeat"></div>
+
+</div>
+
+<script>
+<{*此页不用head和foot，需加上统计代码以便统计*}>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?739e2995d40f81cbaf33e2e48d91a272";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
