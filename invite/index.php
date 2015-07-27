@@ -93,7 +93,7 @@ if(flock($fp , LOCK_EX)){
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
-<title>品珍鲜活</title>
+<title>发给<?php echo $name;?>的邀请函</title>
 <meta charset="utf-8">
 <?php if ($isMobile) : ?>
 <link rel="stylesheet" href="<?php echo ROOT_URL;?>/images/mobi.css">
@@ -109,7 +109,7 @@ if(flock($fp , LOCK_EX)){
 <script>
       var imgUrl = '<?php echo ROOT_URL;?>/images/logo.jpg';  // 分享后展示的一张图片
         var lineLink = '<?php echo $this_url;?>'; // 点击分享后跳转的页面地址
-        var descContent = "2014年11月22日下午2点30分，国通物流园总部大楼，敬待光临！";  // 分享后的描述信息
+        var descContent = "品珍鲜活广州开业典礼！";  // 分享后的描述信息
         var shareTitle = '品珍发给<?php echo $name;?>的邀请函';  // 分享后的标题
         var appid = '';  // 应用id,如果有可以填，没有就留空
         
@@ -168,10 +168,12 @@ if(flock($fp , LOCK_EX)){
 <body>
 
 <table id="loading"><tr><td style="text-align:center;background-color:#1A1A1A;"><img src="<?php echo ROOT_URL;?>/images/loaderc.gif" class="loading_img"></td></tr></table>  
-<img src="<?php echo ROOT_URL;?>/img.php?s=<?php echo $s;?>" id="box_bg" style="display:none">
+<img src="<?php echo ROOT_URL;?>/images/0.jpg" id="box_bg" style="display:none">
 <div class="box" id="bb" style='background-size: 100% 100%;'>
 	<canvas id="cas" ></canvas>
 </div>
+
+
 
 
 <section class="p-index sectionh1" style="display: block;">
@@ -296,11 +298,11 @@ if(flock($fp , LOCK_EX)){
 		function start_can() {
 			time_add++;
 			if (load_img_num >= 2 || time_add>4) {
-				$(".box").css("background",'url("<?php echo ROOT_URL;?>/img.php?s=<?php echo $s;?>") no-repeat');
+				$(".box").css("background",'url("<?php echo ROOT_URL;?>/images/0.jpg") no-repeat');
 				$(".box").css("background-size",'100% 100%');
 				
 				$("#loading").remove();
-				ctx.drawImage(img,0,0,canvas.width,canvas.height);
+			//	ctx.drawImage(img,0,0,canvas.width,canvas.height);
 				tapClip();
 				$(".box").addClass('box_bg');
 				play_audio();

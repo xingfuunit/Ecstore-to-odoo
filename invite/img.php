@@ -40,7 +40,7 @@ if ($s == -1) {
 }
 
 //使用  
-new showChinaText($name,82,200);  
+new showChinaText($name,175,440);  
 
 
 /* 
@@ -56,7 +56,7 @@ class showChinaText {
     var $text = '图象资源';  
     var $font = 'fonts/SIMSUN.TTC'; //如果没有要自己加载到相应的目录下（本地www）  
     var $angle = 0;  
-    var $size = 18;  
+    var $size = 46;  
     var $showX = 160;  
     var $showY = 200;  
       
