@@ -12,7 +12,7 @@ if(flock($fp , LOCK_EX)){
 } else {
 	$cfg = array();
 }
-$showX = 250;
+
 if ($s == -1) {
 	$name = '';
 } else {
@@ -22,6 +22,7 @@ if ($s == -1) {
 		$name = $cfg[$s];
 		
 		$match = preg_match('/^(?!_|\s\')[\x80-\xff\s\']+$/',$name); 
+		/*
 		if ($match) {
 			if (strlen($name) == 6) {
 				$showX = 178;
@@ -34,12 +35,12 @@ if ($s == -1) {
 			} else if (strlen($name) == 15) {
 				$showX = 185;
 			}
-		}
+		}*/
 	}
 }
 
 //使用  
-new showChinaText($name,$showX);  
+new showChinaText($name,175,440);  
 
 
 /* 
@@ -55,13 +56,13 @@ class showChinaText {
     var $text = '图象资源';  
     var $font = 'fonts/SIMSUN.TTC'; //如果没有要自己加载到相应的目录下（本地www）  
     var $angle = 0;  
-    var $size = 45;  
-    var $showX = 210;  
-    var $showY = 675;  
+    var $size = 46;  
+    var $showX = 160;  
+    var $showY = 200;  
       
 
       
-    function showChinaText($showText = '',$showX = 210,$showY = 553) {  
+    function showChinaText($showText = '',$showX ,$showY) {  
     	//echo $showText;exit;
         $this->text = isset ( $showText ) ? $showText : $this->text;  
         
@@ -91,7 +92,7 @@ class showChinaText {
         //$image = imagecreate(400,300);  
         $image = imagecreatefromjpeg ( "images/1.jpg" ); //这里的图片，换成你的图片路径  
         //定义颜色    
-        $color = ImageColorAllocate ( $image, 0, 0, 0 );  
+        $color = ImageColorAllocate ( $image, 94, 82, 164 );  
         //填充颜色  
         //ImageFilledRectangle($image,0,0,200,200,$red);  
         //显示文字  
