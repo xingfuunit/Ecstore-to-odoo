@@ -187,10 +187,13 @@ class b2c_apiv_apis_response_goods_store
 		//-----------------------------------------------
 		$db = kernel::database();
 		$rs = $db->selectrow($sql);
-		$data['store'] = intval($rs[0]);
+		$store = intval($rs[0]);
 
+		$save_data['store']  		= $store;
+		$save_data['last_modify']  	= time();
+		
 		$_goods = $this->app->model('goods');
-		$_goods->update($data, array('goods_id' => $goods_id));
+		$_goods->update($save_data, array('goods_id' => $goods_id));
 
 		return $store;
 	}
@@ -261,8 +264,10 @@ class b2c_apiv_apis_response_goods_store
 		//更新库存
 		$rs_product['store'] = ''.$params['qty'];
 		
-		$data['store'] = $params['qty'];
-		$isSave = $_products->update($data, array('product_id' => $rs_product['product_id']));
+		$save_data['store']  		= $params['qty'];
+		$save_data['last_modify']  	= time();
+		
+		$isSave = $_products->update($save_data, array('product_id' => $rs_product['product_id']));
 		//-----------------------------------------------
 		//同步更新 goods 表
 		$this->update_goods_store($goods_id);
@@ -315,8 +320,10 @@ class b2c_apiv_apis_response_goods_store
 		//更新库存
 		$rs_product['store'] = ''.$params['qty'];
 		
-		$data['store'] = $params['qty'];
-		$isSave = $_products->update($data, array('product_id' => $rs_product['product_id']));
+		$save_data['store']  		= $params['qty'];
+		$save_data['last_modify']  	= time();
+		
+		$isSave = $_products->update($save_data, array('product_id' => $rs_product['product_id']));
 		//-----------------------------------------------
 		//同步更新 goods 表
 		$this->update_goods_store($goods_id);
@@ -368,9 +375,12 @@ class b2c_apiv_apis_response_goods_store
 		//更新库存
 		$rs_product['freez'] = ''.$params['qty'];
 		
-		$data['freez'] = $params['qty'];
-		$isSave = $_products->update($data, array('product_id' => $rs_product['product_id']));
-
+		$save_data['freez']  		= $params['qty'];
+		$save_data['last_modify']  	= time();
+		
+		$isSave = $_products->update($save_data, array('product_id' => $rs_product['product_id']));
+		
+		
         return $this->response_product_store($rs_goods, $rs_product);
     }
 	
@@ -418,10 +428,12 @@ class b2c_apiv_apis_response_goods_store
 		//-----------------------------------------------
 		//更新库存
 		$rs_product['freez'] = ''.$params['qty'];
-		
-		$data['freez'] = $params['qty'];
-		$isSave = $_products->update($data, array('product_id' => $rs_product['product_id']));
 
+		$save_data['freez']  		= $params['qty'];
+		$save_data['last_modify']  	= time();
+		
+		$isSave = $_products->update($save_data, array('product_id' => $rs_product['product_id']));
+		
         return $this->response_product_store($rs_goods, $rs_product);
     }
 	
@@ -489,8 +501,11 @@ class b2c_apiv_apis_response_goods_store
 				//更新库存
 				$rs_product['store'] = ''.$info['quantity'];
 				
-				$data['store'] = $info['quantity'];
-				$isSave = $_products->update($data, array('product_id' => $rs_product['product_id']));
+				$save_data['store']  		= $info['quantity'];
+				$save_data['last_modify']  	= time();
+				
+				$isSave = $_products->update($save_data, array('product_id' => $rs_product['product_id']));
+				
 				//-----------------------------------------------
 				//同步更新 goods 表
 				$this->update_goods_store($goods_id);
