@@ -183,22 +183,22 @@ if(flock($fp , LOCK_EX)){
 	
 <section class="m-page m-page2 hide sectionh1" style="top: 0px;">
   <div class="m-img m-img01" style="background-size:100% 100%;">
-  <img class="animated fadeInDown J_fTxt" src="<?php echo ROOT_URL;?>/images/02.jpg" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; display: none;">
+  <img class="animated fadeInDown J_fTxt" src="<?php echo ROOT_URL;?>/images/2.jpg" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; display: none;">
   <a href="javascript:;" class="help-up"></a> </div>
 </section>
 
 <section class="m-page m-page2 hide sectionh1" style=" top: 0px;">
   <div class="m-img m-img01" style="background-size:100% 100%;">
-  <img class="animated fadeInDown J_fTxt" src="<?php echo ROOT_URL;?>/images/03.jpg" style="position:absolute; left:0px; top:0px; width: 100%; height:100%; display: none; ">
+  <img class="animated fadeInDown J_fTxt" src="<?php echo ROOT_URL;?>/images/3.jpg" style="position:absolute; left:0px; top:0px; width: 100%; height:100%; display: none; ">
   <a href="javascript:;" class="help-up"></a> </div>
 </section>
 
+<!--
 <section class="m-page m-page2 hide sectionh1" style="top: 0px;">
   <div class="m-img m-img01" style="background-size:100% 100%;">
   <img class="animated fadeInDown J_fTxt" src="<?php echo ROOT_URL;?>/images/04.jpg" style="position:absolute; left:0px; top:0px; width: 100%; height:100%; display: none; ">
   <a href="javascript:;" class="help-up"></a> </div>
 </section>
-
 
 
 <section class="m-page m-page2 hide sectionh1" style="top: 0px;">
@@ -236,6 +236,7 @@ if(flock($fp , LOCK_EX)){
   <img class="animated fadeInDown J_fTxt" src="<?php echo ROOT_URL;?>/images/10.jpg" style="position:absolute; left:0px; top:0px; width: 100%; height:100%; display: none; ">
   <a href="javascript:;" class="help-up"></a> </div>
 </section>
+-->
 	
 <audio src=""  autoplay="autoplay" id="video1" loop="loop"></audio>
 
