@@ -222,6 +222,8 @@ class b2c_apiv_apis_response_order_aftersale
         $offset = ($page_no-1) * $page_size;
         $limit = $page_size;
 
+        $page_data =  $this->get_pager($page_no, $page_size, $obj_return_product->table_name(1),$where);
+        
         $has_next = $total_results > ($offset+$limit) ? 'true' : 'false';
         
         $sdf = $obj_return_product->db->selectLimit( str_replace('###', ' * ', $sql), $limit, $offset );
@@ -235,16 +237,75 @@ class b2c_apiv_apis_response_order_aftersale
         	$sdf[$k]['product_data']=unserialize($row['product_data']);
         }
 
-        return $this->search_response($sdf, $total_results, $has_next);
+        return $this->search_response($sdf, $total_results, $has_next,$page_data);
     }
 
-    private function search_response($trades, $total_results=0, $has_next='false'){
+    private function search_response($trades, $total_results=0, $has_next='false',$page_data){
 
         return array(
             'result' => $trades,
             'total_results' => $total_results,
             'has_next' => $has_next,
+        	'pageno'	=> $page_data['page_no'],
+        	'pageszie'	=> $page_data['page_size'],
+        	'pagecount'	=> $page_data['page_count'],
         );
 
+    }
+    
+    
+    /**
+     * 根据表名，查询条件，页码，返回总记录数，总分页数
+     *
+     * @param page_no 		当前页码
+     * @param page_size		每页的记录数
+     * @param sTableName 	表名
+     * @param sWhere 		查询条件
+     * @return array
+     */
+    private function get_pager($page_no, $page_size, $sTableName, $sWhere='')
+    {
+    	$page_no 	= intval($page_no);
+    	$page_size 	= intval($page_size);
+    	$limit		= '';
+    
+    	$rs_count = 0;
+    
+    	$sql = 'select count(*) as c from `'.$sTableName.'` '.$sWhere;
+    
+    	//-------------------------------------------------
+    	$db = kernel::database();
+    	$rows = $db->select($sql);
+    	if ($rows && is_array($rows)){
+    		$rs_count = intval($rows[0]['c']);
+    	}
+    	$str_limit 	= '';
+    	$offset 	= 0;
+    	$limit 		= -1;
+    	$page_count = 0;
+    
+    	if($rs_count>0){
+    		$page_count	= ceil($rs_count / $page_size);
+    		if( $page_no < 1 ){
+    			$page_no = 1;
+    		}else if( $page_no > $page_count ){
+    			$page_no = $page_count;
+    		}
+    		$offset		= (($page_no-1)* $page_size);
+    		$limit		= $page_size;
+    		$str_limit = ' LIMIT '.$offset.','.$limit;
+    	}else{
+    		$page_no = 1;
+    	}
+    
+    	return array(
+    			'rs_count' 		=> $rs_count,
+    			'page_count' 	=> $page_count,
+    			'page_no' 		=> $page_no,
+    			'page_size' 	=> $page_size,
+    			'offset' 		=> $offset,
+    			'limit' 		=> $limit,
+    			'str_limit' 	=> $str_limit
+    	);
     }
 }
