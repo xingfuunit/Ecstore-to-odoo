@@ -175,6 +175,7 @@ class b2c_order_pay extends b2c_api_rpc_request
 
     private function __order_payment($rel_id, &$sdf, &$status='succ',&$msg='')
     {
+    	
         $objMath = kernel::single('ectools_math');
         $obj_orders = $this->app->model('orders');
         $subsdf = array('order_objects'=>array('*',array('order_items'=>array('*',array(':products'=>'*')))));
@@ -259,12 +260,10 @@ class b2c_order_pay extends b2c_api_rpc_request
                 $msg = app::get('b2c')->_('订单支付状态保存失败！');
                 return false;
             }
-            
             if (!$obj_orders->db->affect_row()){
                 $msg = app::get('b2c')->_('订单重复支付！');
                 return false;
             }
-
            $errorMsg[] = $error_Msg; 
             // 为会员添加积分
             if (isset($sdf_order['member_id']) && $sdf_order['member_id'] && $arrOrder['payed'] == $sdf_order['cur_amount'])
@@ -308,7 +307,6 @@ class b2c_order_pay extends b2c_api_rpc_request
                 $obj_member = $this->app->model('members');
                 $obj_member->change_exp($sdf_order['member_id'], floor($sdf_order['cur_amount']));
             }
-
             if ($pay_status == '1')
                 $sdf['pay_status'] = 'PAY_FINISH';
             else if ($pay_status == '2')
@@ -334,8 +332,8 @@ class b2c_order_pay extends b2c_api_rpc_request
                     $arr_service_goods_type_obj[$goods_types] = $obj_service_goods_type;
                 }
                 $arr_common_type = array('goods', 'gift');
-
-                if ($store_mark == '2' && !in_array($sdf_order['shipping']['shipping_name'],NOFREEZ_SHIPPING_TYPE))
+                //门店自提 不检测库存，webpos不检测库存
+                if ($store_mark == '2' && !in_array($sdf_order['shipping']['shipping_name'],NOFREEZ_SHIPPING_TYPE)  && $sdf_order['branch_id'] == 0)
                 {
                     $objGoods = $this->app->model('goods');
                     if ($sdf_order['order_objects'])
@@ -356,7 +354,6 @@ class b2c_order_pay extends b2c_api_rpc_request
                                 }
                             }
                         }
-
                     // 判断是否已经发过货.
                     if ($sdf_order['ship_status'] == '1' || $sdf_order['ship_status'] == '2')
                     {
@@ -434,7 +431,6 @@ class b2c_order_pay extends b2c_api_rpc_request
 
                 if ($is_need_rpc) break;
             }
-
             //if (app::get('b2c')->getConf('site.order.send_type') == 'false'&&$is_need_rpc){
             if ($is_need_rpc){
                 system_queue::instance()->publish('b2c_tasks_matrix_sendpayments', 'b2c_tasks_matrix_sendpayments', $sdf);
