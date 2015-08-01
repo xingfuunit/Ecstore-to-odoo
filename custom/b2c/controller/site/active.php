@@ -61,6 +61,7 @@ class b2c_ctl_site_active extends b2c_frontpage{
     	  		'vipday_fruit',//会员日-水果（fruit）
     	  		'vipday_jingxuan',//会员日-精选食品（jingxuan）
     	  		'childrenday',//儿童节
+    	  		'hgt',//海归天团黑豚肉
     	  		);
           if(in_array($active_name,$active)){
           	$this->page('site/active/'.$active_name.'/index.html',true);//活动页面全屏，不要head和foot

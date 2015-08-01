@@ -74,7 +74,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         $this->pagedata['goodsData'] = $goodsData;
         $this->pagedata['cat_id'] = $cat_id;
         $this->pagedata['scontent'] = $_GET['scontent'];
-        
+
         $objCat = app::get('b2c')->model('goods_cat');
         $this->pagedata['cur_cat'] = empty($cat_id) ? (empty($_GET['scontent']) ? array('cat_name'=>'全部商品') : array('cat_name'=>  str_replace('n,', '',$_GET['scontent']))) :$objCat->getRow('*',array('cat_id'=>$cat_id));
 
@@ -108,7 +108,22 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
         $aData = $oCart->setCartNum( $arr );
         $this->pagedata['cartCount'] = $aData['CART_COUNT'];
         
-        $this->page('wap/gallery/index.html');
+        $cookie = str_replace('n,','',$_REQUEST['scontent']);
+        if($cookie){
+	        $search_arr = $_COOKIE['pz_search_history'];
+	        $search_arr = json_decode($search_arr);
+	        $search_arr[] = $cookie;
+	        $search_arr = array_unique($search_arr);
+	        $_search_history = json_encode($search_arr);
+	        setcookie('pz_search_history',$_search_history , 0, kernel::base_url() . '/');
+        }
+        if(!$goodsData && $_GET['scontent']){
+        	$url = '/wap/simplesearch.html?find=no';
+        	$this->_response->set_redirect($url)->send_headers();
+        }
+        else{
+        	$this->page('wap/gallery/index.html');
+        }
     }
     
     /*
@@ -119,7 +134,6 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     	for ($x=0; $x<$pageNum; $x++) {
     		$arr[$x] = array();
     	}
-    	
     	$this->pagedata['pagetotal_arr'] = $arr;
     }
     
@@ -137,8 +151,9 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
    					'marketable'=>"true",
    					'is_buildexcerpts'=>"true",
     			);
-    	
-    	$goodsData = $goodsModel->getList('*',$filter,0,12);
+	
+    	//$goodsData = $goodsModel->getList('*',$filter,0,12);
+    	$goodsData = $goodsModel->getList('*',$filter,0,10,'wap_hot_num desc');
     	foreach($goodsData as $key=>$goods_row){
     		if(in_array($goods_row['goods_id'],$gfav)){
     			$goodsData[$key]['is_fav'] = 'true';
@@ -181,6 +196,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     		
     	}
     	
+		/*
     	//分组 2个商品为一页
     	$page = 0;
     	$goodsData_new = array();
@@ -197,6 +213,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     			
     		}
     	}
+		*/
     	
     	//购物车 是否有商品
     	$oCart = $this->app->model("cart_objects");
@@ -206,8 +223,10 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     	
 //     	print_r($goodsData);exit;
     	$this->title = app::get('b2c')->_('热门商品');
-    	$this->pagedata['goodsData'] = $goodsData_new;
-    	
+		
+    	$this->pagedata['keywords'] = kernel::single('mobileapi_rpc_keywords')->get_itmes();
+    	//$this->pagedata['goodsData'] = $goodsData_new;
+		$this->pagedata['goodsData'] = $goodsData;
     	$this->page('wap/gallery/products_hot.html');
     }
     
@@ -531,19 +550,51 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
     }
     
     /*
-     * 商品详情页 滑动分页
+     * 商品列表页 滑动分页
     * */
     public function gallery_scroll_goods(){
     	$tmp_params = $this->filter_decode($_GET);
+		
+	
     	$params = $tmp_params['filter'];
-    	$orderby = empty($tmp_params['orderby']) ? 'd_order desc' : $tmp_params['orderby'];
+		
+		//----------------------------------------------------------
+		//sortid:	1=销量,2=价格,3=评价,4=上架
+		//sortby:	1=asc,2=desc
+		
+    	$sortid 	= empty($params['sortid'])? '4':$params['sortid'];
+    	$sortby 	= empty($params['sortby'])? '2':$params['sortby'];
+		$orderby 	= '';
+		if($sortid=='1'){
+			$orderby = 'buy_count';
+			
+		}else if($sortid=='2'){ 
+			$orderby = 'price';
+			
+		}else if($sortid=='3'){ 
+			$orderby = 'comments_count';
+			
+		}else{ 
+			$sortid = '4';
+			//$orderby = 'uptime';
+			$orderby = 'd_order';
+			
+		}
+		
+		if($sortby != '1'){
+			$sortby = '2';
+			$orderby .= ' desc';
+		}
+
+		//----------------------------------------------------------
+		
 //     	$showtype = $tmp_params['showtype'];
     	$showtype = 'gallery';
     	if($tmp_params['limit']){
     		$pagelimit=$tmp_params['limit'];
     	}
     	$page = $tmp_params['page'] ? $tmp_params['page'] : 1;
-    	$params['limit'] = '6';
+    	$params['limit'] = '5';
     	
     	$goodsData = $this->get_goods($params,$page,$orderby);
     	$this->pagedata['goodsData'] = $goodsData;
@@ -707,7 +758,7 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
 
         $page = $page ? $page : 1;
        // $pageLimit = $this->app->getConf('gallery.display.listnum');
-        $pageLimit = ($filter['limit'] ? $filter['limit'] : 6);
+        $pageLimit = ($filter['limit'] ? $filter['limit'] : 5);
        // $pageLimit=1;
         $this->pagedata['pageLimit'] = $pageLimit;
         $orderby = empty($orderby) ? 'd_order desc,goods_id desc' : $orderby;
@@ -787,7 +838,6 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             }
         }
         $goodsData = $this->get_goods_point($gids,$goodsData);
-
         $this->_pagetotal = $pagetotal > $max_pagetotal ? $max_pagetotal : $pagetotal;
         $this->_total = $total;
         return $goodsData;
@@ -822,6 +872,8 @@ class b2c_ctl_wap_gallery extends wap_frontpage{
             if($show_mark_price =='true'){
                 if($product_row['mktprice'] == '' || $product_row['mktprice'] == null)
                     $goodsData[$gk]['products']['mktprice'] = $productModel->getRealMkt($product_row['price']);
+               		$_discount = ($goodsData[$gk]['products']['price']/$goodsData[$gk]['products']['mktprice'])*10;
+               		$goodsData[$gk]['products']['_discount'] = number_format($_discount,1);
             }
 
             //库存

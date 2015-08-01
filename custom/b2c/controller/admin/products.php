@@ -400,6 +400,12 @@ class b2c_ctl_admin_products extends desktop_controller{
             case 1006:
                 $msg = $this->app->_('库存不能小于冻结库存 bn：').$params;
                 break;
+           case 1008:
+                $msg = $this->app->_('条形码重复 barcode：').$params;
+                break;
+           case 1009:
+                $msg = $this->app->_('条形码已被其他商品使用 barcode：').$params;
+                break;
             default:
                 $msg = $params;
                 break;
@@ -703,6 +709,7 @@ class b2c_ctl_admin_products extends desktop_controller{
 
         $products_is_default = null;
         $listBn = array();
+        $list_barcode = array();
         foreach($products as $uid=>$row){
             if($row['product_id'] != 'new'){
                 $productsIds[$row['product_id']] = $row['bn'];
@@ -726,6 +733,19 @@ class b2c_ctl_admin_products extends desktop_controller{
             }else{
                 $code = 1001;
                 $this->result_error($code,$row['bn']);
+            }
+            if($row['barcode']){
+	            if( empty($list_barcode) || !in_array($row['barcode'],$list_barcode) ){
+	            	$list_barcode[] = $row['barcode'];
+	            }else{
+	            	$code = 1008;
+	            	$this->result_error($code,$row['barcode']);
+	            }
+	            
+	            if( $goodsModel->checkProductBarcode($row['barcode'],$goods_id ) ){
+	            	$code = 1009;
+	            	$this->result_error($code,$row['barcode']);
+	            }
             }
 
             if( $goodsModel->checkProductBn($row['bn'],$goods_id ) ){

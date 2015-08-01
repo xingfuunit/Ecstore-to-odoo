@@ -40,7 +40,13 @@ class base_ripcordbuilder{
 	function calling_methods($post_param,$model="eshop.to.odoo"){
 		$uid = $this->logging_in();
 		$models = ripcord::client("$this->url/xmlrpc/2/object");
+		
+		file_put_contents('api_juzhen.log', date("Y-m-d H:i:s",time()).' $post_param:'.print_r($post_param,1)."\r\n",FILE_APPEND);
+		
 		$re = $models->execute_kw($this->db, $uid, $this->password,$model, 'synchronous_method',array(json_encode($post_param),array()));
+		
+		file_put_contents('api_juzhen.log', date("Y-m-d H:i:s",time()).' $re:'.print_r($re,1)."\r\n",FILE_APPEND);
+		
 		return $re;
 	}
 }

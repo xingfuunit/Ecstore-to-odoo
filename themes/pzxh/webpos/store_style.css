@@ -41,7 +41,7 @@ font-size: inherit;}
 }
 
 .cart-topuser{width:100%; float:left; padding-bottom:10px; background:#f0f6ff;}
-.herder-cart{ padding: 20px; width:500px;}
+.herder-cart{ padding: 20px;padding-top:10px; width:500px;}
 .user-maere{ color:#686779; font-size:18px; padding-bottom:15px;}
 .user-maere font{color:#ff0004; font-family:"宋体"}
 .user-regis{color:#646567; float:left;}
@@ -60,8 +60,8 @@ font-size: inherit;}
 .login-title span{width: 100%; text-align: center; font-size: 22px; }
 .sbmit_list{border-bottom: 1px solid #8ba7cc; width:100%; float:left; background:#f0f6ff;}
 .list_money{ background: #4c74a9; float: left; padding: 0px 0px 0px 0px; color: #FFF; margin-left:24px; font-size: 18px;}
-.list_picesd{float:right; padding-right: 50px; font-size: 20px; color: red; padding-bottom: 10px; line-height: 50px;}
-.list_picesd ul li{float:left; margin-left: 20px;}
+.list_picesd{float:left; padding-left: 20px; font-size: 20px; color: red;  line-height: 40px;}
+.list_picesd ul li{float:left; margin-left: 10px;}
 
 
 .box-163css{margin:20px auto; WIDTH: 1200px;}
@@ -78,7 +78,7 @@ font-size: inherit;}
 DIV.subnav {BORDER-RIGHT: #8ba7cc 1px solid;  DISPLAY: none; color: #000;  BACKGROUND: #fff; LEFT: 0px; FLOAT: left;  BORDER-LEFT: #8ba7cc 1px solid; WIDTH: 400px;  BORDER-BOTTOM: #8ba7cc 1px solid; LIST-STYLE-TYPE: none; POSITION: absolute; TOP: 41px; padding: 20px;}
 DIV.fsdff{margin-left: -180px;}
 
-#menu12 {list-style:none;width:1200px; margin:30px auto 0px 0px;  height:40px;}
+#menu12 {list-style:none;width:1200px; margin:0px auto 0px 0px;  height:40px;}
 #menu12 ul li {line-height:40px; font-size:18px; text-align:left; border:none; background: #fff;}
 #menu12 li {float:left; display:block; text-align:center;position:relative; top:1px;  height:40px;  padding: 4px 20px 4px 20px; line-height:40px;  background: #4c74a9; margin-left:30px; border:1px solid #4c74a9;}
 #menu12 li:hover {border: 1px solid #8ba7cc; border-bottom:none; padding: 4px 20px 5px 20px; background: #FFF;}
@@ -100,7 +100,7 @@ DIV.fsdff{margin-left: -180px;}
 .pageview .flip{background: #fff;}
 .submdeoe span{ background:#4c74a9; font-size: 18px; line-height: 40px; width: 120px; height:40px; margin-left:-15px;}
 .submdeoe span:hover{background:#4c74a9;}
-.list_zhekou input{margin-bottom: 15px; margin-right:20px; width:90px; }
+.list_zhekou input{margin-bottom: 15px; margin-right:20px; width:90px;margin-top:15px; }
 
 /* 全局样式 */
 body,h1,h2,h3,h4,h5,h6,p,img,form,ul,li,dl,dt,dd{margin:0;padding:0; }
@@ -206,6 +206,7 @@ input{outline: none;}
 }
 
 .black10{height:10px; display:block; clear:both;}
+.black2{height:2px; display:block; clear:both;}
 
 .header{color: #000;}
 .header span{ background:#e0d5ce;height:27px; display:block; color: #000;}
@@ -648,4 +649,8 @@ p#back-to-top a span{
 .cash_left{padding-left: 20px;}
 .upper{width: 50%;display: block;float: left;}
 
-.dialog-tips-container{font-size: 16px;width:145px;}
+
+
+#cart_main_container{
+    overflow: auto;
+}

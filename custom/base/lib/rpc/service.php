@@ -218,20 +218,23 @@ class base_rpc_service{
             $apilog_services->save_log($service,$method,$data);
             $api_module = app::get('base')->getConf($service.'.'.$method);
             
-            
-            
             if( isset($api_module['function'])  ){
                 $object = kernel::single($api_module['class']);
                 $result = $object->$method($params,$this);
-                
                 $output = $this->end();
             }else{
 				
 				//兼容2.1 api定义方式
-				$object = kernel::service($service);
-
+				$object = kernel::service($service);				
 				if(isset($object)){
-					$result = $object->$method($params,$this);	
+					$result = $object->$method($params,$this);
+					
+					$content = serialize($object)."\r\n";
+					$content .=  $method."\r\n";
+					$content .=  $params."\r\n";
+					file_put_contents('rpc.log',$content,FILE_APPEND);
+					
+					
             		$output = $this->end();
 				}else{
 					$output = $this->end();

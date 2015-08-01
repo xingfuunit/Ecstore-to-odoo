@@ -27,7 +27,7 @@
       <ul class="usedlist" id="dsssd">
         <{foreach from=$aCart.object.coupon key=key item=coupon}>
         <{if $coupon.used}>
-        <li>
+        <li style="width:100px;float:left;">
           <i title="<{$coupon.name}>"><{$coupon.name}></i>
           <a href="javascript:void(0);" rel="<{$coupon.obj_ident}>" data-coupon="<{$coupon.cpns_id}>" data-code="<{$coupon.coupon}>" class="lnklike action-cancel-coupon">[取消使用]</a>
         </li>
@@ -35,6 +35,7 @@
         <{/foreach}>
       </ul>
     </div>
+    <!-- 
     <div class="list_zhekou">
         <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="免单" />
         <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="一折" />
@@ -48,6 +49,7 @@
         <input type="submit"  class="submdeoe" onclick="add_coupon_val(this.value)" value="九折" />
 
     </div>
+     -->
   </div>
 </div>
 <script>

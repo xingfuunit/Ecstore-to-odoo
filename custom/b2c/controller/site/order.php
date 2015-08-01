@@ -31,7 +31,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
         /**
          * 取到扩展参数,用来判断是否是团购立即购买，团购则不判断登录（无注册购买情况下）
          */
-    	$this->app->setConf('system.goods.freez.time','2');
+		$this->app->setConf('system.goods.freez.time','2');
         $arr_args = func_get_args();
         $arr_args = array(
             'get' => $arr_args,
@@ -264,49 +264,6 @@ class b2c_ctl_site_order extends b2c_frontpage{
         }
 
         $result = $obj_order_create->save($order_data, $msg);
-        if ($result)
-        {
-            // 发票高级配置埋点
-            foreach( kernel::servicelist('invoice_setting') as $services ) {
-                if ( is_object($services) ) {
-                    if ( method_exists($services, 'saveInvoiceData') ) {
-                        $services->saveInvoiceData($_POST['order_id'],$_POST['payment']);
-                    }
-                }
-            }
-            // 与中心交互
-            $is_need_rpc = false;
-            /* $obj_rpc_obj_rpc_request_service = kernel::servicelist('b2c.rpc_notify_request');
-            foreach ($obj_rpc_obj_rpc_request_service as $obj)
-            {
-                if ($obj && method_exists($obj, 'rpc_judge_send'))
-                {
-                    if ($obj instanceof b2c_api_rpc_notify_interface)
-                        $is_need_rpc = $obj->rpc_judge_send($order_data);
-                }
-
-                if ($is_need_rpc) break;
-            } */
-
-            if ($is_need_rpc)
-            {
-              /*
-                $obj_rpc_request_service = kernel::service('b2c.rpc.send.request');
-
-                if ($obj_rpc_request_service && method_exists($obj_rpc_request_service, 'rpc_caller_request'))
-                {
-                    if ($obj_rpc_request_service instanceof b2c_api_rpc_request_interface)
-                        $obj_rpc_request_service->rpc_caller_request($order_data,'create');
-                }
-                else
-                {
-                    $obj_order_create->rpc_caller_request($order_data);
-                    }*/
-              //新的版本控制api
-              $obj_apiv = kernel::single('b2c_apiv_exchanges_request');
-              $obj_apiv->rpc_caller_request($order_data, 'ordercreate');
-            }
-        }
 
         // 取到日志模块
         if ($arrMember['member_id'])
@@ -444,8 +401,8 @@ class b2c_ctl_site_order extends b2c_frontpage{
                 $order->fireEvent('create', $arr_updates, $order_data['member_id']);
             }
 
-            $db->commit($transaction_status);
-            
+            $c_result = $db->commit($transaction_status);
+           
             //门店充值卡充值
             if($_POST['is_store_cz'] == 2  ){
                 $orders_czkcz = $this->app->model('orders');
@@ -491,9 +448,53 @@ class b2c_ctl_site_order extends b2c_frontpage{
         {
             $db->rollback();
         }
-
-        if ($result)
+		
+        $order_info = $db->select("select * from sdb_b2c_orders where order_id=$order_id");
+        
+        if ($result && $order_info && $c_result)
         {
+        		// 发票高级配置埋点 begin 矩阵通信
+        		foreach( kernel::servicelist('invoice_setting') as $services ) {
+        			if ( is_object($services) ) {
+        				if ( method_exists($services, 'saveInvoiceData') ) {
+        					$services->saveInvoiceData($_POST['order_id'],$_POST['payment']);
+        				}
+        			}
+        		}
+        		// 与中心交互
+        		$is_need_rpc = false;
+        		/*$obj_rpc_obj_rpc_request_service = kernel::servicelist('b2c.rpc_notify_request');
+        		foreach ($obj_rpc_obj_rpc_request_service as $obj)
+        		{
+        			if ($obj && method_exists($obj, 'rpc_judge_send'))
+        			{
+        				if ($obj instanceof b2c_api_rpc_notify_interface)
+        					$is_need_rpc = $obj->rpc_judge_send($order_data);
+        			}
+        	
+        			if ($is_need_rpc) break;
+        		}*/
+        	
+        		if ($is_need_rpc)
+        		{
+        			/*
+        			 $obj_rpc_request_service = kernel::service('b2c.rpc.send.request');
+        	
+        			if ($obj_rpc_request_service && method_exists($obj_rpc_request_service, 'rpc_caller_request'))
+        			{
+        			if ($obj_rpc_request_service instanceof b2c_api_rpc_request_interface)
+        				$obj_rpc_request_service->rpc_caller_request($order_data,'create');
+        			}
+        			else
+        			{
+        			$obj_order_create->rpc_caller_request($order_data);
+        			}*/
+        			//新的版本控制api
+        			$obj_apiv = kernel::single('b2c_apiv_exchanges_request');
+        			$obj_apiv->rpc_caller_request($order_data, 'ordercreate');
+        		}
+        		//end 矩阵通信
+        	
             $order_num = $order->count(array('member_id' => $order_data['member_id']));
             $obj_mem = $this->app->model('members');
             $obj_mem->update(array('order_num'=>$order_num), array('member_id'=>$order_data['member_id']));
@@ -598,31 +599,32 @@ class b2c_ctl_site_order extends b2c_frontpage{
           			'addon'=>serialize($arr_args),
           	);
           	$log_id = $webposLog->save($sdf_webpos_log);
-            
-          }
-          if( $_POST['is_store'] == 1){
-          	//webpos来源的订单自动完成 bySam 20150708
-          	$objOrders = $this->app->model('orders');
-          	// 更新订单支付信息
-          	$arr_updates1 = array(
-          			'order_id' => $order_id,
-          			'ship_status' => '1',
-          			'status'=>'finish',
-          
-          	);
-          	$objOrders->save($arr_updates1);
+            /*
+            $objOrders = $this->app->model('orders');
+              // 更新订单支付信息
+            $arr_updates = array(
+                'order_id' => $order_id,
+                'ship_status' => '1',
+                'pay_status' => '1',
+            );
+           $objOrders->save($arr_updates);
+            */
           }
           $cart_type = $this->_request->get_post('type');
-          if($cart_type == 'x'){
-            echo json_encode(array('error'=>app::get('b2c')->_($order_data['order_id'])));
-    	    
+          if($cart_type == 'x'){  	    
             $this->end(true, $this->app->_("订单生成成功！"), $this->gen_url(array('app'=>'b2c','ctl'=>'site_paycenter','act'=>'index','arg0'=>$order_id,'arg1'=>'true')).'?type=x','',true);
           }else{
             $this->end(true, $this->app->_("订单生成成功！"), $this->gen_url(array('app'=>'b2c','ctl'=>'site_paycenter','act'=>'index','arg0'=>$order_id,'arg1'=>'true')),'',true);  
           }
+        }else{
+        	$cart_type = $this->_request->get_post('type');
+        	if($cart_type == 'x'){
+        		$this->end(false, $this->app->_("订单生成失败！请重试！"), $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart')).'?type=x','',true);
+        	}else{
+        		$this->end(false, $msg, $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'checkout')),true,true);
+        	}        	
         }
-        else
-            $this->end(false, $msg, $this->gen_url(array('app'=>'b2c','ctl'=>'site_cart','act'=>'checkout')),true,true);
+            
     }
     
     /*

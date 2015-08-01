@@ -109,17 +109,31 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function alist(){
     	
     	//倒序 显示
-    	$alist_date = $this->active_date;
-    	krsort($alist_date);
+    	$alist_date = $this->app->model('tehui')->getlist('*',array(),0,-1,' end_time ASC ');
     	foreach($alist_date as $k => &$v){
     		$alist_date[$k]['is_start'] = 0;  
-    		if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
-    			$alist_date[$k]['is_start'] = 1;
+    	if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
+    			$alist_date[$k]['is_start'] = '2';
+    		}elseif(time() <= strtotime($v['start_time'])){
+    			$alist_date[$k]['is_start'] = '1';
+    		}else{
+    			$alist_date[$k]['is_start'] = '0';
     		}
     		//格式转换
     		$v['start_time'] = date('Y.m.d H:i',strtotime($v['start_time']));
     		$v['end_time'] = date('Y.m.d H:i',strtotime($v['end_time']));
+    		
+    		$v['img_url'] = base_storager::image_path($v['img_url']);
     	}
+    	
+    	usort($alist_date, function($a, $b) {
+    		$al = $a['is_start'];
+    		$bl = $b['is_start'];
+    		if ($al == $bl)
+    			return 0;
+    		return ($al > $bl) ? -1 : 1;
+    	});
+    	
     	$this->pagedata['alist_date'] = $alist_date; 
     	$this->pagedata['title'] = "品珍活动";
     	$this->page('wap/active/list.html');
@@ -131,64 +145,33 @@ class b2c_ctl_wap_active extends wap_frontpage{
     public function hyday(){
     	 
     	//倒序 显示
-    	$alist_date = $this->member_date;
-    	krsort($alist_date);
+    	$alist_date = $this->app->model('vipday')->getlist('*',array(),0,-1,' end_time ASC ');
     	foreach($alist_date as $k => &$v){
-    		$alist_date[$k]['is_start'] = 0;
     		if(time() >= strtotime($v['start_time']) && time() <= strtotime($v['end_time'])){
-    			$alist_date[$k]['is_start'] = 1;
+    			$alist_date[$k]['is_start'] = '2';
+    		}elseif(time() <= strtotime($v['start_time'])){
+    			$alist_date[$k]['is_start'] = '1';
+    		}else{
+    			$alist_date[$k]['is_start'] = '0';
     		}
     		//格式转换
     		$v['start_time'] = date('Y.m.d H:i',strtotime($v['start_time']));
     		$v['end_time'] = date('Y.m.d H:i',strtotime($v['end_time']));
+    		
+    		$v['img_url'] = base_storager::image_path($v['img_url']);
     	}
+    	
+    	usort($alist_date, function($a, $b) {
+    		$al = $a['is_start'];
+    		$bl = $b['is_start'];
+    		if ($al == $bl)
+    			return 0;
+    		return ($al > $bl) ? -1 : 1;
+    	});
+    	
     	$this->pagedata['alist_date'] = $alist_date;
     	$this->pagedata['title'] = "会员日";
     	$this->page('wap/active/hdday.html');
     }
-    
-    //活动
-    var $active_date = array(
-    		0=>array(
-    				'start_time'=>'2015-04-27 00:00:00',
-    				'end_time'=>'2015-05-5 23:59:59',
-    				'alt'=>'品珍私享奢华零距离·和牛',
-    				'image_name'=>'99.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		),
-    		1=>array(
-    				'start_time'=>'2015-05-10 00:00:00',
-    				'end_time'=>'2015-05-10 23:59:59',
-    				'alt'=>'母亲节—不赚钱·只为妈妈美丽健康',
-    				'image_name'=>'mqj.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		)
-    );
-    
-    //会员日
-    var $member_date = array(
-    		2=>array(
-    				'start_time'=>'2015-05-13 00:00:00',
-    				'end_time'=>'2015-05-13 23:59:59',
-    				'alt'=>'周三会员日-全场海鲜8.8折',
-    				'image_name'=>'hx.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		),
-    		3=>array(
-    				'start_time'=>'2015-05-20 00:00:00',
-    				'end_time'=>'2015-05-20 23:59:59',
-    				'alt'=>'周三会员日-全场肉品8.8折',
-    				'image_name'=>'rl.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		),
-    		4=>array(
-    				'start_time'=>'2015-05-27 00:00:00',
-    				'end_time'=>'2015-05-27 23:59:59',
-    				'alt'=>'周三会员日-全场水果8.8折',
-    				'image_name'=>'sg.jpg',
-    				'active_url'=>'javascirpt:void(0);'
-    		),
-    
-    );
     
 }
