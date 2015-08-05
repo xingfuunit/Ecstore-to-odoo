@@ -21,6 +21,9 @@ class b2c_apiv_apis_response_goods_goods
 		
         $_goods = $this->app->model('goods');
         $filter = array('goods_id'=>intval($goods_id));
+		$intro = $_goods->getList('*',$filter);
+        return $intro;
+		
         $wap_status = app::get('wap')->getConf('wap.status');
         if( $wap_status == 'true' ){
             $intro = $_goods->getList('wapintro,intro',$filter);
