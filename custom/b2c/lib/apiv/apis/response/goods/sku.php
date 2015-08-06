@@ -787,6 +787,10 @@ Array
 		
 		$filter['product_id'] = $product_id;
 
+		if($this->_get_active_products($product_id)){
+            $service->send_user_error(app::get('b2c')->_('该商品存在活动的订单，不能删除！'),null);
+		}
+
 		//--------------------------------------------------
 		//删除 货品 记录
 
@@ -800,7 +804,9 @@ Array
             $db->rollback();
             $service->send_user_error(app::get('b2c')->_('删除货品失败'),null);
         }
-
+            $service->send_user_error(app::get('b2c')->_('testte'),null);
+			
+			
         $db->commit($transaction_status);
 		
 
@@ -835,5 +841,21 @@ Array
 			'time' 			=> date('Y-m-d H:i:s',time()),
 		);
 	}
+	
+    /*
+     * 获取当前货品是否存在活动订单
+     * */
+    private function _get_active_products($product_id){
+        //获取到当前商品的活动订单
+		$sql = "select a.order_id as order_id from sdb_b2c_orders a join sdb_b2c_order_items b on  a.order_id =b.order_id where b.product_id = ".$product_id." and a.status='active'";
+
+		$db = kernel::database();
+        $rs = $db->selectrow($sql);
+        if ($rs && is_array($rs) && count($rs)>0){
+			return true;
+		}
+		
+        return false;
+    }
 	
 }
