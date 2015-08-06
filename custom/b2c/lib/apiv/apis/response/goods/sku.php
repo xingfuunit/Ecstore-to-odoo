@@ -804,8 +804,6 @@ Array
             $db->rollback();
             $service->send_user_error(app::get('b2c')->_('删除货品失败'),null);
         }
-            $service->send_user_error(app::get('b2c')->_('testte'),null);
-			
 			
         $db->commit($transaction_status);
 		
